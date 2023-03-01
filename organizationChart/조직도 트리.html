@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>조직도 트리 모달</title>
+	<!-- Bootstrap CSS 파일 -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+    <style>
+		.org-chart ul {
+			padding-left: 30px;
+			position: relative;
+		}
+
+		.org-chart li::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: -20px;
+			border-top: 1px solid #ccc;
+			width: 20px;
+			height: 100%;
+		}
+
+		.org-chart li:first-child::before {
+		display: none;
+		}
+
+		.org-chart li:last-child::before {
+		border-left: 1px solid #ccc;
+		height: 50%;
+		top: 50%;
+		}
+
+		.org-chart li:after {
+		content: '';
+		display: table;
+		clear: both;
+		}
+
+		.org-chart li:first-child {
+		padding-top: 20px;
+		}
+
+		.org-chart li {
+		margin-bottom: 20px;
+		position: relative;
+		}
+
+		.org-chart ul ul::before {
+		content: '';
+		position: absolute;
+		top: -10px;
+		left: 20px;
+		border-left: 1px solid #ccc;
+		width: 1px;
+		height: 100%;
+		}
+
+		.org-chart ul ul::after {
+		content: '';
+		display: table;
+		clear: both;
+		}
+
+		.org-chart ul ul li:last-child::before {
+		height: 50%;
+		top: 50%;
+		}
+
+		.org-chart li > ul {
+		display: none;
+		}
+
+		.org-chart li.active > ul {
+		display: block;
+		}
+	</style>
+</head>
+<body>
+
+	<!-- 모달 버튼 -->
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tree-modal">
+		조직도 트리
+	</button>
+
+	<!-- 모달 -->
+	<div class="modal fade" id="tree-modal" tabindex="-1" role="dialog" aria-labelledby="tree-modal-label" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="tree-modal-label">조직도 트리</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- 조직도 트리 -->
+					<div class="org-chart">
+						<ul>
+						  <li>
+							인사부
+							<ul>
+							  <li>사원1</li>
+							  <li>사원2</li>
+							  <li>사원3</li>
+							</ul>
+						  </li>
+						  <li>
+							경영부
+							<ul>
+							  <li>사원4</li>
+							  <li>사원5</li>
+							  <li>사원6</li>
+							</ul>
+						  </li>
+						  <li>
+							영업부
+							<ul>
+							  <li>
+								1팀
+								<ul>
+								  <li>사원7</li>
+								  <li>사원8</li>
+								</ul>
+							  </li>
+							  <li>
+								2팀
+								<ul>
+								  <li>사원9</li>
+								  <li>사원10</li>
+								</ul>
+							  </li>
+							</ul>
+						  </li>
+						  <li>
+							마케팅부
+							<ul>
+							  <li>사원11</li>
+							  <li>사원12</li>
+							</ul>
+						  </li>
+						</ul>
+					  </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+		<script>
+			$(document).ready(function () {
+				$('.org-chart li').click(function () {
+					$(this).toggleClass('active');
+				});
+			});
+		</script>
+</body>
+</html>
