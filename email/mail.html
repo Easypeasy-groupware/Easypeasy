@@ -9,21 +9,33 @@
     #mail_side_bar{width: 200px; float: left; border-right: 2px solid rgb(185, 187, 221); padding: 10px;}
     #mail_content{width: 1000px; float: left;}
     #mail_header{height: 130px; border-bottom: 2px solid rgb(185, 187, 221); margin: 10px;}
-    #header1{height: 100px;}
+    #header1{height: 90px;}
     #mail_header_info{float: left; margin: 20px;}
     #search_bar{float: right; margin: 20px;}
     #mail_content_menubar{padding: 5px;}
-    .menu{float: left; text-align: right; font-size: 12px;}
+    .menu{float: left; text-align: center; font-weight: 600; font-size: 13px; height: 40px; line-height: 40px;}
     .menu1{width: 100px;}
     .menu2{width: 80px;}
     .menu3{width: 120px;}
+
+    .block{width: 220px; min-height: 150px; max-height: 300px; background: white; border-radius: 10px; border: 1px solid rgb(185, 187, 221); 
+               position: absolute; left: 550px; text-align: center; display: none;}
+    .block_list{width: 205px; min-height: 115px; max-height: 230px; margin: auto; overflow-x: hidden; overflow-y: auto; margin-bottom: 10px;}
+    .block_one{width: 100%; height: 30px; line-height: 30px; font-size: 13px;}
+    .block_one>div{float: left;}
+    .tag_name{width: 100px;}
+    .shift_name{width: 100%; margin: auto; font-size: 15px;}
+    .x-btn{width: 40px; height: 30px; line-height: 30px; margin-bottom: 5px; float: right; border: none;}
+    .tagTriangle {width: 10px; height: 0px; border-top: 8px solid transparent; border-left: 15px solid pink; 
+                  border-bottom: 8px solid transparent; margin-top: 6px;}
 
     #mail_list{height: 500px;}
     .mail_one{height: 40px; line-height: 40px; margin: 5px 10px 5px 15px; border-bottom: 1px solid rgb(185, 187, 221);}
     .mail_one div{float: left; height: 40px;}
     .mail_select_area{color: black;}
     .mail_check{width: 30px;}
-    .mail_img{width: 120px;}
+    .mail_imgList{width: 120px; text-align: center; line-height: 43px;}
+    .mail_img{width: 30px; height: 40px;}
     .mail_sender{width: 160px;}
     .mail_title{width: 520px; overflow: hidden;}
     .mail_date{width: 130px; text-align: right;}
@@ -64,13 +76,9 @@
             <div>작성중인 메일함 <img src=""></div>
         </div>
         <br><br>
+    </div>  
 
-        <div>메일 환경설정</div>
-        <br><br>
-    </div>
-    
-
-    <!-- 메일 컨텐트 -->
+    <!-- 메일 컨텐트-->
     <div id="mail_content">
         <div id="mail_header">
             <div id="header1" style="width:100%; float:left">
@@ -83,7 +91,7 @@
                     <form action="">
                         <select name="" id=""></select>
                         <input type="text">
-                        <button type="submit">검색</button>
+                        <button>검색</button>
                     </form>
                 </div>
             </div><br>
@@ -106,18 +114,57 @@
                 </div>
             </div>
         </div>
+
+        <!-- 태그 블록 -->
+        <div class="block tag_block">
+            <b style="line-height: 30px;">태그 목록</b>
+            <div class="x-btn">
+                <button class="x">X</button>
+            </div>
+            <div class="block_list tag_list">
+                <div class="block_one tag_one">
+                    <div class="tagTriangle "></div><div class="tag_name">태그 이름</div><button class="tag_btn">적용</button>
+                    <div class="tagTriangle "></div><div class="tag_name">태그 이름</div><button class="tag_btn">적용</button>
+                    <div class="tagTriangle "></div><div class="tag_name">태그 이름</div><button class="tag_btn">적용</button>
+                    <div class="tagTriangle "></div><div class="tag_name">태그 이름</div><button class="tag_btn">적용</button>
+                    <div class="tagTriangle "></div><div class="tag_name">태그 이름</div><button class="tag_btn">적용</button>
+                    <div class="tagTriangle "></div><div class="tag_name">태그 이름</div><button class="tag_btn">적용</button>
+                    <div class="tagTriangle "></div><div class="tag_name">태그 이름</div><button class="tag_btn">적용</button>
+                    <div class="tagTriangle "></div><div class="tag_name">태그 이름</div><button class="tag_btn">적용</button>
+                    <div class="tagTriangle "></div><div class="tag_name">태그 이름</div><button class="tag_btn">적용</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 이동 블록 -->
+        <div class="block shift_block">
+            <b style="line-height: 30px;">메일함</b>
+            <div class="x-btn">
+                <button class="x">X</button>
+            </div>
+            <div class="block_list shift_list">
+                <div class="block_one shift_one">
+                    <div class="shift_name">메일함 이름</div><br>
+                    <div class="shift_name">메일함 이름</div><br>
+                    <div class="shift_name">메일함 이름</div><br>
+                    <div class="shift_name">메일함 이름</div><br>
+                    <div class="shift_name">메일함 이름</div><br>
+                </div>
+            </div>
+        </div>
+
+        <!-- 메일 리스트 -->
         <div id="mail_list">
             <div class="mail_one" >
                 <div class="mail_check">
-                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox">
+                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="2">
+                </div>
+                <div class="mail_imgList">
+                    <div class="mail_img favorite"><img style="width: 18px;" src="images/unFavorite.png"></div>
+                    <div class="mail_img read"><img style="width: 18px;" src="images/mail_unRead.png"></div>
                 </div>
                 <form class="mail_select_area" action="select.ma" method="POST">
-                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호">
-                    <div class="mail_img">
-                        ☆<img src="">&nbsp;
-                        ○<img src="">&nbsp;
-                        ■<img src="">&nbsp;
-                    </div>
+                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호2">
                     <div class="mail_sender">
                         김이피 부장
                     </div>       
@@ -131,191 +178,16 @@
             </div>
             <div class="mail_one" >
                 <div class="mail_check">
-                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox">
+                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="8"> 
+                </div>
+                <div class="mail_imgList">
+                    <div class="mail_img favorite"><img style="width: 18px;" src="images/favorite.png"></div>
+                    <div class="mail_img read"><img style="width: 18px;" src="images/mail_read.png"></div>
+                    <div class="mail_img"><img style="width: 18px;" src="images/attachment.png"></div>
                 </div>
                 <form class="mail_select_area" action="select.ma" method="POST">
-                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호">
-                    <div class="mail_img">
-                        ☆<img src="">&nbsp;
-                        ○<img src="">&nbsp;
-                        ■<img src="">&nbsp;
-                    </div>
-                    <div class="mail_sender">
-                        김이피 부장
-                    </div>       
-                    <div class="mail_title">
-                        메일 제목 - 영업1팀 수정 인사 개편 관련 업무 소통 ㅁㄴㅇㅁㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-                    </div>
-                    <div class="mail_date">
-                        2023-03-02
-                    </div>
-                </form>
-            </div>
-            <div class="mail_one" >
-                <div class="mail_check">
-                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox">
-                </div>
-                <form class="mail_select_area" action="select.ma" method="POST">
-                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호">
-                    <div class="mail_img">
-                        ☆<img src="">&nbsp;
-                        ○<img src="">&nbsp;
-                        ■<img src="">&nbsp;
-                    </div>
-                    <div class="mail_sender">
-                        김이피 부장
-                    </div>       
-                    <div class="mail_title">
-                        메일 제목 - 영업1팀 수정 인사 개편 관련 업무 소통 ㅁㄴㅇㅁㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-                    </div>
-                    <div class="mail_date">
-                        2023-03-02
-                    </div>
-                </form>
-            </div>
-            <div class="mail_one" >
-                <div class="mail_check">
-                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox">
-                </div>
-                <form class="mail_select_area" action="select.ma" method="POST">
-                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호">
-                    <div class="mail_img">
-                        ☆<img src="">&nbsp;
-                        ○<img src="">&nbsp;
-                        ■<img src="">&nbsp;
-                    </div>
-                    <div class="mail_sender">
-                        김이피 부장
-                    </div>       
-                    <div class="mail_title">
-                        메일 제목 - 영업1팀 수정 인사 개편 관련 업무 소통 ㅁㄴㅇㅁㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-                    </div>
-                    <div class="mail_date">
-                        2023-03-02
-                    </div>
-                </form>
-            </div>
-            <div class="mail_one" >
-                <div class="mail_check">
-                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox">
-                </div>
-                <form class="mail_select_area" action="select.ma" method="POST">
-                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호">
-                    <div class="mail_img">
-                        ☆<img src="">&nbsp;
-                        ○<img src="">&nbsp;
-                        ■<img src="">&nbsp;
-                    </div>
-                    <div class="mail_sender">
-                        김이피 부장
-                    </div>       
-                    <div class="mail_title">
-                        메일 제목 - 영업1팀 수정 인사 개편 관련 업무 소통 ㅁㄴㅇㅁㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-                    </div>
-                    <div class="mail_date">
-                        2023-03-02
-                    </div>
-                </form>
-            </div>
-            <div class="mail_one" >
-                <div class="mail_check">
-                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox">
-                </div>
-                <form class="mail_select_area" action="select.ma" method="POST">
-                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호">
-                    <div class="mail_img">
-                        ☆<img src="">&nbsp;
-                        ○<img src="">&nbsp;
-                        ■<img src="">&nbsp;
-                    </div>
-                    <div class="mail_sender">
-                        김이피 부장
-                    </div>       
-                    <div class="mail_title">
-                        메일 제목 - 영업1팀 수정 인사 개편 관련 업무 소통 ㅁㄴㅇㅁㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-                    </div>
-                    <div class="mail_date">
-                        2023-03-02
-                    </div>
-                </form>
-            </div>
-            <div class="mail_one" >
-                <div class="mail_check">
-                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox">
-                </div>
-                <form class="mail_select_area" action="select.ma" method="POST">
-                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호">
-                    <div class="mail_img">
-                        ☆<img src="">&nbsp;
-                        ○<img src="">&nbsp;
-                        ■<img src="">&nbsp;
-                    </div>
-                    <div class="mail_sender">
-                        김이피 부장
-                    </div>       
-                    <div class="mail_title">
-                        메일 제목 - 영업1팀 수정 인사 개편 관련 업무 소통 ㅁㄴㅇㅁㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-                    </div>
-                    <div class="mail_date">
-                        2023-03-02
-                    </div>
-                </form>
-            </div>
-            <div class="mail_one" >
-                <div class="mail_check">
-                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox">
-                </div>
-                <form class="mail_select_area" action="select.ma" method="POST">
-                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호">
-                    <div class="mail_img">
-                        ☆<img src="">&nbsp;
-                        ○<img src="">&nbsp;
-                        ■<img src="">&nbsp;
-                    </div>
-                    <div class="mail_sender">
-                        김이피 부장
-                    </div>       
-                    <div class="mail_title">
-                        메일 제목 - 영업1팀 수정 인사 개편 관련 업무 소통 ㅁㄴㅇㅁㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-                    </div>
-                    <div class="mail_date">
-                        2023-03-02
-                    </div>
-                </form>
-            </div>
-            <div class="mail_one" >
-                <div class="mail_check">
-                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox">
-                </div>
-                <form class="mail_select_area" action="select.ma" method="POST">
-                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호">
-                    <div class="mail_img">
-                        ☆<img src="">&nbsp;
-                        ○<img src="">&nbsp;
-                        ■<img src="">&nbsp;
-                    </div>
-                    <div class="mail_sender">
-                        김이피 부장
-                    </div>       
-                    <div class="mail_title">
-                        메일 제목 - 영업1팀 수정 인사 개편 관련 업무 소통 ㅁㄴㅇㅁㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-                    </div>
-                    <div class="mail_date">
-                        2023-03-02
-                    </div>
-                </form>
-            </div>
-            <div class="mail_one" >
-                <div class="mail_check">
-                    <input type="checkbox" name="mailcheckbox" class="mail_checkbox">
-                </div>
-                <form class="mail_select_area" action="select.ma" method="POST">
-                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호">
-                    <div class="mail_img">
-                        ☆<img src="">&nbsp;
-                        ○<img src="">&nbsp;
-                        ■<img src="">&nbsp;
-                    </div>
+                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호8">
+                    
                     <div class="mail_sender">
                         김이피 부장
                     </div>       
@@ -344,7 +216,7 @@
             //     console.log(link);
             // });
             select.addEventListener('click', function(){
-                this.action = "링크 주소";
+                this.action = "www.naver.com";
                 this.method = "POST";
                 this.submit();
             });
@@ -361,56 +233,170 @@
 
         // 스팸 등록
         let spamEnroll = document.getElementById("spam");
+        let mailNoList = document.getElementsByClassName("mailNo");
         spamEnroll.addEventListener('click', function(){
         let checkedBoxSum = 0
-            mailCheckBox.forEach((checkbox) => {
-                if(checkbox.checked == true) {
+        let count = 0;
+        let arr = [];
+        let form = document.createElement("form");
+            mailCheckBox.forEach((i) => {
+                if(i.checked == true) {
                     checkedBoxSum += 1;
-                    let mailNo = mailCheckBox
+                    arr[count] = mailNoList[i.value].value;
+                    count += 1; 
                 }
             })
-            if(checkedBoxSum == 1 && checkedBoxSum > 0) {
-                
-            }else{
-                alert('한 개의 체크박스를 선택해주세요!')
+            console.log(arr);
+
+            if(checkedBoxSum != 0) {
+
+            // form.setAttribute("charset", "UTF-8");
+            // form.setAttribute("method", "POST");  
+            // form.setAttribute("action", "액션 주소");
+
+            // let hiddenInput = document.createElement("input");
+            // hiddenInput.setAttribute("type", "hidden");
+            // hiddenInput.setAttribute("name", "mailNoArr");
+            // hiddenInput.setAttribute("value", arr);
+            // form.appendChild(hiddenInput);
+
+            // document.body.appendChild(form);
+            // form.submit();
+
+            }else {
+                alert('체크박스를 선택해주세요');
             }
         });
 
         // 답장
         let reply = document.getElementById("reply");
         reply.addEventListener('click', function(){
-
+            let checkedBoxSum = 0
+            let count = 0;
+            mailCheckBox.forEach((i) => {
+                if(i.checked == true) {
+                    count = i.value
+                    checkedBoxSum += 1;
+                }
+            })
+            if(checkedBoxSum == 1 && checkedBoxSum > 0) {
+                mailSelectList[count].action = "www.naver.com";
+                mailSelectList[count].method = "POST";
+                mailSelectList[count].submit();
+            }else{
+                alert('한 개의 체크박스를 선택해주세요!')
+            }
         });
 
-        // 메일 삭제
+        // 메일 삭제 - 스팸 등록과 동일
         let deleteMail = document.getElementById("delete");
-        reply.addEventListener('click', function(){
+        deleteMail.addEventListener('click', function(){
+            let checkedBoxSum = 0
+            let count = 0;
+            let arr = [];
+            let form = document.createElement("form");
+                mailCheckBox.forEach((i) => {
+                    if(i.checked == true) {
+                        checkedBoxSum += 1;
+                        arr[count] = mailNoList[i.value].value;
+                        count += 1; 
+                    }
+                })
+                console.log(arr);
 
+            if(checkedBoxSum != 0) {
+
+            }else{
+                alert('체크박스를 선택해주세요');
+            }
         });
 
         // 태그
         let tagging = document.getElementById("tag");
+        let tagBlock = document.querySelector(".tag_block")
         tagging.addEventListener('click', function(){
-
+            tagBlock.style.display = 'block';
         });
 
-        // 메일 이동
+        // 메일 이동 - 태그와 동일
         let shift = document.getElementById("shift");
+        let shiftBlock = document.querySelector(".shift_block")
         shift.addEventListener('click', function(){
-
+            shiftBlock.style.display = 'block';
         });
 
-        // 읽음 처리
+        // x button 닫기 효과
+        let x_blocks = document.querySelectorAll('.x');
+        x_blocks.forEach(function(x){
+            x.addEventListener('click', function(){
+                this.parentNode.parentNode.style.display = 'none';
+            })
+        });
+
+        // 전달 - 답장과 동일
+        let forward = document.getElementById("forward");
+        forward.addEventListener('click', function(){
+            let checkedBoxSum = 0
+            let count = 0;
+            mailCheckBox.forEach((i) => {
+                if(i.checked == true) {
+                    count = i.value
+                    checkedBoxSum += 1;
+                }
+            })
+            if(checkedBoxSum == 1 && checkedBoxSum > 0) {
+                mailSelectList[count].action = "www.naver.com";
+                mailSelectList[count].method = "POST";
+                mailSelectList[count].submit();
+            }else{
+                alert('한 개의 체크박스를 선택해주세요!')
+            }
+        });
+
+        // 읽음 처리 - 스팸 처리와 동일
         let readAndUnread = document.getElementById("read_unread");
         readAndUnread.addEventListener('click', function(){
+            let checkedBoxSum = 0
+            let count = 0;
+            let arr = [];
+            let form = document.createElement("form");
+                mailCheckBox.forEach((i) => {
+                    if(i.checked == true) {
+                        checkedBoxSum += 1;
+                        arr[count] = mailNoList[i.value].value;
+                        count += 1; 
+                    }
+                })
+            if(checkedBoxSum != 0) {
 
+            }else{
+                alert('체크박스를 선택해주세요');
+            }
         }); 
 
-        // 읽음 처리
+        // 새로고침
         let refresh = document.getElementById("refresh");
         refresh.addEventListener('click', function(){
-
+            
         });
+
+        // 즐겨찾기
+        let favoriteList = document.querySelectorAll('.favorite');
+        favoriteList.forEach(function(favorite){
+            favorite.addEventListener('click', function(){
+                console.log("즐겨찾기");
+            });
+        });
+
+        // 아이콘 읽기 처리
+        let readList = document.querySelectorAll('.read');
+        readList.forEach(function(read){
+            read.addEventListener('click', function(){
+                console.log("읽기");
+            });
+        });
+        
+
     </script>
 </body>
 </html>
