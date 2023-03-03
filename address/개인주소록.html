@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- jQuery 라이브러리 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!--flaticon-->
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+
+    <style>
+        .outer{width:1000px;}
+        .outer *{box-sizing: border-box;}
+        
+        /*검색*/
+        #searchKey{width:200px; height:25px; border:1px solid gray; border-radius:5px;}
+        #searchBtn{width:50px; height:25px; border:0; border-radius:5px; background: rgb(166, 184, 145); color:white;}
+
+        /*연락처 추가*/
+        .newAdd{width:120px; height:25px; border:1px solid gray; border-radius:5px;}
+        .addBtn{width:80px; height:25px; border:0; border-radius:5px;}
+        #addBtn1{background: rgb(127, 127, 127); color:white;}
+        #addBtn2{background: rgb(166, 184, 145); color:white;}
+
+        /*주소록 리스트 헤더*/
+        .btn-group{width:80px; height:25px; border:0; border-radius:5px; margin-bottom:10px; color:white;}
+        .btn-group:hover{cursor: pointer; font-weight:600;}
+        #delete{background: rgb(134, 134, 134);}
+        #change-group{background: rgb(166, 184, 145);}
+        #sendMail{background: rgb(77, 88, 64);}
+
+
+        /*주소록 리스트 테이블*/
+        table{
+            margin:auto;
+            border-collapse: collapse;
+        }
+        th{border-bottom:1px solid gray; padding:5px 0 5px 0;}
+        td{padding:3px 0 3px 0;}
+        input[type="checkbox"]{accent-color:rgb(166, 184, 145);}
+        .like:hover{cursor: pointer;}
+        tbody>tr:hover{background:rgb(233, 233, 233); font-weight:600;}
+    </style>
+</head>
+<body>
+    <div class="outer">
+
+        <h4>개인주소록(전체)</h4>
+
+
+        <div class="search" align="right">
+            <input type="text" id="searchKey" placeholder="이름, 회사, 전화번호">
+            <button id="searchBtn">검색</button>
+        </div>
+
+        <div class="addNew">
+            <input type="text" class="newAdd" placeholder="이름">
+            <input type="text" class="newAdd" placeholder="이메일">
+            <input type="text" class="newAdd" placeholder="휴대폰">
+            <button class="addBtn" id="addBtn1">추가정보</button>
+            <button class="addBtn" id="addBtn2">추가</button>
+        </div>
+
+        <br><br>
+        <p class="subheading" id="psSubheading">개인주소록 총 n개</p>
+
+        <button class="btn-group" id="delete">삭제</button>
+        <button class="btn-group" id="change-group">그룹변경</button>
+        <button class="btn-group" id="sendMail">메일쓰기</button>
+
+        <br>
+
+        <div id="psLike">
+            <table>
+                <copgroup>
+                    <col style="width:10px;">
+                    <col style="width:30px;">
+                    <col style="width:50px;"><!--이름-->
+                    <col style="width:50px;"><!--직위-->
+                    <col style="width:150px;"><!--휴대폰-->
+                    <col style="width:150px;"><!--이메일-->
+                    <col style="width:70px;"><!--부서-->
+                    <col style="width:120px;"><!--회사-->
+                    <col style="width:100px;"><!--회사전화-->
+                    <col style="width:150px;"><!--회사주소-->
+                    <col style="width:70px;"><!--메모-->
+                    <col style="width:50px;"><!--그룹-->
+                </copgroup>
+                <thead align="center">
+                    <tr>
+                        <th><input type="checkbox" id="psCheck"></input></th>
+                        <th></th>
+                        <th>이름</th>
+                        <th>직위</th>
+                        <th>휴대폰</th>
+                        <th>이메일</th>
+                        <th>부서</th>
+                        <th>회사</th>
+                        <th>회사전화</th>
+                        <th>회사주소</th>
+                        <th>메모</th>
+                        <th>그룹</th>
+                    </tr>
+                </thead>
+                <tbody align="center" id="ps-tbody">
+                    <tr>
+                        <td><input type="checkbox" class="ps-checkbox"></input></td>
+                        <td class="like">⭐</td>
+                        <td>홍길동</td>
+                        <td>사원</td>
+                        <td>010-1111-2222</td>
+                        <td>gildong@gmail.com</td>
+                        <td>영업1팀</td>
+                        <td>구디아카데미</td>
+                        <td>02-222-3333</td>
+                        <td>서울시 금천구 </td>
+                        <td></td>
+                        <td>friends</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="ps-checkbox"></input></td>
+                        <td class="like">⭐</td>
+                        <td>홍길동</td>
+                        <td>사원</td>
+                        <td>010-1111-2222</td>
+                        <td>gildong@gmail.com</td>
+                        <td>영업1팀</td>
+                        <td>구디아카데미</td>
+                        <td>02-222-3333</td>
+                        <td>서울시 금천구 </td>
+                        <td></td>
+                        <td>friends</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="ps-checkbox"></input></td>
+                        <td class="like"><i class="fi fi-rr-star"></i></td>
+                        <td>홍길동</td>
+                        <td>사원</td>
+                        <td>010-1111-2222</td>
+                        <td>gildong@gmail.com</td>
+                        <td>영업1팀</td>
+                        <td>구디아카데미</td>
+                        <td>02-222-3333</td>
+                        <td>서울시 금천구 </td>
+                        <td></td>
+                        <td>friends</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="ps-checkbox"></input></td>
+                        <td class="like"><i class="fi fi-rr-star"></i></td>
+                        <td>홍길동</td>
+                        <td>사원</td>
+                        <td>010-1111-2222</td>
+                        <td>gildong@gmail.com</td>
+                        <td>영업1팀</td>
+                        <td>구디아카데미</td>
+                        <td>02-222-3333</td>
+                        <td>서울시 금천구 </td>
+                        <td></td>
+                        <td>friends</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            $("#psCheck").click(function(){
+                if($(this).prop("checked")){
+                    $(".ps-checkbox").prop("checked", true);
+                   
+                }else {
+                    $(".ps-checkbox").prop("checked", false);
+                }
+            })
+
+            $(".like").click(function(){
+                console.log($(this).html());
+                if($(this).html()=="⭐"){
+                    $(this).html('<i class="fi fi-rr-star"></i>');
+                }else{
+                    $(this).html("⭐");
+                }
+            })
+        </script>
+
+        <br><br>
+
+
+    
+    </div>
+</body>
+</html>
