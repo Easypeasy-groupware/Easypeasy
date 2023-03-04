@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyPeasy-mail</title>
+<style>
+    #mail_side_bar{width: 200px; height: 1000px; float: left; border-right: 2px solid rgb(185, 187, 221); padding: 10px;}
+    #mail_content{width: 1000px; float: left;}
+    #mail_header{height: 130px; border-bottom: 2px solid rgb(185, 187, 221); margin: 10px;}
+    #header1{height: 90px;}
+
+    #mail_content_text{padding: 0px 20px 0px 20px;}
+    #mail_header_info{font-size: 25px; float: left; margin: 20px;}
+    #send_btnList{margin-left: 20px;}
+    /* #send_info td{border: 1px solid black} */
+    
+
+    .detail_info_tr{height: 35px;}
+    .detail_info_tr th{width: 120px; text-align: center; padding-bottom: 10px;}
+    .detail_info_tr>th{font-size: 18px;}
+    .detail_info_tr td{padding-bottom: 10px;}
+    .detail_info_tr input[type=text]{width: 700px; height: 25px;}
+    #attach_area{height: 100px; border: 2px dashed gray; background: whitesmoke; vertical-align: middle;}
+    #no_attachment{width: 360px; margin: auto;}
+    #no_attachment img, #no_attachment div{float: left;}
+    #no_attachment div{margin-left: 10px; line-height: 23px; font-size: 18px; font-weight: 600; color: gray;}
+    #attach{width: 25px;}
+
+    #send_text_area{height: 525px; max-height: 2000px; margin-top: 20px; padding: 20px; border: 1px solid gray;
+                    vertical-align: baseline;}
+</style>
+</head>
+<body>
+    <!-- 메일 사이드바 -->
+    <div id="mail_side_bar">
+        <h2>메일</h2>
+        <button>메일 쓰기</button>
+        <br><br>
+        <div>
+            즐겨찾기
+            <img src=""><br>
+            <div>안읽은 메일함</div>
+            <div>중요 메일함</div>
+            <div>작성중인 메일함</div>
+        </div><br>
+        <div>
+            태그
+            <div>안읽은 메일함</div>
+            <div>중요 메일함</div>
+            <div>작성중인 메일함</div>
+            <div> + 태그 추가</div>
+        </div><br>
+        <div>
+            메일함
+            <img src=""><br>
+            <div>안읽은 메일함 <img src=""></div>
+            <div>중요 메일함 <img src=""></div>
+            <div>작성중인 메일함 <img src=""></div>
+            <div>안읽은 메일함 <img src=""></div>
+            <div>중요 메일함 <img src=""></div>
+            <div>작성중인 메일함 <img src=""></div><div>안읽은 메일함 <img src=""></div>
+            <div>중요 메일함 <img src=""></div>
+            <div>작성중인 메일함 <img src=""></div>
+        </div>
+        <br><br>
+    </div>  
+
+    <!-- 메일 컨텐트-->
+    <div id="mail_content">
+        <div id="mail_header">
+            <div id="header1" style="width:100%; float:left">
+                <div id="mail_header_info">
+                    <b>메일 쓰기</b>
+                </div>
+                <br>
+            </div>
+            <form id="send_btnList">
+                <button>보내기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button>임시저장</button>&nbsp;
+                <button>미리보기</button>&nbsp;
+                <button>다시쓰기</button>
+            </form>
+        </div>
+        <div id="mail_content_text">
+            <table id="send_info">
+                <tr class="detail_info_tr">
+                    <th>받은 사람</th>
+                    <td style="width: 100px;"><input type="checkbox"> 나에게</td>
+                    <td><input type="text"></td>
+                    <td><button>주소록</button></td>
+                </tr>
+                <tr class="detail_info_tr">
+                    <th>참 조</th>
+                    <td></td>
+                    <td><input type="text"></td>
+                    <td><button>주소록</button></td>
+                </tr>
+                <tr class="detail_info_tr">
+                    <th>제 목</th>
+                    <td><input type="checkbox"> 중요</td>
+                    <td colspan="2"><input style="width: 760px;" type="text"></td>
+                </tr>
+                <tr class="detail_info_tr">
+                    <th>파일 첨부</th>
+                    <td></td>
+                    <td colspan="2" style="text-align: left;">
+                        <button>파일 선택</button>
+                        <button>자료실</button>
+                        <button>모두 삭제</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td colspan="2" id="attach_area">
+                        <div id="no_attachment">
+                            <img id="attach" src="images/attachment.png">
+                            <div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 20px;"></tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td colspan="2" id="send_text_area">
+                        <div>
+                            asdasdasd
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -34,14 +34,12 @@
     .detail_info_tr{height: 25px;}
     .detail_info_th{width: 100px; text-align: left;}
     .detail_info_attach{width: 90%; height: 100px; padding: 5px 0px 5px 20px; float: left; border: 1px solid grey; 
-                        box-sizing: border-box; font-weight: 600;}
+                        box-sizing: border-box; font-weight: 600; overflow-y: auto;}
     .detail_info_attach>div{font-size: 14px; margin: 3px 0px 3px 0px;}
     .tr_attach{margin-top: 15px}
-    .attach{width: 20px; margin: 35px 5px 5px 35px; line-height: 25px; float: left;}
+    #attach{width: 20px; margin: 35px 5px 5px 35px; line-height: 25px; float: left;}
 
     #content_text_area{margin: 5px 1.8px 0px 1.8px; height: 535px; max-height: 2000px; padding: 20px;}
-
-    #paging{height: 100px; text-align: center;}
 </style>
 </head>
 <body> 
@@ -136,7 +134,7 @@
                             <td>정형돈</td>
                         </tr>
                         <tr class="detail_info_tr">
-                            <th class="detail_info_th">참조</th>
+                            <th class="detail_info_th">참 조</th>
                             <td>유재석 과장</td>
                         </tr>
                         <tr class="detail_info_tr">
@@ -145,11 +143,15 @@
                         </tr>
                         <tr style="height: 10px;"></tr>
                         <tr class="detail_info_tr tr_attach">
-                            <td colspan="2" style="border: 2px solid gray; background: gainsboro;">
+                            <td colspan="2" style="padding: 4px; border: 2px solid gray; background: whitesmoke;">
                                 <div style="width: 10%; height: 100px; float: left;">
-                                    <img class="attach" src="images/attachment.png">
+                                    <img id="attach" src="images/attachment.png">
                                 </div>
                                 <div class="detail_info_attach">
+                                    <div>첨부파일 이름</div>
+                                    <div>첨부파일 이름</div>
+                                    <div>첨부파일 이름</div>
+                                    <div>첨부파일 이름</div>
                                     <div>첨부파일 이름</div>
                                 </div>
                             </td>
