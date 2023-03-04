@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>EasyPeasy-mail</title>
 <style>
-    #mail_side_bar{width: 200px; float: left; border-right: 2px solid rgb(185, 187, 221); padding: 10px;}
+    #mail_side_bar{width: 200px; height: 1000px; float: left; border-right: 2px solid rgb(185, 187, 221); padding: 10px;}
     #mail_content{width: 1000px; float: left;}
     #mail_header{height: 130px; border-bottom: 2px solid rgb(185, 187, 221); margin: 10px;}
     #header1{height: 90px;}
-    #mail_header_info{float: left; margin: 20px;}
+    #header2{height: 100%;}
+    #mail_header_info{font-size: 25px; float: left; margin: 20px;}
     #search_bar{float: right; margin: 20px;}
     #mail_content_menubar{padding: 5px;}
     .menu{float: left; text-align: center; font-weight: 600; font-size: 13px; height: 40px; line-height: 40px;}
@@ -29,16 +30,16 @@
     .tagTriangle {width: 10px; height: 0px; border-top: 8px solid transparent; border-left: 15px solid pink; 
                   border-bottom: 8px solid transparent; margin-top: 6px;}
 
-    #mail_list{height: 500px;}
-    .mail_one{height: 40px; line-height: 40px; margin: 5px 10px 5px 15px; border-bottom: 1px solid rgb(185, 187, 221);}
-    .mail_one div{float: left; height: 40px;}
-    .mail_select_area{color: black;}
-    .mail_check{width: 30px;}
-    .mail_imgList{width: 120px; text-align: center; line-height: 43px;}
-    .mail_img{width: 30px; height: 40px;}
-    .mail_sender{width: 160px;}
-    .mail_title{width: 520px; overflow: hidden;}
-    .mail_date{width: 130px; text-align: right;}
+    #mail_detail_content{padding: 0px 15px 0px 15px; overflow-y: auto;}
+    .detail_info_tr{height: 25px;}
+    .detail_info_th{width: 100px; text-align: left;}
+    .detail_info_attach{width: 90%; height: 100px; padding: 5px 0px 5px 20px; float: left; border: 1px solid grey; 
+                        box-sizing: border-box; font-weight: 600;}
+    .detail_info_attach>div{font-size: 14px; margin: 3px 0px 3px 0px;}
+    .tr_attach{margin-top: 15px}
+    .attach{width: 20px; margin: 35px 5px 5px 35px; line-height: 25px; float: left;}
+
+    #content_text_area{margin: 5px 1.8px 0px 1.8px; height: 535px; max-height: 2000px; padding: 20px;}
 
     #paging{height: 100px; text-align: center;}
 </style>
@@ -112,13 +113,87 @@
                 <div class="menu menu2" id="forward"><img src="">전달</div>
                 <div class="menu menu2" id="shift"><img src="">이동</div>
                 <div class="menu menu3" id="read_unread"><img src="">읽음/안읽음</div>
-                <div class="menu menu1" style="float: right;" id="before_mail">
-                    <span class="material-symbols-outlined">
-                        expand_less
-                    </span>
+                <div class="menu menu1" style="float: right; margin-left: 10px;" id="before_mail">
                     다음 메일
+                    <div class="material-symbols-outlined" style="display: block; padding-top: 8px; float: right;">expand_more</div>
                 </div>
-                <div class="menu menu1" style="float: right;" id="after_mail"><img src="">이전 메일</div>
+                <div class="menu menu1" style="float: right;" id="after_mail"><img src="">
+                    이전 메일
+                    <div class="material-symbols-outlined" style="display: block; padding-top: 8px; float: right;">expand_less</div>
+                </div>
+            </div>
+            <div id="mail_detail_content">
+                <div>
+                    <img id="favorite" style="width: 22px; margin-right: 20px; float: left;" src="images/favorite.png">
+                    <div style="font-size: 17px; font-weight: 700;">메일제목 [영업 1팀] (수정) 인사 개편 관련 업무 소통</div><br>
+                    <table>
+                        <tr class="detail_info_tr">
+                            <th class="detail_info_th">보낸 사람</th>
+                            <td style="width: 90%;">김이피 부장&nbsp;kim2p@esps.com</td>
+                        </tr>
+                        <tr class="detail_info_tr">
+                            <th class="detail_info_th">받는 사람</th>
+                            <td>정형돈</td>
+                        </tr>
+                        <tr class="detail_info_tr">
+                            <th class="detail_info_th">참조</th>
+                            <td>유재석 과장</td>
+                        </tr>
+                        <tr class="detail_info_tr">
+                            <th class="detail_info_th">보낸 날짜</th>
+                            <td>2023-02-17 월요일 오전 11:21:31</td>
+                        </tr>
+                        <tr style="height: 10px;"></tr>
+                        <tr class="detail_info_tr tr_attach">
+                            <td colspan="2" style="border: 2px solid gray; background: gainsboro;">
+                                <div style="width: 10%; height: 100px; float: left;">
+                                    <img class="attach" src="images/attachment.png">
+                                </div>
+                                <div class="detail_info_attach">
+                                    <div>첨부파일 이름</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="content_text_area">
+                        <div>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                            블라블라블라 <br>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
