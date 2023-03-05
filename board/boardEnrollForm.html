@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<style>
+    /* 전체 wrapper */
+    .wrapper {
+    width: 1200px;
+    margin: 0 auto;
+    /* 중앙 정렬을 위한 margin: 0 auto; */
+    }
+
+    /* sidebar 스타일 */
+    .sidebar {
+    width: 200px;
+    float: left;
+    position: fixed;
+			top: 0;
+			left: 0;
+			width: 200px;
+			height: 100%;
+			background-color: #fff;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .menu {
+			margin-top: 20px;
+		}
+		.menu ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+		.menu li {
+			margin-bottom: 5px;
+		}
+		.menu a {
+			display: block;
+			padding: 10px;
+			color: #333;
+			text-decoration: none;
+			transition: background-color 0.3s ease-in-out;
+		}
+		.menu a:hover {
+			background-color: #f2f2f2;
+		}
+		.submenu ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			display: none;
+		}
+		.submenu li {
+			margin-bottom: 5px;
+		}
+		.submenu a {
+			display: block;
+			padding: 10px;
+			color: #333;
+			text-decoration: none;
+			transition: background-color 0.3s ease-in-out;
+		}
+		.submenu a:hover {
+			background-color: #f2f2f2;
+		}
+		.active {
+			background-color: #f2f2f2;
+		}
+		.collapse-indicator:after {
+        content: " ∨"; 
+		}
+		.submenu.active > .collapse-indicator:after {
+			content: " ∧";
+		}
+
+    /* 게시판 스타일 */
+    .board {
+    width: 1000px;
+    float: right;
+    }
+    form {
+			max-width: 600px;
+			margin: 0 auto;
+			padding: 20px;
+			border-radius: 5px;
+			box-sizing: border-box;
+		}
+    label {
+			display: inline-block;
+			margin-bottom: 5px;
+			font-weight: bold;
+		}
+		input[type="text"],
+        input[type="file"],
+        textarea,
+		select {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 3px;
+			box-sizing: border-box;
+			margin-bottom: 20px;
+			font-size: 16px;
+			font-family: inherit;
+		}
+		select {
+			height: 40px;
+		}
+</style>
+<body>
+    <div class="wrapper">
+        <div class="sidebar">
+          <!-- sidebar 내용 -->
+          <div class="sidebar">
+            <br><br><br>
+            <div class="menu">
+              <ul>
+                <li><a href="#">전체 공지사항</a></li>
+                <li><a href="#">식단표</a></li>
+                            
+                <li><a href="#">자유게시판</a></li>
+                <li><a href="#">커뮤니티</a></li>
+        
+                        <li class="submenu">
+                            <a href="#" class="dep">부서게시판<span class="collapse-indicator"></span></a>
+                             <ul>
+                                <li><a href="#">&nbsp&nbsp부서 공지사항</a></li>
+                                <li><a href="#">&nbsp&nbsp부서 자유게시판</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        
+          <script>
+            $(document).ready(function(){
+                $('.dep').click(function(){
+                    $(this).next().toggle();
+                });
+            });
+          </script>
+        </div>
+        <div class="board">
+          <!-- 게시판 내용 -->
+        <form action="" method="POST">
+          <h3>게시글 작성</h3>
+          <br><br>
+              <label>게시판그룹</label>
+                  <select name="boardType" required>
+                      <option value="">전체 공지사항</option>
+                      <option value="">식단표</option>
+                      <option value="">자유게시판</option>
+                      <option value="">커뮤니티</option>
+                      <option value="">부서 공지사항</option>
+                      <option value="">부서 자유게시판</option>
+                  </select><br>
+              <label for="title">게시글 제목</label>
+                  <input type="text" id="title" name="title" required /><br>
+              <label for="title">파일첨부</label>
+                  <input type="file" id="file" name="file" required /><br>
+              <label for="about">내용</label>
+                  <textarea name="" id="" cols="30" rows="10" required placeholder="내용을 입력하세요"></textarea><br>
+              <label for="title">공지등록</label>
+                  <input type="checkbox" id="ckb" name="ckb" required /><br>
+               
+                    <br><br>
+              <div align="center">
+                <button type="button" class="btn btn-dark">취소</button>
+                <button type="button" class="btn btn-success"  >등록하기</button>
+                <button type="button" class="btn btn-secondary">임시저장</button>
+              </div>
+      </div>
+    </div>
+  </body>
+</html>
