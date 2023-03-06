@@ -9,9 +9,9 @@
 	
 	
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.br</groupId>
+	<groupId>com.ep</groupId>
 	<artifactId>spring</artifactId>
-	<name>springProject</name>
+	<name>EasyPeasy</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	

@@ -3,10 +3,20 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
+	<!-- 
+		* web.xml - 서버 스타트 시 제일 먼저 읽혀지는 문서
+		
+		- 서버 실행과 동시에 초기에 읽혀야되는 문서들을 등록
+		- 필터나 서블릿 등록 
+	 -->
+
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+		<param-value>
+			/WEB-INF/spring/root-context.xml
+			/WEB-INF/spring/spring-security.xml
+		</param-value>
 	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
@@ -15,19 +25,47 @@
 	</listener>
 
 	<!-- Processes application requests -->
+	
+	
+	<!-- 
+		* DispatcherServlet
+		  사용자의 요청을 받악주는 용도의 객체
+	 -->
+	
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- 
+			* DispatcherServlet 객체 생성시 (사용자의 요청시) 읽어들여지는 문서(servlet-context.xml)
+			- 각 요청에 따라서 처리해야 되는 해당 Controller를 지정하는 "HandlerMapping" 등록
+			- 요청처리 후에 뷰를 지정하는 "ViewResolver" 등록
+		 -->
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported> <!-- websocket관련구문 -->
 	</servlet>
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 
 </web-app>
