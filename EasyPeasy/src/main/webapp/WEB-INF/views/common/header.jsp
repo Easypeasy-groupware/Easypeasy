@@ -22,8 +22,8 @@
     }
     .wrap{width:1200px; margin:auto; box-sizing:border-box;}
     .header{position:fixed; top:0; background:white;}
-    #header1{width:100%; height:60px; background-color: white;} 
-    #header2{width:100%; height:40px; background-color:rgb(185, 187, 221)}
+    #header1{width:1200px; height:60px; background-color: white;} 
+    #header2{width:1200px; height:40px; background-color:rgb(185, 187, 221)}
 
     /*header1영역*/
     #header1>div{float:left; height:100%;}

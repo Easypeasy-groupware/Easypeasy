@@ -61,7 +61,7 @@
 </head>
 <body>
 	
-	<jsp:include page="common/header.jsp"/>
+	<jsp:include page="header.jsp"/>
 	
 	<div id="left-col">
 	   <div class="board">
@@ -74,7 +74,7 @@
 	        <div class="subtitle board-title" id="board-menu">식단표</div>
 	        <br clear="both"><br>
 	
-	        <table class="board-table">
+	        <table class="board-table" id="notice-tb">
 	            <colgroup>
 	                <col style="width:70%;">
 	                <col style="width:15%;">
@@ -91,33 +91,90 @@
 	                <tr>
 	                    <td>전체게시글 제목입니다.</td>
 	                    <td>홍길동 부장</td>
-	                    <td>2023-03-02</td>
+	                    <td>1시간전</td>
 	                </tr>
 	                <tr>
 	                    <td>전체게시글 제목입니다.</td>
 	                    <td>홍길동 부장</td>
-	                    <td>2023-03-02</td>
+	                    <td>4시간전</td>
 	                </tr>
 	                <tr>
 	                    <td>전체게시글 제목입니다.</td>
 	                    <td>홍길동 부장</td>
-	                    <td>2023-03-02</td>
+	                    <td>1일전</td>
 	                </tr>
 	                <tr>
 	                    <td>전체게시글 제목입니다.</td>
 	                    <td>홍길동 부장</td>
-	                    <td>2023-03-02</td>
+	                    <td>3일전</td>
 	                </tr>
 	                <tr>
 	                    <td>전체게시글 제목입니다.</td>
 	                    <td>홍길동 부장</td>
-	                    <td>2023-03-02</td>
+	                    <td>7일전</td>
+	                </tr>
+	            </tbody>
+	        </table>
+
+			<table class="board-table" id="dept-tb" style="display:none">
+	            <colgroup>
+	                <col style="width:70%;">
+	                <col style="width:15%;">
+	                <col style="width:15%;">
+	            </colgroup>
+	            <thead>
+	                <tr>
+	                    <th>제목</th>
+	                    <th>작성자</th>
+	                    <th>게시일</th>
+	                </tr>
+	            </thead>
+	            <tbody align="center">
+	                <tr>
+	                    <td>영업팀게시글 제목입니다.</td>
+	                    <td>박연진 부장</td>
+	                    <td>2일전</td>
+	                </tr>
+	                <tr>
+	                    <td>영업팀게시글 제목입니다</td>
+	                    <td>박연진 부장</td>
+	                    <td>2일전</td>
+	                </tr>
+	                <tr>
+	                    <td>영업팀게시글 제목입니다</td>
+	                    <td>박연진 부장</td>
+	                    <td>2일전</td>
+	                </tr>
+	                <tr>
+	                    <td>영업팀게시글 제목입니다</td>
+	                    <td>박연진 부장</td>
+	                    <td>2일전</td>
+	                </tr>
+	                <tr>
+	                    <td>영업팀게시글 제목입니다</td>
+	                    <td>박연진 부장</td>
+	                    <td>2일전</td>
 	                </tr>
 	            </tbody>
 	        </table>
 	        
 	    </div>
-	
+		<script>
+			$(function(){
+				$("#board-notice").click(function(){
+					$(this).css("border-bottom", "4px solid rgb(166, 184, 145)").css("font-weight", 600);
+					$("#board-dept").css("border-bottom", "2px solid lightgray").css("font-weight", 400);
+					$("#notice-tb").show();
+					$("#dept-tb").hide();
+				})
+				$("#board-dept").click(function(){
+					$(this).css("border-bottom", "4px solid rgb(166, 184, 145)").css("font-weight", 600);
+					$("#board-notice").css("border-bottom", "2px solid lightgray").css("font-weight", 400);
+					$("#dept-tb").show();
+					$("#notice-tb").hide();
+				})
+			})
+		</script>	
 	    <div class="document">
 	        <b>결재문서</b>
 	        
@@ -127,7 +184,7 @@
 	        <div class="subtitle" id="doc-etc"></div>
 	        <br clear="both"><br>
 	
-	        <table class="doc-table">
+	        <table class="doc-table" id="arrived-tb">
 	            <colgroup>
 	                <col style="width:15%;">
 	                <col style="width:15%;">
@@ -173,8 +230,68 @@
 	                </tr>
 	            </tbody>
 	        </table>
+			<table class="doc-table" id="departed-tb" style="display:none;">
+	            <colgroup>
+	                <col style="width:15%;">
+	                <col style="width:15%;">
+	                <col style="width:55%;">
+	                <col style="width:15%;">
+	            </colgroup>
+	            <thead>
+	                <th>기안일</th>
+	                <th>결재양식</th>
+	                <th>제목</th>
+	                <th>결재대기</th>
+	            </thead>
+	            <tbody align="center">
+	                <tr>
+	                    <td>2023-03-02</td>
+	                    <td>휴가신청</td>
+	                    <td>결재해주십쇼</td>
+	                    <td>장원영 부장</td>
+	                </tr>
+	                <tr>
+	                    <td>2023-03-02</td>
+	                    <td>휴가신청</td>
+	                    <td>결재해주십쇼</td>
+	                    <td>안유진 과장</td>
+	                </tr>
+	                <tr>
+	                    <td>2023-03-02</td>
+	                    <td>휴가신청</td>
+	                    <td>결재해주십쇼</td>
+	                    <td>박채영 과장</td>
+	                </tr>
+	                <tr>
+	                    <td>2023-03-02</td>
+	                    <td>휴가신청</td>
+	                    <td>결재해주십쇼</td>
+	                    <td>최정 부장</td>
+	                </tr>
+	                <tr>
+	                    <td>2023-03-02</td>
+	                    <td>휴가신청</td>
+	                    <td>결재해주십쇼</td>
+	                    <td>양의지 부장</td>
+	                </tr>
+	            </tbody>
+	        </table>
 	
 	    </div>
+		<script>
+			$("#doc-arrived").click(function(){
+				$(this).css("border-bottom", "4px solid rgb(166, 184, 145)").css("font-weight", 600);
+				$("#doc-departed").css("border-bottom", "2px solid lightgray").css("font-weight", 400);
+				$("#arrived-tb").show();
+				$("#departed-tb").hide();
+			})
+			$("#doc-departed").click(function(){
+				$(this).css("border-bottom", "4px solid rgb(166, 184, 145)").css("font-weight", 600);
+				$("#doc-arrived").css("border-bottom", "2px solid lightgray").css("font-weight", 400);
+				$("#departed-tb").show();
+				$("#arrived-tb").hide();
+			})
+		</script>
 	
 	    <div class="mail">
 	        <b>메일함</b>
