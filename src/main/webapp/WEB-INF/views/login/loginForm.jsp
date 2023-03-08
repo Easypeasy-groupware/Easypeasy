@@ -64,14 +64,14 @@
         <div class="login-area">
 
 
-            <form action="" method="post" class="loginForm" align="center">
+            <form action="login.ep" method="post" class="loginForm" align="center">
                 <table>
                 <tr>
-                    <td><input type="text" name="userId" required placeholder="ID"></td>
+                    <td><input type="text" name="empId" id="userId" required placeholder="ID"></td>
                     <td rowspan="2"><button type="submit" >로그인</button></td>
                 </tr>
                 <tr>
-                    <td><input type="password" name="userPwd" required placeholder="PWD"></td>
+                    <td><input type="password" name="empPwd" id="userPwd" required placeholder="PWD"></td>
                     
                 </tr>
             </table>
