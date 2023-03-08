@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "mybatis-3-config.dtd" >
+<configuration>
+
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	
+	<typeAliases>
+		<typeAlias type="com.br.spring.address.model.vo.AddFavorite" alias="AddFavorite" />
+		<typeAlias type="com.br.spring.address.model.vo.AddGroup" alias="AddGroup" />
+		<typeAlias type="com.br.spring.address.model.vo.Address" alias="Address" />
+		<typeAlias type="com.br.spring.address.model.vo.AddEdit" alias="AddEdit" />
+		<typeAlias type="com.br.spring.chat.model.vo.ChatMember" alias="ChatMember" />
+		<typeAlias type="com.br.spring.chat.model.vo.ChatRecord" alias="ChatRecord" />
+		<typeAlias type="com.br.spring.chat.model.vo.ChatRoom" alias="ChatRoom" />
+	</typeAliases>
+	<!-- 유의사항 : 미리등록해두려면 해당 클래스가 진짜 존재해야됨 -->
+	
+	<!-- 연결할 db에 대한 정보는 root-context.xml 파일에 작성 예정 -->
+	
+	<mappers>
+		<mapper resource="/mappers/address-mapper.xml"/>
+		<mapper resource="/mappers/approval-mapper.xml"/>
+		<mapper resource="/mappers/chat-mapper.xml"/>
+		<mapper resource="/mappers/mail-mapper.xml"/>
+		<mapper resource="/mappers/schedule-mapper.xml"/>
+	</mappers>
+	<!-- 유의사항 : 미리등록해두려면 해당 mapper파일이 진짜 존재해야됨, namespace도 지정되어있어야됨 -->
+	
+
+</configuration>
