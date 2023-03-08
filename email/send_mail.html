@@ -20,20 +20,27 @@
     #mail_header{height: 130px; border-bottom: 2px solid rgb(185, 187, 221); margin: 10px;}
     #header1{height: 90px;}
 
+    #receiver_area{height: 100px; border: 1px solid gray; background: whitesmoke; line-height: 100px;}
+    #no_receiver_list{width: 100%; text-align: center; font-size: 18px; font-weight: 600; color: gray;
+                      display: block;}
+    #in_receiver_list{width: 100%; max-height: 100px; padding-left: 20px; display: none;}
     #mail_content_text{height: 865px; padding: 0px 20px 0px 20px; overflow-y: auto;}
     #mail_header_info{font-size: 25px; float: left; margin: 20px;}
+    #input_receiver{width: 600px;}
+    #hidden_reference{display: none;}
+    #open_btn_hidden_reference{display: block};
     #send_btnList{margin-left: 20px;}
 
     .detail_info_tr{height: 35px;}
     .detail_info_tr th{width: 120px; text-align: center; padding-bottom: 10px;}
     .detail_info_tr>th{font-size: 18px;}
     .detail_info_tr td{padding-bottom: 10px;}
-    .detail_info_tr input[type=text]{width: 700px; height: 25px;}
+    .detail_info_tr input[type=text]{width: 700px; height: 35px;}
     #attach_area{height: 100px; border: 2px dashed gray; background: whitesmoke; vertical-align: middle;}
     #no_attachment{width: 360px; margin: auto; display: block;}
-    #in_attachments{width: 100%; max-height: 100px; padding-left: 20px; display: none;}
     #no_attachment img, #no_attachment div{float: left;}
     #no_attachment div{margin-left: 10px; line-height: 26px; font-size: 18px; font-weight: 600; color: gray;}
+    #in_attachments{width: 100%; max-height: 100px; padding-left: 20px; display: none;}
     #attach{width: 25px;}
     .attach_delete_btn{border: none;}
 
@@ -94,20 +101,49 @@
             <table id="send_info">
                 <tr class="detail_info_tr">
                     <th>받은 사람</th>
-                    <td style="width: 100px;"><input type="checkbox"> 나에게</td>
-                    <td><input type="text"></td>
-                    <td><button>주소록</button></td>
+                    <td style="width: 100px;"><input id="to_me" type="checkbox"> 나에게</td>
+                    <td><input id="input_receiver" class="mail_input" type="text">
+                        &nbsp;&nbsp;&nbsp;<button type="button">추가</button></td>
+                    <td><button type="button">주소록</button></td>
                 </tr>
                 <tr class="detail_info_tr">
-                    <th>참 조</th>
+                    <td colspan="2">
+                        <div style="width: 150px; margin-left: 30px;">
+                            <b>수신자 목록 첨부<br>(excel 파일만 가능)</b>
+                        </div>
+                    </td>
+                    <td><input class="mail_input" type="text"></td>
+                    <td><button type="button">주소록</button></td>
+                </tr>
+                <tr class="detail_info_tr">
+                    <th>수신 목록</th>
                     <td></td>
-                    <td><input type="text"></td>
-                    <td><button>주소록</button></td>
+                    <td colspan="2" id="receiver_area">
+                        <div id="no_receiver_list">
+                            <div>수신자가 없습니다</div>
+                        </div>
+                        <div id="in_receiver_list">
+                        </div>
+                        <input id="input_receiver_list" type="text" style="display: none;">
+                    </td>
+                </tr>
+                <tr class="detail_info_tr"><td></td></tr>
+                <tr class="detail_info_tr">
+                    <th>참 조</th>
+                    <td><button type="button" id="open_btn_hidden_reference">+</button></td>
+                    <td><input class="mail_input" type="text"></td>
+                    <td><button type="button">주소록</button></td>
+                </tr>
+                <tr class="detail_info_tr" id="hidden_reference">
+                    <th>숨은 참조</th>
+                    <td><button type="button" id="close_btn_hidden_reference" style="width: 25px;">-</button></td>
+                    <td><input class="mail_input" type="text"></td>
+                    <td><button type="button">주소록</button></td>
                 </tr>
                 <tr class="detail_info_tr">
                     <th>제 목</th>
                     <td><input type="checkbox"> 중요</td>
-                    <td colspan="2"><input style="width: 760px;" type="text"></td>
+                    <td colspan="2"><input class="mail_input" style="width: 760px;" type="text"></td>
                 </tr>
                 <tr class="detail_info_tr">
                     <th>파일 첨부</th>
@@ -155,6 +191,37 @@
             });
         });
 
+        // 나에게 버튼
+        const toMeBtn = document.getElementById("to_me");
+        toMeBtn.addEventListener('click', function(){
+            const noReceiverList = document.getElementById("no_receiver_list");
+            const inReceiverList = document.getElementById("in_receiver_list");
+            
+            if(toMeBtn.checked == true) {
+                noReceiverList.style.display = 'none';
+                inReceiverList.append()
+            }else{
+
+            }
+
+            
+        });
+
+        // 숨은 참조 열기 버튼
+        const hiddenRefenceOpenBtn = document.getElementById('open_btn_hidden_reference');
+        const hiddenRefence = document.getElementById("hidden_reference");
+        hiddenRefenceOpenBtn.addEventListener('click', function(){
+            hiddenRefenceOpenBtn.style.display = "none";
+            hiddenRefence.style.display = "table-row";
+        });
+
+        // 숨은 참조 숨기기 버튼
+        const hiddenRefenceCloseBtn = document.getElementById('close_btn_hidden_reference');
+        hiddenRefenceCloseBtn.addEventListener('click', function(){
+            hiddenRefenceOpenBtn.style.display = 'block';
+            hiddenRefence.style.display = "none";
+        });
+
         // 에디터 내용이 비었는지 체크
         // if ($('#summernote').summernote('isEmpty')) {
         //     alert('editor content is empty');
@@ -177,7 +244,7 @@
                     };
                     inAttachs.style.overflowY = 'auto';
                     inAttachs.style.display = "block";
-                }
+                };
             });  
         });
 
@@ -209,7 +276,7 @@
                 };
                 inAttachs.style.overflowY = 'auto';
                 inAttachs.style.display = "block";
-            }
+            };
         });
 
         // 첨부파일 전체 삭제
