@@ -7,14 +7,18 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<style>
-        .outer{
+        .outer1{
             width:1000px;
-            padding:50px;
+            margin:auto;
+            float:left;
+            box-sizing: border-box;
         }	
 	</style>
 </head>
 <body>
-    <div class="outer">
+    <jsp:include page="../common/header.jsp"/>
+    <jsp:include page="appMenubar.jsp" />
+    <div class="outer1">
         <p style="font-size:25px;"><b>기안완료함</b> in 부서명</p>
         <br><br>
         <div class="list-1">

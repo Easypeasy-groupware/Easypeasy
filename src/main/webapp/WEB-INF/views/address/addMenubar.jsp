@@ -94,11 +94,11 @@
             <a href="#" class="add-in"><b>사내주소록</b></a>
         </div>
         <ul class="submenu">
-            <li><a href="#">- 경영지원팀</a></li>
-            <li><a href="#">- 영업 1팀</a></li>
-            <li><a href="#">- 영업 2팀</a></li>
-            <li><a href="#">- 영업 3팀</a></li>
-            <li><a href="#">- 인사팀</a></li>
+            <li><a href="internal.add?dept=as">- 경영지원팀</a></li>
+            <li><a href="internal.add?dept=sales1">- 영업 1팀</a></li>
+            <li><a href="internal.add?dept=sales2">- 영업 2팀</a></li>
+            <li><a href="internal.add?dept=sales3">- 영업 3팀</a></li>
+            <li><a href="internal.add?dept=hr">- 인사팀</a></li>
         </ul>
 
         <br>

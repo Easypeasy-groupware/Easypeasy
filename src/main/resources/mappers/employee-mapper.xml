@@ -42,5 +42,13 @@
 		   and emp_pwd = #{empPwd}
 		   and ent_yn = 'N'
 	</select>
+	
+	<select id="findId" resultType="_int">
+		select
+			   count(*)
+		  from employee
+		 where emp_name = #{empName}
+		   and phone = #{phone}
+	</select>
 
 </mapper>
