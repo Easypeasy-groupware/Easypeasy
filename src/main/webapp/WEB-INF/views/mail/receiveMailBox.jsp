@@ -17,7 +17,7 @@
     .settings{width: 13px; padding-top: 5px;}
     .boxList{width: 170px;}
     .boxList>div{width: 140px; float: left; margin: 5px 0px 0px 15px; padding: 5px 0px 5px 0px; font-size: 14px;}
-    .boxList>img{width: 15px; margin-top: 5px; padding: 5px 0px 5px 0px;}
+    .boxList>img{width: 15px; margin-top: 5px; margin-bottom: 5px; padding: 6px 0px 5px 0px;}
     #tagList{min-height: 60px; max-height: 200px; overflow-y: auto; overflow-x: hidden;}
     #tagList>div{float: left;}
     .tag{width: 200px; float: left; margin: 0px 0px 2px 10px;}
@@ -175,12 +175,12 @@
             <img class="settings" src="resources/common_images/setting.png">
             <br><br>
             <div class="boxList">
-                <div>받은 메일함(전체)</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div>오늘 온 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div>내게 쓴 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div>첨부 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div>보낸 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div>예약 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div id="receiveBox">받은 메일함(전체)</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div id="toDayReceiveBox">오늘 온 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div id="toMeBox">내게 쓴 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div id="attachmentBox">첨부 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div id="sendBox">보낸 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div id="reserveBox">예약 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
                 <div style="width: 200px;">
                     <div id="spambox">스팸 메일함 </div>
                     <div class="delete_mail">비우기</div>

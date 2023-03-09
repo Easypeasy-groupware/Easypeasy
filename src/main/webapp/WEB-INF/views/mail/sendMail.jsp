@@ -219,10 +219,9 @@
                 </div>
             </div>
             <div id="send_btnList">
-                <button class="btn btn-primary">보내기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button class="btn btn-outline-secondary">임시저장</button>&nbsp;
-                <button class="btn btn-outline-secondary">미리보기</button>&nbsp;
-                <button class="btn btn-outline-secondary">다시쓰기</button>
+                <button id="send" class="btn btn-primary">보내기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button id="temp_save" class="btn btn-outline-secondary">임시저장</button>&nbsp;
+                <button id="preview" class="btn btn-outline-secondary">미리보기</button>&nbsp;
             </div>
         </div>
         <form id="mail_content_text" method="POST" enctype="multipart/form-data">
@@ -324,7 +323,7 @@
             
             if(toMeBtn.checked == true) {
                 const eAddress = document.createElement("div");
-                eAddress.innerHTML = '<div class="receiver_one to_me"><b>kkk@naver.com</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">x</button></div>';
+                eAddress.innerHTML = '<div class="receiver_one to_me"><b>user10@easypeasy.com</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">x</button></div>';
                 inReceiverList.append(eAddress);
 
                 let deleteBtnList = document.querySelectorAll('#in_receiver_list button');
@@ -449,9 +448,25 @@
             inAttachs.style.display = "none";
             noAttach.style.display = "block";
         });
+
+
+
+
+
+
+
+        document.getElementById("send").addEventListener('click', function(){
+            const sendContent = document.getElementById("mail_content");
+            const form = document.createElement("form");
+            form.setAttribute("charset", "UTF-8");
+            form.setAttribute("method", "POST");  
+            form.setAttribute("action", "send.ma");
+            form.appendChild(sendContent);
+            document.body.appendChild(form);
+            form.submit();
+        })
     </script>
     
-    <!-- 푸터바 영역 -->
 
 </body>
 </html>
