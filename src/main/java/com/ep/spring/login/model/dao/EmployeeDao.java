@@ -12,6 +12,9 @@ public class EmployeeDao {
 		return sqlSession.selectOne("employeeMapper.loginEmployee", e);
 	}
 	
+	public int findId(SqlSessionTemplate sqlSession, Employee e) {
+		return sqlSession.selectOne("employeeMapper.findId", e);
+	}
 	
 
 }
