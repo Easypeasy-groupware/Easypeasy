@@ -17,16 +17,13 @@
             color: black;
         }
         .title{
-            width: 50%;
-            height: 100%;
-            float: left;
-            text-align: center;
-            padding-top: 300px;
+           float: left;
+           padding-left: 40px;
         }
         .login-area{
             width: 50%;
             padding-top: 200px;
-            float: right;
+            
         }
         .loginForm{
             background-color: rgb(255, 245, 237);
@@ -35,12 +32,18 @@
             margin: 0 auto;
             border-radius: 30px;
         }
+        .idTitle{
+            font-size: 35px;
+            height: 50px;
+            padding-top: 20px;
+        }
         table{
             margin: auto;
-            padding-top: 150px;
+            padding-top: 80px;
         }
         button{
-            height: 60px;
+            height: 40px;
+            width: 120px;
             border: 0cm;
             background-color:rgb(185, 187, 221);
             border-radius: 10px;
@@ -54,31 +57,38 @@
 <body>
 
 
-	 <div class="outer" align="center">
+	<div class="outer" align="center">
 
         <div class="title">
-            파이널 프로젝트 그룹웨어<br>
             <b style="font-size: 80px;">EASY PEASY</b>
         </div>
 
         <div class="login-area">
+            
 
-
-            <form action="login.ep" method="post" class="loginForm" align="center">
+            <form action="" method="post" class="loginForm" >
+                <div class="idTitle"><b>비밀번호 변경</b></div>
                 <table>
                 <tr>
-                    <td><input type="text" name="empId" id="userId" required placeholder="ID"></td>
-                    <td rowspan="2"><button type="submit" >로그인</button></td>
+                    <td>새로운 비밀번호</td>
                 </tr>
                 <tr>
-                    <td><input type="password" name="empPwd" id="userPwd" required placeholder="PWD"></td>
-                    
+                    <td>
+                        <input type="password" name="userPwd" required placeholder="변경할 비밀번호를 입력하세요.">
+                    </td>
+                </tr>
+                <tr>
+                    <td>비밀번호 확인</td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" name="pwdCheck" required placeholder="비밀번호를 다시 한번 입력해주세요.">
+                    </td>
                 </tr>
             </table>
             <br>
             
-            <a href="">아이디 찾기</a>
-            <a href="">비밀번호 찾기</a>
+            <button type="submit"><b>변경하기</b></button>
             </form>
 
 
