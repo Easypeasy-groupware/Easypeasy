@@ -32,9 +32,9 @@
     <style>
          /* 안가져감 */
      div{
-        box-sizing:border-box;
-        /*border:1px solid red; */
-        }
+        box-sizing:border-box; 
+         border:1px solid red;
+         } 
   
        .menubar{
         box-sizing:border-box;
@@ -85,6 +85,7 @@
     </style>
 </head>
 <body>
+    
     <div class="menubar">
         <br><br>
         <ul class="app-menu">
@@ -105,7 +106,7 @@
             <br><br>
         </ul>
     </div>
-
+  
     <!-- 새 결재 양식 선택하는 모달 -->
     <!-- The Modal -->
     <div class="modal" id="newApp">

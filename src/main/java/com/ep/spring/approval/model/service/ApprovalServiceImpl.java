@@ -1,5 +1,8 @@
 package com.ep.spring.approval.model.service;
 
-public class ApprovalServiceImpl {
+import org.springframework.stereotype.Service;
+
+@Service
+public class ApprovalServiceImpl implements ApprovalService{
 
 }
