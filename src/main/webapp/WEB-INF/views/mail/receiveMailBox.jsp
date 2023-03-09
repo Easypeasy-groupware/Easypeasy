@@ -23,7 +23,7 @@
     .tag{width: 200px; float: left; margin: 0px 0px 2px 10px;}
     .tag>div{font-size: 14px;}
     .tagTriangle{width: 10px; height: 0px; float: left; border-top: 8px solid transparent; 
-                 border-left: 15px solid pink; border-bottom: 8px solid transparent; margin-top: 6px;}
+                 border-left: 15px solid pink; border-bottom: 8px solid transparent; margin-top: 6px; margin-right: 10px;}
     .tagTriangle+div{width: 140px; height: 17px; margin-top: 6px; overflow: hidden;}
     #add_tag{width: 100%; padding: 15px 0px 0px 20px; margin-bottom: 42px; font-size: 14px; font-weight: 600; color: gray;}
     #add_tag_view{width: 300px; height: 300px; padding-top: 15px;  position: absolute; top: 400px; left: 400px; border-radius: 10px;

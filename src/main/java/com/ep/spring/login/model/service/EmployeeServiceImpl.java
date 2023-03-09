@@ -20,6 +20,18 @@ public class EmployeeServiceImpl implements EmployeeService{
 		
 		return eDao.loginEmployee(sqlSession, e);
 	}
+
+	@Override
+	public int findId(Employee e) {
+		
+		return eDao.findId(sqlSession, e);
+	}
+
+	@Override
+	public Employee selectEmployee(Employee e) {
+		
+		return null;
+	}
 	
 	
 

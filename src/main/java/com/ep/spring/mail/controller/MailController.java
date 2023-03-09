@@ -17,5 +17,10 @@ public class MailController {
 		return "mail/receiveMailBox";
 	}
 	
+	@RequestMapping("enrollForm.sm")
+	public String enrollFormSendMail() {
+		return "mail/sendMail";
+	}
+	
 	
 }
