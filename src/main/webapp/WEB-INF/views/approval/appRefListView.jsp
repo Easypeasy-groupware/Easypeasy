@@ -14,6 +14,9 @@
 	</style>
 </head>
 <body>
+	<jsp:include page="../common/header.jsp"/>
+	<jsp: include page="appMenubar.jsp" />
+
     <div class="outer">
         <p style="font-size:25px;"><b>참조문서함</b></p>
         <br><br>

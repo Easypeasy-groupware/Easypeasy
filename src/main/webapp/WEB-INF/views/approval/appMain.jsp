@@ -30,6 +30,8 @@
     </style>   
 </head>
 <body>
+	<jsp:include page="../common/header.jsp"/>
+	<jsp: include page="appMenubar.jsp" />
     <div class="outer">
         <p style="font-size:25px;"><b>전자결재 홈</b></p>
         <br><br>
