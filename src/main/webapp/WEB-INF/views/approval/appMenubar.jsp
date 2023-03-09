@@ -31,16 +31,17 @@
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>      
     <style>
          /* 안가져감 */
-     div{
+     /* div{
         box-sizing:border-box; 
          border:1px solid red;
-         } 
-  
+         }  */
+       .area{width:1200px;}
        .menubar{
+        float:left;
         box-sizing:border-box;
         width:200px;
+        height:2000px;
         border:1px solid gray;
-        float:left;
        }
        .app-menu{
         padding-left:0;
@@ -85,83 +86,85 @@
     </style>
 </head>
 <body>
-    
-    <div class="menubar">
-        <br><br>
-        <ul class="app-menu">
-            <li><button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#newApp">새 결재 진행</button></li>
-            <br>
-            <li><a href="">결재 대기문서</a></li>
-            <li><a href="">참조 대기문서</a></li>
-            <br>
-            <li><b>개인</b></li>
-            <li><a href="">기안문서함</a></li>
-            <li><a href="">임시저장함</a></li>
-            <li><a href="">결재문서함</a></li>
-            <li><a href="">참조문서함</a></li>
-            <br>
-            <li><b>부서</b></li>
-            <li><a href="">기안완료함</a></li>
-            <li><a href="">부서참조함</a></li>
-            <br><br>
-        </ul>
-    </div>
-  
-    <!-- 새 결재 양식 선택하는 모달 -->
-    <!-- The Modal -->
-    <div class="modal" id="newApp">
-        <div class="modal-dialog">
-        <div class="modal-content">
-    
-            <!-- Modal Header -->
-            <div class="modal-header">
-            <h4 class="modal-title">결재 양식 선택</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-    
-            <!-- Modal body -->
-            <div class="modal-body selectForm">
-                <div>
-                    <form action="" id="newApp-form">
-                        <br>
-                        <ul>
-                            <li>
-                                <input type="radio" name="newForm" id="draft" value="draft">
-                                <label for="draft">업무기안</label>   
-                            </li>
-                            <li>
-                                <input type="radio" name="newForm" id="appr" value="appr">
-                                <label for="appr">일반품의서</label>  
-                            </li>
-                            <li>
-                                <input type="radio" name="newForm" id="vac" value="vac">
-                                <label for="vac">휴가신청서</label>  
-                            </li>
-                            <li>
-                                <input type="radio" name="newForm" id="extra" value="extra">  
-                                <label for="extra">연장근무신청서</label>
-                            </li>
-                        </ul>
-                    </form>
-                </div>
-                <div>
-                    보안등급 &nbsp;  :  &nbsp; 
-                    <span id="grade"></span>
+    <div class="wrap-1" align="center">
+        <div class="area" >
+            <div class="menubar">
+                <br><br>
+                <ul class="app-menu">
+                    <li><button type="button" class="btn btn-outline-secondary btn-lg" data-toggle="modal" data-target="#newApp">새 결재 진행</button></li>
+                    <br>
+                    <li><a href="">결재 대기문서</a></li>
+                    <li><a href="">참조 대기문서</a></li>
+                    <br>
+                    <li><b>개인</b></li>
+                    <li><a href="">기안문서함</a></li>
+                    <li><a href="">임시저장함</a></li>
+                    <li><a href="">결재문서함</a></li>
+                    <li><a href="">참조문서함</a></li>
+                    <br>
+                    <li><b>부서</b></li>
+                    <li><a href="">기안완료함</a></li>
+                    <li><a href="">부서참조함</a></li>
                     <br><br>
-                    보존연한 &nbsp;  :  &nbsp; 
-                    <span id="preser"></span>
-                </div>
+                </ul>
             </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer" style="margin:auto; ">
-                <button type="submit" class="btn btn-light">확인</button>
-                <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
-            </div>
-    
-        </div>
         </div>
     </div>
+        <!-- 새 결재 양식 선택하는 모달 -->
+        <!-- The Modal -->
+        <div class="modal" id="newApp">
+            <div class="modal-dialog">
+            <div class="modal-content">
+        
+                <!-- Modal Header -->
+                <div class="modal-header">
+                <h4 class="modal-title">결재 양식 선택</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+        
+                <!-- Modal body -->
+                <div class="modal-body selectForm">
+                    <div>
+                        <form action="" id="newApp-form">
+                            <br>
+                            <ul>
+                                <li>
+                                    <input type="radio" name="newForm" id="draft" value="draft">
+                                    <label for="draft">업무기안</label>   
+                                </li>
+                                <li>
+                                    <input type="radio" name="newForm" id="appr" value="appr">
+                                    <label for="appr">일반품의서</label>  
+                                </li>
+                                <li>
+                                    <input type="radio" name="newForm" id="vac" value="vac">
+                                    <label for="vac">휴가신청서</label>  
+                                </li>
+                                <li>
+                                    <input type="radio" name="newForm" id="extra" value="extra">  
+                                    <label for="extra">연장근무신청서</label>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                    <div>
+                        보안등급 &nbsp;  :  &nbsp; 
+                        <span id="grade"></span>
+                        <br><br>
+                        보존연한 &nbsp;  :  &nbsp; 
+                        <span id="preser"></span>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer" style="margin:auto; ">
+                    <button type="submit" class="btn btn-light">확인</button>
+                    <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
+                </div>
+        
+            </div>
+            </div>
+        </div>
     
     <script>
         $(document).ready(function(){

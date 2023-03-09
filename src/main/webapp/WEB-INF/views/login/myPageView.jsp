@@ -11,69 +11,65 @@
         width: 1200px;
         margin: auto;
     }
-    .side{
-        width: 200px;
-        height: 900px;
-        box-sizing: none;
-        float: left;
-    }
+
     .title{
-        width: 980px;
-        height: 100px;
+        width: 1200px;
         box-sizing: none;
-        float: left;
         font-size: 30px;
-        
     }
-    .allContent{
-        width: 990px;
-        height: 900px;
-        box-sizing: none;
-        float: left;
-    }
+
     .img{
         width: 300px;
         height: 300px;
-        margin: 80px;
+        margin: 100px;
         border: 1px solid gray;
         float: left;
         border-radius: 150px;
+        margin-right: 500px;
     }
     .content{
         font-size: 15px;
+        width: 800px;
+        border-top: 1px solid lightgray;
+        border-collapse: collapse;
+        margin: 0 auto;
     }
-    button{
+    .button{
         margin-top: 350px;
         border: none;
         width: 90px;
         height: 30px;
         font-size: 15px;
         font-weight: bold;
+        
     }
-    table {
-    width: 800px;
-    border-top: 1px solid lightgray;
-
-    border-collapse: collapse;
-    margin: 0 auto;
-    
-   }
    th, td {
     border-bottom: 1px solid lightgray;
     padding: 10px;
    }
 </style>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+<!--Popper JS --> 
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 
+	<jsp:include page="../common/header.jsp"/>
 	
 	<div class="outer">
-        <div class="side">사이드바</div>
-        <div class="allContent">
+        
+        
         <div class="title"><b>마이페이지</b><hr></div>
 
         <div class="box">
-            <button>수정하기</button>
+            <button class="button">수정하기</button>
         <div class="img">
             <img src="" alt="">
         </div>
@@ -117,7 +113,7 @@
             </tr>
         </table>
     </div>
-    </div>
+    
     </div>
 
 

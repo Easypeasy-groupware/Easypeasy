@@ -44,6 +44,7 @@
 </style>
 </head>
 <body>
+	
 	<jsp:include page="addMenubar.jsp"/>
 	
     <div class="content-outer">

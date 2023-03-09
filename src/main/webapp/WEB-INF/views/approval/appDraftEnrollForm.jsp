@@ -8,7 +8,13 @@
 <title>Insert title here</title>
     <style>
 
-        .form-outer{ width:1000px;}
+
+        .form-outer{ 
+            width:1000px;
+            margin:auto;
+            float:left;
+            box-sizing: border-box;
+        }
         .form-outer>div{float:left;}
         .left-outer{width:100%; padding:30px;}    
         .left-form3 table{float:left;}
@@ -37,6 +43,8 @@
     </style>    
 </head>
 <body>
+    <jsp:include page="../common/header.jsp"/>
+    <jsp:include page="appMenubar.jsp" />
     <div class="form-outer">
         <div class="left-outer">
             <div class="left-form1">

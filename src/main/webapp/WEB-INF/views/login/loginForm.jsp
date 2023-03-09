@@ -100,8 +100,8 @@
             </table>
             <br>
             
-            <a class="aBtn" href="" >아이디 찾기</a>
-            <a class="aBtn" href="">비밀번호 찾기</a>
+            <a class="aBtn" href="findIdForm.ep" >아이디 찾기</a>
+            <a class="aBtn" href="findPwdForm.ep">비밀번호 찾기</a>
             </form>
 
 
