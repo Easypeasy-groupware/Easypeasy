@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 <!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css'>
 
@@ -16,6 +15,11 @@
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <!-- CSS -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <style>
     .wrap *{
         /*border:solid 1px black;*/
@@ -138,7 +142,7 @@
             <ul>
                 <li><a href="">근태관리</a></li>
                 <li><a href="list.ma">메일</a></li>
-                <li><a href="">전자결재</a></li>
+                <li><a href="main.ap">전자결재</a></li>
                 <li><a href="">일정</a></li>
                 <li><a href="">예약</a></li>
                 <li><a href="">자료실</a></li>
