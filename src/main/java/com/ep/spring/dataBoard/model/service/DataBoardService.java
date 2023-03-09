@@ -8,8 +8,8 @@ import com.ep.spring.dataBoard.model.vo.DataBoard;
 public interface DataBoardService {
 
 	// 1. 리스트 조회 (페이징 처리)
-	int selectListCount();
-	ArrayList<DataBoard> selectList(PageInfo pi);
+	int selectDbListCount();
+	ArrayList<DataBoard> selectDbList(PageInfo pi);
 	
 	// 2. 게시글 작성
 	int insertDataBoard(DataBoard db);
