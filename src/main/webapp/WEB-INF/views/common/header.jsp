@@ -145,7 +145,7 @@
                 <li><a href="main.ap">전자결재</a></li>
                 <li><a href="">일정</a></li>
                 <li><a href="">예약</a></li>
-                <li><a href="">자료실</a></li>
+                <li><a href="main.db">자료실</a></li>
                 <li><a href="">게시판</a></li>
                 <li><a href="favorite.add">주소록</a></li>
                 <li><a href="">조직도</a></li>
