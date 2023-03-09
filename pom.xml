@@ -233,7 +233,7 @@
       </dependency>	
       
       <!-- 문자인증관련 라이브러리 -->
-       <dependency>
+		<dependency>
 		    <groupId>net.nurigo</groupId>
 		    <artifactId>sdk</artifactId>
 		    <version>4.2.7</version>

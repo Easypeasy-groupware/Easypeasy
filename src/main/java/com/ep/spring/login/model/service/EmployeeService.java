@@ -8,12 +8,14 @@ public interface EmployeeService {
 	Employee loginEmployee(Employee e);
 	
 	// 아이디 찾기
+	int findId(Employee e);
 	
 	// 비밀번호 찾기
 	
 	// 비밀번호 수정
 	
-	// 마이페이지
+	// 마이페이지 조회
+	Employee selectEmployee(Employee e);
 	
 	// 마이페이지 수정
 	
