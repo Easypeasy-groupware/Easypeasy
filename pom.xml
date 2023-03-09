@@ -230,7 +230,14 @@
           <groupId>org.codehaus.jackson</groupId>
           <artifactId>jackson-mapper-asl</artifactId>
           <version>1.9.13</version>
-      </dependency>					
+      </dependency>	
+      
+      <!-- 문자인증관련 라이브러리 -->
+       <dependency>
+		    <groupId>net.nurigo</groupId>
+		    <artifactId>sdk</artifactId>
+		    <version>4.2.7</version>
+		</dependency>				
 				       
 	</dependencies>
     <build>
