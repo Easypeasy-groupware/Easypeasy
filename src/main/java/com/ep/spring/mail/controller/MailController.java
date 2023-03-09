@@ -22,6 +22,12 @@ public class MailController {
 		return "mail/sendMail";
 	}
 	
+	
+	@RequestMapping("insert.tg")
+	public void insertTag() {
+		
+	}
+	
 //	@RequestMapping("send.ma")
 //	public String 
 	

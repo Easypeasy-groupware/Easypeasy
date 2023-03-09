@@ -17,7 +17,7 @@
     .boxList{width: 170px;}
     .boxList>div{width: 140px; float: left; margin: 5px 0px 0px 15px; padding: 5px 0px 5px 0px; font-size: 14px;}
     .boxList>img{width: 15px; margin-top: 5px; padding: 5px 0px 5px 0px;}
-    #tagList{min-height: 60px; max-height: 200px; overflow-y: auto; overflow-x: hidden;}
+    #tagList{min-height: 0px; max-height: 200px; overflow-y: auto; overflow-x: hidden;}
     #tagList>div{float: left;}
     .tag{width: 200px; float: left; margin: 0px 0px 2px 10px;}
     .tag>div{font-size: 14px;}
@@ -100,33 +100,13 @@
             <div class="mailbox_subject">태그</div>
             <br><br>
             <div id="tagList">
-                <div class="tag">
-                    <div class="tagTriangle"></div><div>영업 1팀</div>
-                </div>
-                <div class="tag">
-                    <div class="tagTriangle"></div><div>과장님 업무지시 솰라솰라솰라</div>
-                </div>
-                <div class="tag">
-                    <div class="tagTriangle"></div><div>1순위</div>
-                </div>
-                <div class="tag">
-                    <div class="tagTriangle"></div><div>2순위</div>
-                </div>
-                <div class="tag">
-                    <div class="tagTriangle"></div><div>2순위</div>
-                </div>
-                <div class="tag">
-                    <div class="tagTriangle"></div><div>2순위</div>
-                </div>
-                <div class="tag">
-                    <div class="tagTriangle"></div><div>2순위</div>
-                </div>
-                <div class="tag">
-                    <div class="tagTriangle"></div><div>2순위</div>
-                </div>
-                <div class="tag">
-                    <div class="tagTriangle"></div><div>2순위</div>
-                </div>
+                <c:if test="${ not empty tagList }" >
+                    <c:forEach var="t" items="${ tagList }" >
+                        <div class="tag">
+                            <div class="tagTriangle"></div><div>${ t.tagName }</div>
+                        </div>
+                    </c:forEach>
+                </c:if>
             </div>
             <div id="add_tag"> + 태그 추가</div>
 
@@ -207,6 +187,15 @@
             x.addEventListener('click', function(){
                 this.parentNode.parentNode.style.display = 'none';
             })
+        });
+
+        // tag_color 선택
+        let tagColorList = document.querySelectorAll("#select_tag_color div");
+        tagColorList.forEach(function(tagColor){
+            tagColor.addEventListener('click', function(){
+                console.log(tagColorList)
+                console.log(tagColor)
+            });
         });
     </script>
 

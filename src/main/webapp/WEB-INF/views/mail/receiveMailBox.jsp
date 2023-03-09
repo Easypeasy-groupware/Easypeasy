@@ -17,8 +17,8 @@
     .settings{width: 13px; padding-top: 5px;}
     .boxList{width: 170px;}
     .boxList>div{width: 140px; float: left; margin: 5px 0px 0px 15px; padding: 5px 0px 5px 0px; font-size: 14px;}
-    .boxList>img{width: 15px; margin-top: 5px; margin-bottom: 5px; padding: 6px 0px 5px 0px;}
-    #tagList{min-height: 60px; max-height: 200px; overflow-y: auto; overflow-x: hidden;}
+    .boxList>img{width: 15px; margin: 5px 0px 5px 0px; padding: 5px 0px 5px 0px;}
+    #tagList{min-height: 0px; max-height: 200px; overflow-y: auto; overflow-x: hidden;}
     #tagList>div{float: left;}
     .tag{width: 200px; float: left; margin: 0px 0px 2px 10px;}
     .tag>div{font-size: 14px;}
@@ -26,15 +26,14 @@
                  border-left: 15px solid pink; border-bottom: 8px solid transparent; margin-top: 6px; margin-right: 10px;}
     .tagTriangle+div{width: 140px; height: 17px; margin-top: 6px; overflow: hidden;}
     #add_tag{width: 100%; padding: 15px 0px 0px 20px; margin-bottom: 42px; font-size: 14px; font-weight: 600; color: gray;}
-    #add_tag_view{width: 300px; height: 300px; padding-top: 15px;  position: absolute; top: 400px; left: 400px; border-radius: 10px;
+    #add_tag_view{width: 300px; height: 350px; padding-top: 15px;  position: absolute; top: 400px; left: 400px; border-radius: 10px;
                   border: 1px solid rgb(185, 187, 221); background: white; z-index: 10; display: none;}
     #select_tag_color{width: 100%; height: 80px; margin: auto;}
     #select_tag_color>div{width: 15px; height: 15px; margin: 4px; float: left; background-color: brown;}
 
     .favorite{width: 16px;}
     #spambox, #trashcan{width: 125px; float: left;}
-    .delete_mail{width: 40px; padding: 1px; float: left; border: 2px solid gray; font-size: 10px; font-weight: 600; color: gray;
-                 text-align: center;}
+    #spambox+button, #trashcan+button{width: 40px; font-size: 10px; padding: 4px;}
 
     /* 메일 컨텐트 css */
     #mail_content{width: 1000px; float: left;}
@@ -58,7 +57,7 @@
     .x-btn{width: 40px; height: 30px; line-height: 30px; margin-bottom: 5px; float: right; border: none;}
     .mail_favorite, .read, .attachment{width: 18px;}
 
-    #mail_list{height: 800px;}
+    #mail_list{height: 850px;}
     .mail_one{height: 40px; line-height: 35px; margin: 5px 10px 5px 15px; border-bottom: 1px solid rgb(185, 187, 221);}
     .mail_one div{float: left; height: 40px;}
     .mail_select_area{color: black;}
@@ -69,7 +68,11 @@
     .mail_title{width: 520px; overflow: hidden;}
     .mail_date{width: 130px; text-align: right;}
 
-    #paging{height: 65px; text-align: center;}
+    #paging{text-align: center; display: inline-block; padding-left :0;}
+    #paging li {text-align: center; float: left; list-style:none; border-radius:10px; margin:2px; background-color: rgb(234, 234, 234);}
+    #paging li a {display: block; font-size: 12px; color: black; padding: 5px 10px; box-sizing: border-box; text-decoration-line:none;}
+    #paging li.on {background:rgb(166, 184, 145);}
+    #paging li.on a { color: white;}
 </style>
 </head>
 <body>
@@ -99,38 +102,18 @@
             <div class="mailbox_subject">태그</div>
             <br><br>
             <div id="tagList">
-                <div class="tag">
-                    <div class="tagTriangle"></div><div>영업 1팀</div>
-                </div>
-                <div class="tag">
-                    <div class="tagTriangle"></div><div>과장님 업무지시 솰라솰라솰라</div>
-                </div>
-                <div class="tag">
-                    <div class="tagTriangle"></div><div>1순위</div>
-                </div>
-                <div class="tag">
-                    <div class="tagTriangle"></div><div>2순위</div>
-                </div>
-                <div class="tag">
-                    <div class="tagTriangle"></div><div>2순위</div>
-                </div>
-                <div class="tag">
-                    <div class="tagTriangle"></div><div>2순위</div>
-                </div>
-                <div class="tag">
-                    <div class="tagTriangle"></div><div>2순위</div>
-                </div>
-                <div class="tag">
-                    <div class="tagTriangle"></div><div>2순위</div>
-                </div>
-                <div class="tag">
-                    <div class="tagTriangle"></div><div>2순위</div>
-                </div>
+                <c:if test="${ not empty tagList }" >
+                    <c:forEach var="t" items="${ tagList }" >
+                        <div class="tag">
+                            <div class="tagTriangle"></div><div>${ t.tagName }</div>
+                        </div>
+                    </c:forEach>
+                </c:if>
             </div>
             <div id="add_tag"> + 태그 추가</div>
 
             <!-- 태그 추가 화면 -->
-            <div id="add_tag_view">
+            <form id="add_tag_view" action="insert.tg" method="POST">
                 <b style="line-height: 50px; font-size: 20px; padding-left: 30px; color: grey;">태그 추가</b>
                 <br><br>
                 <div style="width: 80%; margin: auto;">
@@ -165,38 +148,50 @@
                     <input type="hidden" id="tagColor" name="tagColor">
                 </div>
                 <div style="width: 100%; text-align: center;">
-                    <button>추가</button>
-                    <button class="x" type="button">취소</button>
+                    <button class="btn btn-danger">추가</button>
+                    <button class="x btn btn-secondary" type="button">취소</button>
                 </div>
-            </div>
+            </form>
         </div>
         <div>
             <div class="mailbox_subject">메일함</div>
             <img class="settings" src="resources/common_images/setting.png">
             <br><br>
             <div class="boxList">
-                <div id="receiveBox">받은 메일함(전체)</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div id="toDayReceiveBox">오늘 온 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div id="toMeBox">내게 쓴 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div id="attachmentBox">첨부 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div id="sendBox">보낸 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div id="reserveBox">예약 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div>받은 메일함(전체)</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div>오늘 온 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div>내게 쓴 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div>첨부 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div>보낸 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div>예약 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
                 <div style="width: 200px;">
                     <div id="spambox">스팸 메일함 </div>
-                    <div class="delete_mail">비우기</div>
+                    <button class="btn btn-outline-secondary btn-sm">비우기</button>
                 </div>
                 <div style="width: 200px;">
                     <div id="trashcan">휴지통 </div>
-                    <div class="delete_mail">비우기</div>
+                    <button class="btn btn-outline-secondary btn-sm">비우기</button>
                 </div>
             </div>
         </div>
         <br><br>
-    </div> 
+    </div>
 
     <script>
+        // 태그 추가 화면
         document.getElementById("add_tag").addEventListener('click', function(){
             document.getElementById("add_tag_view").style.display = 'block'
+        });
+
+        // tag_color 선택
+        let tagColorList = document.querySelectorAll("#select_tag_color div");
+        tagColorList.forEach(function(tagColor){
+            tagColor.addEventListener('click', function(){
+                const inputColor = document.getElementById("tagColor");
+                let colorValue = this.getAttribute("style").split(': ', 2)[1].split(';', 1)[0];
+                inputColor.setAttribute("value", colorValue);
+                console.log(inputColor)
+            });
         });
     </script>
 
@@ -437,8 +432,16 @@
                 </form>
             </div>
         </div>
-        <div id="paging">
-            1 2 3 4 5
+        <div align="center">
+            <ul id="paging">
+                <li><a href=""> < </a></li>
+                <li class='on'><a href=""> 1 </a></li>
+                <li><a href=""> 2 </a></li>
+                <li><a href=""> 3 </a></li>
+                <li><a href=""> 4 </a></li>
+                <li><a href=""> 5 </a></li>
+                <li><a href=""> > </a></li>
+            </ul>
         </div>
     </div>
 
@@ -458,6 +461,13 @@
                 this.submit();
             });
         });
+
+        // 페이징
+        $(function(){
+                 $("#ps-tbody").on("click", "tr", function(){
+                     location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
+                 })
+            })
 
         // 전체 체크박스
         let checkAll = document.getElementById("check_all");
