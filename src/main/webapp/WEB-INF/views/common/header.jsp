@@ -146,9 +146,9 @@
                 <li><a href="">일정</a></li>
                 <li><a href="">예약</a></li>
                 <li><a href="">자료실</a></li>
-                <li><a href="">게시판</a></li>
+                <li><a href="list.bo">게시판</a></li>
                 <li><a href="favorite.add">주소록</a></li>
-                <li><a href="">조직도</a></li>
+                <li><a href="list.org">조직도</a></li>
             </ul>
 
         </div>
