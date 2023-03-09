@@ -14,14 +14,14 @@ public class EmployeeController {
 	private EmployeeService eService;
 	
 	@RequestMapping("login.ep")
-	public void loginEmployee(Employee e) {
+	public String loginEmployee(Employee e) {
 		
 		Employee loginEmployee = eService.loginEmployee(e);
 		
 		if(loginEmployee == null) {//로그인실패
-			
+			return "login/loginForm";
 		}else {//로그인성공
-			
+			return "redirect:/";
 		}
 		
 	}

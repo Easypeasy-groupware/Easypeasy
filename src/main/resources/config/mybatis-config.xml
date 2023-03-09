@@ -10,13 +10,13 @@
 		<typeAlias type="com.ep.spring.address.model.vo.AddFavorite" alias="AddFavorite" />
 		<typeAlias type="com.ep.spring.address.model.vo.AddGroup" alias="AddGroup" />
 		<typeAlias type="com.ep.spring.address.model.vo.Address" alias="Address" />
-		<typeAlias type="com.ep.spring.address.model.vo.AddEdit" alias="AddEdit" />
+		<!-- <typeAlias type="com.ep.spring.address.model.vo.AddEdit" alias="AddEdit" />  -->
 		<typeAlias type="com.ep.spring.chat.model.vo.ChatMember" alias="ChatMember" />
 		<typeAlias type="com.ep.spring.chat.model.vo.ChatRecord" alias="ChatRecord" />
 		<typeAlias type="com.ep.spring.chat.model.vo.ChatRoom" alias="ChatRoom" />
 		<typeAlias type="com.ep.spring.mail.model.vo.MailFavorite" alias="MailFavorite" />
 		<typeAlias type="com.ep.spring.mail.model.vo.MailTag" alias="MailTage" />
-		<typeAlias type="com.ep.spring.mail.model.vo.ReceviceMail" alias="ReceiveMail" />
+		<typeAlias type="com.ep.spring.mail.model.vo.ReceiveMail" alias="ReceiveMail" />
 		<typeAlias type="com.ep.spring.mail.model.vo.SendMail" alias="SendMail" />		
 		<typeAlias type="com.ep.spring.alarm.model.vo.Alarm" alias="Alarm" />
 		<typeAlias type="com.ep.spring.login.model.vo.Employee" alias="Employee" />
