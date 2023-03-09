@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"mybatis-3-mapper.dtd" >
 <mapper namespace="employeeMapper">
 
 	<resultMap type="Employee" id="employeeResult">
@@ -36,8 +38,8 @@
 			  , ent_date
 			  , status
 		  from employee
-		 where emp_id = #{emp_id}
-		   and emp_pwd = #{emp_pwd}
+		 where emp_id = #{empId}
+		   and emp_pwd = #{empPwd}
 		   and ent_yn = 'N'
 	</select>
 
