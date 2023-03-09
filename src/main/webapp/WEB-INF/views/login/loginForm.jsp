@@ -9,8 +9,9 @@
     <style>
         .outer{
             width: 1200px;
-            height: 100vh;
+            height: 800px;
             margin: auto;
+            margin-top:70px;
             background-color: rgb(214, 223, 204);
         }
         .aBtn{
@@ -66,7 +67,7 @@
 <!-- CSS -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
 </head>
-<body>
+<body style="background-color:rgb(214, 223, 204)">
 
 	<c:if test="${ not empty alertMsg }">
 		<script>

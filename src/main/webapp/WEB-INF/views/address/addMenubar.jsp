@@ -9,7 +9,7 @@
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 <style>
 	*{padding:0;margin:0}
-	.menubar{width:200px; position:fixed; top:0; background:white;}
+	.menubar{width:200px; position:fixed; background:white;}
 	a{text-decoration:none; font-size:14px; color:black;}
 	a:hover{font-weight:600; color:black;}
 	.menu-type{text-align:center;}

@@ -7,9 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    .content-outer{width:1000px;}
+    .content-outer{width:1000px; margin-left:200px;}
     .content-outer *{box-sizing: border-box;}
-    #address-group{font-size:22px; font-weight:600;}
+    #address-group{font-size:22px; font-weight:600; color:rgb(93, 109, 75);}
 
     /*검색*/
     #searchKey{width:200px; height:25px; border:1px solid gray; border-radius:5px;}
@@ -48,7 +48,7 @@
 	
     <div class="content-outer">
 
-        <p id="addressp-group">즐겨찾기</p>
+        <p id="address-group">즐겨찾기</p>
 
         <div class="search" align="right">
             <input type="text" id="searchKey" placeholder="이름, 회사, 전화번호">
