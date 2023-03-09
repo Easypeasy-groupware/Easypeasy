@@ -6,14 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
+    <style>
         .outer{
             width: 1200px;
             height: 100vh;
             margin: auto;
             background-color: rgb(214, 223, 204);
         }
-        a{
+        .aBtn{
             color: black;
         }
         .title{
@@ -35,26 +35,48 @@
             margin: 0 auto;
             border-radius: 30px;
         }
-        table{
+        .idForm{
             margin: auto;
             padding-top: 150px;
+            border-collapse: separate;
         }
-        button{
+        .button{
             height: 60px;
             border: 0cm;
             background-color:rgb(185, 187, 221);
             border-radius: 10px;
         }
-        input{
+        .ip{
             width: 220px;
-            height: 20px;
+            height: 30px;
         }
     </style>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+<!--Popper JS --> 
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Alertify JavaScript -->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
 </head>
 <body>
 
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alertify.alert('${alertMsg}');
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
+	</c:if> 
 
-	 <div class="outer" align="center">
+
+    <div class="outer" align="center">
 
         <div class="title">
             파이널 프로젝트 그룹웨어<br>
@@ -65,20 +87,20 @@
 
 
             <form action="login.ep" method="post" class="loginForm" align="center">
-                <table>
+                <table class="idForm">
                 <tr>
-                    <td><input type="text" name="empId" id="userId" required placeholder="ID"></td>
-                    <td rowspan="2"><button type="submit" >로그인</button></td>
+                    <td><input class="ip" type="text" name="empId" required placeholder="ID"></td>
+                    <td rowspan="2"><button class="button" type="submit" >로그인</button></td>
                 </tr>
                 <tr>
-                    <td><input type="password" name="empPwd" id="userPwd" required placeholder="PWD"></td>
+                    <td><input class="ip" type="password" name="empPwd" required placeholder="PWD"></td>
                     
                 </tr>
             </table>
             <br>
             
-            <a href="">아이디 찾기</a>
-            <a href="">비밀번호 찾기</a>
+            <a class="aBtn" href="" >아이디 찾기</a>
+            <a class="aBtn" href="">비밀번호 찾기</a>
             </form>
 
 
