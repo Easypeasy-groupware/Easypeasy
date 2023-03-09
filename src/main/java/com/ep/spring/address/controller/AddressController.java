@@ -17,5 +17,10 @@ public class AddressController {
 		return "address/addFavorite";
 	}
 	
+	@RequestMapping("newPs.add")
+	public String newPsAddForm() {
+		return "address/newPersonalAddress";
+	}
+	
 
 }
