@@ -23,7 +23,7 @@
         border-collapse: separate; border-spacing:0px 10px; /*셀간격*/
     }
     .col-2{
-        width:490px; height:100%;
+        width:100%; height:100%;
         border:1px solid gray; border-radius:5px;
     }
 
@@ -50,7 +50,8 @@
     #modal-add-btn{width:130px; height:40px; border:0; border-radius:5px; color:white; background:rgb(166, 184, 145); display:inline-block;}
 </style>
 </head>
-<body>
+<body>	
+
 	<jsp:include page="addMenubar.jsp"/>
 	
     <div class="content-outer">
@@ -70,7 +71,7 @@
 
         <br>
         <form action="">
-            <table class="input-table">
+            <table class="input-table" border=1>
                 <colgroup>
                     <col style="width:150px;">
                     <col style="width:350px;">
@@ -79,7 +80,7 @@
                 <tr>
                     <td>이름</td>
                     <td colspan="2">
-                        <input type="text" class="col-2" style="width:100%" required>
+                        <input type="text" class="col-2" required>
                     </td>
                 </tr>
                 <tr>
@@ -135,7 +136,7 @@
                 <tr>
                     <td>회사주소</td>
                     <td colspan="2">
-                        <input type="text" class="col-2">
+                        <input type="text" class="col-2" style="width:100%;">
                     </td>
                 </tr>
                 <tr>
