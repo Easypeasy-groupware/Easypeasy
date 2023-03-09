@@ -82,7 +82,7 @@
     #header2 a:hover{font-weight: 600;}
 
     /**/
-    .outer{margin-top:100px; padding-top:10px;}
+    .outer{margin-top:100px; padding-top:15px;}
 
 </style>
 </head>
