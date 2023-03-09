@@ -22,7 +22,7 @@
         width: 200px;
         float: left;
         padding-left: 30px;
-        padding-top: 10px;
+        padding-top: 5px;
     }
     #sidebar a{
         color: black;
@@ -35,30 +35,11 @@
 <body>
 	<div id="sidebar">
         <h5>
-            <a href="">예약</a>
+            <a href="">자료실</a>
         </h5>
         <br>
-        <div id="slide1">전사자산 <i id="upDown1" class="fas fa-regular fa-angle-down"></i></div>
-        <div id="slide2">
-            <div id="slide2-1"><a href="">회의실</a> <i id="upDown2-1" class="fas fa-regular fa-angle-down"></i></div>
-            <div id="slide2-1-1">
-                <span style="font-size: small;"><a href="">A회의실(20명)</a></span><br>
-                <span style="font-size: small;"><a href="">B회의실(15명)</a></span><br>
-                <span style="font-size: small;"><a href="">C회의실(6명)</a></span>
-            </div>
-            <div id="slide2-2"><a href="">빔프로젝터</a> <i id="upDown2-2" class="fas fa-regular fa-angle-down"></i></div>
-            <div id="slide2-2-1">
-                <span style="font-size: small;"><a href="">1번 프로젝터</a></span><br>
-                <span style="font-size: small;"><a href="">2번 프로젝터</a></span><br>
-                <span style="font-size: small;"><a href="">3번 프로젝터</a></span>   
-            </div> 
-        </div>
-        <div id="slide3">
-            <div id="slide3-1">예약관리 <i id="upDown3" class="fas fa-regular fa-angle-down"></i></div>
-            <div id="slide3-1-1">
-                <span style="font-size: small;"><a href="">자산 관리</a></span><br>
-            </div>
-        </div>
+        <div id="slide1">전사 자료실</div>
+        
     </div>
 
     <script>

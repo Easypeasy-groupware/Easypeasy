@@ -14,7 +14,6 @@
     
     .outer{
         width: 1200px;
-        height: 1000px;
         margin: auto;
     }
     
@@ -25,41 +24,49 @@
         box-sizing: border-box;
     }
 
+    #sidebar{
+        width: 200px;
+        float: left;
+        padding-left: 10px;
+        padding-top: 10px;
+    }
+    #sidebar a{
+        color: black;
+        text-decoration: none;
+    }
+
     #title h5{
         padding-left: 25px;
         padding-top: 10px;
-        float: left !important;
-        border: 1px solid blue;
+        float: left		!important;
     }
     .input-group{
-        margin-left: 750px;
-        width: 250px !important;
+        margin-left: 722px;
+        width: 250px	!important;
         height: 30px;
         padding-top: 10px;
-    }
-    
-    .form-control{
-    	width: 100px;
     }
 
     #content>table{
         width: 950px;
         text-align: center;
     }
-
 </style>
 <body>
+
+	<jsp:include page="../common/header.jsp"/>
+
 	<div class="outer">
 
         <div id="sidebar">
             <jsp:include page="sidebar.jsp"/>
         </div>
         <div id="content">
-            <div id="title" style="border:1px solid gold;">
+            <div id="title">
                 <span>
                     <h5>전사 자료실</h5>
                 </span>
-                <form action="">
+                <form action="" method="Get">
                     <div class="input-group mb-3 ">
                         <input type="text" class="form-control" placeholder="검색어를 입력해주세요" required>
                         <div class="input-group-append">
