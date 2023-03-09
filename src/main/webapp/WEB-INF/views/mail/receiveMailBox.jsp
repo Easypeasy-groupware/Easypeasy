@@ -7,15 +7,12 @@
 <meta charset="UTF-8">
 <title>EasyPeasy-mail</title>
 
-    <!-- include libraries(jQuery, bootstrap) -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
     *{box-sizing: content-box;}
 
     /* 메일 사이드바 css*/
     #mail_side_bar{width: 200px; height: 1000px; float: left; border-right: 2px solid rgb(185, 187, 221); padding: 10px;}
+    #send_mail_btn{width: 170px;}
     .mailbox_subject{width: 157px; float: left; font-size: 18px; font-weight: 700; color: darkslategrey;}
     .settings{width: 13px; padding-top: 5px;}
     .boxList{width: 170px;}
@@ -82,8 +79,11 @@
 	<!-- 메일 사이드바 -->
     <div id="mail_side_bar">
         <h2>메일</h2>
-        <button>메일 쓰기</button>
-        <br><br><br><br>
+        <br>
+        <form action="enrollForm.sm">
+            <button id="send_mail_btn" class="btn btn-outline-dark">메일 쓰기</button>
+        </form>
+        <br><br><br>
         <div>
             <div class="mailbox_subject">즐겨찾기</div>
             <img class="settings" src="resources/common_images/setting.png">
