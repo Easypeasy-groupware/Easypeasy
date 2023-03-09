@@ -7,7 +7,7 @@
 	<!-- 
 		* root-context.xml
 			서버구동과 동시에 web.xml을 거쳐서 바로 로딩(pre-loading)되는 문서
-			=> 서버 구동과 동시에 바로 빈으로 세팅해야되는 네영들을 작성하면됨
+			=> 서버 구동과 동시에 바로 빈으로 세팅해야되는 내용들을 작성하면됨
 			   주로 DB연결설정, 트랜잭션처리, 내외부 모듈연동 등등
 				
 	 -->
@@ -28,9 +28,9 @@
 	  
 	  <bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource" destroy-method="close">
 	  	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-	  	<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-	  	<property name="username" value="spring" />
-	  	<property name="password" value="spring" />
+	  	<property name="url" value="jdbc:oracle:thin:@gd1class.iptime.org:8877:xe" />
+	  	<property name="username" value="gdj57_easypeasy" />
+	  	<property name="password" value="gdj57_easypeasy" />
  	  </bean>  
 	  
 	  <!-- 

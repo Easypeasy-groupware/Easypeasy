@@ -136,7 +136,7 @@
 
             <ul>
                 <li><a href="">근태관리</a></li>
-                <li><a href="">메일</a></li>
+                <li><a href="list.ma">메일</a></li>
                 <li><a href="">전자결재</a></li>
                 <li><a href="">일정</a></li>
                 <li><a href="">예약</a></li>
