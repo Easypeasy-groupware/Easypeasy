@@ -22,7 +22,8 @@
 		<result column="add_bin" property="addBin" />
 	</resultMap>
 	
-	<resultMap id="employeeResult" type="Employee">
+	<!-- employeeResult가 employee-mapper.xml에 있어서 충돌 오류 발생하는 것으로 보임 -->
+	<!-- <resultMap id="employeeResult" type="Employee">
 		<id column="emp_no" property="empNo" />
 		<result column="emp_name" property="empName" />
 		<result column="emp_id" property="empId" />
@@ -37,7 +38,7 @@
 		<result column="ent_yn" property="entYn" />
 		<result column="ent_date" property="entDate" />
 		<result column="status" property="status" />
-	</resultMap>
+	</resultMap> -->
 	
 	<select id="selectEntEmpListCount" resultType="_int">
 		select
@@ -46,7 +47,7 @@
 		 where ent_yn = 'N'
 	</select>
 	
-	<select id="selectEntEmpListCount" resultMap="employeeResult">
+	<!-- <select id="selectEntEmpListCount" resultMap="employeeResult">
 		select
 		       emp_no
 		     , emp_name
@@ -61,6 +62,6 @@
 		     , hire_date
 		  from employee
 		 where ent_yn = 'N'
-	</select>
+	</select> -->
 
 </mapper>

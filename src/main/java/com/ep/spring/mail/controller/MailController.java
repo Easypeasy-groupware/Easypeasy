@@ -22,8 +22,8 @@ public class MailController {
 		return "mail/sendMail";
 	}
 	
-	@RequestMapping("send.ma")
-	public String 
+//	@RequestMapping("send.ma")
+//	public String 
 	
 	
 }
