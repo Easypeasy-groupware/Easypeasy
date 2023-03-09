@@ -130,7 +130,7 @@
                 <img src="resources/common_images/default_profile.png" width="45px">
 
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="">정보 수정</a>
+                    <a class="dropdown-item" href="myPage.ep">정보 수정</a>
                     <a class="dropdown-item" href="">로그아웃</a>
                 </div>
             </div>
