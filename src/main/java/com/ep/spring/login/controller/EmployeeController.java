@@ -1,9 +1,12 @@
 package com.ep.spring.login.controller;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ep.spring.common.template.FileUpload;
 import com.ep.spring.login.model.service.EmployeeService;
 import com.ep.spring.login.model.vo.Employee;
+
+import net.nurigo.sdk.message.model.Message;
 
 @Controller
 public class EmployeeController {
@@ -52,20 +57,49 @@ public class EmployeeController {
 	}
 	
 	//아이디찾기 문자인증
-	@RequestMapping("findId.ep")
-	public String findId(Employee e, HttpSession session) {
-		int result = eService.findId(e);
-		
-		if(result>0) {//회원정보 일치 => 인증번호 발송 => 인증번호 확인
-			
-			return "redirect:/";
-			
-		}else {//회원정보 불일지 => 다시 입력
-			session.setAttribute("alertMsg", "등록되지 않은 회원정보입니다. 다시 입력해주세요.");
-			return "redirect:/";
-		}
-		
-	}
+//	@RequestMapping("findId.ep")
+//	public String findId(Employee e, HttpSession session) {
+//		Employee findUser = eService.findId(e);
+//		
+//		if( findUser!=null ) {//회원정보 일치 => 인증번호 발송 => 인증번호 확인
+//			String api_key = "NCSTWMDK6G5I0GKQ";      
+//		    String api_secret = "5JVRA0L8LQQH3R44H8FERHGITQY5ZYPV";        
+//		    Message coolsms = new Message(api_key, api_secret);
+//
+//		    Random rd = new Random();
+//			int ranCode = rd.nextInt(899999)+100000;
+//			
+//		    HashMap<String, String> params = new HashMap<String, String>();
+//		    params.put("to", m.getPhone());
+//		    params.put("from", "01084162654");          
+//		    params.put("type", "SMS");
+//		    params.put("text", "[합플] 아이디찾기 인증번호 : " + ranCode);     //메시지 내용
+//		    params.put("app_version", "test app 1.2");
+//
+//		    try {
+//		      JSONObject obj = (JSONObject) coolsms.send(params);
+//		      //System.out.println(obj.toString());   //전송 결과 출력 
+//		    } catch (CoolsmsException e) {
+//		      System.out.println(e.getMessage());
+//		      System.out.println(e.getCode());
+//		    }
+//		    
+//		    // 랜덤숫자와 아이디리턴
+//		    JSONObject jObj = new JSONObject();
+//		    
+//		    jObj.put("key", ranCode);
+//            jObj.put("memId", m.getMemId());
+//            
+//            response.setContentType("application/json; charset=UTF-8");
+//    		response.getWriter().print(jObj);
+//			return "redirect:/";
+//			
+//		}else {//회원정보 불일지 => 다시 입력
+//			session.setAttribute("alertMsg", "등록되지 않은 회원정보입니다. 다시 입력해주세요.");
+//			return "redirect:/";
+//		}
+//		
+//	}
 	
 	//비밀번호찾기 폼 응답
 	@RequestMapping("findPwdForm.ep")

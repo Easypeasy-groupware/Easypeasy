@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 	}
 
 	@Override //아이디찾기
-	public int findId(Employee e) {
+	public Employee findId(Employee e) {
 		
 		return eDao.findId(sqlSession, e);
 	}
