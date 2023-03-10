@@ -16,4 +16,17 @@ public class OrgController {
 	public String orgList() {
 		return "organization/orgMain";
 	}
+	
+	@RequestMapping("adminList.org")
+	public String adminList() {
+		return "organization/orgMainAdmin";
+	}
+	/*
+	@RequestMapping("memberList.org")
+	public void memberList() {
+		
+	}
+	*/
+	
+	
 }

@@ -97,8 +97,14 @@
 	   
 	    <div class="sidebar">
 	    	<h4>게시판</h4><br>
+	    	
+	    	<button type="button" class="btn btn-success" id="topbtn" onclick="adminList();"> 관리자 </button>
 	      
-	        <button type="button" class="btn btn-success" id="topbtn"> 관리자 </button>
+	      	<script>
+	      		function adminList(){
+	      			location.href="adminList.org";
+	      		}
+	      	</script>
 	      
 	      <div class="menu">
 	        <ul>
@@ -255,65 +261,65 @@
 						<div id="main">
 	
 							<h5>Easy peasy조직도</h5>
-	
-							<ul id="browser" class="filetree treeview-famfamfam">
-								<li><span class="folder">이지피지</span>
-									<ul>
-										<li><span class="file">대표</span></li>
-										<li><span class="file">상무</span></li>
-										<li class="closed"><span class="folder">인사관리부</span>
-											<ul>
-												<li><span class="file">사원1</span></li>
-												<li><span class="file">사원2</span></li>
-												<li><span class="file">사원3</span></li>
-												<li><span class="file">사원4</span></li>
-											</ul>
-										</li>
-										<li class="closed"><span class="folder">경영지원부</span>
-											<ul>
-												<li><span class="file">사원1</span></li>
-												<li><span class="file">사원2</span></li>
-												<li><span class="file">사원3</span></li>
-												<li><span class="file">사원4</span></li>
-											</ul>
-										</li>
-										<li class="closed"><span class="folder">영업부</span>
-											<ul>
-												<li><span class="folder">영업1팀</span>
-													<ul id="folder21">
-														<li><span class="file">사원1</span></li>
-														<li><span class="file">사원2</span></li>
-														<li><span class="file">사원3</span></li>
-													</ul>
-												</li>
-												<li><span class="folder">영업2팀</span>
-													<ul>
-														<li><span class="file">사원1</span></li>
-														<li><span class="file">사원2</span></li>
-														<li><span class="file">사원3</span></li>
-													</ul>
-												</li>
-												<li><span class="folder">영업3팀</span>
-													<ul>
-														<li><span class="file">사원1</span></li>
-														<li><span class="file">사원2</span></li>
-														<li><span class="file">사원3</span></li>
-													</ul>
-												</li>
-											</ul>
-										</li>
-										<li class="closed"><span class="folder">마케팅부</span>
-											<ul>
-												<li><span class="file">사원1</span></li>
-												<li><span class="file">사원2</span></li>
-												<li><span class="file">사원3</span></li>
-											</ul>
-										</li>
-										
-									</ul>
-								</li>
-							</ul>
-	
+							<form action="memberList.org">
+								<ul id="browser" class="filetree treeview-famfamfam">
+									<li><span class="folder">이지피지</span>
+										<ul>
+											<li><span class="file">대표</span></li>
+											<li><span class="file">상무</span></li>
+											<li class="closed"><span class="folder">인사관리부</span>
+												<ul>
+													<li><span class="file">사원1</span></li>
+													<li><span class="file">사원2</span></li>
+													<li><span class="file">사원3</span></li>
+													<li><span class="file">사원4</span></li>
+												</ul>
+											</li>
+											<li class="closed"><span class="folder">경영지원부</span>
+												<ul>
+													<li><span class="file">사원1</span></li>
+													<li><span class="file">사원2</span></li>
+													<li><span class="file">사원3</span></li>
+													<li><span class="file">사원4</span></li>
+												</ul>
+											</li>
+											<li class="closed"><span class="folder">영업부</span>
+												<ul>
+													<li><span class="folder">영업1팀</span>
+														<ul id="folder21">
+															<li><span class="file">사원1</span></li>
+															<li><span class="file">사원2</span></li>
+															<li><span class="file">사원3</span></li>
+														</ul>
+													</li>
+													<li><span class="folder">영업2팀</span>
+														<ul>
+															<li><span class="file">사원1</span></li>
+															<li><span class="file">사원2</span></li>
+															<li><span class="file">사원3</span></li>
+														</ul>
+													</li>
+													<li><span class="folder">영업3팀</span>
+														<ul>
+															<li><span class="file">사원1</span></li>
+															<li><span class="file">사원2</span></li>
+															<li><span class="file">사원3</span></li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+											<li class="closed"><span class="folder">마케팅부</span>
+												<ul>
+													<li><span class="file">사원1</span></li>
+													<li><span class="file">사원2</span></li>
+													<li><span class="file">사원3</span></li>
+												</ul>
+											</li>
+											
+										</ul>
+									</li>
+								</ul>
+							</form>
 						</div>
 	                    <div class="modal-footer">
 	                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
