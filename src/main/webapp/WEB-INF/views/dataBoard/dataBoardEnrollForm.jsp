@@ -115,19 +115,20 @@
         </div>
         <br>
         <br><br>
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="insert.db" method="post" enctype="multipart/form-data">
+        	<input type="hidden" name="dbWriter" value="${ loginUser.empNo }">
             <div id="content-1">
                 <table id="enroll" align="center">
                     <tr height="70">
                         <th width="80">제목</th>
                         <td>
-                            <input type="text" name="" size="100" required>
+                            <input type="text" name="dbTitle" size="100" required>
                         </td>
                     </tr>
                     <tr>
                         <th>내용</th>
                         <td>
-                            <textarea name="" cols="99" rows="8" style="resize: none;"></textarea>
+                            <textarea name="dbContent" cols="99" rows="8" style="resize: none;"></textarea>
                         </td>
                     </tr>
                     <tr height="60">
@@ -137,7 +138,7 @@
                                 <input class="upload-name" disabled="disabled">
                             
                                 <label for="ex_filename">업로드</label> 
-                                <input type="file" id="ex_filename" class="upload-hidden" required> 
+                                <input type="file" name="upfile" id="ex_filename" class="upload-hidden" required> 
                             </div>
                         </td>
                     </tr>

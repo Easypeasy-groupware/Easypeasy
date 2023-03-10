@@ -31,26 +31,26 @@ public class DataBoardServiceImpl implements DataBoardService {
 
 	@Override
 	public int insertDataBoard(DataBoard db) {
-		return 0;
+		return dbDao.insertDataBoard(sqlSession, db);
 	}
 
 	@Override
 	public int increaseCount(int dbNo) {
-		return 0;
+		return dbDao.increaseCount(sqlSession, dbNo);
 	}
 
 	@Override
 	public DataBoard selectDataBoard(int dbNo) {
-		return null;
+		return dbDao.selectDataBoard(sqlSession, dbNo);
 	}
 
 	@Override
 	public int deleteDataBoard(int dbNo) {
-		return 0;
+		return dbDao.deleteDataBoard(sqlSession, dbNo);
 	}
 
 	@Override
 	public int updateDataBoard(DataBoard db) {
-		return 0;
+		return dbDao.updateDataBoard(sqlSession, db);
 	}
 }
