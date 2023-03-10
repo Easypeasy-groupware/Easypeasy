@@ -39,6 +39,12 @@ public class EmployeeServiceImpl implements EmployeeService{
 		return eDao.updatePwd(sqlSession, e);
 	}
 
+	@Override //프로필 사진변경
+	public int updateProfile(Employee e) {
+		
+		return eDao.updateProfile(sqlSession, e);
+	}
+
 	
 	
 	

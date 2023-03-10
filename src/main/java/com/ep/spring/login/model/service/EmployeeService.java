@@ -21,5 +21,7 @@ public interface EmployeeService {
 	// 마이페이지 수정
 	int updateEmployee(Employee e);
 	
+	// 프로필사진 변경
+	int updateProfile(Employee e);
 
 }

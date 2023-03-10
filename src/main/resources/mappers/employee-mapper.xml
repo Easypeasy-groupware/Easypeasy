@@ -64,5 +64,12 @@
 		   set emp_pwd = #{empPwd}
 		 where emp_id = #{empId}
 	</update>
+	
+	<update id="updateProfile">
+		update
+			   employee
+		   set emp_profile = #{empProfile}
+		 where emp_id = #{empId}
+	</update>
 
 </mapper>
