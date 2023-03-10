@@ -87,9 +87,12 @@
             </form>
         </div>
         <br>
-        <a class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white; margin-left: 920px; margin-bottom: -15px;" href="enrollForm.db">글쓰기</a>
+        <!-- 경영지원팀만 글작성 할 수 있도록 -->
+        <c:if test="${ loginUser.deptCode eq 'D2' }">
+        	<a class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white; margin-left: 920px; margin-bottom: -15px;" href="enrollForm.db">글쓰기</a>
+        </c:if>
         <br><br>
-        <table align="center" class="table table-hover table-sm">
+        <table align="center" class="table table-hover table-sm" id="dbList">
             <thead>
                 <tr>
                     <th>번호</th>
@@ -101,7 +104,7 @@
             <tbody>
             	<c:forEach var="db" items="${ list }">
                  <tr>
-                     <td>${ db.dbNo }</td>
+                     <td class="dbno">${ db.dbNo }</td>
                      <td>${ db.dbTitle }</td>
                      <td>${ db.createDate }</td>
                      <td>${ db.count }</td>
@@ -110,6 +113,14 @@
             </tbody>
         </table>
         <br>
+        
+        <script>
+			$(function(){
+				$("#dbList>tbody>tr").click(function(){
+					location.href = 'detail.db?no=' + $(this).children(".dbno").text();	
+				})
+			})
+		</script>
         
         <!-- 페이징 처리 -->
      	<div id="pagingArea" align="center">

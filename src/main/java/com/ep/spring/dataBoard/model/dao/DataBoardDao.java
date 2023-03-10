@@ -26,4 +26,24 @@ public class DataBoardDao {
 		
 		return (ArrayList)sqlSession.selectList("dataBoardMapper.selectDbList", null, rowBounds);
 	}
+	
+	public int insertDataBoard(SqlSessionTemplate sqlSession, DataBoard db) {
+		return sqlSession.insert("dataBoardMapper.insertDataBoard", db);
+	}
+	
+	public int increaseCount(SqlSessionTemplate sqlSession ,int dbNo) {
+		return sqlSession.update("dataBoardMapper.increaseCount", dbNo);
+	}
+	
+	public DataBoard selectDataBoard(SqlSessionTemplate sqlSession, int dbNo) {
+		return sqlSession.selectOne("dataBoardMapper.selectDataBoard", dbNo);
+	}
+	
+	public int deleteDataBoard(SqlSessionTemplate sqlSession, int dbNo) {
+		return sqlSession.update("dataBoardMapper.deleteDataBoard", dbNo);
+	}
+	
+	public int updateDataBoard(SqlSessionTemplate sqlSession, DataBoard db) {
+		return sqlSession.update("dataBoardMapper.updateDataBoard", db);
+	}
 }

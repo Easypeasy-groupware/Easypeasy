@@ -52,21 +52,21 @@ public class ApprovalController {
 	}
 	
 	@RequestMapping("enrollForm.ap")
-	public String enrollForm(int newForm) {
-		
-		System.out.println(newForm);
-		
-		if(newForm == 1) {
-			
-		}else if(newForm == 2) {
-			
-		}else if(newForm == 3) {
-			
-		}else if(newForm == 4) {
-			
+	public String enrollForm(int formCode, Model model, HttpSession session) {
+				
+		if(formCode == 1) {
+			return "approval/appDraftEnrollForm";
+		}else if(formCode == 2) {
+			return "approval/appProposalEnrollForm";
+		}else if(formCode == 3) {
+			return "approval/appVacationEnrollForm";
+		}else if(formCode == 4) {
+			return "approval/appOvertimeEnrollForm";
+		}else {
+			session.setAttribute("alertMsg", "페이지 요청오류");
+			return "redirect:/";
 		}
 		
-		return "";
 	}
 	
 	
