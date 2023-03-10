@@ -17,7 +17,7 @@
             box-sizing: border-box;
         }
         .app-wait{width:800px; height:300px;}
-        .app-wait div{
+        .wapp{
             float:left;
             width:200px; 
             border:1px solid gray; 
@@ -43,14 +43,33 @@
                 <br><br>
                 <div class="app-wait">
                     <p style="font-size:25px; "><b><a href="">결재대기</a></b></p>
-                    
-                    <div>
-                        결재상태 <br>
-                        결재문서 제목 <br><br>
-                        기안자 <br>
-                        기안일 <br><br>
-                        <button class="btn btn-outline-secondary">결재하기</button>
-                    </div>
+                    <c:choose>
+                    	<c:when test="${empty list1}">
+                    		<br><br>
+                    		<div align="center">
+                    			결재 대기중인 문서가 없습니다.
+                    		</div>
+                    	</c:when>
+                    	<c:otherwise>
+		                    <c:forEach var="w" items="${list1}">
+			                    <div class="wapp">
+			                        ${w.tstatus} <br>
+			                        <c:choose>
+				                        <c:when test="${w.formCode == 3 || w.formCode == 4}">
+				                        	${w.formName }
+				                        </c:when>
+				                        <c:otherwise>
+				                        	${w.title }
+				                        </c:otherwise>
+			                        </c:choose>
+			                        <br><br>
+			                        ${w.empName}<br>
+			                        ${w.enrollDate } <br><br>
+			                        <button class="btn btn-outline-secondary">결재하기</button>
+			                    </div>
+		                    </c:forEach>
+	                    </c:otherwise>
+                    </c:choose>
                     
                 </div>
 
@@ -70,14 +89,36 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>s</td>
-                                <td>w</td>
-                                <td>q</td>
-                                <td>g</td>
-                                <td>g</td>
-                                <td><s></s></td>
-                            </tr>
+		                    <c:choose>
+		                    	<c:when test="${empty list2}">
+		                    		<tr>
+		                    			<td colspan='6'>
+				                    		<div align="center">
+				                    			결재 대기중인 문서가 없습니다.
+				                    		</div>
+			                    		</td>
+		                    		</tr>
+		                    	</c:when>   
+		                    	<c:otherwise>                     
+			                        <c:forEach var="s" items="${list2}">
+				                            <tr>
+				                                <td>${s.appNo}</td>
+				                                <td>${s.enrollDate}</td>
+				                                <td>${s.formName}</td>
+				                                <c:choose>
+							                        <c:when test="${s.formCode == 3 || s.formCode == 4}">
+							                         	<td>${s.formName}</td>
+							                        </c:when>
+							                        <c:otherwise>
+							                        	<td>${s.title}</td>
+							                        </c:otherwise>
+				                                </c:choose>
+				                                <td>${s.empName}</td>
+				                                <td>${s.tstatus}</td>
+				                            </tr>
+			                            </c:forEach>
+		                            </c:otherwise>
+		                        </c:choose>
                         </tbody>
                     </table>
                 </div>

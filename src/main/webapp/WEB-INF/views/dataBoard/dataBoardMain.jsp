@@ -13,9 +13,11 @@
     }
     
     #content{
+    	position: relative;
         width: 1000px;
         float: left;
         box-sizing: border-box;
+        z-index: 1;
     }
 
     #title h5{

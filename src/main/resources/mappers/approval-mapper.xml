@@ -1,5 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="approvalMapper">
-
+	
+	<resultMap id="approvalResult" type="Approval">
+		<id column="app_no" property="appNo" />
+		<result column="enroll_date" property="enrollDate" /> 
+		<result column="status" property="status" /> 
+		<result column="app_tstatus" property="tstatus" /> 
+		<result column="writer_comment" property="writerComment" /> 
+		<result column="title" property="title" /> 
+		<result column="content" property="content" /> 
+		<result column="emp_no" property="writerNo" /> 
+		<result column="form_name" property="formName" /> 
+		<result column="conser_period" property="conPeriod" /> 
+		<result column="sec_grade" property="secGrade" /> 
+		<result column="form_code" property="formCode" /> 
+		<result column="app_amount" property="appAmount" /> 
+		<result column="app_sequence" property="appSequence" /> 
+		<result column="emp_name" property="empName" />
+	</resultMap>
+	
+	<select id="selectMainWList" resultMap="approvalResult">
+		   select * 
+		    from(
+		            select rownum rnum, a.*
+		              from(	
+					select
+							 app_no
+						
+						   , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+						   , app_tstatus
+						   , title
+						   , b.emp_no
+						   , form_name
+						   , form_code
+						   , app_amount
+						   , app_sequence
+                           , emp_name
+					   from  approval b
+                       join  employee e on (b.emp_no = e.emp_no)
+					  where b.status = '1'
+					    and app_tstatus = '진행중'
+					    and app_no = (
+                                    select app_no
+                                      from app_line
+                                     where ref_whether = 'N'
+                                       and app_status ='미결재'
+                                       and emp_no = #{empNo}
+                                        )
+			            order 
+			               by b.enroll_date   
+					            
+		               		)a
+		         )
+		         where rnum between 1 and 4               
+			  	
+	</select>
+	
+	<select id="selectMainSList" resultMap="approvalResult">
+			select * 
+		    from(
+		            select rownum rnum, c.*
+		              from(	
+							select
+									 app_no
+								   , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+								   , app_tstatus
+								   , title
+								   , a.emp_no
+								   , form_name
+								   , form_code
+								   , app_amount
+								   , app_sequence
+								   , emp_name
+							   from  approval a
+							   join  employee e on (a.emp_no = e.emp_no)
+							  where a.status = '1'
+							    and app_tstatus = '진행중'
+							    and a.emp_no = #{empNo}
+					            order 
+					               by enroll_date   
+		               		)c
+		         )
+		         where rnum between 1 and 5  
+	</select>
+	
 </mapper>
