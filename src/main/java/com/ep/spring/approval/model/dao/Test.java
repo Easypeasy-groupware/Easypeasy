@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import com.ep.spring.approval.model.vo.Approval;
 
-@Repository
-public class ApprovalDao {
-
+//@Repository
+public class Test {
+	
 	public ArrayList<Approval> selectMainWList(SqlSessionTemplate sqlSession, int eNo){
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectMainWList", eNo);
 	}
@@ -21,5 +21,5 @@ public class ApprovalDao {
 	public Approval selectEnrollInfo(SqlSessionTemplate sqlSession, int eNo) {
 		return sqlSession.selectOne("approvalMapper.selectEnrollInfo", eNo);
 	}
-	
+
 }

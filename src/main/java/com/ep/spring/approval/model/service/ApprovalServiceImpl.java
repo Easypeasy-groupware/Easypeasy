@@ -28,6 +28,12 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public ArrayList<Approval> selectMainSList(int eNo) {
 		return aDao.selectMainSList(sqlSession, eNo);
 	}
+	
+	@Override
+	public Approval selectEnrollInfo(int eNo) {
+		
+		return aDao.selectEnrollInfo(sqlSession, eNo);
+	}
 
 	@Override
 	public int selectWaitingAListCount() {
@@ -124,5 +130,9 @@ public class ApprovalServiceImpl implements ApprovalService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+
 
 }

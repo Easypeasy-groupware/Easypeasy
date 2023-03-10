@@ -192,6 +192,26 @@
  
     </div>
     <script>
+    
+    // 회원정보흘 가져오는 ajax
+    $(function(){
+    	
+    	$.ajax({
+    		url="enrolldraftinfo.ap",
+    		success:function(a){
+    			console.log(a);
+    		}, error:function(){
+    			console.log("작성자정보 조회용 ajax 통신 실패");
+    		}
+    			
+    	});
+    	
+    })
+    
+    
+    
+    
+    
         $('.summernote').summernote({
             toolbar: [
 			    // [groupName, [list of button]]

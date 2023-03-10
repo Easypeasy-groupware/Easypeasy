@@ -18,6 +18,7 @@
 		<result column="app_amount" property="appAmount" /> 
 		<result column="app_sequence" property="appSequence" /> 
 		<result column="emp_name" property="empName" />
+ 		<result column="dept_name" property="deptName" />
 	</resultMap>
 	
 	<select id="selectMainWList" resultMap="approvalResult">
@@ -84,5 +85,17 @@
 		         )
 		         where rnum between 1 and 5  
 	</select>
+	
+	<select id="selectEnrollInfo" resultMap="approvalResult">
+			select 
+			        distinct emp_name
+			      , dept_name
+			  from approval a  
+			  join employee e on (a.emp_no = e.emp_no)
+			  join department d on (d.dept_code = e.dept_code)
+			  where a.emp_no = #{empNo}		
+	</select>
+	
+	
 	
 </mapper>

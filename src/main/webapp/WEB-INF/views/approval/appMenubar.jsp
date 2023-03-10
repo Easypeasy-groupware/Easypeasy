@@ -82,7 +82,7 @@
         vertical-align: middle; 
         }
         .moal{z-index:10000;
-        	z-index: 2147483647;
+        	/* z-index: 2147483647; */
         }
     </style>
     

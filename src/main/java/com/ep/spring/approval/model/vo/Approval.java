@@ -26,5 +26,7 @@ public class Approval {
 	private int appAmount;
 	private int appSequence;
 	private String empName;
+	private String appChange;
+	private String deptName;
 
 }

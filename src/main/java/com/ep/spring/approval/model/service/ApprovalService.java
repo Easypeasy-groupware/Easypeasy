@@ -12,6 +12,10 @@ public interface ApprovalService {
 	// 메인페이지 기안진행문서 조회용 서비스(5개)
 	ArrayList<Approval> selectMainSList(int eNo);
 	
+	// 10. 기안문서 등록을 위한 서비스
+	// 작성자정보와 작성일 조회용 서비스
+	Approval selectEnrollInfo(int eNo);
+	
 	// 2. 결재대기문서 조회용 서비스(페이징)
 	int selectWaitingAListCount();
 	ArrayList<Approval> selectWatingAList();
@@ -43,6 +47,8 @@ public interface ApprovalService {
 	// 9. 부서용 부서참조함 조회용 서비스(페이징)
 	int selectDeptRefListCount();
 	ArrayList<Approval> selectDeptRefList();
+	
+
 	
 	
 	

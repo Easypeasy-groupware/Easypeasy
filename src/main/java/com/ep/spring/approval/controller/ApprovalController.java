@@ -1,6 +1,8 @@
 package com.ep.spring.approval.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -66,6 +68,25 @@ public class ApprovalController {
 			session.setAttribute("alertMsg", "페이지 요청오류");
 			return "redirect:/";
 		}
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="enrolldraftinfo.ap", produces="application/json; charset=UTF-8")
+	public String selectInfoDraft(HttpSession session, Model model) {
+		
+		String currentTime = new SimpleDateFormat("yyMMdd").format(new Date());
+		// 4자리랜덤숫자
+		int ranNum = (int)(Math.random() * 9000 + 1000);
+		String appChange = currentTime + ranNum;
+			
+		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
+		Approval a = aService.selectEnrollInfo(eNo); 
+		
+		a.setAppChange(appChange); 
+		
+		return new Gson().toJson(a);
 		
 	}
 	
