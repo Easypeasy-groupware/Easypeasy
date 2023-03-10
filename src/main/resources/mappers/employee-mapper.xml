@@ -39,7 +39,6 @@
 			  , status
 		  from employee
 		 where emp_id = #{empId}
-		   and emp_pwd = #{empPwd}
 		   and ent_yn = 'N'
 	</select>
 	

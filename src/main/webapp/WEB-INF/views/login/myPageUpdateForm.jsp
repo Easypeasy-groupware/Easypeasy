@@ -101,6 +101,9 @@
 
         <div class="updateForm">
 		<form action="update.mp" method="post">
+					<input type="hidden" name="empId" value="${ loginUser.empId }">
+					<input type="hidden" name="empNo" value="${ loginUser.empNo }">
+					
                     <label for="empName">이름 :</label>
                     <input type="text" class="form-control" id="empName" name="empName" value="${ loginUser.empName }" readonly><br>
                     
@@ -173,6 +176,39 @@
         <button id="pwdBtn" type="button" data-toggle="modal" data-target="#updatePwdForm">비밀번호변경</button>
         </form>
         <br><br><br><br><br>
+        
+        
+        <!-- 비밀번호 변경용 Modal -->
+		   <div class="modal" id="updatePwdForm">
+		     <div class="modal-dialog">
+		       <div class="modal-content">
+		   
+		         <div class="modal-header">
+		           <h4 class="modal-title">비밀번호 변경</h4>
+		           <button type="button" class="close" data-dismiss="modal">&times;</button>
+		         </div>
+		   
+		         <div class="modal-body" align="center">
+		           <form action="updatePwd.ep" method="post">
+		              <input type="hidden" name="userId" value="${ loginUser.empId }">
+		              <table>
+		                 <tr>
+		                    <td>현재 비밀번호</td>
+		                    <td><input type="password" name="empPwd" required></td>
+		                 </tr>
+		                 <tr>
+		                    <td>변경할 비밀번호</td>
+		                    <td><input type="password" name="updatePwd" required></td>
+		                 </tr>
+		              </table>
+		              <br>
+		              <button type="submit" class="btn btn-sm btn-secondary" >비밀번호 변경</button>
+		           </form>
+		         </div>
+		   
+		       </div>
+		     </div>
+		   </div>
     </div>
     </div>
     </div>

@@ -24,7 +24,7 @@
     .wrap *{
         /*border:solid 1px black;*/
         box-sizing:border-box;
-        z-index:10000;
+        z-index:10;
     }
     .wrap{width:1200px; margin:auto; box-sizing:border-box;}
     .header{position:fixed; top:0; background:white;}
@@ -88,6 +88,11 @@
 
     /**/
     .outer{margin-top:100px; padding-top:15px;}
+    
+    /* 모달옹 */
+    .modal-content{
+    	z-index: 15;
+    }
 
 </style>
 </head>
@@ -110,7 +115,7 @@
             <div id="logoName">EASY PEASY</div>
             <script>
            		$("#logoName").click(function(){
-           			location.href="${pageContext.request.contextPath}";
+           			location.href="main.ep";
            		})
             </script>
             

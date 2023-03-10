@@ -39,6 +39,12 @@ public class EmployeeController {
 		
 	}
 	
+	// 메인페이지 이동
+	@RequestMapping("main.ep")
+	public String mainPage() {
+		return "common/main";
+	}
+	
 	//아이디 찾기 폼 응답
 	@RequestMapping("findIdForm.ep")
 	public String findIdForm() {
@@ -101,6 +107,12 @@ public class EmployeeController {
 			return "redirect:myPage.ep";
 		}
 	}
+	
+	//비밀번호 수정
+//	@RequestMapping("updatePwd.ep")
+//	public String updatePwd() {
+//		
+//	}
 	
 
 }
