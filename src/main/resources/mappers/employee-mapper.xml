@@ -33,7 +33,7 @@
 			  , emp_profile
 			  , dept_code
 			  , job_code
-			  , hire_date
+			  , to_char(hire_date, 'YYYY"년"MM"월"DD"일"') as "hire_date"
 			  , ent_yn
 			  , ent_date
 			  , status
