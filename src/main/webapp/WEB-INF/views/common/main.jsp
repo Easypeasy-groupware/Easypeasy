@@ -177,7 +177,7 @@
 			})
 		</script>	
 	    <div class="document">
-	        <b>결재문서</b>
+	        <b> 결재문서</b>
 	        
 	        <br><br>
 	        <div class="subtitle doc-approval" id="doc-arrived">결재 대기 문서</div>
@@ -292,6 +292,8 @@
 				$("#departed-tb").show();
 				$("#arrived-tb").hide();
 			})
+			
+			// 결재목록을 조회해주는 ajax
 		</script>
 	
 	    <div class="mail">
