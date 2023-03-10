@@ -6,29 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-    <!-- 부트스트랩 -->
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-
-    <!-- jQuery 라이브러리 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-    <!-- Popper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     
-    <!-- flatpickr -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>  
-
-    <!-- 써머노트 -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>      
     <style>
          /* 안가져감 */
      /* div{
@@ -103,7 +81,33 @@
         text-align: left;
         vertical-align: middle; 
         }
+        .moal{z-index:10000;
+        	z-index: 2147483647;
+        }
     </style>
+    
+    <!-- 부트스트랩 -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <!-- jQuery 라이브러리 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>  
+
+    <!-- 써머노트 -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>  
 </head>
 <body>
     <div class="wrap-1" align="center">
@@ -145,27 +149,27 @@
                 <!-- Modal body -->
                 <div class="modal-body selectForm">
                     <div>
-                        <form action="enrollForm.ap" id="newApp-form">
+                        <form action="enrollForm.ap" type="Get" id="newApp-form">
                             <br>
                             <ul>
                                 <li>
-                                    <input type="radio" name="newForm" id="draft" value="1">
+                                    <input type="radio" name="formCode" id="draft" value="1">
                                     <label for="draft">업무기안</label>   
                                 </li>
                                 <li>
-                                    <input type="radio" name="newForm" id="appr" value="2">
-                                    <label for="appr">일반품의서</label>  
+                                    <input type="radio" name="formCode" id="propersal" value="2">
+                                    <label for="propersal">일반품의서</label>  
                                 </li>
                                 <li>
-                                    <input type="radio" name="newForm" id="vac" value="3">
-                                    <label for="vac">휴가신청서</label>  
+                                    <input type="radio" name="formCode" id="vacation" value="3">
+                                    <label for="vacation">휴가신청서</label>  
                                 </li>
                                 <li>
-                                    <input type="radio" name="newForm" id="extra" value="4">  
-                                    <label for="extra">연장근무신청서</label>
+                                    <input type="radio" name="formCode" id="overtime" value="4">  
+                                    <label for="overtime">연장근무신청서</label>
                                 </li>
                             </ul>
-                        </form>
+                      
                     </div>
                     <div>
                         보안등급 &nbsp;  :  &nbsp; 
@@ -176,20 +180,20 @@
                     </div>
                 </div>
 
-                <!-- Modal footer -->
-                <div class="modal-footer" style="margin:auto; ">
-                    <button type="submit" class="btn btn-light">확인</button>
-                    <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
-                </div>
-        
+		                <!-- Modal footer -->
+		                <div class="modal-footer" style="margin:auto; ">
+		                    <button type="submit"  class="btn btn-light">확인</button>
+		                    <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
+		                </div>
+		          </form>
             </div>
             </div>
         </div>
     
     <script>
         $(document).ready(function(){
-            $("input[name='newForm']").change(function(){
-                if($("input[name='newForm']:checked").val()=='draft' || $("input[name='newForm']:checked").val()=='appr'){
+            $("input[name='formCode']").change(function(){
+                if($("input[name='formCode']:checked").val()==1 || $("input[name='formCode']:checked").val()==2){
                     $("#grade").text('A');
                     $("#preser").text('5년');
                 }else{
