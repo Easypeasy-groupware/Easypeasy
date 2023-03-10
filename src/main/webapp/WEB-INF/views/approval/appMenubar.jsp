@@ -82,7 +82,27 @@
         #paging li {text-align: center; float: left; list-style:none; border-radius:10px; margin:2px; background-color: rgb(234, 234, 234);}
         #paging li a {display: block; font-size: 12px; color: black; padding: 5px 10px; box-sizing: border-box; text-decoration-line:none;}
         #paging li.on {background:rgb(166, 184, 145);}
-        #paging li.on a { color: white;}     
+        #paging li.on a { color: white;}    
+        
+        /* 모달 창 가운데로 정렬*/
+        .modal.modal-center {
+        /* text-align: center; */
+        }
+
+         @media screen and (min-width: 768px) { 
+        .modal.modal-center:before {
+            display: inline-block;
+            vertical-align: middle;
+            content: " ";
+            height: 30%;
+        }
+        } 
+
+        .modal-dialog.modal-center {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle; 
+        }
     </style>
 </head>
 <body>
@@ -112,7 +132,7 @@
     </div>
         <!-- 새 결재 양식 선택하는 모달 -->
         <!-- The Modal -->
-        <div class="modal" id="newApp">
+        <div class="modal modal-center fade" id="newApp">
             <div class="modal-dialog">
             <div class="modal-content">
         
@@ -125,23 +145,23 @@
                 <!-- Modal body -->
                 <div class="modal-body selectForm">
                     <div>
-                        <form action="" id="newApp-form">
+                        <form action="enrollForm.ap" id="newApp-form">
                             <br>
                             <ul>
                                 <li>
-                                    <input type="radio" name="newForm" id="draft" value="draft">
+                                    <input type="radio" name="newForm" id="draft" value="1">
                                     <label for="draft">업무기안</label>   
                                 </li>
                                 <li>
-                                    <input type="radio" name="newForm" id="appr" value="appr">
+                                    <input type="radio" name="newForm" id="appr" value="2">
                                     <label for="appr">일반품의서</label>  
                                 </li>
                                 <li>
-                                    <input type="radio" name="newForm" id="vac" value="vac">
+                                    <input type="radio" name="newForm" id="vac" value="3">
                                     <label for="vac">휴가신청서</label>  
                                 </li>
                                 <li>
-                                    <input type="radio" name="newForm" id="extra" value="extra">  
+                                    <input type="radio" name="newForm" id="extra" value="4">  
                                     <label for="extra">연장근무신청서</label>
                                 </li>
                             </ul>

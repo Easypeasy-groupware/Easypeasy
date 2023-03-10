@@ -200,36 +200,7 @@
 	                <th>기안자</th>
 	            </thead>
 	            <tbody align="center">
-	                <tr>
-	                    <td>2023-03-02</td>
-	                    <td>휴가신청</td>
-	                    <td>결재해주십쇼</td>
-	                    <td>길동홍</td>
-	                </tr>
-	                <tr>
-	                    <td>2023-03-02</td>
-	                    <td>휴가신청</td>
-	                    <td>결재해주십쇼</td>
-	                    <td>길동홍</td>
-	                </tr>
-	                <tr>
-	                    <td>2023-03-02</td>
-	                    <td>휴가신청</td>
-	                    <td>결재해주십쇼</td>
-	                    <td>길동홍</td>
-	                </tr>
-	                <tr>
-	                    <td>2023-03-02</td>
-	                    <td>휴가신청</td>
-	                    <td>결재해주십쇼</td>
-	                    <td>길동홍</td>
-	                </tr>
-	                <tr>
-	                    <td>2023-03-02</td>
-	                    <td>휴가신청</td>
-	                    <td>결재해주십쇼</td>
-	                    <td>길동홍</td>
-	                </tr>
+	               
 	            </tbody>
 	        </table>
 			<table class="doc-table" id="departed-tb" style="display:none;">
@@ -246,36 +217,7 @@
 	                <th>결재대기</th>
 	            </thead>
 	            <tbody align="center">
-	                <tr>
-	                    <td>2023-03-02</td>
-	                    <td>휴가신청</td>
-	                    <td>결재해주십쇼</td>
-	                    <td>장원영 부장</td>
-	                </tr>
-	                <tr>
-	                    <td>2023-03-02</td>
-	                    <td>휴가신청</td>
-	                    <td>결재해주십쇼</td>
-	                    <td>안유진 과장</td>
-	                </tr>
-	                <tr>
-	                    <td>2023-03-02</td>
-	                    <td>휴가신청</td>
-	                    <td>결재해주십쇼</td>
-	                    <td>박채영 과장</td>
-	                </tr>
-	                <tr>
-	                    <td>2023-03-02</td>
-	                    <td>휴가신청</td>
-	                    <td>결재해주십쇼</td>
-	                    <td>최정 부장</td>
-	                </tr>
-	                <tr>
-	                    <td>2023-03-02</td>
-	                    <td>휴가신청</td>
-	                    <td>결재해주십쇼</td>
-	                    <td>양의지 부장</td>
-	                </tr>
+	               
 	            </tbody>
 	        </table>
 	
@@ -319,7 +261,7 @@
 							for(let i = 0; i < result.list1.length; i++){
 								let a = result.list1[i];
 								value1 += "<tr>"
-										+ "<td>" + a.appNo + "</td>"
+										+ "<td>" + a.enrollDate + "</td>"
 										+ "<td>" + a.formName + "</td>";
 										if(a.formCode == 3 || a.formCode == 4){
 											value1 += "<td>" + a.formName + "</td>";
@@ -331,6 +273,32 @@
 							}
 						}
 						$("#arrived-tb tbody").html(value1);
+						
+						
+						let value2 = "";
+						if(result.list2.length == 0){
+							value2+= "<tr>" 
+							  	+ "<td colspan='4'>"
+								+ "기안 진행중인 문서가 없습니다."
+								+ "</td>"
+								+"</tr>";							
+						}else{
+							for(let i = 0; i<result.list2.length; i++){
+								let b = result.list2[i];
+								value2 += "<tr>"
+									+ "<td>" + b.enrollDate + "</td>"
+									+ "<td>" + b.formName + "</td>";
+									if(b.formCode == 3 || b.formCode == 4){
+										value2 += "<td>" + b.formName + "</td>";
+									}else{
+										value2 += "<td>" + b.title + "</td>";
+									}
+									
+									value2 += "<td>" + b.empName + "</td></tr>";								
+							}
+						}
+						
+						$("#departed-tb tbody").html(value2);
 						
 					}, error:function(){
 						//console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);

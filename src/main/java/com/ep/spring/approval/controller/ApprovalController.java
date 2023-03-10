@@ -32,9 +32,6 @@ public class ApprovalController {
 		
 		model.addAttribute("list1", list1);
 		model.addAttribute("list2", list2);
-		System.out.println(list1);
-		System.out.println(list2);
-
 		
 		return "approval/appMain";
 	}
@@ -52,6 +49,24 @@ public class ApprovalController {
 		map.put("list2", list2);
 		
 		return new Gson().toJson(map);
+	}
+	
+	@RequestMapping("enrollForm.ap")
+	public String enrollForm(int newForm) {
+		
+		System.out.println(newForm);
+		
+		if(newForm == 1) {
+			
+		}else if(newForm == 2) {
+			
+		}else if(newForm == 3) {
+			
+		}else if(newForm == 4) {
+			
+		}
+		
+		return "";
 	}
 	
 	
