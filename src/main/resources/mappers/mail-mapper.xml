@@ -2,4 +2,84 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="mailMapper">
 
+	<resultMap id="ReceiveMailResult" type="ReceiveMail">
+		<id column="recep_mail_no" property="recMailNo" />
+		<result column="mail_no" property="mailNo" />
+		<result column="tag_no" property="tagNo" />
+		<result column="recep_mail_address" property="recMailAdd" />
+		<result column="send_mail_address" property="sendMailAdd" />
+		<result column="mail_title" property="mailTitle" />
+		<result column="mail_content" property="mailContent" />
+		<result column="rec_check" property="recCheck" />
+		<result column="rec_date" property="recDate" />
+		<result column="impor_mail" property="imporMail" />
+		<result column="junk_mail" property="junkMail" />
+		<result column="reser_mail" property="reserMail" />
+		<result column="status" property="status" />
+		<result column="reference" property="reference" />
+		<result column="hidden_reference" property="hiddenReference" />
+	</resultMap>
+
+	<resultMap id="TagResult" type="MailTage">
+		<id column="tag_no" property="tagNo" />
+		<result column="emp_no" property="empNo" />
+		<result column="tag_name" property="tagName" />
+		<result column="tag_color" property="tagColor" />
+	</resultMap> 
+	
+	<select id="selectReceiceMailList" resultMap="ReceiveMailResult">
+		select 
+		       RECEP_MAIL_NO
+			 , MAIL_NO
+			 , TAG_NO
+			 , SEND_MAIL_ADDRESS
+			 , MAIL_TITLE
+			 , MAIL_CONTENT
+			 , REC_CHECK
+			 , REC_DATE
+			 , IMPOR_MAIL
+			 , JUNK_MAIL
+			 , RESER_MAIL
+			 , REFERENCE
+			 , HIDDEN_REFERENCE
+	      from 
+	           rec_mail
+	     where 
+			   recep_mail_address = #{email}
+	     order
+	        by recep_mail_no desc
+	</select>
+	
+	<select id="selectTagList" resultMap="TagResult">
+		select
+		       TAG_NO
+			 , TAG_NAME
+			 , TAG_COLOR
+		  from mail_tag
+		 where emp_no = #{empNo}
+		 order
+		    by tag_no desc 			 
+	</select>
+	
+	
+	
+
+	<insert id="insertTag">
+		insert 
+		  into mail_tag
+		  	 (
+		  	   tag_no
+		  	 , emp_no
+		  	 , tag_name
+		  	 , tag_color  
+		  	 )
+		values
+			 (
+			   seq_tagno.nextval
+			 , #{empNo}
+			 , #{tagName}
+			 , #{tagColor}
+			 )
+	</insert>
+
 </mapper>
