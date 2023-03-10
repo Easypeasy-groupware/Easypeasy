@@ -141,6 +141,68 @@
                 </ul>
              </div>
         </div>
+        <br>
+        <!-- 경영지원팀만 글작성 할 수 있도록 -->
+        <c:if test="${ loginUser.deptCode eq 'D2' }">
+        	<a class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white; margin-left: 920px; margin-bottom: -15px;" href="enrollForm.db">글쓰기</a>
+        </c:if>
+        <br><br>
+        <table align="center" class="table table-hover table-sm" id="dbList">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>등록일</th>
+                    <th>조회수</th>
+                </tr>
+            </thead>
+            <tbody>
+            	<c:forEach var="db" items="${ list }">
+                 <tr>
+                     <td class="dbno">${ db.dbNo }</td>
+                     <td>${ db.dbTitle }</td>
+                     <td>${ db.createDate }</td>
+                     <td>${ db.count }</td>
+                 </tr>
+             </c:forEach>
+            </tbody>
+        </table>
+        <br>
+        
+        <script>
+			$(function(){
+				$("#dbList>tbody>tr").click(function(){
+					location.href = 'detail.db?no=' + $(this).children(".dbno").text();	
+				})
+			})
+		</script>
+        
+        <!-- 페이징 처리 -->
+     	<div id="pagingArea" align="center">
+			<ul id="paging">
+	           	<c:choose>
+	           	<c:when test="${ pi.currentPage eq 1 }">
+	            	<li><a href="#">&lt;</a></li>
+	            </c:when>
+	            <c:otherwise>
+	            	<li><a href="list.db?cpage=${ pi.currentPage-1 }">&lt;</a></li>
+	            </c:otherwise>
+	            </c:choose>
+	                
+	            <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	            	<li><a href="list.db?cpage=${ p }">${ p }</a></li>
+	            </c:forEach>
+	                
+	            <c:choose>
+	            <c:when test="${ pi.currentPage eq pi.maxPage }">
+	            	<li><a href="#">&gt;</a></li>
+	            </c:when>
+	            <c:otherwise>
+	            	<li><a href="list.db?cpage=${ pi.currentPage+1 }">&gt;</a></li>
+	            </c:otherwise>
+	            </c:choose>
+            </ul>
+     	</div>
     </div>
 </body>
 </html>

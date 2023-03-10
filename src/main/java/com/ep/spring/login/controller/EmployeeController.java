@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,6 +23,8 @@ public class EmployeeController {
 	
 	@Autowired
 	private EmployeeService eService;
+	@Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	//로그인
 	@RequestMapping("login.ep")
@@ -109,10 +112,43 @@ public class EmployeeController {
 	}
 	
 	//비밀번호 수정
-//	@RequestMapping("updatePwd.ep")
-//	public String updatePwd() {
-//		
-//	}
+	@RequestMapping("updatePwd.ep")
+	public String updatePwd(String empPwd, String updatePwd, String empId, HttpSession session, Employee e) {
+		
+		//비번 일치 확인
+				//입력한 비번 : userPwd
+				//조회된 비번 : encPwd
+				String encPwd = ((Employee)session.getAttribute("loginUser")).getEmpPwd();
+				
+				if(bcryptPasswordEncoder.matches(empPwd, encPwd)) {//비번일치
+					//바꿀 비번 암호화
+					String encPwd2 = bcryptPasswordEncoder.encode(updatePwd);
+					e.setEmpPwd(encPwd2);
+					e.setEmpId(empId);
+					
+					int result = eService.updatePwd(e);
+					
+					if(result>0) {//변경성공
+						
+						Employee updateUser = eService.loginEmployee(e);
+						session.setAttribute("loginUser", updateUser);
+						session.setAttribute("alertMsg", "비밀번호 변경이 완료되었습니다");
+						
+						return "redirect:myPage.ep";
+						
+					}else {//변경실패
+						
+						session.setAttribute("alertMsg", "비밀번호 변경을 실패하였습니다");
+						return "redirect:myPage.ep";
+						
+					}
+					
+					
+				}else {//비번틀림
+					session.setAttribute("alertMsg", "비밀번호를 잘못 입력하셨습니다");
+					return "redirect:myPage.ep";
+				}
+	}
 	
 
 }

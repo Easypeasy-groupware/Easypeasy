@@ -13,7 +13,7 @@ public interface EmployeeService {
 	// 비밀번호 찾기
 	
 	// 비밀번호 수정
-	
+	int updatePwd(Employee e);
 	
 	// 마이페이지 조회
 	//Employee selectEmployee(Employee e);

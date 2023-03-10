@@ -98,7 +98,7 @@
 			alertify.alert('${alertMsg}');
 		</script>
 		<c:remove var="alertMsg" scope="session"/>
-	</c:if> 
+	</c:if>
 	 
 	
     <div class="wrap">

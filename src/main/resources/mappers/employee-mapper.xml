@@ -57,5 +57,12 @@
 		       address = #{address}
 		 where emp_no = #{empNo}
 	</update>
+	
+	<update id="updatePwd">
+		update
+		       employee
+		   set emp_pwd = #{empPwd}
+		 where emp_id = #{empId}
+	</update>
 
 </mapper>
