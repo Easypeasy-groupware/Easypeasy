@@ -8,7 +8,7 @@ public interface EmployeeService {
 	Employee loginEmployee(Employee e);
 	
 	// 아이디 찾기
-	int findId(Employee e);
+	Employee findId(Employee e);
 	
 	// 비밀번호 찾기
 	

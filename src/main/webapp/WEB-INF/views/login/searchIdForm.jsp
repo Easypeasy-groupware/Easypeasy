@@ -38,6 +38,7 @@
             margin: auto;
             padding-top: 80px;
             border-collapse: separate;
+            
         }
         .button{
             height: 40px;
@@ -50,7 +51,10 @@
             width: 220px;
             height: 20px;
         }
-
+        .inputCodeForm{display:none;}
+		.cCode{width:65%; display:inline-block;}
+        .sendAgain{border:0; width:33%; display:inline-block;}
+        
     </style>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -85,37 +89,87 @@
 
         <div class="login-area">
             
+			<div class="loginForm">
+				<div class="idTitle"><b>아이디 찾기</b></div>
+				
+				<div class="tb">
+                이름<br>
+                <input type="text" class="ip" id="empName" required placeholder="이름"> <br><br>
+                
+                휴대폰 번호<br>
+                <input type="text" class="ip" id="phone" required placeholder="휴대폰 번호(-제외)">
+                
+                <br><br>
+                <button type="button" class="button" id="sendSms" onclick="sms();">인증번호 받기</button> <br><br>
 
-            <form action="findId.ep" method="post" class="loginForm" >
-                <div class="idTitle"><b>아이디 찾기</b></div>
-                <table class="tb">
-                <tr>
-                    <td>이름</td>
-                </tr>
-                <tr>
-                    <td>
-                        <input class="ip" type="text" name="empName" required placeholder="이름">
-                    </td>
-                </tr>
-                <tr>
-                    <td>휴대폰 번호</td>
-                </tr>
-                <tr>
-                    <td>
-                        <input class="ip" type="text" name="phone" required placeholder="휴대폰 번호(-제외)">
-                    </td>
-                </tr>
-            </table>
-            <br>
+              
+                <div class="inputCodeForm">
+                    <input type="text" class="cCode cInput" placeholder="6자리 입력" required>
+                    <button class="sendAgain cButton" onclick="sms();">재발송</button>
+
+                    <button class="submitCode cButton">확인</button>
+                </div>
+
+                           
+
+            	</div>
+			</div>
+			
             
-            <button type="submit" class="button"><b>인증번호받기</b></button>
-            </form>
 
-
+			
             
         </div>
 
     </div>
+    
+    <script>
+		var code = "";
+		var memId = "";
+		function sms(){
+			var $empName = $("#empName").val();
+			var $phone = $("#phone").val();
+			$.ajax({
+				url: "findId.ep",
+				data:{empName:$empName,
+					  phone:$phone
+				},
+				type:"post",
+				success:function(result){
+					if(result=="NNNNN"){//가입되지않은회원
+						alert("가입된 회원이 아닙니다");
+						
+					}else{//가입된회원						
+						$("#sendSms").css("background", "gray").css("border-color", "gray");
+                        $("#sendSms").attr("disabled", true);
+						$(".inputCodeForm").show();
+						code = result.key;
+                        empId = result.empId;
+					}
+				},
+				error: function(){
+					console.log("연락처로 아이디찾기 ajax 통신 실패");
+				}
+			});
+		}
+		
+		$(function(){
+    		$(".sendAgain").on("click", $(".sendAgain"), function(){
+    			$(".cCode").val('');
+    			alert("인증코드가 재발송되었습니다.");
+    		})
+    		$(".submitCode").on("click", $(".submitCode"), function(){
+    			if(code == $(".cCode").val()) {
+    				$(".cCode").val('');
+    				location.href = '<%=contextPath%>/searchId.me?memId=' + memId + '&memName=' + $("#userName").val();
+    			}else {
+    				$(".cCode").val('');
+    				alert("인증코드가 일치하지 않습니다.");
+    			}
+    			  
+             })
+    	})
+	</script>
 
 
 </body>

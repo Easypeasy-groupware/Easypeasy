@@ -14,7 +14,7 @@ public class EmployeeDao {
 	}
 	
 	//아이디찾기
-	public int findId(SqlSessionTemplate sqlSession, Employee e) {
+	public Employee findId(SqlSessionTemplate sqlSession, Employee e) {
 		return sqlSession.selectOne("employeeMapper.findId", e);
 	}
 	
