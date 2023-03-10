@@ -22,5 +22,10 @@ public class EmployeeDao {
 	public int updateEmployee(SqlSessionTemplate sqlSession, Employee e) {
 		return sqlSession.update("employeeMapper.updateEmployee", e);
 	}
+	
+	//비번수정
+	public int updatePwd(SqlSessionTemplate sqlSession, Employee e) {
+		return sqlSession.update("employeeMapper.updatePwd", e);
+	}
 
 }

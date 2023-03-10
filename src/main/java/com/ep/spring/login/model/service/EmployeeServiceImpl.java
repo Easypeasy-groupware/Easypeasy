@@ -33,6 +33,12 @@ public class EmployeeServiceImpl implements EmployeeService{
 		return eDao.updateEmployee(sqlSession, e);
 	}
 
+	@Override //비밀번호 변경
+	public int updatePwd(Employee e) {
+		
+		return eDao.updatePwd(sqlSession, e);
+	}
+
 	
 	
 	
