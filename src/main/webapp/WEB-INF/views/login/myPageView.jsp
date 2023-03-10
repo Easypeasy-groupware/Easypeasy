@@ -69,7 +69,7 @@
         <div class="title"><b>마이페이지</b><hr></div>
 
         <div class="box">
-            <a href="updateMP.ep"><button class="button">수정하기</button></a>
+            <a href="updateForm.mp"><button class="button">수정하기</button></a>
         <div class="img">
             <img src="<c:out value='${ loginUser.empProfile }' default='resources/profile_images/defaultProfile.png' />">
         </div>

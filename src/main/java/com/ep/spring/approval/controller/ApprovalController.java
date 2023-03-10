@@ -32,9 +32,6 @@ public class ApprovalController {
 		
 		model.addAttribute("list1", list1);
 		model.addAttribute("list2", list2);
-		System.out.println(list1);
-		System.out.println(list2);
-
 		
 		return "approval/appMain";
 	}
@@ -52,6 +49,24 @@ public class ApprovalController {
 		map.put("list2", list2);
 		
 		return new Gson().toJson(map);
+	}
+	
+	@RequestMapping("enrollForm.ap")
+	public String enrollForm(int formCode, Model model, HttpSession session) {
+				
+		if(formCode == 1) {
+			return "approval/appDraftEnrollForm";
+		}else if(formCode == 2) {
+			return "approval/appProposalEnrollForm";
+		}else if(formCode == 3) {
+			return "approval/appVacationEnrollForm";
+		}else if(formCode == 4) {
+			return "approval/appOvertimeEnrollForm";
+		}else {
+			session.setAttribute("alertMsg", "페이지 요청오류");
+			return "redirect:/";
+		}
+		
 	}
 	
 	

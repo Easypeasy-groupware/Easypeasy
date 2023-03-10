@@ -39,7 +39,6 @@
 			  , status
 		  from employee
 		 where emp_id = #{empId}
-		   and emp_pwd = #{empPwd}
 		   and ent_yn = 'N'
 	</select>
 	
@@ -50,5 +49,13 @@
 		 where emp_name = #{empName}
 		   and phone = #{phone}
 	</select>
+	
+	<update id="updateEmployee">
+		update 
+			    employee
+		   set phone = #{phone},
+		       address = #{address}
+		 where emp_no = #{empNo}
+	</update>
 
 </mapper>

@@ -39,6 +39,12 @@ public class EmployeeController {
 		
 	}
 	
+	// 메인페이지 이동
+	@RequestMapping("main.ep")
+	public String mainPage() {
+		return "common/main";
+	}
+	
 	//아이디 찾기 폼 응답
 	@RequestMapping("findIdForm.ep")
 	public String findIdForm() {
@@ -71,14 +77,42 @@ public class EmployeeController {
 	@RequestMapping("myPage.ep")
 	public String selectEmployee(Employee e) {
 		
-		return "login/myPageView";
-	}
-	
-	//마이페이지 정보수정
-	@RequestMapping("updateMP.ep")
-	public String updateMyPage() {
 		return "login/myPageUpdateForm";
 	}
+	
+	
+	/*
+	 
+	@RequestMapping("updateForm.mp")
+	public String updateMyPage() {
+		return "login/myPageUpdateForm";
+		
+	}
+	 */
+	
+	//마이페이지 정보수정
+	@RequestMapping("update.mp")
+	public String updateEmployee(Employee e, HttpSession session) {
+		int result = eService.updateEmployee(e);
+		
+		if(result>0) {//정보수정 성공
+			Employee updateUser = eService.loginEmployee(e);
+			session.setAttribute("loginUser", updateUser);
+			session.setAttribute("alertMsg", "정보 수정이 완료되었습니다.");
+			
+			return "redirect:myPage.ep";
+		}else {//정보수정 실패
+			session.setAttribute("alertMsg", "수정에 실패했습니다. 다시 시도해주세요.");
+			
+			return "redirect:myPage.ep";
+		}
+	}
+	
+	//비밀번호 수정
+//	@RequestMapping("updatePwd.ep")
+//	public String updatePwd() {
+//		
+//	}
 	
 
 }
