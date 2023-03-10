@@ -24,6 +24,7 @@
     .wrap *{
         /*border:solid 1px black;*/
         box-sizing:border-box;
+        z-index:10000;
     }
     .wrap{width:1200px; margin:auto; box-sizing:border-box;}
     .header{position:fixed; top:0; background:white;}
@@ -146,8 +147,6 @@
                 <li><a href="">일정</a></li>
                 <li><a href="">예약</a></li>
                 <li><a href="list.db">자료실</a></li>
-                <li><a href="">게시판</a></li>
-                <li><a href="">자료실</a></li>
                 <li><a href="list.bo">게시판</a></li>
                 <li><a href="favorite.add">주소록</a></li>
                 <li><a href="list.org">조직도</a></li>
