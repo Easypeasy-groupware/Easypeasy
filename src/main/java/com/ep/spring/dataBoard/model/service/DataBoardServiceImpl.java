@@ -20,13 +20,13 @@ public class DataBoardServiceImpl implements DataBoardService {
 	private DataBoardDao dbDao;
 
 	@Override
-	public int selectListCount() {
-		return 0;
+	public int selectDbListCount() {
+		return dbDao.selectDbListCount(sqlSession);
 	}
 
 	@Override
-	public ArrayList<DataBoard> selectList(PageInfo pi) {
-		return null;
+	public ArrayList<DataBoard> selectDbList(PageInfo pi) {
+		return dbDao.selectDbList(sqlSession, pi);
 	}
 
 	@Override

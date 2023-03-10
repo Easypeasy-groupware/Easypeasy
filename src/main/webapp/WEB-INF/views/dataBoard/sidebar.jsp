@@ -19,17 +19,16 @@
 </head>
 <style>
      #sidebar{
+     	border-right: 2px solid rgb(185, 187, 221);
+     	height: 1000px;
         width: 200px;
         float: left;
-        padding-left: 30px;
-        padding-top: 5px;
+        padding-left: 15px;
+        padding-top: 15px;
     }
     #sidebar a{
         color: black;
         text-decoration: none;
-    }
-    #slide2, #slide3, #slide2-1-1, #slide2-2-1, #slide3-1-1{
-        display: none;
     }
 </style>
 <body>
@@ -39,61 +38,6 @@
         </h5>
         <br>
         <div id="slide1">전사 자료실</div>
-        
     </div>
-
-    <script>
-        $("#slide1").click(function(){
-            const $s = $(this).nextAll("div");
-
-            if($s.css("display") == "none"){
-                $s.siblings("#slide2, #slide3").slideUp();
-                $("#upDown1").attr("class", "fas fa-regular fa-angle-up")
-                $s.slideDown();
-            }else {
-                $("#upDown1").attr("class", "fas fa-regular fa-angle-down")
-                $s.slideUp();
-            }
-        })
-
-        $("#slide2-1").click(function(){
-            const $s = $(this).next("div");
-
-            if($s.css("display") == "none"){
-                $s.siblings("#slide2-1-1").slideUp();
-                $("#upDown2-1").attr("class", "fas fa-regular fa-angle-up")
-                $s.slideDown();
-            }else {
-                $("#upDown2-1").attr("class", "fas fa-regular fa-angle-down")
-                $s.slideUp();
-            }
-        })
-
-        $("#slide2-2").click(function(){
-            const $s = $(this).next("div");
-
-            if($s.css("display") == "none"){
-                $s.siblings("#slide2-2-1").slideUp();
-                $("#upDown2-2").attr("class", "fas fa-regular fa-angle-up")
-                $s.slideDown();
-            }else {
-                $("#upDown2-2").attr("class", "fas fa-regular fa-angle-down")
-                $s.slideUp();
-            }
-        })
-
-        $("#slide3-1").click(function(){
-            const $s = $(this).next("div");
-
-            if($s.css("display") == "none"){
-                $s.siblings("#slide3-1-1").slideUp();
-                $("#upDown3").attr("class", "fas fa-regular fa-angle-up")
-                $s.slideDown();
-            }else {
-                $("#upDown3").attr("class", "fas fa-regular fa-angle-down")
-                $s.slideUp();
-            }
-        })
-    </script>
 </body>
 </html>

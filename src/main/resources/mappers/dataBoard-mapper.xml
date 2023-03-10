@@ -2,4 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="dataBoardMapper">
 
+	<resultMap id="dataBoardResult" type="DataBoard">
+		<id column="db_no" property="dbNo" />
+		<result column="db_title" property="dbTitle" />
+		<result column="count" property="count" />
+		<result column="create_date" property="createDate" />
+	</resultMap>
+
+	<select id="selectDbListCount" resultType="_int">
+		select
+			   count(*)
+		  from data_board
+		 where db_status = 'Y'
+	</select>
+	
+	<select id="selectDbList" resultMap="dataBoardResult">
+		select
+			    db_no
+			  , db_title
+			  , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+			  , count
+		   from data_board
+		  where db_status = 'Y'
+		  order
+		     by db_no desc
+	</select>
+
 </mapper>

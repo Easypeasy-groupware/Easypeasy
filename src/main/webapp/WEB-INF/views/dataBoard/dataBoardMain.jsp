@@ -12,32 +12,17 @@
         box-sizing: border-box;
     }
     
-    .outer{
-        width: 1200px;
-        margin: auto;
-    }
-    
     #content{
-        border-left: 1px solid lightgray;
+    	position: relative;
         width: 1000px;
         float: left;
         box-sizing: border-box;
-    }
-
-    #sidebar{
-        width: 200px;
-        float: left;
-        padding-left: 10px;
-        padding-top: 10px;
-    }
-    #sidebar a{
-        color: black;
-        text-decoration: none;
+        z-index: 1;
     }
 
     #title h5{
         padding-left: 25px;
-        padding-top: 10px;
+        padding-top: 15px;
         float: left		!important;
     }
     .input-group{
@@ -51,65 +36,107 @@
         width: 950px;
         text-align: center;
     }
+    
+    /* 페이징바 */
+    #paging {
+	    text-align: center;
+	    display: inline-block;
+	    padding-left: 0;
+	}
+    #paging li {
+	    text-align: center;
+	    float: left;
+	    list-style: none;
+	    border-radius: 10px;
+	    margin: 2px;
+	    background-color: rgb(234, 234, 234);
+	}
+    #paging li a {
+    	display: block;
+    	font-size: 12px;
+    	color: black;
+    	padding: 5px 10px;
+    	box-sizing: border-box;
+    	text-decoration-line:none;
+    }
+    #paging li.on {
+    	background:rgb(166, 184, 145);
+    }
+    #paging li.on a {
+    	color: white;
+    }
 </style>
 <body>
 
 	<jsp:include page="../common/header.jsp"/>
 
-	<div class="outer">
-
-        <div id="sidebar">
-            <jsp:include page="sidebar.jsp"/>
-        </div>
-        <div id="content">
-            <div id="title">
-                <span>
-                    <h5>전사 자료실</h5>
-                </span>
-                <form action="" method="Get">
-                    <div class="input-group mb-3 ">
-                        <input type="text" class="form-control" placeholder="검색어를 입력해주세요" required>
-                        <div class="input-group-append">
-                            <button class="btn btn-secondary" type="submit">검색</button>
-                        </div>
+    <jsp:include page="sidebar.jsp"/>
+    
+    <div id="content">
+        <div id="title">
+            <span>
+                <h5>전사 자료실</h5>
+            </span>
+            <form action="" method="Get">
+                <div class="input-group mb-3 ">
+                    <input type="text" class="form-control" placeholder="검색어를 입력해주세요" required>
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" type="submit">검색</button>
                     </div>
-                </form>
-            </div>
-            <br>
-            <a class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white; margin-left: 920px; margin-bottom: -15px;" href="enrollForm.da">글쓰기</a>
-            <br><br>
-            <table align="center" class="table table-hover table-sm">
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>제목</th>
-                        <th>등록일</th>
-                        <th>조회수</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>5</td>
-                        <td>브로셔</td>
-                        <td>2023-03-02</td>
-                        <td>22</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>소개자료</td>
-                        <td>2023-03-02</td>
-                        <td>20</td>
-                    </tr>
-                </tbody>
-            </table>
+                </div>
+            </form>
         </div>
         <br>
-
+        <a class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white; margin-left: 920px; margin-bottom: -15px;" href="enrollForm.db">글쓰기</a>
+        <br><br>
+        <table align="center" class="table table-hover table-sm">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>등록일</th>
+                    <th>조회수</th>
+                </tr>
+            </thead>
+            <tbody>
+            	<c:forEach var="db" items="${ list }">
+                 <tr>
+                     <td>${ db.dbNo }</td>
+                     <td>${ db.dbTitle }</td>
+                     <td>${ db.createDate }</td>
+                     <td>${ db.count }</td>
+                 </tr>
+             </c:forEach>
+            </tbody>
+        </table>
+        <br>
+        
         <!-- 페이징 처리 -->
-        <div id="pagingArea">
-
-        </div>
-
+     	<div id="pagingArea" align="center">
+			<ul id="paging">
+	           	<c:choose>
+	           	<c:when test="${ pi.currentPage eq 1 }">
+	            	<li><a href="#">&lt;</a></li>
+	            </c:when>
+	            <c:otherwise>
+	            	<li><a href="list.db?cpage=${ pi.currentPage-1 }">&lt;</a></li>
+	            </c:otherwise>
+	            </c:choose>
+	                
+	            <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	            	<li><a href="list.db?cpage=${ p }">${ p }</a></li>
+	            </c:forEach>
+	                
+	            <c:choose>
+	            <c:when test="${ pi.currentPage eq pi.maxPage }">
+	            	<li><a href="#">&gt;</a></li>
+	            </c:when>
+	            <c:otherwise>
+	            	<li><a href="list.db?cpage=${ pi.currentPage+1 }">&gt;</a></li>
+	            </c:otherwise>
+	            </c:choose>
+            </ul>
+     	</div>
     </div>
 </body>
 </html>
