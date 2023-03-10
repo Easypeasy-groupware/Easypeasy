@@ -71,8 +71,14 @@ public class EmployeeController {
 	@RequestMapping("myPage.ep")
 	public String selectEmployee(Employee e) {
 		
-		
 		return "login/myPageView";
 	}
+	
+	//마이페이지 정보수정
+	@RequestMapping("updateMP.ep")
+	public String updateMyPage() {
+		return "login/myPageUpdateForm";
+	}
+	
 
 }
