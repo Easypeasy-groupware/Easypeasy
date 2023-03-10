@@ -28,4 +28,8 @@ public class EmployeeDao {
 		return sqlSession.update("employeeMapper.updatePwd", e);
 	}
 
+	//프로필 사진변경
+	public int updateProfile(SqlSessionTemplate sqlSession, Employee e) {
+		return sqlSession.update("employeeMapper.updateProfile", e);
+	}
 }

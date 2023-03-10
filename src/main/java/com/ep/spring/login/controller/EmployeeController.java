@@ -1,22 +1,19 @@
 package com.ep.spring.login.controller;
 
-import java.util.HashMap;
-import java.util.Random;
+import java.io.File;
 
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.ep.spring.common.template.FileUpload;
 import com.ep.spring.login.model.service.EmployeeService;
 import com.ep.spring.login.model.vo.Employee;
-
-import net.nurigo.sdk.message.model.Message;
-import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
-import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 
 @Controller
 public class EmployeeController {
@@ -148,6 +145,29 @@ public class EmployeeController {
 					session.setAttribute("alertMsg", "비밀번호를 잘못 입력하셨습니다");
 					return "redirect:myPage.ep";
 				}
+	}
+	
+	//프로필 사진변경
+	@ResponseBody
+	@RequestMapping("uploadProfile.me")
+	public void updateProfile(MultipartFile uploadFile, Employee e, 
+			String originalFile, HttpSession session) {
+		
+		System.out.println(uploadFile);
+		if(uploadFile != null) {
+			String saveFilePath = FileUpload.saveFile(uploadFile, session, "resources/profile_images/");
+			e.setEmpProfile(saveFilePath);
+			int result = eService.updateProfile(e);
+			
+			if(result>0) {// 변경성공
+				if(!originalFile.equals("")) {
+					new File(session.getServletContext().getRealPath(originalFile)).delete(); //기존의 파일 삭제
+				}
+				session.setAttribute("loginUser", eService.loginEmployee(e));
+				
+			}
+		}
+		
 	}
 	
 
