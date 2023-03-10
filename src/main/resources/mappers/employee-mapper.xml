@@ -50,5 +50,13 @@
 		 where emp_name = #{empName}
 		   and phone = #{phone}
 	</select>
+	
+	<update id="updateEmployee">
+		update 
+			    employee
+		   set phone = #{phone},
+		       address = #{address}
+		 where emp_no = #{empNo}
+	</update>
 
 </mapper>

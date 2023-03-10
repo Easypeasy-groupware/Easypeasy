@@ -18,7 +18,7 @@ public interface EmployeeService {
 	//Employee selectEmployee(Employee e);
 	
 	// 마이페이지 수정
-	
+	int updateEmployee(Employee e);
 	
 
 }

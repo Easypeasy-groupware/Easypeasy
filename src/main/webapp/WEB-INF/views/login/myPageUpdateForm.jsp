@@ -100,7 +100,7 @@
         </div>
 
         <div class="updateForm">
-		<form action="" method="">
+		<form action="update.mp" method="post">
                     <label for="empName">이름 :</label>
                     <input type="text" class="form-control" id="empName" name="empName" value="${ loginUser.empName }" readonly><br>
                     
