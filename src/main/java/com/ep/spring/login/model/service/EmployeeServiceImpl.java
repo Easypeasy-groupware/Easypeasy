@@ -15,23 +15,31 @@ public class EmployeeServiceImpl implements EmployeeService{
 	@Autowired
 	private EmployeeDao eDao;
 
-	@Override
+	@Override //로그인
 	public Employee loginEmployee(Employee e) {
 		
 		return eDao.loginEmployee(sqlSession, e);
 	}
 
-	@Override
+	@Override //아이디찾기
 	public int findId(Employee e) {
 		
 		return eDao.findId(sqlSession, e);
 	}
 
-	@Override
-	public Employee selectEmployee(Employee e) {
+	@Override //마이페이지 정보수정
+	public int updateEmployee(Employee e) {
 		
-		return null;
+		return eDao.updateEmployee(sqlSession, e);
 	}
+
+	@Override //비밀번호 변경
+	public int updatePwd(Employee e) {
+		
+		return eDao.updatePwd(sqlSession, e);
+	}
+
+	
 	
 	
 

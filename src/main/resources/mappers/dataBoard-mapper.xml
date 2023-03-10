@@ -5,8 +5,11 @@
 	<resultMap id="dataBoardResult" type="DataBoard">
 		<id column="db_no" property="dbNo" />
 		<result column="db_title" property="dbTitle" />
+		<result column="db_content" property="dbContent" />
 		<result column="count" property="count" />
 		<result column="create_date" property="createDate" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
 	</resultMap>
 
 	<select id="selectDbListCount" resultType="_int">
@@ -27,5 +30,65 @@
 		  order
 		     by db_no desc
 	</select>
+	
+	<insert id="insertDataBoard">
+		insert
+		  into data_board
+		  (
+		  	db_no
+		  , db_title
+		  , db_writer
+		  , db_content
+		  , origin_name
+		  , change_name
+		  )
+		  values
+		  (
+		  	seq_dbno.nextval
+		  , #{dbTitle}
+		  , #{dbWriter}
+		  , #{dbContent}
+		  , #{originName}
+		  , #{changeName}
+		  )
+	</insert>
+	
+	<update id="increaseCount">
+		update
+			   data_board
+		   set count = count+1
+		 where db_no = #{dbNo}
+		   and db_status = 'Y'
+	</update>
+	
+	<select id="selectDataBoard" resultMap="dataBoardResult">
+		select
+			   db_no
+			 , db_title
+			 , db_content
+			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+			 , count
+			 , origin_name
+			 , change_name
+		  from data_board
+		 where db_no = #{dbNo}
+	</select>
+	
+	<update id="deleteDataBoard">
+		update
+			   data_board
+		   set db_status = 'N'
+		 where db_no = #{dbNo} 
+	</update>
+	
+	<update id="updateDataBoard">
+		update
+			   data_board
+		   set db_title = #{dbTitle}
+		     , db_content = #{dbContent}
+		     , origin_name = #{originName}
+		     , change_name = #{changeName}
+		 where db_no = #{dbNo}
+	</update>
 
 </mapper>

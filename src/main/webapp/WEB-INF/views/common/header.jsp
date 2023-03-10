@@ -24,7 +24,6 @@
     .wrap *{
         /*border:solid 1px black;*/
         box-sizing:border-box;
-        z-index:10000;
     }
     .wrap{width:1200px; margin:auto; box-sizing:border-box;}
     .header{position:fixed; top:0; background:white;}
@@ -93,14 +92,14 @@
 </head>
 <body>
 
-	<!-- 
+	
 	<c:if test="${ not empty alertMsg }">
 		<script>
 			alertify.alert('${alertMsg}');
 		</script>
 		<c:remove var="alertMsg" scope="session"/>
-	</c:if> 
-	 -->
+	</c:if>
+	 
 	
     <div class="wrap">
 
@@ -110,7 +109,7 @@
             <div id="logoName">EASY PEASY</div>
             <script>
            		$("#logoName").click(function(){
-           			location.href="${pageContext.request.contextPath}";
+           			location.href="main.ep";
            		})
             </script>
             

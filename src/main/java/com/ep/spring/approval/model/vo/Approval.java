@@ -14,7 +14,7 @@ public class Approval {
 	private int appNo;
 	private String enrollDate;
 	private String status;
-	private String tStatus;
+	private String tstatus;
 	private String writerComment;
 	private String title;
 	private String content;
@@ -25,5 +25,6 @@ public class Approval {
 	private int formCode;
 	private int appAmount;
 	private int appSequence;
+	private String empName;
 
 }

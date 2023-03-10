@@ -33,13 +33,12 @@
 			  , emp_profile
 			  , dept_code
 			  , job_code
-			  , hire_date
+			  , to_char(hire_date, 'YYYY"년"MM"월"DD"일"') as "hire_date"
 			  , ent_yn
 			  , ent_date
 			  , status
 		  from employee
 		 where emp_id = #{empId}
-		   and emp_pwd = #{empPwd}
 		   and ent_yn = 'N'
 	</select>
 	
@@ -50,5 +49,20 @@
 		 where emp_name = #{empName}
 		   and phone = #{phone}
 	</select>
+	
+	<update id="updateEmployee">
+		update 
+			    employee
+		   set phone = #{phone},
+		       address = #{address}
+		 where emp_no = #{empNo}
+	</update>
+	
+	<update id="updatePwd">
+		update
+		       employee
+		   set emp_pwd = #{empPwd}
+		 where emp_id = #{empId}
+	</update>
 
 </mapper>
