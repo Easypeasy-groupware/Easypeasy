@@ -117,7 +117,7 @@
                 <ul class="app-menu">
                     <li><button type="button" class="btn btn-outline-secondary btn-lg" data-toggle="modal" data-target="#newApp">새 결재 진행</button></li>
                     <br>
-                    <li><a href="">결재 대기문서</a></li>
+                    <li><a href="recWlist.ap">결재 대기문서</a></li>
                     <li><a href="">참조 대기문서</a></li>
                     <br>
                     <li><b>개인</b></li>

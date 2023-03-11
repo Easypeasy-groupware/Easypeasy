@@ -19,6 +19,7 @@
 		<result column="app_sequence" property="appSequence" /> 
 		<result column="emp_name" property="empName" />
  		<result column="dept_name" property="deptName" />
+ 		<result column="origin_name" property="originName" />
 	</resultMap>
 	
 	<select id="selectMainWList" resultMap="approvalResult">
@@ -94,6 +95,52 @@
 			  join employee e on (a.emp_no = e.emp_no)
 			  join department d on (d.dept_code = e.dept_code)
 			  where a.emp_no = #{empNo}		
+	</select>
+	
+	<select id="selectWaitingAListCount" resultType="_int">
+				select
+						count(*)
+				   from  approval b
+                      join  employee e on (b.emp_no = e.emp_no)
+				  where b.status = '1'
+				    and app_tstatus = '진행중'
+				    and app_no = (
+                                   select app_no
+                                     from app_line
+                                    where ref_whether = 'N'
+                                      and app_status ='미결재'
+                                      and emp_no = #{empNo}
+                                       )
+		            order 
+		               by b.enroll_date  
+			       
+	</select>
+	
+	<select id="selectWatingAList" resultMap="approvalResult">
+				select
+						 app_no
+					   , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+					   , app_tstatus
+					   , title
+					   , b.emp_no
+					   , form_name
+					   , form_code
+					   , app_amount
+					   , app_sequence
+                          , emp_name
+                          , origin_name
+				   from  approval b
+                      join  employee e on (b.emp_no = e.emp_no)
+                      join attachment on (ref_no = app_no)
+				  where b.status = '1'
+				    and app_tstatus = '진행중'
+				    and app_no = (
+                                   select app_no
+                                     from app_line
+                                    where ref_whether = 'N'
+                                      and app_status ='미결재'
+                                      and emp_no = #{empNo}
+                                       )	
 	</select>
 	
 	

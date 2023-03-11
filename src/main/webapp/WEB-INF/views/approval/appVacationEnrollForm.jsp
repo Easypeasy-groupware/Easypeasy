@@ -92,7 +92,7 @@
                                 <label for="writer">기안자</label>
                             </td>
                             <td width="200px;">
-                                <input type="text" value="정형돈" readonly> 
+                                <input type="text" id="writer" value="" readonly> 
                             </td>
                         </tr>
                         <tr>
@@ -100,7 +100,7 @@
                                 <label for="dept">소속</label>
                             </td>
                             <td>
-                                <input type="text" value="부서명" readonly> 
+                                <input type="text" value="" id="dept" readonly> 
                             </td>
                         </tr>
                         <tr>
@@ -116,7 +116,7 @@
                                 <label for="appNo">문서번호</label>
                             </td>
                             <td>
-                                <input type="text" val="23013423" readonly>
+                                <input type="text" val="" id="appChange" name="appChange" readonly>
                             </td>
                         </tr>
                     </table>
@@ -176,6 +176,25 @@
                             </td>
                         </tr>
                         <script>
+                        
+                        // 회원정보흘 가져오는 ajax
+                        $(function(){
+                        	
+                        	$.ajax({
+                        		url:"enrollinfo.ap",
+                        		success:function(a){
+                        			
+                        			$("#writer").val(a.empName);
+                        			$("#dept").val(a.deptName);
+                        			$("#appChange").val(a.appChange);
+                        			
+                        		}, error:function(){
+                        			//console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+                    				console.log("직성용 정보 불러오기 ajax 통신실패");
+                        		}
+                        	});
+                        	
+                        })
                            
                            document.getElementById("enrollDate").value = new Date().toISOString().substring(0, 10);
 
@@ -364,7 +383,7 @@
                </div>
               
                <div class="app-comment" style="font-size:15px;">
-                   <img src="img/user.png" width="30px;" alt=""> &nbsp;정형돈 과장
+                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
                    <br>
                      회사명 | 부서명
                    <br>
@@ -374,7 +393,7 @@
                    <br>
                </div>
                <div class="app-comment" style="font-size:15px;">
-                <img src="img/user.png" width="30px;" alt=""> &nbsp;정형돈 과장
+                <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
                 <br>
                     회사명 | 부서명
                 <br>
@@ -445,13 +464,6 @@
                             </ul>
                             <ul class="appList">
 
-                                <!-- 지울예정 -->
-                                <li>
-                                    <span>결재</span>
-                                    <span>이름</span>
-                                    <span>부서명</span>
-                                    <span><button class="btn btn-outline-secondary addbtn">-</button></span>
-                                </li>
                             </ul>
                         </div>
                     </form>                    
@@ -574,13 +586,6 @@
                             </ul>
                             <ul class="repList">
 
-                                <!-- 지울예정 -->
-                                <li>
-                                    <span>참조</span>
-                                    <span>이름</span>
-                                    <span>부서명</span>
-                                    <span><button class="btn btn-outline-secondary addbtn">-</button></span>
-                                </li>
                             </ul>
                         </div>
                     </form>                   

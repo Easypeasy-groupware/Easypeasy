@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ep.spring.approval.model.dao.ApprovalDao;
 import com.ep.spring.approval.model.vo.Approval;
+import com.ep.spring.common.model.vo.PageInfo;
 
 @Service
 public class ApprovalServiceImpl implements ApprovalService{
@@ -36,97 +37,97 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 	@Override
-	public int selectWaitingAListCount() {
+	public int selectWaitingAListCount(int eNo) {
+
+		return aDao.selectWaitingAListCount(sqlSession, eNo);
+	}
+
+	@Override
+	public ArrayList<Approval> selectWatingAList(PageInfo pi, int eNo) {
+
+		return aDao.selectWatingAList(sqlSession, pi, eNo);
+	}
+
+	@Override
+	public int selectWaitingRListCount(int eNo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public ArrayList<Approval> selectWatingAList() {
+	public ArrayList<Approval> selectWaitingRList(int eNo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int selectWaitingRListCount() {
+	public int selectSendListCount(int eNo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public ArrayList<Approval> selectWaitingRList() {
+	public ArrayList<Approval> selectSendList(int eNo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int selectSendListCount() {
+	public int selectTempListCount(int eNo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public ArrayList<Approval> selectSendList() {
+	public ArrayList<Approval> selectTempList(int eNo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int selectTempListCount() {
+	public int selectApprovalListCount(int eNo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public ArrayList<Approval> selectTempList() {
+	public ArrayList<Approval> selectApprovalList(int eNo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int selectApprovalListCount() {
+	public int selectRefListCount(int eNo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public ArrayList<Approval> selectApprovalList() {
+	public ArrayList<Approval> selectRefList(int eNo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int selectRefListCount() {
+	public int selectDeptSendListCount(int eNo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public ArrayList<Approval> selectRefList() {
+	public ArrayList<Approval> selectDeptSendList(int eNo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int selectDeptSendListCount() {
+	public int selectDeptRefListCount(int eNo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public ArrayList<Approval> selectDeptSendList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int selectDeptRefListCount() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public ArrayList<Approval> selectDeptRefList() {
+	public ArrayList<Approval> selectDeptRefList(int eNo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

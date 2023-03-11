@@ -11,10 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ep.spring.approval.model.service.ApprovalService;
 import com.ep.spring.approval.model.vo.Approval;
+import com.ep.spring.common.model.vo.PageInfo;
+import com.ep.spring.common.template.Pagination;
 import com.ep.spring.login.model.vo.Employee;
 import com.google.gson.Gson;
 
@@ -72,7 +75,7 @@ public class ApprovalController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="enrolldraftinfo.ap", produces="application/json; charset=UTF-8")
+	@RequestMapping(value="enrollinfo.ap", produces="application/json; charset=UTF-8")
 	public String selectInfoDraft(HttpSession session, Model model) {
 		
 		String currentTime = new SimpleDateFormat("yyMMdd").format(new Date());
@@ -88,6 +91,18 @@ public class ApprovalController {
 		
 		return new Gson().toJson(a);
 		
+	}
+	
+	@RequestMapping("recWlist.ap")
+	public String selectRecWList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+		
+		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		int listCount = aService.selectWaitingAListCount(eNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Approval> list = aService.selectWatingAList(pi, eNo);
+		model.addAttribute("list", list);
+		
+		return "approval/appRecWatingListView";
 	}
 	
 	

@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 	<style>
         .outer1{
+            padding:50px;
             width:1000px;
             margin:auto;
             float:left;
@@ -26,7 +27,7 @@
                 <option value="">전체기간</option>
                 <option value="">1개월</option>
                 <option value="">6개월</option>
-                <option value="">1년년</option>
+                <option value="">1년</option>
             </select>
             <select name="option" id="">
                 <option value="">기안자</option>
@@ -54,28 +55,66 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                             <input type="checkbox" name="" id="">
-                        </td>
-                        <td>w</td>
-                        <td>q</td>
-                        <td>g</td>
-                        <td>g</td>
-                        <td><s></s></td>
-                    </tr>
+                	<c:choose>
+                		<c:when test="${empty list}">
+							<tr>
+								<td colspan='6'>
+									결재대기중인 문서가 없습니다.
+								</td>
+							</tr>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<c:forEach var="a" items="list">
+			                    <tr>
+			                        <td>
+			                             <input type="checkbox" name="" id="">
+			                        </td>
+			                        <td>${a.enrollDate}</td>
+			                        <td>${a.formName }</td>
+			                        <c:choose>
+				                        <c:when test="${a.formCode == 3 || a.formCode == 4 }">
+				                        	<td>${a.formName }</td>
+				                        </c:when>
+				                        <c:otherwise>
+				                        	<td>${a.title }</td>
+				                        </c:otherwise>
+			                        </c:choose>
+			                        <td>
+			                        	<c:if test="${not empty a.originName}">
+			                        		<span><img src="resources/common_images/attachment.png" width="10px;"></span>
+			                        	</c:if>
+			                        </td>
+			                        <td>${s.empName }</td>
+			                    </tr>
+		                    </c:forEach>
+	                    </c:otherwise>
+                    </c:choose>
                 </tbody>
             </table>
             <br><br>
             <div align="center">
                 <ul id="paging">
-                    <li><a href=""> < </a></li>
-                    <li class='on'><a href=""> 1 </a></li>
-                    <li><a href=""> 2 </a></li>
-                    <li><a href=""> 3 </a></li>
-                    <li><a href=""> 4 </a></li>
-                    <li><a href=""> 5 </a></li>
-                    <li><a href=""> > </a></li>
+                	<c:choose>
+                		<c:when test="${pi.currentPage eq 1 }">
+                			<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+                		</c:when>
+                		<c:otherwise>
+                			<li class="page-item"><a class="page-link" href="recWlist.ap?cpage=${pi.currentPage -1 }">&lt;</a>  </li> 
+                		</c:otherwise>
+                	</c:choose>
+                    
+                    <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+                    	<li class="page-item"><a class="page-link" href="recWlist.ap?cpage=${p }">${p }</a></li>
+                    </c:forEach>
+                    
+                    <c:choose>
+                    	<c:when test="${pi.currentPage eq pi.maxPage }">
+	                   		<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<li class="page-item"><a class="page-link" href="recWlist.ap?cpage=${pi.currentPage + 1 }">&gt;</a></li>
+	                    </c:otherwise>
+                    </c:choose>
                 </ul>
             </div>
             <script>

@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 	<style>
         .outer1{
+            padding:50px;
             width:1000px;
             margin:auto;
             float:left;

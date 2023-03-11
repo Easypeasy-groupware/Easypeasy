@@ -28,5 +28,6 @@ public class Approval {
 	private String empName;
 	private String appChange;
 	private String deptName;
+	private String originName;
 
 }

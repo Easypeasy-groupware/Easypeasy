@@ -3,6 +3,7 @@ package com.ep.spring.approval.model.service;
 import java.util.ArrayList;
 
 import com.ep.spring.approval.model.vo.Approval;
+import com.ep.spring.common.model.vo.PageInfo;
 
 public interface ApprovalService {
 	
@@ -17,36 +18,36 @@ public interface ApprovalService {
 	Approval selectEnrollInfo(int eNo);
 	
 	// 2. 결재대기문서 조회용 서비스(페이징)
-	int selectWaitingAListCount();
-	ArrayList<Approval> selectWatingAList();
+	int selectWaitingAListCount(int eNo);
+	ArrayList<Approval> selectWatingAList(PageInfo pi, int eNo);
 	
 	// 3. 참조대기문서 조회용 서비스(페이징)
-	int selectWaitingRListCount();
-	ArrayList<Approval> selectWaitingRList();
+	int selectWaitingRListCount(int eNo);
+	ArrayList<Approval> selectWaitingRList(int eNo);
 	
 	// 4. 기안문서함 조회용 서비스(페이징)
-	int selectSendListCount();
-	ArrayList<Approval> selectSendList();
+	int selectSendListCount(int eNo);
+	ArrayList<Approval> selectSendList(int eNo);
 	
 	// 5. 임시저장함 조회용 서비스(페이징)
-	int selectTempListCount();
-	ArrayList<Approval> selectTempList();
+	int selectTempListCount(int eNo);
+	ArrayList<Approval> selectTempList(int eNo);
 	
 	// 6. 결재문서함 조회용 서비스(페이징)
-	int selectApprovalListCount();
-	ArrayList<Approval> selectApprovalList();
+	int selectApprovalListCount(int eNo);
+	ArrayList<Approval> selectApprovalList(int eNo);
 	
 	// 7. 참조문서함 조회용 서비스(페이징)
-	int selectRefListCount();
-	ArrayList<Approval> selectRefList();
+	int selectRefListCount(int eNo);
+	ArrayList<Approval> selectRefList(int eNo);
 	
 	// 8. 부서용 기안완료함 조회용 서비스(페이징)
-	int selectDeptSendListCount();
-	ArrayList<Approval> selectDeptSendList();
+	int selectDeptSendListCount(int eNo);
+	ArrayList<Approval> selectDeptSendList(int eNo);
 	
 	// 9. 부서용 부서참조함 조회용 서비스(페이징)
-	int selectDeptRefListCount();
-	ArrayList<Approval> selectDeptRefList();
+	int selectDeptRefListCount(int eNo);
+	ArrayList<Approval> selectDeptRefList(int eNo);
 	
 
 	
