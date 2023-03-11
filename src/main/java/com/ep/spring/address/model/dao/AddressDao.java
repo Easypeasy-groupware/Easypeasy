@@ -21,7 +21,7 @@ public class AddressDao {
 		int limit = pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("addressMapper.selectEntEmpListCount", null, rowBounds); 
+		return (ArrayList)sqlSession.selectList("addressMapper.selectEntEmpList", null, rowBounds); 
 	}
 
 }

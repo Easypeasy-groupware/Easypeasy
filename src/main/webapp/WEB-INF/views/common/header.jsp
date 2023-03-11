@@ -124,16 +124,17 @@
                 <!--알람이 있을때-->
                 <!--<img src="resources/common_images/bell-si-alarm.png" class="alarm-icon">-->
             </div>
-            <div id="empName">정형돈 과장님</div>
+            
+           	<div id="empName">${ loginUser.empName } ${ loginUser.jobName }님</div>
             <div class="dropdown-wrap">
-
-                <img src="resources/common_images/default_profile.png" width="45px">
+                <img src="<c:out value='${ loginUser.empProfile }' default='resources/common_images/default_profile.png' />" width="45px">
 
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="myPage.ep">정보 수정</a>
                     <a class="dropdown-item" href="">로그아웃</a>
                 </div>
             </div>
+            
 
         </div>
         
@@ -160,3 +161,4 @@
     <div class="outer">
 </body>
 </html>
+	

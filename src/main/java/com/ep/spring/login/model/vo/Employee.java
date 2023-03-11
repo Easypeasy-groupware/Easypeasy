@@ -23,7 +23,9 @@ public class Employee {
 	private String phone;
 	private String empProfile;
 	private String deptCode;
+	private String deptName;
 	private String jobCode;
+	private String jobName;
 	private String hireDate;
 	private String entYn;
 	private String entDate;

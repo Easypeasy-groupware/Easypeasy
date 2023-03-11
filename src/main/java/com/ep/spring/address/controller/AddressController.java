@@ -29,9 +29,16 @@ public class AddressController {
 		return "address/newPersonalAddress";
 	}
 	
-	
+	/** 사내전체주소록 리스트
+	 * @author 이수연
+	 * @param currentPage
+	 * @param mv
+	 * @return mv
+	 */
 	@RequestMapping("internalEnt.add")
-	public ModelAndView selectEntEmplList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
+	public ModelAndView selectEntEmplList(@RequestParam(value="cpage", defaultValue="1") int currentPage, String user, ModelAndView mv) {
+		
+		System.out.println(user);
 		
 		int listCount = aService.selectEntEmpListCount();
 		

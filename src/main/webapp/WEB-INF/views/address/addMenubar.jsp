@@ -91,7 +91,7 @@
         </div>
 
         <div class="add-type">
-            <a href="#" class="add-in"><b>사내주소록</b></a>
+            <a href="internal.add?user=${loginUser.empNo}" class="add-in"><b>사내주소록</b></a>
         </div>
         <ul class="submenu">
             <li><a href="internal.add?dept=as">- 경영지원팀</a></li>
