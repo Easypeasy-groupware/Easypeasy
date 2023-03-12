@@ -92,26 +92,22 @@ public class ApprovalServiceImpl implements ApprovalService{
 
 	@Override
 	public int selectRefListCount(int eNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return aDao.selectRefListCount(sqlSession, eNo);
 	}
 
 	@Override
 	public ArrayList<Approval> selectRefList(PageInfo pi, int eNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return aDao.selectRefList(sqlSession, pi, eNo);
 	}
 
 	@Override
 	public int selectDeptSendListCount(int eNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return aDao.selectDeptSendListCount(sqlSession, eNo);
 	}
 
 	@Override
 	public ArrayList<Approval> selectDeptSendList(PageInfo pi, int eNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return aDao.selectDeptSendList(sqlSession, pi, eNo);
 	}
 
 	@Override

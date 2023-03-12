@@ -83,4 +83,26 @@ public class ApprovalDao {
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectRecList", empNo, rowBounds);
 	}
 	
+	public int selectRefListCount(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("approvalMapper.selectRefListCount", empNo);
+	}
+	
+	public ArrayList<Approval> selectRefList(SqlSessionTemplate sqlSession, PageInfo pi, int empNo){
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds();
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectRefList", empNo, rowBounds);
+	}
+	
+	public int selectDeptSendListCount(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("approvalMapper.selectDeptSendListCount", empNo);
+	}
+	
+	public ArrayList<Approval> selectDeptSendList(SqlSessionTemplate sqlSession, PageInfo pi, int empNo){
+		int offset = (pi.getCurrentPage() -1)* pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds();
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectDeptSendList", empNo, rowBounds);
+	}
+	
 }

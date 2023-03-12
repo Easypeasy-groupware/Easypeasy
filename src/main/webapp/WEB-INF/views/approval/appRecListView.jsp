@@ -67,7 +67,7 @@
                 		<c:when test="${empty list}">
 							<tr>
 								<td colspan='9'>
-								 	임시저장된 문서가 없습니다.
+								 	결재 문서가 없습니다.
 								</td>
 							</tr>
 	                    </c:when>
