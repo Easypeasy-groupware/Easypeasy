@@ -118,13 +118,13 @@
                     <li><button type="button" class="btn btn-outline-secondary btn-lg" data-toggle="modal" data-target="#newApp">새 결재 진행</button></li>
                     <br>
                     <li><a href="recWlist.ap">결재 대기문서</a></li>
-                    <li><a href="">참조 대기문서</a></li>
+                    <li><a href="refWlist.ap">참조 대기문서</a></li>
                     <br>
                     <li><b>개인</b></li>
-                    <li><a href="">기안문서함</a></li>
-                    <li><a href="">임시저장함</a></li>
-                    <li><a href="">결재문서함</a></li>
-                    <li><a href="">참조문서함</a></li>
+                    <li><a href="sendList.ap">기안문서함</a></li>
+                    <li><a href="tempList.ap">임시저장함</a></li>
+                    <li><a href="recList.ap">결재문서함</a></li>
+                    <li><a href="refList.ap">참조문서함</a></li>
                     <br>
                     <li><b>부서</b></li>
                     <li><a href="">기안완료함</a></li>

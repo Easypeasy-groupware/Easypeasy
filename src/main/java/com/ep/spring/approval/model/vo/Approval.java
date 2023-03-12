@@ -29,5 +29,7 @@ public class Approval {
 	private String appChange;
 	private String deptName;
 	private String originName;
+	private int count;
+	private String updateDate;
 
 }

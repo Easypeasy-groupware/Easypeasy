@@ -100,10 +100,62 @@ public class ApprovalController {
 		int listCount = aService.selectWaitingAListCount(eNo);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 		ArrayList<Approval> list = aService.selectWatingAList(pi, eNo);
+		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
 		return "approval/appRecWatingListView";
 	}
+	
+	@RequestMapping("refWlist.ap")
+	public String selectRefWList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+		
+		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		int listCount = aService.selectWaitingRListCount(eNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Approval> list = aService.selectWaitingRList(pi, eNo);
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		return "approval/appRefWatingListView";
+	}
+	
+	@RequestMapping("sendList.ap")
+	public String selectSendList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+		
+		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		int listCount = aService.selectSendListCount(eNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Approval> list = aService.selectSendList(pi, eNo);
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		return "approval/appSendListView";
+	}
+	
+	@RequestMapping("tempList.ap")
+	public String selectTempList(@RequestParam(value="cpage", defaultValue="1")int currentPage, HttpSession session, Model model) {
+		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		int listCount = aService.selectTempListCount(eNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Approval> list = aService.selectTempList(pi, eNo);
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		return "approval/appTempStorListView";
+	}
+	
+	@RequestMapping("recList.ap")
+	public String selectRecList(@RequestParam(value="cpage", defaultValue="1")int currentPage, HttpSession session, Model model) {
+		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		int listCount = aService.selectRecListCount(eNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Approval> list = aService.selectRecList(pi, eNo);
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		
+		System.out.println(list);
+		return "approval/appRecListView";
+	}
+	
+	
 	
 	
 

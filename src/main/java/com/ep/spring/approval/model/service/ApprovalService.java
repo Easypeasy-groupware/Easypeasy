@@ -23,31 +23,31 @@ public interface ApprovalService {
 	
 	// 3. 참조대기문서 조회용 서비스(페이징)
 	int selectWaitingRListCount(int eNo);
-	ArrayList<Approval> selectWaitingRList(int eNo);
+	ArrayList<Approval> selectWaitingRList(PageInfo pi, int eNo);
 	
 	// 4. 기안문서함 조회용 서비스(페이징)
 	int selectSendListCount(int eNo);
-	ArrayList<Approval> selectSendList(int eNo);
+	ArrayList<Approval> selectSendList(PageInfo pi, int eNo);
 	
 	// 5. 임시저장함 조회용 서비스(페이징)
 	int selectTempListCount(int eNo);
-	ArrayList<Approval> selectTempList(int eNo);
+	ArrayList<Approval> selectTempList(PageInfo pi, int eNo);
 	
 	// 6. 결재문서함 조회용 서비스(페이징)
-	int selectApprovalListCount(int eNo);
-	ArrayList<Approval> selectApprovalList(int eNo);
+	int selectRecListCount(int eNo);
+	ArrayList<Approval> selectRecList(PageInfo pi, int eNo);
 	
 	// 7. 참조문서함 조회용 서비스(페이징)
 	int selectRefListCount(int eNo);
-	ArrayList<Approval> selectRefList(int eNo);
+	ArrayList<Approval> selectRefList(PageInfo pi, int eNo);
 	
 	// 8. 부서용 기안완료함 조회용 서비스(페이징)
 	int selectDeptSendListCount(int eNo);
-	ArrayList<Approval> selectDeptSendList(int eNo);
+	ArrayList<Approval> selectDeptSendList(PageInfo pi, int eNo);
 	
 	// 9. 부서용 부서참조함 조회용 서비스(페이징)
 	int selectDeptRefListCount(int eNo);
-	ArrayList<Approval> selectDeptRefList(int eNo);
+	ArrayList<Approval> selectDeptRefList(PageInfo pi, int eNo);
 	
 
 	

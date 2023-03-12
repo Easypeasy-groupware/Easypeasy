@@ -41,11 +41,11 @@
         <br><br>
 
         <div class="list-2">
-            <table style="text-align:center" class="table">
+            <table style="text-align:center" class="table" id="result-tb">
                 <thead>
                     <tr>
                         <th>
-                            <input type="checkbox" name="" id="">
+                            <input type="checkbox" name="" id="chk-total">
                         </th>
                         <th>기안일</th>
                         <th>결재양식</th>
@@ -64,10 +64,10 @@
 							</tr>
 	                    </c:when>
 	                    <c:otherwise>
-	                    	<c:forEach var="a" items="list">
+	                    	<c:forEach var="a" items="${list}">
 			                    <tr>
 			                        <td>
-			                             <input type="checkbox" name="" id="">
+			                             <input type="checkbox" name="chk" id="">
 			                        </td>
 			                        <td>${a.enrollDate}</td>
 			                        <td>${a.formName }</td>
@@ -118,11 +118,34 @@
                 </ul>
             </div>
             <script>
-                $(function(){
-                     $("#ps-tbody").on("click", "tr", function(){
-                         location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
-                     })
-                })
+            
+            $(function(){
+            	
+            	// 체크박스 전체선택 or 해제하는 function
+            	$("#chk-total").on("click", function(){
+            		if($("#chk-total").is(":checked")){
+            			$("#result-tb tbody input[name='chk']").prop("checked", true);
+            		}else{
+            			$("#result-tb tbody input[name='chk']").prop("checked", false);
+            		}
+            	});
+            	
+            	$("#result-tb tbody input[name='chk']").on("click", function(){
+            		var total = $("#result-tb tbody input[name='chk']").length;
+            		var checked = $("#result-tb tbody input[name='chk:checked']").length;
+            		
+            		if(total != checked){
+            			$("#result-tb thead input[name='chk']").prop("checked", false);
+            		}else{
+            			$("#result-tb thead input[name='chk']").prop("checked", true);
+            		}
+            	});
+            	
+             	// 상세페이지로 이동하는 function
+                 $("#result-tb tbody").on("click", "tr", function(){
+                     location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
+                 }); 
+            });
             </script>
            
             <br clear="both"><br>

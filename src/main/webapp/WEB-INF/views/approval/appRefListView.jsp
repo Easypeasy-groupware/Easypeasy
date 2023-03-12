@@ -42,11 +42,11 @@
         <br><br>
 
         <div class="list-2">
-            <table style="text-align:center" class="table">
+            <table style="text-align:center" class="table" id="result-tb">
                 <thead>
                     <tr>
                         <th>
-                            <input type="checkbox" name="" id="">
+                            <input type="checkbox" name="" id="chk-total">
                         </th>
                         <th>기안일</th>
                         <th>완료일</th>
@@ -61,7 +61,7 @@
                 <tbody>
                     <tr>
                         <td>
-                             <input type="checkbox" name="" id="">
+                             <input type="checkbox" name="chk" id="">
                         </td>
                         <td>w</td>
                         <td>w</td>

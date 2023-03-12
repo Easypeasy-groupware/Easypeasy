@@ -20,4 +20,5 @@ public class ApprovalLine {
 	private int appNo;
 	private String appComment;
 	private String enrollDate;
+	private int count;
 }
