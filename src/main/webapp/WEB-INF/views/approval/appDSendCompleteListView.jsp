@@ -118,7 +118,8 @@
 	                    <c:otherwise>
 	                    	<li class="page-item"><a class="page-link" href="dSendList.ap?cpage=${pi.currentPage + 1 }">&gt;</a></li>
 	                    </c:otherwise>
-                    </c:choose>                </ul>
+                    </c:choose>                
+               </ul>
             </div>
             <script>
             $(function(){

@@ -67,7 +67,7 @@ public class ApprovalDao {
 	public ArrayList<Approval> selectTempList(SqlSessionTemplate sqlSession, PageInfo pi, int empNo){
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds();
+		RowBounds rowBounds = new RowBounds(offset, limit);
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectTempList", empNo, rowBounds);
 	}
 	
@@ -101,8 +101,21 @@ public class ApprovalDao {
 	public ArrayList<Approval> selectDeptSendList(SqlSessionTemplate sqlSession, PageInfo pi, int empNo){
 		int offset = (pi.getCurrentPage() -1)* pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds();
+		RowBounds rowBounds = new RowBounds(offset, limit);
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectDeptSendList", empNo, rowBounds);
+	}
+	
+	public int selectDeptRefListCount(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("approvalMapper.selectDeptRefListCount", empNo);
+		
+	}
+	
+	public ArrayList<Approval> selectDeptRefList(SqlSessionTemplate sqlSession, PageInfo pi, int empNo){
+		int offset = (pi.getCurrentPage() -1)*pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectDeptRefList", empNo, rowBounds);
+		
 	}
 	
 }

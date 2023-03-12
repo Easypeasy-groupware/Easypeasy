@@ -339,25 +339,18 @@
 	</select>
 	
 	<select id="selectDeptSendListCount" resultType="_int">
-			   select 
-			          count(*) count
-			     from approval
-			    where app_no in (
-				                    select app_no
-				                      from app_line a
-				                      join employee e on (e.emp_no = a.emp_no) 
-				                     where ref_whether = 'Y'
-				                       and dept_code = (
-				                                        select dept_code
-				                                          from employee
-				                                         where emp_no = #{empNo}
-				                                        )
-				                      group by app_no
-			                      )	
+			 select count(*)
+			  from approval a
+			  join employee e on (e.emp_no = a.emp_no) 
+			  where dept_code in (
+			                    select dept_code
+			                      from employee
+			                     where emp_no = #{empNo}
+			                    )
+			    and app_tstatus = '결재'   	
 	</select>
 	
-	<select id = "selectDeptSendList" resultMap = "approvalResult">
-                    
+	<select id="selectDeptSendList" resultMap="approvalResult">
 				select
 				         distinct a.app_no
 				        , to_char(a.enroll_date, 'YYYY-MM-dd') as "enroll_date"
@@ -375,6 +368,57 @@
 				   left join employee e on (a.emp_no = e.emp_no)
 				  where a.status = 1
 				    and app_tstatus = '결재'
+				    and dept_code in (
+                                        select dept_code
+                                          from employee
+                                         where emp_no = #{empNo}
+                                        )
+                                    
+                    and update_date = (select max(update_date)
+                                        from app_line
+                                       where app_no in a.app_no
+                                    )              
+				   order by a.app_no   
+	</select>
+	
+	
+	
+	<select id="selectDeptRefListCount" resultType="_int">
+			   select 
+			          count(*) count
+			     from approval
+			    where app_no in (
+				                    select app_no
+				                      from app_line a
+				                      join employee e on (e.emp_no = a.emp_no) 
+				                     where ref_whether = 'Y'
+				                       and dept_code = (
+				                                        select dept_code
+				                                          from employee
+				                                         where emp_no = #{empNo}
+				                                        )
+				                      group by app_no
+			                      )	              
+	</select>
+	
+	<select id = "selectDeptRefList" resultMap = "approvalResult">
+                    
+				select
+				         distinct a.app_no
+				        , to_char(a.enroll_date, 'YYYY-MM-dd') as "enroll_date"
+				        , to_char(update_date, 'YYYY-MM-dd') as "update_date" 
+				        , form_name
+				        , form_code
+				        , title
+				        , emp_name
+				        , origin_name
+				        , app_change
+				        , app_tstatus
+				   from approval a
+				   left join app_line l on (a.app_no = l.app_no)
+				    left join attachment on (a.app_no = ref_no)
+				   left join employee e on (a.emp_no = e.emp_no)
+				  where a.status = 1
 				    and a.app_no in (
                                     select app_no
                                       from app_line a

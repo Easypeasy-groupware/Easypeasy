@@ -128,7 +128,7 @@
                     <br>
                     <li><b>부서</b></li>
                     <li><a href="dSendList.ap">기안완료함</a></li>
-                    <li><a href="">부서참조함</a></li>
+                    <li><a href="dRefList.ap">부서참조함</a></li>
                     <br><br>
                 </ul>
             </div>

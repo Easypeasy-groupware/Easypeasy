@@ -173,8 +173,18 @@ public class ApprovalController {
 		ArrayList<Approval> list = aService.selectDeptSendList(pi, eNo);
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
-		System.out.println(list);
 		return "approval/appDSendCompleteListView";
+	}
+	
+	@RequestMapping("dRefList.ap")
+	public String selectDeptRefList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
+		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		int listCount = aService.selectDeptRefListCount(eNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Approval> list= aService.selectDeptRefList(pi, eNo);
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		return "approval/appDRefListView";
 	}
 	
 	
