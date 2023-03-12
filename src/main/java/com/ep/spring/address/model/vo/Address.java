@@ -31,5 +31,7 @@ public class Address {
 	private String deleteDate;
 	private String addBin;
 	
+	private String addProfile;
+	
 
 }

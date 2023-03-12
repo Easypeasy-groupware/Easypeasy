@@ -91,14 +91,14 @@
         </div>
 
         <div class="add-type">
-            <a href="internal.add?user=${loginUser.empNo}" class="add-in"><b>사내주소록</b></a>
+            <a href="internalEnt.add?no=${ loginUser.empNo }" class="add-in"><b>사내주소록</b></a>
         </div>
         <ul class="submenu">
-            <li><a href="internal.add?dept=as">- 경영지원팀</a></li>
-            <li><a href="internal.add?dept=sales1">- 영업 1팀</a></li>
-            <li><a href="internal.add?dept=sales2">- 영업 2팀</a></li>
-            <li><a href="internal.add?dept=sales3">- 영업 3팀</a></li>
-            <li><a href="internal.add?dept=hr">- 인사팀</a></li>
+            <li><a href="internalDept.add?dept=as">- 경영지원팀</a></li>
+            <li><a href="internalDept.add?dept=sales1">- 영업 1팀</a></li>
+            <li><a href="internalDept.add?dept=sales2">- 영업 2팀</a></li>
+            <li><a href="internalDept.add?dept=sales3">- 영업 3팀</a></li>
+            <li><a href="internalDept.add?dept=hr">- 인사팀</a></li>
         </ul>
 
         <br>

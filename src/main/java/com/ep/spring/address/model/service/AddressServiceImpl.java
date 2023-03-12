@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ep.spring.address.model.dao.AddressDao;
+import com.ep.spring.address.model.vo.AddFavorite;
 import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.login.model.vo.Employee;
 
@@ -21,15 +22,15 @@ public class AddressServiceImpl implements AddressService {
 	
 
 	@Override
-	public int selectEntEmpListCount() {
-		return aDao.selectEntEmpListCount(sqlSession);
+	public int selectEntEmpListCount(int no) {
+		return aDao.selectEntEmpListCount(sqlSession, no);
 	}
 
 	@Override
-	public ArrayList<Employee> selectEntEmpListCount(PageInfo pi) {
-		return aDao.selectEntEmpListCount(sqlSession, pi);
+	public ArrayList<Employee> selectEntEmpList(PageInfo pi, int no) {
+		return aDao.selectEntEmpListCount(sqlSession, pi, no);
 	}
-
+	
 	@Override
 	public int selectDeptEmpListCount(String dept) {
 		return 0;
@@ -39,5 +40,11 @@ public class AddressServiceImpl implements AddressService {
 	public ArrayList<Employee> selectDeptEmpList(PageInfo pi, String dept) {
 		return null;
 	}
+
+	@Override
+	public Employee selectEmpAddd(int empNo) {
+		return null;
+	}
+
 
 }
