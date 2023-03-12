@@ -24,4 +24,7 @@ public interface DataBoardService {
 	// 5. 게시글 수정
 	int updateDataBoard(DataBoard db);
 	
+	// [추가]
+	//DataBoard selectNextDataBoard(int dbNo);
+	
 }

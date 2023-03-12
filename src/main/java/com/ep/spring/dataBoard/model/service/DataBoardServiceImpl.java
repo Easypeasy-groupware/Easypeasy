@@ -43,6 +43,8 @@ public class DataBoardServiceImpl implements DataBoardService {
 	public DataBoard selectDataBoard(int dbNo) {
 		return dbDao.selectDataBoard(sqlSession, dbNo);
 	}
+	
+	
 
 	@Override
 	public int deleteDataBoard(int dbNo) {
@@ -53,4 +55,12 @@ public class DataBoardServiceImpl implements DataBoardService {
 	public int updateDataBoard(DataBoard db) {
 		return dbDao.updateDataBoard(sqlSession, db);
 	}
+
+	/*
+	@Override
+	public DataBoard selectNextDataBoard(int dbNo) {
+		return dbDao.selectNextDataBoard(sqlSession, dbNo);
+	}
+	*/
+
 }

@@ -20,4 +20,10 @@ public class DataBoard {
 	private String originName;
 	private String changeName;
 	private String dbStatus;
+	
+	// 추가
+	private int nextNo;
+	private int prevNo;
+	private String nextTitle;
+	private String prevTitle;
 }

@@ -46,4 +46,10 @@ public class DataBoardDao {
 	public int updateDataBoard(SqlSessionTemplate sqlSession, DataBoard db) {
 		return sqlSession.update("dataBoardMapper.updateDataBoard", db);
 	}
+	
+	/*
+	public DataBoard selectNextDataBoard(SqlSessionTemplate sqlSession, int dbNo) {
+		return sqlSession.selectOne("dataBoardMapper.selectNextDataBoard", dbNo);
+	}
+	*/
 }

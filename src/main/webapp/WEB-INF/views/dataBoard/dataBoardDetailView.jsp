@@ -40,6 +40,11 @@
         border-top: 2px solid gray;
         border-bottom: 2px solid gray;
     }
+    
+    .nextPrev a{
+    	text-decoration: none;
+        color: black;
+    }
 </style>
 </head>
 <body>
@@ -57,10 +62,27 @@
         <br><br><br>
         <c:if test="${ loginUser.deptCode eq 'D2' }">
 	        <div style="margin-left: 25px;">
-	            <a href="updateForm.db?no=${ db.dbNo }" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">수정</a>&nbsp;&nbsp;
-	            <a href="delete.db?no=${ db.dbNo }" class="btn btn-sm btn-light">삭제</a>
+	            <a onclick="postFormSubmit(1);" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">수정</a>&nbsp;&nbsp;
+	            <a onclick="postFormSubmit(2);" class="btn btn-sm btn-light">삭제</a>
 	        </div>
 	    </c:if>
+	    
+	    <form action="" method="post" id="postForm">
+        	<input type="hidden" name="no" value="${ db.dbNo }">
+        	<!-- 현재 게시글의 첨부파일에 대한 경로 넘기기 -->
+        	<input type="hidden" name="filePath" value="${ db.changeName }">
+        </form>
+        
+        <script>
+        	function postFormSubmit(num){ // 숫자 받기 위한 num변수
+        		if(num == 1){
+        			$("#postForm").attr("action", "updateForm.db").submit();
+        		}else{
+        			$("#postForm").attr("action", "delete.db").submit();
+        		}
+        	}
+        </script>
+	    
         <br>
         <table border="1" align="center">
             <thead>
@@ -104,20 +126,37 @@
         <br>
 
         <table align="center" border="1">
-            <tr height="35" style="border-top: 2px solid gray;">
-                <th width="130">이전글 <i id="upDown1" class="fas fa-regular fa-angle-up"></i></th>
+            <tr height="35" class="nextPrev" style="border-top: 2px solid gray;">
+                <th width="130">다음글 <i id="upDown1" class="fas fa-regular fa-angle-up"></i></th>
                 <td style="text-align: left;">
-                    이전글이 없습니다
+                	<c:choose>
+                		<c:when test="${ db.nextTitle eq null }">
+                			다음글이 없습니다.
+                		</c:when>
+                		<c:otherwise>
+                			<a href="detail.db?no=${ db.nextNo }">${ db.nextTitle }</a>
+                		</c:otherwise>
+                	</c:choose>
                 </td>
             </tr>
-            <tr height="35" style="border-bottom: 2px solid gray;">
-                <th>다음글 <i id="upDown1" class="fas fa-regular fa-angle-down"></i></th>
+            <tr height="35" class="nextPrev" style="border-bottom: 2px solid gray;">
+                <th>이전글 <i id="upDown1" class="fas fa-regular fa-angle-down"></i></th>
                 <td style="text-align: left;">
-                    1월 시국세
+                	<c:choose>
+                		<c:when test="${ db.prevTitle eq null }">
+                			이전글이 없습니다.
+                		</c:when>
+                		<c:otherwise>
+                			<a href="detail.db?no=${ db.prevNo }">${ db.prevTitle }</a>
+                		</c:otherwise>
+                	</c:choose>
                 </td>
             </tr>
         </table>
+        
     </div>
+
+    
 
 </body>
 </html>

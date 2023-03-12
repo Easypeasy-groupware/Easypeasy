@@ -10,6 +10,10 @@
 		<result column="create_date" property="createDate" />
 		<result column="origin_name" property="originName" />
 		<result column="change_name" property="changeName" />
+		<result column="next_no" property="nextNo" />
+		<result column="next_title" property="nextTitle" />
+		<result column="prev_no" property="prevNo" />
+		<result column="prev_title" property="prevTitle" />
 	</resultMap>
 
 	<select id="selectDbListCount" resultType="_int">
@@ -61,6 +65,7 @@
 		   and db_status = 'Y'
 	</update>
 	
+	<!--  
 	<select id="selectDataBoard" resultMap="dataBoardResult">
 		select
 			   db_no
@@ -73,6 +78,7 @@
 		  from data_board
 		 where db_no = #{dbNo}
 	</select>
+	-->
 	
 	<update id="deleteDataBoard">
 		update
@@ -90,5 +96,26 @@
 		     , change_name = #{changeName}
 		 where db_no = #{dbNo}
 	</update>
+	
+	<select id="selectDataBoard" resultMap="dataBoardResult">
+		select *
+		from(
+		     select
+		       db_no
+		     , db_title
+		     , db_content
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , count
+		     , origin_name
+		     , change_name
+		     , lag(db_no) over(order by db_no) as "prev_no"
+             , lag(db_title) over(order by db_no) as "prev_title"
+		     , lead(db_no) over(order by db_no) as "next_no"
+             , lead(db_title) over(order by db_no) as "next_title"
+		  from data_board
+		 where db_status = 'Y'
+		     )
+		where db_no = #{dbNo}
+	</select>
 
 </mapper>

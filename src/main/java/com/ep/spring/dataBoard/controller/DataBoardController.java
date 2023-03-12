@@ -69,13 +69,31 @@ public class DataBoardController {
 	}
 	
 	@RequestMapping("detail.db")
-	public String selectBoard(int no, HttpSession session, Model model) {
+	public String selectBoard(int no, /*@RequestParam(value="prevno", defaultValue="0") int prevno, @RequestParam(value="nextno", defaultValue="0") int nextno, */HttpSession session, Model model) {
 		
 		int result = daService.increaseCount(no);
 	
 		if(result > 0) {
 			
+			DataBoard currentdb = daService.selectDataBoard(no);
+			//DataBoard prevdb = daService.selectDataBoard(prevno);
+			//DataBoard nextdb = daService.selectDataBoard(nextno);
+			
+			//System.out.println("현재글 : " + currentdb);
+			//System.out.println("이전글 : " + prevdb);
+			//System.out.println("다음글 : " + nextdb);
+			
 			DataBoard db = daService.selectDataBoard(no);
+			
+			//DataBoard nextdb = daService.selectNextDataBoard(nextno);
+			
+			//ArrayList<DataBoard> list = new ArrayList<>();
+			//list.add(prevdb);
+			//list.add(currentdb);
+			//list.add(nextdb);
+			
+			//System.out.println(list);
+			
 			model.addAttribute("db", db);
 			return "dataBoard/dataBoardDetailView";
 			
@@ -85,12 +103,16 @@ public class DataBoardController {
 	}
 	
 	@RequestMapping("delete.db")
-	public String deleteDataBoard(int no, HttpSession session) {
+	public String deleteDataBoard(int no, String filePath, HttpSession session) {
 		
 		int result = daService.deleteDataBoard(no);
 		
 		if(result > 0) { 
 			
+			// 첨부파일이 있었을 경우 파일 삭제
+			if(!filePath.equals("")) {
+				new File(session.getServletContext().getRealPath(filePath)).delete();
+			}
 			
 			session.setAttribute("alertMsg", "성공적으로 게시글이 삭제되었습니다");
 			return "redirect:list.db";
@@ -138,4 +160,6 @@ public class DataBoardController {
 			return "redirect:detail.db?no=" + db.getDbNo();
 		}
 	}
+	
+	
 }
