@@ -60,28 +60,28 @@
 			<h2>사원 등록 폼</h2>
 			
 			<div class="container">
-				<form action="" method="POST">
+				<form action="insert.org" method="POST">
 					<br>
-			        <label for="empNo">사원번호:</label>
+			        <label for="empNo">*사원번호:</label>
 			            <input type="text" id="empNo" name="empNo" required /><br />
-			        <label for="username">아이디:</label>
-			          <input type="text" id="username" name="username" required /><br />
-			        <label for="password">비밀번호:</label>
-			            <input type="text" id="password" name="password" value="1234" readonly/><br />
-					<label>이름</label>
-					    <input type="text" name="name" required>
-					<label>직급</label>
-			            <select name="position" required>
+			        <label for="username">*아이디:</label>
+			          <input type="text" id="empId" name="empId"  required/><br />
+			        <label for="password">*비밀번호:</label>
+			            <input type="text" id="empPwd" name="empPwd" placeholder="초기 비밀번호는 1234입니다." required/><br />
+					<label>*이름</label>
+					    <input type="text" id="empName" name="empName" required>
+					<label>*직급</label>
+			            <select name="jobCode" id="jobCode" >
 			                <option value="">선택하세요</option>
-			                <option value="대표이사">대표이사</option>
-			                <option value="전무이사">전무이사</option>
-			                <option value="부장">부장</option>
-			                <option value="과장">과장</option>
-			                <option value="대리">대리</option>
-			                <option value="사원">사원</option>
+			                <option value="대표이사">J6</option>
+			                <option value="전무이사">J5</option>
+			                <option value="부장">J4</option>
+			                <option value="과장">J3</option>
+			                <option value="대리">J2</option>
+			                <option value="사원">J1</option>
 			            </select>
-			        <label>직무</label>
-			            <select name="department" required>
+			        <label>*직무</label>
+			            <select name="deptCode" id="deptCode" >
 			                <option value="">선택하세요</option>
 			                <option value="">인사관리부</option>
 			                <option value="">경영관리부</option>
@@ -92,9 +92,9 @@
 			            </select>
 			
 					<label>연락처</label>
-					    <input type="text" name="phone" required>
+					    <input type="text" id="phone" name="phone" >
 					<label>이메일</label>
-					    <input type="email" name="email">
+					    <input type="email" id="email" name="email">
 			        
 			         <label for="address">주소:</label>
 			            <input type="text" id="address" name="address"></input><br/>
@@ -102,7 +102,7 @@
 					<br><br>
 					<div align="center">
 						<button type="button" class="btn btn-secondary">이전으로</button>
-						<button type="button" class="btn btn-success">등록하기</button>
+						<button type="submit" class="btn btn-success">등록하기</button>
 					</div>
 				</form>
 			</div>

@@ -81,12 +81,7 @@
 	      
 	        <button type="button" class="btn btn-success" id="topbtn" onclick="adminList();"> 관리자 </button>
 	      
-	      	<script>
-	      		function adminList(){
-	      			location.href="adminList.org";
-	      		}
-	      	</script>
-	      
+	     
 	      <div class="menu">
 	        <ul>
 	          <li><a href="#">인사관리부</a></li>
@@ -135,11 +130,11 @@
                 </script>
                 
                 <br><br>
-                <table>
+                <table id="memberList">
                     <thead>
                         <tr>
-                            <th>이름</th>
                             <th>사원번호</th>
+                            <th>이름</th>
                             <th>부서</th>
                             <th>직위</th>
                             <th>이메일</th>
@@ -148,109 +143,44 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>유재석</td>
-                            <td>1</td>
-                            <td>인사관리부</td>
-                            <td>부장</td>
-                            <td>user01@ezpz.com</td>
-                            <td>010-1111-2222</td>
-                            <td>근무</td>
-                        </tr>
-                        <tr>
-                            <td>유재석</td>
-                            <td>1</td>
-                            <td>인사관리부</td>
-                            <td>부장</td>
-                            <td>user01@ezpz.com</td>
-                            <td>010-1111-2222</td>
-                            <td>근무</td>
-                        </tr>
-                        <tr>
-                            <td>유재석</td>
-                            <td>1</td>
-                            <td>인사관리부</td>
-                            <td>부장</td>
-                            <td>user01@ezpz.com</td>
-                            <td>010-1111-2222</td>
-                            <td>근무</td>
-                        </tr>
-                        <tr>
-                            <td>유재석</td>
-                            <td>1</td>
-                            <td>인사관리부</td>
-                            <td>부장</td>
-                            <td>user01@ezpz.com</td>
-                            <td>010-1111-2222</td>
-                            <td>근무</td>
-                        </tr>
-                        <tr>
-                            <td>유재석</td>
-                            <td>1</td>
-                            <td>인사관리부</td>
-                            <td>부장</td>
-                            <td>user01@ezpz.com</td>
-                            <td>010-1111-2222</td>
-                            <td>근무</td>
-                        </tr>
-                        <tr>
-                            <td>박명수</td>
-                            <td>2</td>
-                            <td>경영지원부</td>
-                            <td>과장</td>
-                            <td>user02@ezpz.com</td>
-                            <td>010-3333-4444</td>
-                            <td>근무</td>
-                        </tr>
-                        <tr>
-                            <td>박명수</td>
-                            <td>2</td>
-                            <td>경영지원부</td>
-                            <td>과장</td>
-                            <td>user02@ezpz.com</td>
-                            <td>010-3333-4444</td>
-                            <td>근무</td>
-                        </tr>
-                        <tr>
-                            <td>박명수</td>
-                            <td>2</td>
-                            <td>경영지원부</td>
-                            <td>과장</td>
-                            <td>user02@ezpz.com</td>
-                            <td>010-3333-4444</td>
-                            <td>근무</td>
-                        </tr>
-                        <tr>
-                            <td>박명수</td>
-                            <td>2</td>
-                            <td>경영지원부</td>
-                            <td>과장</td>
-                            <td>user02@ezpz.com</td>
-                            <td>010-3333-4444</td>
-                            <td>근무</td>
-                        </tr>
-                        <tr>
-                            <td>박명수</td>
-                            <td>2</td>
-                            <td>경영지원부</td>
-                            <td>과장</td>
-                            <td>user02@ezpz.com</td>
-                            <td>010-3333-4444</td>
-                            <td>근무</td>
-                        </tr>
+                    	<c:forEach var="o" items="${list}">
+	                        <tr>
+	                            <td>${o.empNo}</td>
+	                            <td>${o.empName}</td>
+	                            <td>${o.deptCode}</td>
+	                            <td>${o.jobCode}</td>
+	                            <td>${o.email}</td>
+	                            <td>${o.phone}</td>
+	                            <td>${o.entYn}</td>
+	                        </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
                 <br><br>
                 <tfoot>
                      <div align="center">
-			            <ul id="paging">
-			                <li><a href=""> < </a></li>
-			                <li class='on'><a href=""> 1 </a></li>
-			                <li><a href=""> 2 </a></li>
-			                <li><a href=""> 3 </a></li>
-			                <li><a href=""> 4 </a></li>
-			                <li><a href=""> 5 </a></li>
-			                <li><a href=""> > </a></li>
+			            <ul class="pagination" id="paging">
+			            	<c:choose>
+			            		<c:when test="${ pi.currentPage eq 1 }">
+			            			<li class="page-item disabled"><a class="page-link" href="#"> < </a></li>
+			            		</c:when>
+			            		<c:otherwise>
+			            			<li class="page-item"><a class="page-link" href="adminList.org?cpage=${ pi.currentPage-1 }"> < </a></li>
+			            		</c:otherwise>
+			            	</c:choose>
+			            	
+			            	 <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+		                    	<li class="on"><a class="page-link" href="adminList.org?cpage=${p}">${p}</a></li>
+		     				</c:forEach>
+                    
+			                <c:choose>
+			                    <c:when test="${pi.currentPage eq pi.maxPage }">
+			                    	<li class="page-item disabled"><a class="page-link" href="#"> > </a></li>
+			                    </c:when>
+			                    <c:otherwise>
+			                    	<li class="page-item"><a class="page-link" href="adminList.org?cpage=${ pi.currentPage + 1 }"> > </a></li>
+		                    	</c:otherwise>
+		                    </c:choose>
 			            </ul>
 			        </div>
 			        <script>

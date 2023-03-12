@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"mybatis-3-mapper.dtd" >
+<mapper namespace="organizationMapper">
+
+	<resultMap id="employeeResult" type="Employee">
+		<id column="emp_no" property="empNo" />
+		<result column="emp_name" property="empName" />
+		<result column="emp_id" property="empId" />
+		<result column="email" property="email" />
+		<result column="phone" property="phone" />
+		<result column="dept_code" property="deptCode" />
+		<result column="job_code" property="jobCode" />
+		<result column="ent_yn" property="entYn" />
+	</resultMap>
+	
+	<select id="selectListCount" resultType="_int">
+		select 
+		       count(*)
+		  from employee
+		 where ent_yn = 'N'
+	</select>
+	
+	<select id="selectList" resultMap="employeeResult">
+		select
+			   emp_no
+			 , emp_name
+			 , emp_id
+			 , email
+			 , phone
+			 , dept_code
+			 , job_code
+			 , ent_yn
+		  from employee
+		 order
+	        by emp_no desc
+	</select>
+	
+	<!-- <insert id="insertMember">
+		insert
+		  into employee
+		  (
+		    emp_no
+		  ,	emp_id
+		  , emp_pwd
+		  , emp_name
+		  , job_code
+		  , dept_code
+		  , phone
+		  , email
+		  , address
+		  )
+		  values
+		  (
+		    seq_empNo.nextval
+		  , #{empId}
+		  , #{empPwd}
+		  , #{empName}
+		  , #{jobCode} 
+		  , #{deptCode}
+		  , #{phone}
+		  , #{email}
+		  , #{address}
+		  )
+	</insert> -->
+	
+</mapper>
