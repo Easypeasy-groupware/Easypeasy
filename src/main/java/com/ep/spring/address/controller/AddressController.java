@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ep.spring.address.model.service.AddressService;
+import com.ep.spring.address.model.vo.AddFavorite;
 import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.common.template.Pagination;
 import com.ep.spring.login.model.vo.Employee;
@@ -29,26 +30,20 @@ public class AddressController {
 		return "address/newPersonalAddress";
 	}
 	
-	/** 사내전체주소록 리스트
-	 * @author 이수연
-	 * @param currentPage
-	 * @param mv
-	 * @return mv
-	 */
-	@RequestMapping("internalEnt.add")
-	public ModelAndView selectEntEmplList(@RequestParam(value="cpage", defaultValue="1") int currentPage, String user, ModelAndView mv) {
+
+	@RequestMapping("internalEnt.add") // 사내주소록 전체리스트
+	public ModelAndView selectEntEmplList(@RequestParam(value="cpage", defaultValue="1") int currentPage, int no, ModelAndView mv) {
 		
-		System.out.println(user);
-		
-		int listCount = aService.selectEntEmpListCount();
+		int listCount = aService.selectEntEmpListCount(no);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
 		
-		ArrayList<Employee> list = aService.selectEntEmpListCount(pi);
+		ArrayList<Employee> list = aService.selectEntEmpList(pi, no);
 		
-		mv.addObject("pi", pi)
+		mv.addObject("count", listCount)
+		  .addObject("pi", pi)
 		  .addObject("list", list)
-		  .setViewName("address/sharedAddListAllEmp.jsp");
+		  .setViewName("address/sharedAddListAllEmp");
 		return mv;
 	}
 	

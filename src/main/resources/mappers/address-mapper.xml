@@ -20,6 +20,7 @@
 		<result column="modify_date" property="modifyDate" />
 		<result column="delete_date" property="deleteDate" />
 		<result column="add_bin" property="addBin" />
+		<result column="add_profile" property="addProfile"/>
 	</resultMap>
 	
 	
@@ -33,11 +34,21 @@
 		<result column="phone" property="phone" />
 		<result column="emp_profile" property="empProfile" />
 		<result column="dept_code" property="deptCode" />
+		<result column="dept_name" property="deptName" />
 		<result column="job_code" property="jobCode" />
+		<result column="job_name" property="jobName" />
 		<result column="hire_date" property="hireDate" />
 		<result column="ent_yn" property="entYn" />
 		<result column="ent_date" property="entDate" />
 		<result column="status" property="status" />
+		<result column="add_emp_no" property="addEmpNo"/>
+	</resultMap>
+	
+	<resultMap id="addFavoriteResult" type="addFavorite">
+		<id column="emp_no" property="empNo"/>
+		<result column="add_no" property="addNo" />
+		<result column="add_emp_no" property="addEmpNo" />
+			
 	</resultMap>
 	
 	<select id="selectEntEmpListCount" resultType="_int">
@@ -45,23 +56,31 @@
 		       count(*)
 		  from employee
 		 where ent_yn = 'N'
+		   and emp_no != #{no}
 	</select>
 	
 	<select id="selectEntEmpList" resultMap="empResult">
 		select
-		       emp_no
+		       e.emp_no
 		     , emp_name
-		     , emp_id
-		     , emp_pwd
-		     , email
+		     , email 
 		     , address
 		     , phone
 		     , emp_profile
-		     , dept_code
-		     , job_code
-		     , hire_date
-		  from employee
+		     , dept_name
+		     , job_name
+             , add_emp_no
+		  from employee e
+          left join department d on (e.dept_code = d.dept_code)
+          left join job j on (e.job_code = j.job_code)
+          left join add_fav f on (e.emp_no = f.add_emp_no)
 		 where ent_yn = 'N'
+           and e.emp_no != #{user}
 	</select>
+
+
+
+
+
 
 </mapper>
