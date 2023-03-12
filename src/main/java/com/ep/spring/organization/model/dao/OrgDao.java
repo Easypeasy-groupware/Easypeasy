@@ -30,4 +30,8 @@ public class OrgDao {
 	 * sqlSession.insert("organizationMapper.insertMember", e); }
 	 */
 	
+	
+	public int noCheck(SqlSessionTemplate sqlSession, String checkNo) {
+		return sqlSession.selectOne("organizationMapper.noCheck", checkNo);
+	}
 }

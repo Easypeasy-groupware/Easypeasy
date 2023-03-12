@@ -14,4 +14,7 @@ public interface OrgService {
 	// 2. 멤버 회원가입 서비스
 	int insertMember(Employee e);
 	
+	// 3. 사원번호 중복체크 서비스 (ajax)
+	int noCheck(String checkNo);
+	
 }

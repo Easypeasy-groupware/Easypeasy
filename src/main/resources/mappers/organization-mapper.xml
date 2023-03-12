@@ -65,4 +65,11 @@
 		  )
 	</insert> -->
 	
+	<select id="noCheck" resultType="_int">
+		select
+		       count(*)
+		  from employee
+		 where emp_no = #{checkNo}
+	</select>
+	
 </mapper>

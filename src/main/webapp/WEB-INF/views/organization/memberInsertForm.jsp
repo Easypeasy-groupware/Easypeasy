@@ -60,10 +60,12 @@
 			<h2>사원 등록 폼</h2>
 			
 			<div class="container">
-				<form action="insert.org" method="POST">
+				<form action="insert.org" method="POST" id="enrollForm">
 					<br>
 			        <label for="empNo">*사원번호:</label>
 			            <input type="text" id="empNo" name="empNo" required /><br />
+			            <div id="checkResult" style="font-size:0.8em; display:none"></div>
+			            <br>
 			        <label for="username">*아이디:</label>
 			          <input type="text" id="empId" name="empId"  required/><br />
 			        <label for="password">*비밀번호:</label>
@@ -102,10 +104,50 @@
 					<br><br>
 					<div align="center">
 						<button type="button" class="btn btn-secondary">이전으로</button>
-						<button type="submit" class="btn btn-success">등록하기</button>
+						<button type="submit" class="btn btn-success" disabled>등록하기</button>
 					</div>
 				</form>
 			</div>
+			
+			<script>
+	    	$(function(){
+	    		const $noInput = $("#enrollForm input[name=empNo]");
+	    		
+	    		$noInput.keyup(function(){	
+	    			if($noInput.val().length >= 2){
+	    				
+	    				$.ajax({
+	    					url:"noCheck.me",
+	    					data:{checkNo:$noInput.val()},
+	    					success:function(result){
+	    						
+	    						if(result == "NNNNN"){  // 사용불가능
+	    							// => 빨간색 메세지 출력
+	    							$("#checkResult").show();
+	    							$("#checkResult").css("color", "red").text("중복된 사원번호가 존재합니다. 다시 입력해주세요.");
+	    							// => 버튼 비활성화
+	    							$("#enrollForm :submit").attr("disabled", true);
+	    							
+	    						}else if (result == "NNNNY"){	// 사용가능
+	    							// => 초록색 메세지 출력
+	    							$("#checkResult").show();
+	    							$("#checkResult").css("color", "green").text("사용가능한 사원번호입니다.");
+	    							// => 버튼 활성화
+	    							$("#enrollForm :submit").removeAttr("disabled");
+	    						}
+	    						
+	    					},error:function(){
+	    						console.log("사원번호 중복체크용 ajax 통신실패");
+	    					}
+	    				});
+	    			}else{	
+	    				$("#checkResult").hide();
+	    				$("#enrollForm :submit").attr("disabled", true);
+	    			}
+	    		})
+	    	})
+	    </script>
+			
 		</div>
 	</div>	
 </body>

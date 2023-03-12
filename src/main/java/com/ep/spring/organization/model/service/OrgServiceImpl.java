@@ -37,6 +37,11 @@ public class OrgServiceImpl implements OrgService{
 		 */
 		return 0;
 	}
+
+	@Override
+	public int noCheck(String checkNo) {
+		return oDao.noCheck(sqlSession, checkNo);
+	}
 	
 	
 	
