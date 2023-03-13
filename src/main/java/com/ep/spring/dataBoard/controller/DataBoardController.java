@@ -149,16 +149,18 @@ public class DataBoardController {
 	@RequestMapping("search.db")
 	public String searchDbList(String keyword, @RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
 		
-		int searchDbListCount = daService.searchDbListCount(keyword);
+		int searchCount = daService.selectSearchCount(keyword);
 		
-		PageInfo pi = Pagination.getPageInfo(searchDbListCount, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 10, 5);
 		
-		ArrayList<DataBoard> searchDbList = daService.searchDbList(pi, keyword);
+		ArrayList<DataBoard> list = daService.selectSearchList(pi, keyword);
 		
-		model.addAttribute("searchpi", pi);
-		model.addAttribute("searchDbList", searchDbList);
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
 		
-		return "dataBoard/searchList";
+		model.addAttribute("keyword", keyword);
+		
+		return "dataBoard/dataBoardMain";
 	}
 	
 	
