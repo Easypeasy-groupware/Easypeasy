@@ -1,12 +1,10 @@
 package com.ep.spring.login.controller;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -14,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ep.spring.address.model.service.AddressService;
+import com.ep.spring.address.model.vo.AddGroup;
 import com.ep.spring.common.template.FileUpload;
 import com.ep.spring.login.model.service.EmployeeService;
 import com.ep.spring.login.model.vo.Employee;
-
-import net.nurigo.sdk.message.model.Message;
 
 @Controller
 public class EmployeeController {
@@ -28,17 +26,24 @@ public class EmployeeController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
+	@Autowired
+	private AddressService aService;
+	
 	//로그인
 	@RequestMapping("login.ep")
 	public String loginEmployee(Employee e, HttpSession session) {
 		
 		Employee loginUser = eService.loginEmployee(e);
 		
+		// 로그인한 사원이 등록한 연락처그룹 리스트 조회용
+		ArrayList<AddGroup> userGroup = aService.selectPersonalAddGroup(e);
+		
 		if(loginUser == null) {//로그인실패
 			session.setAttribute("alertMsg", "로그인에 실패했습니다. 다시 시도 해주세요.");
 			return "redirect:/";
 		}else {//로그인성공
 			session.setAttribute("loginUser", loginUser);
+			session.setAttribute("gList", userGroup);
 			return "common/main";
 		}
 		

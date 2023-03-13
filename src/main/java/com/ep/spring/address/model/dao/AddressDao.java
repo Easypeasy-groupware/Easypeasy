@@ -7,11 +7,16 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.ep.spring.address.model.vo.AddDept;
+import com.ep.spring.address.model.vo.AddGroup;
 import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.login.model.vo.Employee;
 
 @Repository
 public class AddressDao {
+	
+	public ArrayList<AddGroup> selectPersonalAddGroup(SqlSessionTemplate sqlSession, Employee e) {
+		return (ArrayList)sqlSession.selectList("addressMapper.selectPersonalAddGroup", e);
+	}
 
 	public int selectEntEmpListCount(SqlSessionTemplate sqlSession, int no) {
 		return sqlSession.selectOne("addressMapper.selectEntEmpListCount", no);
@@ -44,6 +49,8 @@ public class AddressDao {
 	public Employee selectEmpAddDetail(SqlSessionTemplate sqlSession, int no) {
 		return sqlSession.selectOne("addressMapper.selectEmpAddDetail", no);
 	}
+
+	
 
 
 

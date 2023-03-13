@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ep.spring.address.model.dao.AddressDao;
 import com.ep.spring.address.model.vo.AddDept;
+import com.ep.spring.address.model.vo.AddGroup;
 import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.login.model.vo.Employee;
 
@@ -21,6 +22,11 @@ public class AddressServiceImpl implements AddressService {
 	private AddressDao aDao;
 	
 
+	@Override
+	public ArrayList<AddGroup> selectPersonalAddGroup(Employee e) {
+		return aDao.selectPersonalAddGroup(sqlSession, e);
+	}
+	
 	@Override
 	public int selectEntEmpListCount(int no) {
 		return aDao.selectEntEmpListCount(sqlSession, no);
@@ -50,6 +56,8 @@ public class AddressServiceImpl implements AddressService {
 	public Employee selectEmpAddDetail(int no) {
 		return aDao.selectEmpAddDetail(sqlSession, no);
 	}
+
+
 
 
 

@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="addressMapper">
 
+	<resultMap id="addGroupResult" type="addGroup">
+		<id column="emp_no" property="empNo" />
+		<result column="group_no" property="groupNo" />
+		<result column="group_name" property="groupName" />
+		<result column="add_type" property="addType" />
+	</resultMap>
+	
 	<resultMap id="addressResult" type="Address">
 		<id column="add_no" property="addNo" />
 		<result column="emp_no" property="addWriter" />
@@ -49,6 +56,22 @@
 		<result column="add_no" property="addNo" />
 		<result column="add_emp_no" property="addEmpNo" />	
 	</resultMap>
+	
+	
+	
+	
+	
+	<select id="selectPersonalAddGroup" resultMap="addGroupResult">
+		select
+		       group_no
+			 , a.emp_no
+			 , group_name
+			 , add_type
+		  from add_group a
+          join employee e on (a.emp_no = e.emp_no)
+		 where emp_id = #{empId} 
+		      
+	</select>
 	
 	<select id="selectEntEmpListCount" resultType="_int">
 		select
@@ -127,6 +150,23 @@
            and e.emp_no = #{no}
 	</select>
 	
+	<insert id="" >
+	insert 
+	  into add_group
+	  (
+	    GROUP_NO,
+	    EMP_NO,
+	    GROUP_NAME,
+	    ADD_TYPE
+	  )
+	  values
+	  (
+	    seq_grpno.nextval
+	  , 1
+	  , 'hey'
+	  , 'P'
+	  )
+	</insert>
 
 
 
