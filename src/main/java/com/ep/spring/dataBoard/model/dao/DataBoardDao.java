@@ -47,9 +47,20 @@ public class DataBoardDao {
 		return sqlSession.update("dataBoardMapper.updateDataBoard", db);
 	}
 	
-	/*
-	public DataBoard selectNextDataBoard(SqlSessionTemplate sqlSession, int dbNo) {
-		return sqlSession.selectOne("dataBoardMapper.selectNextDataBoard", dbNo);
+	
+	public int selectSearchCount(SqlSessionTemplate sqlSession, String keyword) {
+		return sqlSession.selectOne("dataBoardMapper.selectSearchCount", keyword);
 	}
-	*/
+	
+	public ArrayList<DataBoard> selectSearchList(SqlSessionTemplate sqlSession, PageInfo pi, String keyword) {
+		
+		// 몇개의 게시글을 건너뛸건지
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		// 조회할 게시글 개수
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("dataBoardMapper.selectSearchList", keyword, rowBounds);
+	}
+	
 }

@@ -80,11 +80,11 @@
                 <span>
                     <h5>전사 자료실</h5>
                 </span>
-                <form action="" method="Get">
+                <form action="search.db" method="Get">
                     <div style="position: inherit;" class="input-group mb-3 ">
-                        <input type="text" style="position: inherit;" class="form-control" placeholder="검색어를 입력해주세요" required>
+                        <input type="text" name="keyword" value="${ keyword }" style="position: inherit;" class="form-control" placeholder="검색어를 입력해주세요" required>
                         <div class="input-group-append">
-                            <button style="position: inherit; z-index: -1;" class="btn btn-secondary" type="submit">검색</button>
+                            <button type="submit" style="position: inherit; z-index: -1;" class="btn btn-secondary">검색</button>
                         </div>
                     </div>
                 </form>
@@ -120,62 +120,48 @@
             <script>
 			$(function(){
 				$("#dbList>tbody>tr").click(function(){
-					//console.log($(this).children(".dbno").text());
-					//console.log($(this).next().children(".dbno").text());
-					//console.log($(this).prev().children(".dbno").text());
-					
-					/*
-					if($(this).prev().children(".dbno").text() != "" && $(this).next().children(".dbno").text() != ""){
-					
-						location.href = 'detail.db?no=' + $(this).children(".dbno").text() + "&prevno=" + $(this).next().children(".dbno").text() + "&nextno=" + $(this).prev().children(".dbno").text();
-					
-					} else if($(this).prev().children(".dbno").text() != "" && $(this).next().children(".dbno").text() == ""){
-						
-						location.href = 'detail.db?no=' + $(this).children(".dbno").text() + "&nextno=" + $(this).prev().children(".dbno").text();
-					
-					} else if($(this).next().children(".dbno").text() != "" && $(this).prev().children(".dbno").text() == ""){
-						
-						location.href = 'detail.db?no=' + $(this).children(".dbno").text() + "&prevno=" + $(this).next().children(".dbno").text();
-					
-					}else{
-						
-						location.href = 'detail.db?no=' + $(this).children(".dbno").text();
-						
-					}
-					*/
 					
 					location.href = 'detail.db?no=' + $(this).children(".dbno").text();
 				})
 			})
 			</script>
-            
-            
+         
+         
+         
             <!-- 페이징 처리 -->
              <div id="pagingArea" align="center">
                 <ul id="paging">
-                       <c:choose>
-                       <c:when test="${ pi.currentPage eq 1 }">
-                        <li><a href="#">&lt;</a></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="list.db?cpage=${ pi.currentPage-1 }">&lt;</a></li>
-                    </c:otherwise>
-                    </c:choose>
+                    <c:choose>
+	                    <c:when test="${ empty keyword }">
+	                    	<li><a href="list.db?cpage=${ pi.currentPage-1 }">&lt;</a></li>
+	                  	</c:when>
+	                  	<c:otherwise>
+	                    	<li><a href="search.db?cpage=${ pi.currentPage-1 }&keyword="${ keyword }">&lt;</a></li>
+	                  	</c:otherwise>
+                  	</c:choose>
                         
                     <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                        <li><a href="list.db?cpage=${ p }">${ p }</a></li>
+                        <c:choose>
+                        	<c:when test="${ empty keyword }">
+                        		<li><a href="list.db?cpage=${ p }">${ p }</a></li>
+                        	</c:when>
+                        	<c:otherwise>
+	                    		<li><a href="search.db?cpage=${ p }&keyword="${ keyword }">${ p }</a></li>
+	                  		</c:otherwise>
+                        </c:choose>
                     </c:forEach>
                         
                     <c:choose>
-                    <c:when test="${ pi.currentPage eq pi.maxPage }">
-                        <li><a href="#">&gt;</a></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="list.db?cpage=${ pi.currentPage+1 }">&gt;</a></li>
-                    </c:otherwise>
-                    </c:choose>
+	                    <c:when test="${ empty keyword }">
+	                    	<li><a href="list.db?cpage=${ pi.currentPage+1 }">&gt;</a></li>
+	                  	</c:when>
+	                  	<c:otherwise>
+	                    	<li><a href="search.db?cpage=${ pi.currentPage+1 }&keyword="${ keyword }">&gt;</a></li>
+	                  	</c:otherwise>
+                  	</c:choose>
                 </ul>
              </div>
+           
         </div>
 </body>
 </html>

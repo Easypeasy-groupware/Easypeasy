@@ -117,5 +117,30 @@
 		     )
 		where db_no = #{dbNo}
 	</select>
+	
+	<select id="selectSearchCount" resultType="_int">
+		select
+			   count(*)
+		  from data_board
+		 where db_status = 'Y'
+           and db_title like '%' || #{keyword} || '%'
+            or db_content like '%' || #{keyword} || '%'
+            or origin_name like '%' || #{keyword} || '%'
+	</select>
+	
+	<select id="selectSearchList" resultMap="dataBoardResult">
+		select
+			    db_no
+			  , db_title
+			  , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+			  , count
+		   from data_board
+		  where db_status = 'Y'
+		    and db_title like '%' || #{keyword} || '%'
+             or db_content like '%' || #{keyword} || '%'
+             or origin_name like '%' || #{keyword} || '%'
+		  order
+		     by db_no desc
+	</select>
 
 </mapper>

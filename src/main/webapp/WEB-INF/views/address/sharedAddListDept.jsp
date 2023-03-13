@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,28 +77,42 @@
         </div>
 
         <br><br>
-        <p class="subheading" id="psSubheading">인사팀 총 n개</p>
-
+        <p class="subheading" id="psSubheading"><span id="dName"></span> 총 <b>${ count }</b>명</p>
+		<script>
+			$(function(){
+				if('${dept}'=='hr'){
+					console.log("인사관리팀");
+					$("#dName").html("인사관리팀");
+				}else if('${dept}'=='as'){
+					$("#dName").html("경영지원팀");
+				}else if('${dept}'=='sales1'){
+					$("#dName").html("영업 1팀");
+				}else if('${dept}'=='sales2'){
+					$("#dName").html("영업 2팀");
+				}else if('${dept}'=='sales3'){
+					$("#dName").html("영업 3팀");
+				}else if('${dept}'=='marketing'){
+					console.log("마케팅팀");
+					$("#dName").html("마케팅팀");
+				}
+			})
+		</script>
         <button class="btnGroup" id="sendMail">메일쓰기</button>
 
         <br>
 
         <div id="psLike">
             <table>
-                <copgroup>
-                    <col style="width:10px;">
-                    <col style="width:30px;">
-                    <col style="width:50px;"><!--이름-->
-                    <col style="width:50px;"><!--직위-->
-                    <col style="width:150px;"><!--휴대폰-->
-                    <col style="width:150px;"><!--이메일-->
-                    <col style="width:70px;"><!--부서-->
-                    <col style="width:120px;"><!--회사-->
-                    <col style="width:100px;"><!--회사전화-->
-                    <col style="width:150px;"><!--회사주소-->
-                    <col style="width:70px;"><!--메모-->
-                    <col style="width:50px;"><!--그룹-->
-                </copgroup>
+                <colgroup>
+                    <col style="width:50px;"><!-- 체크박스 -->
+                    <col style="width:50px;"><!-- 별 -->
+                    <col style="width:100px;"><!--이름-->
+                    <col style="width:100px;"><!--직위-->
+                    <col style="width:150px;"><!--부서-->
+                    <col style="width:200px;"><!--휴대폰-->
+                    <col style="width:250px;"><!--이메일-->
+                    <col style="width:150px;"><!--그룹-->
+                </colgroup>
                 <thead align="center">
                     <tr>
                         <th style="display:none">no</th>
@@ -105,98 +120,48 @@
                         <th></th>
                         <th>이름</th>
                         <th>직위</th>
+                        <th>부서</th>                        
                         <th>휴대폰</th>
                         <th>이메일</th>
-                        <th>부서</th>
-                        <th>회사</th>
-                        <th>회사전화</th>
-                        <th>회사주소</th>
-                        <th>메모</th>
                         <th>그룹</th>
                     </tr>
                 </thead>
                 <tbody align="center" id="ps-tbody">
-                    <tr>
-                        <td style="display:none">1</td>
-                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-                        <td class="like">⭐</td>
-                        <td class="clck-detail">홍길동</td>
-                        <td class="clck-detail">사원</td>
-                        <td class="clck-detail">010-1111-2222</td>
-                        <td class="clck-detail">gildong@gmail.com</td>
-                        <td class="clck-detail">영업1팀</td>
-                        <td class="clck-detail">구디아카데미</td>
-                        <td>02-222-3333</td>
-                        <td>서울시 금천구 </td>
-                        <td></td>
-                        <td>friends</td>
-                    </tr>
-                    <tr>
-                        <td style="display:none">2</td>
-                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-                        <td class="like"><i class="fi fi-rr-star"></i></td>
-                        <td class="clck-detail">홍길동</td>
-                        <td class="clck-detail">사원</td>
-                        <td class="clck-detail">010-1111-2222</td>
-                        <td class="clck-detail">gildong@gmail.com</td>
-                        <td class="clck-detail">영업1팀</td>
-                        <td class="clck-detail">구디아카데미</td>
-                        <td>02-222-3333</td>
-                        <td>서울시 금천구 </td>
-                        <td></td>
-                        <td>friends</td>
-                    </tr>
-                    <tr>
-                        <td style="display:none">3</td>
-                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-                        <td class="like">⭐</i></td>
-                        <td class="clck-detail">홍길동</td>
-                        <td class="clck-detail">사원</td>
-                        <td class="clck-detail">010-1111-2222</td>
-                        <td class="clck-detail">gildong@gmail.com</td>
-                        <td class="clck-detail">영업1팀</td>
-                        <td class="clck-detail">구디아카데미</td>
-                        <td>02-222-3333</td>
-                        <td>서울시 금천구 </td>
-                        <td></td>
-                        <td>friends</td>
-                    </tr>
-                    <tr>
-                        <td style="display:none">4</td>
-                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-                        <td class="like"><i class="fi fi-rr-star"></i></td>
-                        <td class="clck-detail">홍길동</td>
-                        <td class="clck-detail">사원</td>
-                        <td class="clck-detail">010-1111-2222</td>
-                        <td class="clck-detail">gildong@gmail.com</td>
-                        <td class="clck-detail">영업1팀</td>
-                        <td class="clck-detail">구디아카데미</td>
-                        <td>02-222-3333</td>
-                        <td>서울시 금천구 </td>
-                        <td></td>
-                        <td>friends</td>
-                    </tr>
-                    <tr>
-                        <td style="display:none">5</td>
-                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-                        <td class="like">⭐</i></td>
-                        <td class="clck-detail">홍길동</td>
-                        <td class="clck-detail">사원</td>
-                        <td class="clck-detail">010-1111-2222</td>
-                        <td class="clck-detail">gildong@gmail.com</td>
-                        <td class="clck-detail">영업1팀</td>
-                        <td class="clck-detail">구디아카데미</td>
-                        <td>02-222-3333</td>
-                        <td>서울시 금천구 </td>
-                        <td></td>
-                        <td>friends</td>
-                    </tr>
+                    <c:forEach var="a" items="${ list }">
+	                    <tr>
+	                        <td style="display:none">${ a.empNo }</td>
+	                        <td><input type="checkbox" class="ps-checkbox"></input></td>
+	                        <td class="like">
+	                        	<c:forEach var = "f" items="${ fList }">
+		                        
+		                        	<c:if test="${ a.empNo eq f.addEmpNo}">
+		                        		⭐
+		                        	</c:if>
+		                        	
+		                        </c:forEach>
+	
+	                        </td>
+	                        <td class="clck-detail">${ a.empName }</td>
+	                        <td class="clck-detail">${ a.jobName }</td>
+	                        <td class="clck-detail">${ a.deptName }</td>	                        
+	                        <td class="clck-detail">${ a.phone }</td>
+	                        <td class="clck-detail">${ a.email }</td>
+	                        <c:choose>
+		                        <c:when test= "${ empty a.deptName }" >
+		                        	<td>기타</td>
+		                        </c:when>
+		                        <c:otherwise>
+		                        	<td>${ a.deptName }</td>
+		                        </c:otherwise>
+		                    </c:choose>
+	                    </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
 
         <script>
-            $("#psCheck").click(function(){ /*체크박스*/
+            $("#psCheck").click(function(){ // 체크박스
                 if($(this).prop("checked")){
                     $(".ps-checkbox").prop("checked", true);
                    
@@ -204,36 +169,62 @@
                     $(".ps-checkbox").prop("checked", false);
                 }
             })
+            
+            
+            $(function(){ //즐겨찾기 리스트 출력
+            	$(".like").each(function(i, e){
+            		if($(this).html().trim().length == 0){
+                		$(this).html('<img src="resources/common_images/star_vacant.png">');
+                	}
+            		
+            	})
+            	
+            })
 
-            $(".like").click(function(){ /*즐겨찾기*/
+            $(".like").click(function(){ // 즐겨찾기
                 if($(this).html()=="⭐"){
                     $(this).html('<i class="fi fi-rr-star"></i>');
                 }else{
                     $(this).html("⭐");
                 }
             })
-
-
-        </script>
-
-        <div align="center">
-            <ul id="paging">
-                <li><a href=""> < </a></li>
-                <li class='on'><a href=""> 1 </a></li>
-                <li><a href=""> 2 </a></li>
-                <li><a href=""> 3 </a></li>
-                <li><a href=""> 4 </a></li>
-                <li><a href=""> 5 </a></li>
-                <li><a href=""> > </a></li>
-            </ul>
-        </div>
-        <script>
-            $(function(){
+            
+            
+            $(function(){ // 사원정보 상세페이지
                 $('.clck-detail').on("click", $('.clck-detail'), function(){
-                    location.href = 'detail.ad?no=' + $(this).siblings().eq(0).text(); 
+                    location.href = 'empInfo.add?no=' + $(this).siblings().eq(0).text(); 
                 })
             })
+
+
         </script>
+
+		<br>
+		
+        <div align="center">
+            <ul id="paging">
+                <c:if test="${ pi.currentPage ne 1 }">
+                   	<li><a href="internalEnt.add?cpage=${ pi.currentPage-1 }&no=${loginUser.empNo}"> < </a></li>
+                </c:if>
+                   
+                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+            		<c:choose>
+            		<c:when test="${ pi.currentPage eq p }">
+	            		<li class="on"><a href="internalDept.add?dept=${ dept }&cpage=${ p }&no=${loginUser.empNo}">${ p }</a></li>
+            		</c:when>
+            		<c:otherwise>
+            			<li><a href="internalDept.add?dept=${ dept }&cpage=${ p }">${ p }</a></li>
+            		</c:otherwise>
+            		</c:choose>
+                </c:forEach>
+
+                   
+                <c:if test="${ pi.currentPage ne pi.maxPage }">
+                   	<li><a href="internalDept.add?dept=${ dept }&cpage=${ pi.currentPage+1 }"> > </a></li>
+               	</c:if>
+            </ul>
+        </div>
+        
     
     </div>
 </body>
