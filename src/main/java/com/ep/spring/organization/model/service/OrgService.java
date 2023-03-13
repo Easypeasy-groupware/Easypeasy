@@ -17,4 +17,10 @@ public interface OrgService {
 	// 3. 사원번호 중복체크 서비스 (ajax)
 	int noCheck(String checkNo);
 	
+	// 4. 사원 정보수정 서비스
+	int updateMember(Employee e);
+	
+	// 5. 사원 삭제 서비스
+	int deleteMember();
+	
 }

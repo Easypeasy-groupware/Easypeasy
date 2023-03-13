@@ -11,7 +11,10 @@
 		<result column="email" property="email" />
 		<result column="phone" property="phone" />
 		<result column="dept_code" property="deptCode" />
+		<result column="dept_name" property="deptName" />
+		<result column="job_name" property="jobName" />
 		<result column="job_code" property="jobCode" />
+		<result column="hire_date" property="hireDate" />
 		<result column="ent_yn" property="entYn" />
 	</resultMap>
 	
@@ -29,15 +32,17 @@
 			 , emp_id
 			 , email
 			 , phone
-			 , dept_code
-			 , job_code
+			 , dept_name
+			 , job_name
 			 , ent_yn
-		  from employee
+		  from employee e
+		  join department d on (e.dept_code = d.dept_code)
+          join job j on (e.job_code = j.job_code)
 		 order
 	        by emp_no desc
 	</select>
 	
-	<!-- <insert id="insertMember">
+	<insert id="insertMember">
 		insert
 		  into employee
 		  (
@@ -47,6 +52,7 @@
 		  , emp_name
 		  , job_code
 		  , dept_code
+		  , hire_date
 		  , phone
 		  , email
 		  , address
@@ -59,11 +65,12 @@
 		  , #{empName}
 		  , #{jobCode} 
 		  , #{deptCode}
+		  , #{hireDate}
 		  , #{phone}
 		  , #{email}
 		  , #{address}
 		  )
-	</insert> -->
+	</insert>
 	
 	<select id="noCheck" resultType="_int">
 		select
@@ -71,5 +78,26 @@
 		  from employee
 		 where emp_no = #{checkNo}
 	</select>
+	
+	<update id="updateMember">
+		update 
+		       employee
+		   set emp_id = #{empId}
+		     , emp_name = #{empName}
+		     , job_code = #{jobCode}
+		     , dept_code = #{deptCode}
+		     , hire_date = #{hireDate}
+		     , email = #{email}
+		     , ent_yn = #{entYn}
+		     , ent_date = #{entDate}
+		 where emp_no = #{empNo}
+	</update>
+	
+	<delete id="deleteMember">
+		delete 
+		  from employee
+		 where status='Y' 
+	</delete>
+	
 	
 </mapper>

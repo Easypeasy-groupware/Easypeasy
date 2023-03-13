@@ -117,7 +117,7 @@
             <div class="container">
                 <form>
                     <div class="search-container">
-                            <button type="button" class="btn btn-secondary">검색</button>
+                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#tree-modal" >사원 검색</button>
                     </div>
                 </form>
                 <button type="button" class="btn btn-outline-success btn-sm" onclick="minsert();">등록</button>
@@ -145,10 +145,10 @@
                     <tbody>
                     	<c:forEach var="o" items="${list}">
 	                        <tr>
-	                            <td>${o.empNo}</td>
+	                            <td class="ono">${o.empNo}</td>
 	                            <td>${o.empName}</td>
-	                            <td>${o.deptCode}</td>
-	                            <td>${o.jobCode}</td>
+	                            <td>${o.deptName}</td>
+	                            <td>${o.jobName}</td>
 	                            <td>${o.email}</td>
 	                            <td>${o.phone}</td>
 	                            <td>${o.entYn}</td>
@@ -159,7 +159,7 @@
                 <br><br>
                 <tfoot>
                      <div align="center">
-			            <ul class="pagination" id="paging">
+			            <ul id="paging">
 			            	<c:choose>
 			            		<c:when test="${ pi.currentPage eq 1 }">
 			            			<li class="page-item disabled"><a class="page-link" href="#"> < </a></li>
@@ -185,12 +185,123 @@
 			        </div>
 			        <script>
 			            $(function(){
-			                 $("#ps-tbody").on("click", "tr", function(){
-			                     location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
-			                 })
+			                 $("#memberList>tbody>tr").click(function(){
+			            			location.href='updateForm.org?no=' + $(this).children(".ono").text();
+			            		})
 			            })
 			        </script>
                 </tfoot>
+                
+                 <!-- 검색/조직도 트리 -->
+					<!-- 모달 -->
+					<div class="modal fade" id="tree-modal" tabindex="-1" role="dialog" aria-labelledby="tree-modal-label" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="tree-modal-label"><input type="text" placeholder="사원 검색"></h5> <button type="button" class="btn btn-success">검색</button>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<!-- 조직도 트리 -->
+									
+									<div id="main">
+				
+										<h5>Easy peasy조직도</h5>
+										<form action="memberList.org">
+											<input type="hidden" name="userNo" value="">
+											<ul id="browser" class="filetree treeview-famfamfam">
+												<li><span class="folder">이지피지</span>
+													<ul>
+														<li><span class="file">${o.jobCode}</span></li>
+														<li><span class="file">상무</span></li>
+														
+														<c:forEach var="o" items="${list}">
+															<li class="closed"><span class="folder">${o.deptCode}</span>
+																<ul>
+																	<li><span class="file">사원1</span></li>
+																	<li><span class="file">사원2</span></li>
+																	<li><span class="file">사원3</span></li>
+																	<li><span class="file">사원4</span></li>
+																</ul>
+															</li>
+														</c:forEach>
+														
+														<li class="closed"><span class="folder">경영지원부</span>
+															<ul>
+																<li><span class="file">사원1</span></li>
+																<li><span class="file">사원2</span></li>
+																<li><span class="file">사원3</span></li>
+																<li><span class="file">사원4</span></li>
+															</ul>
+														</li>
+														<li class="closed"><span class="folder">영업부</span>
+															<ul>
+																<li><span class="folder">영업1팀</span>
+																	<ul id="folder21">
+																		<li><span class="file">사원1</span></li>
+																		<li><span class="file">사원2</span></li>
+																		<li><span class="file">사원3</span></li>
+																	</ul>
+																</li>
+																<li><span class="folder">영업2팀</span>
+																	<ul>
+																		<li><span class="file">사원1</span></li>
+																		<li><span class="file">사원2</span></li>
+																		<li><span class="file">사원3</span></li>
+																	</ul>
+																</li>
+																<li><span class="folder">영업3팀</span>
+																	<ul>
+																		<li><span class="file">사원1</span></li>
+																		<li><span class="file">사원2</span></li>
+																		<li><span class="file">사원3</span></li>
+																	</ul>
+																</li>
+															</ul>
+														</li>
+														<li class="closed"><span class="folder">마케팅부</span>
+															<ul>
+																<li><span class="file">사원1</span></li>
+																<li><span class="file">사원2</span></li>
+																<li><span class="file">사원3</span></li>
+															</ul>
+														</li>
+														
+													</ul>
+												</li>
+											</ul>
+										</form>
+									</div>
+				                    <div class="modal-footer">
+				                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				                    </div>
+				                </div>
+				            </div>
+				        </div>
+					</div>
+					  <script src="resources/org/demo/jquery.cookie.js" type="text/javascript"></script>
+					  <script src="resources/org/jquery.treeview.js" type="text/javascript"></script>
+					  <script type="text/javascript">
+							$(document).ready(function(){
+								$("#browser").treeview({
+									toggle: function() {
+										console.log("%s was toggled.", $(this).find(">span").text());
+									}
+								});
+						
+								$("#add").click(function() {
+									var branches = $("<li><span class='folder'>New Sublist</span><ul>" +
+										"<li><span class='file'>Item1</span></li>" +
+										"<li><span class='file'>Item2</span></li></ul></li>").appendTo("#browser");
+									$("#browser").treeview({
+										add: branches
+									});
+								});
+							});
+					  </script>
+                
             </div>
         </div>
     </div>
