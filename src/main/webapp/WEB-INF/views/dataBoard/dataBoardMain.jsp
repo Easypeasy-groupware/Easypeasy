@@ -81,6 +81,7 @@
                     <h5>전사 자료실</h5>
                 </span>
                 <form action="search.db" method="Get">
+                <input type="hidden" name="cpage" value="1">
                     <div style="position: inherit;" class="input-group mb-3 ">
                         <input type="text" name="keyword" value="${ keyword }" style="position: inherit;" class="form-control" placeholder="검색어를 입력해주세요" required>
                         <div class="input-group-append">

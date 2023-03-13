@@ -2,9 +2,12 @@ package com.ep.spring.organization.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,7 +53,7 @@ public class OrgController {
 		return "organization/memberInsertForm";
 	}
 	
-	/*@RequestMapping("insert.org")
+	@RequestMapping("insert.org")
 	public String insertMember(Employee e, Model model, HttpSession session) {
 		
 		String encPwd = bcryptPasswordEncoder.encode(e.getEmpPwd());
@@ -68,8 +71,7 @@ public class OrgController {
 			return "common/errorPage";
 		}
 		
-	}*/
-	
+	}
 	
 	// ajax
 	@ResponseBody
@@ -77,10 +79,43 @@ public class OrgController {
 	public String ajaxIdCheck(String checkNo) {
 		int count = oService.noCheck(checkNo);
 			
-		
 		return count > 0 ? "NNNNN" : "NNNNY"; 			
 			
-		}	
+	}	
+	
+	
+	@RequestMapping("updateForm.org")
+	public String updateForm() {
+		return "organization/memberUpdateForm";
+	}
+	
+	@RequestMapping("update.org")
+	public String updateMember(Employee e, HttpSession session, Model model) {
+		
+		int result = oService.updateMember(e);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "성공적으로 사원정보가 수정되었습니다.");
+			return "redirect:updateForm.org?no=" + e.getEmpNo();
+		}else {
+			model.addAttribute("errorMsg", "사원정보 수정 실패");
+			return "common/errorPage";	
+		}
+	}
+	
+	@RequestMapping("deleteMember.org")
+	public String deleteMember(HttpSession session, Model model) {
+		int result = oService.deleteMember();
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "성공적으로 사원정보가 삭제되었습니다.");
+			return "redirect:adminList.org";
+		}else {
+			model.addAttribute("errorMsg", "사원정보 삭제 실패");
+			return "common/errorPage";	
+		}
+		
+	}
 	
 	
 }
