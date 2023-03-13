@@ -105,7 +105,7 @@
 	                </tr>
 	            </thead>
 	            <tbody>
-	            	<c:forEach var="db" items="${ list }">
+	            	<c:forEach var="db" items="${ searchDbList }">
 		                 <tr>
 		                     <td class="dbno">${ db.dbNo }</td>
 		                     <td>${ db.dbTitle }</td>
@@ -132,24 +132,24 @@
              <div id="pagingArea" align="center">
                 <ul id="paging">
                     <c:choose>
-	                    <c:when test="${ pi.currentPage eq 1 }">
+	                    <c:when test="${ searchpi.currentPage eq 1 }">
 	                    	<li><a href="#">&lt;</a></li>
 	                  	</c:when>
 	                  	<c:otherwise>
-	                    	<li><a href="list.db?cpage=${ pi.currentPage-1 }">&lt;</a></li>
+	                    	<li><a href="search.db?cpage=${ searchpi.currentPage-1 }">&lt;</a></li>
 	                  	</c:otherwise>
                   	</c:choose>
                         
-                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                        <li><a href="list.db?cpage=${ p }">${ p }</a></li>
+                    <c:forEach var="p" begin="${ searchpi.startPage }" end="${ searchpi.endPage }">
+                        <li><a href="search.db?cpage=${ p }">${ p }</a></li>
                     </c:forEach>
                         
                     <c:choose>
-                    <c:when test="${ pi.currentPage eq pi.maxPage }">
+                    <c:when test="${ searchpi.currentPage eq pi.maxPage }">
                         <li><a href="#">&gt;</a></li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="list.db?cpage=${ pi.currentPage+1 }">&gt;</a></li>
+                        <li><a href="search.db?cpage=${ searchpi.currentPage+1 }">&gt;</a></li>
                     </c:otherwise>
                     </c:choose>
                 </ul>

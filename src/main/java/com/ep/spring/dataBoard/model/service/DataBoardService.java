@@ -25,6 +25,7 @@ public interface DataBoardService {
 	int updateDataBoard(DataBoard db);
 	
 	// [추가]
-	//DataBoard selectNextDataBoard(int dbNo);
+	int searchDbListCount(String keyword);
+	ArrayList<DataBoard> searchDbList(PageInfo pi, String keyword);
 	
 }
