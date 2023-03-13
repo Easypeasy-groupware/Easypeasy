@@ -21,8 +21,8 @@
             width: 50%;
             height: 100%;
             float: left;
-            text-align: center;
-            padding-top: 300px;
+            text-align: right;
+            padding-top: 150px;
         }
         .login-area{
             width: 50%;
@@ -80,8 +80,7 @@
     <div class="outer" align="center">
 
         <div class="title">
-            파이널 프로젝트 그룹웨어<br>
-            <b style="font-size: 80px;">EASY PEASY</b>
+            <img src="resources/common_images/EP-oval.png" style="width:500px;">
         </div>
 
         <div class="login-area">
