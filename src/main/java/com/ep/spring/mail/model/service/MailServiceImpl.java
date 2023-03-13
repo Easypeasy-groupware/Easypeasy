@@ -6,10 +6,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ep.spring.login.model.vo.Employee;
 import com.ep.spring.mail.model.dao.MailDao;
+import com.ep.spring.mail.model.vo.Mail;
 import com.ep.spring.mail.model.vo.MailTag;
-import com.ep.spring.mail.model.vo.ReceiveMail;
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -21,7 +20,7 @@ public class MailServiceImpl implements MailService {
 	private MailDao mDao;
 	
 	@Override
-	public ArrayList<ReceiveMail> selectReceiveMailList(String email) {
+	public ArrayList<Mail> selectReceiveMailList(String email) {
 		return mDao.selectReceiveMailList(email, sqlSession);
 	}
 

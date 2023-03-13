@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="mailMapper">
 
-	<resultMap id="ReceiveMailResult" type="ReceiveMail">
+	<resultMap id="MailResult" type="Mail">
 		<id column="recep_mail_no" property="recMailNo" />
 		<result column="mail_no" property="mailNo" />
 		<result column="tag_no" property="tagNo" />
@@ -18,6 +18,9 @@
 		<result column="status" property="status" />
 		<result column="reference" property="reference" />
 		<result column="hidden_reference" property="hiddenReference" />
+		<result column="send_mail_address" property="sendMailAddress" />
+		<result column="sent_date" property="sendDate" />
+		<result column="temp_storage" property="tempStorage" />
 	</resultMap>
 
 	<resultMap id="TagResult" type="MailTage">
@@ -27,7 +30,7 @@
 		<result column="tag_color" property="tagColor" />
 	</resultMap> 
 	
-	<select id="selectReceiceMailList" resultMap="ReceiveMailResult">
+	<select id="selectReceiceMailList" resultMap="MailResult">
 		select 
 		       RECEP_MAIL_NO
 			 , MAIL_NO

@@ -73,7 +73,7 @@
                 <button id="preview" class="btn btn-outline-secondary">미리보기</button>&nbsp;
             </div>
         </div>
-        <form id="mail_content_text" method="POST" enctype="multipart/form-data">
+        <form id="mail_content_text" action="send.ma" method="POST" enctype="multipart/form-data">
             <table id="send_info">
                 <tr class="detail_info_tr">
                     <th>받은 사람</th>
@@ -115,8 +115,8 @@
                 </tr>
                 <tr class="detail_info_tr">
                     <th>제 목</th>
-                    <td><input type="checkbox"> 중요</td>
-                    <td colspan="2"><input class="mail_input" style="width: 760px; margin-right: 0;" type="text"></td>
+                    <td><input type="checkbox" name="imporMail"> 중요</td>
+                    <td colspan="2"><input class="mail_input" style="width: 760px; margin-right: 0;" name="mailTitle" type="text"></td>
                 </tr>
                 <tr class="detail_info_tr">
                     <th>파일 첨부</th>
@@ -145,7 +145,7 @@
                     <td></td>
                     <td></td>
                     <td colspan="2">
-                        <textarea name="editordata" id="summernote">
+                        <textarea name="mailContent" id="summernote">
 
                         </textarea>
                     </td>
@@ -313,14 +313,15 @@
 
 
         document.getElementById("send").addEventListener('click', function(){
-            const sendContent = document.getElementById("mail_content");
-            const form = document.createElement("form");
-            form.setAttribute("charset", "UTF-8");
-            form.setAttribute("method", "POST");  
-            form.setAttribute("action", "send.ma");
-            form.appendChild(sendContent);
-            document.body.appendChild(form);
-            form.submit();
+            const sendContent = document.getElementById("mail_content_text");
+            // const form = document.createElement("form");
+            // form.setAttribute("charset", "UTF-8");
+            // form.setAttribute("method", "POST");  
+            // form.setAttribute("action", "send.ma");
+            // form.appendChild(sendContent);
+            // document.body.appendChild(form);
+            // form.submit();
+            sendContent.submit();
         })
     </script>
     

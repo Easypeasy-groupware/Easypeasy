@@ -16,7 +16,7 @@
 		<typeAlias type="com.ep.spring.chat.model.vo.ChatRoom" alias="ChatRoom" />
 		<typeAlias type="com.ep.spring.mail.model.vo.MailFavorite" alias="MailFavorite" />
 		<typeAlias type="com.ep.spring.mail.model.vo.MailTag" alias="MailTage" />
-		<typeAlias type="com.ep.spring.mail.model.vo.ReceiveMail" alias="ReceiveMail" />
+		<typeAlias type="com.ep.spring.mail.model.vo.Mail" alias="Mail" />
 		<typeAlias type="com.ep.spring.mail.model.vo.SendMail" alias="SendMail" />		
 		<typeAlias type="com.ep.spring.alarm.model.vo.Alarm" alias="Alarm" />
 		<typeAlias type="com.ep.spring.login.model.vo.Employee" alias="Employee" />

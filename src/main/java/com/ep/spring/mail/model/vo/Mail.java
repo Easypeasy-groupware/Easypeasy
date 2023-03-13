@@ -9,7 +9,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class ReceiveMail {
+public class Mail {
 	
 	private int recMailNo;
 	private int mailNo;
@@ -26,5 +26,8 @@ public class ReceiveMail {
 	private String status;
 	private String reference;
 	private String hiddenReference;
+	private String sendMailAddress;
+	private String sentDate;
+	private String tempStorage;
 
 }

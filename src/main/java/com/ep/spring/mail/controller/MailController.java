@@ -11,8 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ep.spring.login.model.vo.Employee;
 import com.ep.spring.mail.model.service.MailService;
+import com.ep.spring.mail.model.vo.Mail;
 import com.ep.spring.mail.model.vo.MailTag;
-import com.ep.spring.mail.model.vo.ReceiveMail;
 
 @Controller
 public class MailController {
@@ -23,7 +23,7 @@ public class MailController {
 	@RequestMapping("list.ma")
 	public ModelAndView selectMailList(String email, HttpSession session, ModelAndView mv) {
 		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
-		ArrayList<ReceiveMail> mailList = mService.selectReceiveMailList(email);
+		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
 		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
 		
 		mv.addObject("mailList", mailList);
@@ -40,8 +40,6 @@ public class MailController {
 	
 	@RequestMapping("insert.tg")
 	public ModelAndView insertTag(MailTag t, ModelAndView mv) {
-		
-		System.out.println(t);
 		int result = mService.insertTag(t);
 		
 		if(result > 0) {
@@ -54,8 +52,13 @@ public class MailController {
 		
 	}
 	
-//	@RequestMapping("send.ma")
-//	public String 
+	@RequestMapping("send.ma")
+	public ModelAndView sendMail(Mail m, ModelAndView mv) {
+		System.out.println(m);
+		
+		
+		return mv;
+	}
 	
 	
 }

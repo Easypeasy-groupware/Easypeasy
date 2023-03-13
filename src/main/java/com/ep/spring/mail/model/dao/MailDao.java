@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.ep.spring.mail.model.vo.Mail;
 import com.ep.spring.mail.model.vo.MailTag;
-import com.ep.spring.mail.model.vo.ReceiveMail;
 
 @Repository
 public class MailDao {
 
-	public ArrayList<ReceiveMail> selectReceiveMailList(String email, SqlSessionTemplate sqlSession) {
+	public ArrayList<Mail> selectReceiveMailList(String email, SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiceMailList", email);
 	}
 
