@@ -38,6 +38,34 @@
 		
 	</resultMap>
 	
+	<resultMap id="approvalReplyResult" type="ApprovalReply">
+		<id column="app_repno" property="replyNo" />
+		<result column ="enroll_date" property="enrollDate" /> 
+		<result column ="content" property="content" /> 
+		<result column ="status" property="status" /> 
+		<result column ="app_no" property="appNo" /> 
+		<result column ="emp_no" property="writerNo" /> 
+	</resultMap>
+	
+	<resultMap id="vacationFormResult" type="VacationForm">
+		<id column = "app_no" property="appNo" />
+		<result column="vac_kind" property="vacKind" /> 
+		<result column="vac_start" property="vacStart" /> 
+		<result column="vac_end" property="vacEnd" /> 
+		<result column="half_status" property="halfStatus" /> 
+		<result column="vac_use" property="vacUse" /> 
+		<result column="half_day" property="halfDay" /> 
+	</resultMap>
+	
+	<resultMap id="overTimeFormResult" type="OverTimeForm">
+		<id column="app_no" property="appNo" />
+		<id column="overtime_kind" property="otKind" />
+		<id column="over_date" property="otDate" />
+		<id column="over_start_hour" property="otStart" />
+		<id column="over_end_hour" property="otEnd" />
+		<id column="over_use_time" property="otUseTime" />
+	</resultMap>
+	
 	<select id="selectMainWList" resultMap="approvalResult">
 		   select * 
 		    from(
@@ -439,5 +467,98 @@
 				   order by a.app_no        	
 	</select>
 	
+	<select id="selectDetailSPrgAp" resultMap="approvalResult">
+				select 
+				        APP_NO
+				        , to_char(a.ENROLL_DATE, 'YYYY-MM-dd') as "enroll_date"
+				        , a.STATUS
+				        , APP_TSTATUS
+				        , WRITER_COMMENT
+				        , TITLE
+				        , CONTENT
+				        , a.EMP_NO
+				        , FORM_NAME
+				        , CONSER_PERIOD
+				        , SEC_GRADE
+				        , FORM_CODE
+				        , APP_AMOUNT
+				        , APP_SEQUENCE
+				        , APP_CHANGE
+				        , emp_name
+				        , dept_name
+				        , job_code
+				  from approval a
+				  join employee b on (a.emp_no = b.emp_no)
+				  join department c on (b.dept_code = c.dept_code)
+				  where a.emp_no = #{writerNo}
+				    and APP_TSTATUS = '진행중'
+				    and a.status = '1'
+				    and app_no = #{appNo}	
+	</select>
 	
+	<select id="selectDetailSPrgAl" resultMap="approvalLineResult">
+    
+				 select  
+				        APP_LINE_NO
+				        , REF_WHETHER
+				        , APP_SEQ_NO
+				        , APP_STATUS
+				        , to_char(UPDATE_DATE, 'YYYY-MM-dd') as "update_date"
+				        , a.EMP_NO
+				        , APP_NO
+				        , APP_COMMENT
+				        , ENROLL_DATE
+				        , COUNT
+				        , emp_name
+				        , dept_name
+				        , job_code
+				   from app_line a
+				   join employee b on (a.emp_no = b.emp_no)
+				   join department c on (b.dept_code = c.dept_code)
+				  where app_no = #{appNo}	 
+				  order 
+				     by app_seq_no
+	</select>
+	
+	<select id="selectDetailSPrgAr" resultMap="approvalReplyResult">
+			    select
+			            APP_REPNO
+			            , to_char(a.ENROLL_DATE, 'YYYY-MM-dd hh:mm:ss') as "enroll_date"
+			            , CONTENT
+			            , a.STATUS
+			            , APP_NO
+			            , a.EMP_NO
+			            , emp_name
+			            , dept_name
+			            , job_code
+			     from  app_reply a
+			     join  employee b on (a.emp_no = b.emp_no)
+			     join  department c on (b.dept_code = c.dept_code)   
+			     where a.status = 'Y'
+			       and app_no = #{appNo}	 	
+	</select>
+	<select id="selectDetailSPrgVf" resultMap="vacationFormResult">
+				SELECT 
+				        APP_NO
+				        , VAC_KIND
+				        , VAC_START
+				        , VAC_END
+				        , HALF_STATUS
+				        , VAC_USE
+				        , HALF_DAY
+				   from vac_form
+				  where app_no = #{appNo}
+	</select>			
+	
+	<select id="selectDetailSPrgOt" resultMap="overTimeFormResult">
+				select
+				        APP_NO
+				        , OVERTIME_KIND
+				        , OVER_DATE
+				        , OVER_START_HOUR
+				        , OVER_END_HOUR
+				        , OVER_USE_TIME
+				   from ot_form
+				  where app_no = #{appNo}	
+	</select>
 </mapper>

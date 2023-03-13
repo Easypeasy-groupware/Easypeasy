@@ -16,6 +16,6 @@ public class ApprovalReply {
 	private String content;
 	private String status;
 	private int appNo;
-	private String writerNo;
+	private int writerNo;
 
 }

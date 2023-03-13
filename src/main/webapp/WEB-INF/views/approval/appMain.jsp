@@ -107,10 +107,10 @@
 				                                <td>${s.formName}</td>
 				                                <c:choose>
 							                        <c:when test="${s.formCode == 3 || s.formCode == 4}">
-							                         	<td>${s.formName}</td>
+							                         	<td id = "clk">${s.formName}</td>
 							                        </c:when>
 							                        <c:otherwise>
-							                        	<td>${s.title}</td>
+							                        	<td id= "clk">${s.title}</td>
 							                        </c:otherwise>
 				                                </c:choose>
 				                                <td>${s.empName}</td>
@@ -125,7 +125,12 @@
             </div>
             <br><br><br><br><br><br><br><br><br><br>
         </div>
-        
+        <script>
+	     	// 상세페이지로 이동하는 function
+	        $("table tbody").on("click", "tr", function(){
+	            location.href = 'detailSPrg.ap?no=' + $(this).children().eq(0).text()+"&form="+ $(this).children().eq(2).text(); 
+	        }); 
+        </script>
  
 </body>
 </html>

@@ -23,19 +23,21 @@
         <p style="font-size:25px;"><b>결재대기문서</b></p>
         <br><br>
         <div class="list-1">
-            <select name="period" id="">
-                <option value="">전체기간</option>
-                <option value="">1개월</option>
-                <option value="">6개월</option>
-                <option value="">1년</option>
-            </select>
-            <select name="option" id="">
-                <option value="">기안자</option>
-                <option value="">기안부서</option>
-                <option value="">결재양식</option>
-            </select>
-            <input type="search"> <button>검색</button>
-
+        	<form action="search.ap" method="Get">
+        		<input type="hidden" name="r-page" value="cw">
+	            <select name="period" id="">
+	                <option value="all">전체기간</option>
+	                <option value="1">1개월</option>
+	                <option value="6">6개월</option>
+	                <option value="365">1년</option>
+	            </select>
+	            <select name="option" id="">
+	                <option value="writer">기안자</option>
+	                <option value="dept">기안부서</option>
+	                <option value="form">결재양식</option>
+	            </select>
+	            <input type="search" name="keyword"> <button type="submit">검색</button>
+            </form>
         </div>
 
         <br><br>

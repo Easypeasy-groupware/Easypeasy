@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.ep.spring.approval.model.dao.ApprovalDao;
 import com.ep.spring.approval.model.vo.Approval;
+import com.ep.spring.approval.model.vo.ApprovalLine;
+import com.ep.spring.approval.model.vo.ApprovalReply;
+import com.ep.spring.approval.model.vo.OverTimeForm;
+import com.ep.spring.approval.model.vo.VacationForm;
 import com.ep.spring.common.model.vo.PageInfo;
 
 @Service
@@ -119,6 +123,34 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public ArrayList<Approval> selectDeptRefList(PageInfo pi, int eNo) {
 		return aDao.selectDeptRefList(sqlSession, pi, eNo);
 	}
+
+	@Override
+	public Approval selectDetailSPrgAp(Approval a) {
+		return aDao.selectDetailSPrgAp(sqlSession, a);
+	}
+
+	@Override
+	public ArrayList<ApprovalLine> selectDetailSPrgAl(Approval a) {
+		return aDao.selectDetailSPrgAl(sqlSession, a);
+	}
+
+	@Override
+	public ArrayList<ApprovalReply> selectDetailSPrgAr(Approval a) {
+		return aDao.selectDetailSPrgAr(sqlSession, a);
+	}
+
+	@Override
+	public OverTimeForm selectDetailSPrgOt(Approval a) {
+		return aDao.selectDetailSPrgOt(sqlSession, a);
+	}
+
+	@Override
+	public VacationForm selectDetailSPrgVf(Approval a) {
+		return aDao.selectDetailSPrgVf(sqlSession, a);
+	}
+
+
+
 
 
 

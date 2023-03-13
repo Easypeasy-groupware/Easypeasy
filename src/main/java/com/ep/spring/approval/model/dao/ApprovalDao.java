@@ -8,6 +8,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.ep.spring.approval.model.vo.Approval;
+import com.ep.spring.approval.model.vo.ApprovalLine;
+import com.ep.spring.approval.model.vo.ApprovalReply;
+import com.ep.spring.approval.model.vo.OverTimeForm;
+import com.ep.spring.approval.model.vo.VacationForm;
 import com.ep.spring.common.model.vo.PageInfo;
 
 @Repository
@@ -117,5 +121,28 @@ public class ApprovalDao {
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectDeptRefList", empNo, rowBounds);
 		
 	}
+	
+	public Approval selectDetailSPrgAp(SqlSessionTemplate sqlSession, Approval a) {
+		return sqlSession.selectOne("approvalMapper.selectDetailSPrgAp", a);
+	}
+
+	public ArrayList<ApprovalLine> selectDetailSPrgAl(SqlSessionTemplate sqlSession, Approval a) {
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectDetailSPrgAl", a);
+	}
+	
+	public ArrayList<ApprovalReply> selectDetailSPrgAr(SqlSessionTemplate sqlSession, Approval a) {
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectDetailSPrgAr", a);
+	}
+	
+	public VacationForm selectDetailSPrgVf(SqlSessionTemplate sqlSession, Approval a) {
+		return sqlSession.selectOne("approvalMapper.selectDetailSPrgVf", a);
+	}
+	
+	public OverTimeForm selectDetailSPrgOt(SqlSessionTemplate sqlSession, Approval a) {
+		return sqlSession.selectOne("approvalMapper.selectDetailSPrgOt", a);
+	}
+	
+	
+
 	
 }
