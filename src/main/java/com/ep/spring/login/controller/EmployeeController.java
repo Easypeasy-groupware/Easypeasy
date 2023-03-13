@@ -34,6 +34,7 @@ public class EmployeeController {
 	public String loginEmployee(Employee e, HttpSession session) {
 		
 		Employee loginUser = eService.loginEmployee(e);
+		System.out.println(loginUser);
 		
 		// 로그인한 사원이 등록한 연락처그룹 리스트 조회
 		ArrayList<AddGroup> userGroup = aService.selectPersonalAddGroup(e);
