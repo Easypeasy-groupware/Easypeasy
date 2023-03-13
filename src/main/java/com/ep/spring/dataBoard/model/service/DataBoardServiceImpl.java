@@ -45,7 +45,6 @@ public class DataBoardServiceImpl implements DataBoardService {
 	}
 	
 	
-
 	@Override
 	public int deleteDataBoard(int dbNo) {
 		return dbDao.deleteDataBoard(sqlSession, dbNo);
@@ -56,11 +55,15 @@ public class DataBoardServiceImpl implements DataBoardService {
 		return dbDao.updateDataBoard(sqlSession, db);
 	}
 
-	/*
 	@Override
-	public DataBoard selectNextDataBoard(int dbNo) {
-		return dbDao.selectNextDataBoard(sqlSession, dbNo);
+	public int searchDbListCount(String keyword) {
+		return dbDao.searchDbListCount(sqlSession, keyword);
 	}
-	*/
 
+	@Override
+	public ArrayList<DataBoard> searchDbList(PageInfo pi, String keyword) {
+		return dbDao.searchDbList(sqlSession, pi, keyword);
+	}
+
+	
 }

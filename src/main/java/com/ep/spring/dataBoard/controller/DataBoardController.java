@@ -25,7 +25,7 @@ public class DataBoardController {
 	private DataBoardService daService;
 	
 	@RequestMapping("list.db")
-	public String selectMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+	public String selectDbList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
 		
 		int listCount = daService.selectDbListCount();
 		
@@ -69,30 +69,15 @@ public class DataBoardController {
 	}
 	
 	@RequestMapping("detail.db")
-	public String selectBoard(int no, /*@RequestParam(value="prevno", defaultValue="0") int prevno, @RequestParam(value="nextno", defaultValue="0") int nextno, */HttpSession session, Model model) {
+	public String selectBoard(int no, HttpSession session, Model model) {
 		
 		int result = daService.increaseCount(no);
 	
 		if(result > 0) {
 			
 			DataBoard currentdb = daService.selectDataBoard(no);
-			//DataBoard prevdb = daService.selectDataBoard(prevno);
-			//DataBoard nextdb = daService.selectDataBoard(nextno);
-			
-			//System.out.println("현재글 : " + currentdb);
-			//System.out.println("이전글 : " + prevdb);
-			//System.out.println("다음글 : " + nextdb);
 			
 			DataBoard db = daService.selectDataBoard(no);
-			
-			//DataBoard nextdb = daService.selectNextDataBoard(nextno);
-			
-			//ArrayList<DataBoard> list = new ArrayList<>();
-			//list.add(prevdb);
-			//list.add(currentdb);
-			//list.add(nextdb);
-			
-			//System.out.println(list);
 			
 			model.addAttribute("db", db);
 			return "dataBoard/dataBoardDetailView";
@@ -159,6 +144,21 @@ public class DataBoardController {
 			session.setAttribute("alertMsg", "게시글 수정 실패");
 			return "redirect:detail.db?no=" + db.getDbNo();
 		}
+	}
+	
+	@RequestMapping("search.db")
+	public String searchDbList(String keyword, @RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+		
+		int searchDbListCount = daService.searchDbListCount(keyword);
+		
+		PageInfo pi = Pagination.getPageInfo(searchDbListCount, currentPage, 10, 5);
+		
+		ArrayList<DataBoard> searchDbList = daService.searchDbList(pi, keyword);
+		
+		model.addAttribute("searchpi", pi);
+		model.addAttribute("searchDbList", searchDbList);
+		
+		return "dataBoard/searchList";
 	}
 	
 	
