@@ -48,11 +48,11 @@ public class DataBoardDao {
 	}
 	
 	
-	public int searchDbListCount(SqlSessionTemplate sqlSession, String keyword) {
-		return sqlSession.selectOne("dataBoardMapper.searchDbListCount", keyword);
+	public int selectSearchCount(SqlSessionTemplate sqlSession, String keyword) {
+		return sqlSession.selectOne("dataBoardMapper.selectSearchCount", keyword);
 	}
 	
-	public ArrayList<DataBoard> searchDbList(SqlSessionTemplate sqlSession, PageInfo pi, String keyword) {
+	public ArrayList<DataBoard> selectSearchList(SqlSessionTemplate sqlSession, PageInfo pi, String keyword) {
 		
 		// 몇개의 게시글을 건너뛸건지
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
@@ -60,7 +60,7 @@ public class DataBoardDao {
 		int limit = pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("dataBoardMapper.searchDbList", keyword, rowBounds);
+		return (ArrayList)sqlSession.selectList("dataBoardMapper.selectSearchList", keyword, rowBounds);
 	}
 	
 }

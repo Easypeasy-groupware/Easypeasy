@@ -132,26 +132,33 @@
              <div id="pagingArea" align="center">
                 <ul id="paging">
                     <c:choose>
-	                    <c:when test="${ pi.currentPage eq 1 }">
-	                    	<li><a href="#">&lt;</a></li>
+	                    <c:when test="${ empty keyword }">
+	                    	<li><a href="list.db?cpage=${ pi.currentPage-1 }">&lt;</a></li>
 	                  	</c:when>
 	                  	<c:otherwise>
-	                    	<li><a href="list.db?cpage=${ pi.currentPage-1 }">&lt;</a></li>
+	                    	<li><a href="search.db?cpage=${ pi.currentPage-1 }&keyword="${ keyword }">&lt;</a></li>
 	                  	</c:otherwise>
                   	</c:choose>
                         
                     <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                        <li><a href="list.db?cpage=${ p }">${ p }</a></li>
+                        <c:choose>
+                        	<c:when test="${ empty keyword }">
+                        		<li><a href="list.db?cpage=${ p }">${ p }</a></li>
+                        	</c:when>
+                        	<c:otherwise>
+	                    		<li><a href="search.db?cpage=${ p }&keyword="${ keyword }">${ p }</a></li>
+	                  		</c:otherwise>
+                        </c:choose>
                     </c:forEach>
                         
                     <c:choose>
-                    <c:when test="${ pi.currentPage eq pi.maxPage }">
-                        <li><a href="#">&gt;</a></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="list.db?cpage=${ pi.currentPage+1 }">&gt;</a></li>
-                    </c:otherwise>
-                    </c:choose>
+	                    <c:when test="${ empty keyword }">
+	                    	<li><a href="list.db?cpage=${ pi.currentPage+1 }">&gt;</a></li>
+	                  	</c:when>
+	                  	<c:otherwise>
+	                    	<li><a href="search.db?cpage=${ pi.currentPage+1 }&keyword="${ keyword }">&gt;</a></li>
+	                  	</c:otherwise>
+                  	</c:choose>
                 </ul>
              </div>
            

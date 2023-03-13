@@ -56,13 +56,13 @@ public class DataBoardServiceImpl implements DataBoardService {
 	}
 
 	@Override
-	public int searchDbListCount(String keyword) {
-		return dbDao.searchDbListCount(sqlSession, keyword);
+	public int selectSearchCount(String keyword) {
+		return dbDao.selectSearchCount(sqlSession, keyword);
 	}
 
 	@Override
-	public ArrayList<DataBoard> searchDbList(PageInfo pi, String keyword) {
-		return dbDao.searchDbList(sqlSession, pi, keyword);
+	public ArrayList<DataBoard> selectSearchList(PageInfo pi, String keyword) {
+		return dbDao.selectSearchList(sqlSession, pi, keyword);
 	}
 
 	
