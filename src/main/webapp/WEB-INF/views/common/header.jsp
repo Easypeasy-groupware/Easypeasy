@@ -41,7 +41,7 @@
     .chat-icon{margin-right:10px;}
 
     #empName{display:inline-block; font-size:13px; line-height: 60px;}
-
+	#user-name{font-weight:600;}
 
     /*프로필사진+드롭다운메뉴*/
     .dropdown-wrap{ 
@@ -125,7 +125,7 @@
                 <!--<img src="resources/common_images/bell-si-alarm.png" class="alarm-icon">-->
             </div>
             
-           	<div id="empName">${ loginUser.empName } ${ loginUser.jobName }님</div>
+           	<div id="empName"><span id="user-name">${ loginUser.empName }</span> ${ loginUser.jobName }님</div>
             <div class="dropdown-wrap">
                 <img src="<c:out value='${ loginUser.empProfile }' default='resources/common_images/default_profile.png' />" width="45px">
 

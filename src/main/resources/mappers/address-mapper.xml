@@ -69,8 +69,19 @@
 			 , add_type
 		  from add_group a
           join employee e on (a.emp_no = e.emp_no)
-		 where emp_id = #{empId} 
+		 where add_type = 'P'
+		   and emp_id = #{empId} 
 		      
+	</select>
+	
+	<select id="selectSharedAddGroup" resultMap="addGroupResult">
+		select
+		       group_no
+			 , emp_no
+			 , group_name
+			 , add_type
+		  from add_group
+         where add_type = 'S'
 	</select>
 	
 	<select id="selectEntEmpListCount" resultType="_int">

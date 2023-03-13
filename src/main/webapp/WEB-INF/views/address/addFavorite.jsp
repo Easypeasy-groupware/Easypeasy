@@ -7,9 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    .content-outer{width:1000px; margin-left:200px;}
+    .content-outer{width:1000px; margin-left:200px; padding-top:20px;}
     .content-outer *{box-sizing: border-box;}
-    #address-group{font-size:22px; font-weight:600; color:rgb(93, 109, 75);}
+    #address-group{font-size:20px; font-weight:600; color:rgb(93, 109, 75);}
 
     /*검색*/
     #searchKey{width:200px; height:25px; border:1px solid gray; border-radius:5px;}

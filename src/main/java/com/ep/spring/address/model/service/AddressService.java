@@ -9,8 +9,9 @@ import com.ep.spring.login.model.vo.Employee;
 
 public interface AddressService {
 	
-	// 0. 로그인한 사원이 등록한 연락처 그룹 리스트
+	// 0. 로그인한 사원이 등록한 연락처 그룹 리스트 & 공유주소록(외부) 그룹리스트
 	ArrayList<AddGroup> selectPersonalAddGroup(Employee e);
+	ArrayList<AddGroup> selectSharedAddGroup();
 	
 	// 1. 즐겨찾기 리스트 조회 서비스
 	

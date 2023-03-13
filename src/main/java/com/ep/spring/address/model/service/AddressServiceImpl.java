@@ -28,6 +28,11 @@ public class AddressServiceImpl implements AddressService {
 	}
 	
 	@Override
+	public ArrayList<AddGroup> selectSharedAddGroup() {
+		return aDao.selectSharedAddGroup(sqlSession);
+	}
+	
+	@Override
 	public int selectEntEmpListCount(int no) {
 		return aDao.selectEntEmpListCount(sqlSession, no);
 	}
@@ -56,6 +61,8 @@ public class AddressServiceImpl implements AddressService {
 	public Employee selectEmpAddDetail(int no) {
 		return aDao.selectEmpAddDetail(sqlSession, no);
 	}
+
+	
 
 
 
