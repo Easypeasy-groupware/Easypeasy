@@ -160,6 +160,8 @@ public class DataBoardController {
 		
 		model.addAttribute("keyword", keyword);
 		
+		//System.out.println(keyword);
+		
 		return "dataBoard/dataBoardMain";
 	}
 	
