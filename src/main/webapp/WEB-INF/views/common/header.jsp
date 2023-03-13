@@ -16,10 +16,10 @@
 <!-- CSS -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<!-- Latest compiled JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<!--Bootstrap 5.3.0-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
 <style>
     .wrap *{
         /*border:solid 1px black;*/
@@ -32,46 +32,40 @@
 
     /*header1영역*/
     #header1>div{float:left; height:100%;}
-    #logoName{display:inline-block; font-size:30px; padding-left:20px; line-height: 60px;}
-    #logoName:hover{cursor: pointer;}
+    
+    /*로고*/
+    #logoName{top:0; height:80px;}
+    .logo-img{display:inline-block; padding:0; padding-left:20px; height:75px; margin:0;}
+    .logo-img:hover{cursor: pointer;}
 
-    .icons{margin:0px 20px 0px 750px; display : inline-block; line-height: 60px;}
-    .icons>img{display : inline-block; vertical-align: middle;}
-    .icons>img:hover{cursor: pointer;}
-    .chat-icon{margin-right:10px;}
+    /*채팅&알람*/
+    .icons{margin-left:550px; display:inline-block; line-height:60px;}
+    .icons img{display : inline-block; vertical-align: middle; width:40px;}
+    .icons>a{text-decoration: none; color:white;}
+    .icons>a:hover{cursor: pointer; text-decoration: none;}
+    #alarm-a{margin:0 20px 0 20px;}
+    .websk-num{width:30px; height:15px; font-size:x-small;}
 
+	/*사용자이름*/
     #empName{display:inline-block; font-size:13px; line-height: 60px;}
 	#user-name{font-weight:600;}
 
-    /*프로필사진+드롭다운메뉴*/
-    .dropdown-wrap{ 
-        margin-left:10px; 
-        display : inline-block;
-        line-height: 60px;
-    }
-    .dropdown-wrap>img{
-        border-radius: 50%;
-        display : inline-block;
-        vertical-align: middle;
-    }
-    .dropdown-wrap>img:hover{cursor: pointer;}
-    .dropdown-menu{
-        display: none;
-        position : absolute;
-        background-color: #f1f1f1;
-    }
-    .dropdown-item{
-        text-decoration:none;
-        color : black;
-        padding : 12px 16px;
-        display : block;
-        width : 120px;
-        height: 35px;
-        text-align : center;
-        line-height: 10px;
-    }
-    .dropdown-wrap:hover .dropdown-menu{ display : block; }
-    .dropdown-item:hover{background: rgb(166, 184, 145); color:white; cursor: pointer;}
+    /*프로필사진, 로그아웃&마이페이지*/
+    .image-effect-slide-pop-up{ width: 160px; height: 80px; overflow: hidden; position: relative; margin: 0 auto;}
+	.image-layer{position: absolute; bottom: 0; height: 60px; -webkit-transition: 0.2s 0.4s; transition: 0.2s 0.4s;}
+	.image-effect-slide-pop-up:hover .image-layer{-webkit-transition: 0.2s 0s; transition: 0.2s 0s; -webkit-transform: translateX(-120px); transform: translateX(-120px);}
+
+	#profile-img{top:10px; left:10px; border-radius:50%; position: relative; z-index: 5; margin:auto;}
+
+	.share-button {position: absolute; display: block; text-decoration: none; padding: 0; width: 70px; height: 30px; border-radius: 10px;
+		line-height: 30px; font-size: 10px; text-align: center; bottom: 15px; right:0; opacity: 0; z-index: 2;}
+
+	.image-effect-slide-pop-up:hover .myPage-btn {opacity: 1; -webkit-transform: translateX(-80px); transform: translateX(-80px);}
+    .image-effect-slide-pop-up:hover .logout-btn {opacity: 1; -webkit-transform: translateX(0px); transform: translateX(0px); }
+	.image-effect-slide-pop-up .myPage-btn{left :200px; -webkit-transition: 0.2s 0.3s; transition: 0.2s 0.3s;}
+	.image-effect-slide-pop-up .logout-btn{left:170px; -webkit-transition: 0.2s 0.3s; transition: 0.2s 0.2s;}
+	.image-effect-slide-pop-up:hover .myPage-btn {-webkit-transition: 0.2s 0.1s; transition: 0.2s 0.1s;}
+	.image-effect-slide-pop-up:hover .logout-btn {-webkit-transition: 0.4s 0.4s; transition: 0.2s 0.1s;}
     
 
     /*header2영역*/
@@ -106,35 +100,48 @@
     <div class="header">
         <div id="header1">
 
-            <div id="logoName">EASY PEASY</div>
+            <div id="logoName">
+             <img src="resources/common_images/header-logo.png" class="logo-img"> 
+            </div>
             <script>
-           		$("#logoName").click(function(){
+           		$(".logo-img").click(function(){
            			location.href="main.ep";
            		})
             </script>
             
+		   
+            
             <div class="icons">
-                <!--채팅이 없을때-->
-                <img src="resources/common_images/chat-no-alarm.png" class="chat-icon">
-                <!--채팅이 있을때-->
-                <!--<img src="resources/common_images/chat-si-alarm.png" class="chat-icon">-->
+                <a href="" title="" class="position-relative" id="chat-a">
+                    <img src="resources/common_images/chat.png" class="chat-icon"> 
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger websk-num">
+                        99+
+                    </span>
+                </a>
 
-                <!--알람이 없을때-->
-                <img src="resources/common_images/bell-no-alarm.png" class="alarm-icon">
-                <!--알람이 있을때-->
-                <!--<img src="resources/common_images/bell-si-alarm.png" class="alarm-icon">-->
+                <a class="position-relative" id="alarm-a">
+                    <img src="resources/common_images/alarm.png" class="alarm-icon"> 
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger websk-num">
+                        99+
+                    </span>
+                </a>
             </div>
             
            	<div id="empName"><span id="user-name">${ loginUser.empName }</span> ${ loginUser.jobName }님</div>
-            <div class="dropdown-wrap">
-                <img src="<c:out value='${ loginUser.empProfile }' default='resources/common_images/default_profile.png' />" width="45px">
 
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="myPage.ep">정보 수정</a>
-                    <a class="dropdown-item" href="">로그아웃</a>
+            <div class="image-effect-slide-pop-up">
+                <div class="image-layer">
+                    <img src="<c:out value='${ loginUser.empProfile }' default='resources/common_images/businessman.png' />" id="profile-img" width="45px">
+        
+                    <a href="#" class="share-button myPage-btn">
+                        <img src="resources/common_images/mypage.png" width="35px" class="sub-image">
+                    </a>
+        
+                    <a href="#" class="share-button logout-btn">
+                        <img src="resources/common_images/logout.png" width="35px" class="sub-image">
+                    </a>
                 </div>
             </div>
-            
 
         </div>
         
@@ -159,6 +166,10 @@
     <br claer="both">
 
     <div class="outer">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 	
