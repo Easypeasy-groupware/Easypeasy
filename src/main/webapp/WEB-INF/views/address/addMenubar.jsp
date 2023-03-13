@@ -13,10 +13,9 @@
 	a{text-decoration:none; font-size:14px; color:black;}
 	a:hover{font-weight:600; color:black;}
 	li{list-style:none;}
-	.menu-type{text-align:center;}
 	
 	/*메뉴이름*/
-	.menu-title{margin:20px 0 20px 0;}
+	.menu-title{margin:20px 0 20px 0; text-align:center;}
 	#title{font-size:20px; font-weight:600; color:rgb(93, 109, 75);}
 	#title:hover{color:rgb(58, 69, 47); text-decoration:none;}
 	
@@ -24,12 +23,12 @@
 	.dropdown-key:hover{cursor:pointer;}
 	
 	/*연락처추가버튼*/
-	.menu-btn{width:70%; height:35px; margin:auto; margin-bottom:15px; padding:5px 0 5px 0; background-color: rgb(142, 161, 122); border-radius:4px;}
+	.menu-btn{width:70%; height:35px; margin:auto; margin-bottom:15px; padding:5px 0 5px 0; background-color: rgb(142, 161, 122); border-radius:4px; text-align:center;}
 	#menu-add-btn{color:white; text-decoration:none;}
 	.menu-btn:hover{background-color: rgb(93, 105, 81);}
 	
 	/*즐겨찾기*/
-	.menu-like{width:70%; height:35px; margin:auto; margin-bottom:10px; padding:5px 0 5px 0; border-radius:4px; }
+	.menu-like{width:70%; height:35px; margin:auto; margin-bottom:10px; padding:5px 0 5px 0; border-radius:4px;  text-align:center;}
 	.menu-like:hover{background-color: rgb(246, 246, 246);}
 	#like-page{text-decoration:none; font-size:14px; color:black; font-weight:600;}
 	#like-page:hover{text-decoration:none; color:darkgreen;}
@@ -43,13 +42,13 @@
 	/*주소록 제목 리스트*/
 	.add-in, .add-ex{color:rgb(53, 62, 42);}
 	.add-in:hover, .add-ex:hover{text-decoration:none; color:black;}
-	.submenu{margin-left:60px;}
+	.submenu{margin-left:30px;}
 	.submenu > li {line-height: 20px;}
 	.submenu a{text-decoration:none; font-size:14px; color:black;}
 	.submenu a:hover{text-decoration:none; font-weight:600; color:black;}
 	
 	/*휴지통*/
-	.menu-list{width:98%; height:35px; margin:auto; padding:5px 0 5px 0; border-radius:4px;}
+	.menu-list{width:98%; height:35px; margin:auto; padding:5px 0 5px 42px; border-radius:4px;}
 	.menu-list:hover{background-color: rgb(246, 246, 246); text-decoration:none;}
 	/*#trash-a{text-decoration:none; font-size:14px; color:black;}
 	#trash-a:hover{text-decoration:none; color:black; }*/
@@ -69,15 +68,15 @@
 
     <div class="menubar">
 
-        <div class="menu-type menu-title">
+        <div class="menu-title">
             <a href="favorite.add" id="title"><img src="resources/common_images/phone-book.png" style="width:20px;"> 주소록</a>
         </div>
 
-        <div class="menu-type menu-btn">
+        <div class="menu-btn">
             <a href="newPs.add" id="menu-add-btn">연락처 추가</a>
         </div>
 
-        <div class="menu-type menu-like">
+        <div class="menu-like">
             <a href="#" id="like-page">⭐ 즐겨찾기</a>
         </div>
 

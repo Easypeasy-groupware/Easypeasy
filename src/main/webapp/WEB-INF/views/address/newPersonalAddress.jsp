@@ -22,7 +22,7 @@
         margin:auto; 
         border-collapse: separate; border-spacing:0px 10px; /*셀간격*/
     }
-    .col-2{
+    .tb-input{
         width:100%; height:100%;
         border:1px solid gray; border-radius:5px;
     }
@@ -71,7 +71,7 @@
 
         <br>
         <form action="">
-            <table class="input-table" border=1>
+            <table class="input-table">
                 <colgroup>
                     <col style="width:150px;">
                     <col style="width:350px;">
@@ -80,37 +80,37 @@
                 <tr>
                     <td>이름</td>
                     <td colspan="2">
-                        <input type="text" class="col-2" required>
+                        <input type="text" class="tb-input" required>
                     </td>
                 </tr>
                 <tr>
                     <td>회사</td>
                     <td colspan="2">
-                        <input type="text" class="col-2">
+                        <input type="text" class="tb-input">
                     </td>
                 </tr>
                 <tr>
                     <td>부서</td>
                     <td colspan="2">
-                        <input type="text" class="col-2">
+                        <input type="text" class="tb-input">
                     </td>
                 </tr>
                 <tr>
                     <td>직위</td>
                     <td colspan="2">
-                        <input type="text" class="col-2">
+                        <input type="text" class="tb-input">
                     </td>
                 </tr>
                 <tr>
                     <td>이메일</td>
                     <td colspan="2">
-                        <input type="email" class="col-2">
+                        <input type="email" class="tb-input">
                     </td>
                 </tr>
                 <tr>
                     <td>휴대폰</td>
                     <td colspan="2">
-                        <input type="text" class="col-2">
+                        <input type="text" class="tb-input">
                     </td>
                 </tr>
                 <tr>
@@ -118,9 +118,11 @@
                     <td>
                         <select class="td-select">
                             <option>선택안함</option>
-                            <option>friends</option>
-                            <option>aaa</option>
-                            <option>거래처</option>
+                            <c:if test="${ not empty pList }">
+	                            <c:forEach var="p" items="${ pList }">
+					        		<option> ${ p.groupName } </option>
+					        	</c:forEach>
+				        	</c:if>				        	
                         </select>
                     </td>
                     <td>
@@ -130,13 +132,13 @@
                 <tr>
                     <td>회사전화</td>
                     <td colspan="2">
-                        <input type="text" class="col-2">
+                        <input type="text" class="tb-input">
                     </td>
                 </tr>
                 <tr>
                     <td>회사주소</td>
                     <td colspan="2">
-                        <input type="text" class="col-2" style="width:100%;">
+                        <input type="text" class="tb-input" style="width:100%;">
                     </td>
                 </tr>
                 <tr>

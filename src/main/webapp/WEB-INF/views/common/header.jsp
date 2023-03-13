@@ -40,7 +40,7 @@
 
     /*채팅&알람*/
     .icons{margin-left:550px; display:inline-block; line-height:60px;}
-    .icons img{display : inline-block; vertical-align: middle; width:40px;}
+    .icons img{display : inline-block; vertical-align: middle; width:30px;}
     .icons>a{text-decoration: none; color:white;}
     .icons>a:hover{cursor: pointer; text-decoration: none;}
     #alarm-a{margin:0 20px 0 20px;}
@@ -113,14 +113,14 @@
             
             <div class="icons">
                 <a href="" title="" class="position-relative" id="chat-a">
-                    <img src="resources/common_images/chat.png" class="chat-icon"> 
+                    <img src="resources/common_images/comments.png" class="chat-icon"> 
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger websk-num">
                         99+
                     </span>
                 </a>
 
                 <a class="position-relative" id="alarm-a">
-                    <img src="resources/common_images/alarm.png" class="alarm-icon"> 
+                    <img src="resources/common_images/bell.png" class="alarm-icon"> 
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger websk-num">
                         99+
                     </span>
@@ -134,11 +134,11 @@
                     <img src="<c:out value='${ loginUser.empProfile }' default='resources/common_images/businessman.png' />" id="profile-img" width="45px">
         
                     <a href="#" class="share-button myPage-btn">
-                        <img src="resources/common_images/mypage.png" width="35px" class="sub-image">
+                        <img src="resources/common_images/note.png" width="30px" class="sub-image">
                     </a>
         
                     <a href="#" class="share-button logout-btn">
-                        <img src="resources/common_images/logout.png" width="35px" class="sub-image">
+                        <img src="resources/common_images/logout-door.png" width="28px" class="sub-image">
                     </a>
                 </div>
             </div>
