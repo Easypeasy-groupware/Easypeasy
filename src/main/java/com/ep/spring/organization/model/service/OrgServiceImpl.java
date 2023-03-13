@@ -32,15 +32,24 @@ public class OrgServiceImpl implements OrgService{
 
 	@Override
 	public int insertMember(Employee e) {
-		/*
-		 * int result = oDao.insertMember(sqlSession, e); return result;
-		 */
-		return 0;
+		
+		int result = oDao.insertMember(sqlSession, e); 
+		return result;
 	}
 
 	@Override
 	public int noCheck(String checkNo) {
 		return oDao.noCheck(sqlSession, checkNo);
+	}
+
+	@Override
+	public int updateMember(Employee e) {
+		return oDao.updateMember(sqlSession, e);
+	}
+
+	@Override
+	public int deleteMember() {
+		return oDao.deleteMember(sqlSession);
 	}
 	
 	

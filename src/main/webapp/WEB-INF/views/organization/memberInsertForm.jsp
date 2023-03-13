@@ -33,6 +33,7 @@
 	label {display: inline-block; margin-bottom: 5px; font-weight: bold;}
 	input[type="text"],
 	input[type="email"],
+	input[type="date"],
 	select {
 		width: 100%;
 		padding: 10px;
@@ -63,36 +64,36 @@
 				<form action="insert.org" method="POST" id="enrollForm">
 					<br>
 			        <label for="empNo">*사원번호:</label>
-			            <input type="text" id="empNo" name="empNo" required /><br />
+			            <input type="text" id="empNo" name="empNo" required><br />
 			            <div id="checkResult" style="font-size:0.8em; display:none"></div>
 			            <br>
-			        <label for="username">*아이디:</label>
-			          <input type="text" id="empId" name="empId"  required/><br />
+			        <label for="userId">*아이디:</label>
+			          <input type="text" id="empId" name="empId"  required><br />
 			        <label for="password">*비밀번호:</label>
-			            <input type="text" id="empPwd" name="empPwd" placeholder="초기 비밀번호는 1234입니다." required/><br />
+			            <input type="text" id="empPwd" name="empPwd" value="1234" required readonly><br />
 					<label>*이름</label>
 					    <input type="text" id="empName" name="empName" required>
 					<label>*직급</label>
 			            <select name="jobCode" id="jobCode" >
-			                <option value="">선택하세요</option>
-			                <option value="대표이사">J6</option>
-			                <option value="전무이사">J5</option>
-			                <option value="부장">J4</option>
-			                <option value="과장">J3</option>
-			                <option value="대리">J2</option>
-			                <option value="사원">J1</option>
+				            <option value="J1" name="jobCode" id="J1">사원</option>
+				            <option value="J2" name="jobCode" id="J2">대리</option>
+				            <option value="J3" name="jobCode" id="J3">과장</option>
+				            <option value="J4" name="jobCode" id="J4">부장</option>
+				            <option value="J5" name="jobCode" id="J5">상무</option>
+				            <option value="J6" name="jobCode" id="J6">대표</option>
 			            </select>
-			        <label>*직무</label>
+			        <label>직무</label>
 			            <select name="deptCode" id="deptCode" >
-			                <option value="">선택하세요</option>
-			                <option value="">인사관리부</option>
-			                <option value="">경영관리부</option>
-			                <option value="">영업1팀</option>
-			                <option value="">영업2팀</option>
-			                <option value="">영업3팀</option>
-			                <option value="">마케팅부</option>
+			                <option value="D1" name="deptCode" id="D1">인사관리부</option>
+			                <option value="D2" name="deptCode" id="D2">경영관리부</option>
+			                <option value="D3" name="deptCode" id="D3">영업1팀</option>
+			                <option value="D4" name="deptCode" id="D4">영업2팀</option>
+			                <option value="D5" name="deptCode" id="D5">영업3팀</option>
+			                <option value="D6" name="deptCode" id="D6">마케팅부</option>
 			            </select>
 			
+					<label>입사일</label>
+						<input type="date" id="hireDate" name="hireDate"><br>
 					<label>연락처</label>
 					    <input type="text" id="phone" name="phone" >
 					<label>이메일</label>
@@ -103,7 +104,7 @@
 			        
 					<br><br>
 					<div align="center">
-						<button type="button" class="btn btn-secondary">이전으로</button>
+						<button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1);">이전으로</button>
 						<button type="submit" class="btn btn-success" disabled>등록하기</button>
 					</div>
 				</form>
@@ -114,25 +115,21 @@
 	    		const $noInput = $("#enrollForm input[name=empNo]");
 	    		
 	    		$noInput.keyup(function(){	
-	    			if($noInput.val().length >= 2){
+	    			if($noInput.val().length >= 1){
 	    				
 	    				$.ajax({
 	    					url:"noCheck.me",
 	    					data:{checkNo:$noInput.val()},
 	    					success:function(result){
 	    						
-	    						if(result == "NNNNN"){  // 사용불가능
-	    							// => 빨간색 메세지 출력
+	    						if(result == "NNNNN"){  
 	    							$("#checkResult").show();
 	    							$("#checkResult").css("color", "red").text("중복된 사원번호가 존재합니다. 다시 입력해주세요.");
-	    							// => 버튼 비활성화
 	    							$("#enrollForm :submit").attr("disabled", true);
 	    							
-	    						}else if (result == "NNNNY"){	// 사용가능
-	    							// => 초록색 메세지 출력
+	    						}else if (result == "NNNNY"){
 	    							$("#checkResult").show();
 	    							$("#checkResult").css("color", "green").text("사용가능한 사원번호입니다.");
-	    							// => 버튼 활성화
 	    							$("#enrollForm :submit").removeAttr("disabled");
 	    						}
 	    						

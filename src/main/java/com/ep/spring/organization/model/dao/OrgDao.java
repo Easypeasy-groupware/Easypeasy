@@ -25,13 +25,24 @@ public class OrgDao {
 		return (ArrayList)sqlSession.selectList("organizationMapper.selectList", null, rowBounds);
 	}
 	
-	/*
-	 * public int insertMember(SqlSessionTemplate sqlSession, Employee e) { return
-	 * sqlSession.insert("organizationMapper.insertMember", e); }
-	 */
+	
+	 public int insertMember(SqlSessionTemplate sqlSession, Employee e) { 
+		 return sqlSession.insert("organizationMapper.insertMember", e); 
+	 }
+	 
 	
 	
 	public int noCheck(SqlSessionTemplate sqlSession, String checkNo) {
 		return sqlSession.selectOne("organizationMapper.noCheck", checkNo);
 	}
+	
+	
+	public int updateMember(SqlSessionTemplate sqlSession, Employee e) {
+		return sqlSession.insert("organizationMapper.updateMember", e);
+	}
+	
+	public int deleteMember(SqlSessionTemplate sqlSession) {
+		return sqlSession.delete("organizationMapper.deleteMember");
+	}
+	
 }
