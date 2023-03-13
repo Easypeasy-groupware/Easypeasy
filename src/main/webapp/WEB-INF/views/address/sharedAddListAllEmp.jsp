@@ -115,14 +115,14 @@
 	                        <td style="display:none">${ a.empNo }</td>
 	                        <td><input type="checkbox" class="ps-checkbox"></input></td>
 	                        <td class="like">
-		                        <c:choose> 
-		                        	<c:when test="${ a.addEmpNo eq 0}">
-		                        		<img src="resources/common_images/star_vacant.png">
-		                        	</c:when>
-		                        	<c:otherwise>
+	                        	<c:forEach var = "f" items="${ fList }">
+		                        
+		                        	<c:if test="${ a.empNo eq f.addEmpNo}">
 		                        		⭐
-		                        	</c:otherwise>
-		                        </c:choose>
+		                        	</c:if>
+		                        	
+		                        </c:forEach>
+	
 	                        </td>
 	                        <td class="clck-detail">${ a.empName }</td>
 	                        <td class="clck-detail">${ a.jobName }</td>
@@ -160,7 +160,17 @@
             	}
             })
 
-            $(".like").click(function(){ /*즐겨찾기*/
+            $(function(){ //즐겨찾기 리스트 출력
+            	$(".like").each(function(i, e){
+            		if($(this).html().trim().length == 0){
+                		$(this).html('<img src="resources/common_images/star_vacant.png">');
+                	}
+            		
+            	})
+            	
+            })
+            
+            $(".like").click(function(){//즐겨찾기
                 if($(this).html()=="⭐"){
                     $(this).html('<img src="resources/common_images/star_vacant.png">');
                 }else{
@@ -168,12 +178,12 @@
                 }
             })
             
-			/*
-	        $("#addList>tbody>tr").click(function(){
+
+	        /* $("#addList>tbody>tr").click(function(){
 	        	location.href='empInfo.add?no=' + $(this).children("") 
-	        })
-			*/
-            $(function(){
+	        }) */
+
+            $(function(){ // 사원정보 상세페이지
                 $('.clck-detail').on("click", $('.clck-detail'), function(){
                     location.href = 'empInfo.add?no=' + $(this).siblings().eq(0).text(); 
                 })
@@ -186,29 +196,27 @@
             <ul id="paging">
             	
             	<c:if test="${ pi.currentPage ne 1 }">
-                   	<li><a href="internalEnt.add?cpage=${ pi.currentPage-1 }&no=${loginUser.empNo}"> < </a></li>
+                   	<li><a href="internalEnt.add?cpage=${ pi.currentPage-1 }"> < </a></li>
                 </c:if>
                    
                 <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
             		<c:choose>
             		<c:when test="${ pi.currentPage eq p }">
-	            		<li class="on"><a href="internalEnt.add?cpage=${ p }&no=${loginUser.empNo}">${ p }</a></li>
+	            		<li class="on"><a href="internalEnt.add?cpage=${ p }">${ p }</a></li>
             		</c:when>
             		<c:otherwise>
-            			<li><a href="internalEnt.add?cpage=${ p }&no=${loginUser.empNo}">${ p }</a></li>
+            			<li><a href="internalEnt.add?cpage=${ p }">${ p }</a></li>
             		</c:otherwise>
             		</c:choose>
                 </c:forEach>
 
                    
                 <c:if test="${ pi.currentPage ne pi.maxPage }">
-                   	<li><a href="internalEnt.add?cpage=${ pi.currentPage+1 }&no=${loginUser.empNo}"> > </a></li>
+                   	<li><a href="internalEnt.add?cpage=${ pi.currentPage+1 }"> > </a></li>
                	</c:if>
             </ul>
         </div>
-        <script>
-	        
-        </script>
+
     
     </div>    
 </body>

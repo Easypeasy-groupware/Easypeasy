@@ -47,8 +47,7 @@
 	<resultMap id="addFavoriteResult" type="addFavorite">
 		<id column="emp_no" property="empNo"/>
 		<result column="add_no" property="addNo" />
-		<result column="add_emp_no" property="addEmpNo" />
-			
+		<result column="add_emp_no" property="addEmpNo" />	
 	</resultMap>
 	
 	<select id="selectEntEmpListCount" resultType="_int">
@@ -69,14 +68,65 @@
 		     , emp_profile
 		     , dept_name
 		     , job_name
-             , add_emp_no
 		  from employee e
           left join department d on (e.dept_code = d.dept_code)
           left join job j on (e.job_code = j.job_code)
-          left join add_fav f on (e.emp_no = f.add_emp_no)
 		 where ent_yn = 'N'
-           and e.emp_no != #{user}
+		   and e.emp_no != #{no}
 	</select>
+	
+	<select id="selectEmpFavList" resultMap="empResult">
+		SELECT add_emp_no
+		  FROM ADD_FAV
+		 WHERE EMP_NO = #{no}
+	</select>
+	
+	
+	
+	<select id="selectDeptEmpListCount" resultType="_int">
+		select
+		       count(*)
+		  from employee
+		 where ent_yn = 'N'
+		   and emp_no != #{empNo}
+		   and dept_code = #{deptCode}
+	</select>
+	
+	<select id="selectDeptEmpList" resultMap="empResult">
+		select
+		       e.emp_no
+		     , emp_name
+		     , email 
+		     , address
+		     , phone
+		     , emp_profile
+		     , dept_name
+		     , job_name
+		  from employee e
+          left join department d on (e.dept_code = d.dept_code)
+          left join job j on (e.job_code = j.job_code)
+		 where ent_yn = 'N'
+           and e.emp_no != #{empNo}
+           and e.dept_code = #{deptCode}
+	</select>
+	
+	<select id="selectEmpAddDetail" resultMap="empResult">
+		select
+		       e.emp_no
+		     , emp_name
+		     , email 
+		     , address
+		     , phone
+		     , emp_profile
+		     , dept_name
+		     , job_name
+		  from employee e
+          left join department d on (e.dept_code = d.dept_code)
+          left join job j on (e.job_code = j.job_code)
+		 where ent_yn = 'N'
+           and e.emp_no = #{no}
+	</select>
+	
 
 
 

@@ -1,5 +1,9 @@
 package com.ep.spring.login.model.vo;
 
+import java.util.ArrayList;
+
+import com.ep.spring.address.model.vo.AddFavorite;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +34,5 @@ public class Employee {
 	private String entYn;
 	private String entDate;
 	private String status;
-
-	private int addEmpNo;
+	private String addEmpNo;
 }
