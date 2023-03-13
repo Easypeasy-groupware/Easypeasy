@@ -17,6 +17,10 @@ public class AddressDao {
 	public ArrayList<AddGroup> selectPersonalAddGroup(SqlSessionTemplate sqlSession, Employee e) {
 		return (ArrayList)sqlSession.selectList("addressMapper.selectPersonalAddGroup", e);
 	}
+	
+	public ArrayList<AddGroup> selectSharedAddGroup(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("addressMapper.selectSharedAddGroup");
+	}
 
 	public int selectEntEmpListCount(SqlSessionTemplate sqlSession, int no) {
 		return sqlSession.selectOne("addressMapper.selectEntEmpListCount", no);
@@ -49,6 +53,8 @@ public class AddressDao {
 	public Employee selectEmpAddDetail(SqlSessionTemplate sqlSession, int no) {
 		return sqlSession.selectOne("addressMapper.selectEmpAddDetail", no);
 	}
+
+	
 
 	
 

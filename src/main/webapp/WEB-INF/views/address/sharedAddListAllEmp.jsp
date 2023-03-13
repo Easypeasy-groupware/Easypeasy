@@ -13,11 +13,11 @@
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 
 <style>
-    .content-outer{width:1000px; padding-left:10px; margin-left:200px;}
+    .content-outer{width:1000px; padding-left:10px; margin-left:200px; padding-top:20px;}
     .content-outer *{box-sizing: border-box;}
     
-    #address-group{font-size:22px; font-weight:600;}
-    #group-name{color:rgb(96, 96, 96); font-size:18px; font-weight:600;}
+    #address-group{font-size:20px; font-weight:600;}
+    #group-name{color:rgb(96, 96, 96); font-size:16px; font-weight:600;}
 
     /*검색*/
     #searchKey{width:200px; height:25px; border:1px solid gray; border-radius:5px;}

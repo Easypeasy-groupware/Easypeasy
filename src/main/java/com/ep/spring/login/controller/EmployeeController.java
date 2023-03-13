@@ -35,15 +35,20 @@ public class EmployeeController {
 		
 		Employee loginUser = eService.loginEmployee(e);
 		
-		// 로그인한 사원이 등록한 연락처그룹 리스트 조회용
+		// 로그인한 사원이 등록한 연락처그룹 리스트 조회
 		ArrayList<AddGroup> userGroup = aService.selectPersonalAddGroup(e);
+		// 공용외부주소록 그룹리스트 조회
+		ArrayList<AddGroup> sharedGroup = aService.selectSharedAddGroup();
+		
+		
 		
 		if(loginUser == null) {//로그인실패
 			session.setAttribute("alertMsg", "로그인에 실패했습니다. 다시 시도 해주세요.");
 			return "redirect:/";
 		}else {//로그인성공
 			session.setAttribute("loginUser", loginUser);
-			session.setAttribute("gList", userGroup);
+			session.setAttribute("pList", userGroup); //로그인한 사원의 주소록 그룹리스트 세션에 저장
+			session.setAttribute("sList", sharedGroup); //외부 공유주소록 그룹리스트 세션에 저장
 			return "common/main";
 		}
 		
