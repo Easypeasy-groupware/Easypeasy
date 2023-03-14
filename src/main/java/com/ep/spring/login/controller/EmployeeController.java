@@ -33,6 +33,7 @@ public class EmployeeController {
 	@RequestMapping("login.ep")
 	public String loginEmployee(Employee e, HttpSession session) {
 		
+		//로그인
 		Employee loginUser = eService.loginEmployee(e);
 		
 		// 로그인한 사원이 등록한 연락처그룹 리스트 조회
@@ -49,9 +50,37 @@ public class EmployeeController {
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("pList", userGroup); //로그인한 사원의 주소록 그룹리스트 세션에 저장
 			session.setAttribute("sList", sharedGroup); //외부 공유주소록 그룹리스트 세션에 저장
+			
+			
+			//암호화 작업 (암호문을 만들어내는 과정)
+			//System.out.println("평문 : " + m.getUserPwd());
+			String encPwd = bcryptPasswordEncoder.encode(e.getEmpPwd());
+			System.out.println("암호문 : " + encPwd);
+			
+			
 			return "common/main";
 		}
+			
+		/*
+		if(loginUser != null && bcryptPasswordEncoder.matches(e.getEmpPwd(), loginUser.getEmpPwd())) { // 성공
+			session.setAttribute("loginUser", loginUser);
+			session.setAttribute("pList", userGroup); //로그인한 사원의 주소록 그룹리스트 세션에 저장
+			session.setAttribute("sList", sharedGroup); //외부 공유주소록 그룹리스트 세션에 저장
+			return "common/main";
+		}else { // 실패
+			session.setAttribute("alertMsg", "로그인에 실패했습니다. 다시 시도 해주세요.");
+			return "redirect:/";
+		}
+		*/
 		
+	}
+	
+	//로그아웃
+	@RequestMapping("logout.ep")
+	public String logoutMember(HttpSession session) {
+		//세션무효화
+		session.invalidate();
+		return "redirect:/";
 	}
 	
 	// 메인페이지 이동
@@ -167,6 +196,8 @@ public class EmployeeController {
 					e.setEmpPwd(encPwd2);
 					e.setEmpId(empId);
 					
+					System.out.println(encPwd2);
+					
 					int result = eService.updatePwd(e);
 					
 					if(result>0) {//변경성공
@@ -212,6 +243,12 @@ public class EmployeeController {
 			}
 		}
 		
+	}
+	
+	//근태관리 메인페이지(일반사용자)
+	@RequestMapping("commute.ep")
+	public String commuteMainForm() {
+		return "commute/commuteMain";
 	}
 	
 

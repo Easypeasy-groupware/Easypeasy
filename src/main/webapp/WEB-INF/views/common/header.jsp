@@ -144,11 +144,11 @@
                 <div class="image-layer">
                     <img src="<c:out value='${ loginUser.empProfile }' default='resources/common_images/businessman.png' />" id="profile-img" width="45px">
         
-                    <a href="#" class="share-button myPage-btn">
+                    <a href="myPage.ep" class="share-button myPage-btn">
                         <img src="resources/common_images/note.png" width="30px" class="sub-image">
                     </a>
         
-                    <a href="#" class="share-button logout-btn">
+                    <a href="logout.ep" class="share-button logout-btn">
                         <img src="resources/common_images/logout-door.png" width="28px" class="sub-image">
                     </a>
                 </div>
@@ -159,10 +159,11 @@
         <div id="header2">
 
             <ul>
-                <li><a href="">근태관리</a></li>
+                <li><a href="commute.ep">근태관리</a></li>
                 <li><a href="list.ma">메일</a></li>
                 <li><a href="main.ap">전자결재</a></li>
                 <li><a href="">일정</a></li>
+                
                 <li><a href="main.re">예약</a></li>
                 <li><a href="list.db">자료실</a></li>
                 <li><a href="list.bo">게시판</a></li>

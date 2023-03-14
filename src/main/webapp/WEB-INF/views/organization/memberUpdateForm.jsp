@@ -104,11 +104,11 @@
 				<form action="update.org" method="POST">
 					<br>
 			        <label for="empNo">*사원번호:</label>
-			            <input type="text" id="empNo" name="empNo" value="${updateMember.empNo}" readonly><br>
+			            <input type="text" id="empNo" name="empNo" value="${o.empNo}" readonly><br>
 			        <label for="empId">*아이디:</label>
-			          <input type="text" id="empId" name="empId" value="${updateMember.empId}" readonly><br>
+			          <input type="text" id="empId" name="empId" value="${o.empId}" readonly><br>
 					<label for="empName">*이름 :</label>
-					    <input type="text" id="empName" name="empName" value="${updateMember.empName}" readonly><br>
+					    <input type="text" id="empName" name="empName" value="${o.empName}" readonly><br>
 					<label>*직급</label>
 			            <select name="jobCode" id="jobCode" >
 				            <option value="J1" name="jobCode" id="J1">사원</option>
@@ -130,9 +130,9 @@
 			            </select>
 						<br><br>
 					<label>입사일</label><br>
-						<input type="date" id="hireDate" name="hireDate" value="${updateMember.hireDate}" ><br>
+						<input type="date" id="hireDate" name="hireDate" value="${o.hireDate}" ><br>
 					<label>이메일</label>
-					    <input type="email" id="email" name="email" value="${updateMember.email}"><br>
+					    <input type="email" id="email" name="email" value="${o.email}"><br>
 			        <br>
 			        <label>근무 상태</label>&nbsp;&nbsp;: 
 					    <input type="radio" id="N" name="entYn" value="N" checked>
