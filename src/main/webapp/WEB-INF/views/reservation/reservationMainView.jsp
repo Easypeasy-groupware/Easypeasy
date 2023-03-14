@@ -265,7 +265,6 @@
     <!-- 타임라인 프리미엄 -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.4/index.global.min.js'></script>
     <script>
-        var arr = ["gg", "dd"];
         // FullCalendar
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
@@ -285,73 +284,10 @@
                     },
                 ],
                 resources: [
-                    { id: 'a', title: 'A회의실(20명)'},
-                    { id: 'b', title: 'B회의실(15명)'},
-                    { id: 'c', title: 'C회의실(6명)'}
+                	<c:forEach var="r" items="${ list }">
+                		{ id: '${ r.resourceNo }', title: '${ r.resourceName }'},
+                    </c:forEach>
                 ],
-                /*
-                dateClick: function(info) { // 클릭
-
-                    // 클릭한 날짜
-                    const dStart = info.dateStr;
-                    //console.log(dStart); // Date 타입으로 반환되는걸 확인
-
-                    // 선택한 시간
-                    var selectDate = new Date(dStart); // 문자열로 변환하기 위한 작업
-                    var selectYear = selectDate.getFullYear();
-                    var selectMonth = ('0' + (selectDate.getMonth() + 1)).slice(-2);
-                    var selectDay = ('0' + selectDate.getDate()).slice(-2);
-                    var selectHour = ('0' + selectDate.getHours()).slice(-2);
-                    var selectMinites = ('0' + selectDate.getMinutes()).slice(-2);
-                    // 30분 더하는거 계산하기위해 따로 변수에 저장
-                    var selectHour2 = (selectDate.getHours()+1);
-                    var selectMinites2 = (selectDate.getMinutes()+30);
-
-                    //var dayStr = year + '-' + month  + '-' + day + " " + hour + ":" + minites;
-                    //console.log(dayStr);
-                    // 문자열 반환
-                    const yymmddSelect = selectYear + "-" + selectMonth + "-" + selectDay;
-                    const hhmmSelect = selectHour + ":" + selectMinites;
-
-                    // 지금 시간
-                    var date = new Date();
-                    var Hour = ('0' + date.getHours()).slice(-2);
-                    var Minites = ('0' + date.getMinutes()).slice(-2);
-                    // 문자열 반환
-                    const hhmmToday = Hour + ":" + Minites;
-
-                    //console.log(selectHhmm);
-                    //console.log(thhmm);
-
-                    if(hhmmSelect < hhmmToday){
-                        alert("예약 불가능한 시간");
-                    }else{
-                        $("#myModal").modal("show");
-
-                        // 선택한 시간에서 30분 더해서 기본적으로 sel2에 보여줄거임
-                        // 조건문으로 조건마다 다르게 들어갈 시간
-                        const hhmmEnd1 = selectHour + ":" + selectMinites2; // 분이 30분이 아니라 00분일 경우
-                        const hhmmEnd2 = (selectHour2 < 10 ? "0" + selectHour2 : selectHour2) + ":" + "00"; // 분이 30분일 경우
-
-                        console.log(hhmmEnd1);
-                        console.log(hhmmEnd2);
-                       
-
-                        // option태그의 value값이 선택된 시간과 같은 경우 selected(선택)되도록!
-                        $("#sel1").val(hhmmSelect).prop("selected", true);
-
-                        if(selectMinites == 30){
-                            $("#sel2").val(hhmmEnd2).prop("selected", true);  
-                        }else{
-                            $("#sel2").val(hhmmEnd1).prop("selected", true);
-                        }
-
-                        $("#sDate").datepicker("setDate", yymmddSelect);
-                        $("#eDate").datepicker("setDate", yymmddSelect);
-                        
-                    }
-                },
-                */
                 select: function(info) { // 클릭&드래그
                     // 클릭한 날짜
                     const start = info.startStr;

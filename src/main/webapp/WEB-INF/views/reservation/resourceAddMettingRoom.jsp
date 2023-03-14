@@ -54,14 +54,14 @@
             </div>
             <br>
             <form action="resourceAddMettingRoom.re" method="post">
-            <input type="hidden" name="category" value="회의실">
-            <input type="hidden" name="writer" value="${ loginUser.empName }">
+            <input type="hidden" name="categoryName" value="회의실">
+            <input type="hidden" name="resourceWriter" value="${ loginUser.empNo }">
                 <div id="content-1">
                     <table>
                         <tr>
                             <td width="70">자산명</td>
                             <td>
-                                <input type="text" name="name" placeholder=" 추가할 자산명을 입력해주세요" size="100" required>
+                                <input type="text" name="resourceName" placeholder=" 추가할 자산명을 입력해주세요" size="100" required>
                             </td>
                         </tr>
                     </table>

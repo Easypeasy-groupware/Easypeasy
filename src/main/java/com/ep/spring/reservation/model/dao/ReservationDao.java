@@ -11,10 +11,10 @@ import com.ep.spring.reservation.model.vo.Resource;
 public class ReservationDao {
 
 	public ArrayList<Resource> selectSettingMettingRoom(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("ReservationMapper.selectSettingMettingRoom");
+		return (ArrayList)sqlSession.selectList("reservationMapper.selectSettingMettingRoom");
 	}
 	
 	public int addMettingRoomResource(SqlSessionTemplate sqlSession, Resource rsc) {
-		return sqlSession.insert("ReservationMapper.addMettingRoomResource", rsc);
+		return sqlSession.insert("reservationMapper.addMettingRoomResource", rsc);
 	}
 }
