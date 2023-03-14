@@ -12,6 +12,7 @@ import com.ep.spring.approval.model.vo.ApprovalLine;
 import com.ep.spring.approval.model.vo.ApprovalReply;
 import com.ep.spring.approval.model.vo.OverTimeForm;
 import com.ep.spring.approval.model.vo.VacationForm;
+import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
 
 @Service
@@ -134,10 +135,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return aDao.selectDetailSPrgAl(sqlSession, a);
 	}
 
-	@Override
-	public ArrayList<ApprovalReply> selectDetailSPrgAr(Approval a) {
-		return aDao.selectDetailSPrgAr(sqlSession, a);
-	}
+
 
 	@Override
 	public OverTimeForm selectDetailSPrgOt(Approval a) {
@@ -147,6 +145,21 @@ public class ApprovalServiceImpl implements ApprovalService{
 	@Override
 	public VacationForm selectDetailSPrgVf(Approval a) {
 		return aDao.selectDetailSPrgVf(sqlSession, a);
+	}
+
+	@Override
+	public ArrayList<Attachment> selectDetailSPrgAt(Approval a) {
+		return aDao.selectDetailSPrgAt(sqlSession, a);
+	}
+	
+	@Override
+	public ArrayList<ApprovalReply> selectReplyList(int appNo) {
+		return aDao.selectReplyList(sqlSession, appNo);
+	}
+
+	@Override
+	public int insertReply(ApprovalReply r) {
+		return 0;
 	}
 
 

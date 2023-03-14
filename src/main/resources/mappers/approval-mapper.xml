@@ -39,7 +39,7 @@
 		<result column="emp_name" property="empName" />
 		<result column="dept_name" property="deptName" />
 		<result column="job_code" property="jobCode" /> 
-		
+		<result column="emp_profile" property="empProfile" />
 	</resultMap>
 	
 	<resultMap id="approvalReplyResult" type="ApprovalReply">
@@ -52,6 +52,8 @@
 		<result column="emp_name" property="writerName" />
 		<result column="dept_name" property="deptName" />
 		<result column="job_code" property="jobCode" /> 
+		<result column="emp_profile" property="empProfile" />
+		
 	</resultMap>
 	
 	<resultMap id="vacationFormResult" type="VacationForm">
@@ -66,11 +68,21 @@
 	
 	<resultMap id="overTimeFormResult" type="OverTimeForm">
 		<id column="app_no" property="appNo" />
-		<id column="overtime_kind" property="otKind" />
-		<id column="over_date" property="otDate" />
-		<id column="over_start_hour" property="otStart" />
-		<id column="over_end_hour" property="otEnd" />
-		<id column="over_use_time" property="otUseTime" />
+		<result column="overtime_kind" property="otKind" />
+		<result column="over_date" property="otDate" />
+		<result column="over_start_hour" property="otStart" />
+		<result column="over_end_hour" property="otEnd" />
+		<result column="over_use_time" property="otUseTime" />
+	</resultMap>
+	
+	<resultMap id="appAttachementResult" type="Attachment">
+		<id column="attach_no" property="attachNo" /> 
+		<result column="ref_no" property="refNo" /> 
+		<result column="origin_name" property="originName" /> 
+		<result column="change_name" property="changeName" /> 
+		<result column="file_path" property="filePath" /> 
+		<result column="upload_date" property="uploadDate" /> 
+		<result column="division" property="division" /> 
 	</resultMap>
 	
 	<select id="selectMainWList" resultMap="approvalResult">
@@ -519,6 +531,7 @@
 				        , emp_name
 				        , dept_name
 				        , job_code
+				        , emp_profile
 				   from app_line a
 				   join employee b on (a.emp_no = b.emp_no)
 				   join department c on (b.dept_code = c.dept_code)
@@ -527,23 +540,7 @@
 				     by app_seq_no
 	</select>
 	
-	<select id="selectDetailSPrgAr" resultMap="approvalReplyResult">
-			    select
-			            APP_REPNO
-			            , to_char(a.ENROLL_DATE, 'YYYY-MM-dd hh:mm:ss') as "enroll_date"
-			            , CONTENT
-			            , a.STATUS
-			            , APP_NO
-			            , a.EMP_NO
-			            , emp_name
-			            , dept_name
-			            , job_code
-			     from  app_reply a
-			     join  employee b on (a.emp_no = b.emp_no)
-			     join  department c on (b.dept_code = c.dept_code)   
-			     where a.status = 'Y'
-			       and app_no = #{appNo}	 	
-	</select>
+
 	<select id="selectDetailSPrgVf" resultMap="vacationFormResult">
 				SELECT 
 				        APP_NO
@@ -567,5 +564,37 @@
 				        , OVER_USE_TIME
 				   from ot_form
 				  where app_no = #{appNo}	
+	</select>
+	
+	<select id="selectDetailSPrgAt" resultMap="appAttachementResult">
+				select 
+				        ATTACH_NO
+				        , REF_NO
+				        , ORIGIN_NAME
+				        , CHANGE_NAME
+				        , FILE_PATH
+				        , UPLOAD_DATE
+				        , DIVISION
+				   from attachment
+				  where ref_no = ''
+				    and division = 'A'
+	</select>
+	
+		<select id="selectReplyList" resultMap="approvalReplyResult">
+			    select
+			            APP_REPNO
+			            , to_char(a.ENROLL_DATE, 'YYYY-MM-dd hh:mm:ss') as "enroll_date"
+			            , CONTENT
+			            , a.STATUS
+			            , APP_NO
+			            , a.EMP_NO
+			            , emp_name
+			            , dept_name
+			            , job_code
+			     from  app_reply a
+			     join  employee b on (a.emp_no = b.emp_no)
+			     join  department c on (b.dept_code = c.dept_code)   
+			     where a.status = 'Y'
+			       and app_no = #{appNo}	 	
 	</select>
 </mapper>

@@ -20,6 +20,7 @@ import com.ep.spring.approval.model.vo.ApprovalLine;
 import com.ep.spring.approval.model.vo.ApprovalReply;
 import com.ep.spring.approval.model.vo.OverTimeForm;
 import com.ep.spring.approval.model.vo.VacationForm;
+import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.common.template.Pagination;
 import com.ep.spring.login.model.vo.Employee;
@@ -207,12 +208,11 @@ public class ApprovalController {
 		
 		Approval ap = aService.selectDetailSPrgAp(a);
 		ArrayList<ApprovalLine> list1 = aService.selectDetailSPrgAl(a);
-		ArrayList<ApprovalReply> list2 = aService.selectDetailSPrgAr(a);
-		
+		ArrayList<Attachment> list3 = aService.selectDetailSPrgAt(a);
 		
 		model.addAttribute("ap", ap);
 		model.addAttribute("list1", list1);
-		model.addAttribute("list2", list2);
+		model.addAttribute("list3", list3);
 
 		if(a.getFormName().equals("업무기안")) {
 			
@@ -239,6 +239,28 @@ public class ApprovalController {
 			return"redirect:main.ap";
 		}
 		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="rlist.ap", produces="application/json; charset=UTF-8")
+	public String selectReplyList(@RequestParam(value="no") int appNo) {
+		
+		ArrayList<ApprovalReply> list = aService.selectReplyList(appNo);
+		
+		return new Gson().toJson(list);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="rinsert.ap", produces="application/json; charset=UTF-8")
+	public String insertReply(@RequestParam(value="replyContent") String content,
+							@RequestParam(value="replyWriter") int writerNo,
+							@RequestParam(value="appNo") int appNo) {
+		ApprovalReply r = new ApprovalReply();
+		r.setContent(content);
+		r.setWriterNo(writerNo);
+		r.setAppNo(appNo);
+		int result = aService.insertReply(r);
+		return new Gson().toJson(result);
 	}
 	
 	

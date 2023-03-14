@@ -20,5 +20,5 @@ public class ApprovalReply {
 	private String writerName;
 	private String deptName;
 	private String jobCode;
-
+	private String empProfile;
 }

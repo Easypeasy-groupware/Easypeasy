@@ -24,4 +24,5 @@ public class ApprovalLine {
 	private String empName;
 	private String deptName;
 	private String jobCode;
+	private String empProfile;
 }

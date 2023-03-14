@@ -7,6 +7,7 @@ import com.ep.spring.approval.model.vo.ApprovalLine;
 import com.ep.spring.approval.model.vo.ApprovalReply;
 import com.ep.spring.approval.model.vo.OverTimeForm;
 import com.ep.spring.approval.model.vo.VacationForm;
+import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
 
 public interface ApprovalService {
@@ -56,9 +57,13 @@ public interface ApprovalService {
 	// 10. 기안진행문서 상세페이지 조회용 서비스
 	Approval selectDetailSPrgAp(Approval a);
 	ArrayList<ApprovalLine> selectDetailSPrgAl(Approval a);
-	ArrayList<ApprovalReply> selectDetailSPrgAr(Approval a);
+	ArrayList<Attachment> selectDetailSPrgAt(Approval a);
 	OverTimeForm selectDetailSPrgOt(Approval a);
 	VacationForm selectDetailSPrgVf(Approval a);
+	
+	// 11. 댓글 조회랑 입력용 서비스
+	ArrayList<ApprovalReply> selectReplyList(int appNo);
+	int insertReply(ApprovalReply r);
 	
 
 }
