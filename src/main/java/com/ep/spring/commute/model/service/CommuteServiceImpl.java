@@ -28,6 +28,18 @@ public class CommuteServiceImpl implements CommuteService{
 		
 		return cDao.commuteMainPage(sqlSession, empNo);
 	}
+
+	@Override
+	public int updateStatus(Commute c) {
+		
+		return cDao.updateStatus(sqlSession, c);
+	}
+
+	@Override
+	public int outTime(Commute c) {
+		
+		return cDao.outTime(sqlSession, c);
+	}
 	
 	
 

@@ -17,5 +17,14 @@ public class CommuteDao {
 	public Commute commuteMainPage(SqlSessionTemplate sqlSession, int empNo) {
 		return sqlSession.selectOne("commuteMapper.commuteMainPage", empNo);
 	}
+	
+	public int updateStatus(SqlSessionTemplate sqlSession, Commute c) {
+		return sqlSession.update("commuteMapper.updateStatus", c);
+	}
+	
+	//퇴근시간 등록
+	public int outTime(SqlSessionTemplate sqlSession, Commute c) {
+		return sqlSession.update("commuteMapper.outTime", c);
+	}
 
 }

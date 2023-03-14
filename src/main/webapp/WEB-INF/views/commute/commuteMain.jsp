@@ -319,9 +319,52 @@
     	               
     	                $(".outTime").text(outTime);
     	                $(".out-button").css("color", "gray").css("background-color","rgb(85, 85, 85)").attr("disabled", true);
+    	                
+    	                var year = a.getFullYear();
+    	                var month = a.getMonth()+1;  
+                        var date = a.getDate();
+                        
+    	                month = month < 10 ? "0" + month : month;
+    	                date = date < 10 ? "0" + date : date;
+                        
+                        var today = year + "/" + month + "/" + date;
+                        
+                        
+    	                outTimeInsertAjax(today);
     	
     	                
     	            }
+                    
+					function outTimeInsertAjax(today){
+                    	
+                    	$.ajax({
+    	                	url:"outTime.co",
+    	                	data:{
+    	                		endTime:$(".outTime").html().trim(),
+    	                		empNo:${loginUser.empNo},
+    	                		enrollDate:today
+    	                		},
+    	                	success:function(result){
+    	                		if(result=="success"){
+    	                			console.log(result);
+    	                			swal({
+    	                	            title:   '퇴근 확인', 
+    	                	            text: "퇴근시간이 기록되었습니다", 
+    	                	            icon: "success",
+    	                	            button: "확인"
+    	                	         });
+    	                		}
+    	                	},error:function(){
+    	                		console.log("퇴근시간등록 ajax 통신실패");
+    	                		swal({
+	                	            title:   '퇴근 확인', 
+	                	            text: "퇴근시간이 기록에 실패했습니다", 
+	                	            icon: "error",
+	                	            button: "확인"
+	                	         });
+    	                	}
+    	                })
+                    }
                 </script>
             </div>
             <div class="content2">
@@ -335,12 +378,17 @@
                 
 
                 <div class="recode">
-                    -- 출근 08:55:14 <br>
-                    -- 회의중 09:20:11 <br>
-                    -- 근무중 10:01:54 <br>
+                    <c:if test="${ not empty c.startTime }">
+                    	-- ${ c.startTime } 출근
+                    </c:if>
 
                 </div>
             </div>
+            
+            <script>
+            	
+            </script>
+            
             <div class="content3">
                 <div class="name">근태현황</div><br>
                 <table  id="commute">

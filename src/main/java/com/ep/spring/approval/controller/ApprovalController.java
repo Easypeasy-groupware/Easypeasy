@@ -251,7 +251,7 @@ public class ApprovalController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="rinsert.ap", produces="application/json; charset=UTF-8")
+	@RequestMapping("rinsert.ap")
 	public String insertReply(@RequestParam(value="replyContent") String content,
 							@RequestParam(value="replyWriter") int writerNo,
 							@RequestParam(value="appNo") int appNo) {
@@ -260,9 +260,15 @@ public class ApprovalController {
 		r.setWriterNo(writerNo);
 		r.setAppNo(appNo);
 		int result = aService.insertReply(r);
-		return new Gson().toJson(result);
+		return result>0?"success" : "error";
 	}
 	
+	@ResponseBody
+	@RequestMapping("rdelete.ap")
+	public String deleteReply(@RequestParam(value="no")int replyNo) {
+		int result = aService.deleteReply(replyNo);
+		return result>0?"success":"error";
+	}
 	
 	/*
 	@RequestMapping("search.ap")
