@@ -164,8 +164,22 @@
 
             <div class="content1">
                 <div class="name" style="float: left;">근무체크</div><br><br>
-
-                <div class="status">근무중</div><br>
+			
+			<c:choose>
+				<c:when test="${ not empty loginUser.status }">
+	                <div class="status">
+	                
+	                	<c:choose>
+	                		<c:when test="${ loginUser.status eq 'ME' }">회의중</c:when>
+	                		<c:when test="${ loginUser.status eq 'OU' }">외출중</c:when>
+	                		<c:when test="${ loginUser.status eq 'OW' }">외근중</c:when>
+	                		<c:otherwise>근무중</c:otherwise>
+	                	</c:choose>
+	                
+	                </div><br>
+	             </c:when>
+	             <c:otherwise><br><br></c:otherwise>
+             </c:choose>
 
                 <h1 id="clock" style="color:black;">clock</h1>
 
@@ -180,12 +194,12 @@
                 <script>
 	                $(function(){
 	         			
-	                	//출근시간등록이 되어 있을 시 버튼 비활성화
+	                	//출근시간 등록이 되어 있을 시 버튼 비활성화
 	                	if($(".inTime").html().trim().length != 0){
 	                		$(".in-button").css("background-color", "rgb(93, 104, 83)").attr("disabled", true);
 	                	} 
 	                	
-	                	//퇴근시간등록이 되어 있을 시 버튼 비활성화
+	                	//퇴근시간 등록이 되어 있을 시 버튼 비활성화
 	                	if($(".outTime").html().trim().length != 0){
 	                		$(".out-button").css("background-color", "rgb(93, 104, 83)").attr("disabled", true);
 	                	}
@@ -242,13 +256,32 @@
                     	let s = a.getSeconds(); 
                     	
                     	let inTime = h+":"+m+":"+s;
-    	                
-    	                //location.href="inTime.co?time="+inTime;
-    	                
-    	                $(".inTime").text(inTime);
+                    	
+                    	$(".inTime").text(inTime);
     	                $(".in-button").css("color", "gray").css("background-color", "rgb(93, 104, 83)").attr("disabled", true);
+    	                
+    	                inTimeInsertAjax();
+    	                
+    	                
+    	                
     	            }
                     
+                    function inTimeInsertAjax(){
+                    	$.ajax({
+    	                	url:"inTime.co",
+    	                	data:{
+    	                		startTime:$(".inTime").val(),
+    	                		empNo:${loginUser.empNo}
+    	                		},
+    	                	success:function(result){
+    	                		if(result=="success"){
+    	                			console.log(result);
+    	                		}
+    	                	},error:function(){
+    	                		console.log("출근시간등록 ajax 통신실패");
+    	                	}
+    	                })
+                    }
                     //퇴근하기 버튼 클릭
     	            function outTime(){
     	

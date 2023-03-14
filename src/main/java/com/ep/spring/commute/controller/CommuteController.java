@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ep.spring.common.model.vo.AlertMsg;
@@ -45,10 +46,14 @@ public class CommuteController {
 		}
 		
 		//출근시간 등록
+		@ResponseBody
 		@RequestMapping("inTime.co")
-		public void inTime(String time, HttpSession session) {
-		
+		public String inTime(Commute c) {
 			
+			
+			int result = cService.inTime(c);
+			
+			return result >0 ? "success" : "fail";
 			
 		}
 		
