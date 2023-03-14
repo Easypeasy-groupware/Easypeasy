@@ -597,4 +597,30 @@
 			     where a.status = 'Y'
 			       and app_no = #{appNo}	 	
 	</select>
+	
+	<insert id="insertReply">
+			 	insert
+				  into app_reply
+					  (
+					  APP_REPNO
+					, CONTENT
+					, APP_NO
+					, EMP_NO
+					  )
+				values
+					  (
+					  seq_arno.nextval
+					  , #{content}
+					  , #{appNo}
+					  , #{writerNo}
+					  )
+	</insert>
+	
+	<update id="deleteReply">
+				update 
+				       app_reply
+				   set status = 'N'
+				 where app_repno = #{replyNo}		
+	</update>
+	
 </mapper>

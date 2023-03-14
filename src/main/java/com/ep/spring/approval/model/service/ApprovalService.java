@@ -61,9 +61,10 @@ public interface ApprovalService {
 	OverTimeForm selectDetailSPrgOt(Approval a);
 	VacationForm selectDetailSPrgVf(Approval a);
 	
-	// 11. 댓글 조회랑 입력용 서비스
+	// 11. 댓글 조회랑 입력 삭제용 서비스
 	ArrayList<ApprovalReply> selectReplyList(int appNo);
 	int insertReply(ApprovalReply r);
+	int deleteReply(int replyNo);
 	
 
 }

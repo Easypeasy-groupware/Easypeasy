@@ -69,8 +69,8 @@
 			    	회의실/빔프로젝터
 			  	</button>
 			  	<div class="dropdown-menu">
-				    <a class="dropdown-item" href="settingView.re" name="회의실">회의실</a>
-				    <a class="dropdown-item" href="settingBeamView.re">빔프로젝터</a>
+				    <a class="dropdown-item" href="settingMettingRoomView.re">회의실</a>
+				    <a class="dropdown-item" href="settingBeamProjectView.re">빔프로젝터</a>
 			  	</div>
 			</div>
         </div>

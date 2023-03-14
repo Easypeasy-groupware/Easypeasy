@@ -69,14 +69,14 @@
 			    	회의실/빔프로젝터
 			  	</button>
 			  	<div class="dropdown-menu">
-				    <a class="dropdown-item" href="settingView.re">회의실</a>
-				    <a class="dropdown-item" href="settingBeamView.re">빔프로젝터</a>
+				    <a class="dropdown-item" href="settingMettingRoomView.re">회의실</a>
+				    <a class="dropdown-item" href="settingBeamProjectView.re">빔프로젝터</a>
 			  	</div>
 			</div>
         </div>
         <br>
         <div id="content-1">
-            <a id="add" href="resourceAddView.re" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">자산 추가</a>
+            <a id="add" href="resourceAddMettingRoomView.re" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">자산 추가</a>
             <table align="center" class="table table-hover table-sm">
                 <thead>
                     <tr>
@@ -85,24 +85,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>A회의실(20명)</td>
-                        <td>
-                            <button style="border: none; background: none;"><i class="fas fa-cog"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>B회의실(15명)</td>
-                        <td>
-                            <button style="border: none; background: none;"><i class="fas fa-cog"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>C회의실(6명)</td>
-                        <td>
-                            <button style="border: none; background: none;"><i class="fas fa-cog"></i></button>
-                        </td>
-                    </tr>
+                	<c:forEach var="rsc" items="${ list }">
+	                    <tr>
+	                        <td>${ rsc.resourceName }</td>
+	                        <td>
+	                            <button style="border: none; background: none;"><i class="fas fa-cog"></i></button>
+	                        </td>
+	                    </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>

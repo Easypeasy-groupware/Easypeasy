@@ -85,9 +85,9 @@
             <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="inlist-key"></span>
         </div>
         <ul class="submenu" id="inlist" style="display:none;">
-        	<li><a href="internalDept.add?dept=hr">- A회의실(20명)</a></li>
-            <li><a href="internalDept.add?dept=as">- B회의실(15명)</a></li>
-            <li><a href="internalDept.add?dept=sales1">- C회의실(6명)</a></li>
+        	<c:forEach var="r" items="${ list }">
+        		<li><a href="internalDept.add?dept=hr">- ${ r.resourceName }</a></li>
+            </c:forEach>
         </ul>
 
         <div class="add-type" id="add-ex"  style="display:none;">
@@ -111,7 +111,7 @@
 	        </div>
 	        
 	        <div class="add-type" id="setting-in" style="display:none;">
-            	<a href="settingView.re" class="add-in" style="margin-left: -15px"><b> 자산 관리</b></a>
+            	<a href="settingMettingRoomView.re" class="add-in" style="margin-left: -15px"><b> 자산 관리</b></a>
             </div>
         </c:if>
     </div>

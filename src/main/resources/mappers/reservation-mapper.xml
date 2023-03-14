@@ -9,22 +9,23 @@
 		<result column="emp_no" property="resourceWriter" />
 		<result column="create_date" property="createDate" />
 	</resultMap>
-  
-  <!--
-  <select id="selectSettingMettingRoom" resultMap="resourceResult">
+	
+	<select id="selectSettingMettingRoom" resultMap="resourceResult">
 		select
 			    resource_no
 			  , resource_name
-		   from resource
-		  where category_name = 
+			  , category_name
+			  , emp_name
+		   from re_resource
+		   join employee using(emp_no)
+		  where category_name = '회의실'
 		  order
 		     by resource_no
 	</select>
-  	-->
-  	
+  
   	<insert id="addMettingRoomResource">
 		insert
-		  into resource
+		  into re_resource
 		  (
 		  	resource_no
 		  , resource_name

@@ -159,7 +159,12 @@ public class ApprovalServiceImpl implements ApprovalService{
 
 	@Override
 	public int insertReply(ApprovalReply r) {
-		return 0;
+		return aDao.insertReply(sqlSession, r);
+	}
+
+	@Override
+	public int deleteReply(int replyNo) {
+		return aDao.deleteReply(sqlSession, replyNo);
 	}
 
 

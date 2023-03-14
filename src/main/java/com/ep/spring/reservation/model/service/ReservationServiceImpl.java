@@ -18,12 +18,11 @@ public class ReservationServiceImpl implements ReservationService {
 	@Autowired
 	private ReservationDao reDao;
 
-	/*
+	
 	@Override
 	public ArrayList<Resource> selectSettingMettingRoom() {
 		return reDao.selectSettingMettingRoom(sqlSession);
 	}
-	*/
 
 	@Override
 	public int addMettingRoomResource(Resource rsc) {

@@ -149,6 +149,14 @@ public class ApprovalDao {
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectReplyList", appNo);
 	}
 	
+	public int insertReply(SqlSessionTemplate sqlSession, ApprovalReply r) {
+		return sqlSession.insert("approvalMapper.insertReply", r);
+	}
+	
+	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
+		return sqlSession.update("approvalMapper.deleteReply", replyNo);
+	}
+	
 	
 
 	
