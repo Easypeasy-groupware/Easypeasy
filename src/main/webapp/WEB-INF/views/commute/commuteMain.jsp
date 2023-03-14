@@ -186,10 +186,10 @@
                         var seconds = time.getSeconds();
             
                         Target.innerText = 
-                        	"${month + 1}월 ${date}일 ${week[day]}요일" +
-                        	"${hours < 10 ? '0${hours}' : hours}" 
-                        	+ ":" + "${minutes < 10 ? '0${minutes}' : minutes}" 
-                        	+ ":" + "${seconds < 10 ? '0${seconds}' : seconds}";
+                        	(month + 1)+"월 "+ date + "일 " + week[day] +"요일" +
+                        	(hours < 10 ? "0"+hours : hours )
+                        	+ ":" +( minutes < 10 ? "0"+minutes : minutes )
+                        	+ ":" +( seconds < 10 ? "0"+seconds : seconds );
                         
                     }
                     clock();
