@@ -1,5 +1,6 @@
 package com.ep.spring.approval.controller;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,6 +21,7 @@ import com.ep.spring.approval.model.vo.ApprovalLine;
 import com.ep.spring.approval.model.vo.ApprovalReply;
 import com.ep.spring.approval.model.vo.OverTimeForm;
 import com.ep.spring.approval.model.vo.VacationForm;
+import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.common.template.Pagination;
@@ -268,6 +270,33 @@ public class ApprovalController {
 	public String deleteReply(@RequestParam(value="no")int replyNo) {
 		int result = aService.deleteReply(replyNo);
 		return result>0?"success":"error";
+	}
+	
+	@RequestMapping("delete.ap")
+	public String deleteApproval(@RequestParam(value="no")int appNo, HttpSession session, ArrayList<String> filePath) {
+		
+		System.out.println(appNo);
+		System.out.println(filePath);
+		int result = aService.deleteApproval(appNo);
+		
+		System.out.println(result);
+		
+		if(result > 0) {
+				for(int i= 0; i < filePath.size(); i++) {
+					if(!filePath.get(i).equals("")) {
+					new File(session.getServletContext().getRealPath(filePath.get(i))).delete();
+				}
+			}
+
+			AlertMsg msg = new AlertMsg("문서삭제", "성공적으로 삭제되었습니다");
+			session.setAttribute("successMsg", msg);
+			return "redirect:main.ap";
+		}else {
+			AlertMsg msg = new AlertMsg("문서삭제", "삭제에 실패했습니다.");
+			session.setAttribute("failMsg", msg);
+			return "redirect:main.ap";
+		}
+		
 	}
 	
 	/*

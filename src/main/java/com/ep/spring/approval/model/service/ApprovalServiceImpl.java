@@ -167,6 +167,11 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return aDao.deleteReply(sqlSession, replyNo);
 	}
 
+	@Override
+	public int deleteApproval(int appNo) {
+		return aDao.deleteApproval(sqlSession, appNo);
+	}
+
 
 
 

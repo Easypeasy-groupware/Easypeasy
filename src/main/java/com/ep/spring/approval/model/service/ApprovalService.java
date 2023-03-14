@@ -66,5 +66,7 @@ public interface ApprovalService {
 	int insertReply(ApprovalReply r);
 	int deleteReply(int replyNo);
 	
+	// 12. 문서 삭제용 서비스
+	int deleteApproval(int appNo);
 
 }

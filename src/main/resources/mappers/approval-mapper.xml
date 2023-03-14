@@ -623,4 +623,11 @@
 				 where app_repno = #{replyNo}		
 	</update>
 	
+	<update id="deleteApproval">
+				update
+				        approval
+				   set status = 3
+				 where app_no = #{appNo} 	
+	</update>
+	
 </mapper>

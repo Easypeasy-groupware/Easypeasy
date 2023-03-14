@@ -157,7 +157,9 @@ public class ApprovalDao {
 		return sqlSession.update("approvalMapper.deleteReply", replyNo);
 	}
 	
-	
+	public int deleteApproval(SqlSessionTemplate sqlSession, int appNo) {
+		return sqlSession.update("approvalMapper.deleteApproval", appNo);
+	}
 
 	
 }

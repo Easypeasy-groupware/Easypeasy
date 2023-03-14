@@ -59,8 +59,8 @@
                 <div class="left-form2">
                 <c:choose>
                     <c:when test="${loginUser.empNo eq ap.writerNo }" >
-                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">문서삭제</a> |
-                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">기안수정</a>
+                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서삭제</a> |
+                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">기안수정</a>
                         <br><br>
                     </c:when>    
                     <c:otherwise>
@@ -85,13 +85,7 @@
 			</div>
 			
 				<script>
-					function postFormSubmit(num){
-						if(num == 1){ // 수정하기 클릭 시
-							$("#postForm").attr("action", "updateForm.ap").submit();	
-						}else{ // 삭제하기 클릭시
-							$("#postForm").attr("action", "delete.ap").submit();
-						}
-					}
+
 				</script>			
             
             <div class="left-form3" >
@@ -396,6 +390,23 @@
     </div>
     
         <script>
+
+			function postFormSubmit(num){
+				if(num == 1){ // 수정하기 클릭 시
+					
+					$("#postForm").attr("action", "updateForm.ap").submit();
+				
+				}else{ // 삭제하기 클릭시
+					
+	        		var con = confirm("해당문서를 삭제하시겠습니까?");
+	        		
+	        		if(con){
+	        			$("#postForm").attr("action", "delete.ap").submit();
+	        		}							
+					
+				}
+			}
+        
 		
 	    	$(function(){
 	    		selectReplyList();
