@@ -8,10 +8,12 @@ import com.ep.spring.commute.model.vo.Commute;
 @Repository
 public class CommuteDao {
 	
-	public int inTime(SqlSessionTemplate sqlSession, String inTime) {
-		return sqlSession.insert("commuteMapper.inTime", inTime);
+	//출근시간 등록
+	public int inTime(SqlSessionTemplate sqlSession, Commute c) {
+		return sqlSession.insert("commuteMapper.inTime", c);
 	}
 	
+	//근태관리 메인페이지 응답시 Commute 조회
 	public Commute commuteMainPage(SqlSessionTemplate sqlSession, int empNo) {
 		return sqlSession.selectOne("commuteMapper.commuteMainPage", empNo);
 	}
