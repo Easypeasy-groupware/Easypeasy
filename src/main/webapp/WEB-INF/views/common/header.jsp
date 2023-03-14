@@ -148,10 +148,11 @@
         <div id="header2">
 
             <ul>
-                <li><a href="">근태관리</a></li>
+                <li><a href="commute.ep">근태관리</a></li>
                 <li><a href="list.ma">메일</a></li>
                 <li><a href="main.ap">전자결재</a></li>
                 <li><a href="">일정</a></li>
+                
                 <li><a href="main.re">예약</a></li>
                 <li><a href="list.db">자료실</a></li>
                 <li><a href="list.bo">게시판</a></li>
