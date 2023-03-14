@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 public class AddGroup {
 
-	private int groupNo;
+	private String groupNo;
 	private int empNo;
 	private String groupName;
 	private String addType;

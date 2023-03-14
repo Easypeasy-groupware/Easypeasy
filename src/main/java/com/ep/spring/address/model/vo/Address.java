@@ -22,7 +22,7 @@ public class Address {
 	private String addEmp;
 	private String addDept;
 	private String addJob;
-	private int groupNo;
+	private String groupNo;
 	private String empPhone;
 	private String empAddress;
 	private String memo;

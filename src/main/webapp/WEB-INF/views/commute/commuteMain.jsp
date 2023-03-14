@@ -260,25 +260,49 @@
                     	$(".inTime").text(inTime);
     	                $(".in-button").css("color", "gray").css("background-color", "rgb(93, 104, 83)").attr("disabled", true);
     	                
-    	                inTimeInsertAjax();
+    	                var year = a.getFullYear();
+    	                var month = a.getMonth()+1;  
+                        var date = a.getDate();
+                        
+    	                month = month < 10 ? "0" + month : month;
+    	                date = date < 10 ? "0" + date : date;
+                        
+                        var today = year + "/" + month + "/" + date;
+                        
+                        
+    	                inTimeInsertAjax(today);
     	                
     	                
     	                
     	            }
                     
-                    function inTimeInsertAjax(){
+                    function inTimeInsertAjax(today){
+                    	
                     	$.ajax({
     	                	url:"inTime.co",
     	                	data:{
-    	                		startTime:$(".inTime").val(),
-    	                		empNo:${loginUser.empNo}
+    	                		startTime:$(".inTime").html().trim(),
+    	                		empNo:${loginUser.empNo},
+    	                		enrollDate:today
     	                		},
     	                	success:function(result){
     	                		if(result=="success"){
     	                			console.log(result);
+    	                			swal({
+    	                	            title:   '출근 확인', 
+    	                	            text: "출근시간이 기록되었습니다", 
+    	                	            icon: "success",
+    	                	            button: "확인"
+    	                	         });
     	                		}
     	                	},error:function(){
     	                		console.log("출근시간등록 ajax 통신실패");
+    	                		swal({
+	                	            title:   '출근 확인', 
+	                	            text: "출근시간이 기록에 실패했습니다", 
+	                	            icon: "error",
+	                	            button: "확인"
+	                	         });
     	                	}
     	                })
                     }
