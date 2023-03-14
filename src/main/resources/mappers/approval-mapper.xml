@@ -22,6 +22,7 @@
  		<result column="origin_name" property="originName" />
  		<result column="update_date" property="updateDate" />
  		<result column="count" property="count" />
+ 		<result column="job_code" property="jobCode" />
 	</resultMap>
 	
 	<resultMap id="approvalLineResult" type="ApprovalLine">
@@ -35,6 +36,9 @@
 		<result column="app_comment" property="appComment" />
 		<result column="enroll_date" property="enrollDate" />
 		<result column="count" property="count" />
+		<result column="emp_name" property="empName" />
+		<result column="dept_name" property="deptName" />
+		<result column="job_code" property="jobCode" /> 
 		
 	</resultMap>
 	
@@ -44,7 +48,10 @@
 		<result column ="content" property="content" /> 
 		<result column ="status" property="status" /> 
 		<result column ="app_no" property="appNo" /> 
-		<result column ="emp_no" property="writerNo" /> 
+		<result column ="emp_no" property="writerNo" />
+		<result column="emp_name" property="writerName" />
+		<result column="dept_name" property="deptName" />
+		<result column="job_code" property="jobCode" /> 
 	</resultMap>
 	
 	<resultMap id="vacationFormResult" type="VacationForm">

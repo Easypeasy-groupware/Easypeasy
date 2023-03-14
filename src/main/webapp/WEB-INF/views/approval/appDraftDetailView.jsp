@@ -45,30 +45,44 @@
     <jsp:include page="../common/header.jsp"/>
     <jsp:include page="appMenubar.jsp" />
     <div class="form-outer">
-        <div class="left-outer">
+        <div class="left-outer" style=" border-right:1px solid gray;">
             <div class="left-form1">
                 <p><b style="font-size:30px;"> 업무기안</b></p>
             </div>
             <div class="left-form2">
-                <a href="" style="padding:20px; color:rgb(71, 71, 71);">문서삭제</a> |
-                <a href="" style="padding:20px; color:rgb(71, 71, 71);">기안수정</a>
-                <br><br>
-                            <!-- 결재자일때 보일버튼 -->
-
-                <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#approval">결재</a> |  
-                <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#companion">반려</a> |
-                <a href="" style="padding:20px; color:rgb(71, 71, 71);">문서수정</a>
-                <br><br>
+                <c:choose>
+                    <c:when test="${loginUser.empNo eq ap.empNo }" >
+                        
+                        <a href="" style="padding:20px; color:rgb(71, 71, 71);">문서삭제</a> |
+                        <a href="" style="padding:20px; color:rgb(71, 71, 71);">기안수정</a>
+                        <br><br>
+                    </c:when>    
+                                    <!-- 결재자일때 보일버튼 -->
+                    <otherwise>
+                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#approval">결재</a> |  
+                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#companion">반려</a> |
+                        <a href="" style="padding:20px; color:rgb(71, 71, 71);">문서수정</a>
+                        <br><br>
+                    </otherwise>    
+                        
+                </c:choose>
             </div>
-
-
 
             <div class="left-form3">
 
                 <table class="draft" style="width:100px; text-align:center; font-size:12px; margin-right:10px;" border="1">
                     <tr>
                         <td rowspan="4" style="background:rgb(223, 221, 221);">신<br>청</td>
-                        <td>직급</td>
+                        <td>
+                        	
+                        	${ap.jobCode == 'J1'?'사원':
+                        	  ap.jobCode == 'J2'?'대리':
+                        	  ap.jobCode == 'J3'?'과장':
+                        	  ap.jobCode == 'J4'?'부장':
+                        	  ap.jobCode == 'J5'?'상무':
+                        	  ap.jobCode == 'J6'?'대표':
+                        	}
+                        </td>
                     </tr>
                     <tr>
                         <td>도장 <br>이름</td>
@@ -158,7 +172,7 @@
                 </div>
             </div>
         </div>
-        <div class="right-outer" style="padding-left:20px; border-left:1px solid gray;">
+        <div class="right-outer" style="padding-left:20px;">
             <br>
             <div style="text-align:center; padding:20px; font-size:20px;">
                  <p><b> 결재선</b></p>
