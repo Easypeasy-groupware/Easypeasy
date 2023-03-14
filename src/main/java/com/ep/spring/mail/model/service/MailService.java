@@ -18,6 +18,9 @@ public interface MailService {
 	// 2. 태그 생성
 	int insertTag(MailTag t);
 
+	// 3. 메일 보내기
+	int sendMail(Mail m);
+
 	
 
 	

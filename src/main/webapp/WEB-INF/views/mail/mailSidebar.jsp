@@ -9,8 +9,13 @@
 <style>
 
 	/* 메일 사이드바 css*/
+    .menu-title{margin:20px 0 20px 0; text-align:center;}
+    #title{font-size:20px; font-weight:600; color:rgb(93, 109, 75);}
+    #title:hover{color:rgb(58, 69, 47); text-decoration:none;}
+    .menu-btn{width:70%; height:35px; margin:auto; margin-bottom:15px; padding:5px 0 5px 0; background-color: rgb(142, 161, 122); border-radius:4px; text-align:center;}
+	#menu-add-btn{color:white; text-decoration:none;}
+	.menu-btn:hover{background-color: rgb(93, 105, 81);}
     #mail_side_bar{width: 200px; height: 1000px; float: left; border-right: 2px solid rgb(185, 187, 221); padding: 10px;}
-    #send_mail_btn{width: 170px;}
     .mailbox_subject{width: 157px; float: left; font-size: 18px; font-weight: 700; color: darkslategrey;}
     .settings{width: 13px; padding-top: 5px;}
     .boxList{width: 170px;}
@@ -39,11 +44,12 @@
 	
 	<!-- 메일 사이드바 -->
     <div id="mail_side_bar">
-        <h2>메일</h2>
-        <br>
-        <form action="enrollForm.sm">
-            <button id="send_mail_btn" class="btn btn-outline-dark">메일 쓰기</button>
-        </form>
+        <div class="menu-title">
+            <p id="title">메일</p>
+        </div>
+        <div class="menu-btn">
+            <a href="enrollForm.sm" id="menu-add-btn">메일 쓰기</a>
+        </div>
         <br><br><br>
         <div>
             <div class="mailbox_subject">즐겨찾기</div>

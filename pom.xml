@@ -244,7 +244,19 @@
 			<groupId>com.google.apis</groupId>
 			<artifactId>google-api-services-gmail</artifactId>
 			<version>v1-rev20211108-1.32.1</version>
-	    </dependency>				     
+	    </dependency>	
+	    
+	    <!-- 다중 첨부 파일 업로드 -->
+	    <dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>			     
 				    
 	</dependencies>
     <build>

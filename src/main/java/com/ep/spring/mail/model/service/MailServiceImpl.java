@@ -34,6 +34,11 @@ public class MailServiceImpl implements MailService {
 		return mDao.insertTag(t, sqlSession);
 	}
 
+	@Override
+	public int sendMail(Mail m) {
+		return mDao.sendMail(m, sqlSession);
+	}
+
 	
 
 	

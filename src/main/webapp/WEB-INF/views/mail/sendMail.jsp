@@ -13,6 +13,10 @@
     #mail_content{width: 1000px; float: left;}
     #mail_header{height: 130px; border-bottom: 2px solid rgb(185, 187, 221); margin: 10px;}
     #mail_header1{height: 90x;}
+    #send{width: 100px; height: 30px; margin:auto; padding:5px 0 5px 0; background-color: rgb(142, 161, 122);
+          border-radius:4px; border: none; color: white; display: block; float: left; margin-top: 9px;}
+          
+    #send:hover{background-color:rgb(58, 69, 47); text-decoration:none; color: white;}
     #send_btnList{line-height: 45px;}
     #send_btnList>button{height: 30px; line-height: 12px;}
 
@@ -20,11 +24,15 @@
     #in_receiver_list{width: 100%; max-height: 200px; padding-left: 20px; display: block; overflow-y: auto; overflow-x: auto;}
     .receiver_one{height: 30px;}
     .receiver_one>b{line-height: 10px;}
-    .receiver_one>button{height: 25px; line-height: 20px; padding: 0px 8px 0px 8px; margin-top: 5px; border: 1px solid gray; background-color: whitesmoke;}
+
+    .receiver_one>button, 
+    .receiver_ref_one>button, 
+    .receiver_hid_ref_one>button{height: 25px; line-height: 20px; padding: 0px 8px 0px 8px; 
+                                 margin-top: 5px; border: 1px solid gray; background-color: whitesmoke;}
     
     #mail_content_text{height: 865px; padding: 0px 20px 0px 20px; overflow-y: auto; overflow-x: hidden;}
     #mail_header_info{font-size: 25px; float: left; margin: 20px;}
-    #input_receiver{width: 585px;}
+    #input_receiver, #input_reference, #input_hidden_reference{width: 585px;}
 
     #hidden_reference{display: none;}
     #open_btn_hidden_reference{display: block; padding-left: 6px;}
@@ -68,7 +76,7 @@
                 </div>
             </div>
             <div id="send_btnList">
-                <button id="send" class="btn btn-primary">보내기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button id="send">보내기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <button id="temp_save" class="btn btn-outline-secondary">임시저장</button>&nbsp;
                 <button id="preview" class="btn btn-outline-secondary">미리보기</button>&nbsp;
             </div>
@@ -92,31 +100,33 @@
                     <td><button type="button" class="btn btn-secondary">주소록</button></td>
                 </tr>
                 <tr class="detail_info_tr">
-                    <th>수신 목록</th>
-                    <td></td>
-                    <td colspan="2" id="receiver_area">
-                        <div id="in_receiver_list">
-                        </div>
-                        <input id="input_receiver_list" type="text" style="display: none;">
-                    </td>
-                </tr>
-                <tr class="detail_info_tr"><td></td></tr>
-                <tr class="detail_info_tr">
                     <th>참 조</th>
                     <td><button type="button" id="open_btn_hidden_reference" class="btn btn-outline-secondary">+</button></td>
-                    <td><input class="mail_input" type="text"></td>
+                    <td><input id="input_reference" class="mail_input" type="text">
+                        &nbsp;&nbsp;&nbsp;<button type="button" id="add_rec_ref" class="btn btn-secondary">추가</button></td>
                     <td><button type="button" class="btn btn-secondary">주소록</button></td>
                 </tr>
                 <tr class="detail_info_tr" id="hidden_reference">
                     <th>숨은 참조</th>
                     <td><button type="button" id="close_btn_hidden_reference" class="btn btn-outline-secondary">-</button></td>
-                    <td><input class="mail_input" type="text"></td>
+                    <td><input id="input_hidden_reference" class="mail_input" type="text">
+                        &nbsp;&nbsp;&nbsp;<button type="button" id="add_rec_hid_ref" class="btn btn-secondary">추가</button></td>
                     <td><button type="button" class="btn btn-secondary">주소록</button></td>
                 </tr>
                 <tr class="detail_info_tr">
+                    <th>수신 목록</th>
+                    <td></td>
+                    <td colspan="2" id="receiver_area">
+                        <div id="in_receiver_list">
+                        </div>
+                        <input id="input_receiver_list" type="eamil" multiple style="display: none;">
+                    </td>
+                </tr>
+                <tr class="detail_info_tr"><td></td></tr>
+                <tr class="detail_info_tr">
                     <th>제 목</th>
                     <td><input type="checkbox" name="imporMail"> 중요</td>
-                    <td colspan="2"><input class="mail_input" style="width: 760px; margin-right: 0;" name="mailTitle" type="text"></td>
+                    <td colspan="2"><input type="text" id="mail_title" class="mail_input" style="width: 760px; margin-right: 0;" name="mailTitle" value=""></td>
                 </tr>
                 <tr class="detail_info_tr">
                     <th>파일 첨부</th>
@@ -137,7 +147,7 @@
                         </div>
                         <div id="in_attachments">
                         </div>
-                        <input id="attach_files" type="file" multiple accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
+                        <input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
                     </td>
                 </tr>
                 <tr style="height: 20px;"></tr>
@@ -145,9 +155,7 @@
                     <td></td>
                     <td></td>
                     <td colspan="2">
-                        <textarea name="mailContent" id="summernote">
-
-                        </textarea>
+                        <textarea name="mailContent" id="summernote" value=""></textarea>
                     </td>
                 </tr>
             </table>
@@ -180,7 +188,7 @@
             
             if(toMeBtn.checked == true) {
                 const eAddress = document.createElement("div");
-                eAddress.innerHTML = '<div class="receiver_one to_me"><b>user10@easypeasy.com</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">x</button></div>';
+                eAddress.innerHTML = '<div class="receiver_one to_me"><b>${ loginUser.email }</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">x</button></div>';
                 inReceiverList.append(eAddress);
 
                 let deleteBtnList = document.querySelectorAll('#in_receiver_list button');
@@ -195,6 +203,7 @@
             }
         });
 
+        // 수신자 주소 추가
         const addReceiver = document.getElementById("add_receiver");
         addReceiver.addEventListener('click', function(){
             let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -207,6 +216,56 @@
                 const eAddress = document.createElement("div");
                 eAddress.innerHTML = '<div class="receiver_one"><b>' + email + '</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">x</button></div>';
                 inReceiverList.append(eAddress);
+                document.getElementById("input_receiver").value = null;
+
+                let deleteBtnList = document.querySelectorAll('#in_receiver_list button');
+                deleteBtnList.forEach(function(deleteBtn){
+                    deleteBtn.addEventListener('click', () => {
+                        deleteBtn.parentNode.remove();
+                    });
+                });
+            }
+        });
+
+        // 참조자 주소 추가
+        const addRecRef = document.getElementById("add_rec_ref");
+        addRecRef.addEventListener('click', function(){
+            let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            let email = document.getElementById("input_reference").value;
+            if (email == '' || !re.test(email)) {
+                alert("올바른 이메일 주소를 입력하세요")
+                return false;
+            }else{
+                const inReceiverList = document.getElementById("in_receiver_list");
+                const eAddress = document.createElement("div");
+                eAddress.innerHTML = '<div class="receiver_ref_one"><b>참조 - ' + email + '</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">x</button></div>';
+                inReceiverList.append(eAddress);
+                document.getElementById("input_reference").value = null;
+
+
+                let deleteBtnList = document.querySelectorAll('#in_receiver_list button');
+                deleteBtnList.forEach(function(deleteBtn){
+                    deleteBtn.addEventListener('click', () => {
+                        deleteBtn.parentNode.remove();
+                    });
+                });
+            }
+        });
+
+        // 숨은 참조자 주소 추가
+        const addHidRecRef = document.getElementById("add_rec_hid_ref");
+        addHidRecRef.addEventListener('click', function(){
+            let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            let email = document.getElementById("input_hidden_reference").value;
+            if (email == '' || !re.test(email)) {
+                alert("올바른 이메일 주소를 입력하세요")
+                return false;
+            }else{
+                const inReceiverList = document.getElementById("in_receiver_list");
+                const eAddress = document.createElement("div");
+                eAddress.innerHTML = '<div class="receiver_hid_ref_one"><b>숨은 참조 - ' + email + '</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">x</button></div>';
+                inReceiverList.append(eAddress);
+                document.getElementById("input_hidden_reference").value = null;
 
                 let deleteBtnList = document.querySelectorAll('#in_receiver_list button');
                 deleteBtnList.forEach(function(deleteBtn){
@@ -311,7 +370,7 @@
 
 
 
-
+        // 메일 보내기
         document.getElementById("send").addEventListener('click', function(){
             const sendContent = document.getElementById("mail_content_text");
             // const form = document.createElement("form");
@@ -320,8 +379,29 @@
             // form.setAttribute("action", "send.ma");
             // form.appendChild(sendContent);
             // document.body.appendChild(form);
-            // form.submit();
-            sendContent.submit();
+
+            let receiverList = document.querySelectorAll("#in_receiver_list b");
+            let inputEValue = document.getElementById("input_receiver_list");
+            const receiver = document.getElementsByClassName("receiver_one");
+            const mailTitle = document.getElementById("mail_title");
+            const mailContent = document.getElementById("summernote");
+            inputEValue.value = "";
+            for(let i=0; i<receiverList.length; i++) {
+                inputEValue.value += receiverList[i].innerHTML + ','
+            }
+            inputEValue.setAttribute("name", "recMailAdd");
+
+            console.log(mailTitle.value);
+            console.log(mailContent.value);
+            if(receiver.length < 1) {
+                alert("수신자를 입력해주세요.")
+            }else if(mailTitle.value == ""){
+                alert("제목을 입력해주세요.")
+            }else if(mailContent.value == ""){
+                alert("내용을 입력해주세요.")
+            }else{
+                sendContent.submit();
+            }
         })
     </script>
     
