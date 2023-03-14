@@ -133,7 +133,7 @@
                 <div class="image-layer">
                     <img src="<c:out value='${ loginUser.empProfile }' default='resources/common_images/businessman.png' />" id="profile-img" width="45px">
         
-                    <a href="#" class="share-button myPage-btn">
+                    <a href="myPage.ep" class="share-button myPage-btn">
                         <img src="resources/common_images/note.png" width="30px" class="sub-image">
                     </a>
         
