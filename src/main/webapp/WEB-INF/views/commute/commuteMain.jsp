@@ -214,10 +214,15 @@
                     
                     //출근하기 버튼 클릭
                     function inTime(){
-    	               
-    	                let inTime = new Date(new Date() * 1 + 3600000 * 9).toISOString().replace("T", " ").replace(/\..*/, "");
+                    	const a = new Date(); 
+
+                    	let h = a.getHours();
+                    	let m = a.getMinutes(); 
+                    	let s = a.getSeconds(); 
+                    	
+                    	let inTime = h+":"+m+":"+s;
     	                
-    	                
+    	                location.href="inTime.co?time="+inTime;
     	                
     	                $(".inTime").text(inTime);
     	                $(".in-button").css("color", "gray").css("background-color", "rgb(93, 104, 83)").attr("disabled", true);
@@ -226,8 +231,14 @@
                     //퇴근하기 버튼 클릭
     	            function outTime(){
     	
-    	
-    	                let outTime = new Date(new Date() * 1 + 3600000 * 9).toISOString().replace("T", " ").replace(/\..*/, "");
+    	            	const a = new Date(); 
+
+                    	let h = a.getHours();
+                    	let m = a.getMinutes(); 
+                    	let s = a.getSeconds(); 
+                    	
+                    	let outTime = h+":"+m+":"+s;
+    	               
     	                $(".outTime").text(outTime);
     	                $(".out-button").css("color", "gray").css("background-color","rgb(85, 85, 85)").attr("disabled", true);
     	
