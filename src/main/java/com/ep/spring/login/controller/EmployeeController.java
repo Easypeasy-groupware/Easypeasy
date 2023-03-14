@@ -41,7 +41,7 @@ public class EmployeeController {
 		ArrayList<AddGroup> sharedGroup = aService.selectSharedAddGroup();
 		
 		
-		
+		/*
 		if(loginUser == null) {//로그인실패
 			session.setAttribute("alertMsg", "로그인에 실패했습니다. 다시 시도 해주세요.");
 			return "redirect:/";
@@ -50,6 +50,16 @@ public class EmployeeController {
 			session.setAttribute("pList", userGroup); //로그인한 사원의 주소록 그룹리스트 세션에 저장
 			session.setAttribute("sList", sharedGroup); //외부 공유주소록 그룹리스트 세션에 저장
 			return "common/main";
+			
+		*/
+		if(loginUser != null && bcryptPasswordEncoder.matches(e.getEmpPwd(), loginUser.getEmpPwd())) { // 성공
+			session.setAttribute("loginUser", loginUser);
+			session.setAttribute("pList", userGroup); //로그인한 사원의 주소록 그룹리스트 세션에 저장
+			session.setAttribute("sList", sharedGroup); //외부 공유주소록 그룹리스트 세션에 저장
+			return "common/main";
+		}else { // 실패
+			session.setAttribute("alertMsg", "로그인에 실패했습니다. 다시 시도 해주세요.");
+			return "redirect:/";
 		}
 		
 	}

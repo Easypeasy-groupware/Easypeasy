@@ -70,7 +70,7 @@
 			        <label for="userId">*아이디:</label>
 			          <input type="text" id="empId" name="empId"  required><br />
 			        <label for="password">*비밀번호:</label>
-			            <input type="text" id="empPwd" name="empPwd" value="1234" required readonly><br />
+			            <input type="text" id="empPwd" name="empPwd" placeholder="초기 비밀번호는 1234입니다." required>
 					<label>*이름</label>
 					    <input type="text" id="empName" name="empName" required>
 					<label>*직급</label>

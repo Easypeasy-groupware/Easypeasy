@@ -214,7 +214,7 @@
 											<ul id="browser" class="filetree treeview-famfamfam">
 												<li><span class="folder">이지피지</span>
 													<ul>
-														<li><span class="file">${o.jobCode}</span></li>
+														<li><span class="file"></span></li>
 														<li><span class="file">상무</span></li>
 														
 														<c:forEach var="o" items="${list}">
