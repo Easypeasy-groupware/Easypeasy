@@ -7,11 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    .outer{
-        width: 1200px;
-        margin: auto;
-        
-    }
+
     .side{
         width: 200px;
         height: 900px;
@@ -158,7 +154,7 @@
 	<jsp:include page="../common/header.jsp"/>
 	
 
-	    <div class="outer">
+	    
 
         <div class="side"><jsp:include page="../commute/commuteSidebar.jsp"/></div>
         <div class="allContent">
@@ -218,10 +214,11 @@
                     
                     //출근하기 버튼 클릭
                     function inTime(){
-                    	
-    	                strTime = new Date(); /*경과시간계산용*/
-    	
-    	                let inTime = h + ":" + m + ":" + s;
+    	               
+    	                let inTime = new Date(new Date() * 1 + 3600000 * 9).toISOString().replace("T", " ").replace(/\..*/, "");
+    	                
+    	                
+    	                
     	                $(".inTime").text(inTime);
     	                $(".in-button").css("color", "gray").css("background-color", "rgb(93, 104, 83)").attr("disabled", true);
     	            }
@@ -229,23 +226,12 @@
                     //퇴근하기 버튼 클릭
     	            function outTime(){
     	
-    	                endTime = new Date();/*경과시간계산용*/
     	
-    	                let outTime = h + ":" + m + ":" + s;
-    	                $("outTime").text(outTime);
-    	                $("out-button").css("color", "gray").css("background-color","rgb(85, 85, 85)").attr("disabled", true);
+    	                let outTime = new Date(new Date() * 1 + 3600000 * 9).toISOString().replace("T", " ").replace(/\..*/, "");
+    	                $(".outTime").text(outTime);
+    	                $(".out-button").css("color", "gray").css("background-color","rgb(85, 85, 85)").attr("disabled", true);
     	
-    	                /*경과시간 계산*/
-    	                let diff = (endTime - strTime);
-    	                var hh = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    	                var mm = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    	                var ss = Math.ceil((diff % (1000 * 60)) / 1000);
-    	
-    	                var diffResult = hh + "h " + mm + "m " + ss + "s ";
-    	
-    	                $("#sum-time").text(diffResult);
-    	
-    	
+    	                
     	            }
                 </script>
             </div>
@@ -323,7 +309,7 @@
                     </table>
             </div>
         </div>
-    </div>
+    
 
 
 </body>

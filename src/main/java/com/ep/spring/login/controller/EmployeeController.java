@@ -245,11 +245,7 @@ public class EmployeeController {
 		
 	}
 	
-	//근태관리 메인페이지(일반사용자)
-	@RequestMapping("commute.ep")
-	public String commuteMainForm() {
-		return "commute/commuteMain";
-	}
+	
 	
 
 }
