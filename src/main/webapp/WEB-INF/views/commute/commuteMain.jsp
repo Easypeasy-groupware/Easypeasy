@@ -170,13 +170,34 @@
                 <h1 id="clock" style="color:black;">clock</h1>
 
                 <div class="start">출근시각 <br>
-                    <div class="inTime"></div>
+                    <div class="inTime">
+                    <c:if test="${ not empty c.startTime }">
+                    	${ c.startTime }
+                    </c:if>
+                    </div>
                     <br><button class="in-button" onclick="inTime();" style="background-color: rgb(214, 223, 204); width: 150px; height: 40px;">출근하기</button>
                 </div>
-                
+                <script>
+	                $(function(){
+	         			
+	                	//출근시간등록이 되어 있을 시 버튼 비활성화
+	                	if($(".inTime").html().trim().length != 0){
+	                		$(".in-button").css("background-color", "rgb(93, 104, 83)").attr("disabled", true);
+	                	} 
+	                	
+	                	//퇴근시간등록이 되어 있을 시 버튼 비활성화
+	                	if($(".outTime").html().trim().length != 0){
+	                		$(".out-button").css("background-color", "rgb(93, 104, 83)").attr("disabled", true);
+	                	}
+	                })
+                </script>
 
                 <div class="end">퇴근시각 <br>
-                    <div class="outTime"></div>
+                    <div class="outTime">
+                    <c:if test="${ not empty c.endTime }">
+                    	${ c.endTime }
+                    </c:if>
+                    </div>
                     <br><button class="out-button" onclick="outTime();" style="width: 150px; height: 40px;">퇴근하기</button>
                 </div>
                 
@@ -222,7 +243,7 @@
                     	
                     	let inTime = h+":"+m+":"+s;
     	                
-    	                location.href="inTime.co?time="+inTime;
+    	                //location.href="inTime.co?time="+inTime;
     	                
     	                $(".inTime").text(inTime);
     	                $(".in-button").css("color", "gray").css("background-color", "rgb(93, 104, 83)").attr("disabled", true);

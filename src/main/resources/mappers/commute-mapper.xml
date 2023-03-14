@@ -4,9 +4,35 @@
 "mybatis-3-mapper.dtd" >
 <mapper namespace="commuteMapper">
 
+	<resultMap type="Commute" id="commuteResult">
+		<id column="com_code" property="comCode" />
+		<result column="emp_no" property="empNo" />
+		<result column="enroll_date" property="enrollDate" />
+		<result column="start_time" property="startTime" />
+		<result column="end_time" property="endTime" />
+		<result column="work_time" property="workTime" />
+		<result column="com_status" property="comStatus" />
+	</resultMap>
+
 
 	<insert id="inTime">
 		
 	</insert>
+	
+	<select id="commuteMainPage" resultMap="commuteResult">
+	
+		select
+			   com_code
+			 , emp_no
+			 , enroll_date
+			 , start_time
+			 , end_time
+			 , work_time
+			 , com_status
+		  from commute
+		 where emp_no = #{empNo}
+		 
+		
+	</select>
 
 </mapper>

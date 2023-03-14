@@ -15,11 +15,18 @@ public class CommuteServiceImpl implements CommuteService{
 	@Autowired
 	private CommuteDao cDao;
 	
-	
+	//출근하기 등록
 	@Override
 	public int inTime(Commute c) {
 		
 		return 0;
+	}
+
+	//근태관리 메인페이지
+	@Override
+	public Commute commuteMainPage(int empNo) {
+		
+		return cDao.commuteMainPage(sqlSession, empNo);
 	}
 	
 	
