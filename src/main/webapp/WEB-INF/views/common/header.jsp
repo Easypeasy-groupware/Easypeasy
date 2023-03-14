@@ -137,7 +137,7 @@
                         <img src="resources/common_images/note.png" width="30px" class="sub-image">
                     </a>
         
-                    <a href="#" class="share-button logout-btn">
+                    <a href="logout.ep" class="share-button logout-btn">
                         <img src="resources/common_images/logout-door.png" width="28px" class="sub-image">
                     </a>
                 </div>
