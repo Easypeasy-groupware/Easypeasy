@@ -419,8 +419,10 @@
 	    						selectReplyList();
 	    					}
 	    					
-	    				}, error: function(){
+	    				}, error: function(request, status, error ){
 	    					console.log("댓글 작성용 ajax 통신실패");
+	    					alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+
 	    				}
 	    			});
 	    			
@@ -456,7 +458,7 @@
 		    					  		+ "<br><br>"
 		    					  	    + list[i].content;
 			    					  		if(${loginUser.empNo} == list[i].writerNo){
-			    					  			value +="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='' >수정 </a>" +  "|" + "<a href=''>삭제</a>";
+			    					  			value +="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onclick='deleteReply("+ list[i].replyNo +");' href=''>삭제</a>";
 			    					  		}
 			    				  value += "</tr>";
 		    				}
@@ -472,6 +474,32 @@
 	    		})
 	    		
 	    	}
+	    	
+	    	function deleteReply(a){
+	    		
+	    		var con = confirm("댓글을 삭제하시겠습니까?");
+	    		
+	    		if(con){
+		    		$.ajax({
+		    			url:"rdelete.ap",
+		    			data : {no:a},
+		    			success:function(result){
+		    				
+	    					if(result == "success"){
+	    						alert("성공적으로 삭제되었습니다.");
+	    						selectReplyList();
+	    					}		    				
+		    				
+		    			}, error:function(){
+	    					console.log("댓글 작성용 ajax 통신실패");
+	    					alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+		    				
+		    			}
+		    		});
+	    		}
+	    	}
+	    	
+	    	
    	</script>
 
     <!-- 결재하는 모달 -->
