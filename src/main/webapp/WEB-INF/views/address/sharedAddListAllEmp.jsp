@@ -16,24 +16,21 @@
     .content-outer{width:1000px; padding-left:10px; margin-left:200px; padding-top:20px;}
     .content-outer *{box-sizing: border-box;}
     
-    #address-group{font-size:20px; font-weight:600;}
+    #address-group{font-size:20px; font-weight:600; display:inline-block;}
     #group-name{color:rgb(96, 96, 96); font-size:16px; font-weight:600;}
 
     /*검색*/
     #searchKey{width:200px; height:25px; border:1px solid gray; border-radius:5px;}
     #searchBtn{width:50px; height:25px; border:0; border-radius:5px; background: rgb(166, 184, 145); color:white;}
 
-    /*연락처 추가*/
-    .newAdd{width:120px; height:25px; border:1px solid gray; border-radius:5px;}
-    .addBtn{width:80px; height:25px; border:0; border-radius:5px;}
-    #addBtn1{background: rgb(127, 127, 127); color:white;}
-    #addBtn2{background: rgb(166, 184, 145); color:white;}
+
 
     /*주소록 리스트 헤더*/
     .btnGroup{width:80px; height:25px; border:0; border-radius:5px; margin-bottom:10px; color:white;}
     .btnGroup:hover{cursor: pointer; font-weight:600;}
     #sendMail{background: rgb(77, 88, 64);}
 
+	.subheading{display:inline-block; margin-left:850px;}
 
     /*주소록 리스트 테이블*/
     #addList{
@@ -59,28 +56,23 @@
 	<jsp:include page="addMenubar.jsp" />
 	
     <div class="content-outer">
-
-        <p id="address-group">공유주소록</p>
-        <p id="group-name">사내주소록(전체)</p>
-
-
-        <div class="search" align="right">
+    
+		<div class="search" align="right" style="float:right">
             <input type="text" id="searchKey" placeholder="이름, 회사, 전화번호">
             <button id="searchBtn">검색</button>
         </div>
+        
+        <p id="address-group">공유주소록</p>
+        
 
-        <div class="addNew">
-            <input type="text" class="newAdd" placeholder="이름">
-            <input type="text" class="newAdd" placeholder="이메일">
-            <input type="text" class="newAdd" placeholder="휴대폰">
-            <button class="addBtn" id="addBtn1">추가정보</button>
-            <button class="addBtn" id="addBtn2">추가</button>
-        </div>
+        
+        <p id="group-name">사내주소록(전체)</p>
 
-        <br><br>
-        <p class="subheading" id="psSubheading">사내주소록 총 <b>${ count }</b>명</p>
+
 		
-        <button class="btnGroup" id="sendMail">메일쓰기</button>
+        <button class="btnGroup" id="sendMail">메일쓰기</button> 
+        
+        <p class="subheading" id="psSubheading">총 <b>${ count }</b>명</p>
 
         <br>
 

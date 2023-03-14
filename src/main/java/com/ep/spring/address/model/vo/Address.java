@@ -14,13 +14,13 @@ import lombok.ToString;
 public class Address {
 	
 	private int addNo;
-	private String addWriter;
+	private String empNo;
 	private String addType;
 	private String addName;
 	private String email;
 	private String phone;
 	private String addEmp;
-	private String addEdpt;
+	private String addDept;
 	private String addJob;
 	private int groupNo;
 	private String empPhone;
@@ -30,8 +30,10 @@ public class Address {
 	private String modifyDate;
 	private String deleteDate;
 	private String addBin;
+	private String editable;
 	
 	private String addProfile;
+	private AddGroup group;
 	
 
 }

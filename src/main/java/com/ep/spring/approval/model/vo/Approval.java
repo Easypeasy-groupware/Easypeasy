@@ -31,5 +31,6 @@ public class Approval {
 	private String originName;
 	private int count;
 	private String updateDate;
+	private String jobCode;
 
 }

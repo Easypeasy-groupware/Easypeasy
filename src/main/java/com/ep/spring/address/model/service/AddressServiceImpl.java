@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.ep.spring.address.model.dao.AddressDao;
 import com.ep.spring.address.model.vo.AddDept;
+import com.ep.spring.address.model.vo.AddFavorite;
 import com.ep.spring.address.model.vo.AddGroup;
+import com.ep.spring.address.model.vo.Address;
 import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.login.model.vo.Employee;
 
@@ -33,6 +35,16 @@ public class AddressServiceImpl implements AddressService {
 	}
 	
 	@Override
+	public int insertPersonalAdd(Address a) {
+		return aDao.insertPersonalAdd(sqlSession, a);
+	}
+	
+	@Override
+	public int insertSharedAdd(Address a) {
+		return aDao.insertSharedAdd(sqlSession, a);
+	}
+	
+	@Override
 	public int selectEntEmpListCount(int no) {
 		return aDao.selectEntEmpListCount(sqlSession, no);
 	}
@@ -43,7 +55,7 @@ public class AddressServiceImpl implements AddressService {
 	}
 	
 	@Override
-	public ArrayList<Employee> selectEmpFavList(int no) {
+	public ArrayList<AddFavorite> selectEmpFavList(int no) {
 		return aDao.selectEmpFavList(sqlSession, no);
 	}
 	
@@ -61,6 +73,25 @@ public class AddressServiceImpl implements AddressService {
 	public Employee selectEmpAddDetail(int no) {
 		return aDao.selectEmpAddDetail(sqlSession, no);
 	}
+
+	@Override
+	public int selectPsAllAddListCount(int empNo) {
+		return aDao.selectPsAllAddListCount(sqlSession, empNo);
+	}
+
+	@Override
+	public ArrayList<Address> selectPsAllAddList(PageInfo pi, int empNo) {
+		return aDao.selectPsAllAddList(sqlSession, pi, empNo);
+	}
+
+	@Override
+	public ArrayList<AddFavorite> selectPsFavList(int empNo) {
+		return aDao.selectPsFavList(sqlSession, empNo);
+	}
+
+
+
+
 
 	
 

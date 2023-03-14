@@ -227,7 +227,7 @@
 		   
 		         <div class="modal-body" align="center">
 		           <form action="updatePwd.ep" method="post">
-		              <input type="hidden" name="userId" value="${ loginUser.empId }">
+		              <input type="hidden" name="empId" value="${ loginUser.empId }">
 		              <table>
 		                 <tr>
 		                    <td>현재 비밀번호</td>

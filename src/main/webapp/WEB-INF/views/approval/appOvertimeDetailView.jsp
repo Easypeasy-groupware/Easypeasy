@@ -45,7 +45,7 @@
     <jsp:include page="../common/header.jsp"/>
     <jsp:include page="appMenubar.jsp" />
     <div class="form-outer">
-        <div class="left-outer">
+        <div class="left-outer" style=" border-right:1px solid gray;">
             <div class="left-form1">
                 <p><b style="font-size:30px;">연장근무 신청서</b></p>
             </div>
@@ -179,7 +179,7 @@
                 <br>
             </div>
         </div>
-        <div class="right-outer" style="padding-left:20px; border-left:1px solid gray;">
+        <div class="right-outer" style="padding-left:20px;">
             <br>
             <div style="text-align:center; padding:20px; font-size:20px;">
                  <p><b> 결재선</b></p>

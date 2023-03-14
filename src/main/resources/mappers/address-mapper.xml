@@ -11,13 +11,13 @@
 	
 	<resultMap id="addressResult" type="Address">
 		<id column="add_no" property="addNo" />
-		<result column="emp_no" property="addWriter" />
+		<result column="emp_no" property="empNo" />
 		<result column="add_type" property="addType" />
 		<result column="add_name" property="addName" />
 		<result column="email" property="email" />
 		<result column="phone" property="phone" />
 		<result column="add_emp" property="addEmp" />
-		<result column="add_dept" property="addEdpt" />
+		<result column="add_dept" property="addDept" />
 		<result column="add_job" property="addJob" />
 		<result column="group_no" property="groupNo" />
 		<result column="emp_phone" property="empPhone" />
@@ -27,7 +27,8 @@
 		<result column="modify_date" property="modifyDate" />
 		<result column="delete_date" property="deleteDate" />
 		<result column="add_bin" property="addBin" />
-		<result column="add_profile" property="addProfile"/>
+		<result column="editable" property="editable"/>
+		<association property="group" resultMap="addGroupResult"/>
 	</resultMap>
 	
 	
@@ -60,7 +61,6 @@
 	
 	
 	
-	
 	<select id="selectPersonalAddGroup" resultMap="addGroupResult">
 		select
 		       group_no
@@ -83,6 +83,49 @@
 		  from add_group
          where add_type = 'S'
 	</select>
+	
+	<insert id="insertPersonalAdd">
+		insert
+		  into address
+		     ( 
+		       ADD_NO
+			 , EMP_NO
+			 , ADD_TYPE
+			 , ADD_NAME
+			 , EMAIL
+			 , PHONE
+			 , ADD_EMP
+			 , ADD_DEPT
+			 , ADD_JOB
+			 , GROUP_NO
+			 , EMP_PHONE
+			 , EMP_ADDRESS
+			 , MEMO
+			 , CREATE_DATE
+		     )
+		values
+			 (
+			   seq_addno.nextval
+			 , #{empNo}
+			 , 'P'
+			 , #{addName}
+			 , #{email}
+			 , #{phone}
+			 , #{addEmp}
+			 , #{addDept}
+			 , #{addJob}
+			 , #{groupNo}
+			 , #{empPhone}
+			 , #{empAddress}
+			 , #{memo}
+			 , sysdate
+			 )
+	</insert>
+	
+	<insert id="insertSharedAdd">
+		
+	</insert>
+	
 	
 	<select id="selectEntEmpListCount" resultType="_int">
 		select
@@ -109,7 +152,7 @@
 		   and e.emp_no != #{no}
 	</select>
 	
-	<select id="selectEmpFavList" resultMap="empResult">
+	<select id="selectEmpFavList" resultMap="addFavoriteResult">
 		SELECT add_emp_no
 		  FROM ADD_FAV
 		 WHERE EMP_NO = #{no}
@@ -179,7 +222,47 @@
 	  )
 	</insert>
 
-
+	<select id="selectPsAllAddListCount" resultType="_int">
+		select
+		       count(*)
+		  from address
+		 where emp_no = #{empNo}
+	</select>
+	
+	<select id="selectPsAllAddList" resultMap="addressResult">
+	   select
+		       ADD_NO
+		     , a.EMP_NO
+		     , a.ADD_TYPE
+		     , ADD_NAME
+		     , EMAIL
+		     , PHONE
+		     , ADD_EMP
+		     , ADD_DEPT
+		     , ADD_JOB
+		     , a.GROUP_NO
+		     , GROUP_NAME
+		     , EMP_PHONE
+		     , EMP_ADDRESS
+		     , MEMO
+		     , CREATE_DATE
+		     , MODIFY_DATE
+		     , DELETE_DATE
+		     , ADD_BIN
+		     , EDITABLE
+		 from address a
+         join add_group g on (a.group_no = g.group_no)
+		 where a.emp_no = #{empNo}
+		   and a.add_type = 'P'
+		   and add_bin = 'N'
+	</select>
+	
+	<select id="selectPsFavList" resultMap="addFavoriteResult">
+		select
+		       add_no
+		  from add_fav
+		 where emp_no = #{empNo}
+	</select>
 
 
 

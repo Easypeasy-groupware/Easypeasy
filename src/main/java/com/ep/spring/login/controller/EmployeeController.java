@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ep.spring.address.model.service.AddressService;
 import com.ep.spring.address.model.vo.AddGroup;
+import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.common.template.FileUpload;
 import com.ep.spring.login.model.service.EmployeeService;
 import com.ep.spring.login.model.vo.Employee;
@@ -42,7 +43,7 @@ public class EmployeeController {
 		ArrayList<AddGroup> sharedGroup = aService.selectSharedAddGroup();
 		
 		
-		
+		/*
 		if(loginUser == null) {//로그인실패
 			session.setAttribute("alertMsg", "로그인에 실패했습니다. 다시 시도 해주세요.");
 			return "redirect:/";
@@ -60,8 +61,9 @@ public class EmployeeController {
 			
 			return "common/main";
 		}
+		*/
 			
-		/*
+		
 		if(loginUser != null && bcryptPasswordEncoder.matches(e.getEmpPwd(), loginUser.getEmpPwd())) { // 성공
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("pList", userGroup); //로그인한 사원의 주소록 그룹리스트 세션에 저장
@@ -71,7 +73,7 @@ public class EmployeeController {
 			session.setAttribute("alertMsg", "로그인에 실패했습니다. 다시 시도 해주세요.");
 			return "redirect:/";
 		}
-		*/
+		
 		
 	}
 	
@@ -186,9 +188,12 @@ public class EmployeeController {
 	public String updatePwd(String empPwd, String updatePwd, String empId, HttpSession session, Employee e) {
 		
 		//비번 일치 확인
-				//입력한 비번 : userPwd
+				//입력한 비번 : empPwd
 				//조회된 비번 : encPwd
 				String encPwd = ((Employee)session.getAttribute("loginUser")).getEmpPwd();
+				
+				//System.out.println(encPwd);
+				//System.out.println(empPwd);
 				
 				if(bcryptPasswordEncoder.matches(empPwd, encPwd)) {//비번일치
 					//바꿀 비번 암호화
@@ -196,28 +201,35 @@ public class EmployeeController {
 					e.setEmpPwd(encPwd2);
 					e.setEmpId(empId);
 					
-					System.out.println(encPwd2);
+					//System.out.println(encPwd2);
 					
 					int result = eService.updatePwd(e);
 					
+				
 					if(result>0) {//변경성공
 						
 						Employee updateUser = eService.loginEmployee(e);
 						session.setAttribute("loginUser", updateUser);
-						session.setAttribute("alertMsg", "비밀번호 변경이 완료되었습니다");
+						
+						AlertMsg msg = new AlertMsg("비밀번호 변경", "비밀번호 변경이 완료되었습니다.");
+						session.setAttribute("successMsg", msg);
+						
+						
 						
 						return "redirect:myPage.ep";
 						
 					}else {//변경실패
 						
-						session.setAttribute("alertMsg", "비밀번호 변경을 실패하였습니다");
+						AlertMsg msg = new AlertMsg("비밀번호 변경", "비밀번호 변경 실패");
+						session.setAttribute("failMsg", msg);
 						return "redirect:myPage.ep";
 						
 					}
 					
 					
 				}else {//비번틀림
-					session.setAttribute("alertMsg", "비밀번호를 잘못 입력하셨습니다");
+					AlertMsg msg = new AlertMsg("비밀번호 변경", "비밀번호를 잘못 입력하셨습니다.");
+					session.setAttribute("failMsg", msg);
 					return "redirect:myPage.ep";
 				}
 	}
@@ -245,11 +257,7 @@ public class EmployeeController {
 		
 	}
 	
-	//근태관리 메인페이지(일반사용자)
-	@RequestMapping("commute.ep")
-	public String commuteMainForm() {
-		return "commute/commuteMain";
-	}
+	
 	
 
 }

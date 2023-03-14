@@ -7,10 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    .outer{
-        width: 1200px;
-        margin: auto;
-    }
+
     .side{
         width: 200px;
         height: 900px;
@@ -30,6 +27,7 @@
         height: 900px;
         box-sizing: none;
         float: left;
+        margin-left:10px;
     }
     .content1{
         width: 490px;
@@ -89,6 +87,16 @@
         padding: 20px;
         font-size: 14px;
     }
+    .in-button{
+        width: 100px;
+        height: 30px;
+        border: none;
+    }
+    .out-button{
+        width: 100px;
+        height: 30px;
+        border: none;
+    }
     .button{
         width: 100px;
         height: 30px;
@@ -143,10 +151,12 @@
 </head>
 <body>
 
+	<jsp:include page="../common/header.jsp"/>
+	
 
-	    <div class="outer">
+	    
 
-        <div class="side">사이드바</div>
+        <div class="side"><jsp:include page="../commute/commuteSidebar.jsp"/></div>
         <div class="allContent">
             <div class="title"><b>나의 근무 정보</b><hr></div>
             
@@ -160,18 +170,24 @@
                 <h1 id="clock" style="color:black;">clock</h1>
 
                 <div class="start">출근시각 <br>
-                    08:55:14
-                    <br><button class="button" style="background-color: rgb(214, 223, 204); width: 150px; height: 40px;">출근하기</button>
+                    <div class="inTime"></div>
+                    <br><button class="in-button" onclick="inTime();" style="background-color: rgb(214, 223, 204); width: 150px; height: 40px;">출근하기</button>
                 </div>
                 
 
                 <div class="end">퇴근시각 <br>
-                    18:00:40
-                    <br><button class="button" style="width: 150px; height: 40px;">퇴근하기</button>
+                    <div class="outTime"></div>
+                    <br><button class="out-button" onclick="outTime();" style="width: 150px; height: 40px;">퇴근하기</button>
                 </div>
                 
     
                 <script>
+                
+	                let h = "";
+		            let m = "";
+		            let s = "";
+	            
+                	//현재 날짜 시간 출력
                     var Target = document.getElementById("clock");
                     function clock() {
                         var time = new Date();
@@ -194,6 +210,40 @@
                     }
                     clock();
                     setInterval(clock, 1000); // 1초마다 실행
+                    
+                    
+                    //출근하기 버튼 클릭
+                    function inTime(){
+                    	const a = new Date(); 
+
+                    	let h = a.getHours();
+                    	let m = a.getMinutes(); 
+                    	let s = a.getSeconds(); 
+                    	
+                    	let inTime = h+":"+m+":"+s;
+    	                
+    	                location.href="inTime.co?time="+inTime;
+    	                
+    	                $(".inTime").text(inTime);
+    	                $(".in-button").css("color", "gray").css("background-color", "rgb(93, 104, 83)").attr("disabled", true);
+    	            }
+                    
+                    //퇴근하기 버튼 클릭
+    	            function outTime(){
+    	
+    	            	const a = new Date(); 
+
+                    	let h = a.getHours();
+                    	let m = a.getMinutes(); 
+                    	let s = a.getSeconds(); 
+                    	
+                    	let outTime = h+":"+m+":"+s;
+    	               
+    	                $(".outTime").text(outTime);
+    	                $(".out-button").css("color", "gray").css("background-color","rgb(85, 85, 85)").attr("disabled", true);
+    	
+    	                
+    	            }
                 </script>
             </div>
             <div class="content2">
@@ -270,7 +320,7 @@
                     </table>
             </div>
         </div>
-    </div>
+    
 
 
 </body>
