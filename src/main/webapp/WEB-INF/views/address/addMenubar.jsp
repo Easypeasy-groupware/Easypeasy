@@ -73,7 +73,7 @@
         </div>
 
         <div class="menu-btn">
-            <a href="newPs.add" id="menu-add-btn">연락처 추가</a>
+            <a href="newPsForm.add" id="menu-add-btn">연락처 추가</a>
         </div>
 
         <div class="menu-like">
@@ -143,9 +143,11 @@
         
        <br>
        
-        <div class="menu-type menu-list">
-        	<a href="#" class="menu-a"><img src="resources/common_images/admin-setting.png" style="width:15px; color:orange;"> <b> 그룹 관리 </b></a>
-        </div>
+       <c:if test="${ loginUser.deptCode eq 'D1' }">
+	        <div class="menu-type menu-list">
+	        	<a href="#" class="menu-a"><img src="resources/common_images/admin-setting.png" style="width:15px; color:orange;"> <b> 주소록 관리 </b></a>
+	        </div>
+        </c:if>
     </div>
     
     <script>

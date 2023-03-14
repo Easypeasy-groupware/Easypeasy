@@ -12,7 +12,11 @@
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css'>
 
 <!-- Alertify JavaScript -->
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<!-- <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script> -->
+
+<!-- SweetAlert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <!-- CSS -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
 
@@ -87,11 +91,18 @@
 <body>
 
 	
-	<c:if test="${ not empty alertMsg }">
+	<c:if test="${ not empty successMsg }">
 		<script>
-			alertify.alert('${alertMsg}');
+			swal('${successMsg.title}', "${successMsg.content}", "success");
 		</script>
-		<c:remove var="alertMsg" scope="session"/>
+		<c:remove var="successMsg" scope="session"/>
+	</c:if>
+	
+	<c:if test="${ not empty failMsg }">
+		<script>
+			swal('${failMsg.title}', "${failMsg.content}", "error");
+		</script>
+		<c:remove var="failMsg" scope="session"/>
 	</c:if>
 	 
 	

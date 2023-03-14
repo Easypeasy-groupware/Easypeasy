@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +20,7 @@
 
     /*테이블*/
     .input-table{
-        margin:auto; 
+        margin-top:20px; margin-left:50px; 
         border-collapse: separate; border-spacing:0px 10px; /*셀간격*/
     }
     .tb-input{
@@ -62,15 +63,16 @@
 
         <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">개인</a>
+              <a class="nav-link active" aria-current="page" href="createNewPs.add">개인</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">공용</a>
+              <a class="nav-link" href="newShForm.add">공용</a>
             </li>
         </ul>
 
         <br>
-        <form action="">
+        <form action="insertNewPs.add">
+        	<input type="hidden" name="empNo" value="${ loginUser.empNo }">
             <table class="input-table">
                 <colgroup>
                     <col style="width:150px;">
@@ -80,49 +82,49 @@
                 <tr>
                     <td>이름</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input" required>
+                        <input type="text" class="tb-input" name="addName" required>
                     </td>
                 </tr>
                 <tr>
                     <td>회사</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input">
+                        <input type="text" class="tb-input" name="addEmp">
                     </td>
                 </tr>
                 <tr>
                     <td>부서</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input">
+                        <input type="text" class="tb-input" name="addDept">
                     </td>
                 </tr>
                 <tr>
                     <td>직위</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input">
+                        <input type="text" class="tb-input" name="addJob">
                     </td>
                 </tr>
                 <tr>
                     <td>이메일</td>
                     <td colspan="2">
-                        <input type="email" class="tb-input">
+                        <input type="email" class="tb-input" name="email">
                     </td>
                 </tr>
                 <tr>
                     <td>휴대폰</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input">
+                        <input type="text" class="tb-input" name="phone">
                     </td>
                 </tr>
                 <tr>
                     <td>그룹</td>
                     <td>
-                        <select class="td-select">
-                            <option>선택안함</option>
-                            <c:if test="${ not empty pList }">
-	                            <c:forEach var="p" items="${ pList }">
-					        		<option> ${ p.groupName } </option>
-					        	</c:forEach>
-				        	</c:if>				        	
+                        <select class="td-select" name="groupNo">
+                            <option value="">선택안함</option>
+
+                            <c:forEach var="p" items="${ pList }">
+				        		<option value="${ p.groupNo }"> ${ p.groupName } </option>
+				        	</c:forEach>
+			        	
                         </select>
                     </td>
                     <td>
@@ -132,19 +134,19 @@
                 <tr>
                     <td>회사전화</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input">
+                        <input type="text" class="tb-input" name="empPhone">
                     </td>
                 </tr>
                 <tr>
                     <td>회사주소</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input" style="width:100%;">
+                        <input type="text" class="tb-input" style="width:100%;" name="empAddress">
                     </td>
                 </tr>
                 <tr>
                     <td>메모</td>
                     <td colspan="2">
-                        <textarea class="td-textarea" rows="4" style="resize:none; width:100%">
+                        <textarea class="td-textarea" rows="4" style="resize:none; width:100%" name="memo">
 
                         </textarea>
                     </td>
