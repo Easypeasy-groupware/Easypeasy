@@ -17,5 +17,8 @@ public class ApprovalReply {
 	private String status;
 	private int appNo;
 	private int writerNo;
+	private String writerName;
+	private String deptName;
+	private String jobCode;
 
 }

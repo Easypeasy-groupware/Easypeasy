@@ -21,4 +21,7 @@ public class ApprovalLine {
 	private String appComment;
 	private String enrollDate;
 	private int count;
+	private String empName;
+	private String deptName;
+	private String jobCode;
 }

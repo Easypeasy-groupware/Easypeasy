@@ -30,6 +30,8 @@
 		<typeAlias type="com.ep.spring.board.model.vo.BoardCate" alias="BoardCate" />
 		<typeAlias type="com.ep.spring.board.model.vo.BoardReply" alias="BoardReply" />
 		<typeAlias type="com.ep.spring.dataBoard.model.vo.DataBoard" alias="DataBoard" />
+		<typeAlias type="com.ep.spring.reservation.model.vo.Reservation" alias="Reservation" />
+		<typeAlias type="com.ep.spring.reservation.model.vo.Resource" alias="Resource" />
 		<typeAlias type="com.ep.spring.commute.model.vo.Commute" alias="Commute" />
 	</typeAliases>
 	<!-- 유의사항 : 미리등록해두려면 해당 클래스가 진짜 존재해야됨 -->
@@ -38,6 +40,7 @@
 	
 	<mappers>
 		<mapper resource="/mappers/address-mapper.xml"/>
+		
 		<mapper resource="/mappers/approval-mapper.xml"/>
 		<mapper resource="/mappers/chat-mapper.xml"/>
 		<mapper resource="/mappers/mail-mapper.xml"/>
@@ -47,6 +50,7 @@
 		<mapper resource="/mappers/board-mapper.xml"/>
 		<mapper resource="/mappers/dataBoard-mapper.xml"/>
 		<mapper resource="/mappers/organization-mapper.xml"/>
+		<mapper resource="/mappers/reservation-mapper.xml"/>
 		<mapper resource="/mappers/commute-mapper.xml"/>
 	</mappers>
 	<!-- 유의사항 : 미리등록해두려면 해당 mapper파일이 진짜 존재해야됨, namespace도 지정되어있어야됨 -->

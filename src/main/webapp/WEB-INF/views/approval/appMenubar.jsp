@@ -18,17 +18,17 @@
         float:left;
         box-sizing:border-box;
         width:200px;
-        height:2000px;
-        border:1px solid gray;
+        height:1000px;
+        border-right: 2px solid rgb(185, 187, 221);
        }
        .app-menu{
         padding-left:0;
         list-style-type:none;
        }
-       .app-menu>li{
+       .app-menu-1>li{
         padding:5px;
-        text-align:center;
-        
+        text-align:left;
+        padding-left:30px;
        }
        .app-menu a{
         text-decoration:none;
@@ -39,6 +39,17 @@
         display: flex;
         align-items: center;
        }
+
+       /* 새 결재진행 버튼 */
+       .menu-title{margin:20px 0 20px 0; text-align:center; }
+        #title>a{font-size:20px; font-weight:600; color:rgb(93, 109, 75);}
+        #title>a:hover{color:rgb(58, 69, 47); text-decoration:none;}
+
+        /*연락처추가버튼*/
+        #newBtn{width:70%; height:35px; margin:auto; margin-bottom:15px; padding:5px 0 5px 0; background-color: rgb(142, 161, 122); border-radius:4px; text-align:center;
+        color:white; text-decoration:none;}
+        #newBtn:hover{background-color: rgb(93, 105, 81);}
+
        .selectForm>div{width:50%; float:left;}
         .appLine>div{float:left;}
         .appLine1, .appLine2{width:50%;}
@@ -113,10 +124,12 @@
     <div class="wrap-1" align="center">
         <div class="area" >
             <div class="menubar">
-                <br><br>
+               
                 <ul class="app-menu">
-                    <li><button type="button" class="btn btn-outline-secondary btn-lg" data-toggle="modal" data-target="#newApp">새 결재 진행</button></li>
+                    <li id="title" class="menu-title" style="text-align:center;"><a href="main.ap"> 전자결재</a></li>
+                    <li style="text-align:center;" class="menu-title"><button type="button"  class="btn btn-outline-secondary" id="newBtn"  data-toggle="modal" data-target="#newApp">새 결재 진행</button></li>
                     <br>
+                    <div class="app-menu-1">
                     <li><a href="recWlist.ap">결재 대기문서</a></li>
                     <li><a href="refWlist.ap">참조 대기문서</a></li>
                     <br>
@@ -129,6 +142,7 @@
                     <li><b>부서</b></li>
                     <li><a href="dSendList.ap">기안완료함</a></li>
                     <li><a href="dRefList.ap">부서참조함</a></li>
+                    </div>
                     <br><br>
                 </ul>
             </div>

@@ -7,11 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    .outer{
-        width: 1200px;
-        margin: auto;
-        
-    }
+
     .side{
         width: 200px;
         height: 900px;
@@ -158,7 +154,7 @@
 	<jsp:include page="../common/header.jsp"/>
 	
 
-	    <div class="outer">
+	    
 
         <div class="side"><jsp:include page="../commute/commuteSidebar.jsp"/></div>
         <div class="allContent">
@@ -174,13 +170,34 @@
                 <h1 id="clock" style="color:black;">clock</h1>
 
                 <div class="start">출근시각 <br>
-                    <div class="inTime"></div>
+                    <div class="inTime">
+                    <c:if test="${ not empty c.startTime }">
+                    	${ c.startTime }
+                    </c:if>
+                    </div>
                     <br><button class="in-button" onclick="inTime();" style="background-color: rgb(214, 223, 204); width: 150px; height: 40px;">출근하기</button>
                 </div>
-                
+                <script>
+	                $(function(){
+	         			
+	                	//출근시간등록이 되어 있을 시 버튼 비활성화
+	                	if($(".inTime").html().trim().length != 0){
+	                		$(".in-button").css("background-color", "rgb(93, 104, 83)").attr("disabled", true);
+	                	} 
+	                	
+	                	//퇴근시간등록이 되어 있을 시 버튼 비활성화
+	                	if($(".outTime").html().trim().length != 0){
+	                		$(".out-button").css("background-color", "rgb(93, 104, 83)").attr("disabled", true);
+	                	}
+	                })
+                </script>
 
                 <div class="end">퇴근시각 <br>
-                    <div class="outTime"></div>
+                    <div class="outTime">
+                    <c:if test="${ not empty c.endTime }">
+                    	${ c.endTime }
+                    </c:if>
+                    </div>
                     <br><button class="out-button" onclick="outTime();" style="width: 150px; height: 40px;">퇴근하기</button>
                 </div>
                 
@@ -218,10 +235,16 @@
                     
                     //출근하기 버튼 클릭
                     function inTime(){
+                    	const a = new Date(); 
+
+                    	let h = a.getHours();
+                    	let m = a.getMinutes(); 
+                    	let s = a.getSeconds(); 
                     	
-    	                strTime = new Date(); /*경과시간계산용*/
-    	
-    	                let inTime = h + ":" + m + ":" + s;
+                    	let inTime = h+":"+m+":"+s;
+    	                
+    	                //location.href="inTime.co?time="+inTime;
+    	                
     	                $(".inTime").text(inTime);
     	                $(".in-button").css("color", "gray").css("background-color", "rgb(93, 104, 83)").attr("disabled", true);
     	            }
@@ -229,23 +252,18 @@
                     //퇴근하기 버튼 클릭
     	            function outTime(){
     	
-    	                endTime = new Date();/*경과시간계산용*/
+    	            	const a = new Date(); 
+
+                    	let h = a.getHours();
+                    	let m = a.getMinutes(); 
+                    	let s = a.getSeconds(); 
+                    	
+                    	let outTime = h+":"+m+":"+s;
+    	               
+    	                $(".outTime").text(outTime);
+    	                $(".out-button").css("color", "gray").css("background-color","rgb(85, 85, 85)").attr("disabled", true);
     	
-    	                let outTime = h + ":" + m + ":" + s;
-    	                $("outTime").text(outTime);
-    	                $("out-button").css("color", "gray").css("background-color","rgb(85, 85, 85)").attr("disabled", true);
-    	
-    	                /*경과시간 계산*/
-    	                let diff = (endTime - strTime);
-    	                var hh = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    	                var mm = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    	                var ss = Math.ceil((diff % (1000 * 60)) / 1000);
-    	
-    	                var diffResult = hh + "h " + mm + "m " + ss + "s ";
-    	
-    	                $("#sum-time").text(diffResult);
-    	
-    	
+    	                
     	            }
                 </script>
             </div>
@@ -323,7 +341,7 @@
                     </table>
             </div>
         </div>
-    </div>
+    
 
 
 </body>

@@ -209,16 +209,31 @@ public class ApprovalController {
 		ArrayList<ApprovalLine> list1 = aService.selectDetailSPrgAl(a);
 		ArrayList<ApprovalReply> list2 = aService.selectDetailSPrgAr(a);
 		
+		
+		model.addAttribute("ap", ap);
+		model.addAttribute("list1", list1);
+		model.addAttribute("list2", list2);
+
 		if(a.getFormName().equals("업무기안")) {
+			
 			return "approval/appDraftDetailView";
+			
 		}else if(a.getFormName().equals("일반품의서")) {
+			
 			return"approval/appProposalDetailView";
+			
 		}else if(a.getFormName().equals("휴가신청서")) {
+			
 			VacationForm vf = aService.selectDetailSPrgVf(a);
+			model.addAttribute("vf", vf);
 			return"approval/appVacationDetailView";
+			
 		}else if(a.getFormName().equals("연장근무신청서")) {
+			
 			OverTimeForm ot = aService.selectDetailSPrgOt(a);
+			model.addAttribute("ot",ot);
 			return"approval/appOvertimeDetailView";
+			
 		}else {
 			session.setAttribute("alertMsg", "페이지 요청에 실패했습니다.");
 			return"redirect:main.ap";
