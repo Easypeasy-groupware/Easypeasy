@@ -1,5 +1,7 @@
 package com.ep.spring.commute.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,12 +50,11 @@ public class CommuteController {
 		//출근시간 등록
 		@ResponseBody
 		@RequestMapping("inTime.co")
-		public String inTime(Commute c) {
-			
-			
+		public String inTime(Commute c) {			
+			System.out.println(c);
 			int result = cService.inTime(c);
 			
-			return result >0 ? "success" : "fail";
+			return result > 0 ? "success" : "fail";
 			
 		}
 		

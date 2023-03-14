@@ -15,13 +15,13 @@
 	</resultMap>
 
 
-	<insert id="inTime">
+	<update id="inTime">
 		update 
 			   commute
 		   set start_time = #{startTime}
 		 where emp_no = #{empNo}
-		   and enroll_date = sysdate
-	</insert>
+		   and enroll_date = #{enrollDate}
+	</update>
 	
 	<select id="commuteMainPage" resultMap="commuteResult">
 	
