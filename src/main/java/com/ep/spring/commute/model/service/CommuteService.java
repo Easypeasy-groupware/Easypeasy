@@ -9,5 +9,12 @@ public interface CommuteService {
 	
 	//출근등록 
 	int inTime(Commute c);
+	
+	//퇴근등록
+	int outTime(Commute c);
+	
+	//Employee상태변경(근무,회의,외출,외근)
+	int updateStatus(Commute c);
+	
 
 }

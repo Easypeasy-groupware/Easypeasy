@@ -23,6 +23,14 @@
 		   and enroll_date = #{enrollDate}
 	</update>
 	
+	<update id="outTime">
+		update 
+			   commute
+		   set end_time = #{endTime}
+		 where emp_no = #{empNo}
+		   and enroll_date = #{enrollDate}
+	</update>
+	
 	<select id="commuteMainPage" resultMap="commuteResult">
 	
 		select
@@ -38,5 +46,9 @@
 		 
 		
 	</select>
+	
+	<update id="updateStatus">
+		
+	</update>
 
 </mapper>

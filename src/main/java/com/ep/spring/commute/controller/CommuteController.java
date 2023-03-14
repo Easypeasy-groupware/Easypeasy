@@ -51,14 +51,25 @@ public class CommuteController {
 		@ResponseBody
 		@RequestMapping("inTime.co")
 		public String inTime(Commute c) {			
-			System.out.println(c);
-			int result = cService.inTime(c);
 			
-			return result > 0 ? "success" : "fail";
+			int result1 = cService.inTime(c);
+			
+			int result2 = cService.updateStatus(c);
+			
+			return result1 > 0 ? "success" : "fail";
 			
 		}
 		
-		
+		//퇴근시간 등록
+		@ResponseBody
+		@RequestMapping("outTime.co")
+		public String outTime(Commute c) {			
+					
+			int result = cService.outTime(c);
+					
+			return result > 0 ? "success" : "fail";
+					
+		}
 	
 
 }
