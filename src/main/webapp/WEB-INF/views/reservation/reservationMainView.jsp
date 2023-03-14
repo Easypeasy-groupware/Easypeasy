@@ -11,48 +11,36 @@
         box-sizing: border-box;
     }
     
-    .outer{
-        width: 1200px;
-        height: 1000px;
-        margin: auto;
-    }
-    
     #content{
-        border-left: 1px solid lightgray;
         width: 1000px;
         float: left;
         box-sizing: border-box;
     }
 
-    #sidebar{
-        width: 200px;
-        float: left;
+    #con-title h5{
+    	color:rgb(93, 109, 75);
         padding-left: 10px;
-        padding-top: 10px;
-    }
-    #sidebar a{
-        color: black;
-        text-decoration: none;
-    }
-
-    #title h5{
-        padding-left: 25px;
-        padding-top: 10px;
+        padding-top: 12px;
         display: inline-block;
     }
-    #title>select{
+    #con-title>select{
         width: 110px;
-        height: 28px;
-        margin-left: 720px;
+        height: 30px;
+        margin-left: 755px;
         display: inline-block;
     }
 
+	#content-1{
+		width: 990px;
+		padding-left: 10px;
+	}
     #content-1>h5{
-        margin-left: 25px;
+    	color:rgb(93, 109, 75);
+        margin-left: 5px;
         padding-top: 20px;
     }
     #content-1>table{
-        width: 950px;
+        width: 980px;
         text-align: center;
     }
 
@@ -104,7 +92,7 @@
     <jsp:include page="sidebar.jsp"/>
     
     <div id="content">
-        <div id="title">
+        <div id="con-title">
             <span>
                 <h5>자산 예약 현황</h5>
             </span>
@@ -114,9 +102,10 @@
             </select>
         </div>
         <br>
-        <div id="calendar" style="height: 200px;">
+        <div id="calendar" style="padding-left: 10px; width: 990px; height: 200px;">
             
         </div>
+		<br>
 
         <div id="content-1">
             <h5>
