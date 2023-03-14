@@ -37,6 +37,10 @@ public class OrgDao {
 	}
 	
 	
+	public Employee selectDetailForm(SqlSessionTemplate sqlSession, int no) {
+		return sqlSession.selectOne("organizationMapper.selectDetailForm", no);
+	}
+	
 	public int updateMember(SqlSessionTemplate sqlSession, Employee e) {
 		return sqlSession.insert("organizationMapper.updateMember", e);
 	}

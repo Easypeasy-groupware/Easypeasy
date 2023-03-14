@@ -11,27 +11,6 @@
     .wrapper { width: 1200px; margin: 0 auto;} /* 중앙 정렬을 위한 margin: 0 auto; */
     body {font-family: Arial, sans-serif; margin: 0; padding: 0;}
 
-    /* sidebar 스타일 */
-    .sidebar {
-       	top: 0;
-		left: 0;
-		width: 200px;
-		height: 100%;
-        float: left;
-    }
-    .menu {margin-top: 20px;}
-	.menu ul {list-style: none; padding: 0; margin: 0;}
-	.menu li {margin-bottom: 5px;}
-	.menu a {display: block; padding: 10px; color: #333; text-decoration: none; transition: background-color 0.3s ease-in-out;}
-	.menu a:hover {background-color: #f2f2f2;}
-	.submenu ul {list-style: none; padding: 0; margin: 0; display: none;}
-	.submenu li {margin-bottom: 5px;}
-	.submenu a {display: block; padding: 10px; color: #333; text-decoration: none; transition: background-color 0.3s ease-in-out;}
-	.submenu a:hover {background-color: #f2f2f2;}
-	.active {background-color: #f2f2f2;}
-	.collapse-indicator:after {content: " ∨";}
-	.submenu.active > .collapse-indicator:after {content: " ∧";}
-
     /* 게시판 스타일 */
     .board {width: 1000px;float: right;}
     .container {margin: 20px auto; width: 900px; border: 1px solid #ccc; padding: 20px;}
@@ -58,38 +37,9 @@
 	<jsp:include page="../common/header.jsp" />
 	
 	<div class="wrapper">
-        <div class="sidebar">
-          <!-- sidebar 내용 -->
-          <div class="sidebar">
-            <div class="topbtn">
-              <button type="button" class="btn btn-success">게시판 추가</button>
-            </div>
-            <div class="menu">
-              <ul>
-                <li><a href="#">전체 공지사항 <img src="../icon1.png" alt="" style="width: 25px;"></a></li>
-                <li><a href="#">식단표 <img src="../icon1.png" alt="" style="width: 25px;"></a></li>
-                            
-                <li><a href="#">자유게시판 <img src="../icon1.png" alt="" style="width: 25px;"></a></li>
-                <li><a href="#">커뮤니티 <img src="../icon1.png" alt="" style="width: 25px;"></a></li>
-        
-                        <li class="submenu">
-                            <a href="#" class="dep">부서게시판 <span class="collapse-indicator"></span></a>
-                             <ul>
-                                <li><a href="#">- 부서 공지사항 <img src="../icon1.png" alt="" style="width: 25px;"></a></li>
-                                <li><a href="#">- 부서 자유게시판 <img src="../icon1.png" alt="" style="width: 25px;"></a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <script>
-              $(document).ready(function(){
-                  $('.dep').click(function(){
-                      $(this).next().toggle();
-                  });
-              });
-            </script>
-        </div>
+       
+       <jsp:include page="../board/boardSidebar.jsp" />
+       
         <div class="board">
           <!-- 게시판 내용 -->
           <bheader>

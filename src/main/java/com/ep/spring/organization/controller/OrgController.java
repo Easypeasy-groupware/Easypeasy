@@ -84,10 +84,18 @@ public class OrgController {
 	}	
 	
 	
-	@RequestMapping("updateForm.org")
-	public String updateForm() {
-		return "organization/memberUpdateForm";
+	@RequestMapping("detailForm.org")
+	public ModelAndView selectDetailForm(int no, ModelAndView mv) {
+		
+		Employee emp = oService.selectDetailForm(no);
+		
+		mv.addObject("e", emp).setViewName("organization/memberUpdateForm");
+		
+		return mv;
+				
 	}
+	
+	
 	
 	@RequestMapping("update.org")
 	public String updateMember(Employee e, HttpSession session, Model model) {
@@ -96,7 +104,7 @@ public class OrgController {
 		
 		if(result>0) {
 			session.setAttribute("alertMsg", "성공적으로 사원정보가 수정되었습니다.");
-			return "redirect:updateForm.org?no=" + e.getEmpNo();
+			return "redirect:/";
 		}else {
 			model.addAttribute("errorMsg", "사원정보 수정 실패");
 			return "common/errorPage";	
@@ -109,13 +117,21 @@ public class OrgController {
 		
 		if(result>0) {
 			session.setAttribute("alertMsg", "성공적으로 사원정보가 삭제되었습니다.");
-			return "redirect:adminList.org";
+			return "redirect:/";
 		}else {
 			model.addAttribute("errorMsg", "사원정보 삭제 실패");
 			return "common/errorPage";	
 		}
 		
 	}
+	
+	
+	@RequestMapping("settings.org")
+	public String settingForm() {
+		return "organization/orgSettings";
+	}
+	
+	
 	
 	
 }

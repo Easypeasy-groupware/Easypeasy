@@ -11,25 +11,9 @@
     .wrapper { width: 1200px; margin: 0 auto;} /* 중앙 정렬을 위한 margin: 0 auto; */
     body {font-family: Arial, sans-serif; margin: 0; padding: 0;}
 
-    /* sidebar 스타일 */
-    .sidebar {top: 0; left: 0; width: 200px; height: 100%; float: left;}
-    h4 {text-align: center;}
-    .menu {margin-top: 20px;}
-	.menu ul {list-style: none; padding: 0; margin: 0;}
-	.menu li {margin-bottom: 5px; text-align: center;}
-	.menu a {display: block; padding: 10px; color: #333; text-decoration: none; transition: background-color 0.3s ease-in-out;}
-	.menu a:hover {background-color: #f2f2f2;}
-	.submenu ul {list-style: none; padding: 0; margin: 0; display: none;}
-	.submenu li {margin-bottom: 5px;}
-	.submenu a {display: block; padding: 10px; color: #333; text-decoration: none; transition: background-color 0.3s ease-in-out;}
-	.submenu a:hover {background-color: #f2f2f2;}
-	.active {background-color: #f2f2f2;}
-	.collapse-indicator:after {content: " ∨";}
-	.submenu.active > .collapse-indicator:after {content: " ∧";}
-
     /* 게시판 스타일 */
     .board {width: 1000px;float: right;}
-    .container {margin: 20px auto; width: 900px; border: 1px solid #ccc; padding: 20px;}
+    .container {margin: 20px auto; width: 900px; padding: 20px;}
 	h2 {padding:1% 1%;}
 	table {border-collapse: collapse; width: 100%;}
 	tr {text-align: center;}
@@ -55,39 +39,8 @@
 	
 	<div class="wrapper">
 	
-        <div class="sidebar">
-          <!-- sidebar 내용 -->
-          <div class="sidebar">
-          	<br>
-            <h4>게시판</h4><br>
-            <div class="menu">
-                <ul>
-                    <li><a href="#">전체 공지사항</a></li>
-                    <li><a href="#">식단표</a></li>
-                        
-                    <li><a href="#">자유게시판</a></li>
-                    <li><a href="#">커뮤니티</a></li>
-    
-                    <li class="submenu">
-                        <a href="#" class="dep">부서게시판<span class="collapse-indicator"></span></a>
-                         <ul>
-                            <li><a href="#">- 부서 공지사항</a></li>
-                            <li><a href="#">- 부서 자유게시판</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    
-        <script>
-            $(document).ready(function(){
-                $('.dep').click(function(){
-                    $(this).next().toggle();
-                });
-            });
-        </script>
-        </div>
-        
+		<jsp:include page="../board/boardSidebar.jsp" />
+       
         <div class="board">
           <!-- 게시판 내용 -->
           <bheader>
@@ -113,7 +66,7 @@
                         <button type="button" class="btn btn-success btn-sm" onclick="search()">검색</button>
                 </div>
             </form>
-            <button type="button" class="btn btn-outline-success btn-sm"> 새글쓰기</button>
+            <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enroll.bo';"> 새글쓰기</button>
             <br><br>
             <table>
                 <thead>
@@ -126,13 +79,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>공지사항 제목입니다.</td>
-                        <td>사용자</td>
-                        <td>2022-02-26</td>
-                        <td class="views">10</td>
-                    </tr>
+                	<c:forEach var="b" items="${list}">
+	                    <tr>
+	                        <td>${b.boardNo}</td>
+	                        <td>${b.boardTitle}</td>
+	                        <td>${b.boardWriter}</td>
+	                        <td>${b.createDate}</td>
+	                        <td class="views">${b.boardCount}</td>
+	                    </tr>
+                    </c:forEach>
                     <tr>
                         <td>2</td>
                         <td>공지사항 제목입니다.</td>
@@ -140,62 +95,7 @@
                         <td>2022-02-25</td>
                         <td class="views">7</td>
                     </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>공지사항 제목입니다.</td>
-                        <td>사용자</td>
-                        <td>2022-02-24</td>
-                        <td class="views">5</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>공지사항 제목입니다.</td>
-                        <td>사용자</td>
-                        <td>2022-02-23</td>
-                        <td class="views">2</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>공지사항 제목입니다.</td>
-                        <td>사용자</td>
-                        <td>2022-02-22</td>
-                        <td class="views">1</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>공지사항 제목입니다.</td>
-                        <td>사용자</td>
-                        <td>2022-02-22</td>
-                        <td class="views">1</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>공지사항 제목입니다.</td>
-                        <td>사용자</td>
-                        <td>2022-02-22</td>
-                        <td class="views">1</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>공지사항 제목입니다.</td>
-                        <td>사용자</td>
-                        <td>2022-02-22</td>
-                        <td class="views">1</td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>공지사항 제목입니다.</td>
-                        <td>사용자</td>
-                        <td>2022-02-22</td>
-                        <td class="views">1</td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>공지사항 제목입니다.</td>
-                        <td>사용자</td>
-                        <td>2022-02-22</td>
-                        <td class="views">1</td>
-                    </tr>
+                   
                 </tbody>
             </table>
             <br><br>

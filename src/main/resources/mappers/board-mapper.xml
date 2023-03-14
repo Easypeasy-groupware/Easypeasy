@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="boardMapper">
+	
+	<resultMap id="boardResult" type="Board">
+		<id column="board_no" property="boardNo" />
+		<result column="board_title" property="boardTitle" />
+		<result column="board_writer" property="boardWriter" />
+		<result column="board_count" property="boardCount" />
+		<result column="create_date" property="createDate" />
+		<result column="board_content" property="boardContent" />
+		<result column="board_pin" property="boardPin" />
+	</resultMap>
+
+	<select id="selectListCount" resultType="_int">
+		select
+			   count(*)
+		  from board
+		 where delete_status = 'N'
+	</select> 
+	
+	<select id="selectList" resultMap="boardResult">
+		select
+		       board_no
+		     , board_title
+		     , board_writer
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , board_count
+		     , board_pin
+		  from board
+		 where delete_status = 'N'
+		 order
+		    by board_no desc
+	</select>
 
 </mapper>
