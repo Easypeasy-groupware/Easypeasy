@@ -31,105 +31,152 @@
 <!-- icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"></script>
 <style>
-	#sidebar{
-		border-right: 2px solid rgb(185, 187, 221);
-        width: 200px;
-        height: 1000px;
-        float: left;
-        padding-left: 30px;
-        padding-top: 5px;
-    }
-    #sidebar a{
-        color: black;
-        text-decoration: none;
-    }
-    #slide2, #slide3, #slide2-1-1, #slide2-2-1, #slide3-1-1{
-        display: none;
-    }
+	*{padding:0; margin:0}
+	.menubar{width:200px; background:white; float:left;}
+	a{text-decoration:none; font-size:14px; color:black;}
+	a:hover{font-weight:600; color:black;}
+	li{list-style:none;}
+	
+	/*메뉴이름*/
+	.menu-title{margin:10px 0 20px 0; text-align:center;}
+	#title{font-size:20px; font-weight:600; color:rgb(93, 109, 75);}
+	#title:hover{color:rgb(58, 69, 47); text-decoration:none;}
+	
+	/*드롭다운이미지*/
+	.dropdown-key:hover{cursor:pointer;}
+	
+	/*주소록타입*/
+	.add-type{width:98%; height:35px; margin:auto; text-align:center; padding:5px 0 5px 0;}
+	.add-type:hover{background-color: rgb(246, 246, 246); text-decoration:none;}
+	.menu-a{text-decoration:none; font-size:14px; color:black;}
+	.menu-a:hover{text-decoration:none; color:black;}
+	
+	/*주소록 제목 리스트*/
+	.add-in, .add-ex{color:rgb(53, 62, 42);}
+	.add-in:hover, .add-ex:hover{text-decoration:none; color:black;}
+	.submenu{margin-left:30px;}
+	.submenu > li {line-height: 20px;}
+	.submenu a{text-decoration:none; font-size:14px; color:black;}
+	.submenu a:hover{text-decoration:none; font-weight:600; color:black;}
+	
+	/* 예약관리 */
+	.menu-list{width:98%; height:35px; margin:auto; padding:5px 0 15px 50px; border-radius:4px;}
+	.menu-list:hover{background-color: rgb(246, 246, 246); text-decoration:none;}
+
 </style>
 </head>
 <body>
 
-	<div id="sidebar">
-        <h5>
-            <a href="">예약</a>
-        </h5>
+	<div class="menubar">
+
+        <div class="menu-title">
+            <a href="main.re" id="title"><img src="resources/common_images/re-logo.png" style="width:20px;">  예약</a>
+        </div>
+        
+        <div class="add-type">
+            <a href="#" class="menu-a">
+                <b>전사자산</b>
+            </a>
+            <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="shlist-key"></span>
+        </div>
+
+        <div class="add-type" id="add-in" style="display:none;">
+            <a href="internalEnt.add" class="add-in"><b>회의실</b></a>
+            <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="inlist-key"></span>
+        </div>
+        <ul class="submenu" id="inlist" style="display:none;">
+        	<li><a href="internalDept.add?dept=hr">- A회의실(20명)</a></li>
+            <li><a href="internalDept.add?dept=as">- B회의실(15명)</a></li>
+            <li><a href="internalDept.add?dept=sales1">- C회의실(6명)</a></li>
+        </ul>
+
+        <div class="add-type" id="add-ex"  style="display:none;">
+            <a href="externalEnt.add" class="add-ex"><b>빔프로젝터</b></a>
+            <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="exlist-key"></span>
+        </div>
+        <ul class="submenu" id="exlist" style="display:none;">
+            <c:forEach var="s" items="">
+        		<li><a href="externalGroup.add?group=">- jstl </a></li>
+        	</c:forEach>
+        </ul>
+       
         <br>
-        <div id="slide1">전사자산 <i id="upDown1" class="fas fa-regular fa-angle-down"></i></div>
-        <div id="slide2">
-            <div id="slide2-1"><a href="">회의실</a> <i id="upDown2-1" class="fas fa-regular fa-angle-down"></i></div>
-            <div id="slide2-1-1">
-                <span style="font-size: small;"><a href="">A회의실(20명)</a></span><br>
-                <span style="font-size: small;"><a href="">B회의실(15명)</a></span><br>
-                <span style="font-size: small;"><a href="">C회의실(6명)</a></span>
+        <!-- 경영지원팀만 수정 할 수 있도록 -->
+        <c:if test="${ loginUser.deptCode eq 'D2' }">
+	        <div class="menu-list">
+	            <a href="#" class="menu-a">
+	                <img src="resources/common_images/admin-setting.png" style="width:15px; color:orange;"> <b>예약 관리</b>
+	            </a>
+	            <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="setting-key"></span>
+	        </div>
+	        
+	        <div class="add-type" id="setting-in" style="display:none;">
+            	<a href="settingView.re" class="add-in" style="margin-left: -15px"><b> 자산 관리</b></a>
             </div>
-            <div id="slide2-2"><a href="">빔프로젝터</a> <i id="upDown2-2" class="fas fa-regular fa-angle-down"></i></div>
-            <div id="slide2-2-1">
-                <span style="font-size: small;"><a href="">1번 프로젝터</a></span><br>
-                <span style="font-size: small;"><a href="">2번 프로젝터</a></span><br>
-                <span style="font-size: small;"><a href="">3번 프로젝터</a></span>   
-            </div> 
-        </div>
-        <div id="slide3">
-            <div id="slide3-1">예약관리 <i id="upDown3" class="fas fa-regular fa-angle-down"></i></div>
-            <div id="slide3-1-1">
-                <span style="font-size: small;"><a href="">자산 관리</a></span><br>
-            </div>
-        </div>
+        </c:if>
     </div>
-
+    
     <script>
-        $("#slide1").click(function(){
-            const $s = $(this).nextAll("div");
-
-            if($s.css("display") == "none"){
-                $s.siblings("#slide2, #slide3").slideUp();
-                $("#upDown1").attr("class", "fas fa-regular fa-angle-up")
-                $s.slideDown();
-            }else {
-                $("#upDown1").attr("class", "fas fa-regular fa-angle-down")
-                $s.slideUp();
-            }
-        })
-
-        $("#slide2-1").click(function(){
-            const $s = $(this).next("div");
-
-            if($s.css("display") == "none"){
-                $s.siblings("#slide2-1-1").slideUp();
-                $("#upDown2-1").attr("class", "fas fa-regular fa-angle-up")
-                $s.slideDown();
-            }else {
-                $("#upDown2-1").attr("class", "fas fa-regular fa-angle-down")
-                $s.slideUp();
-            }
-        })
-
-        $("#slide2-2").click(function(){
-            const $s = $(this).next("div");
-
-            if($s.css("display") == "none"){
-                $s.siblings("#slide2-2-1").slideUp();
-                $("#upDown2-2").attr("class", "fas fa-regular fa-angle-up")
-                $s.slideDown();
-            }else {
-                $("#upDown2-2").attr("class", "fas fa-regular fa-angle-down")
-                $s.slideUp();
-            }
-        })
-
-        $("#slide3-1").click(function(){
-            const $s = $(this).next("div");
-
-            if($s.css("display") == "none"){
-                $s.siblings("#slide3-1-1").slideUp();
-                $("#upDown3").attr("class", "fas fa-regular fa-angle-up")
-                $s.slideDown();
-            }else {
-                $("#upDown3").attr("class", "fas fa-regular fa-angle-down")
-                $s.slideUp();
-            }
-        })
+    	$(function(){
+    		$("#pslist-key").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#pslist").show();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#pslist").hide();
+    			}
+    		})
+    		
+    		$("#shlist-key").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#add-in").show();
+    				$("#add-ex").show();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#inlist-key").attr("src", "resources/common_images/list-down.png");
+    				$("#exlist-key").attr("src", "resources/common_images/list-down.png");
+    				$("#add-in").hide();
+    				$("#add-ex").hide();
+    				$("#inlist").hide();
+    				$("#exlist").hide();
+    			}
+    		})
+    		
+    		$('#inlist-key').on("click", $('#inlist-key'), function(){
+    			
+	   			if($(this).attr("src") === "resources/common_images/list-down.png"){
+	   				$(this).attr("src", "resources/common_images/list-up.png");	
+	   				$("#inlist").show();
+	   			}else {
+	   				$(this).attr("src", "resources/common_images/list-down.png");
+	   				$("#inlist").hide();
+	   			}
+    		}) 
+    		
+			$('#exlist-key').on("click", $('#exlist-key'), function(){
+    			
+	   			if($(this).attr("src") === "resources/common_images/list-down.png"){
+	   				$(this).attr("src", "resources/common_images/list-up.png");	
+	   				$("#exlist").show();
+	   			}else {
+	   				$(this).attr("src", "resources/common_images/list-down.png");
+	   				$("#exlist").hide();
+	   			}
+    		}) 
+    		
+    		$("#setting-key").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#setting-in").show();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#setting-in").hide();
+    			}
+    		})
+    		
+    	})
     </script>
 	
 </body>

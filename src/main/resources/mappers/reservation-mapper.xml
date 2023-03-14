@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="reservationMapper">
+
+	<resultMap id="resourceResult" type="Resource">
+		<id column="resource_no" property="resourceNo" />
+		<result column="resource_name" property="resourceName" />
+		<result column="category_name" property="categoryName" />
+		<result column="emp_no" property="resourceWriter" />
+		<result column="create_date" property="createDate" />
+	</resultMap>
+  
+  <!--
+  <select id="selectSettingMettingRoom" resultMap="resourceResult">
+		select
+			    resource_no
+			  , resource_name
+		   from resource
+		  where category_name = 
+		  order
+		     by resource_no
+	</select>
+  	-->
+  	
+  	<insert id="addMettingRoomResource">
+		insert
+		  into resource
+		  (
+		  	resource_no
+		  , resource_name
+		  , category_name
+		  , emp_no
+		  )
+		  values
+		  (
+		  	seq_rscno.nextval
+		  , #{resourceName}
+		  , #{categoryName}
+		  , #{resourceWriter}
+		  )
+	</insert>
+</mapper>
