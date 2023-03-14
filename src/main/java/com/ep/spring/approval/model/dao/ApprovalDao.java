@@ -12,6 +12,7 @@ import com.ep.spring.approval.model.vo.ApprovalLine;
 import com.ep.spring.approval.model.vo.ApprovalReply;
 import com.ep.spring.approval.model.vo.OverTimeForm;
 import com.ep.spring.approval.model.vo.VacationForm;
+import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
 
 @Repository
@@ -130,9 +131,7 @@ public class ApprovalDao {
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectDetailSPrgAl", a);
 	}
 	
-	public ArrayList<ApprovalReply> selectDetailSPrgAr(SqlSessionTemplate sqlSession, Approval a) {
-		return (ArrayList)sqlSession.selectList("approvalMapper.selectDetailSPrgAr", a);
-	}
+
 	
 	public VacationForm selectDetailSPrgVf(SqlSessionTemplate sqlSession, Approval a) {
 		return sqlSession.selectOne("approvalMapper.selectDetailSPrgVf", a);
@@ -140,6 +139,14 @@ public class ApprovalDao {
 	
 	public OverTimeForm selectDetailSPrgOt(SqlSessionTemplate sqlSession, Approval a) {
 		return sqlSession.selectOne("approvalMapper.selectDetailSPrgOt", a);
+	}
+	
+	public ArrayList<Attachment> selectDetailSPrgAt(SqlSessionTemplate sqlSession, Approval a){
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectDetailSPrgAt", a);
+	}
+	
+	public ArrayList<ApprovalReply> selectReplyList(SqlSessionTemplate sqlSession, int appNo) {
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectReplyList", appNo);
 	}
 	
 	
