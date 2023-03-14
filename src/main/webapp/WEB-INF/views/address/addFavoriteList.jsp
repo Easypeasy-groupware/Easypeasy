@@ -311,13 +311,21 @@
         </div>
 
         <script>
-            $("#pbCheck").click(function(){
-                if($(this).prop("checked")){
-                    $(".pb-checkbox").prop("checked", true);
-                }else {
-                    $(".pb-checkbox").prop("checked", false);
-                }
-            })
+	        $("#psCheck").click(function(){ /*체크박스*/
+	            if($(this).prop("checked")){
+	                $(".ps-checkbox").prop("checked", true);
+	               
+	            }else {
+	                $(".ps-checkbox").prop("checked", false);
+	            }
+	        })
+	        $(".ps-checkbox").click(function(){
+	        	if($(this).prop("checked")){
+	        		 
+	        	}else{
+	        		$("#psCheck").prop("checked", false);
+	        	}
+	        })
 
             $(".like").click(function(){ /*별 누르면 실행할 내용*/
                 

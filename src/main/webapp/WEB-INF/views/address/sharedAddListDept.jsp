@@ -15,18 +15,14 @@
 	.content-outer{width:1000px; padding-left:10px; margin-left:200px;}
 	.content-outer *{box-sizing: border-box;}
 	
-	#address-group{font-size:22px; font-weight:600;}
+	#address-group{font-size:22px; font-weight:600; display:inline-block;}
 	#group-name{color:rgb(96, 96, 96); font-size:18px; font-weight:600;}
 	
 	/*검색*/
 	#searchKey{width:200px; height:25px; border:1px solid gray; border-radius:5px;}
 	#searchBtn{width:50px; height:25px; border:0; border-radius:5px; background: rgb(166, 184, 145); color:white;}
 	
-	/*연락처 추가*/
-	.newAdd{width:120px; height:25px; border:1px solid gray; border-radius:5px;}
-	.addBtn{width:80px; height:25px; border:0; border-radius:5px;}
-	#addBtn1{background: rgb(127, 127, 127); color:white;}
-	#addBtn2{background: rgb(166, 184, 145); color:white;}
+	.subheading{display:inline-block; margin-left:850px;}
 	
 	/*주소록 리스트 헤더*/
 	.btnGroup{width:80px; height:25px; border:0; border-radius:5px; margin-bottom:10px; color:white;}
@@ -35,15 +31,15 @@
 	
 	
 	/*주소록 리스트 테이블*/
-	table{
+	#addList{
 	    margin:auto;
 	    border-collapse: collapse;
 	}
-	th{border-bottom:1px solid gray; padding:5px 0 5px 0;}
-	td{padding:3px 0 3px 0; height:40px;}
-	input[type="checkbox"]{accent-color:rgb(166, 184, 145);}
+	#addList th{border-bottom:1px solid gray; padding:5px 0 5px 0;}
+	#addList td{padding:3px 0 3px 0; height:40px;}
+	#addList input[type="checkbox"]{accent-color:rgb(166, 184, 145);}
 	.like:hover{cursor: pointer;}
-	tbody>tr:hover{background:rgb(233, 233, 233); font-weight:600;}
+	#addList tbody>tr:hover{background:rgb(233, 233, 233); font-weight:600;}
 	
 	/*페이징바*/
 	#paging{text-align: center; display: inline-block; padding-left :0;}
@@ -58,26 +54,18 @@
 	<jsp:include page="addMenubar.jsp"/>
 	
     <div class="content-outer">
-
-        <p id="address-group">공유주소록</p>
-        <p id="group-name">사내주소록(인사팀)</p>
-
-
-        <div class="search" align="right">
+    
+    	<div class="search" align="right" style="float:right">
             <input type="text" id="searchKey" placeholder="이름, 회사, 전화번호">
             <button id="searchBtn">검색</button>
         </div>
 
-        <div class="addNew">
-            <input type="text" class="newAdd" placeholder="이름">
-            <input type="text" class="newAdd" placeholder="이메일">
-            <input type="text" class="newAdd" placeholder="휴대폰">
-            <button class="addBtn" id="addBtn1">추가정보</button>
-            <button class="addBtn" id="addBtn2">추가</button>
-        </div>
+        <p id="address-group">공유주소록</p>
+        <p id="group-name">사내주소록(<span id="dName"></span>)</p>
+ 
 
         <br><br>
-        <p class="subheading" id="psSubheading"><span id="dName"></span> 총 <b>${ count }</b>명</p>
+        
 		<script>
 			$(function(){
 				if('${dept}'=='hr'){
@@ -98,11 +86,13 @@
 			})
 		</script>
         <button class="btnGroup" id="sendMail">메일쓰기</button>
-
+        
+		<p class="subheading" id="psSubheading"> 총 <b>${ count }</b>명</p>
+		
         <br>
 
         <div id="psLike">
-            <table>
+            <table id="addList">
                 <colgroup>
                     <col style="width:50px;"><!-- 체크박스 -->
                     <col style="width:50px;"><!-- 별 -->
@@ -161,14 +151,21 @@
         </div>
 
         <script>
-            $("#psCheck").click(function(){ // 체크박스
-                if($(this).prop("checked")){
-                    $(".ps-checkbox").prop("checked", true);
-                   
-                }else {
-                    $(".ps-checkbox").prop("checked", false);
-                }
-            })
+	        $("#psCheck").click(function(){ /*체크박스*/
+	            if($(this).prop("checked")){
+	                $(".ps-checkbox").prop("checked", true);
+	               
+	            }else {
+	                $(".ps-checkbox").prop("checked", false);
+	            }
+	        })
+	        $(".ps-checkbox").click(function(){
+	        	if($(this).prop("checked")){
+	        		 
+	        	}else{
+	        		$("#psCheck").prop("checked", false);
+	        	}
+	        })
             
             
             $(function(){ //즐겨찾기 리스트 출력
