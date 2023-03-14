@@ -24,6 +24,6 @@ public interface EmployeeService {
 	// 프로필사진 변경
 	int updateProfile(Employee e);
 	
-	//근태관리 메인페이지(일반사용자)
+	
 
 }
