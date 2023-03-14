@@ -15,25 +15,10 @@
   /* 전체 wrapper */
   .wrapper {width: 1200px;margin: 0 auto;}
   body {font-family: Arial, sans-serif;	margin: 0; padding: 0;}
-  /* 사이드바 */
-  .sidebar {top: 0; left: 0; width: 200px; height: 100%; float: left;}
-  h4 {text-align: center;}
-	#topbtn {align-items: center; justify-content: center; align:center; width:200px;}
-	.menu {margin-top: 20px;}
-	.menu ul {list-style: none; padding: 0; margin: 0;}
-	.menu li {margin-bottom: 5px; text-align: center; }
-	.menu a {display: block; padding: 10px; color: #333; text-decoration: none; transition: background-color 0.3s ease-in-out;}
-	.menu a:hover {background-color: #f2f2f2;}
-	.submenu ul {list-style: none; padding: 0; margin: 0;	display: none;}
-	.submenu li {margin-bottom: 5px;}
-	.submenu a {display: block;padding: 10px;color: #333;text-decoration: none;transition: background-color 0.3s ease-in-out;}
-	.submenu a:hover {background-color: #f2f2f2;}
-	.active {background-color: #f2f2f2;}
-	.collapse-indicator:after {content: " ∨";}
-	.submenu.active > .collapse-indicator:after {content: " ∧";}
+  
   /* content */
   .board {width: 1000px; float: right;}
-  .container {margin: 20px auto; width: 100%; border: 1px solid #ccc; padding: 20px;}
+  .container {margin: 20px auto; width: 100%; padding: 20px;}
   form {max-width: 1000px; margin: 0 auto; padding: 10px; border-radius: 5px; box-sizing: border-box;}
   .search-container {display: flex; justify-content: flex-end;margin-bottom: 10px;}
   .card {
@@ -95,41 +80,7 @@
 	
 	<div class="wrapper">
 	   
-	    <div class="sidebar">
-	    	<h4>게시판</h4><br>
-	    	
-	    	<button type="button" class="btn btn-success" id="topbtn" onclick="adminList();"> 관리자 </button>
-	      
-	      	<script>
-	      		function adminList(){
-	      			location.href="adminList.org";
-	      		}
-	      	</script>
-	      
-	      <div class="menu">
-	        <ul>
-	          <li><a href="#">인사관리부</a></li>
-	          <li><a href="#">경영지원부</a></li>
-	          <li class="submenu">
-	          	 <a href="#" class="dep1">영업부<span class="collapse-indicator"></span></a>
-	                 <ul>
-	                      <li><a href="#">- 영업 1팀</a></li>
-	                      <li><a href="#">- 영업 2팀</a></li>
-	              		  <li><a href="#">- 영업 3팀</a></li>
-	                 </ul>
-	          </li>   
-	          <li><a href="#">마케팅부</a></li>
-	        </ul>
-	      </div>
-	    </div>
-  
-	    <script>
-            $(document).ready(function(){
-                $('.dep1').click(function(){
-                    $(this).next().toggle();
-                });
-            });
-        </script>
+	   <jsp:include page="../organization/orgSidebar.jsp" />
 	  
 	  
 	    <div class="board">
@@ -143,13 +94,23 @@
 	              </div>
 	          </form>
 	        
-	          <div class="card">
+	          <!-- <div class="card">
 	            <div class="imagecard">
 	                <img src="resources/common_images/default_profile.png">
 	            </div>
 	            <div class="details">
 	                <h4>부장 홍길동</h4>
 	            </div>
+	          </div>
+	          <br> -->
+	          
+	          <div class="card">
+	            <table>
+	            	<tr>
+	            		<td><img src="resources/common_images/default_profile.png"  style="width:80px;"></td>
+	            		<td><br><h4>부장 홍길동</h4></td>
+	            	</tr>
+	            </table>
 	          </div>
 	          <br>
 	          
@@ -172,31 +133,25 @@
 	            </table>
 	          </div>
 	          <div class="card">
-	            <div class="image">
-	                <img src="resources/common_images/default_profile.png"  alt="Profile Image">
-	            </div>
-	            <div class="details">
-	                <h4>대리 홍길동</h4>
-	            </div>
+	            <table>
+	            	<tr>
+	            		<td><img src="resources/common_images/default_profile.png"  style="width:80px;"></td>
+	            		<td><br><h4>대리 홍길동</h4></td>
+	            	</tr>
+	            </table>
 	          </div>
 	          <br>
 	          
 	          <div class="card">
-	            <div class="image">
-	                <img src="resources/common_images/default_profile.png"  alt="Profile Image">
-	            </div>
-	            <div class="details">
-	                <h4>사원 홍길동</h4>
-	            </div>
+	            <table>
+	            	<tr>
+	            		<td><img src="resources/common_images/default_profile.png"  style="width:80px;"></td>
+	            		<td><br><h4>사원 홍길동</h4></td>
+	            	</tr>
+	            </table>
 	          </div>
-	          <div class="card">
-	            <div class="image">
-	                <img src="resources/common_images/default_profile.png"  alt="Profile Image">
-	            </div>
-	            <div class="details">
-	                <h4>사원 홍길동</h4>
-	            </div>
-	          </div>
+	          <br>
+	          
 	      </div>
 	    </div>
 	</div>
@@ -261,21 +216,23 @@
 						<div id="main">
 	
 							<h5>Easy peasy조직도</h5>
-							<form action="memberList.org">
-								<input type="hidden" name="userNo" value="">
+							<form action="adminList.org">
+								<input type="hidden" name="empNo" value="${e.empNo }">
 								<ul id="browser" class="filetree treeview-famfamfam">
 									<li><span class="folder">이지피지</span>
 										<ul>
-											<li><span class="file">대표</span></li>
+											<li><span class="file">"${e.JobName eq e.getJobName('대표')}"</span></li>
 											<li><span class="file">상무</span></li>
-											<li class="closed"><span class="folder">인사관리부</span>
-												<ul>
-													<li><span class="file">사원1</span></li>
-													<li><span class="file">사원2</span></li>
-													<li><span class="file">사원3</span></li>
-													<li><span class="file">사원4</span></li>
-												</ul>
-											</li>
+											<c:forEach var="e" items="${list}">
+												<li class="closed"><span class="folder">인사관리부</span>
+													<ul>
+														<li><span class="file">${e.empName}</span></li>
+														<li><span class="file">사원2</span></li>
+														<li><span class="file">사원3</span></li>
+														<li><span class="file">사원4</span></li>
+													</ul>
+												</li>
+											</c:forEach>
 											<li class="closed"><span class="folder">경영지원부</span>
 												<ul>
 													<li><span class="file">사원1</span></li>

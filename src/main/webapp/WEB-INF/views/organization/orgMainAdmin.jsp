@@ -15,22 +15,7 @@
   /* 전체 wrapper */
   .wrapper {width: 1200px;margin: 0 auto;}
   body {font-family: Arial, sans-serif;	margin: 0; padding: 0;}
-  /* 사이드바 */
-  .sidebar {top: 0; left: 0; width: 200px; height: 100%; float: left;}
-  h4 {text-align: center;}
-	#topbtn {align-items: center; justify-content: center; align:center; width:200px;}
-	.menu {margin-top: 20px;}
-	.menu ul {list-style: none; padding: 0; margin: 0;}
-	.menu li {margin-bottom: 5px; text-align: center; }
-	.menu a {display: block; padding: 10px; color: #333; text-decoration: none; transition: background-color 0.3s ease-in-out;}
-	.menu a:hover {background-color: #f2f2f2;}
-	.submenu ul {list-style: none; padding: 0; margin: 0;	display: none;}
-	.submenu li {margin-bottom: 5px;}
-	.submenu a {display: block;padding: 10px;color: #333;text-decoration: none;transition: background-color 0.3s ease-in-out;}
-	.submenu a:hover {background-color: #f2f2f2;}
-	.active {background-color: #f2f2f2;}
-	.collapse-indicator:after {content: " ∨";}
-	.submenu.active > .collapse-indicator:after {content: " ∧";}
+
   /* content */
   .board {width: 1000px; float: right;}
   .container {margin: 20px auto; width: 100%; border: 1px solid #ccc; padding: 20px;}
@@ -76,36 +61,8 @@
 	<jsp:include page="../common/header.jsp" />
 	
 	<div class="wrapper">
-        <div class="sidebar">
-			<h4>게시판</h4><br>
-	      
-	        <button type="button" class="btn btn-success" id="topbtn" onclick="adminList();"> 관리자 </button>
-	      
-	     
-	      <div class="menu">
-	        <ul>
-	          <li><a href="#">인사관리부</a></li>
-	          <li><a href="#">경영지원부</a></li>
-	          <li class="submenu">
-	          	 <a href="#" class="dep1">영업부<span class="collapse-indicator"></span></a>
-	                 <ul>
-	                      <li><a href="#">- 영업 1팀</a></li>
-	                      <li><a href="#">- 영업 2팀</a></li>
-	              		  <li><a href="#">- 영업 3팀</a></li>
-	                 </ul>
-	          </li>   
-	          <li><a href="#">마케팅부</a></li>
-	        </ul>
-	      </div>
-	    </div>
-  
-	    <script>
-            $(document).ready(function(){
-                $('.dep1').click(function(){
-                    $(this).next().toggle();
-                });
-            });
-        </script>
+        
+         <jsp:include page="../organization/orgSidebar.jsp" />
     
 
         <div class="board">
@@ -121,7 +78,7 @@
                     </div>
                 </form>
                 <button type="button" class="btn btn-outline-success btn-sm" onclick="minsert();">등록</button>
-                <button type="button" class="btn btn-outline-success btn-sm">설정</button>
+                <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='settings.org';">설정</button>
                 
                 <script>
 	                function minsert() {
@@ -186,7 +143,7 @@
 			        <script>
 			            $(function(){
 			                 $("#memberList>tbody>tr").click(function(){
-			            			location.href='updateForm.org?no=' + $(this).children(".ono").text();
+			            			location.href='detailForm.org?no=' + $(this).children(".ono").text();
 			            		})
 			            })
 			        </script>
@@ -209,12 +166,12 @@
 									<div id="main">
 				
 										<h5>Easy peasy조직도</h5>
-										<form action="memberList.org">
+										<form action="adminList.org">
 											<input type="hidden" name="userNo" value="">
 											<ul id="browser" class="filetree treeview-famfamfam">
 												<li><span class="folder">이지피지</span>
 													<ul>
-														<li><span class="file"></span></li>
+														<li><span class="file">대표</span></li>
 														<li><span class="file">상무</span></li>
 														
 														<c:forEach var="o" items="${list}">

@@ -6,40 +6,43 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+/* 전체 wrapper */
+  .wrapper {width: 1200px;margin: 0 auto;}
+  body {font-family: Arial, sans-serif;	margin: 0; padding: 0;}
+
+ /* 게시판 스타일 */
+	.board {width: 1000px; float: right;}
+	.board>.board1{width:50%; float:left;}
+	.board>.board2{width:50%; float:right;}
+	.container {margin: 10px auto; width: 90%;  padding: 20px;}
+    table {border-collapse: collapse; width: 100%;}
+	th, td {text-align: center; padding: 8px; border-bottom: 1px solid #ccc;}
+	th {background-color: #ddd;}
+	tr:hover {background-color: #f5f5f5;}
+    input[type="text"],
+	select {
+		width: 100%;
+		padding: 10px;
+		border: 1px solid #ccc;
+		border-radius: 3px;
+		box-sizing: border-box;
+		margin-bottom: 20px;
+		font-size: 16px;
+		font-family: inherit;
+	}
+	select {height: 40px;}
+	.v-line {border-left : thick solid lightgrey; height : 50px;}
+
+</style>
 </head>
 <body>
 
 	<jsp:include page="../common/header.jsp" />
 	
 	<div class="wrapper">
-		<div class="sidebar">
-			<div class="topbtn">
-				<button type="button" class="btn btn-success">관리자</button>
-			</div>
-			<div class="menu">
-				<ul>
-					<li><a href="#">인사관리부</a></li>
-					<li><a href="#">경영지원부</a></li>
-					<li class="submenu">
-						<a href="#" class="dep">영업부</a>
-						<ul>
-							<li><a href="#">영업 1팀</a></li>
-							<li><a href="#">영업 2팀</a></li>
-							<li><a href="#">영업 3팀</a></li>
-						</ul>
-					</li>   
-					<li><a href="#">마케팅부</a></li>
-				</ul>
-			</div>
-		</div>
-
-		<script>
-			$(document).ready(function () {
-				$('.menu li').click(function () {
-					$(this).toggleClass('active');
-				});
-			});
-		</script>
+		
+		<jsp:include page="../organization/orgSidebar.jsp" />
 	
 		<div class="board">
 			<div class="board1">
@@ -125,7 +128,7 @@
 				<h2>직위관리</h2>
 				<br>
 				<div class="container position">
-					<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#myModal" style="float:right;">등록하기</button>
+					<button type="button" class="btn btn-outline-success btn-sm" style="float:right;">등록하기</button>
 					<br><br>
 					<table id="depList">
 						<thead>

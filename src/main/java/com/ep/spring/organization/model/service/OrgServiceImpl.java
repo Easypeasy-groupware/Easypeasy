@@ -43,6 +43,11 @@ public class OrgServiceImpl implements OrgService{
 	}
 
 	@Override
+	public Employee selectDetailForm(int no) {
+		return oDao.selectDetailForm(sqlSession, no);
+	}
+	
+	@Override
 	public int updateMember(Employee e) {
 		return oDao.updateMember(sqlSession, e);
 	}
@@ -51,6 +56,10 @@ public class OrgServiceImpl implements OrgService{
 	public int deleteMember() {
 		return oDao.deleteMember(sqlSession);
 	}
+
+
+
+	
 	
 	
 	
