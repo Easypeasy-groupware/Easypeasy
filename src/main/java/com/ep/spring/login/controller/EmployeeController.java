@@ -54,6 +54,14 @@ public class EmployeeController {
 		
 	}
 	
+	//로그아웃
+	@RequestMapping("logout.ep")
+	public String logoutMember(HttpSession session) {
+		//세션무효화
+		session.invalidate();
+		return "redirect:/";
+	}
+	
 	// 메인페이지 이동
 	@RequestMapping("main.ep")
 	public String mainPage() {
