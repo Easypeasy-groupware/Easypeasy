@@ -118,11 +118,11 @@
                 <tr>
                     <td>그룹</td>
                     <td>
-                        <select class="td-select" name="groupNo">
-                            <option value="">선택안함</option>
+                        <select class="td-select">
+                            <option>선택안함</option>
 
                             <c:forEach var="p" items="${ pList }">
-				        		<option value="${ p.groupNo }"> ${ p.groupName } </option>
+				        		<option name="groupNo" value="${ p.groupNo }"> ${ p.groupName } </option>
 				        	</c:forEach>
 			        	
                         </select>
@@ -169,19 +169,60 @@
                     <p class="modal-title" style="font-weight:600">새 그룹 추가</p>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                
-                <form>
+
                     <div class="modal-body">
-                        <input type="text" id="modal-input" name="newGroup">
+                        <input type="text" id="modal-input" class="group-input" name="groupName">
                         <br><br>
                         <button type="button" data-bs-dismiss="modal" id="modal-close-btn">닫기</button>
-                        <button type="submit" id="modal-add-btn">추가</button>
+                        <button type="button" data-bs-dismiss="modal" id="modal-add-btn" onclick="addGroup();">추가</button>
                     </div>
-                    
-                </form>
+
 
             </div>
           </div>
     </div>
+    <script>
+    	/* 
+    	$(function(){
+    		selectGroupList();
+    	}) 
+    	*/
+    	
+    	function addGroup(){ /* 그룹 추가용 ajax */
+    		if($(".group-input").val().trim().length > 0) {
+    			
+    			$.ajax({
+    				url:"insertPsGroup.add",
+    				data:{
+    					empNo:${loginUser.empNo},
+    					groupName:$(".group-input").val()
+    				},
+    				success:function(result){
+    					if(result == "success") {
+    						$(".group-input").val("");
+    						selectGroupList();
+    					}
+    				},error:function(fail){
+    					console.log("개인주소록 그룹 추가용 ajax 통신 실패");
+    					swal({
+        		            title: "그룹 추가", 
+        		            text: "이미 중복된 그룹명이 있습니다", 
+        		            icon: "error",
+        		            button: "확인",
+        		         });
+    				}
+    				
+    			})
+    		}else {
+    			 swal({
+    		            title: "그룹 추가", 
+    		            text: "그룹명을 입력 해주세요", 
+    		            icon: "error",
+    		            button: "확인",
+    		         });
+
+    		}
+    	}
+    </script>
 </body>
 </html>

@@ -227,6 +227,8 @@
 		       count(*)
 		  from address
 		 where emp_no = #{empNo}
+		   and add_type = 'P'
+		   and add_bin = 'N'
 	</select>
 	
 	<select id="selectPsAllAddList" resultMap="addressResult">
@@ -251,7 +253,7 @@
 		     , ADD_BIN
 		     , EDITABLE
 		 from address a
-         join add_group g on (a.group_no = g.group_no)
+         left join add_group g on (a.group_no = g.group_no)
 		 where a.emp_no = #{empNo}
 		   and a.add_type = 'P'
 		   and add_bin = 'N'
@@ -263,7 +265,92 @@
 		  from add_fav
 		 where emp_no = #{empNo}
 	</select>
+	
+	<select id="selectPsGroupAddListCount" resultType="_int">
+		select
+		       count(*)
+		  from address
+		 where emp_no = #{empNo}
+		   <choose>
+			<when test="groupNo != null">
+				and group_no = #{groupNo}
+			</when>
+			<otherwise>
+				and group_no is null	
+			</otherwise>
+		</choose>
+		   and add_type = 'P'
+		   and add_bin = 'N'
+	</select>
+	
+	<select id="selectPsGroupAddList" resultMap="addressResult">
+		select
+		       ADD_NO
+		     , a.EMP_NO
+		     , a.ADD_TYPE
+		     , ADD_NAME
+		     , EMAIL
+		     , PHONE
+		     , ADD_EMP
+		     , ADD_DEPT
+		     , ADD_JOB
+		     , a.GROUP_NO
+		     , GROUP_NAME
+		     , EMP_PHONE
+		     , EMP_ADDRESS
+		     , MEMO
+		     , CREATE_DATE
+		     , MODIFY_DATE
+		     , DELETE_DATE
+		     , ADD_BIN
+		     , EDITABLE
+		  from address a
+          left join add_group g on (a.group_no = g.group_no)
+		  where a.emp_no = #{empNo}
+		<choose>
+			<when test="groupNo != null">
+				and a.group_no = #{groupNo}
+			</when>
+			<otherwise>
+				and a.group_no is null	
+			</otherwise>
+		</choose>
+		    and a.add_type = 'P'
+		    and add_bin = 'N'
+		
+	</select>
+	
+	<select id="selectAddGroup" resultMap="addGroupResult">
+		select group_name
+		  from add_group
+		 where group_no = #{group}
+	</select>
 
+	<select id="selectExtPersonalGroup" resultType="_int">
+		select count(*)
+		  from add_group
+		 where emp_no = #{empNo}
+		   and group_name = #{groupName}
+		   and add_type = 'P'
+	</select>
+	
+	<insert id="insertNewPersonalGroup">
+		insert
+		  into add_group
+		     (
+		       GROUP_NO
+			 , EMP_NO
+			 , GROUP_NAME
+			 , ADD_TYPE
+		     )
+		values
+			 (
+			   seq_grpno.nextval
+			 , #{empNo}
+			 , #{groupName}
+			 , 'P'
+			 )     
+	</insert>
 
 
 

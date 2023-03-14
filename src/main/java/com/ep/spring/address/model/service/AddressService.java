@@ -45,6 +45,15 @@ public interface AddressService {
 	ArrayList<AddFavorite> selectPsFavList(int empNo);
 	
 	// 8. 그룹별 개인주소록 리스트 조회
+	int selectPsGroupAddListCount(AddDept ad);
+	ArrayList<Address> selectPsGroupAddList(PageInfo pi, AddDept ad);
+	
+	// 8.5 그룹이름 조회
+	AddGroup selectAddGroup(String group);
+	
+	// 9. 개인주소록 그룹 추가(ajax)
+	int selectExtPersonalGroup(AddGroup ag);
+	int insertNewPersonalGroup(AddGroup ag);
 	
 	
 

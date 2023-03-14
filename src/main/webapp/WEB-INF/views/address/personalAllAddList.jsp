@@ -15,10 +15,10 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
 <style>
-    .content-outer{width:1000px; padding-left:10px; margin-left:200px;}
+    .content-outer{width:1000px; padding-left:10px; margin-left:200px;  padding-top:20px;}
     .content-outer *{box-sizing: border-box;}
-    #address-group{font-size:22px; font-weight:600;}
-    #group-name{color:rgb(96, 96, 96); font-size:18px; font-weight:600;}
+    #address-group{font-size:20px; font-weight:600; display:inline-block;}
+    #group-name{color:rgb(96, 96, 96); font-size:18px; font-weight:600;  margin-left:20px;}
     
     /*검색*/
     #searchKey{width:200px; height:25px; border:1px solid gray; border-radius:5px;}
@@ -31,6 +31,7 @@
     #addBtn2{background: rgb(166, 184, 145); color:white;}
 
     /*주소록 리스트 헤더*/
+    .subheading{display:inline-block; margin-left:650px;}
     .btnGroup{width:80px; height:25px; border:0; border-radius:5px; margin-bottom:10px; color:white;}
     .btnGroup:hover{cursor: pointer; font-weight:600;}
     #delete{background: rgb(134, 134, 134); text-align:center;}
@@ -39,15 +40,15 @@
 
 
     /*주소록 리스트 테이블*/
-    table{
+    #addList{
         margin:auto;
         border-collapse: collapse;
     }
-    th{border-bottom:1px solid gray; padding:5px 0 5px 0;}
-    td{padding:3px 0 3px 0;}
-    input[type="checkbox"]{accent-color:rgb(166, 184, 145);}
+    #addList th{border-bottom:1px solid gray; padding:5px 0 5px 0;}
+    #addList td{padding:3px 0 3px 0;}
+    #addList input[type="checkbox"]{accent-color:rgb(166, 184, 145);}
     .like:hover{cursor: pointer;}
-    tbody>tr:hover{background:rgb(233, 233, 233); font-weight:600;}
+    #addList tbody>tr:hover{background:rgb(233, 233, 233); font-weight:600;}
 
     /*모달 공통css*/
     .modal-header{padding-right:20px;}
@@ -105,15 +106,16 @@
 	</c:if>
 	
     <div class="content-outer">
-	
-        <p id="address-group">개인주소록</p>
-        <p id="group-name">전체</p>
-
-
-        <div class="search" align="right">
+		<div class="search" align="right" style="float:right">
             <input type="text" id="searchKey" placeholder="이름, 회사, 전화번호">
             <button id="searchBtn">검색</button>
         </div>
+        
+        <p id="address-group">개인주소록</p>
+        <p id="group-name">전체</p>
+
+		<br>
+
 
         <div class="addNew">
             <input type="text" class="newAdd" placeholder="이름">
@@ -124,16 +126,17 @@
         </div>
 
         <br><br>
-        <p class="subheading" id="psSubheading"> 총 <b>${ count }</b> 명</p>
+        
 
         <button class="btnGroup" id="delete" data-bs-toggle="modal" data-bs-target="#deleteModal">삭제</button>
         <button class="btnGroup" id="change-group" data-bs-toggle="modal" data-bs-target="#changeModal">그룹변경</button>
         <button class="btnGroup" id="sendMail">메일쓰기</button>
 
+		<p class="subheading" id="psSubheading"> 총 <b>${ count }</b> 명</p>
         <br>
 
         <div id="psLike">
-            <table>
+            <table id="addList">
                 <copgroup>
                     <col style="width:50px;">
                     <col style="width:50px;">
@@ -188,13 +191,7 @@
                 </tbody>
             </table>
         </div>
-		<button id="testAlert">클릭</button>
-		<script>
-			$("#testAlert").click(function(){
-				swal("${ count }", "${ count }", "error");
-			})
-			
-		</script>
+		
         <script>
 	        $("#psCheck").click(function(){ /*체크박스*/
 	            if($(this).prop("checked")){
@@ -318,6 +315,8 @@
 
         <div align="center">
             <ul id="paging">
+            <c:if test="${ not empty list }">
+            
                 <c:if test="${ pi.currentPage ne 1 }">
                    	<li><a href="internalEnt.add?cpage=${ pi.currentPage-1 }"> < </a></li>
                 </c:if>
@@ -337,6 +336,7 @@
                 <c:if test="${ pi.currentPage ne pi.maxPage }">
                    	<li><a href="internalEnt.add?cpage=${ pi.currentPage+1 }"> > </a></li>
                	</c:if>
+            </c:if>
             </ul>
         </div>
        

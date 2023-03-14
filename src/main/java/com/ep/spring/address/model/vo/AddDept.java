@@ -15,5 +15,6 @@ public class AddDept {
 	
 	private int empNo;
 	private String deptCode;
+	private String groupNo;
 
 }

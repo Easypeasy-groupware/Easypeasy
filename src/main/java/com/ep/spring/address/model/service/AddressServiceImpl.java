@@ -89,6 +89,31 @@ public class AddressServiceImpl implements AddressService {
 		return aDao.selectPsFavList(sqlSession, empNo);
 	}
 
+	@Override
+	public int selectPsGroupAddListCount(AddDept ad) {
+		return aDao.selectPsGroupAddListCount(sqlSession, ad);
+	}
+
+	@Override
+	public ArrayList<Address> selectPsGroupAddList(PageInfo pi, AddDept ad) {
+		return aDao.selectPsGroupAddList(sqlSession, pi, ad);
+	}
+
+	@Override
+	public AddGroup selectAddGroup(String group) {
+		return aDao.selectAddGroup(sqlSession, group);
+	}
+
+	@Override
+	public int selectExtPersonalGroup(AddGroup ag) {
+		return aDao.selectExtPersonalGroup(sqlSession, ag);
+	}
+
+	@Override
+	public int insertNewPersonalGroup(AddGroup ag) {
+		return aDao.insertNewPersonalGroup(sqlSession, ag);
+	}
+
 
 
 

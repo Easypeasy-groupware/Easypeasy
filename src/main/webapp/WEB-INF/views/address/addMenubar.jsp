@@ -9,7 +9,7 @@
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 <style>
 	*{padding:0; margin:0}
-	.menubar{width:200px; background:white; float:left;}
+	.menubar{width:200px; height:1000px; background:white; float:left; border-right:1px solid rgb(185, 187, 221); margin-right:20px;}
 	a{text-decoration:none; font-size:14px; color:black;}
 	a:hover{font-weight:600; color:black;}
 	li{list-style:none;}
@@ -88,9 +88,9 @@
         </div>
         <ul class="submenu" id="pslist" style="display:none;">
         	<c:forEach var="p" items="${ pList }">
-        		<li><a href="psGroup.add?group=${ p.groupName }">- ${ p.groupName } </a></li>
+        		<li><a href="psGroup.add?group=${ p.groupNo }">- ${ p.groupName } </a></li>
         	</c:forEach>
-        	<li><a href="psGroup.add?group=etc">- 기타 </a></li>
+        	<li><a href="psGroup.add">- 기타 </a></li>
         </ul>
     
         <br>

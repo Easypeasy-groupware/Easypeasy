@@ -80,6 +80,30 @@ public class AddressDao {
 		return (ArrayList)sqlSession.selectList("addressMapper.selectPsFavList", empNo);
 	}
 
+	public int selectPsGroupAddListCount(SqlSessionTemplate sqlSession, AddDept ad) {
+		return sqlSession.selectOne("addressMapper.selectPsGroupAddListCount", ad);
+	}
+
+	public ArrayList<Address> selectPsGroupAddList(SqlSessionTemplate sqlSession, PageInfo pi, AddDept ad) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("addressMapper.selectPsGroupAddList", ad, rowBounds);
+	}
+
+	public AddGroup selectAddGroup(SqlSessionTemplate sqlSession, String group) {
+		return sqlSession.selectOne("addressMapper.selectAddGroup", group);
+	}
+
+	public int selectExtPersonalGroup(SqlSessionTemplate sqlSession, AddGroup ag) {
+		return sqlSession.selectOne("addressMapper.selectExtPersonalGroup", ag);
+	}
+
+	public int insertNewPersonalGroup(SqlSessionTemplate sqlSession, AddGroup ag) {
+		return sqlSession.insert("addressMapper.insertNewPersonalGroup", ag);
+	}
+
 
 
 	

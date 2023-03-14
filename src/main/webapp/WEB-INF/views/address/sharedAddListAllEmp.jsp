@@ -24,13 +24,12 @@
     #searchBtn{width:50px; height:25px; border:0; border-radius:5px; background: rgb(166, 184, 145); color:white;}
 
 
-
-    /*주소록 리스트 헤더*/
-    .btnGroup{width:80px; height:25px; border:0; border-radius:5px; margin-bottom:10px; color:white;}
-    .btnGroup:hover{cursor: pointer; font-weight:600;}
-    #sendMail{background: rgb(77, 88, 64);}
-
-	.subheading{display:inline-block; margin-left:850px;}
+	.subheading{display:inline-block; margin-left:820px;}
+	
+	/*주소록 리스트 헤더*/
+	.btnGroup{width:80px; height:25px; border:0; border-radius:5px; margin-bottom:10px; color:white; display:inline-block;}
+	.btnGroup:hover{cursor: pointer; font-weight:600;}
+	#sendMail{background: rgb(77, 88, 64);}
 
     /*주소록 리스트 테이블*/
     #addList{
@@ -63,17 +62,14 @@
         </div>
         
         <p id="address-group">공유주소록</p>
-        
-
-        
         <p id="group-name">사내주소록(전체)</p>
 
-
+		<br><br>
 		
-        <button class="btnGroup" id="sendMail">메일쓰기</button> 
+        <button class="btnGroup" id="sendMail">메일쓰기</button>
         
-        <p class="subheading" id="psSubheading">총 <b>${ count }</b>명</p>
-
+		<p class="subheading" id="psSubheading"> 총 <b>${ count }</b>명</p>
+		
         <br>
 
         <div id="psLike">

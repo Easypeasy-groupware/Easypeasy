@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ep.spring.address.model.service.AddressService;
 import com.ep.spring.address.model.vo.AddDept;
 import com.ep.spring.address.model.vo.AddFavorite;
+import com.ep.spring.address.model.vo.AddGroup;
 import com.ep.spring.address.model.vo.Address;
 import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.common.model.vo.PageInfo;
@@ -32,7 +34,7 @@ public class AddressController {
 	
 	@RequestMapping("newPsForm.add") // 개인주소록 등록화면
 	public String newPsAddForm() {
-		return "address/newPersonalAddress";
+		return "address/newPersonalAddressForm";
 	}
 	
 	@RequestMapping("insertNewPs.add")
@@ -93,7 +95,9 @@ public class AddressController {
 		case "marketing" : deptName = "D6"; break;
 		}
 		
-		AddDept ad = new AddDept(empNo, deptName);
+		AddDept ad = new AddDept();
+		ad.setEmpNo(empNo);
+		ad.setDeptCode(deptName);
 		
 		int listCount = aService.selectDeptEmpListCount(ad);
 		
@@ -143,8 +147,50 @@ public class AddressController {
 		return mv;
 	}
 	
+	@RequestMapping("psGroup.add") // 개인주소록 그룹별 리스트
+	public ModelAndView selectPsGroupAddList(@RequestParam(value="cpage", defaultValue="1") int currentPage, String group, ModelAndView mv, HttpSession session) {
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+
+		AddDept ad = new AddDept();
+		ad.setEmpNo(empNo);
+		ad.setGroupNo(group);
+		
+		AddGroup ag = aService.selectAddGroup(group);
+		
+		int listCount = aService.selectPsGroupAddListCount(ad);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		ArrayList<Address> list = aService.selectPsGroupAddList(pi, ad);
+		
+		ArrayList<AddFavorite> fList = aService.selectPsFavList(empNo);
+		
+		mv.addObject("ag", ag)
+		  .addObject("count", listCount)
+		  .addObject("list", list)
+		  .addObject("fList", fList)
+		  .addObject("pi", pi)
+		  .setViewName("address/personalGroupAddList");
+		return mv;
+	}
 	
-	
+	@ResponseBody
+	@RequestMapping(value="insertPsGroup.add", produces="application/json; charset=utf-8")
+	public String ajaxInsertPersonalGroup(AddGroup ag) {
+		
+		int result1 = aService.selectExtPersonalGroup(ag);
+		
+		if(result1 > 0) { // 중복된 그룹 있음
+			
+			return "fail";
+			
+		}else { // 중복된 그룹 없음
+			int result2 = aService.insertNewPersonalGroup(ag);
+			
+			return result2 > 0 ? "success" : "fail";
+		}
+		
+	}
 	
 	
 	
