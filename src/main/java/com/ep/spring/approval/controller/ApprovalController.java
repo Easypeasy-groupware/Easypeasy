@@ -198,7 +198,7 @@ public class ApprovalController {
 	
 	@RequestMapping("detailSPrg.ap")
 	public String selectDetailSPrg(@RequestParam(value="no") int appNo, @RequestParam(value="form") String formName,
-								HttpSession session, Model model) {
+								@RequestParam(value="st")String st, HttpSession session, Model model) {
 		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		
 		
@@ -208,7 +208,13 @@ public class ApprovalController {
 		a.setFormName(formName);
 		a.setWriterNo(eNo);
 		
+		if(st.equals("기안진행")) {
+			a.setTstatus("진행중");
+		}	
+		
 		Approval ap = aService.selectDetailSPrgAp(a);
+			
+		
 		ArrayList<ApprovalLine> list1 = aService.selectDetailSPrgAl(a);
 		ArrayList<Attachment> list3 = aService.selectDetailSPrgAt(a);
 		
@@ -275,8 +281,7 @@ public class ApprovalController {
 	@RequestMapping("delete.ap")
 	public String deleteApproval(@RequestParam(value="no")int appNo, HttpSession session, ArrayList<String> filePath) {
 		
-		System.out.println(appNo);
-		System.out.println(filePath);
+
 		int result = aService.deleteApproval(appNo);
 		
 		System.out.println(result);
@@ -295,6 +300,58 @@ public class ApprovalController {
 			AlertMsg msg = new AlertMsg("문서삭제", "삭제에 실패했습니다.");
 			session.setAttribute("failMsg", msg);
 			return "redirect:main.ap";
+		}
+		
+	}
+	
+	@RequestMapping("detailRec.ap")
+	public String selectRecDetail(int no, String form, String st, HttpSession session, Model model) {
+		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
+		
+		
+		Approval a = new Approval();
+		a.setAppNo(no);
+		a.setFormName(form);
+		a.setReceiverNo(eNo);
+		
+		if(st.equals("결재대기")) {
+			a.setTstatus("진행중");
+		}	
+		
+		Approval ap = aService.selectDetailRec(a);
+		
+		ArrayList<ApprovalLine> list1 = aService.selectDetailSPrgAl(a);
+		ArrayList<Attachment> list3 = aService.selectDetailSPrgAt(a);
+		
+		model.addAttribute("ap", ap);
+		model.addAttribute("list1", list1);
+		model.addAttribute("list3", list3);
+
+		if(a.getFormName().equals("업무기안")) {
+			
+			return "approval/appDraftDetailView";
+			
+		}else if(a.getFormName().equals("일반품의서")) {
+			
+			return"approval/appProposalDetailView";
+			
+		}else if(a.getFormName().equals("휴가신청서")) {
+			
+			VacationForm vf = aService.selectDetailSPrgVf(a);
+			model.addAttribute("vf", vf);
+			return"approval/appVacationDetailView";
+			
+		}else if(a.getFormName().equals("연장근무신청서")) {
+			
+			OverTimeForm ot = aService.selectDetailSPrgOt(a);
+			model.addAttribute("ot",ot);
+			return"approval/appOvertimeDetailView";
+			
+		}else {
+			AlertMsg msg = new AlertMsg("페이지 요청실패", "페이지요청에 실패했습니다.");
+			session.setAttribute("failMsg", msg);
+			return"redirect:main.ap";
 		}
 		
 	}
