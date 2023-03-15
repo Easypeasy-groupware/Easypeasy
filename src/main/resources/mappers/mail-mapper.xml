@@ -98,5 +98,51 @@
 		  , #{ mailContent }
 		  )
 	</insert>
+	
+	<insert id="receiveMail" parameterType="java.util.List">
+		insert
+		  into rec_mail
+		  (
+			RECEP_MAIL_NO
+		  , MAIL_NO
+		  , RECEP_MAIL_ADDRESS
+		  , SEND_MAIL_ADDRESS
+		  , MAIL_TITLE
+		  , MAIL_CONTENT
+		  , REC_DATE
+		  , IMPOR_MAIL
+		  , REFERENCE
+		  , HIDDEN_REFERENCE
+		  )
+		  values
+		  <foreach item="Mail" collection="list">
+			  (
+			    seq_recmano.nextval
+			  , seq_mano.currval
+			  , #{ Mail.recMailAdd }
+			  , #{ Mail.sendMailAdd }
+			  , #{ Mail.mailTitle }
+			  , #{ Mail.mailContent }
+			  , sysdate
+			  , #{ Mail.imporMail }
+			  <choose>
+			  	<when test = "Mail.reference == Y" >
+			  		, 'Y'
+			  	</when>
+			  	<otherwise>
+			  		, 'N'
+			  	</otherwise>
+			  </choose>
+			  <choose>
+			  	<when test = "Mail.hiddenReference == Y" >
+			  		, 'Y'
+			  	</when>
+			  	<otherwise>
+			  		, 'N'
+			  	</otherwise>
+			  </choose>
+			  )
+		  </foreach>
+	</insert>
 
 </mapper>
