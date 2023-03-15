@@ -71,6 +71,9 @@ public interface ApprovalService {
 	
 	// 13. 결재대기/ 결재전체 문서 상세페이지 조회용 서비스
 	Approval selectDetailRec(Approval a);
+	
+	// 14. 참조자 조회수 증가 서비스
+	int updateCount(Approval a);
 
 	
 

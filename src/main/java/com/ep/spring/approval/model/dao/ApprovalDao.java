@@ -165,6 +165,9 @@ public class ApprovalDao {
 		return sqlSession.selectOne("approvalMapper.selectDetailRec", a);
 	}
 	
+	public int updateCount(SqlSessionTemplate sqlSession, Approval a) {
+		return sqlSession.update("approvalMapper.updateCount", a);
+	}
 
 	
 

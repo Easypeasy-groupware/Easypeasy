@@ -58,10 +58,13 @@
                 <div class="left-form2">
                 <c:choose>
                     <c:when test="${loginUser.empNo eq ap.writerNo }" >
-                        <p style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서삭제</p> |
-                        <p style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">기안수정</p>
+                        <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서삭제</span> |
+                        <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">기안수정</span>
                         <br><br>
-                    </c:when>    
+                    </c:when>   
+                    <c:when test="${ap.st eq '참조대기' || ap.st eq '참조전체'}" >
+                        <br><br>
+                    </c:when>   
                     <c:otherwise>
                         <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#approval">결재</a> |  
                         <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#companion">반려</a> |
@@ -201,17 +204,14 @@
             
             <div class="left-form5">
                 <table class="table-bordered" >
+
                     <tr>
-                        <td width="100px;" style="text-align:center">협조부서</td>
-                        <td width="700px;"></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center">제목</td>
-                        <td></td>
+                        <td width="100px;" style="text-align:center">제목</td>
+                        <td width="700px;">${ap.title }</td>
                     </tr>
                     <tr>
                         <td rowspan="5" style="text-align:center">내용</td>
-                        <td rowspan="5" height="150px;">내용</td>
+                        <td rowspan="5" height="150px;">${ap.content }</td>
                     </tr>
                     <tr>
                     </tr>
@@ -227,7 +227,18 @@
                    
                     <tr>
                         <td style="text-align:center">첨부파일</td>
-                        <td></td>
+                        <td>
+                        	<c:choose>
+                        		<c:when test="${empty list3 }">
+                        			첨부파일이 없습니다.
+                        		</c:when>
+                        		<c:otherwise>
+                        			<c:forEach var="t" items="${list3 }">
+                        				<a href="${t.changeName }" download="${t.originName }">${t.originName }</a>
+                        			</c:forEach>
+                        		</c:otherwise>
+                        	</c:choose>
+                        </td>
                     </tr>
                 </table>
             </div>

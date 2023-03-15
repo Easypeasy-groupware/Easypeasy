@@ -309,7 +309,6 @@ public class ApprovalController {
 		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		
 		
-		
 		Approval a = new Approval();
 		a.setAppNo(no);
 		a.setFormName(form);
@@ -317,9 +316,25 @@ public class ApprovalController {
 		
 		if(st.equals("결재대기")) {
 			a.setTstatus("진행중");
-		}	
+		}
 		
 		Approval ap = aService.selectDetailRec(a);
+		
+		if(st.equals("참조대기")) {
+			ap.setSt("참조대기");
+			
+			int result = aService.updateCount(a);
+			
+			if(result < 0) {
+				AlertMsg msg = new AlertMsg("페이지 요청실패", "페이지요청에 실패했습니다.");
+				session.setAttribute("failMsg", msg);
+				return"redirect:main.ap";
+			}
+			
+		}else if(st.equals("참조전체")) {
+			ap.setSt("참조전체");
+		}
+		
 		
 		ArrayList<ApprovalLine> list1 = aService.selectDetailSPrgAl(a);
 		ArrayList<Attachment> list3 = aService.selectDetailSPrgAt(a);

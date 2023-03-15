@@ -551,7 +551,8 @@
 				   from app_line a
 				   left join employee b on (a.emp_no = b.emp_no)
 				   left join department c on (b.dept_code = c.dept_code)
-				  where app_no = #{appNo}	 
+				  where app_no = #{appNo}	
+				  	and ref_whether = 'N' 
 				  order 
 				     by app_seq_no
 	</select>
@@ -675,6 +676,19 @@
                   </if>
 				    and a.status = '1'
 	</select>
+	
+	<update id="updateCount">
+				update 
+				       app_line
+				   set count = count+1
+				 where app_line_no = (
+				                        select app_line_no
+				                          from app_line
+				                         where ref_whether = 'Y'
+				                           and emp_no = 6
+				                           and app_no = #{appNo}
+				                        )	
+	</update>
 	
 	
 	

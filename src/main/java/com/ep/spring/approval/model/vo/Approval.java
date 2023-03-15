@@ -33,5 +33,6 @@ public class Approval {
 	private String updateDate;
 	private String jobCode;
 	private int receiverNo;
+	private String st;
 	
 }
