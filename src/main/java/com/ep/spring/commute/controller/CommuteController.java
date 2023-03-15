@@ -17,6 +17,8 @@ import com.ep.spring.commute.model.service.CommuteService;
 import com.ep.spring.commute.model.vo.Commute;
 import com.ep.spring.commute.model.vo.VacationRecode;
 import com.ep.spring.login.controller.EmployeeController;
+import com.ep.spring.login.model.service.EmployeeService;
+import com.ep.spring.login.model.service.EmployeeServiceImpl;
 import com.ep.spring.login.model.vo.Employee;
 
 
@@ -25,6 +27,9 @@ public class CommuteController {
 	
 	@Autowired
 	private CommuteService cService;
+	
+	@Autowired
+	private EmployeeService eService;
 	
 		//근태관리 메인페이지(일반사용자)
 		@RequestMapping("commute.ep")
@@ -98,14 +103,12 @@ public class CommuteController {
 		@ResponseBody
 		@RequestMapping("updateStatus")
 		public String updateStatus(Employee e, HttpSession session) {
-			
 			int result = cService.updateStatus(e);
+			e.setEmpId(((Employee)session.getAttribute("loginUser")).getEmpId());
+			Employee loginUser = eService.loginEmployee(e);
 			
-			
-			
-			
+			session.setAttribute("loginUser", loginUser);
 			return result > 0 ? "success" : "fail";
-			
 		}
 		
 	
