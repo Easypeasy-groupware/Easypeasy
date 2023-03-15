@@ -172,6 +172,14 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return aDao.deleteApproval(sqlSession, appNo);
 	}
 
+	@Override
+	public Approval selectDetailRec(Approval a) {
+		return aDao.selectDetailRec(sqlSession, a);
+	}
+
+
+
+
 
 
 

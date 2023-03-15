@@ -111,14 +111,15 @@
                                       from app_line
                                      where ref_whether = 'N'
                                        and app_status ='미결재'
-                                       and emp_no = #{empNo}
+                                       and emp_no = #{eNo}
+                                       and app_seq_no = b.app_sequence
                                         )
 			            order 
 			               by b.enroll_date   
 					            
 		               		)a
 		         )
-		         where rnum between 1 and 4               
+		         where rnum between 1 and 4                 
 			  	
 	</select>
 	
@@ -142,7 +143,7 @@
 							   join  employee e on (a.emp_no = e.emp_no)
 							  where a.status = '1'
 							    and app_tstatus = '진행중'
-							    and a.emp_no = #{empNo}
+							    and a.emp_no = #{eNo}
 					            order 
 					               by enroll_date   
 		               		)c
@@ -163,8 +164,10 @@
 	<select id="selectWaitingAListCount" resultType="_int">
 				select
 						count(*)
-				   from  approval 
-				  where status = '1'
+				   from  approval b
+                   left join  employee e on (b.emp_no = e.emp_no)
+                   left join attachment on (ref_no = app_no)
+				  where b.status = '1'
 				    and app_tstatus = '진행중'
 				    and app_no = (
                                    select app_no
@@ -172,9 +175,10 @@
                                     where ref_whether = 'N'
                                       and app_status ='미결재'
                                       and emp_no = #{empNo}
+                                      and app_seq_no = b.app_sequence
                                        )
 		            order 
-		               by enroll_date  
+		               by b.enroll_date   
 			       
 	</select>
 	
@@ -192,8 +196,8 @@
                           , emp_name
                           , origin_name
 				   from  approval b
-                      join  employee e on (b.emp_no = e.emp_no)
-                      join attachment on (ref_no = app_no)
+                   left join  employee e on (b.emp_no = e.emp_no)
+                   left join attachment on (ref_no = app_no)
 				  where b.status = '1'
 				    and app_tstatus = '진행중'
 				    and app_no = (
@@ -202,6 +206,7 @@
                                     where ref_whether = 'N'
                                       and app_status ='미결재'
                                       and emp_no = #{empNo}
+                                      and app_seq_no = b.app_sequence
                                        )
 		            order 
 		               by b.enroll_date                                            	
@@ -245,6 +250,7 @@
                                       and emp_no = #{empNo}
                                       and count = 0
                                        )
+                                       
 		            order 
 		               by b.enroll_date        		
 	</select>
@@ -303,13 +309,14 @@
 	<select id="selectRecListCount" resultType="_int">
 		select 
         		count(*)
-		   from approval
+		   from approval a
 		  where status = 1
 		    and app_no = (
 		                    select distinct app_no
 		                      from app_line
 		                     where ref_whether = 'N'
 		                       and emp_no = #{empNo}
+		                       and app_seq_no <![CDATA[ <= ]]> a.app_sequence
 		                  )
         
 	</select>
@@ -336,6 +343,8 @@
 				                      from app_line
 				                     where ref_whether = 'N'
 				                       and emp_no = #{empNo}
+				                       and app_seq_no <![CDATA[ <= ]]> a.app_sequence
+				                       
 				                  )
 				    and update_date = (select max(update_date)
 				                        from app_line
@@ -382,6 +391,11 @@
 				                     where ref_whether = 'Y'
 				                       and emp_no = #{empNo}
 				    )
+				    and update_date = (select max(update_date)
+				                        from app_line
+				                       where ref_whether = 'N'
+				                         and app_no = a.app_no
+				                    )   				    
 				   order by a.enroll_date
 	</select>
 	
@@ -510,7 +524,9 @@
 				  join employee b on (a.emp_no = b.emp_no)
 				  join department c on (b.dept_code = c.dept_code)
 				  where a.emp_no = #{writerNo}
-				    and APP_TSTATUS = '진행중'
+                  <if test="#{tstatus} == '진행중'">
+                    and APP_TSTATUS = '진행중'
+                  </if>
 				    and a.status = '1'
 				    and app_no = #{appNo}	
 	</select>
@@ -533,8 +549,8 @@
 				        , job_code
 				        , emp_profile
 				   from app_line a
-				   join employee b on (a.emp_no = b.emp_no)
-				   join department c on (b.dept_code = c.dept_code)
+				   left join employee b on (a.emp_no = b.emp_no)
+				   left join department c on (b.dept_code = c.dept_code)
 				  where app_no = #{appNo}	 
 				  order 
 				     by app_seq_no
@@ -629,5 +645,37 @@
 				   set status = 3
 				 where app_no = #{appNo} 	
 	</update>
+
+	<select id="selectDetailRec" resultMap="approvalResult">
+				select 
+				        APP_NO
+				        , to_char(a.ENROLL_DATE, 'YYYY-MM-dd') as "enroll_date"
+				        , a.STATUS
+				        , APP_TSTATUS
+				        , WRITER_COMMENT
+				        , TITLE
+				        , CONTENT
+				        , a.EMP_NO
+				        , FORM_NAME
+				        , CONSER_PERIOD
+				        , SEC_GRADE
+				        , FORM_CODE
+				        , APP_AMOUNT
+				        , APP_SEQUENCE
+				        , APP_CHANGE
+				        , emp_name
+				        , dept_name
+				        , job_code
+				  from approval a
+				  join employee b on (a.emp_no = b.emp_no)
+				  join department c on (b.dept_code = c.dept_code)
+				  where app_no = #{appNo}
+                  <if test="#{tstatus} == '진행중'">
+                    and APP_TSTATUS = '진행중'
+                  </if>
+				    and a.status = '1'
+	</select>
+	
+	
 	
 </mapper>

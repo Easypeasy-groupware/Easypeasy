@@ -32,5 +32,6 @@ public class Approval {
 	private int count;
 	private String updateDate;
 	private String jobCode;
-
+	private int receiverNo;
+	
 }
