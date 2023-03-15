@@ -375,10 +375,10 @@
             <div class="content2">
                 <div class="name">근무현황</div><br>
                 <div class="bbb">
-                <button class="btn-status" onclick="status();" id="WO" value="WO">근무</button>
-                <button class="btn-status" onclick="status();" id="ME" value="ME">회의</button>
-                <button class="btn-status" onclick="status();" id="OW" value="OW">외근</button>
-                <button class="btn-status" onclick="status();" id="OU" value="OU">외출</button>
+                <button class="btn-status" onclick="status(1);" id="WO" value="WO">근무</button>
+                <button class="btn-status" onclick="status(2);" id="ME" value="ME">회의</button>
+                <button class="btn-status" onclick="status(3);" id="OW" value="OW">외근</button>
+                <button class="btn-status" onclick="status(4);" id="OU" value="OU">외출</button>
                 </div> <br>
                 
 
@@ -386,15 +386,57 @@
                     <c:if test="${ not empty c.startTime }">
                     	-- ${ c.startTime } 출근
                     </c:if>
+                    
 
                 </div>
             </div>
             
             <script>
             	let a = "";
-            	function status(){
-            		$(".btn-status")
+            	function status(num){
             		
+            		if(num==1){
+            			a = $("#WO").val();
+            		}else if(num==2){
+            			a = $("#ME").val();
+            		}else if(num==3){
+            			a = $("#OW").val();
+            		}else{
+            			a = $("#OU").val();
+            		}
+            		
+            		
+            		updateStatus(a);
+            		
+            	}
+            	
+            	function updateStatus(a){
+            		$.ajax({
+            			url:"updateStatus",
+            			data:{
+            				empNo:${loginUser.empNo},
+            				status:a
+            			},
+            			success:function(result){
+	                		if(result=="success"){
+	                			console.log(result);
+	                			swal({
+	                	            title:   '근무상태 등록', 
+	                	            text: "근무상태가 등록되었습니다.", 
+	                	            icon: "success",
+	                	            button: "확인"
+	                	         });
+	                		}
+	                	},error:function(){
+	                		console.log("퇴근시간등록 ajax 통신실패");
+	                		swal({
+                	            title:   '근무상태 등록', 
+                	            text: "근무상태 등록에 실패했습니다.", 
+                	            icon: "error",
+                	            button: "확인"
+                	         });
+	                	}
+            		})
             	}
             </script>
             

@@ -51,6 +51,13 @@
 		   and enroll_date = #{enrollDate}
 	</update>
 	
+	<update id="updateStatus">
+		update
+		       employee
+		   set status = #{status}
+		 where emp_no = #{empNo}
+	</update>
+	
 	<select id="commuteMainPage" resultMap="commuteResult">
 	
 		select

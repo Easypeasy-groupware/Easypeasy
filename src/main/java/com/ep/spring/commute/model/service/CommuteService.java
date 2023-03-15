@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.ep.spring.approval.model.vo.VacationForm;
 import com.ep.spring.commute.model.vo.Commute;
 import com.ep.spring.commute.model.vo.VacationRecode;
+import com.ep.spring.login.model.vo.Employee;
 
 
 public interface CommuteService {
@@ -19,7 +20,7 @@ public interface CommuteService {
 	int outTime(Commute c);
 	
 	//Employee상태변경(근무,회의,외출,외근)
-	int updateStatus(Commute c);
+	int updateStatus(Employee e);
 	
 	//12시마다 insert scheduler
 	int insertCommuteDay();
