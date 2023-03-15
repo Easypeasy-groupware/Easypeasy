@@ -351,6 +351,17 @@
 			 , 'P'
 			 )     
 	</insert>
+	
+	<select id="selectPersonalGroupList" resultMap="addGroupResult">
+		select
+		       group_no
+			 , emp_no
+			 , group_name
+			 , add_type
+		  from add_group
+		 where emp_no = #{empNo}
+		   and add_type = 'P'
+	</select>
 
 
 

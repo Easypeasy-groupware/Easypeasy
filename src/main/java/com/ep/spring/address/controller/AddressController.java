@@ -20,6 +20,7 @@ import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.common.template.Pagination;
 import com.ep.spring.login.model.vo.Employee;
+import com.google.gson.Gson;
 
 @Controller
 public class AddressController {
@@ -175,24 +176,32 @@ public class AddressController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="insertPsGroup.add", produces="application/json; charset=utf-8")
+	@RequestMapping(value="insertPsGroup.add")
 	public String ajaxInsertPersonalGroup(AddGroup ag) { // 개인주소록 그룹 추가
 		
 		int result1 = aService.selectExtPersonalGroup(ag);
-		System.out.println("1 : " + result1);
+		
 		if(result1 > 0) { // 중복된 그룹 있음
-			
 			return "fail";
 			
 		}else { // 중복된 그룹 없음
-			
 			int result2 = aService.insertNewPersonalGroup(ag);
-			System.out.println("2 : " + result2);
 			return result2 > 0 ? "success" : "fail";
 		}
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="listPsGroup.add", produces="application/json; charset=utf-8")
+	public String ajaxSelectPersonalGroupList(int empNo, HttpSession session) {
+		
+		ArrayList<AddGroup> list = aService.selectPersonalGroupList(empNo);
+		
+		session.setAttribute("pList", list); 
+		
+		return new Gson().toJson(list);
+		
+	}
 	
 	
 	

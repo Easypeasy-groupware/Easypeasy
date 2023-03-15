@@ -55,6 +55,9 @@ public interface AddressService {
 	int selectExtPersonalGroup(AddGroup ag);
 	int insertNewPersonalGroup(AddGroup ag);
 	
+	// 10. 개인주소록 그룹 조회(ajax)
+	ArrayList<AddGroup> selectPersonalGroupList(int empNo);
+	
 	
 
 }

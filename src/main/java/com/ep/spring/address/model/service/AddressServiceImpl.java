@@ -114,6 +114,11 @@ public class AddressServiceImpl implements AddressService {
 		return aDao.insertNewPersonalGroup(sqlSession, ag);
 	}
 
+	@Override
+	public ArrayList<AddGroup> selectPersonalGroupList(int empNo) {
+		return aDao.selectPersonalGroupList(sqlSession, empNo);
+	}
+
 
 
 
