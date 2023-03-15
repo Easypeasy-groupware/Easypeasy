@@ -76,6 +76,7 @@ public class CommuteController {
 					
 		}
 		
+		//휴가내역 메인페이지
 		@RequestMapping("vac.ep")
 		public String selectVacMain(HttpSession session) {
 			int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
@@ -84,6 +85,13 @@ public class CommuteController {
 			ArrayList<VacationForm> list2 = cService.selectVacForm(empNo);
 			
 			session.setAttribute("list1", list1);
+			session.setAttribute("list2", list2);
+			
+			//System.out.println(list1);
+			//System.out.println(list2);
+			
+			
+			
 			return "vacation/vacationMain";
 		}
 	

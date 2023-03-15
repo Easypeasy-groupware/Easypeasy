@@ -58,13 +58,13 @@ public class CommuteServiceImpl implements CommuteService{
 	@Override
 	public ArrayList<VacationRecode> selectVacMain(int empNo) {
 		
-		return null;
+		return cDao.selectVacMain(sqlSession, empNo);
 	}
 
 	@Override
 	public ArrayList<VacationForm> selectVacForm(int empNo) {
 		
-		return null;
+		return cDao.selectVacForm(sqlSession, empNo);
 	}
 	
 	

@@ -37,11 +37,11 @@ public class CommuteDao {
 	}
 	
 	public ArrayList<VacationRecode> selectVacMain(SqlSessionTemplate sqlSession, int empNo){
-		return (ArrayList)sqlSession.selectList("vacationMapper.selectVacMain", empNo);
+		return (ArrayList)sqlSession.selectList("commuteMapper.selectVacMain", empNo);
 	}
 	
 	public ArrayList<VacationForm> selectVacForm(SqlSessionTemplate sqlSession, int empNo){
-		return (ArrayList)sqlSession.selectList("vacationMapper.selectVacForm", empNo);
+		return (ArrayList)sqlSession.selectList("commuteMapper.selectVacForm", empNo);
 	}
 
 }

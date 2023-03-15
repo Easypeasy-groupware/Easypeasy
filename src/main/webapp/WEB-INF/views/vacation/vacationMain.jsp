@@ -115,7 +115,7 @@
                 <img src="" alt="">
                 
             </div>
-            <div class="name">정형돈 님</div>
+            <div class="name">${ loginUser.empName }님</div>
 
             <table class="table1">
                 <tr>
@@ -129,7 +129,7 @@
                 </tr>
 
                 <tr>
-                    <td>정형돈</td>
+                    <td>${ loginUser.empName }</td>
                     <td>인사팀</td>
                     <td>16</td>
                     <td>2</td>

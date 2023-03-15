@@ -103,16 +103,18 @@
 	</select>
 	
 	<select id="selectVacForm" resultMap="vacFormResult">
-				 SELECT 
-				          APP_NO
-				        , VAC_KIND
-				        , VAC_START
-				        , VAC_END
-				        , HALF_STATUS
-				        , VAC_USE
-				        , HALF_DAY
-				   from vac_form
-				  where app_no = #{appNo}
+                 select  app_no
+                        , vac_kind
+                        , vac_start
+                        , vac_end
+                        , half_status
+                        , vac_use
+                        , half_day
+				   from vac_form v
+                   join approval a
+                     using (app_no)
+				  where a.emp_no = #{empNo}
+                    and a.form_code = 3
 	</select>
 	
 
