@@ -57,19 +57,17 @@
             </div>
             <div class="left-form2">
                 <c:choose>
-                    <c:when test="${loginUser.empNo eq ap.empNo }" >
-                        <p style="padding:20px; color:rgb(71, 71, 71);">문서삭제</p> |
-                        <p style="padding:20px; color:rgb(71, 71, 71);">기안수정</p>
+                    <c:when test="${loginUser.empNo eq ap.writerNo }" >
+                        <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서삭제</span> |
+                        <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">기안수정</span>
                         <br><br>
                     </c:when>    
-                                    <!-- 결재자일때 보일버튼 -->
-                    <otherwise>
+                    <c:otherwise>
                         <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#approval">결재</a> |  
                         <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#companion">반려</a> |
                         <a href="" style="padding:20px; color:rgb(71, 71, 71);">문서수정</a>
                         <br><br>
-                    </otherwise>    
-                        
+                    </c:otherwise>    
                 </c:choose>
                 
                 <!-- 몰래 수정하거나 삭제하기  -->
@@ -170,7 +168,7 @@
 			               </c:forEach>
 		                 </c:otherwise>   
                     </c:choose>
-                </table>
+                
                 <br><br><br><br>
                 
             </div>
@@ -204,11 +202,11 @@
                     </tr>
                     <tr>
                         <td style="text-align:center">제목</td>
-                        <td></td>
+                        <td>${ap.title }</td>
                     </tr>
                     <tr>
                         <td rowspan="5" style="text-align:center">내용</td>
-                        <td rowspan="5" height="150px;">내용</td>
+                        <td rowspan="5" height="150px;">${ap.content }</td>
                     </tr>
                     <tr>
                     </tr>

@@ -19,7 +19,7 @@ public interface MailService {
 	int insertTag(MailTag t);
 
 	// 3. 메일 보내기
-	int sendMail(Mail m);
+	int sendMail(Mail m, ArrayList<Mail> mList);
 
 	
 

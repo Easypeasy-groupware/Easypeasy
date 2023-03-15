@@ -1,6 +1,11 @@
 package com.ep.spring.commute.model.service;
 
+import java.util.ArrayList;
+
+import com.ep.spring.approval.model.vo.VacationForm;
 import com.ep.spring.commute.model.vo.Commute;
+import com.ep.spring.commute.model.vo.VacationRecode;
+
 
 public interface CommuteService {
 	
@@ -18,5 +23,9 @@ public interface CommuteService {
 	
 	//12시마다 insert scheduler
 	int insertCommuteDay();
+	
+	//(일반사용자)휴가 메인페이지
+		ArrayList<VacationRecode> selectVacMain(int empNo);
+		ArrayList<VacationForm> selectVacForm(int empNo);
 
 }

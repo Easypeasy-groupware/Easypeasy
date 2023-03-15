@@ -53,7 +53,9 @@
                     	<c:otherwise>
 		                    <c:forEach var="w" items="${list1}">
 			                    <div class="wapp">
+			                    	<input type="hidden" name="aNum" id="aNum" value="${w.appNo }">
 			                        ${w.tstatus} <br>
+			                       <span id="formN"> ${w.formName }</span><br>
 			                        <c:choose>
 				                        <c:when test="${w.formCode == 3 || w.formCode == 4}">
 				                        	${w.formName }
@@ -65,7 +67,7 @@
 			                        <br><br>
 			                        ${w.empName}<br>
 			                        ${w.enrollDate } <br><br>
-			                        <button class="btn btn-outline-secondary">결재하기</button>
+			                        <button type="button" id="recBtn" class="btn btn-outline-secondary" onclick="receiveDetail(${w.appNo },'${w.formName }');">결재하기</button>
 			                    </div>
 		                    </c:forEach>
 	                    </c:otherwise>
@@ -94,7 +96,7 @@
 		                    		<tr>
 		                    			<td colspan='6' >
 				                    		<div align="center">
-				                    			결재 대기중인 문서가 없습니다.
+				                    			기안 진행중인 문서가 없습니다.
 				                    		</div>
 			                    		</td>
 		                    		</tr>
@@ -126,10 +128,17 @@
             <br><br><br><br><br><br><br><br><br><br>
         </div>
         <script>
+        
+        	function receiveDetail(no, form){
+        		
+        		location.href='detailRec.ap?no='+ no +"&form="+ form +"&st=결재대기"; 
+        		
+        	}
+
 	     	// 상세페이지로 이동하는 function
 	     	if(${not empty list2}){
 		        $("table tbody").on("click", "tr", function(){
-		            location.href = 'detailSPrg.ap?no=' + $(this).children().eq(0).text()+"&form="+ $(this).children().eq(2).text(); 
+		            location.href = 'detailSPrg.ap?no=' + $(this).children().eq(0).text()+"&form="+ $(this).children().eq(2).text()+"&st='기안진행'"; 
 		        }); 
 	        }
         </script>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ep.spring.board.model.dao.BoardDao;
 import com.ep.spring.board.model.vo.Board;
 import com.ep.spring.board.model.vo.BoardReply;
+import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
 
 @Service
@@ -31,20 +32,25 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int insertBoard(Board b) {
-		return 0;
+	public ArrayList<Attachment> selectAtList(Attachment a) {
+		return bDao.selectAtList(sqlSession, a);
 	}
-
+	
+	@Override
+	public int insertBoard(Board b) {
+		return bDao.insertBoard(sqlSession, b);
+	}
+	/*
 	@Override
 	public int increaseCount(int boardNo) {
-		return 0;
+		return bDao.increaseCount(sqlSession, boardNo);
 	}
 
 	@Override
 	public Board selectBoard(int boardNo) {
-		return null;
+		return bDao.selectBoard(sqlSession, boardNo);
 	}
-
+*/
 	@Override
 	public int deleteBoard(int boardNo) {
 		return 0;
@@ -69,5 +75,7 @@ public class BoardServiceImpl implements BoardService{
 	public ArrayList<Board> selectTopList() {
 		return null;
 	}
+
+	
 
 }

@@ -7,30 +7,25 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	div{
-        box-sizing: border-box;
-    }
-    
-    #content{
+	
+	#content{
+        border-left: 1px solid lightgray;
         width: 1000px;
         float: left;
-        box-sizing: border-box;
     }
 
     #con-title h5{
-    	color:rgb(93, 109, 75);
-        padding-left: 10px;
-        padding-top: 12px;
-        display: inline-block;
+        color:rgb(93, 109, 75);
+        margin-left: 10px;
+        padding-top: 15px;
     }
     #con-title>select{
-        width: 110px;
-        height: 30px;
-        margin-left: 755px;
+        width: 120px;
+        margin-left: 720px;
         display: inline-block;
     }
 
-	#content-1{
+    #content-1{
 		width: 990px;
 		padding-left: 10px;
 	}
@@ -42,6 +37,17 @@
     #content-1>table{
         width: 980px;
         text-align: center;
+    }
+
+    p{
+        border: 1px solid lightgray;
+        background-color: #fff5ed;
+        margin: auto;
+        width: 98%;
+        height: 120px;
+        padding: 10px;
+        box-sizing: border-box;
+        border-radius: 5px;
     }
 
     #modal select{
@@ -58,23 +64,7 @@
         border-radius: 5px;
     }
 
-	.dropdown{
-		margin-top: 10px;
-		float: right;
-	}
-	.dropdown button{
-		background: rgb(214, 223, 204);
-		color: white;
-		border: none;
-	}
-	.btn:not(:disabled):not(.disabled) {
-    	cursor: pointer;
-    	background: rgb(214, 223, 204);
-		color: white;
-	}
-
-
-    /* 풀캘린더 */
+	/* 풀캘린더 */
     /* 전체적인 크기 */
     #calendar{
         height: 250px;
@@ -96,72 +86,54 @@
     .fc-daygrid-dot-event > .fc-event-title{
         color:#000 !important;
     }
-    
 </style>
 </head>
 <body>
-	
+
 	<jsp:include page="../common/header.jsp"/>
 
     <jsp:include page="sidebar.jsp"/>
-    
+
     <div id="content">
         <div id="con-title">
             <span>
-                <h5>자산 예약 현황</h5>
+                <h5>빔프로젝터</h5>
             </span>
-            <div class="dropdown">
-			  	<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
-			    	회의실/빔프로젝터
-			  	</button>
-			  	<div class="dropdown-menu">
-				    <a class="dropdown-item" href="main.re">회의실</a>
-				    <a class="dropdown-item" href="beamProjectorMain.re">빔프로젝터</a>
-			  	</div>
-			</div>
+            <br>
+            <p>
+                빔프로젝터 입니다.<br>
+                예약 후 이용바랍니다.<br><br>
+                &lt; 경영지원팀 : 02-222-2222 &gt;
+            </p>
         </div>
         <br>
         <div id="calendar" style="padding-left: 10px; width: 990px; height: 200px;">
             
         </div>
-		<br>
-
         <div id="content-1">
-            <h5>
-                <span>내 예약/대여 현황</span>
-            </h5>
+            <h5><span>자산별 상세 정보</span></h5>
             <table align="center" class="table table-hover table-sm">
                 <thead>
                     <tr>
-                        <th>자산</th>
-                        <th>이름</th>
-                        <th>예약시간</th>
-                        <th>취소</th>
+                        <th>항목</th>
+                        <th>예약</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>빔프로젝터</td>
-                        <td>1번 프로젝터</td>
-                        <td>2023-02-27 13:00 ~ 2023-02-27 15:00</td>
-                        <td>
-                            <button onclick="" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">취소</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>회의실</td>
-                        <td>1번 회의실</td>
-                        <td>2023-02-27 13:00 ~ 2023-02-27 15:00</td>
-                        <td>
-                            <button onclick="" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">취소</button>
-                        </td>
-                    </tr>
+                	<c:forEach var="rb" items="${ beList }">
+	                    <tr>
+	                        <td>${ rb.resourceName }</td>
+	                        <td>
+	                            <button onclick="" class="btn btn-sm btn-light" data-toggle="modal" data-target="#myModal" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">예약</button>
+	                        </td>
+	                    </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
     </div>
-
-
+    
+    
     <!-- myModal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -174,15 +146,17 @@
                 </div>
                 <br>
                 <form action="예약등록" method="post">
+                <input type="hidden" name="resourceNo" value="${ beList.resourceNo }">
+                <input type="hidden" name="reWriter" value="${ loginUser.empNo }">
                     <!-- Modal Body -->
                     <div style="margin: 20px;">
                         <table id="modal">
                             <tr style="height: 45px;">
                                 <td style="width: 80px;">예약일</td>
                                 <td>
-                                    <input type="text" id="sDate" size="11" name="">
+                                    <input type="text" id="sDate" size="11" name="startDate">
                                     <span>
-                                        <select class="sel" name="" id="sel1">
+                                        <select class="sel" name="startTime" id="sel1">
                                             <option value="08:00">08:00</option>
                                             <option value="08:30">08:30</option>
                                             <option value="09:00">09:00</option>
@@ -217,9 +191,9 @@
                                         </select>
                                     </span>
                                     <span>~</span>
-                                    <input type="text" id="eDate" size="11" name="">
+                                    <input type="text" id="eDate" size="11" name="endDate">
                                     <span>
-                                        <select class="sel" name="" id="sel2">
+                                        <select class="sel" name="endTime" id="sel2">
                                             <option value="08:00">08:00</option>
                                             <option value="08:30">08:30</option>
                                             <option value="09:00">09:00</option>
@@ -255,14 +229,14 @@
                                     </span>
                                     &nbsp;
                                     <div class="custom-control custom-checkbox" style="display: inline-block;">
-                                        <input type="checkbox" class="custom-control-input" name="" id="allDay" onclick="allDayShowHidden();">
+                                        <input type="checkbox" class="custom-control-input" name="allDay" id="allDay" onclick="allDayShowHidden();">
                                         <label class="custom-control-label" for="allDay">종일</label>
                                     </div>
                                 </td>
                             </tr>
                             <tr style="height: 45px;">
                             <td>목적</td>
-                            <td colspan="6"><input type="text" name="" size="60" placeholder=" 목적을 입력해주세요" required></td> 
+                            <td colspan="6"><input type="text" name="rePurpose" size="60" placeholder=" 목적을 입력해주세요" required></td> 
                             </tr>
                         </table>
                     </div>
@@ -297,12 +271,17 @@
                 resourceAreaColumns: [
                     {
                         field: 'title',
-                        headerContent: '회의실'
+                        headerContent: '빔프로젝터'
                     },
                 ],
                 resources: [
-                	<c:forEach var="rm" items="${ meList }">
-                		{ id: '${ rm.resourceNo }', title: '${ rm.resourceName }'},
+                	<c:forEach var="rb" items="${ beList }">
+                		{ id: '${ rb.resourceNo }', title: '${ rb.resourceName }'},
+                    </c:forEach>
+                ],
+                events: [
+                	<c:forEach var="rb" items="${ beList }">
+                    	{ id: '${ rb.resourceNo }', resourceId: '${ rb.resourceNo }', start: '2023-03-15 12:00', end: '2023-03-15 15:00', title: 'dd 12:00 ~ 15:00', color: '#d6dfcc' },
                     </c:forEach>
                 ],
                 select: function(info) { // 클릭&드래그
@@ -459,7 +438,7 @@
             }
         }
     </script>
-    
         
+
 </body>
 </html>

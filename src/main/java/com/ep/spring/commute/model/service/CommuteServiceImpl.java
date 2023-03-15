@@ -1,11 +1,16 @@
 package com.ep.spring.commute.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ep.spring.approval.model.vo.VacationForm;
 import com.ep.spring.commute.model.dao.CommuteDao;
 import com.ep.spring.commute.model.vo.Commute;
+import com.ep.spring.commute.model.vo.VacationRecode;
+
 
 @Service
 public class CommuteServiceImpl implements CommuteService{
@@ -48,6 +53,18 @@ public class CommuteServiceImpl implements CommuteService{
 	public int insertCommuteDay() {
 		
 		return cDao.insertCommuteDay(sqlSession);
+	}
+
+	@Override
+	public ArrayList<VacationRecode> selectVacMain(int empNo) {
+		
+		return cDao.selectVacMain(sqlSession, empNo);
+	}
+
+	@Override
+	public ArrayList<VacationForm> selectVacForm(int empNo) {
+		
+		return cDao.selectVacForm(sqlSession, empNo);
 	}
 	
 	

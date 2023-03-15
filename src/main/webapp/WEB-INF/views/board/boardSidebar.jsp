@@ -38,21 +38,21 @@
           	<div class="menu-title">
 				<a href="" id="title">게시판</a>
 			</div>
-            <button type="button" class="btn btn-success" id="topbtn">게시판 추가</button>
+            <button type="button" class="btn btn-success" id="topbtn" onclick="location.href='adminSettings.bo';">게시판 추가</button>
             
             <div class="menu">
                 <ul>
-                    <li><a href="#">전체 공지사항</a></li>
-                    <li><a href="#">식단표</a></li>
+                    <li><a href="list.bo?boardCno=1">전체 공지사항</a></li>
+                    <li><a href="food.bo?boardCno=2">식단표</a></li>
                         
-                    <li><a href="#">자유게시판</a></li>
-                    <li><a href="#">커뮤니티</a></li>
+                    <li><a href="free.bo?boardCno=3">자유게시판</a></li>
+                    <li><a href="comm.bo?boardCno=4">커뮤니티</a></li>
     
                     <li class="submenu">
                         <a href="#" class="dep">부서게시판<span class="collapse-indicator"></span></a>
                          <ul>
-                            <li><a href="#">- 부서 공지사항</a></li>
-                            <li><a href="#">- 부서 자유게시판</a></li>
+                            <li><a href="deplist.bo?boardCno=5">- 부서 공지사항</a></li>
+                            <li><a href="defree.bo?boardCno=6">- 부서 자유게시판</a></li>
                         </ul>
                     </li>
                 </ul>

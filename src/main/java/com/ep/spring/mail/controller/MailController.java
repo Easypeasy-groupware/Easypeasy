@@ -66,10 +66,7 @@ public class MailController {
 	public ModelAndView sendMail(MultipartHttpServletRequest multipartRequest, Attachment at, Mail m, ModelAndView mv, 
 			  					 HttpSession session, String recMailAdd, String refList, String hRefList) {
 
-		// 메일 발신 처리 진행
-		int sendResult = mService.sendMail(m);
-		
-		
+		System.out.println(m.getImporMail());
 		String mAddList = recMailAdd.substring(0, recMailAdd.length()-1);
 		String[] receiverAddList = mAddList.split(",");
 		String[] refAddList = refList.split("참조 - ");
@@ -82,6 +79,11 @@ public class MailController {
 			Mail mail = new Mail();
 			mail.setSendMailAdd(m.getSendMailAdd());
 			mail.setRecMailAdd(receiverAddList[i]);
+			if(m.getImporMail() == "on") {
+				mail.setImporMail("Y");
+			}else {
+				mail.setImporMail("N");
+			}
 			mList.add(mail);
 		}
 		
@@ -91,6 +93,11 @@ public class MailController {
 			mail.setSendMailAdd(m.getSendMailAdd());
 			mail.setRecMailAdd(refAddList[i]);
 			mail.setReference("Y");
+			if(m.getImporMail() == "on") {
+				mail.setImporMail("Y");
+			}else {
+				mail.setImporMail("N");
+			}
 			mList.add(mail);
 		}
 		
@@ -100,9 +107,15 @@ public class MailController {
 			mail.setSendMailAdd(m.getSendMailAdd());
 			mail.setRecMailAdd(hidRefAddList[i]);
 			mail.setHiddenReference("Y");
+			if(m.getImporMail() == "on") {
+				mail.setImporMail("Y");
+			}else {
+				mail.setImporMail("N");
+			}
 			mList.add(mail);
 		}
-//		int receiveResult = 
+		
+		int sendResult = mService.sendMail(m, mList);
 		
 		if(!multipartRequest.getFiles("orginNames").isEmpty()) {
 			ArrayList<Attachment> atList = new ArrayList<>();

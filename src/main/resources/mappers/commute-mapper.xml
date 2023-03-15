@@ -13,6 +13,26 @@
 		<result column="work_time" property="workTime" />
 		<result column="com_status" property="comStatus" />
 	</resultMap>
+	
+	<resultMap type="VacationRecode" id="vacResult">
+		<id column="vac_recode" property="vacRecode" />
+		<result column="emp_no" property="empNo" />
+		<result column="vac_days" property="vacDays" />
+		<result column="enroll_date" property="enrollDate" />
+		<result column="vac_reason" property="vacReason" />
+		<result column="vac_divide" property="vacDivide" />
+		<result column="vac_category" property="vacCategory" />
+	</resultMap>
+	
+	<resultMap id="vacFormResult" type="VacationForm">
+		<id column = "app_no" property="appNo" />
+		<result column="vac_kind" property="vacKind" /> 
+		<result column="vac_start" property="vacStart" /> 
+		<result column="vac_end" property="vacEnd" /> 
+		<result column="half_status" property="halfStatus" /> 
+		<result column="vac_use" property="vacUse" /> 
+		<result column="half_day" property="halfDay" /> 
+	</resultMap>
 
 
 	<update id="inTime">
@@ -43,13 +63,12 @@
 			 , com_status
 		  from commute
 		 where emp_no = #{empNo}
+		   and enroll_date = to_char(sysdate, 'YYYY/MM/DD')
 		 
 		
 	</select>
 	
-	<update id="updateStatus">
-		
-	</update>
+
 	
 	<insert id="insertCommuteDay">
 		 insert all
@@ -69,5 +88,34 @@
 		  from employee
 		 where employee.ent_yn = 'N'
 	</insert>
+	
+	<select id="selectVacMain" resultMap="vacResult">
+		select
+				vac_recode
+			  , emp_no
+			  , vac_days
+			  , enroll_date
+			  , vac_reason
+			  , vac_divide
+			  , vac_category
+		   from vac_recode
+		  where emp_no = #{empNo}
+	</select>
+	
+	<select id="selectVacForm" resultMap="vacFormResult">
+                 select  app_no
+                        , vac_kind
+                        , vac_start
+                        , vac_end
+                        , half_status
+                        , vac_use
+                        , half_day
+				   from vac_form v
+                   join approval a
+                     using (app_no)
+				  where a.emp_no = #{empNo}
+                    and a.form_code = 3
+	</select>
+	
 
 </mapper>

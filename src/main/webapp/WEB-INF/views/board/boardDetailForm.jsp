@@ -31,33 +31,48 @@
 	
 		<jsp:include page="../board/boardSidebar.jsp" />
        
-       		
-       
         <div class="board">
         
         	 <h1>전체 공지사항</h1><br><br>
     
 		    <div class="container" style="width:1000px">
 		        <form>
-		            <button type="button" class="btn btn-outline-success btn-sm"> 새글쓰기</button>
-		            <button type="button" class="btn btn-outline-info btn-sm">수정</button>
-		            <button type="button" class="btn btn-outline-dark btn-sm">삭제</button>
-		            <button type="button" class="btn btn-outline-secondary btn-sm" style="float:right">목록으로</button> 
-		            <br><hr><br>
+		            <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enrollForm.bo';"> 새글쓰기</button>
+		            <c:if test="${ loginUser.userId eq b.boardWriter }">
+			            <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
+		                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
+		                 
+		                 <form action="" method="post" id="postForm"> 
+				         	<input type="hidden" name="no" value="${b.boardNo}">
+				         	<input type="hidden" name="filePath" value="${ b.changeName }">
+				         </form>
+			            <script>
+				            function postFormSubmit(num){ 
+				                if(num == 1){ 
+				                	$("#postForm").attr("action", "updateForm.bo").submit();
+				                }else{
+				                	$("#postForm").attr("action", "delete.bo").submit();
+				                }
+				        	}
+				        </script>
+		            </c:if>
 		            
+		              <button type="button" class="btn btn-outline-secondary btn-sm" style="float:right" onclick="location.href='list.bo';">목록으로</button> 
+		             <br><hr><br>
+		             
 		            <table id="contentArea" align="center" class="table" border="1px, solid">
 		                <tr>
-		                    <th width="500" colspan="3">제목입니다</th>
+		                    <th width="500" colspan="3">${b.boardTitle}</th>
 		                </tr>
 		                <tr>
 		                    <td>
 		                        이미지
 		                    </td>
 		                    <td>
-		                        작성자 
+		                        ${b.boardWriter}
 		                    </td>
 		                    <td>
-		                        날짜
+		                        ${b.createDate}
 		                    </td>
 		                </tr>
 		                <tr>
@@ -68,7 +83,7 @@
 		                <tr>
 		                    <td colspan="4">
 		                        <p style="height:150px">
-		                        내용자리
+		                        	${b.boardContent}
 		                        </p>
 		                    </td>
 		                </tr>

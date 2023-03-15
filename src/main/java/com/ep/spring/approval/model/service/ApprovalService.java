@@ -54,7 +54,7 @@ public interface ApprovalService {
 	int selectDeptRefListCount(int eNo);
 	ArrayList<Approval> selectDeptRefList(PageInfo pi, int eNo);
 	
-	// 10. 기안진행문서 상세페이지 조회용 서비스
+	// 10. 기안진행/ 기안문서 상세페이지 조회용 서비스
 	Approval selectDetailSPrgAp(Approval a);
 	ArrayList<ApprovalLine> selectDetailSPrgAl(Approval a);
 	ArrayList<Attachment> selectDetailSPrgAt(Approval a);
@@ -68,5 +68,10 @@ public interface ApprovalService {
 	
 	// 12. 문서 삭제용 서비스
 	int deleteApproval(int appNo);
+	
+	// 13. 결재대기/ 결재전체 문서 상세페이지 조회용 서비스
+	Approval selectDetailRec(Approval a);
+
+	
 
 }

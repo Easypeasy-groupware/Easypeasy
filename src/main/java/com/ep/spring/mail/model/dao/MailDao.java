@@ -23,7 +23,11 @@ public class MailDao {
 		return sqlSession.insert("mailMapper.insertTag", t);
 	}
 
-	public int sendMail(Mail m, SqlSessionTemplate sqlSession) {
+	public int insertSendMail(Mail m, SqlSessionTemplate sqlSession) {
 		return sqlSession.insert("mailMapper.sendMail", m);
+	}
+	
+	public int insertReceiveMail(ArrayList<Mail> mList, SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("mailMapper.receiveMail", mList);
 	}
 }

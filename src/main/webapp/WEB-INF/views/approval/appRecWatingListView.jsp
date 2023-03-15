@@ -70,6 +70,7 @@
 			                    <tr>
 			                        <td>
 			                             <input type="checkbox" name="chk" id="">
+			                              <input type="hidden" id="num" value="${a.appNo }">
 			                        </td>
 			                        <td>${a.enrollDate}</td>
 			                        <td>${a.formName }</td>
@@ -86,7 +87,7 @@
 			                        		<span><img src="resources/common_images/attachment.png" width="10px;"></span>
 			                        	</c:if>
 			                        </td>
-			                        <td>${s.empName }</td>
+			                        <td>${a.empName }</td>
 			                    </tr>
 		                    </c:forEach>
 	                    </c:otherwise>
@@ -146,7 +147,7 @@
     	     	// 상세페이지로 이동하는 function
     	     	if(${not empty list}){
     		        $("table tbody").on("click", "tr", function(){
-    		            location.href = 'xxx.ap?no=' + $(this).children().eq(0).text()+"&form="+ $(this).children().eq(2).text(); 
+    		            location.href = 'detailRec.ap?no=' + $(this).children().eq(0).find("#num").val()+"&form="+ $(this).children().eq(2).text()+"&st=결재대기"; 
     		        }); 
     	        }
             });

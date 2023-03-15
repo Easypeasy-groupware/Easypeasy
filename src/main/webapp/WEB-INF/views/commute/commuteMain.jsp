@@ -102,6 +102,11 @@
         height: 30px;
         border: none;
     }
+    .btn-status{
+    	width: 100px;
+        height: 30px;
+        border: none;
+    }
     .start{
         float: left;
         margin: 20px;
@@ -299,7 +304,7 @@
     	                		console.log("출근시간등록 ajax 통신실패");
     	                		swal({
 	                	            title:   '출근 확인', 
-	                	            text: "출근시간이 기록에 실패했습니다", 
+	                	            text: "출근시간 기록에 실패했습니다", 
 	                	            icon: "error",
 	                	            button: "확인"
 	                	         });
@@ -370,10 +375,10 @@
             <div class="content2">
                 <div class="name">근무현황</div><br>
                 <div class="bbb">
-                <button class="button">근무</button>
-                <button class="button">회의</button>
-                <button class="button">외근</button>
-                <button class="button">외출</button>
+                <button class="btn-status" onclick="status();" id="WO" value="WO">근무</button>
+                <button class="btn-status" onclick="status();" id="ME" value="ME">회의</button>
+                <button class="btn-status" onclick="status();" id="OW" value="OW">외근</button>
+                <button class="btn-status" onclick="status();" id="OU" value="OU">외출</button>
                 </div> <br>
                 
 
@@ -386,7 +391,10 @@
             </div>
             
             <script>
-            	
+            	let a = "";
+            	function status(){
+            		$(".btn-status")
+            	}
             </script>
             
             <div class="content3">

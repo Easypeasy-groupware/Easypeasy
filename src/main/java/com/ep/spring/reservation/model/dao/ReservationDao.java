@@ -17,4 +17,29 @@ public class ReservationDao {
 	public int addMettingRoomResource(SqlSessionTemplate sqlSession, Resource rsc) {
 		return sqlSession.insert("reservationMapper.addMettingRoomResource", rsc);
 	}
+	
+	public int mettingRoomUpdate(SqlSessionTemplate sqlSession, Resource rsc) {
+		return sqlSession.update("reservationMapper.mettingRoomUpdate", rsc);
+	}
+	
+	public int mettingRoomDelete(SqlSessionTemplate sqlSession, int resourceNo) {
+		return sqlSession.delete("reservationMapper.mettingRoomDelete", resourceNo);
+	}
+	
+	// 빔프
+	public ArrayList<Resource> selectSettingBeamProjector(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("reservationMapper.selectSettingBeamProjector");
+	}
+	
+	public int addBeamProjectorResource(SqlSessionTemplate sqlSession, Resource rsc) {
+		return sqlSession.insert("reservationMapper.addBeamProjectorResource", rsc);
+	}
+	
+	public int beamProjectorUpdate(SqlSessionTemplate sqlSession, Resource rsc) {
+		return sqlSession.update("reservationMapper.beamProjectorUpdate", rsc);
+	}
+	
+	public int beamProjectorDelete(SqlSessionTemplate sqlSession, int resourceNo) {
+		return sqlSession.delete("reservationMapper.beamProjectorDelete", resourceNo);
+	}
 }

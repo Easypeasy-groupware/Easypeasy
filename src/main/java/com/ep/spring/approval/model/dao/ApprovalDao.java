@@ -160,6 +160,14 @@ public class ApprovalDao {
 	public int deleteApproval(SqlSessionTemplate sqlSession, int appNo) {
 		return sqlSession.update("approvalMapper.deleteApproval", appNo);
 	}
+	
+	public Approval selectDetailRec(SqlSessionTemplate sqlSession, Approval a) {
+		return sqlSession.selectOne("approvalMapper.selectDetailRec", a);
+	}
+	
+
+	
+
 
 	
 }

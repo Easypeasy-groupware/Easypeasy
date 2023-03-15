@@ -1,9 +1,14 @@
 package com.ep.spring.commute.model.dao;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.ep.spring.approval.model.vo.VacationForm;
 import com.ep.spring.commute.model.vo.Commute;
+import com.ep.spring.commute.model.vo.VacationRecode;
+
 
 @Repository
 public class CommuteDao {
@@ -29,6 +34,14 @@ public class CommuteDao {
 	
 	public int insertCommuteDay(SqlSessionTemplate sqlSession) {
 		return sqlSession.insert("commuteMapper.insertCommuteDay");
+	}
+	
+	public ArrayList<VacationRecode> selectVacMain(SqlSessionTemplate sqlSession, int empNo){
+		return (ArrayList)sqlSession.selectList("commuteMapper.selectVacMain", empNo);
+	}
+	
+	public ArrayList<VacationForm> selectVacForm(SqlSessionTemplate sqlSession, int empNo){
+		return (ArrayList)sqlSession.selectList("commuteMapper.selectVacForm", empNo);
 	}
 
 }
