@@ -202,18 +202,24 @@ public class ApprovalController {
 		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		
 		
-		
 		Approval a = new Approval();
 		a.setAppNo(appNo);
 		a.setFormName(formName);
-		a.setWriterNo(eNo);
+		
 		
 		if(st.equals("기안진행")) {
 			a.setTstatus("진행중");
-		}	
+		}
+		if(st.equals("부서기안완료")) {
+			a.setSt("부서기안완료");
+			a.setTstatus("결재");
+		}else {
+			a.setWriterNo(eNo);
+		}
 		
 		Approval ap = aService.selectDetailSPrgAp(a);
 			
+		System.out.println(ap);
 		
 		ArrayList<ApprovalLine> list1 = aService.selectDetailSPrgAl(a);
 		ArrayList<Attachment> list3 = aService.selectDetailSPrgAt(a);
@@ -333,6 +339,8 @@ public class ApprovalController {
 			
 		}else if(st.equals("참조전체")) {
 			ap.setSt("참조전체");
+		}else if(st.equals("부서참조")) {
+			ap.setSt("부서참조");
 		}
 		
 		

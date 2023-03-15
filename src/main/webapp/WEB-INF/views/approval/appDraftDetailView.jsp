@@ -57,18 +57,42 @@
             </div>
             <div class="left-form2">
                 <c:choose>
-                    <c:when test="${loginUser.empNo eq ap.writerNo }" >
+                    <c:when test="${loginUser.empNo eq ap.writerNo && ap.tstatus eq '진행중' }" >
                         <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서삭제</span> |
                         <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">기안수정</span>
                         <br><br>
-                    </c:when>   
-                    <c:when test="${ap.st eq '참조대기' || ap.st eq '참조전체'}" >
+                    </c:when> 
+                    <c:when test="${loginUser.empNo eq ap.writerNo &&  ap.tstatus != '진행중' }" >
+                        <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서삭제</span> |
+                        <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">재기안</span>
                         <br><br>
-                    </c:when>   
+                    </c:when>                       
+                    <c:when test="${ap.st eq '참조대기' || ap.st eq '참조전체'}" >
+                       
+                    </c:when>  
+                    <c:when test="${loginUser.empNo != ap.writerNo &&  ap.tstatus != '진행중' }" >
+
+                        <br>
+                    </c:when>
+                    <c:when test="${loginUser.empNo != ap.writerNo && ap.tstatus eq '진행중'}">
+                    	<c:forEach var="c" items="${list1}">
+                    		<c:choose>
+	                    		<c:when test="${c.recEmpNo eq loginUser.empNo && c.appStatus != '미결재' }">
+	                    			<br>
+	                    		</c:when>
+	                    		<c:when test="${c.recEmpNo eq loginUser.empNo && c.appStatus eq '미결재' }">
+			                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#approval">결재</a> |  
+			                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#companion">반려</a> |
+			                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서수정</a>              			
+	                    		</c:when>
+	                    		<c:otherwise>
+	                    			<br>
+	                    		</c:otherwise>
+                    		</c:choose>
+                    	</c:forEach>                    	
+                    </c:when>                               
                     <c:otherwise>
-                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#approval">결재</a> |  
-                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#companion">반려</a> |
-                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서수정</a>
+
                         <br><br>
                     </c:otherwise>    
                         
@@ -200,13 +224,10 @@
             </div>
             <div class="left-form5">
                 <table class="table-bordered" >
+
                     <tr>
-                        <td width="100px;" style="text-align:center">협조부서</td>
-                        <td width="700px;"></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center">제목</td>
-                        <td>${ap.title }</td>
+                        <td width="100px;"  style="text-align:center">제목</td>
+                        <td width="700px;">${ap.title }</td>
                     </tr>
                     <tr>
                         <td rowspan="5" style="text-align:center">내용</td>
