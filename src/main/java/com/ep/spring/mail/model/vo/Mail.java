@@ -26,7 +26,6 @@ public class Mail {
 	private String status;
 	private String reference;
 	private String hiddenReference;
-	private String sendMailAddress;
 	private String sentDate;
 	private String tempStorage;
 
