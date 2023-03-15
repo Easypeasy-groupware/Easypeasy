@@ -20,7 +20,7 @@
 
     /*테이블*/
     .input-table{
-        margin-top:20px; margin-left:50px; 
+        margin-top:20px; margin-left:80px; 
         border-collapse: separate; border-spacing:0px 10px; /*셀간격*/
     }
     .tb-input{
@@ -41,7 +41,7 @@
 
     /*버튼*/
     .set-btn{border:0; border-radius: 5px; width:90px; height:30px; color:white;}
-    #reset-btn{background:rgb(158, 158, 158); margin:0 5px 0 450px;}
+    #reset-btn{background:rgb(158, 158, 158); margin:0 5px 0 350px;}
     #submit-btn{background:rgb(166, 184, 145);}
 
     /*그룹추가용 모달*/
@@ -233,6 +233,25 @@
     		         });
 
     		}
+    	}
+    	
+    	function selectGroupList(){
+    		$.ajax({
+    			url:"listPsGroup.add",
+    			data:{empNo:${loginUser.empNo}},
+    			success:function(list){
+    				console.log(list);
+    				let value="<option>선택안함</option>";
+    				for(let i=0; i<list.length; i++){
+    					value += "<option name='groupNo' value='" + list[i].groupNo + "'>"
+    					         	+ list[i].groupName
+    					        + "</option>";
+    				}
+    				$(".td-select").html(value);
+    			},error:function(){
+    				console.log("개인주소록 그룹 조회용 ajax 통신 실패");	
+    			}
+    		});
     	}
     </script>
 </body>

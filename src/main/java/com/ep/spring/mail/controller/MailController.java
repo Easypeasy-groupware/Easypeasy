@@ -63,18 +63,46 @@ public class MailController {
 
 	
 	@RequestMapping(value = "send.ma")
-	public ModelAndView sendMail(MultipartHttpServletRequest multipartRequest, Attachment at, Mail m, ModelAndView mv, HttpSession session) {
+	public ModelAndView sendMail(MultipartHttpServletRequest multipartRequest, Attachment at, Mail m, ModelAndView mv, 
+			  					 HttpSession session, String recMailAdd, String refList, String hRefList) {
+
+		// 메일 발신 처리 진행
+		int sendResult = mService.sendMail(m);
+		
+		
+		String mAddList = recMailAdd.substring(0, recMailAdd.length()-1);
+		String[] receiverAddList = mAddList.split(",");
+		String[] refAddList = refList.split("참조 - ");
+		String[] hidRefAddList = hRefList.split("숨은 참조 - ");
+		
 		ArrayList<Mail> mList = new ArrayList<>();
-		Mail mail = null;
-		System.out.println(m.getRecMailAdd());
-		String[] receiverAddList = m.getRecMailAdd().split(",");
+		
+		// mList에 수신 메일 추가
 		for(int i=0; i<receiverAddList.length; i++) {
-			System.out.println(receiverAddList[i]);
-//			mail.setRecMailAdd(receiverAddList[i]);
-//			mList.add(mail);
+			Mail mail = new Mail();
+			mail.setSendMailAdd(m.getSendMailAdd());
+			mail.setRecMailAdd(receiverAddList[i]);
+			mList.add(mail);
 		}
-		System.out.println(mList);
-		int result = mService.sendMail(m);
+		
+		// mList에 참조 메일 추가
+		for(int i=0; i<refAddList.length; i++) {
+			Mail mail = new Mail();
+			mail.setSendMailAdd(m.getSendMailAdd());
+			mail.setRecMailAdd(refAddList[i]);
+			mail.setReference("Y");
+			mList.add(mail);
+		}
+		
+		// mList에 숨은 참조 메일 추가
+		for(int i=0; i<hidRefAddList.length; i++) {
+			Mail mail = new Mail();
+			mail.setSendMailAdd(m.getSendMailAdd());
+			mail.setRecMailAdd(hidRefAddList[i]);
+			mail.setHiddenReference("Y");
+			mList.add(mail);
+		}
+//		int receiveResult = 
 		
 		if(!multipartRequest.getFiles("orginNames").isEmpty()) {
 			ArrayList<Attachment> atList = new ArrayList<>();

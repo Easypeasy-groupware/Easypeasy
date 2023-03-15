@@ -104,6 +104,10 @@ public class AddressDao {
 		return sqlSession.insert("addressMapper.insertNewPersonalGroup", ag);
 	}
 
+	public ArrayList<AddGroup> selectPersonalGroupList(SqlSessionTemplate sqlSession, int empNo) {
+		return (ArrayList)sqlSession.selectList("addressMapper.selectPersonalGroupList", empNo);
+	}
+
 
 
 	
