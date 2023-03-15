@@ -65,7 +65,7 @@
         text-align: center;
         font-size: 14px;
     }
-    .profile{
+    .img{
         width: 100px;
         height: 100px;
         margin: 40px;
@@ -112,7 +112,8 @@
             <div class="title"><b>휴가내역</b><hr></div>
 
             <div class="profile">
-                <img src="" alt="">
+                <img  class="img" id="profileImg" src="<c:out value='${ loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" >
+               
                 
             </div>
             <div class="name">${ loginUser.empName }님</div>
@@ -130,7 +131,26 @@
 
                 <tr>
                     <td>${ loginUser.empName }</td>
-                    <td>인사팀</td>
+                    <c:choose>
+                	<c:when test="${ loginUser.deptCode eq 'D1' }">
+                		<td>인사관리팀</td>
+                	</c:when>
+                	<c:when test="${ loginUser.deptCode eq 'D2' }">
+                		<td>경영지원팀</td>
+                	</c:when>
+                	<c:when test="${ loginUser.deptCode eq 'D3' }">
+                		<td>영업1팀</td>
+                	</c:when>
+                	<c:when test="${ loginUser.deptCode eq 'D4' }">
+                		<td>영업2팀</td>
+                	</c:when>
+                	<c:when test="${ loginUser.deptCode eq 'D5' }">
+                		<td>영업3팀</td>
+                	</c:when>
+                	<c:otherwise>
+                		<td>마케팅팀</td>
+                	</c:otherwise>
+                	</c:choose>
                     <td>16</td>
                     <td>2</td>
                     <td>0</td>
@@ -150,49 +170,39 @@
                     <th>이름</th>
                     <th>부서명</th>
                     <th>사용기간</th>
-                    <th>사용일수</th>
                     <th>내용</th>
                 </tr>
                 
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>${ loginUser.empName }</td>
+                    <c:choose>
+                	<c:when test="${ loginUser.deptCode eq 'D1' }">
+                		<td>인사관리팀</td>
+                	</c:when>
+                	<c:when test="${ loginUser.deptCode eq 'D2' }">
+                		<td>경영지원팀</td>
+                	</c:when>
+                	<c:when test="${ loginUser.deptCode eq 'D3' }">
+                		<td>영업1팀</td>
+                	</c:when>
+                	<c:when test="${ loginUser.deptCode eq 'D4' }">
+                		<td>영업2팀</td>
+                	</c:when>
+                	<c:when test="${ loginUser.deptCode eq 'D5' }">
+                		<td>영업3팀</td>
+                	</c:when>
+                	<c:otherwise>
+                		<td>마케팅팀</td>
+                	</c:otherwise>
+                	</c:choose>
+                	<c:forEach var="list2" items="${ list2 }">
+                		<td>${ list2.vacStart }~${ list2.vacEnd }</td>
+	                    <td>${ list2.vacKind }</td>
+                	</c:forEach>
+                    
                 </tr>
 
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+               
             </table>
 
             <br><br>
@@ -208,44 +218,33 @@
                 </tr>
                 
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-
-                <tr>
-                    <td></td>
-                    <td></td>
+                    <td>${ loginUser.empName }</td>
+                    <c:choose>
+                	<c:when test="${ loginUser.deptCode eq 'D1' }">
+                		<td>인사관리팀</td>
+                	</c:when>
+                	<c:when test="${ loginUser.deptCode eq 'D2' }">
+                		<td>경영지원팀</td>
+                	</c:when>
+                	<c:when test="${ loginUser.deptCode eq 'D3' }">
+                		<td>영업1팀</td>
+                	</c:when>
+                	<c:when test="${ loginUser.deptCode eq 'D4' }">
+                		<td>영업2팀</td>
+                	</c:when>
+                	<c:when test="${ loginUser.deptCode eq 'D5' }">
+                		<td>영업3팀</td>
+                	</c:when>
+                	<c:otherwise>
+                		<td>마케팅팀</td>
+                	</c:otherwise>
+                	</c:choose>
                     <td></td>
                     <td></td>
                     <td></td>
                 </tr>
 
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+    
             </table>
             
 
