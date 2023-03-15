@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.reservation.model.service.ReservationService;
+import com.ep.spring.reservation.model.vo.Reservation;
 import com.ep.spring.reservation.model.vo.Resource;
 
 @Controller
@@ -197,8 +198,11 @@ public class ReservationController {
 	}
 	
 	@RequestMapping("beamProjector.re")
-	public String selectBeamProjector() {
-
+	public String selectBeamProjector(Model model) {
+		
+		ArrayList<Resource> beList = reService.selectSettingBeamProjector();
+		model.addAttribute(beList);
+		
 		return "reservation/reservationBeamProjector";
 	}
 	
@@ -208,5 +212,24 @@ public class ReservationController {
 		return "reservation/reservationMettingRoom";
 	}
 	
+	
+	@RequestMapping("insertBeamProjector.re")
+	public String insertBeamProjector(Reservation r, HttpSession session, Model model) {
+		
+
+		int result = reService.insertBeamProjector(r);
+		
+		if(result > 0) {
+			AlertMsg msg = new AlertMsg("예약", "성공적으로 예약되었습니다");
+			session.setAttribute("successMsg", msg);
+			model.addAttribute("r", r);
+			return "redirect:beamProjector.re";
+		}else {
+			AlertMsg msg = new AlertMsg("예약", "예약 실패");
+			session.setAttribute("failMsg", msg);
+			return "redirect:beamProjector.re";
+		}
+	
+	}
 	
 }

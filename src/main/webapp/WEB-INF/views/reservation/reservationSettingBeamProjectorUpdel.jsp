@@ -46,7 +46,7 @@
         </div>
         <br>
         <form action="beamProjectorUp.re" method="post">
-        <input type="hidden" name="resourceNo" value=${ bno }>
+        <input type="hidden" name="resourceNo" value="${ bno }">
             <div id="content-1">
                 <table>
                     <tr>

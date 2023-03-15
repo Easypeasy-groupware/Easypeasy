@@ -145,7 +145,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button> 
                 </div>
                 <br>
-                <form action="예약등록" method="post">
+                <form action="insertBeamProjector.re" method="post">
                 <input type="hidden" name="resourceNo" value="${ beList.resourceNo }">
                 <input type="hidden" name="reWriter" value="${ loginUser.empNo }">
                     <!-- Modal Body -->
