@@ -1,5 +1,6 @@
 package com.ep.spring.commute.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
@@ -10,10 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ep.spring.approval.model.vo.VacationForm;
 import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.commute.model.service.CommuteService;
 import com.ep.spring.commute.model.vo.Commute;
+import com.ep.spring.commute.model.vo.VacationRecode;
 import com.ep.spring.login.model.vo.Employee;
+
 
 @Controller
 public class CommuteController {
@@ -63,12 +67,24 @@ public class CommuteController {
 		//퇴근시간 등록
 		@ResponseBody
 		@RequestMapping("outTime.co")
+		
 		public String outTime(Commute c) {			
 					
 			int result = cService.outTime(c);
 					
 			return result > 0 ? "success" : "fail";
 					
+		}
+		
+		@RequestMapping("vac.ep")
+		public String selectVacMain(HttpSession session) {
+			int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+			
+			ArrayList<VacationRecode> list1 = cService.selectVacMain(empNo);
+			ArrayList<VacationForm> list2 = cService.selectVacForm(empNo);
+			
+			session.setAttribute("list1", list1);
+			return "vacation/vacationMain";
 		}
 	
 

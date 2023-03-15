@@ -1,4 +1,4 @@
-package com.ep.spring.vacation.model.vo;
+package com.ep.spring.commute.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,9 +11,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class Vacation {
-	
-
+public class VacationRecode {
 	
 	private int vacRecode;
 	private int empNo;
@@ -22,6 +20,5 @@ public class Vacation {
 	private String vacReason;
 	private String vacDivide;
 	private String vacCategory;
-	
 
 }

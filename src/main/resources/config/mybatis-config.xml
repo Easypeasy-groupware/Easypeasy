@@ -33,7 +33,7 @@
 		<typeAlias type="com.ep.spring.reservation.model.vo.Reservation" alias="Reservation" />
 		<typeAlias type="com.ep.spring.reservation.model.vo.Resource" alias="Resource" />
 		<typeAlias type="com.ep.spring.commute.model.vo.Commute" alias="Commute" />
-		<typeAlias type="com.ep.spring.vacation.model.vo.Vacation" alias="Vacation" />
+		
 	</typeAliases>
 	<!-- 유의사항 : 미리등록해두려면 해당 클래스가 진짜 존재해야됨 -->
 	
@@ -53,7 +53,7 @@
 		<mapper resource="/mappers/organization-mapper.xml"/>
 		<mapper resource="/mappers/reservation-mapper.xml"/>
 		<mapper resource="/mappers/commute-mapper.xml"/>
-		<mapper resource="/mappers/vacation-mapper.xml"/>
+		
 	</mappers>
 	<!-- 유의사항 : 미리등록해두려면 해당 mapper파일이 진짜 존재해야됨, namespace도 지정되어있어야됨 -->
 	
