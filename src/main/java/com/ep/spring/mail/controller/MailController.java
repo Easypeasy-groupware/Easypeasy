@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +30,8 @@ public class MailController {
 	
 	
 	@RequestMapping("list.ma")
-	public ModelAndView selectMailList(String email, HttpSession session, ModelAndView mv) {
+	public ModelAndView selectMailList(HttpSession session, ModelAndView mv) {
+		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
 		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
 		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
@@ -52,9 +54,9 @@ public class MailController {
 		int result = mService.insertTag(t);
 		
 		if(result > 0) {
-			mv.addObject("alertMsg", "태그가 추가되었습니다");
+			mv.addObject("successMsg", "태그가 추가되었습니다");
 		}else {
-			mv.addObject("alertMsg", "태그 추가에 실패하였습니다");
+			mv.addObject("failMsg", "태그 추가에 실패하였습니다");
 		}
 		mv.setViewName("redirect:list.ma");
 		return mv;
@@ -66,19 +68,21 @@ public class MailController {
 	public ModelAndView sendMail(MultipartHttpServletRequest multipartRequest, Attachment at, Mail m, ModelAndView mv, 
 			  					 HttpSession session, String recMailAdd, String refList, String hRefList) {
 
-		System.out.println(m.getImporMail());
 		String mAddList = recMailAdd.substring(0, recMailAdd.length()-1);
 		String[] receiverAddList = mAddList.split(",");
 		String[] refAddList = refList.split("참조 - ");
 		String[] hidRefAddList = hRefList.split("숨은 참조 - ");
-		
 		ArrayList<Mail> mList = new ArrayList<>();
 		
 		// mList에 수신 메일 추가
 		for(int i=0; i<receiverAddList.length; i++) {
 			Mail mail = new Mail();
 			mail.setSendMailAdd(m.getSendMailAdd());
+			mail.setMailTitle(m.getMailTitle());
+			mail.setMailContent(m.getMailContent());
 			mail.setRecMailAdd(receiverAddList[i]);
+			mail.setReference("N");
+			mail.setHiddenReference("N");
 			if(m.getImporMail() == "on") {
 				mail.setImporMail("Y");
 			}else {
@@ -88,11 +92,14 @@ public class MailController {
 		}
 		
 		// mList에 참조 메일 추가
-		for(int i=0; i<refAddList.length; i++) {
+		for(int i=1; i<refAddList.length; i++) {
 			Mail mail = new Mail();
 			mail.setSendMailAdd(m.getSendMailAdd());
+			mail.setMailTitle(m.getMailTitle());
+			mail.setMailContent(m.getMailContent());
 			mail.setRecMailAdd(refAddList[i]);
 			mail.setReference("Y");
+			mail.setHiddenReference("N");
 			if(m.getImporMail() == "on") {
 				mail.setImporMail("Y");
 			}else {
@@ -102,10 +109,13 @@ public class MailController {
 		}
 		
 		// mList에 숨은 참조 메일 추가
-		for(int i=0; i<hidRefAddList.length; i++) {
+		for(int i=1; i<hidRefAddList.length; i++) {
 			Mail mail = new Mail();
 			mail.setSendMailAdd(m.getSendMailAdd());
+			mail.setMailTitle(m.getMailTitle());
+			mail.setMailContent(m.getMailContent());
 			mail.setRecMailAdd(hidRefAddList[i]);
+			mail.setReference("N");
 			mail.setHiddenReference("Y");
 			if(m.getImporMail() == "on") {
 				mail.setImporMail("Y");
@@ -114,7 +124,6 @@ public class MailController {
 			}
 			mList.add(mail);
 		}
-		
 		int sendResult = mService.sendMail(m, mList);
 		
 		if(!multipartRequest.getFiles("orginNames").isEmpty()) {
@@ -136,12 +145,24 @@ public class MailController {
 					e.printStackTrace();
 				}
 			}
-			
 		}
 		
-		
+		if(sendResult > 0) {
+			mv.addObject("successMsg", "메일을 성공적으로 발송했습니다");
+		}else {
+			mv.addObject("failMsg", "메일 발송에 실패했습니다");
+		}
+		mv.setViewName("redirect:list.ma");
 		return mv;
 	}
 	
+	@RequestMapping("select.ma")
+	public ModelAndView selectMail(ModelAndView mv, Mail m) {
+		Mail mail = mService.selectMail(m);
+		
+		mv.addObject("mail", mail);
+		mv.setViewName("mail/receiveMail");
+		return mv;
+	}
 	
 }

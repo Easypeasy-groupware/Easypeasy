@@ -28,6 +28,14 @@ public class MailDao {
 	}
 	
 	public int insertReceiveMail(ArrayList<Mail> mList, SqlSessionTemplate sqlSession) {
-		return sqlSession.insert("mailMapper.receiveMail", mList);
+		int result = 0;
+		for(Mail m : mList) {
+			result += sqlSession.insert("mailMapper.receiveMail", m);
+		}
+		return result;
+	}
+
+	public Mail selectMail(Mail m, SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("mailMapper.selectMail", m);
 	}
 }

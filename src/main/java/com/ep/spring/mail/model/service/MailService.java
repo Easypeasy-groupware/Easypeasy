@@ -21,6 +21,9 @@ public interface MailService {
 	// 3. 메일 보내기
 	int sendMail(Mail m, ArrayList<Mail> mList);
 
+	// 4. 메일 상세조회하기
+	Mail selectMail(Mail m);
+
 	
 
 	

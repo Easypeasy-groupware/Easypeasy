@@ -38,7 +38,7 @@
 			 , MAIL_TITLE
 			 , MAIL_CONTENT
 			 , REC_CHECK
-			 , REC_DATE
+			 , to_char(REC_DATE , 'yyyy-mm-dd HH24:MM') "REC_DATE"
 			 , IMPOR_MAIL
 			 , JUNK_MAIL
 			 , RESER_MAIL
@@ -99,7 +99,7 @@
 		  )
 	</insert>
 	
-	<insert id="receiveMail" parameterType="java.util.List">
+	<insert id="receiveMail">
 		insert
 		  into rec_mail
 		  (
@@ -109,40 +109,46 @@
 		  , SEND_MAIL_ADDRESS
 		  , MAIL_TITLE
 		  , MAIL_CONTENT
-		  , REC_DATE
+		  , to_char(REC_DATE , 'yyyy-mm-dd HH24:MM') "REC_DATE"
 		  , IMPOR_MAIL
 		  , REFERENCE
 		  , HIDDEN_REFERENCE
 		  )
 		  values
-		  <foreach item="Mail" collection="list">
-			  (
-			    seq_recmano.nextval
-			  , seq_mano.currval
-			  , #{ Mail.recMailAdd }
-			  , #{ Mail.sendMailAdd }
-			  , #{ Mail.mailTitle }
-			  , #{ Mail.mailContent }
-			  , sysdate
-			  , #{ Mail.imporMail }
-			  <choose>
-			  	<when test = "Mail.reference == Y" >
-			  		, 'Y'
-			  	</when>
-			  	<otherwise>
-			  		, 'N'
-			  	</otherwise>
-			  </choose>
-			  <choose>
-			  	<when test = "Mail.hiddenReference == Y" >
-			  		, 'Y'
-			  	</when>
-			  	<otherwise>
-			  		, 'N'
-			  	</otherwise>
-			  </choose>
-			  )
-		  </foreach>
+		  (
+		    seq_recmano.nextval
+		  , seq_mano.currval
+		  , #{ recMailAdd }
+		  , #{ sendMailAdd }
+		  , #{ mailTitle }
+		  , #{ mailContent }
+		  , to_date(sysdate, 'YYYY-MM-DD HH24:MM')
+		  , #{ imporMail }
+		  , #{ reference }
+		  , #{ hiddenReference }
+		  )
 	</insert>
+	
+	<select id="selectMail" resultMap="MailResult">
+		select
+			   RECEP_MAIL_NO
+			 , MAIL_NO
+			 , TAG_NO
+			 , SEND_MAIL_ADDRESS
+			 , MAIL_TITLE
+			 , MAIL_CONTENT
+			 , REC_CHECK
+			 , to_char(REC_DATE , 'yyyy-mm-dd HH24:MM') "REC_DATE"
+			 , IMPOR_MAIL
+			 , JUNK_MAIL
+			 , RESER_MAIL
+			 , REFERENCE
+			 , HIDDEN_REFERENCE
+	      from 
+	           rec_mail
+	     where 
+			   MAIL_NO = #{ mailNo }
+		   and RECEP_MAIL_NO = #{ recMailNo }
+	</select>
 
 </mapper>

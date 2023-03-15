@@ -46,6 +46,11 @@ public class MailServiceImpl implements MailService {
 		}
 	}
 
+	@Override
+	public Mail selectMail(Mail m) {
+		return mDao.selectMail(m, sqlSession);
+	}
+
 	
 
 	

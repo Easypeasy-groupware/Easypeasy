@@ -46,8 +46,8 @@
     .mail_check{width: 30px; padding-top: 2px;}
     .mail_imgList{width: 120px; text-align: center; line-height: 43px;}
     .mail_img{width: 30px; line-height: 2.5;}
-    .mail_sender{width: 160px;}
-    .mail_title{width: 520px; overflow: hidden;}
+    .mail_sender{width: 200px; overflow: hidden;}
+    .mail_title{width: 480px; overflow: hidden;}
     .mail_date{width: 130px; text-align: right;}
 
     #paging{text-align: center; display: inline-block; padding-left :0;}
@@ -148,159 +148,49 @@
 
         <!-- 메일 리스트 -->
         <div id="mail_list">
-            <div class="mail_one" >
-                <div class="mail_check">
-                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="2">
-                </div>
-                <div class="mail_imgList">
-                    <div class="mail_img"><img class="mail_favorite" src="resources/common_images/unFavorite.png"></div>
-                    <div class="mail_img"><img class="read" src="resources/common_images/mail_unRead.png"></div>
-                </div>
-                <form class="mail_select_area" action="select.ma" method="POST">
-                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호2">
-                    <div class="mail_sender">
-                        김이피 부장
-                    </div>       
-                    <div class="mail_title">
-                        메일 제목 - 영업1팀 수정 인사 개편 관련 업무 소통 ㅁㄴㅇㅁㅁㄴㅇㅁㄴㅇㅁㄴㅇ
+            <c:if test="${ not empty mailList }">
+                <c:forEach var="m" items="${ mailList }">
+                    <div class="mail_one" >
+                        <div class="mail_check">
+                            <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="">
+                        </div>
+                        <div class="mail_imgList">
+                            <c:choose>
+                                <c:when test="${ m.imporMail == 'Y' }">
+                                    <div class="mail_img"><img class="mail_favorite" src="resources/common_images/favorite.png"></div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="mail_img"><img class="mail_favorite" src="resources/common_images/unFavorite.png"></div>
+                                </c:otherwise>
+                            </c:choose>
+                            <c:choose>
+                                <c:when test="${ m.recCheck == 'Y' }" >
+                                    <div class="mail_img"><img class="read" src="resources/common_images/mail_read.png"></div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="mail_img"><img class="read" src="resources/common_images/mail_unRead.png"></div>
+                                </c:otherwise>
+                            </c:choose>
+                            <c:if test="${ not empty attachmentList }">
+                                <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
+                            </c:if>
+                        </div>
+                        <form class="mail_select_area">
+                            <input class="mailNo" type="hidden" name="mailNo" value="${ m.mailNo }">
+                            <input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
+                            <div class="mail_sender">
+                                ${ m.sendMailAdd }
+                            </div>       
+                            <div class="mail_title">
+                                메일 제목 - ${ m.mailTitle }
+                            </div>
+                            <div class="mail_date">
+                                ${ m.recDate }
+                            </div>
+                        </form>
                     </div>
-                    <div class="mail_date">
-                        2023-03-02
-                    </div>
-                </form>
-            </div>
-            <div class="mail_one" >
-                <div class="mail_check">
-                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="8"> 
-                </div>
-                <div class="mail_imgList">
-                    <div class="mail_img"><img class="mail_favorite" src="resources/common_images/favorite.png"></div>
-                    <div class="mail_img"><img class="read" src="resources/common_images/mail_read.png"></div>
-                    <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
-                </div>
-                <form class="mail_select_area" action="select.ma" method="POST">
-                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호8">
-                    <div class="mail_sender">
-                        김이피 부장
-                    </div>       
-                    <div class="mail_title">
-                        메일 제목 - 영업1팀 수정 인사 개편 관련 업무 소통 ㅁㄴㅇㅁㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-                    </div>
-                    <div class="mail_date">
-                        2023-03-02
-                    </div>
-                </form>
-            </div>
-            <div class="mail_one" >
-                <div class="mail_check">
-                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="8"> 
-                </div>
-                <div class="mail_imgList">
-                    <div class="mail_img"><img class="mail_favorite" src="resources/common_images/favorite.png"></div>
-                    <div class="mail_img"><img class="read" src="resources/common_images/mail_read.png"></div>
-                    <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
-                </div>
-                <form class="mail_select_area" action="select.ma" method="POST">
-                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호8">
-                    <div class="mail_sender">
-                        김이피 부장
-                    </div>       
-                    <div class="mail_title">
-                        메일 제목 - 영업1팀 수정 인사 개편 관련 업무 소통 ㅁㄴㅇㅁㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-                    </div>
-                    <div class="mail_date">
-                        2023-03-02
-                    </div>
-                </form>
-            </div>
-            <div class="mail_one" >
-                <div class="mail_check">
-                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="8"> 
-                </div>
-                <div class="mail_imgList">
-                    <div class="mail_img"><img class="mail_favorite" src="resources/common_images/favorite.png"></div>
-                    <div class="mail_img"><img class="read" src="resources/common_images/mail_read.png"></div>
-                    <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
-                </div>
-                <form class="mail_select_area" action="select.ma" method="POST">
-                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호8">
-                    <div class="mail_sender">
-                        김이피 부장
-                    </div>       
-                    <div class="mail_title">
-                        메일 제목 - 영업1팀 수정 인사 개편 관련 업무 소통 ㅁㄴㅇㅁㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-                    </div>
-                    <div class="mail_date">
-                        2023-03-02
-                    </div>
-                </form>
-            </div>
-            <div class="mail_one" >
-                <div class="mail_check">
-                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="8"> 
-                </div>
-                <div class="mail_imgList">
-                    <div class="mail_img"><img class="mail_favorite" src="resources/common_images/favorite.png"></div>
-                    <div class="mail_img"><img class="read" src="resources/common_images/mail_read.png"></div>
-                    <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
-                </div>
-                <form class="mail_select_area" action="select.ma" method="POST">
-                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호8">
-                    <div class="mail_sender">
-                        김이피 부장
-                    </div>       
-                    <div class="mail_title">
-                        메일 제목 - 영업1팀 수정 인사 개편 관련 업무 소통 ㅁㄴㅇㅁㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-                    </div>
-                    <div class="mail_date">
-                        2023-03-02
-                    </div>
-                </form>
-            </div>
-            <div class="mail_one" >
-                <div class="mail_check">
-                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="8"> 
-                </div>
-                <div class="mail_imgList">
-                    <div class="mail_img"><img class="mail_favorite" src="resources/common_images/favorite.png"></div>
-                    <div class="mail_img"><img class="read" src="resources/common_images/mail_read.png"></div>
-                    <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
-                </div>
-                <form class="mail_select_area" action="select.ma" method="POST">
-                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호8">
-                    <div class="mail_sender">
-                        김이피 부장
-                    </div>       
-                    <div class="mail_title">
-                        메일 제목 - 영업1팀 수정 인사 개편 관련 업무 소통 ㅁㄴㅇㅁㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-                    </div>
-                    <div class="mail_date">
-                        2023-03-02
-                    </div>
-                </form>
-            </div>
-            <div class="mail_one" >
-                <div class="mail_check">
-                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="8"> 
-                </div>
-                <div class="mail_imgList">
-                    <div class="mail_img"><img class="mail_favorite" src="resources/common_images/favorite.png"></div>
-                    <div class="mail_img"><img class="read" src="resources/common_images/mail_read.png"></div>
-                    <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
-                </div>
-                <form class="mail_select_area" action="select.ma" method="POST">
-                    <input class="mailNo" type="hidden" name="mailNo" value="메일번호8">
-                    <div class="mail_sender">
-                        김이피 부장
-                    </div>       
-                    <div class="mail_title">
-                        메일 제목 - 영업1팀 수정 인사 개편 관련 업무 소통 ㅁㄴㅇㅁㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-                    </div>
-                    <div class="mail_date">
-                        2023-03-02
-                    </div>
-                </form>
-            </div>
+                </c:forEach>
+            </c:if>
         </div>
         <div align="center">
             <ul id="paging">
@@ -319,14 +209,8 @@
         // 메일 상세조회
         let mailSelectList = document.querySelectorAll('.mail_select_area');
         mailSelectList.forEach(function(select){
-            // select.addEventListener('click', function(){
-            //     let mailNo = this.getElementsByClassName('mailNo').mailNo.value;
-            //     console.log(mailNo);
-            //     let link = this.getElementsByClassName('mail_select_area');
-            //     console.log(link);
-            // });
             select.addEventListener('click', function(){
-                this.action = "www.naver.com";
+                this.action = "select.ma";
                 this.method = "POST";
                 this.submit();
             });

@@ -6,18 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <title>EasyPeasy-mail</title>
-	<!-- include libraries(jQuery, bootstrap) -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <style>
     *{box-sizing: content-box;}
 
     /* 메일 컨텐트 css */
     #mail_content{width: 1000px; float: left;}
     #mail_header{height: 130px; border-bottom: 2px solid rgb(185, 187, 221); margin: 10px;}
-    #header1{height: 90px;}
-    #header2{height: 100%;}
+    #mail_header1{height: 90px;}
+    #mail_header2{height: 100%;}
     #mail_header_info{font-size: 25px; float: left; margin: 20px;}
     #search_bar{float: right; margin: 20px;}
     #mail_content_menubar{padding: 5px;}
@@ -62,7 +59,7 @@
     <!-- 메일 컨텐트-->
     <div id="mail_content">
         <div id="mail_header">
-            <div id="header1" style="width:100%; float:left">
+            <div id="mail_header1" style="width:100%; float:left">
                 <div id="mail_header_info">
                     <b>받은 메일함</b>
                     <img src="">
@@ -81,7 +78,7 @@
                     </form>
                 </div>
             </div><br>
-            <div id="header2">
+            <div id="mail_header2">
                 <div class="menu" style="width: 27px;"><input type="checkbox" name="" id="check_all"></div>
                 <div class="menu menu1" id="spam"><img src="">스팸 등록</div>
                 <div class="menu menu2" id="reply"><img src="">답장</div>
@@ -101,7 +98,7 @@
             </div>
             <div id="mail_detail_content">
                 <div>
-                    <img id="favorite" style="width: 22px; margin-right: 20px; float: left;" src="images/favorite.png">
+                    <img id="favorite" style="width: 22px; margin-right: 20px; float: left;" src="resources/common_images/favorite.png">
                     <div style="font-size: 17px; font-weight: 700;">메일제목 [영업 1팀] (수정) 인사 개편 관련 업무 소통</div><br>
                     <table>
                         <tr class="detail_info_tr">
