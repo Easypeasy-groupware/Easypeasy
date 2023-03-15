@@ -35,8 +35,15 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public int sendMail(Mail m) {
-		return mDao.sendMail(m, sqlSession);
+	public int sendMail(Mail m, ArrayList<Mail> mList) {
+		int sendResult = mDao.insertSendMail(m, sqlSession);
+		int receiveResult = mDao.insertReceiveMail(mList, sqlSession);
+		
+		if(sendResult > 0 && receiveResult > 0) {
+			return 1;
+		}else {
+			return 0;
+		}
 	}
 
 	
