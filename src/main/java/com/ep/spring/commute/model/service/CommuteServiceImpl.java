@@ -28,17 +28,26 @@ public class CommuteServiceImpl implements CommuteService{
 		
 		return cDao.commuteMainPage(sqlSession, empNo);
 	}
-
+	
+	//상태변경
 	@Override
 	public int updateStatus(Commute c) {
 		
 		return cDao.updateStatus(sqlSession, c);
 	}
 
+	//퇴근시간 등록
 	@Override
 	public int outTime(Commute c) {
 		
 		return cDao.outTime(sqlSession, c);
+	}
+
+	//12시마다 insert 스케쥴링
+	@Override
+	public int insertCommuteDay() {
+		
+		return cDao.insertCommuteDay(sqlSession);
 	}
 	
 	

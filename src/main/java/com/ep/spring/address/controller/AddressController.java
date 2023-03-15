@@ -179,14 +179,15 @@ public class AddressController {
 	public String ajaxInsertPersonalGroup(AddGroup ag) {
 		
 		int result1 = aService.selectExtPersonalGroup(ag);
-		
+		System.out.println("1 : " + result1);
 		if(result1 > 0) { // 중복된 그룹 있음
 			
 			return "fail";
 			
 		}else { // 중복된 그룹 없음
-			int result2 = aService.insertNewPersonalGroup(ag);
 			
+			int result2 = aService.insertNewPersonalGroup(ag);
+			System.out.println("2 : " + result2);
 			return result2 > 0 ? "success" : "fail";
 		}
 		
