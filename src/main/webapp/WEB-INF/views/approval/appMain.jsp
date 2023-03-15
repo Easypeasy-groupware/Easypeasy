@@ -92,7 +92,7 @@
 		                    <c:choose>
 		                    	<c:when test="${empty list2}">
 		                    		<tr>
-		                    			<td colspan='6'>
+		                    			<td colspan='6' >
 				                    		<div align="center">
 				                    			결재 대기중인 문서가 없습니다.
 				                    		</div>
@@ -127,9 +127,11 @@
         </div>
         <script>
 	     	// 상세페이지로 이동하는 function
-	        $("table tbody").on("click", "tr", function(){
-	            location.href = 'detailSPrg.ap?no=' + $(this).children().eq(0).text()+"&form="+ $(this).children().eq(2).text(); 
-	        }); 
+	     	if(${not empty list2}){
+		        $("table tbody").on("click", "tr", function(){
+		            location.href = 'detailSPrg.ap?no=' + $(this).children().eq(0).text()+"&form="+ $(this).children().eq(2).text(); 
+		        }); 
+	        }
         </script>
  
 </body>

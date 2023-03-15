@@ -26,5 +26,9 @@ public class CommuteDao {
 	public int outTime(SqlSessionTemplate sqlSession, Commute c) {
 		return sqlSession.update("commuteMapper.outTime", c);
 	}
+	
+	public int insertCommuteDay(SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("commuteMapper.insertCommuteDay");
+	}
 
 }

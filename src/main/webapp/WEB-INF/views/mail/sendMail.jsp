@@ -82,6 +82,7 @@
             </div>
         </div>
         <form id="mail_content_text" action="send.ma" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="sendMailAdd" value="${loginUser.email}">
             <table id="send_info">
                 <tr class="detail_info_tr">
                     <th>받은 사람</th>
@@ -119,7 +120,9 @@
                     <td colspan="2" id="receiver_area">
                         <div id="in_receiver_list">
                         </div>
-                        <input id="input_receiver_list" type="eamil" multiple style="display: none;">
+                        <input id="input_receiver_list" name="recMailAdd" type="eamil" multiple style="display: none;">
+                        <input id="input_ref_list" name="refList" type="email" multiple style="display: none;">
+                        <input id="input_hid_ref_list" name="hRefList" type="email" multiple style="display: none;">
                     </td>
                 </tr>
                 <tr class="detail_info_tr"><td></td></tr>
@@ -380,19 +383,28 @@
             // form.appendChild(sendContent);
             // document.body.appendChild(form);
 
-            let receiverList = document.querySelectorAll("#in_receiver_list b");
-            let inputEValue = document.getElementById("input_receiver_list");
+            const receiverList = document.querySelectorAll("#in_receiver_list b");
+            const recAddList = document.getElementById("input_receiver_list");
+            const referAddList = document.getElementById("input_ref_list");
+            const hidRefAddList = document.getElementById("input_hid_ref_list");
             const receiver = document.getElementsByClassName("receiver_one");
             const mailTitle = document.getElementById("mail_title");
             const mailContent = document.getElementById("summernote");
-            inputEValue.value = "";
-            for(let i=0; i<receiverList.length; i++) {
-                inputEValue.value += receiverList[i].innerHTML + ','
-            }
-            inputEValue.setAttribute("name", "recMailAdd");
+            
+            recAddList.value = "";
+            referAddList.value = "";
+            hidRefAddList.value = "";
 
-            console.log(mailTitle.value);
-            console.log(mailContent.value);
+            for(let i=0; i<receiverList.length; i++) {
+                if(receiverList[i].innerHTML.includes('숨은 참조')){
+                    hidRefAddList.value += receiverList[i].innerHTML
+                }else if(receiverList[i].innerHTML.includes('참조')){
+                    referAddList.value += receiverList[i].innerHTML
+                }else{
+                    recAddList.value += receiverList[i].innerHTML + ","
+                }
+            }
+
             if(receiver.length < 1) {
                 alert("수신자를 입력해주세요.")
             }else if(mailTitle.value == ""){

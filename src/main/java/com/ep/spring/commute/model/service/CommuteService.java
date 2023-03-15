@@ -16,5 +16,7 @@ public interface CommuteService {
 	//Employee상태변경(근무,회의,외출,외근)
 	int updateStatus(Commute c);
 	
+	//12시마다 insert scheduler
+	int insertCommuteDay();
 
 }

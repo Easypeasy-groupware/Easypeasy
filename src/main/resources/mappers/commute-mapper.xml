@@ -50,5 +50,24 @@
 	<update id="updateStatus">
 		
 	</update>
+	
+	<insert id="insertCommuteDay">
+		 insert all
+	       into commute (COM_CODE
+	                   , emp_no
+	                   , ENROLL_DATE
+	                   , START_TIME
+	                   , END_TIME
+	                   , COM_STATUS) 
+	        values (SEQ_COMNO.nextval
+	              , emp_no
+	              , to_char(sysdate, 'YYYY/MM/DD')
+	              , null
+	              , null
+	              , 'AB')
+		select emp_no
+		  from employee
+		 where employee.ent_yn = 'N'
+	</insert>
 
 </mapper>
