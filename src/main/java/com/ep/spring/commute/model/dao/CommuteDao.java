@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.ep.spring.approval.model.vo.VacationForm;
 import com.ep.spring.commute.model.vo.Commute;
 import com.ep.spring.commute.model.vo.VacationRecode;
+import com.ep.spring.login.model.vo.Employee;
 
 
 @Repository
@@ -23,8 +24,8 @@ public class CommuteDao {
 		return sqlSession.selectOne("commuteMapper.commuteMainPage", empNo);
 	}
 	
-	public int updateStatus(SqlSessionTemplate sqlSession, Commute c) {
-		return sqlSession.update("commuteMapper.updateStatus", c);
+	public int updateStatus(SqlSessionTemplate sqlSession, Employee e) {
+		return sqlSession.update("commuteMapper.updateStatus", e);
 	}
 	
 	//퇴근시간 등록

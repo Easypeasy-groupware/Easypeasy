@@ -16,6 +16,7 @@ import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.commute.model.service.CommuteService;
 import com.ep.spring.commute.model.vo.Commute;
 import com.ep.spring.commute.model.vo.VacationRecode;
+import com.ep.spring.login.controller.EmployeeController;
 import com.ep.spring.login.model.vo.Employee;
 
 
@@ -92,6 +93,21 @@ public class CommuteController {
 			
 			return "vacation/vacationMain";
 		}
+		
+		//근무상태 변경
+		@ResponseBody
+		@RequestMapping("updateStatus")
+		public String updateStatus(Employee e, HttpSession session) {
+			
+			int result = cService.updateStatus(e);
+			
+			
+			
+			
+			return result > 0 ? "success" : "fail";
+			
+		}
+		
 	
 
 }

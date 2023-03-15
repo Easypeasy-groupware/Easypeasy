@@ -10,6 +10,7 @@ import com.ep.spring.approval.model.vo.VacationForm;
 import com.ep.spring.commute.model.dao.CommuteDao;
 import com.ep.spring.commute.model.vo.Commute;
 import com.ep.spring.commute.model.vo.VacationRecode;
+import com.ep.spring.login.model.vo.Employee;
 
 
 @Service
@@ -36,9 +37,9 @@ public class CommuteServiceImpl implements CommuteService{
 	
 	//상태변경
 	@Override
-	public int updateStatus(Commute c) {
+	public int updateStatus(Employee e) {
 		
-		return cDao.updateStatus(sqlSession, c);
+		return cDao.updateStatus(sqlSession, e);
 	}
 
 	//퇴근시간 등록
