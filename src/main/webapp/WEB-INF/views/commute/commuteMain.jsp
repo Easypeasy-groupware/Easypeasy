@@ -171,7 +171,7 @@
                 <div class="name" style="float: left;">근무체크</div><br><br>
 			
 			<c:choose>
-				<c:when test="${ not empty loginUser.status }">
+				<c:when test="${ not empty loginUser.status && empty c.endTime }">
 	                <div class="status">
 	                
 	                	<c:choose>
@@ -384,7 +384,7 @@
 
                 <div class="recode">
                     <c:if test="${ not empty c.startTime }">
-                    	-- ${ c.startTime } 출근
+                    	<div>-- ${ c.startTime } 출근</div>
                     </c:if>
                     
 
@@ -393,22 +393,29 @@
             
             <script>
             	let a = "";
-            	function status(num){
-            		
-            		if(num==1){
-            			a = $("#WO").val();
-            		}else if(num==2){
-            			a = $("#ME").val();
-            		}else if(num==3){
-            			a = $("#OW").val();
-            		}else{
-            			a = $("#OU").val();
-            		}
-            		
-            		
-            		updateStatus(a);
-            		
-            	}
+            	
+
+                function status(num){
+                    if(${ c.endTime == null }) {
+                        if(num==1){
+                        a = $("#WO").val();
+                        
+                    }else if(num==2){
+                        a = $("#ME").val();
+                    }else if(num==3){
+                        a = $("#OW").val();
+                    }else{
+                        a = $("#OU").val();
+                    }
+                    
+                    
+                    updateStatus(a);
+                    }
+                    
+
+                    
+                    
+                }
             	
             	function updateStatus(a){
             		$.ajax({
@@ -425,7 +432,28 @@
 	                	            text: "근무상태가 등록되었습니다.", 
 	                	            icon: "success",
 	                	            button: "확인"
+	                	            
 	                	         });
+                                 
+                                let recode = document.querySelector(".recode");
+                                let text = document.createElement("div");
+                                let time = new Date();
+                                let h = time.getHours();
+                                let m = time.getMinutes(); 
+                                let s = time.getSeconds();
+                                let insertTime = h+":"+m+":"+s; 
+
+                                if( a == 'OU' ) {
+                                    text.innerText = "-- " + insertTime + " 외출"
+                                }else if( a == 'ME' ) {
+                                    text.innerText = "-- " + insertTime + " 회의"
+                                }else if( a== 'OW' ) {
+                                    text.innerText = "-- " + insertTime + " 외근"
+                                }else{
+                                    text.innerText = "-- " + insertTime + " 근무"
+                                }
+
+                                recode.append(text);
 	                		}
 	                	},error:function(){
 	                		console.log("퇴근시간등록 ajax 통신실패");
