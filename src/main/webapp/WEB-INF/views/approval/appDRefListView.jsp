@@ -20,7 +20,7 @@
     <jsp:include page="../common/header.jsp"/>
     <jsp:include page="appMenubar.jsp" />
     <div class="outer1">
-        <p style="font-size:25px;"><b>부서참조함</b> in 부서명</p>
+        <p style="font-size:25px;"><b>부서참조함</b> in ${loginUser.getDeptName() }</p>
         <br><br>
         <div class="list-1">
             <select name="period" id="">
@@ -147,10 +147,12 @@
             		}
             	});
             	
-             	// 상세페이지로 이동하는 function
-                 $("#result-tb tbody").on("click", "tr", function(){
-                     location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
-                 }); 
+    	     	// 상세페이지로 이동하는 function
+    	     	if(${not empty list}){
+    		        $("table tbody").on("click", "tr", function(){
+    		            location.href = 'xxx.ap?no=' + $(this).children().eq(0).text()+"&form="+ $(this).children().eq(2).text(); 
+    		        }); 
+    	        }
             });
             </script>
            

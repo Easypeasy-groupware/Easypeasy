@@ -59,8 +59,8 @@
                 <div class="left-form2">
                 <c:choose>
                     <c:when test="${loginUser.empNo eq ap.writerNo }" >
-                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서삭제</a> |
-                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">기안수정</a>
+                        <p style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서삭제</p> |
+                        <p style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">기안수정</p>
                         <br><br>
                     </c:when>    
                     <c:otherwise>
@@ -74,7 +74,7 @@
                 
                 
                 <!-- 몰래 수정하거나 삭제하기  -->
-				<form action="" method="post" id="postForm">
+				<form action method="POST" id="postForm">
 					<input type="hidden" name="no" value="${ap.appNo }">
 					<c:forEach var="o" items="${list3 }">
 						<input type="hidden" name="filePath" value="${o.changeName }">
@@ -83,10 +83,7 @@
 				</form>
 				
 			</div>
-			
-				<script>
-
-				</script>			
+		
             
             <div class="left-form3" >
 
@@ -399,9 +396,10 @@
 				}else{ // 삭제하기 클릭시
 					
 	        		var con = confirm("해당문서를 삭제하시겠습니까?");
-	        		
+	        		console.log(con);
 	        		if(con){
-	        			$("#postForm").attr("action", "delete.ap").submit();
+	        			$("#postForm").prop("action", "delete.ap");
+	        			$("#postForm").submit();
 	        		}							
 					
 				}
