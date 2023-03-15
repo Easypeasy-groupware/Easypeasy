@@ -27,7 +27,7 @@ public class CommuteController {
 			int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 			
 			Commute c = cService.commuteMainPage(empNo);
-			
+			//System.out.println(c);
 			 
 			if(c != null) {
 				mv.addObject("c", c)
@@ -54,7 +54,7 @@ public class CommuteController {
 			
 			int result1 = cService.inTime(c);
 			
-			int result2 = cService.updateStatus(c);
+			//int result2 = cService.updateStatus(c);
 			
 			return result1 > 0 ? "success" : "fail";
 			
