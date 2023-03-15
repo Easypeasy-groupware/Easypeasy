@@ -90,8 +90,6 @@ public class CommuteController {
 			//System.out.println(list1);
 			//System.out.println(list2);
 			
-			
-			
 			return "vacation/vacationMain";
 		}
 	
