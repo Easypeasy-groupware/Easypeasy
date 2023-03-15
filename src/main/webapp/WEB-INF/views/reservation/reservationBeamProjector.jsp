@@ -124,7 +124,7 @@
 	                    <tr>
 	                        <td>${ rb.resourceName }</td>
 	                        <td>
-	                            <button onclick="" class="btn btn-sm btn-light" data-toggle="modal" data-target="#myModal" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">예약</button>
+	                            <button class="btn btn-sm btn-light" onclick="openModal('${ rb.resourceNo }');" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">예약</button>
 	                        </td>
 	                    </tr>
                     </c:forEach>
@@ -132,10 +132,16 @@
             </table>
         </div>
     </div>
-    
-    
+    <script>
+    	function openModal(no){
+    		
+    		$("input[name=resourceNo]").val(no);
+    		$("#myModal").modal("show");
+    		console.log($("input[name=resourceNo]").val())
+    	}
+    </script>
     <!-- myModal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade reservationModal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -146,8 +152,10 @@
                 </div>
                 <br>
                 <form action="insertBeamProjector.re" method="post">
-                <input type="hidden" name="resourceNo" value="${ beList.resourceNo }">
-                <input type="hidden" name="reWriter" value="${ loginUser.empNo }">
+                
+                <input type="hidden" name="resourceNo">
+                
+                <input type="hidden" name="reWriter" value="${ loginUser.empNo }">                
                     <!-- Modal Body -->
                     <div style="margin: 20px;">
                         <table id="modal">

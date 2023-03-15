@@ -201,6 +201,9 @@ public class ReservationController {
 	public String selectBeamProjector(Model model) {
 		
 		ArrayList<Resource> beList = reService.selectSettingBeamProjector();
+		
+		System.out.println(beList);
+		
 		model.addAttribute(beList);
 		
 		return "reservation/reservationBeamProjector";
@@ -212,7 +215,7 @@ public class ReservationController {
 		return "reservation/reservationMettingRoom";
 	}
 	
-	
+	/*
 	@RequestMapping("insertBeamProjector.re")
 	public String insertBeamProjector(Reservation r, HttpSession session, Model model) {
 		
@@ -231,5 +234,5 @@ public class ReservationController {
 		}
 	
 	}
-	
+	*/
 }
