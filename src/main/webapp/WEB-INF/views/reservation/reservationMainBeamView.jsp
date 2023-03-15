@@ -57,8 +57,8 @@
         border: 1px solid lightgray;
         border-radius: 5px;
     }
-
-	.dropdown{
+    
+    .dropdown{
 		margin-top: 10px;
 		float: right;
 	}
@@ -72,6 +72,7 @@
     	background: rgb(214, 223, 204);
 		color: white;
 	}
+
 
 
     /* 풀캘린더 */
@@ -297,12 +298,12 @@
                 resourceAreaColumns: [
                     {
                         field: 'title',
-                        headerContent: '회의실'
+                        headerContent: '빔프로젝터'
                     },
                 ],
                 resources: [
-                	<c:forEach var="rm" items="${ meList }">
-                		{ id: '${ rm.resourceNo }', title: '${ rm.resourceName }'},
+                	<c:forEach var="rb" items="${ beList }">
+                		{ id: '${ rb.resourceNo }', title: '${ rb.resourceName }'},
                     </c:forEach>
                 ],
                 select: function(info) { // 클릭&드래그
