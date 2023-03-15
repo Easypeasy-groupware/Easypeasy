@@ -199,20 +199,31 @@
     				},
     				success:function(result){
     					if(result == "success") {
+    						console.log(result);
     						$(".group-input").val("");
+    						swal({
+            		            title: "그룹 추가", 
+            		            text: "새로운 그룹이 추가되었습니다", 
+            		            icon: "success",
+            		            button: "확인",
+            		         });
     						selectGroupList();
+    					}else{
+    						$(".group-input").val("");
+        					console.log(result);
+        					swal({
+            		            title: "그룹 추가", 
+            		            text: "이미 중복된 그룹명이 있습니다", 
+            		            icon: "error",
+            		            button: "확인",
+            		         });
     					}
-    				},error:function(fail){
+    						
+    				},error:function(){
     					console.log("개인주소록 그룹 추가용 ajax 통신 실패");
-    					swal({
-        		            title: "그룹 추가", 
-        		            text: "이미 중복된 그룹명이 있습니다", 
-        		            icon: "error",
-        		            button: "확인",
-        		         });
     				}
     				
-    			})
+    			});
     		}else {
     			 swal({
     		            title: "그룹 추가", 
