@@ -32,7 +32,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"></script>
 <style>
 	*{padding:0; margin:0}
-	.menubar{width:200px; background:white; float:left;}
+	.menubar{width:200px; background:white; float:left; border-right: 2px solid rgb(185, 187, 221); height: 750px;}
 	a{text-decoration:none; font-size:14px; color:black;}
 	a:hover{font-weight:600; color:black;}
 	li{list-style:none;}
@@ -81,22 +81,22 @@
         </div>
 
         <div class="add-type" id="add-in" style="display:none;">
-            <a href="internalEnt.add" class="add-in"><b>회의실</b></a>
+            <a href="mettingRoom.re" class="add-in"><b>회의실</b></a>
             <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="inlist-key"></span>
         </div>
         <ul class="submenu" id="inlist" style="display:none;">
-        	<c:forEach var="r" items="${ list }">
-        		<li><a href="internalDept.add?dept=hr">- ${ r.resourceName }</a></li>
+        	<c:forEach var="rm" items="${ meList }">
+        		<li><a href="mettingRoomDetail.re?mno=${ rm.resourceNo }">- ${ rm.resourceName }</a></li>
             </c:forEach>
         </ul>
 
         <div class="add-type" id="add-ex"  style="display:none;">
-            <a href="externalEnt.add" class="add-ex"><b>빔프로젝터</b></a>
+            <a href="beamProjector.re" class="add-ex"><b>빔프로젝터</b></a>
             <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="exlist-key"></span>
         </div>
         <ul class="submenu" id="exlist" style="display:none;">
-            <c:forEach var="s" items="">
-        		<li><a href="externalGroup.add?group=">- jstl </a></li>
+            <c:forEach var="rb" items="${ beList }">
+        		<li><a href="externalGroup.add?group=">- ${ rb.resourceName }</a></li>
         	</c:forEach>
         </ul>
        

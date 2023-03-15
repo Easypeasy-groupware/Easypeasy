@@ -81,7 +81,7 @@
 			            <br>
 			        <script>
 				        $(function(){
-				        	$("#selectBox").val('${e.jobName}').prop("selected", true);
+				        	$(#selectBox>option).val('${e.jobName}').prop("selected", true);
 				        })
 			        </script>
 			            

@@ -58,6 +58,20 @@ public interface AddressService {
 	// 10. 개인주소록 그룹 조회(ajax)
 	ArrayList<AddGroup> selectPersonalGroupList(int empNo);
 	
+	// 11. 개인주소록 연락처 상세조회
+	Address selectPsAddDetail(int no);
+	
+	// 12. 개인주소록 연락처 수정
+	int updatePsAdd(Address a);
+	
+	// 13. 공유주소록 그룹 추가(ajax)
+	int selectExtSharedGroup(AddGroup ag);
+	int insertNewSharedGroup(AddGroup ag);
+	
+	// 14. 검색한 사원리스트 조회(ajax)
+	ArrayList<Employee> selectEmployeeList(Employee e);
+
+	
 	
 
 }

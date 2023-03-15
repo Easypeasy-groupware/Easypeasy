@@ -40,4 +40,62 @@
 		  , #{resourceWriter}
 		  )
 	</insert>
+	
+	<update id="mettingRoomUpdate">
+		update
+			   re_resource
+		   set resource_name = #{resourceName}
+		 where resource_no = #{resourceNo}
+	</update>
+	
+	<delete id="mettingRoomDelete">
+		delete
+		  from re_resource
+		 where resource_no = #{resourceNo}
+	</delete>
+	
+	<select id="selectSettingBeamProjector" resultMap="resourceResult">
+		select
+			    resource_no
+			  , resource_name
+			  , category_name
+			  , emp_name
+		   from re_resource
+		   join employee using(emp_no)
+		  where category_name = '빔프로젝터'
+		  order
+		     by resource_no
+	</select>
+	
+	<insert id="addBeamProjectorResource">
+		insert
+		  into re_resource
+		  (
+		  	resource_no
+		  , resource_name
+		  , category_name
+		  , emp_no
+		  )
+		  values
+		  (
+		  	seq_rscno.nextval
+		  , #{resourceName}
+		  , #{categoryName}
+		  , #{resourceWriter}
+		  )
+	</insert>
+	
+	<update id="beamProjectorUpdate">
+		update
+			   re_resource
+		   set resource_name = #{resourceName}
+		 where resource_no = #{resourceNo}
+	</update>
+	
+	<delete id="beamProjectorDelete">
+		delete
+		  from re_resource
+		 where resource_no = #{resourceNo}
+	</delete>
+	
 </mapper>

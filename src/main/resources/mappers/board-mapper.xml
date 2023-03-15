@@ -4,12 +4,23 @@
 	
 	<resultMap id="boardResult" type="Board">
 		<id column="board_no" property="boardNo" />
+		<result column="board_cno" property="boardCno" />
 		<result column="board_title" property="boardTitle" />
 		<result column="board_writer" property="boardWriter" />
 		<result column="board_count" property="boardCount" />
 		<result column="create_date" property="createDate" />
 		<result column="board_content" property="boardContent" />
 		<result column="board_pin" property="boardPin" />
+	</resultMap>
+	
+	<resultMap id="attachmentResult" type="Attachment">
+		<id column="attach_no" property="attachNo" />
+		<result column="ref_no" property="refNo" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
+		<result column="file_path" property="filePath" />
+		<result column="upload_date" property="uploadDate" />
+		<result column="division" property="division" />
 	</resultMap>
 
 	<select id="selectListCount" resultType="_int">
@@ -22,6 +33,7 @@
 	<select id="selectList" resultMap="boardResult">
 		select
 		       board_no
+		     , board_cno
 		     , board_title
 		     , board_writer
 		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
@@ -29,8 +41,64 @@
 		     , board_pin
 		  from board
 		 where delete_status = 'N'
+		   and board_cno = #{boardCno}
 		 order
 		    by board_no desc
 	</select>
+	
+	<select id="selectAtList" resultMap="attachmentResult">
+		select
+			   attach_no
+			 , ref_no
+			 , origin_name
+			 , change_name
+			 , file_path
+			 , upload_date
+			 , division
+	      from attachment 
+	</select>
+	
+	<insert id="insertBoard">
+		insert
+		  into board
+		  (
+		  	board_no
+		  , board_title
+		  , board_writer
+		  , board_content
+		  , delete_status
+		  , board_pin
+		  ) 
+		  values
+		  (
+		  	sql_bno.nextval
+		  , #{boardTitle}
+		  , #{boardWriter}
+		  , #{boardContent}
+		  , #{delete_status}
+		  , #{board_pin}
+		  )
+	</insert>
+	
+	<!-- <update id="increaseCount">
+		update
+		       board
+		   set board_count = board_count +1
+		 where board_no = #{boardNo}
+		   and delete_status = 'N'
+	</update>
+	
+	<select id="selectBoard" resultMap="boardResult">
+		select
+			   board_no
+			 , board_cno
+			 , board_title
+			 , board_writer
+			 , board_content
+			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		  from board
+		 where board_no = #{boardNo}
+	</select> -->
+
 
 </mapper>

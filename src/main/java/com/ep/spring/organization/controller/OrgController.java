@@ -80,7 +80,6 @@ public class OrgController {
 		int count = oService.noCheck(checkNo);
 			
 		return count > 0 ? "NNNNN" : "NNNNY"; 			
-			
 	}	
 	
 	
@@ -128,6 +127,10 @@ public class OrgController {
 	
 	@RequestMapping("settings.org")
 	public String settingForm() {
+		
+		
+		
+		
 		return "organization/orgSettings";
 	}
 	

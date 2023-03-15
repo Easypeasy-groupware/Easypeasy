@@ -108,6 +108,26 @@ public class AddressDao {
 		return (ArrayList)sqlSession.selectList("addressMapper.selectPersonalGroupList", empNo);
 	}
 
+	public Address selectPsAddDetail(SqlSessionTemplate sqlSession, int no) {
+		return sqlSession.selectOne("addressMapper.selectPsAddDetail", no);
+	}
+
+	public int updatePsAdd(SqlSessionTemplate sqlSession, Address a) {
+		return sqlSession.update("addressMapper.updatePsAdd", a);
+	}
+
+	public int selectExtSharedGroup(SqlSessionTemplate sqlSession, AddGroup ag) {
+		return sqlSession.selectOne("addressMapper.selectExtSharedGroup", ag);
+	}
+
+	public int insertNewSharedGroup(SqlSessionTemplate sqlSession, AddGroup ag) {
+		return sqlSession.insert("addressMapper.insertNewSharedGroup", ag);
+	}
+
+	public ArrayList<Employee> selectEmployeeList(SqlSessionTemplate sqlSession, Employee e) {
+		return (ArrayList)sqlSession.selectList("addressMapper.selectEmployeeList", e);
+	}
+
 
 
 	

@@ -70,7 +70,7 @@
 			  	</button>
 			  	<div class="dropdown-menu">
 				    <a class="dropdown-item" href="settingMettingRoomView.re">회의실</a>
-				    <a class="dropdown-item" href="settingBeamProjectView.re">빔프로젝터</a>
+				    <a class="dropdown-item" href="settingBeamProjectorView.re">빔프로젝터</a>
 			  	</div>
 			</div>
         </div>
@@ -85,11 +85,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                	<c:forEach var="rsc" items="${ list }">
+                	<c:forEach var="rm" items="${ meList }">
 	                    <tr>
-	                        <td>${ rsc.resourceName }</td>
+	                        <td>${ rm.resourceName }</td>
 	                        <td>
-	                            <button style="border: none; background: none;"><i class="fas fa-cog"></i></button>
+	                            <button onclick="location.href='upDelMettingRoom.re?mno=${ rm.resourceNo }&mname=${ rm.resourceName }'" style="border: none; background: none;"><i class="fas fa-cog"></i></button>
 	                        </td>
 	                    </tr>
                     </c:forEach>
@@ -97,6 +97,7 @@
             </table>
         </div>
     </div>
+ 
 
 </body>
 </html>

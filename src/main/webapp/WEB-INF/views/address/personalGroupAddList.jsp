@@ -218,7 +218,7 @@
 
 			$(function(){
                 $('.clck-detail').on("click", $('.clck-detail'), function(){
-                    location.href = 'detail.ad?no=' + $(this).siblings().eq(0).text(); 
+                    location.href = 'psAddInfo.ad?no=' + $(this).siblings().eq(0).text(); 
                 })
             })
         </script>
