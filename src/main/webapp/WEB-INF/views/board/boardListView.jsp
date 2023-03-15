@@ -23,6 +23,7 @@
 	.views {text-align: center;}
     .search-container {display: flex; justify-content: flex-end; margin-bottom: 10px;}
 	.search-container input[type=text] {padding: 6px; margin-right: 10px; border: none; border-radius: 3px; width: 200px;}
+	.notice{font-color:red;}
 
 	/* 페이징바 */
     #paging{text-align: center; display: inline-block; padding-left :0;}
@@ -51,13 +52,12 @@
             <form>
                 <div class="search-container">
                     <select>
-                        <option value="">전체</option>
+                        <option value="all">전체</option>
                         <option value="1">1일</option>
                         <option value="7">1주일</option>
                         <option value="30">1개월</option>
                     </select>
                     <select>
-                        <option value="">선택하세요</option>
                         <option value="title">제목</option>
                         <option value="author">작성자</option>
                         <option value="content">내용</option>
@@ -66,12 +66,12 @@
                         <button type="button" class="btn btn-success btn-sm" onclick="search()">검색</button>
                 </div>
             </form>
-            <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enroll.bo';"> 새글쓰기</button>
+            <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enrollForm.bo';">새글쓰기</button>
             <br><br>
-            <table>
+            <table id="boardList">
                 <thead>
                     <tr>
-                        <th>번호</th>
+                        <th>글번호</th>
                         <th>제목</th>
                         <th>작성자</th>
                         <th>작성일</th>
@@ -81,43 +81,51 @@
                 <tbody>
                 	<c:forEach var="b" items="${list}">
 	                    <tr>
-	                        <td>${b.boardNo}</td>
-	                        <td>${b.boardTitle}</td>
+	                        <td class="bno">${b.boardNo}</td>
+	                        <td class="notice">${b.boardTitle}</td>
 	                        <td>${b.boardWriter}</td>
 	                        <td>${b.createDate}</td>
 	                        <td class="views">${b.boardCount}</td>
 	                    </tr>
                     </c:forEach>
-                    <tr>
-                        <td>2</td>
-                        <td>공지사항 제목입니다.</td>
-                        <td>사용자</td>
-                        <td>2022-02-25</td>
-                        <td class="views">7</td>
-                    </tr>
-                   
                 </tbody>
             </table>
+            	<script>
+			        $(function(){
+		                 $("#boardList>tbody>tr").click(function(){
+		            			location.href='detailForm.bo?no=' + $(this).children(".bno").text();
+		            	})
+		            })
+		        </script>
+            
             <br><br>
             <tfoot>
                 <div align="center">
 		            <ul id="paging">
-		                <li><a href=""> < </a></li>
-		                <li class='on'><a href=""> 1 </a></li>
-		                <li><a href=""> 2 </a></li>
-		                <li><a href=""> 3 </a></li>
-		                <li><a href=""> 4 </a></li>
-		                <li><a href=""> 5 </a></li>
-		                <li><a href=""> > </a></li>
+		               <c:choose>
+		                	<c:when test="${ pi.currentPage eq 1 }">
+			                    <li class="page-item disabled"><a class="page-link" href="#"> < </a></li>
+			                </c:when>
+			                <c:otherwise>
+			                    <li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage-1 }"> < </a></li>
+		                    </c:otherwise>
+	                    </c:choose>
+	                    
+	                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	                    	<li class="page-item"><a class="page-link" href="list.bo?cpage=${p}">${p}</a></li>
+	     				</c:forEach>
+	                    
+	                    <c:choose>
+		                    <c:when test="${pi.currentPage eq pi.maxPage }">
+		                    	<li class="page-item disabled"><a class="page-link" href="#"> > </a></li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage + 1 }"> > </a></li>
+	                    	</c:otherwise>
+	                    </c:choose>
 		            </ul>
 		        </div>
-		        <script>
-		            $(function(){
-		                 $("#ps-tbody").on("click", "tr", function(){
-		                     location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
-		                 })
-		            })
-		        </script>
+		        
             </tfoot>
         </div>
         </div>

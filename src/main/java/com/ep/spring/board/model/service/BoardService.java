@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.ep.spring.board.model.vo.Board;
 import com.ep.spring.board.model.vo.BoardReply;
+import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
 
 public interface BoardService {
@@ -14,10 +15,11 @@ public interface BoardService {
 		
 	// 2. 게시글 작성하기 서비스
 	int insertBoard(Board b);
-		
+	ArrayList<Attachment> selectAtList(Attachment a);
+	
 	// 3. 게시글 상세조회용 서비스
-	int increaseCount(int boardNo);
-	Board selectBoard(int boardNo);
+	//int increaseCount(int boardNo);
+	//Board selectBoard(int boardNo);
 		
 	// 4. 게시글 삭제용 서비스
 	int deleteBoard(int boardNo);
