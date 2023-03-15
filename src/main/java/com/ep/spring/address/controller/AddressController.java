@@ -175,7 +175,7 @@ public class AddressController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="insertPsGroup.add", produces="application/json; charset=utf-8")
+	@RequestMapping(value="insertPsGroup.add", produces="text/html; charset=utf-8")
 	public String ajaxInsertPersonalGroup(AddGroup ag) {
 		
 		int result1 = aService.selectExtPersonalGroup(ag);
