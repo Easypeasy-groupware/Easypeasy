@@ -137,7 +137,7 @@
 
         <div id="psLike">
             <table id="addList">
-                <copgroup>
+                <colgroup>
                     <col style="width:50px;">
                     <col style="width:50px;">
                     <col style="width:100px;"><!--이름-->
@@ -148,7 +148,7 @@
                     <col style="width:120px;"><!--회사-->
                     <col style="width:100px;"><!--메모-->
                     <col style="width:100px;"><!--그룹-->
-                </copgroup>
+                </colgroup>
                 <thead align="center">
                     <tr>
                         <th style="display:none">no</th>
@@ -229,7 +229,7 @@
 
 			$(function(){
                 $('.clck-detail').on("click", $('.clck-detail'), function(){
-                    location.href = 'detail.ad?no=' + $(this).siblings().eq(0).text(); 
+                    location.href = 'psAddInfo.ad?no=' + $(this).siblings().eq(0).text(); 
                 })
             })
         </script>

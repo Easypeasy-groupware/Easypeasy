@@ -56,7 +56,7 @@ public class AddressController {
 	
 	@RequestMapping("newShForm.add") 
 	public String newShAddForm() {
-		return "address/newSharedAddress";
+		return "address/newSharedAddressForm";
 	}
 
 	@RequestMapping("internalEnt.add") // 사내주소록 전체리스트
@@ -177,7 +177,7 @@ public class AddressController {
 	
 	@ResponseBody
 	@RequestMapping(value="insertPsGroup.add")
-	public String ajaxInsertPersonalGroup(AddGroup ag) { // 개인주소록 그룹 추가
+	public String ajaxInsertPersonalGroup(AddGroup ag) { // ajax 개인주소록 그룹 추가
 		
 		int result1 = aService.selectExtPersonalGroup(ag);
 		
@@ -193,7 +193,7 @@ public class AddressController {
 	
 	@ResponseBody
 	@RequestMapping(value="listPsGroup.add", produces="application/json; charset=utf-8")
-	public String ajaxSelectPersonalGroupList(int empNo, HttpSession session) {
+	public String ajaxSelectPersonalGroupList(int empNo, HttpSession session) { // ajax 개인주소록 그룹 조회
 		
 		ArrayList<AddGroup> list = aService.selectPersonalGroupList(empNo);
 		
@@ -203,11 +203,67 @@ public class AddressController {
 		
 	}
 	
+	@RequestMapping("psAddInfo.ad")
+	public ModelAndView selectPsAddDetail(int no, ModelAndView mv) { // 개인주소록 상세조회
+		
+		Address add = aService.selectPsAddDetail(no);
+		
+		mv.addObject("a", add)
+		  .setViewName("address/personalAddDetailForm");
+		return mv;
+	}
+	
+	@RequestMapping("updatePsAdd.ad")
+	public String updatePsAdd(Address a, HttpSession session) { // 개인주소록 수정하기
+		int result = aService.updatePsAdd(a);
+		
+		if(result > 0) {
+			AlertMsg msg = new AlertMsg("주소록 수정", "성공적으로 수정되었습니다");
+			session.setAttribute("successMsg", msg);
+		}else {
+			AlertMsg msg = new AlertMsg("주소록 수정", "주소록이 수정되지 않았습니다");
+			session.setAttribute("failMsg", msg);
+		}
+		return "redirect:psAddInfo.ad?no=" + a.getAddNo();
+		
+	}
 	
 	
+	@ResponseBody
+	@RequestMapping(value="insertShGroup.add")
+	public String ajaxInsertSharedGroup(AddGroup ag) { // ajax 개인주소록 그룹 추가
+		
+		int result1 = aService.selectExtSharedGroup(ag);
+		
+		if(result1 > 0) { // 중복된 그룹 있음
+			return "fail";
+			
+		}else { // 중복된 그룹 없음
+			int result2 = aService.insertNewSharedGroup(ag);
+			return result2 > 0 ? "success" : "fail";
+		}
+		
+	}
 	
+	@ResponseBody
+	@RequestMapping(value="listShGroup.add", produces="application/json; charset=utf-8")
+	public String ajaxSelectSharedGroupList(HttpSession session) { // ajax 개인주소록 그룹 조회
+		
+		ArrayList<AddGroup> list = aService.selectSharedAddGroup();
+
+		session.setAttribute("sList", list); 
+		return new Gson().toJson(list);
+		
+	}
 	
-	
+	@ResponseBody
+	@RequestMapping(value="selectEmpList.ad", produces="application/json; charset=utf-8")
+	public String ajaxSelectEmployeeList(Employee e) {
+		
+		ArrayList<Employee> list = aService.selectEmployeeList(e);
+		
+		return new Gson().toJson(list);
+	}
 	
 	
 	
