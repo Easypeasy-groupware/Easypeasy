@@ -177,6 +177,11 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return aDao.selectDetailRec(sqlSession, a);
 	}
 
+	@Override
+	public int updateCount(Approval a) {
+		return aDao.updateCount(sqlSession, a);
+	}
+
 
 
 

@@ -58,10 +58,13 @@
             <div class="left-form2">
                 <c:choose>
                     <c:when test="${loginUser.empNo eq ap.writerNo }" >
-                        <p style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서삭제</p> |
-                        <p style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">기안수정</p>
+                        <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서삭제</span> |
+                        <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">기안수정</span>
                         <br><br>
-                    </c:when>    
+                    </c:when>   
+                    <c:when test="${ap.st eq '참조대기' || ap.st eq '참조전체'}" >
+                        <br><br>
+                    </c:when>   
                     <c:otherwise>
                         <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#approval">결재</a> |  
                         <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#companion">반려</a> |
@@ -69,7 +72,7 @@
                         <br><br>
                     </c:otherwise>    
                         
-                </c:choose>   
+                </c:choose> 
                 
                 <!-- 몰래 수정하거나 삭제하기  -->
 				<form action method="POST" id="postForm">
