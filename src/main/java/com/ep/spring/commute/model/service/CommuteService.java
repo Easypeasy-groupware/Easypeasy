@@ -28,5 +28,9 @@ public interface CommuteService {
 	//(일반사용자)휴가 메인페이지
 		ArrayList<VacationRecode> selectVacMain(int empNo);
 		ArrayList<VacationForm> selectVacForm(int empNo);
+		
+	//인사계정 사원정보 리스트 조회
+	ArrayList<Employee> selectEmpList();
+	
 
 }

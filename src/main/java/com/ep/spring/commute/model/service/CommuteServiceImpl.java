@@ -69,6 +69,13 @@ public class CommuteServiceImpl implements CommuteService{
 		
 		return cDao.selectVacForm(sqlSession, empNo);
 	}
+
+	//인사계정 사원정보 리스트 조회
+	@Override
+	public ArrayList<Employee> selectEmpList() {
+		
+		return cDao.selectEmpList(sqlSession);
+	}
 	
 	
 

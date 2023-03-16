@@ -51,5 +51,10 @@ public class CommuteDao {
 	public ArrayList<VacationForm> selectVacForm(SqlSessionTemplate sqlSession, int empNo){
 		return (ArrayList)sqlSession.selectList("commuteMapper.selectVacForm", empNo);
 	}
+	
+	//인사계정 사원 정보 리스트 조회
+	public ArrayList<Employee> selectEmpList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("commuteMapper.selectEmpList");
+	}
 
 }

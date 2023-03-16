@@ -87,6 +87,18 @@
         #deptList{
             margin-right: 50px;
         }
+        .img{
+        width: 50px;
+        height: 50px;
+        border: none;
+        border-radius: 150px;
+    }
+    /*페이징바*/
+        #paging{text-align: center; display: inline-block; padding-left :0;}
+        #paging li {text-align: center; float: left; list-style:none; border-radius:10px; margin:2px; background-color: rgb(234, 234, 234);}
+        #paging li a {display: block; font-size: 12px; color: black; padding: 5px 10px; box-sizing: border-box; text-decoration-line:none;}
+        #paging li.on {background:rgb(166, 184, 145);}
+        #paging li.on a { color: white;}
    
     </style>
     <!-- Latest compiled and minified CSS -->
@@ -141,107 +153,87 @@
                 <tr>
                     <th></th>
                     <th>이름</th>
-
                     <th>부서</th>
                     <th>직위</th>
                     <th>근무시간 확인</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><img src="" alt="img"></td>
-                    <td>인사관리팀</td>
-                    <td>정형돈</td>
-                    <td>과장</td>
-                    <td>
-                        <button class="view">근무시간</button>
-                        
-                    </td>
-                </tr>
+            	<c:forEach var="list" items="${ list }">
+	            	<tr>
+	                    <td><img  class="img" id="profileImg" src="<c:out value='${ list.empProfile }' default='resources/profile_images/default_profile.png' />" ></td>
+	                    <c:choose>
+	                	<c:when test="${ list.deptCode eq 'D1' }">
+	                		<td>인사관리팀</td>
+	                	</c:when>
+	                	<c:when test="${ list.deptCode eq 'D2' }">
+	                		<td>경영지원팀</td>
+	                	</c:when>
+	                	<c:when test="${ list.deptCode eq 'D3' }">
+	                		<td>영업1팀</td>
+	                	</c:when>
+	                	<c:when test="${ list.deptCode eq 'D4' }">
+	                		<td>영업2팀</td>
+	                	</c:when>
+	                	<c:when test="${ list.deptCode eq 'D5' }">
+	                		<td>영업3팀</td>
+	                	</c:when>
+	                	<c:otherwise>
+	                		<td>마케팅팀</td>
+	                	</c:otherwise>
+	                	</c:choose>
+	                    <td>${ list.empName }</td>
+	                    <c:choose>
+	                	<c:when test="${ list.jobCode eq 'J1' }">
+	                		<td>사원</td>
+	                	</c:when>
+	                	<c:when test="${ list.jobCode eq 'J2' }">
+	                		<td>대리</td>
+	                	</c:when>
+	                	<c:when test="${ list.jobCode eq 'J3' }">
+	                		<td>과장</td>
+	                	</c:when>
+	                	<c:when test="${ list.jobCode eq 'J4' }">
+	                		<td>부장</td>
+	                	</c:when>
+	                	<c:when test="${ list.jobCode eq 'J5' }">
+	                		<td>상무</td>
+	                	</c:when>
+	                	<c:otherwise>
+	                		<td>대표</td>
+	                	</c:otherwise>
+	               	 	</c:choose>
+	                    <td>
+	                        <button class="view">근무시간</button>
+	                    </td>
+	                </tr>
+            	</c:forEach>
+            
     
-                <tr>
-                    <td><img src="" alt="img"></td>
-                    <td rowspan="2">Shades</td>
-                    <td>David</td>
-                    <td>180</td>
-                    <td>
-                        <button class="view">근무시간</button>
-                        
-                    </td>
-                </tr>
-    
-                <tr>
-              <td><img src="" alt="img"></td>
-                    <td>Alex</td>
-                    <td>160</td>
-                    <td>
-                        <button class="view">근무시간</button>
-                        
-                    </td>
-                </tr>
-    
-                <tr>
-                    <td><img src="" alt="img"></td>
-                    <td rowspan="2">Valhala</td>
-                    <td> Kawtar</td>
-                    <td>190</td>
-                    <td>
-                        <button class="view">근무시간</button>
-                        
-                    </td>
-                </tr>
-    
-                <tr>
-                    <td><img src="" alt="img"></td>
-                    <td>Katara</td>
-                    <td>110</td>
-                    <td>
-                        <button class="view">근무시간</button>
-                        
-                    </td>
-                </tr>
-    
-                <tr>
-                    <td><img src="" alt="img"></td>
-                    <td>Union</td>
-                    <td>Ashraf</td>
-                    <td>90</td>
-                    <td>
-                        <button class="view">근무시간</button>
-                        
-                    </td>
-                </tr>
+                
             </tbody>
             
         </table>
-
+		<br><br>
         
-        <div id="pagingArea">
-            <ul class="pagination">
-            <c:choose>
-                <c:when test="${ pi.currentPage eq 1 }">
-                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                </c:when>
-                <c:otherwise>
-                    <li class="page-item"><a class="page-link" href="#?cpage=${pi.currentPage-1 }">Previous</a></li>
-                </c:otherwise>
-            </c:choose>
-            
-                   <c:forEach var="p" begin="${ pi.startPage }" end="${pi.endPage }">
-                <li class="page-item"><a class="page-link" href="#?cpage=${p }">${p }</a></li>
-                </c:forEach>
-                
-                <c:choose>
-                <c:when test="${ pi.currentPage eq pi.maxPage }">
-                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-                </c:when>
-                <c:otherwise>
-                    <li class="page-item"><a class="page-link" href="#?cpage=${pi.currentPage+1 }">Next</a></li>
-                </c:otherwise>
-            </c:choose>
-                
+		<div align="center">
+            <ul id="paging">
+                <li><a href=""> &lt; </a></li>
+                <li class='on'><a href=""> 1 </a></li>
+                <li><a href=""> 2 </a></li>
+                <li><a href=""> 3 </a></li>
+                <li><a href=""> 4 </a></li>
+                <li><a href=""> 5 </a></li>
+                <li><a href=""> &gt; </a></li>
             </ul>
         </div>
+        <script>
+            $(function(){
+                 $("#ps-tbody").on("click", "tr", function(){
+                     location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
+                 })
+            })
+        </script>
 
     </div>
 
