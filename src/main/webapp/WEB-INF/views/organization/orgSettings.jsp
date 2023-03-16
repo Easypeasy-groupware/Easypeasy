@@ -55,33 +55,36 @@
 					<table id="depList">
 						<thead>
 							<tr>
-								<th>직무코드</th>
+								<th>부서코드</th>
 								<th>직무명</th>
 							</tr>
 						</thead>
 						<tbody>
+							<c:forEach var="e" items="${list}">
+								<tr>
+									<td>${e.deptCode}</td>
+									<td>${e.deptName}</td>
+								</tr>
+							</c:forEach>
+							
 							<tr>
-								<td>1</td>
-								<td>인사관리부</td>
-							</tr>
-							<tr>
-								<td>2</td>
+								<td>D2</td>
 								<td>경영지원부</td>
 							</tr>
 							<tr>
-								<td>3</td>
-								<td>영업1</td>
+								<td>D3</td>
+								<td>영업1팀</td>
 							</tr>
 							<tr>
-								<td>4</td>
+								<td>D4</td>
 								<td>영업2</td>
 							</tr>
 							<tr>
-								<td>5</td>
+								<td>D5</td>
 								<td>영업3</td>
 							</tr>
 							<tr>
-								<td>6</td>
+								<td>D6</td>
 								<td>마케팅부</td>
 							</tr>
 						</tbody>
@@ -100,10 +103,88 @@
 			
 					<!-- Modal body -->
 					<div class="modal-body">
-						<label for="empNo">직무코드 :</label>
+						<label for="empNo">부서코드 :</label>
 						<input type="text" id="depCode" name="depCode" required />
 
 						<label for="empNo">직무명 :</label>
+						<input type="text" id="depName" name="depName" required />
+					</div>
+			
+					<!-- Modal footer -->
+					<div class="modal-footer">
+					<button type="submit" class="btn btn-success" data-dismiss="modal">등록하기</button>
+					</div>
+			
+				</div>
+				</div>
+				<script>
+					$(function(){
+						$("#noticeList>tbody>tr").click(function(){
+							/* 모달안에 멀티모달 적용  */
+						})
+					})
+				</script>    
+			</div>
+
+			<div class="board2">
+				<br><br>
+				<h2>직위관리</h2>
+				<br>
+				<div class="container position">
+					<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#jobModal" style="float:right;">등록하기</button>
+					<br><br>
+					<table id="depList">
+						<thead>
+							<tr>
+								<th>직위코드</th>
+								<th>직위명</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>J1</td>
+								<td>대표</td>
+							</tr>
+							<tr>
+								<td>J2</td>
+								<td>이사</td>
+							</tr>
+							<tr>
+								<td>J3</td>
+								<td>부장</td>
+							</tr>
+							<tr>
+								<td>J4</td>
+								<td>과장</td>
+							</tr>
+							<tr>
+								<td>J5</td>
+								<td>대리</td>
+							</tr>
+							<tr>
+								<td>J6</td>
+								<td>사원</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- The Modal -->
+			<div class="modal" id="jobModal">
+				<div class="modal-dialog">
+				<div class="modal-content">
+			
+					<!-- Modal Header -->
+					<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+			
+					<!-- Modal body -->
+					<div class="modal-body">
+						<label for="empNo">직위코드 :</label>
+						<input type="text" id="depCode" name="depCode" required />
+
+						<label for="empNo">직위명 :</label>
 						<input type="text" id="depName" name="depName" required />
 					</div>
 			
@@ -122,50 +203,7 @@
 					})
 				</script>    
 			</div>
-
-			<div class="board2">
-				<br><br>
-				<h2>직위관리</h2>
-				<br>
-				<div class="container position">
-					<button type="button" class="btn btn-outline-success btn-sm" style="float:right;">등록하기</button>
-					<br><br>
-					<table id="depList">
-						<thead>
-							<tr>
-								<th>직위코드</th>
-								<th>직위명</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td>이사</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>부장</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>과장</td>
-							</tr>
-							<tr>
-								<td>4</td>
-								<td>대리</td>
-							</tr>
-							<tr>
-								<td>5</td>
-								<td>사원</td>
-							</tr>
-							<tr>
-								<td>5</td>
-								<td>사원</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
+			
 		</div>
 	</div>
 

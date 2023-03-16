@@ -68,25 +68,27 @@
 					<label for="empName">*이름 :</label>
 					    <input type="text" id="empName" name="empName" value="${e.empName}" readonly><br>
 					<label>*직급</label>
-			            <select name="jobCode" id="selectBox"  >
-			            	<c:forEach var="e" items="${list}">
-					            <option value="jobName" name="jobName" id="jobName">${e.jobName}</option>
-					        </c:forEach>
-			            </select>
-			            <!-- <option value="J2" name="jobCode" id="J2">대리</option>
-					            <option value="J3" name="jobCode" id="J3">과장</option>
-					            <option value="J4" name="jobCode" id="J4">부장</option>
-					            <option value="J5" name="jobCode" id="J5">상무</option>
-					            <option value="J6" name="jobCode" id="J6">대표</option> -->
-			            <br>
-			        <script>
-				        $(function(){
-				        	$(#selectBox>option).val('${e.jobName}').prop("selected", true);
-				        })
-			        </script>
+			           <select name="jobCode" id="jcBox" >
+			             		<option value="${e.jobCode}" name="jobCode" id="J">${e.jobName}</option>
+			             		<option>-----수정----</option>
+			             		<option value="J2" name="jobCode" id="J6">사원</option>
+			             		<option value="J2" name="jobCode" id="J5">대리</option>
+						        <option value="J3" name="jobCode" id="J4">과장</option>
+						        <option value="J4" name="jobCode" id="J3">부장</option>
+						        <option value="J5" name="jobCode" id="J2">상무</option>
+						        <option value="J6" name="jobCode" id="J1">대표</option>
+					   </select>
+				       <script>
+					       $(function(){
+					           $('select[name=jobCode] value=[${e.jobCode}]').attr("selected", true);
+					        })
+				       </script>
+				       <br>
 			            
 			        <label>직무</label>
-			            <select name="deptCode" id="deptCode" >
+			            <select name="deptCode" id="dcbox" >
+			            	<option value="${e.deptCode}" name="deptCode" id="D">${e.deptName}</option>
+			             	<option>-----수정----</option>
 			                <option value="D1" name="deptCode" id="D1">인사관리부</option>
 			                <option value="D2" name="deptCode" id="D2">경영관리부</option>
 			                <option value="D3" name="deptCode" id="D3">영업1팀</option>
@@ -94,6 +96,11 @@
 			                <option value="D5" name="deptCode" id="D5">영업3팀</option>
 			                <option value="D6" name="deptCode" id="D6">마케팅부</option>
 			            </select>
+			            <script> /* 찐 완성 아님ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ  */
+					        $(function(){
+					        	$('select[name=deptCode] value=[${e.deptCode}]').attr("selected", true);
+					        })
+				        </script>
 						<br><br>
 						
 					<label>입사일</label><br>

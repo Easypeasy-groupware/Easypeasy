@@ -205,7 +205,10 @@
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="tree-modal-label"><input type="text" placeholder="사원 검색"></h5><button type="button" class="btn btn-success">검색</button>
+						<h5 class="modal-title" id="tree-modal-label">
+							<form id="searchForm" method="Get">
+								<input type="text" placeholder="사원 검색"></h5><button type="button" class="btn btn-success">검색</button>
+							</form>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -217,63 +220,38 @@
 	
 							<h5>Easy peasy조직도</h5>
 							<form action="adminList.org">
-								<input type="hidden" name="empNo" value="${e.empNo }">
+								<input type="hidden" name="empNo" value="empNo">
 								<ul id="browser" class="filetree treeview-famfamfam">
 									<li><span class="folder">이지피지</span>
 										<ul>
-											<li><span class="file">"${e.JobName eq e.getJobName('대표')}"</span></li>
+											<li><span class="file">대표</span></li>
 											<li><span class="file">상무</span></li>
-											<c:forEach var="e" items="${list}">
-												<li class="closed"><span class="folder">인사관리부</span>
+											
+											<c:forEach var="d" items="${deptList}">
+												<li class="closed">
+													<span class="folder">${d.deptName}</span>
 													<ul>
-														<li><span class="file">${e.empName}</span></li>
-														<li><span class="file">사원2</span></li>
-														<li><span class="file">사원3</span></li>
-														<li><span class="file">사원4</span></li>
+														<c:forEach var="e" items="${list}">
+															<c:if test="${ e.deptName eq d.deptName }">
+																<li><span class="file">${ e.empName }</span></li>
+															</c:if>
+														</c:forEach>
 													</ul>
 												</li>
 											</c:forEach>
-											<li class="closed"><span class="folder">경영지원부</span>
-												<ul>
-													<li><span class="file">사원1</span></li>
-													<li><span class="file">사원2</span></li>
-													<li><span class="file">사원3</span></li>
-													<li><span class="file">사원4</span></li>
-												</ul>
-											</li>
-											<li class="closed"><span class="folder">영업부</span>
-												<ul>
-													<li><span class="folder">영업1팀</span>
-														<ul id="folder21">
-															<li><span class="file">사원1</span></li>
-															<li><span class="file">사원2</span></li>
-															<li><span class="file">사원3</span></li>
-														</ul>
-													</li>
-													<li><span class="folder">영업2팀</span>
+												
+											<%-- c:forEach var="부서" items="${부서리스트 }">
+												<li class="closed">
+													<span class="folder">${ 부서명 }</span>
 														<ul>
-															<li><span class="file">사원1</span></li>
-															<li><span class="file">사원2</span></li>
-															<li><span class="file">사원3</span></li>
+															<c:forEach var="사원" items="${ 사원리스트 }">
+																<c:if test="${ 사원.부서명 eq 부서명 }">
+																	<li><span class="file">${ 사원명 }</span></li>
+																</c:if>
+															</c:forEach>
 														</ul>
-													</li>
-													<li><span class="folder">영업3팀</span>
-														<ul>
-															<li><span class="file">사원1</span></li>
-															<li><span class="file">사원2</span></li>
-															<li><span class="file">사원3</span></li>
-														</ul>
-													</li>
-												</ul>
-											</li>
-											<li class="closed"><span class="folder">마케팅부</span>
-												<ul>
-													<li><span class="file">사원1</span></li>
-													<li><span class="file">사원2</span></li>
-													<li><span class="file">사원3</span></li>
-												</ul>
-											</li>
-											
+												</li>
+											</c:forEach> --%>
 										</ul>
 									</li>
 								</ul>

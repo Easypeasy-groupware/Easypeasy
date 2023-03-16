@@ -15,7 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.common.template.Pagination;
+import com.ep.spring.login.model.vo.Department;
 import com.ep.spring.login.model.vo.Employee;
+import com.ep.spring.login.model.vo.Job;
 import com.ep.spring.organization.model.service.OrgService;
 
 @Controller
@@ -29,7 +31,22 @@ public class OrgController {
 	
 	
 	@RequestMapping("list.org")
-	public String orgList() {
+	public String selectOrgList(HttpSession session, Model model) {
+		
+		int no = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
+		ArrayList<Employee> list = oService.selectOrgList(no);
+		ArrayList<Department> deptList = oService.selectDept();
+		ArrayList<Job> jList = oService.selectJob();
+		
+		//System.out.println(list);
+		//System.out.println(deptList);
+		System.out.println(jList); 
+		
+		model.addAttribute("jList", jList);
+		model.addAttribute("deptList", deptList);
+		model.addAttribute("list", list);
+		
 		return "organization/orgMain";
 	}
 	
@@ -57,7 +74,7 @@ public class OrgController {
 	public String insertMember(Employee e, Model model, HttpSession session) {
 		
 		String encPwd = bcryptPasswordEncoder.encode(e.getEmpPwd());
-		System.out.println("암호문 : " + encPwd);
+		//System.out.println("암호문 : " + encPwd);
 		
 		e.setEmpPwd(encPwd);
 		
@@ -125,15 +142,16 @@ public class OrgController {
 	}
 	
 	
-	@RequestMapping("settings.org")
-	public String settingForm() {
-		
-		
-		
-		
-		return "organization/orgSettings";
-	}
-	
+	/*
+	 * @RequestMapping("settings.org") public ModelAndView
+	 * selectSettingForm(Employee e, ModelAndView mv) {
+	 * 
+	 * ArrayList<Employee> list = oService.selectSettingForm(e);
+	 * 
+	 * mv.addObject("list", list).setViewName("organization/orgSettings");
+	 * 
+	 * return mv; }
+	 */
 	
 	
 	
