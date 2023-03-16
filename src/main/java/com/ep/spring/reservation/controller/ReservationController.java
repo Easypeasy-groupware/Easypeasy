@@ -200,12 +200,6 @@ public class ReservationController {
 	@RequestMapping("beamProjector.re")
 	public String selectBeamProjector(Model model) {
 		
-		ArrayList<Resource> beList = reService.selectSettingBeamProjector();
-		
-		System.out.println(beList);
-		
-		model.addAttribute(beList);
-		
 		return "reservation/reservationBeamProjector";
 	}
 	
@@ -215,12 +209,19 @@ public class ReservationController {
 		return "reservation/reservationMettingRoom";
 	}
 	
-	/*
-	@RequestMapping("insertBeamProjector.re")
-	public String insertBeamProjector(Reservation r, HttpSession session, Model model) {
+	
+	@RequestMapping("insertReservationBeam.re")
+	public String insertReservationBeam(Reservation r, HttpSession session, Model model) {
 		
+		//System.out.println(r);
 
-		int result = reService.insertBeamProjector(r);
+		if(r.getAllDay() == null) {
+			r.setAllDay("N");
+		}else {
+			r.setAllDay("Y");
+		}
+		
+		int result = reService.insertReservation(r);
 		
 		if(result > 0) {
 			AlertMsg msg = new AlertMsg("예약", "성공적으로 예약되었습니다");
@@ -232,7 +233,84 @@ public class ReservationController {
 			session.setAttribute("failMsg", msg);
 			return "redirect:beamProjector.re";
 		}
-	
+			
 	}
-	*/
+	
+	@RequestMapping("insertReservationMe.re")
+	public String insertReservationMe(Reservation r, HttpSession session, Model model) {
+		
+		//System.out.println(r);
+
+		if(r.getAllDay() == null) {
+			r.setAllDay("N");
+		}else {
+			r.setAllDay("Y");
+		}
+		
+		int result = reService.insertReservation(r);
+		
+		if(result > 0) {
+			AlertMsg msg = new AlertMsg("예약", "성공적으로 예약되었습니다");
+			session.setAttribute("successMsg", msg);
+			model.addAttribute("r", r);
+			return "redirect:mettingRoom.re";
+		}else {
+			AlertMsg msg = new AlertMsg("예약", "예약 실패");
+			session.setAttribute("failMsg", msg);
+			return "redirect:mettingRoom.re";
+		}
+			
+	}
+	
+	@RequestMapping("insertReservationBeamMain.re")
+	public String insertReservationBeamMain(Reservation r, HttpSession session, Model model) {
+		
+		//System.out.println(r);
+
+		if(r.getAllDay() == null) {
+			r.setAllDay("N");
+		}else {
+			r.setAllDay("Y");
+		}
+		
+		int result = reService.insertReservation(r);
+		
+		if(result > 0) {
+			AlertMsg msg = new AlertMsg("예약", "성공적으로 예약되었습니다");
+			session.setAttribute("successMsg", msg);
+			model.addAttribute("r", r);
+			return "redirect:beamProjectorMain.re";
+		}else {
+			AlertMsg msg = new AlertMsg("예약", "예약 실패");
+			session.setAttribute("failMsg", msg);
+			return "redirect:beamProjectorMain.re";
+		}
+			
+	}
+	
+	@RequestMapping("insertReservationMeMain.re")
+	public String insertReservationMeMain(Reservation r, HttpSession session, Model model) {
+		
+		//System.out.println(r);
+
+		if(r.getAllDay() == null) {
+			r.setAllDay("N");
+		}else {
+			r.setAllDay("Y");
+		}
+		
+		int result = reService.insertReservation(r);
+		
+		if(result > 0) {
+			AlertMsg msg = new AlertMsg("예약", "성공적으로 예약되었습니다");
+			session.setAttribute("successMsg", msg);
+			model.addAttribute("r", r);
+			return "redirect:main.re";
+		}else {
+			AlertMsg msg = new AlertMsg("예약", "예약 실패");
+			session.setAttribute("failMsg", msg);
+			return "redirect:main.re";
+		}
+			
+	}
 }

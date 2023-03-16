@@ -132,14 +132,15 @@
             </table>
         </div>
     </div>
+    
     <script>
     	function openModal(no){
-    		
     		$("input[name=resourceNo]").val(no);
     		$("#myModal").modal("show");
-    		console.log($("input[name=resourceNo]").val())
+    		//console.log($("input[name=resourceNo]").val())
     	}
     </script>
+    
     <!-- myModal -->
     <div class="modal fade reservationModal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -151,7 +152,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button> 
                 </div>
                 <br>
-                <form action="insertBeamProjector.re" method="post">
+                <form action="insertReservationBeam.re" method="post">
                 
                 <input type="hidden" name="resourceNo">
                 
@@ -237,7 +238,7 @@
                                     </span>
                                     &nbsp;
                                     <div class="custom-control custom-checkbox" style="display: inline-block;">
-                                        <input type="checkbox" class="custom-control-input" name="allDay" id="allDay" onclick="allDayShowHidden();">
+                                        <input type="checkbox" class="custom-control-input" name="allDay" value="N" id="allDay" onclick="allDayShowHidden();">
                                         <label class="custom-control-label" for="allDay">종일</label>
                                     </div>
                                 </td>
@@ -289,10 +290,11 @@
                 ],
                 events: [
                 	<c:forEach var="rb" items="${ beList }">
-                    	{ id: '${ rb.resourceNo }', resourceId: '${ rb.resourceNo }', start: '2023-03-15 12:00', end: '2023-03-15 15:00', title: 'dd 12:00 ~ 15:00', color: '#d6dfcc' },
+                    	{ id: '${ rb.resourceNo }', resourceId: '${ rb.resourceNo }', start: '2023-03-15 08:00', end: '2023-03-15 23:00', title: 'dd 12:00 ~ 15:00', color: '#d6dfcc' },
                     </c:forEach>
                 ],
                 select: function(info) { // 클릭&드래그
+                
                     // 클릭한 날짜
                     const start = info.startStr;
                     const end = info.endStr;
@@ -333,13 +335,16 @@
 
                     //console.log("체크날짜" + yymmddStart);
                     //console.log("오늘 날짜" + tDate);
-                    console.log(hhmmStart);
+                    //console.log(hhmmStart);
                     //console.log(tHhmm);
-                    console.log(hhmmEnd);
+                    //console.log(hhmmEnd);
 
                     if(yymmddStart > tDate) { // 오늘 날짜 이후 선택시
-                        $("#myModal").modal("show");
-
+                    	
+                    	$("input[name=resourceNo]").val(info.resource.id); // info.resource.id : 해당 이벤트 아이디 반환해줌
+                    	//console.log($("input[name=resourceNo]").val());
+                		$("#myModal").modal("show");
+                    	
                         // option태그의 value값이 선택된 시간과 같은 경우 selected(선택)되도록!
                         $("#sel1").val(hhmmStart).prop("selected", true);
                         $("#sel2").val(hhmmEnd).prop("selected", true);
@@ -351,7 +356,11 @@
                     }else if(hhmmStart < tHhmm) { // 오늘 날짜에서 지나간 시간 선택시
                         alert("예약 불가능한 시간");
                     }else{
-                        $("#myModal").modal("show");
+                    	
+                    	$("input[name=resourceNo]").val(info.resource.id);
+                    	//console.log($("input[name=resourceNo]").val());
+                		$("#myModal").modal("show");
+                    	
 
                         // option태그의 value값이 선택된 시간과 같은 경우 selected(선택)되도록!
                         $("#sel1").val(hhmmStart).prop("selected", true);
@@ -384,8 +393,8 @@
                 slotMinTime: "08:00:00", // 최소시간
                 slotMaxTime: "23:00:00", // 최대시간 (23시까지만 화면에 보여짐)
                 selectable : true, // 달력 일자 드래그 설정가능
-                droppable : true,
-                editable : true,
+                //droppable : true,
+                //editable : true,
                 nowIndicator: true, // 현재 시간 마크
                 eventLimit: true, // 달력상에 셀 크기보다 많은 이벤트가 등록되어 있는 경우 'more' 표기
                 locale: 'ko' // 한국어 설정
@@ -431,10 +440,14 @@
         // 종일 체크시 시간 선택 숨기기
         function allDayShowHidden(){
             if($("input:checkbox[id='allDay']").is(":checked") == true) {
-                $(".sel").attr("hidden", true);    
+                $(".sel").attr("hidden", true);
+                $("#sel1").val("08:00"); // 시간 값 8시부터
+                $("#sel2").val("23:00"); // 23시까지
+                $("input[name=allDay]").val("Y");
             } else {
+            	//console.log($("input:checkbox[id='allDay']").prop("checked", false));
                 $(".sel").attr("hidden", false);
-            }
+            } 
         }
 
         // 전사일정 체크 확인

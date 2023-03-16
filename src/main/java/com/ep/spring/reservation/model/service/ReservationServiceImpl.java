@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ep.spring.reservation.model.dao.ReservationDao;
+import com.ep.spring.reservation.model.vo.Reservation;
 import com.ep.spring.reservation.model.vo.Resource;
 
 @Service
@@ -58,6 +59,11 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public int BeamProjectorDelete(int resourceNo) {
 		return reDao.beamProjectorDelete(sqlSession, resourceNo);
+	}
+
+	@Override
+	public int insertReservation(Reservation r) {
+		return reDao.insertReservation(sqlSession, r);
 	}
 	
 	
