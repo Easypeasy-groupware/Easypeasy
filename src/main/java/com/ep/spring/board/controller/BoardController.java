@@ -82,7 +82,10 @@ public class BoardController {
 	}
 	*/
 	
-	
+	@RequestMapping("adminSettings.bo")
+	public String adminSettings() {
+		return "board/boardAdminSettings";
+	}
 	
 	
 	

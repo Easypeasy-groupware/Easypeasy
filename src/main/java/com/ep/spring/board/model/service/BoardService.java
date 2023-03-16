@@ -3,6 +3,7 @@ package com.ep.spring.board.model.service;
 import java.util.ArrayList;
 
 import com.ep.spring.board.model.vo.Board;
+import com.ep.spring.board.model.vo.BoardCate;
 import com.ep.spring.board.model.vo.BoardReply;
 import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
@@ -35,5 +36,13 @@ public interface BoardService {
 		
 	// 8. 게시글 top5 조회용 서비스 (ajax)
 	ArrayList<Board> selectTopList();	
+	
+	// 9. 게시판 설정 서비스
+	ArrayList<BoardCate> selectBcList(BoardCate bc);
+	int insertSettings(BoardCate bc);
+	
+	// 10. 게시판 설정 수정 서비스
+	int updateSettings(BoardCate bc);
+	
 	
 }
