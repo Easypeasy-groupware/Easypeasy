@@ -59,11 +59,7 @@
             padding: 10px;
         }
 
-        img {
-            width: 90px;
-            height: 90px;
-        }
-
+        
         .view,
         .delete {
             border: none;
@@ -118,7 +114,7 @@
 	    
 
 
-    <div class="side"><jsp:include page="../commute/commuteSidebar.jsp"/></div>
+    <div class="side"><jsp:include page="../commute/HRsidebar.jsp"/></div>
 
     <div class="allContent">
 

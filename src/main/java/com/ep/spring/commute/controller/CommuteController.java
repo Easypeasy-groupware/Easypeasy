@@ -117,5 +117,11 @@ public class CommuteController {
 		public String monthlyWorkingStatus() {
 			return "commute/monthlyWorkingStatus";
 		}
+		
+		//근태관리 인사계정
+		@RequestMapping("working.HR")
+		public String hRWorkingStatus() {
+			return "commute/HRworkingStatus";
+		}
 
 }
