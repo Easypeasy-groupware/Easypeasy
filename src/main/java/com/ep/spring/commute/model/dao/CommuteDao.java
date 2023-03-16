@@ -21,6 +21,9 @@ public class CommuteDao {
 	
 	//근태관리 메인페이지 응답시 Commute 조회
 	public Commute commuteMainPage(SqlSessionTemplate sqlSession, int empNo) {
+		Commute c = sqlSession.selectOne("commuteMapper.commuteMainPage", empNo);
+		System.out.println(c);
+		System.out.println(empNo);
 		return sqlSession.selectOne("commuteMapper.commuteMainPage", empNo);
 	}
 	

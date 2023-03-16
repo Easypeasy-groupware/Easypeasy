@@ -35,9 +35,10 @@ public class CommuteController {
 		@RequestMapping("commute.ep")
 		public ModelAndView commuteMainForm(HttpSession session, ModelAndView mv) {
 			int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+			System.out.println(empNo);
 			
 			Commute c = cService.commuteMainPage(empNo);
-			//System.out.println(c);
+			System.out.println(c);
 			 
 			if(c != null) {
 				mv.addObject("c", c)
