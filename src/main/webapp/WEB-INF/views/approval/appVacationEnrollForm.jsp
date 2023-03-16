@@ -44,7 +44,7 @@
 		  position: absolute;
 		  width: 200px;
 		  padding: 8px;
-		  left: 660px;
+		  left: 930px;
 		  -webkit-border-radius: 8px;
 		  -moz-border-radius: 8px;
 		  border-radius: 8px;
@@ -193,8 +193,6 @@
                             <td>
                                 &nbsp;&nbsp;<input type="checkbox" id="vac-startHalf" onclick="halfCheck();"> 
                                 <label for="vac-startHalf">시작일</label> 
-
-                                
                                 ( <input type="radio" name="start-half" id="start-half1" value="am" >  &nbsp; <label for="start-half1">오전</label>  &nbsp;
                                 <input type="radio" name="start-half" id="start-half2" >  &nbsp; <label for="start-half2">오후</label> )
                                 &nbsp;&nbsp;<input type="checkbox" id="vac-endHalf" onclick="halfCheck();">
@@ -250,7 +248,15 @@
                                     $p.slideUp(); // 사라지게
                                 }
                                 
-                            })
+                            });
+                            
+                            $("input[type=radio][name=end-half]").click(function(){
+                            	$("#vac-endHalf").prop("checked", true);
+                            });
+                            
+                            $("input[type=radio][name=start-half]").click(function(){
+                            	$("#vac-startHalf").prop("checked", true);
+                            });
                 	    	
                 	    	
                 	    })
@@ -405,7 +411,15 @@
                                         $("#start-half1").prop("checked", false);
                                         $("#start-half2").prop("checked", false);
                                         
+                                    } else {
+                                         $("#end-half1").prop("checked", false);
+                                         $("#end-half2").prop("checked", false);
+                                         $("#start-half1").prop("checked", false);
+                                         $("#start-half2").prop("checked", false);
+                              
                                     }
+                                    
+                                    
                                 
                             }
                             
