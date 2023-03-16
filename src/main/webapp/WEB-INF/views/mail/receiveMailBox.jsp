@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,7 +72,15 @@
                 <div id="mail_header_info">
                     <b>받은 메일함</b>
                     <img src="">
-                    <b>전체메일 </b><b style="color: dodgerblue;">150 </b><b>/ </b><b style="color: crimson">75</b>
+                    <b>전체메일 </b><b style="color: dodgerblue;">${ fn:length(mailList) } </b><b>/ </b>
+                    <b style="color: crimson">
+                        <c:forEach var="m" items="${ mailList }" varStatus="status">
+                            <c:if test="${ m.recCheck == 'N' }">
+                                <c:set var="unReadMail" value="${unReadMail + 1}" />
+                            </c:if>
+                        </c:forEach>
+                        ${ unReadMail }
+                    </b>
                 </div>
                 <div id="search_bar">
                     <form action="">

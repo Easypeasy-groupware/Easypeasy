@@ -206,9 +206,13 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="tree-modal-label">
-							<form id="searchForm" method="Get">
-								<input type="text" placeholder="사원 검색"></h5><button type="button" class="btn btn-success">검색</button>
+						
+							<form id="searchForm.org" method="Get">
+							<input type="hidden" name="cpage" value="1">
+								<input type="text" placeholder="사원 검색"></h5>
+								<button type="submit" class="btn btn-success">검색</button>
 							</form>
+							
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>

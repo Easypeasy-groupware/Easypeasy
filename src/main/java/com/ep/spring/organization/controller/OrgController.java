@@ -41,7 +41,7 @@ public class OrgController {
 		
 		//System.out.println(list);
 		//System.out.println(deptList);
-		System.out.println(jList); 
+		//System.out.println(jList); 
 		
 		model.addAttribute("jList", jList);
 		model.addAttribute("deptList", deptList);
@@ -152,6 +152,24 @@ public class OrgController {
 	 * 
 	 * return mv; }
 	 */
+	
+	
+	@RequestMapping("searchForm.org")
+	public String selectSearchList(@RequestParam(value="cpage", defaultValue="1")int currentPage, HttpSession session, Model model) {
+		
+		int searchCount = oService.selectListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 5, 10);
+		ArrayList<Employee> list = oService.selectSearchList(pi);
+		
+		System.out.println(list);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		return "organization/orgMain";
+		
+	}
 	
 	
 	
