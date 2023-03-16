@@ -98,4 +98,32 @@
 		 where resource_no = #{resourceNo}
 	</delete>
 	
+	<insert id="insertReservation">
+		insert
+		  into reservation
+		  (
+		  	re_no
+		  , resource_no
+		  , re_writer
+		  , re_purpose
+		  , start_date
+		  , end_date
+		  , re_allday
+		  , start_time
+		  , end_time
+		  )
+		  values
+		  (
+		  	seq_reno.nextval
+		  , #{resourceNo}
+		  , #{reWriter}
+		  , #{rePurpose}
+		  , #{startDate}
+		  , #{endDate}
+		  , #{allDay}
+		  , #{startTime}
+		  , #{endTime}
+		  )
+	</insert>
+	
 </mapper>

@@ -9,7 +9,6 @@
 
 <style>
     *{box-sizing: content-box;}
-
     
 
     /* 메일 컨텐트 css */
@@ -44,10 +43,11 @@
     .mail_one div{float: left; height: 40px;}
     .mail_select_area{color: black;}
     .mail_check{width: 30px; padding-top: 2px;}
-    .mail_imgList{width: 120px; text-align: center; line-height: 43px;}
+    .mail_imgList{width: 110px; text-align: center; line-height: 43px;}
     .mail_img{width: 30px; line-height: 2.5;}
+    .mail_sender_name{width: 80px}
     .mail_sender{width: 200px; overflow: hidden;}
-    .mail_title{width: 480px; overflow: hidden;}
+    .mail_title{width: 400px; overflow: hidden;}
     .mail_date{width: 130px; text-align: right;}
 
     #paging{text-align: center; display: inline-block; padding-left :0;}
@@ -178,11 +178,14 @@
                         <form class="mail_select_area">
                             <input class="mailNo" type="hidden" name="mailNo" value="${ m.mailNo }">
                             <input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
+                            <div class="mail_sender_name">
+                                ${m.empName}
+                            </div>
                             <div class="mail_sender">
                                 ${ m.sendMailAdd }
-                            </div>       
+                            </div>
                             <div class="mail_title">
-                                메일 제목 - ${ m.mailTitle }
+                                ${ m.mailTitle }
                             </div>
                             <div class="mail_date">
                                 ${ m.recDate }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.ep.spring.reservation.model.vo.Reservation;
 import com.ep.spring.reservation.model.vo.Resource;
 
 @Repository
@@ -41,5 +42,11 @@ public class ReservationDao {
 	
 	public int beamProjectorDelete(SqlSessionTemplate sqlSession, int resourceNo) {
 		return sqlSession.delete("reservationMapper.beamProjectorDelete", resourceNo);
+	}
+	
+	
+	
+	public int insertReservation(SqlSessionTemplate sqlSession, Reservation r) {
+		return sqlSession.insert("reservationMapper.insertReservation", r);
 	}
 }

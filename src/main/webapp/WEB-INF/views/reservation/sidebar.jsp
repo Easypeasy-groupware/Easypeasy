@@ -33,7 +33,7 @@
 <style>
 	*{padding:0; margin:0}
 	.menubar{width:200px; background:white; float:left; border-right: 2px solid rgb(185, 187, 221); height: 750px;}
-	a{text-decoration:none; font-size:14px; color:black;}
+	a{text-decoration:none; color:black;}
 	a:hover{font-weight:600; color:black;}
 	li{list-style:none;}
 	
@@ -49,11 +49,14 @@
 	.add-type{width:98%; height:35px; margin:auto; text-align:center; padding:5px 0 5px 0;}
 	.add-type:hover{background-color: rgb(246, 246, 246); text-decoration:none;}
 	.menu-a{text-decoration:none; font-size:14px; color:black;}
+	.menu-a b{font-size:15px;}
 	.menu-a:hover{text-decoration:none; color:black;}
 	
 	/*주소록 제목 리스트*/
 	.add-in, .add-ex{color:rgb(53, 62, 42);}
 	.add-in:hover, .add-ex:hover{text-decoration:none; color:black;}
+	.add-in b{font-size:15px;}
+	.add-ex b{font-size:15px;}
 	.submenu{margin-left:30px;}
 	.submenu > li {line-height: 20px;}
 	.submenu a{text-decoration:none; font-size:14px; color:black;}

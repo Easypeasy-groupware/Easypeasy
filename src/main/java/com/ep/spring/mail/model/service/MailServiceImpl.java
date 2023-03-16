@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.mail.model.dao.MailDao;
 import com.ep.spring.mail.model.vo.Mail;
 import com.ep.spring.mail.model.vo.MailTag;
@@ -45,11 +46,23 @@ public class MailServiceImpl implements MailService {
 			return 0;
 		}
 	}
+	
+	@Override
+	public int insertAttachment(ArrayList<Attachment> atList) {
+		return mDao.insertAttachment(atList, sqlSession);
+	}
 
 	@Override
 	public Mail selectMail(Mail m) {
 		return mDao.selectMail(m, sqlSession);
 	}
+
+	@Override
+	public ArrayList<Mail> selectReceiverList(Mail m) {
+		return mDao.selectReceiverList(m, sqlSession);
+	}
+
+	
 
 	
 
