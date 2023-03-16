@@ -93,12 +93,13 @@ public class ApprovalController {
 		String appChange = currentTime + ranNum;
 			
 		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		Employee a = aService.selectEnrollInfo(eNo); 
+
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("a", a);
+		map.put("appChange", appChange);
 		
-		Approval a = aService.selectEnrollInfo(eNo); 
-		
-		a.setAppChange(appChange); 
-		
-		return new Gson().toJson(a);
+		return new Gson().toJson(map);
 		
 	}
 	

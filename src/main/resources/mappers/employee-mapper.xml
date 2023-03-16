@@ -77,5 +77,14 @@
 		   set emp_profile = #{empProfile}
 		 where emp_id = #{empId}
 	</update>
+	
+	<select id="selectEnrollInfo" resultMap="employeeResult">
+			select 
+			        emp_name
+			      , dept_name
+			  from employee e
+			  left join department d on (d.dept_code = e.dept_code)
+			  where emp_no = #{eNo}			
+	</select>
 
 </mapper>
