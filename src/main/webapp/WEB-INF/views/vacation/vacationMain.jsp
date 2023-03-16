@@ -206,46 +206,9 @@
             </table>
 
             <br><br>
-            <h3 class="smallTitle">사용내역</h3>
+            
 
-            <table class="table3">
-                <tr>
-                    <th>이름</th>
-                    <th>부서명</th>
-                    <th>사용기간</th>
-                    <th>사용일수</th>
-                    <th>내용</th>
-                </tr>
-                
-                <tr>
-                    <td>${ loginUser.empName }</td>
-                    <c:choose>
-                	<c:when test="${ loginUser.deptCode eq 'D1' }">
-                		<td>인사관리팀</td>
-                	</c:when>
-                	<c:when test="${ loginUser.deptCode eq 'D2' }">
-                		<td>경영지원팀</td>
-                	</c:when>
-                	<c:when test="${ loginUser.deptCode eq 'D3' }">
-                		<td>영업1팀</td>
-                	</c:when>
-                	<c:when test="${ loginUser.deptCode eq 'D4' }">
-                		<td>영업2팀</td>
-                	</c:when>
-                	<c:when test="${ loginUser.deptCode eq 'D5' }">
-                		<td>영업3팀</td>
-                	</c:when>
-                	<c:otherwise>
-                		<td>마케팅팀</td>
-                	</c:otherwise>
-                	</c:choose>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-
-    
-            </table>
+            
             
 
         </div>

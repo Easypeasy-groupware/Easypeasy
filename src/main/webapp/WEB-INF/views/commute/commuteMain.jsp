@@ -78,15 +78,7 @@
         margin: 0 auto;
         border-radius: 10px;
     }
-    .recode{
-        border: 1px solid gray;
-        border-radius: 10px;
-        width: 400px;
-        height: 200px;
-        margin: 0 auto;
-        padding: 20px;
-        font-size: 14px;
-    }
+
     .in-button{
         width: 100px;
         height: 30px;
@@ -103,9 +95,10 @@
         border: none;
     }
     .btn-status{
-    	width: 100px;
-        height: 30px;
+    	width: 150px;
+        height: 50px;
         border: none;
+        margin-left: 30px;
     }
     .start{
         float: left;
@@ -376,19 +369,13 @@
                 <div class="name">근무현황</div><br>
                 <div class="bbb">
                 <button class="btn-status" onclick="status(1);" id="WO" value="WO">근무</button>
-                <button class="btn-status" onclick="status(2);" id="ME" value="ME">회의</button>
+                <button class="btn-status" onclick="status(2);" id="ME" value="ME">회의</button><br><br><br>
                 <button class="btn-status" onclick="status(3);" id="OW" value="OW">외근</button>
                 <button class="btn-status" onclick="status(4);" id="OU" value="OU">외출</button>
                 </div> <br>
                 
 
-                <div class="recode">
-                    <c:if test="${ not empty c.startTime }">
-                    	<div>-- ${ c.startTime } 출근</div>
-                    </c:if>
-                    
-
-                </div>
+             
             </div>
             
             <script>

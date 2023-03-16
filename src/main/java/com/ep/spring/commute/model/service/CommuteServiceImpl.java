@@ -56,12 +56,14 @@ public class CommuteServiceImpl implements CommuteService{
 		return cDao.insertCommuteDay(sqlSession);
 	}
 
+	//휴가 기록 조회
 	@Override
 	public ArrayList<VacationRecode> selectVacMain(int empNo) {
 		
 		return cDao.selectVacMain(sqlSession, empNo);
 	}
 
+	//휴가 신청 기록 조회
 	@Override
 	public ArrayList<VacationForm> selectVacForm(int empNo) {
 		
