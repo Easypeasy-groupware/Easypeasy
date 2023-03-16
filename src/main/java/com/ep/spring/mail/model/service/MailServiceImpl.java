@@ -36,22 +36,18 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public int sendMail(Mail m, ArrayList<Mail> mList) {
+	public int sendMail(Mail m, ArrayList<Mail> mList, ArrayList<Attachment> atList) {
 		int sendResult = mDao.insertSendMail(m, sqlSession);
 		int receiveResult = mDao.insertReceiveMail(mList, sqlSession);
+		int attachResult = mDao.insertAttachment(atList, sqlSession);
 		
-		if(sendResult > 0 && receiveResult > 0) {
+		if(sendResult > 0 && receiveResult > 0 && (atList.size() + attachResult > 0)) {
 			return 1;
 		}else {
 			return 0;
 		}
 	}
 	
-	@Override
-	public int insertAttachment(ArrayList<Attachment> atList) {
-		return mDao.insertAttachment(atList, sqlSession);
-	}
-
 	@Override
 	public Mail selectMail(Mail m) {
 		return mDao.selectMail(m, sqlSession);
@@ -60,6 +56,11 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public ArrayList<Mail> selectReceiverList(Mail m) {
 		return mDao.selectReceiverList(m, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Attachment> selectAttachmentList(Mail m) {
+		return mDao.selectAttachmentList(m, sqlSession);
 	}
 
 	

@@ -78,6 +78,22 @@ public class MailController {
 		ArrayList<Mail> mList = new ArrayList<>();
 		ArrayList<Attachment> atList = new ArrayList<>();
 		
+		// 첨부파일 처리
+		if(originNames.size() > 0) {
+			String path = "resources/mail_attachFiles/";
+			for (MultipartFile mf : originNames) {
+				Attachment attach = new Attachment();
+				String originFileName = mf.getOriginalFilename();
+				String saveFilePath = FileUpload.saveFile(mf, session, path);
+				String[] changeNameArr = saveFilePath.split("/");
+				String changeName = changeNameArr[2];
+				attach.setOriginName(mf.getOriginalFilename());
+				attach.setChangeName(changeName);
+				attach.setFilePath(saveFilePath);
+				atList.add(attach);
+			}
+		}
+		
 		// mList에 수신 메일 추가
 		for(int i=0; i<receiverAddList.length; i++) {
 			Mail mail = new Mail();
@@ -127,9 +143,8 @@ public class MailController {
 				mail.setImporMail("N");
 			}
 			mList.add(mail);
+			System.out.println(mList);
 		}
-		int sendResult = mService.sendMail(m, mList);
-		
 		
 		System.out.println(originNames);
 		String path = "resources/mail_attachFiles/";
@@ -142,7 +157,7 @@ public class MailController {
 			atList.add(attach);
 			System.out.println(atList);
 		}
-//			int insertAttachment = mService.insertAttachment(atList);
+		int sendResult = mService.sendMail(m, mList, atList);
 		
 		if(sendResult > 0) {
 			mv.addObject("successMsg", "메일을 성공적으로 발송했습니다");
@@ -155,14 +170,13 @@ public class MailController {
 	
 	@RequestMapping("select.ma")
 	public ModelAndView selectMail(ModelAndView mv, Mail m) {
-		System.out.println(m);
 		Mail mail = mService.selectMail(m);
 		ArrayList<Mail> receiverList = mService.selectReceiverList(m);
-//		ArrayList<Attachment> attachmentList = mService.selectAttachmentList(m);
+		ArrayList<Attachment> attachmentList = mService.selectAttachmentList(m);
 		
 		mv.addObject("mail", mail);
 		mv.addObject("receiverList", receiverList);
-//		mv.addObject("attachmentList" attachmentList);
+		mv.addObject("attachmentList", attachmentList);
 		mv.setViewName("mail/receiveMail");
 		return mv;
 	}

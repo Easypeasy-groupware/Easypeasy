@@ -155,7 +155,7 @@
 						<div class="modal-dialog modal-dialog-centered" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="tree-modal-label"><input type="text" placeholder="사원 검색"></h5> <button type="button" class="btn btn-success">검색</button>
+									<h5 class="modal-title" id="tree-modal-label"><input type="text" placeholder="사원 검색"></h5> &nbsp;&nbsp;<button type="button" class="btn btn-success">검색</button>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>

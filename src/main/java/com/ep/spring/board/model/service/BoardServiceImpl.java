@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ep.spring.board.model.dao.BoardDao;
 import com.ep.spring.board.model.vo.Board;
+import com.ep.spring.board.model.vo.BoardCate;
 import com.ep.spring.board.model.vo.BoardReply;
 import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
@@ -75,6 +76,23 @@ public class BoardServiceImpl implements BoardService{
 	public ArrayList<Board> selectTopList() {
 		return null;
 	}
+
+	@Override
+	public ArrayList<BoardCate> selectBcList(BoardCate bc) {
+		return null;
+	}
+	
+	@Override
+	public int insertSettings(BoardCate bc) {
+		return 0;
+	}
+
+	@Override
+	public int updateSettings(BoardCate bc) {
+		return 0;
+	}
+
+	
 
 	
 

@@ -19,6 +19,49 @@
 		<result column="ent_date" property="entDate" />
 	</resultMap>
 	
+	<resultMap id="departmentResult" type="Department">
+		<id column="dept_code" property="deptCode" />
+		<result column="dept_name" property="deptName" />
+	</resultMap>
+	
+	<resultMap id="jobResult" type="Job">
+		<id column="job_code" property="jobCode" />
+		<result column="job_name" property="jobName" />
+	</resultMap>
+	
+	
+	<select id="selectJob" resultMap="jobResult">
+		select 
+		       job_code
+		     , job_name
+		  from job
+	</select>
+	
+	<select id="selectDept" resultMap="departmentResult">
+		select 
+			   dept_code
+			 , dept_name
+		  from department
+	</select>
+	
+	
+	<select id="selectOrgList" resultMap="employeeResult">
+		select
+			   emp_no
+			 , emp_name
+			 , emp_id
+			 , email
+			 , phone
+			 , e.dept_code
+			 , dept_name
+			 , e.job_code
+			 , job_name
+		  from employee e
+		  join department d on (e.dept_code = d.dept_code)
+          join job j on (e.job_code = j.job_code)
+         where ent_yn = 'N'
+	</select>
+	
 	<select id="selectListCount" resultType="_int">
 		select 
 		       count(*)
@@ -117,5 +160,16 @@
 		 where ent_yn ='Y' 
 	</delete>
 	
+<!-- 	<select id="selectSettingForm" resultMap="employeeResult">
+		select
+			   dept_name
+			 , dept_code
+			 , job_name
+			 , job_code
+		  from employee e
+		  join department d on (e.dept_code = d.dept_code)
+          join job j on (e.job_code = j.job_code)
+	</select>
+	 -->
 	
 </mapper>

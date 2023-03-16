@@ -33,6 +33,25 @@
 		<result column="vac_use" property="vacUse" /> 
 		<result column="half_day" property="halfDay" /> 
 	</resultMap>
+	
+	<resultMap type="Employee" id="employeeResult">
+		<id column="emp_no" property="empNo" />
+		<result column="emp_name" property="empName" />
+		<result column="emp_id" property="empId" />
+		<result column="emp_pwd" property="empPwd" />
+		<result column="email" property="email" />
+		<result column="address" property="address" />
+		<result column="phone" property="phone" />
+		<result column="emp_profile" property="empProfile" />
+		<result column="dept_code" property="deptCode" />
+		<result column="dept_name" property="deptName" />
+		<result column="job_code" property="jobCode" />
+		<result column="job_name" property="jobName" />
+		<result column="hire_date" property="hireDate" />
+		<result column="ent_yn" property="entYn" />
+		<result column="ent_date" property="entDate" />
+		<result column="status" property="status" />
+	</resultMap>
 
 
 	<update id="inTime">
@@ -59,7 +78,6 @@
 	</update>
 	
 	<select id="commuteMainPage" resultMap="commuteResult">
-	
 		select
 			   com_code
 			 , emp_no
@@ -70,11 +88,9 @@
 			 , com_status
 		  from commute
 		 where emp_no = #{empNo}
-		   and enroll_date = to_char(sysdate, 'YYYY/MM/DD')
-		 
-		
+		   and enroll_date = (SELECT TO_CHAR(SYSDATE, 'YYYY/MM/DD') FROM DUAL)
 	</select>
-	
+
 
 	
 	<insert id="insertCommuteDay">
@@ -122,6 +138,37 @@
                      using (app_no)
 				  where a.emp_no = #{empNo}
                     and a.form_code = 3
+	</select>
+	
+	<select id="selectListCount" resultType="_int">
+		select
+				count(*)
+			from employee
+		   where ent_yn = 'N'		
+	</select>
+	
+	<select id="selectEmpList" resultMap="employeeResult">
+				select
+					    emp_no
+					  , emp_name
+					  , emp_id
+					  , emp_pwd
+					  , email
+					  , address
+					  , phone
+					  , emp_profile
+					  , d.dept_code
+		              , dept_name
+					  , j.job_code
+		              , job_name
+					  , to_char(hire_date, 'YYYY"년"MM"월"DD"일"') as "hire_date"
+					  , ent_yn
+					  , ent_date
+					  , status
+				  from employee e
+		          left join department d on (e.dept_code = d.dept_code)
+		          left join job j on (e.job_code = j.job_code)
+				 where ent_yn = 'N'
 	</select>
 	
 

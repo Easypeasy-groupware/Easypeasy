@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ep.spring.approval.model.vo.VacationForm;
+import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.commute.model.dao.CommuteDao;
 import com.ep.spring.commute.model.vo.Commute;
 import com.ep.spring.commute.model.vo.VacationRecode;
@@ -56,16 +57,31 @@ public class CommuteServiceImpl implements CommuteService{
 		return cDao.insertCommuteDay(sqlSession);
 	}
 
+	//휴가 기록 조회
 	@Override
 	public ArrayList<VacationRecode> selectVacMain(int empNo) {
 		
 		return cDao.selectVacMain(sqlSession, empNo);
 	}
 
+	//휴가 신청 기록 조회
 	@Override
 	public ArrayList<VacationForm> selectVacForm(int empNo) {
 		
 		return cDao.selectVacForm(sqlSession, empNo);
+	}
+
+	//인사계정 사원정보 리스트 조회
+	@Override
+	public ArrayList<Employee> selectEmpList(PageInfo pi) {
+		
+		return cDao.selectEmpList(sqlSession, pi);
+	}
+
+	@Override
+	public int selectListCount() {
+		
+		return cDao.selectListCount(sqlSession);
 	}
 	
 	

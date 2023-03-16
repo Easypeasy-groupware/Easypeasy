@@ -37,7 +37,42 @@
             margin-left: -10px;
             margin-top: -20px;
         } 
-
+        
+		/* 말풍선 적절한 top 과 margin-left 로 위치조정 */
+		.arrow_box {
+		  display: none;
+		  position: absolute;
+		  width: 200px;
+		  padding: 8px;
+		  left: 930px;
+		  -webkit-border-radius: 8px;
+		  -moz-border-radius: 8px;
+		  border-radius: 8px;
+		  background: #33333374;
+		  color: #fff;
+		  font-size: 14px;
+		}
+		
+		.arrow_box:after {
+		  position: absolute;
+		  bottom: 100%;
+		  left: 50%;
+		  width: 0;
+		  height: 0;
+		  margin-left: -10px;
+		  border: solid transparent;
+		  border-color: rgba(91, 91, 91, 0);
+		  border-bottom-color:  #33333374;
+		  border-width: 10px;
+		  pointer-events: none;
+		  content: ' ';
+		}
+		
+		#useHalf:hover + p.arrow_box {
+		  display: block;
+		  cursor:pointer
+		}        
+        
     </style>
 </head>
 <body>
@@ -146,23 +181,26 @@
                             <td>
                                 <input type="text" class="dateSelect-start" name="vac-start" onchange="diffDate();" > ~ 
                                 <input type="text" class="dateSelect-end" id="vac-end" name="vac-end"  onchange="diffDate();">
+                                <span id="useHalf" style="cursor:pointer">반차사용</span>
+                                <p class="arrow_box">클릭 시 반차 선택가능합니다.</p>
                             </td>                        
                         </tr>
 
-                        <tr>
+                        <tr style=" display:none;" id="half-area">
                             <td style="text-align:center">
                                 <label for="content">반차여부</label>
                             </td>
                             <td>
                                 &nbsp;&nbsp;<input type="checkbox" id="vac-startHalf" onclick="halfCheck();"> 
                                 <label for="vac-startHalf">시작일</label> 
-                                ( <input type="radio" name="start-half" id="start-half1" value="am">  &nbsp; <label for="start-half1">오전</label>  &nbsp;
-                                <input type="radio" name="start-half" id="start-half2">  &nbsp; <label for="start-half2">오후</label> )
+                                ( <input type="radio" name="start-half" id="start-half1" value="am" >  &nbsp; <label for="start-half1">오전</label>  &nbsp;
+                                <input type="radio" name="start-half" id="start-half2" >  &nbsp; <label for="start-half2">오후</label> )
                                 &nbsp;&nbsp;<input type="checkbox" id="vac-endHalf" onclick="halfCheck();">
                                 <label for="vac-endHalf">종료일</label> 
-                                ( <input type="radio" name="end-half" id="end-half1">  &nbsp; <label for="end-half1">오전</label> &nbsp;
-                                <input type="radio" name="end-half" id="end-half2">  &nbsp; <label for="end-half2">오후</label> )
-
+                                ( <input type="radio" name="end-half" id="end-half1" >  &nbsp; <label for="end-half1">오전</label> &nbsp;
+                                <input type="radio" name="end-half" id="end-half2" >  &nbsp; <label for="end-half2">오후</label> )
+								
+								
                             </td>
                         </tr>
                         <tr>
@@ -171,30 +209,57 @@
                             </td>
                             <td>
                                 잔여연차 : <input type="text" style="width:50px;" readonly> 
-                                신청연차 : <input type="text" id="vacUse" name="vacUse" style="width:50px;" readonly>
-
+                                신청연차 : <input type="number" id="vacUse" name="vacUse" style="width:50px;" readonly>
                             </td>
                         </tr>
                         <script>
                         
-                        // 회원정보흘 가져오는 ajax
-                        $(function(){
-                        	
-                        	$.ajax({
-                        		url:"enrollinfo.ap",
-                        		success:function(a){
-                        			
-                        			$("#writer").val(a.empName);
-                        			$("#dept").val(a.deptName);
-                        			$("#appChange").val(a.appChange);
-                        			
-                        		}, error:function(){
-                        			//console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
-                    				console.log("직성용 정보 불러오기 ajax 통신실패");
-                        		}
-                        	});
-                        	
-                        })
+                	    // 회원정보흘 가져오는 ajax
+                	    $(function(){
+                	    	
+                	    	$.ajax({
+                	    		url:"enrollinfo.ap",
+                	    		success:function(result){
+                	    				    			
+                	    			$("#writer").val(result.a.empName);
+                	    			$("#dept").val(result.a.deptName);
+                	    			$("#appChange").val(result.appChange);
+                	    			
+                	    		}, error:function(request, status, error){
+                	    			console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+                					console.log("직성용 정보 불러오기 ajax 통신실패");
+                	    		}
+                	    	});
+                	    	
+                	    	
+
+                            $("#useHalf").click(function(){
+                                // $(this) : 클릭 이벤트가 발생된 div 요소를 가리킴
+                                // $(this).next() : 클릭이벤트가 발생된 div요소 뒤에 있는 p 요소
+                                //$(this).next().slideDown();
+                                // $p : 제이쿼리 형식이라는 것을 보여주기 위해 $붙여줬음
+                                const $p = $("#half-area"); // jQuery 방식으로 선택된 요소를 담기위해
+								
+                                if($("#half-area").css("display") == "none"){ // css는 스타일 속성값을 반환해주는 역할도 해줌
+
+                                    $p.slideDown(); // 보여지게
+                                    
+                                }else{
+                                    $p.slideUp(); // 사라지게
+                                }
+                                
+                            });
+                            
+                            $("input[type=radio][name=end-half]").click(function(){
+                            	$("#vac-endHalf").prop("checked", true);
+                            });
+                            
+                            $("input[type=radio][name=start-half]").click(function(){
+                            	$("#vac-startHalf").prop("checked", true);
+                            });
+                	    	
+                	    	
+                	    })
                            
                            document.getElementById("enrollDate").value = new Date().toISOString().substring(0, 10);
 
@@ -316,32 +381,48 @@
 
                                             
                                         } 
-                                       // $("#vac-startHalf").attr("checked", false); 
-                                       // $("#vac-endHalf").attr("checked", false); 
-
+                                       
+								//halfCheck();
                             }                            
                               
                             function halfCheck(){
-                                
+                            	
                                 diffDate();
-
-                                if($("#vac-startHalf").prop("checked") && $("#vac-endHalf").prop("checked")){
-                                    $("#start-half1").attr("disabled", true);
-                                    $("#end-half2").attr("disabled", true);
-                                    $("#vacUse").val($("#vacUse").val() - 1) ;
+	
+                                    if($("#vac-startHalf").prop("checked")){
+                                    	
+                                    	$("#vacUse").val($("#vacUse").val() - 0.5) ;
+                                    	$("input[type=radio][name=start-half]").prop('disabled', false);
+                                    	
+                                    	$("#vac-endHalf").prop("checked", false);
+                                    	
+                                        $("input[type=radio][name=end-half]").prop('disabled', true);
+                                        $("#end-half1").prop("checked", false);
+                                        $("#end-half2").prop("checked", false);
+                                    	
+                                    } else if($("#vac-endHalf").prop("checked")){
+                                    	
+                                    	$("#vacUse").val($("#vacUse").val() - 0.5) ;
+                                    	$("input[type=radio][name=end-half]").prop('disabled', false);
+                                    	
+                                    	$("#vac-startHalf").prop("checked", false);
+                                    	
+                                    	$("input[type=radio][name=start-half]").prop('disabled', true);
+                                        $("#start-half1").prop("checked", false);
+                                        $("#start-half2").prop("checked", false);
+                                        
+                                    } else {
+                                         $("#end-half1").prop("checked", false);
+                                         $("#end-half2").prop("checked", false);
+                                         $("#start-half1").prop("checked", false);
+                                         $("#start-half2").prop("checked", false);
+                              
+                                    }
                                     
-                                }else if($("#vac-startHalf").prop("checked") || $("#vac-endHalf").prop("checked")){
-                                    $("#vacUse").val($("#vacUse").val() - 0.5) ;
+                                    
                                 
-                                }else if(!($("#vac-startHalf").prop("checked"))){
-                                    $("#start-half1").attr("checked", false);
-                                    $("#start-half2").attr("checked", false);
-                                }else if(!($("#vac-endHalf").prop("checked"))){
-                                    $("#end-half1").attr("checked", false);
-                                    $("#end-half2").attr("checked", false);
-                                }
                             }
-                           
+                            
 
                     </script>                
                               
@@ -377,32 +458,60 @@
                     </table>
                 </div>
                 <br>
-            <div class="left-form6">
-                <div style=" padding:10px; font-size:20px;">
-                    <p><b> 결재선</b></p>
+           		 <div class="left-form6">
+		               <div style=" padding:10px; font-size:20px;">
+		                    <p><b> 결재선</b></p>
+		               </div>
+	              
+		               <div class="app-comment" style="font-size:15px;">
+		                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
+		                   <br>
+		                     회사명 | 부서명
+		                   <br>
+		                    기안
+		                   <br><br>
+		
+		                   <br>
+		               </div>
+		               <div class="app-comment" style="font-size:15px;">
+		                <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
+		                <br>
+		                    회사명 | 부서명
+		                <br>
+		                    결재
+		                <br><br>
+		
+		                <br>
+		              </div>
+		              
+		                <div style=" padding:10px; font-size:20px;">
+		                    <p><b> 참조자</b></p>
+		               </div>
+	              
+		               <div class="app-comment" style="font-size:15px;">
+		                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
+		                   <br>
+		                     회사명 | 부서명
+		                   <br>
+		                    참조
+		                   <br><br>
+		
+		                   <br>
+		               </div>
+		               <div class="app-comment" style="font-size:15px;">
+		                <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
+		                <br>
+		                    회사명 | 부서명
+		                <br>
+		                    참조
+		                <br><br>
+		
+		                <br>
+		              </div>		              
                </div>
-              
-               <div class="app-comment" style="font-size:15px;">
-                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
-                   <br>
-                     회사명 | 부서명
-                   <br>
-                    기안
-                   <br><br>
-
-                   <br>
-               </div>
-               <div class="app-comment" style="font-size:15px;">
-                <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
-                <br>
-                    회사명 | 부서명
-                <br>
-                    결재
-                <br><br>
-
-                <br>
-            </div>
-                </div>
+               
+               
+               
             </div>
         </div>
  

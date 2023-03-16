@@ -11,6 +11,7 @@
 		<result column="create_date" property="createDate" />
 		<result column="board_content" property="boardContent" />
 		<result column="board_pin" property="boardPin" />
+		<result column="board_cname" property="boardCname" />
 	</resultMap>
 	
 	<resultMap id="attachmentResult" type="Attachment">
@@ -39,7 +40,7 @@
 		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		     , board_count
 		     , board_pin
-		  from board
+		  from board 
 		 where delete_status = 'N'
 		   and board_cno = #{boardCno}
 		 order

@@ -45,38 +45,28 @@
 </head>
 <body>
 
-
-	<div class="menubar">
-
-	
-
-		
+	    <div class="menubar">
 
         <div class="menu-title">
-            <a href="commute.ep" id="title"><img src="resources/common_images/commute.png" style="width:20px;"> 근태관리</a>
+            <a href="" id="title"><img src="resources/common_images/commute.png" style="width:20px;"> 인사 계정 </a>
         </div>
 
-		<div class="menu-btn">
-            <a href="working.HR" id="menu-add-btn">인사계정</a>
-        </div>
+       
         <br>
 
         <div class="menu-type menu-list">
-            <a href="working.ep" class="menu-a"><img src="resources/common_images/work-plan.png" style="width:15px;"> <b> 근무현황 및 계획 </b></a>
+            <a href="" class="menu-a"><img src="resources/common_images/work-plan.png" style="width:15px;"> <b>근무시간 확인/수정</b></a>
         </div>
         
         <br>
         
         <div class="menu-type menu-list">
-        	<a href="vac.ep" class="menu-a"><img src="resources/common_images/vacation.png" style="width:15px;"> <b> 휴가 내역 </b></a>
+        	<a href="" class="menu-a"><img src="resources/common_images/vacation.png" style="width:15px;"> <b> 휴가 관리 </b></a>
         </div>
-
-		
         
         
        <br>
     </div>
-	
 
 </body>
 </html>

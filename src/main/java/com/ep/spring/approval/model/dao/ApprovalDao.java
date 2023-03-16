@@ -14,6 +14,7 @@ import com.ep.spring.approval.model.vo.OverTimeForm;
 import com.ep.spring.approval.model.vo.VacationForm;
 import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
+import com.ep.spring.login.model.vo.Employee;
 
 @Repository
 public class ApprovalDao {
@@ -26,8 +27,8 @@ public class ApprovalDao {
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectMainSList", eNo);
 	}
 	
-	public Approval selectEnrollInfo(SqlSessionTemplate sqlSession, int eNo) {
-		return sqlSession.selectOne("approvalMapper.selectEnrollInfo", eNo);
+	public Employee selectEnrollInfo(SqlSessionTemplate sqlSession, int eNo) {
+		return sqlSession.selectOne("employeeMapper.selectEnrollInfo", eNo);
 	}
 	
 	public int selectWaitingAListCount(SqlSessionTemplate sqlSession, int eNo) {
