@@ -42,7 +42,7 @@
 	
 	<mappers>
 		<mapper resource="/mappers/address-mapper.xml"/>
-		
+		<mapper resource="/mappers/attachment-mapper.xml" />
 		<mapper resource="/mappers/approval-mapper.xml"/>
 		<mapper resource="/mappers/chat-mapper.xml"/>
 		<mapper resource="/mappers/mail-mapper.xml"/>

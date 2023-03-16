@@ -63,7 +63,7 @@
                 <div id="mail_header_info">
                     <b>받은 메일함</b>
                     <img src="">
-                    <b>전체메일 </b><b style="color: dodgerblue;">150 </b><b>/ </b><b style="color: crimson">75</b>
+                    <b>전체메일 </b><b style="color: dodgerblue;"></b><b>/ </b><b style="color: crimson">75</b>
                 </div>
                 <div id="search_bar">
                     <form action="">
@@ -87,11 +87,11 @@
                 <div class="menu menu2" id="forward"><img src="">전달</div>
                 <div class="menu menu2" id="shift"><img src="">이동</div>
                 <div class="menu menu3" id="read_unread"><img src="">읽음/안읽음</div>
-                <div class="menu menu1" style="float: right; margin-left: 10px;" id="before_mail">
+                <div class="menu menu1" style="float: right; margin-left: 10px;" id="after_mail">
                     다음 메일
                     <div class="material-symbols-outlined" style="display: block; padding-top: 8px; float: right;">expand_more</div>
                 </div>
-                <div class="menu menu1" style="float: right;" id="after_mail"><img src="">
+                <div class="menu menu1" style="float: right;" id="before_mail">
                     이전 메일
                     <div class="material-symbols-outlined" style="display: block; padding-top: 8px; float: right;">expand_less</div>
                 </div>
@@ -144,20 +144,16 @@
                                     <img id="attach" src="resources/common_images/attachment.png">
                                 </div>
                                 <div class="detail_info_attach">
-                                    <!-- <c:choose>
+                                    <c:choose>
                                         <c:when test="${ empty attachmentList }">
                                             <div>첨부파일이 없습니다.</div>
                                         </c:when>
                                         <c:otherwise>
-                                            <c:forEach var="a" items="${ attachList }">
-                                                <c:choose>
-                                                    <c:if test="${ a.reference == 'Y' }">
-                                                        <div></div>
-                                                    </c:if>
-                                                </c:choose>    
+                                            <c:forEach var="a" items="${ attachmentList }">
+                                                <a href="${ a.filePath }" download="">${ a.originName }</a><br>
                                             </c:forEach>
                                         </c:otherwise>
-                                    </c:choose> -->
+                                    </c:choose>
                                 </div>
                             </td>
                         </tr>
@@ -360,6 +356,18 @@
             });
         });
         
+        // 이전 메일
+        const prev = document.getElementById("before_mail")
+        prev.addEventListener('click', function(){
+            
+        })
+
+        // 다음 메일
+        const next = document.getElementById("after_mail")
+        next.addEventListener('click', function(){
+
+        })
+
 
     </script>
 </body>

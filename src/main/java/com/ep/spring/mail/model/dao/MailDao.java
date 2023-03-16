@@ -51,4 +51,8 @@ public class MailDao {
 	public ArrayList<Mail> selectReceiverList(Mail m, SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiverList", m);
 	}
+
+	public ArrayList<Attachment> selectAttachmentList(Mail m, SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("attachmentMapper.selectMailAttachmentList", m);
+	}
 }

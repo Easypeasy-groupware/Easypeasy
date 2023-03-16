@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="attachmentMapper">
+
+	<resultMap id="AttachResult" type="Attachment">
+		<id column="attach_no" property="attachNo" />
+		<result column="ref_no" property="refNo" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
+		<result column="file_path" property="filePath" />
+		<result column="upload_date" property="uploadDate" />
+		<result column="division" property="division" />
+	</resultMap>
+	
+	<select id="selectMailAttachmentList" resultMap="AttachResult">
+		select
+		       ATTACH_NO
+			 , REF_NO
+			 , ORIGIN_NAME
+			 , CHANGE_NAME
+			 , FILE_PATH
+			 , UPLOAD_DATE
+			 , DIVISION
+		  from attachment
+		 where division = 'M'
+		   and ref_no = #{ mailNo }
+	</select>
+</mapper>
