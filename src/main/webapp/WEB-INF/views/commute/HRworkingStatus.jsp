@@ -81,6 +81,7 @@
             
         }
         #search-btn{
+            width: 70px;
             background-color: rgb(214, 223, 204);
             border: none;
             font-weight: bold;
@@ -145,8 +146,8 @@
                 <option value="">영업3팀</option>
                 <option value="">마케팅팀</option>
             </select>
-            <input type="text" placeholder="검색">
-                        <button type="button" id="search-btn" onclick="">이름</button>
+            <input type="text" placeholder="사원 이름">
+                        <button type="button" id="search-btn" onclick="">검색</button>
         </div><br><br>
 
         <table>
