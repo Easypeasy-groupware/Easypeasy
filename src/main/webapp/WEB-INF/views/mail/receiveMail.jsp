@@ -6,18 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <title>EasyPeasy-mail</title>
-	<!-- include libraries(jQuery, bootstrap) -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <style>
     *{box-sizing: content-box;}
 
     /* 메일 컨텐트 css */
     #mail_content{width: 1000px; float: left;}
     #mail_header{height: 130px; border-bottom: 2px solid rgb(185, 187, 221); margin: 10px;}
-    #header1{height: 90px;}
-    #header2{height: 100%;}
+    #mail_header1{height: 90px;}
+    #mail_header2{height: 100%;}
     #mail_header_info{font-size: 25px; float: left; margin: 20px;}
     #search_bar{float: right; margin: 20px;}
     #mail_content_menubar{padding: 5px;}
@@ -62,11 +59,11 @@
     <!-- 메일 컨텐트-->
     <div id="mail_content">
         <div id="mail_header">
-            <div id="header1" style="width:100%; float:left">
+            <div id="mail_header1" style="width:100%; float:left">
                 <div id="mail_header_info">
                     <b>받은 메일함</b>
                     <img src="">
-                    <b>전체메일 </b><b style="color: dodgerblue;">150 </b><b>/ </b><b style="color: crimson">75</b>
+                    <b>전체메일 </b><b style="color: dodgerblue;"></b><b>/ </b><b style="color: crimson">75</b>
                 </div>
                 <div id="search_bar">
                     <form action="">
@@ -81,7 +78,7 @@
                     </form>
                 </div>
             </div><br>
-            <div id="header2">
+            <div id="mail_header2">
                 <div class="menu" style="width: 27px;"><input type="checkbox" name="" id="check_all"></div>
                 <div class="menu menu1" id="spam"><img src="">스팸 등록</div>
                 <div class="menu menu2" id="reply"><img src="">답장</div>
@@ -90,89 +87,79 @@
                 <div class="menu menu2" id="forward"><img src="">전달</div>
                 <div class="menu menu2" id="shift"><img src="">이동</div>
                 <div class="menu menu3" id="read_unread"><img src="">읽음/안읽음</div>
-                <div class="menu menu1" style="float: right; margin-left: 10px;" id="before_mail">
+                <div class="menu menu1" style="float: right; margin-left: 10px;" id="after_mail">
                     다음 메일
                     <div class="material-symbols-outlined" style="display: block; padding-top: 8px; float: right;">expand_more</div>
                 </div>
-                <div class="menu menu1" style="float: right;" id="after_mail"><img src="">
+                <div class="menu menu1" style="float: right;" id="before_mail">
                     이전 메일
                     <div class="material-symbols-outlined" style="display: block; padding-top: 8px; float: right;">expand_less</div>
                 </div>
             </div>
             <div id="mail_detail_content">
                 <div>
-                    <img id="favorite" style="width: 22px; margin-right: 20px; float: left;" src="images/favorite.png">
-                    <div style="font-size: 17px; font-weight: 700;">메일제목 [영업 1팀] (수정) 인사 개편 관련 업무 소통</div><br>
+                    <img id="favorite" style="width: 22px; margin-right: 20px; float: left;" src="resources/common_images/favorite.png">
+                    <div style="font-size: 17px; font-weight: 700;">메일제목 - ${ mail.mailTitle }</div><br>
                     <table>
                         <tr class="detail_info_tr">
                             <th class="detail_info_th">보낸 사람</th>
-                            <td style="width: 90%;">김이피 부장&nbsp;kim2p@esps.com</td>
+                            <td style="width: 90%;">${ mail.empName } ${ mail.sendMailAdd }</td>
                         </tr>
                         <tr class="detail_info_tr">
                             <th class="detail_info_th">받는 사람</th>
-                            <td>정형돈</td>
+                            <td>
+                                <c:forEach var="r" items="${ receiverList }">
+                                    <c:choose>
+                                        <c:when test="${ r.reference == 'N' && r.hiddenReference == 'N' }">
+                                            ${ r.empName } ${ r.recMailAdd }
+                                        </c:when>
+                                        <c:otherwise>
+                                        </c:otherwise>
+                                    </c:choose>    
+                                </c:forEach>
+                            </td>
                         </tr>
                         <tr class="detail_info_tr">
                             <th class="detail_info_th">참 조</th>
-                            <td>유재석 과장</td>
+                            <td>
+                                <c:forEach var="r" items="${ receiverList }">
+                                    <c:choose>
+                                        <c:when test="${ r.reference == 'Y' }">
+                                            <div>${ r.empName } ${ r.recMailAdd }</div>
+                                        </c:when>
+                                        <c:otherwise>
+                                        </c:otherwise>
+                                    </c:choose>    
+                                </c:forEach>
+                            </td>
                         </tr>
                         <tr class="detail_info_tr">
                             <th class="detail_info_th">보낸 날짜</th>
-                            <td>2023-02-17 월요일 오전 11:21:31</td>
+                            <td>${ mail.recDate }</td>
                         </tr>
                         <tr style="height: 10px;"></tr>
                         <tr class="detail_info_tr tr_attach">
                             <td colspan="2" style="padding: 4px; border: 2px solid gray; background: whitesmoke;">
                                 <div style="width: 10%; height: 100px; float: left;">
-                                    <img id="attach" src="images/attachment.png">
+                                    <img id="attach" src="resources/common_images/attachment.png">
                                 </div>
                                 <div class="detail_info_attach">
-                                    <div>첨부파일 이름</div>
-                                    <div>첨부파일 이름</div>
-                                    <div>첨부파일 이름</div>
-                                    <div>첨부파일 이름</div>
-                                    <div>첨부파일 이름</div>
+                                    <c:choose>
+                                        <c:when test="${ empty attachmentList }">
+                                            <div>첨부파일이 없습니다.</div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:forEach var="a" items="${ attachmentList }">
+                                                <a href="${ a.filePath }" download="">${ a.originName }</a><br>
+                                            </c:forEach>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </td>
                         </tr>
                     </table>
                     <div id="content_text_area">
-                        <div>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                        </div>
+                        ${ mail.mailContent }
                     </div>
                 </div>
             </div>
@@ -369,6 +356,18 @@
             });
         });
         
+        // 이전 메일
+        const prev = document.getElementById("before_mail")
+        prev.addEventListener('click', function(){
+            
+        })
+
+        // 다음 메일
+        const next = document.getElementById("after_mail")
+        next.addEventListener('click', function(){
+
+        })
+
 
     </script>
 </body>

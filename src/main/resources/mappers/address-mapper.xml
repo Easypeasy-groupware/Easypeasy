@@ -203,24 +203,6 @@
 		 where ent_yn = 'N'
            and e.emp_no = #{no}
 	</select>
-	
-	<insert id="" >
-	insert 
-	  into add_group
-	  (
-	    GROUP_NO,
-	    EMP_NO,
-	    GROUP_NAME,
-	    ADD_TYPE
-	  )
-	  values
-	  (
-	    seq_grpno.nextval
-	  , 1
-	  , 'hey'
-	  , 'P'
-	  )
-	</insert>
 
 	<select id="selectPsAllAddListCount" resultType="_int">
 		select
@@ -271,7 +253,7 @@
 		       count(*)
 		  from address
 		 where emp_no = #{empNo}
-		   <choose>
+		 <choose>
 			<when test="groupNo != null">
 				and group_no = #{groupNo}
 			</when>
@@ -361,6 +343,93 @@
 		  from add_group
 		 where emp_no = #{empNo}
 		   and add_type = 'P'
+	</select>
+	
+	<select id="selectPsAddDetail" resultMap="addressResult">
+		select
+		       ADD_NO
+		     , a.EMP_NO
+		     , a.ADD_TYPE
+		     , ADD_NAME
+		     , EMAIL
+		     , PHONE
+		     , ADD_EMP
+		     , ADD_DEPT
+		     , ADD_JOB
+		     , a.GROUP_NO
+		     , GROUP_NAME
+		     , EMP_PHONE
+		     , EMP_ADDRESS
+		     , MEMO
+		     , CREATE_DATE
+		     , MODIFY_DATE
+		     , DELETE_DATE
+		     , ADD_BIN
+		     , EDITABLE
+		 from address a
+         left join add_group g on (a.group_no = g.group_no)
+		 where a.add_no = #{no}
+	</select>
+	
+	<update id="updatePsAdd">
+		update
+		       address
+		   set
+		       ADD_NAME = #{addName}
+		     , EMAIL = #{email}
+		     , PHONE = #{phone}
+		     , ADD_EMP = #{addEmp}
+		     , ADD_DEPT = #{addDept}
+		     , ADD_JOB = #{addJob}
+		     , GROUP_NO = #{groupNo}
+		     , EMP_PHONE = #{empPhone}
+		     , EMP_ADDRESS = #{empAddress}
+		     , MEMO = #{memo}
+		     , MODIFY_DATE = sysdate
+	    where add_no = #{addNo}
+	</update>
+	
+	<select id="selectExtSharedGroup" resultType="_int">
+		select count(*)
+		  from add_group
+		 where group_name = #{groupName}
+		   and add_type = 'S'
+		       
+	</select>
+	
+	<insert id="insertNewSharedGroup">
+		insert
+		  into add_group
+		     (
+		       GROUP_NO
+			 , EMP_NO
+			 , GROUP_NAME
+			 , ADD_TYPE
+		     )
+		values
+			 (
+			   seq_grpno.nextval
+			 , #{empNo}
+			 , #{groupName}
+			 , 'S'
+			 )   
+	</insert>
+	
+	<select id="selectEmployeeList" resultMap="empResult">
+		<if test="empName != ''">
+			select
+			       emp_no
+			     , emp_name
+			     , job_name
+			     , dept_name
+			  from employee e
+			  left join department d on e.dept_code = d.dept_code
+			  left join job j on e.job_code = j.job_code
+			 where emp_no != #{empNo}
+			 	and emp_name like '%' || #{empName} || '%'
+			 order
+			    by emp_name asc
+		</if>
 	</select>
 
 

@@ -8,6 +8,7 @@
 		<result column="tag_no" property="tagNo" />
 		<result column="recep_mail_address" property="recMailAdd" />
 		<result column="send_mail_address" property="sendMailAdd" />
+		<result column="emp_name" property="empName" />
 		<result column="mail_title" property="mailTitle" />
 		<result column="mail_content" property="mailContent" />
 		<result column="rec_check" property="recCheck" />
@@ -34,18 +35,19 @@
 		       RECEP_MAIL_NO
 			 , MAIL_NO
 			 , TAG_NO
+			 , emp_name
 			 , SEND_MAIL_ADDRESS
 			 , MAIL_TITLE
 			 , MAIL_CONTENT
 			 , REC_CHECK
-			 , REC_DATE
+			 , to_char(REC_DATE , 'YYYY-MM-DD HH24:MI') "REC_DATE"
 			 , IMPOR_MAIL
 			 , JUNK_MAIL
 			 , RESER_MAIL
 			 , REFERENCE
 			 , HIDDEN_REFERENCE
-	      from 
-	           rec_mail
+	      from rec_mail r
+	      join employee e on r.send_mail_address = e.email
 	     where 
 			   recep_mail_address = #{email}
 	     order
@@ -99,7 +101,7 @@
 		  )
 	</insert>
 	
-	<insert id="receiveMail" parameterType="java.util.List">
+	<insert id="receiveMail">
 		insert
 		  into rec_mail
 		  (
@@ -115,34 +117,77 @@
 		  , HIDDEN_REFERENCE
 		  )
 		  values
-		  <foreach item="Mail" collection="list">
-			  (
-			    seq_recmano.nextval
-			  , seq_mano.currval
-			  , #{ Mail.recMailAdd }
-			  , #{ Mail.sendMailAdd }
-			  , #{ Mail.mailTitle }
-			  , #{ Mail.mailContent }
-			  , sysdate
-			  , #{ Mail.imporMail }
-			  <choose>
-			  	<when test = "Mail.reference == Y" >
-			  		, 'Y'
-			  	</when>
-			  	<otherwise>
-			  		, 'N'
-			  	</otherwise>
-			  </choose>
-			  <choose>
-			  	<when test = "Mail.hiddenReference == Y" >
-			  		, 'Y'
-			  	</when>
-			  	<otherwise>
-			  		, 'N'
-			  	</otherwise>
-			  </choose>
-			  )
-		  </foreach>
+		  (
+		    seq_recmano.nextval
+		  , seq_mano.currval
+		  , #{ recMailAdd }
+		  , #{ sendMailAdd }
+		  , #{ mailTitle }
+		  , #{ mailContent }
+		  , to_char(sysdate, 'YYYY-MM-DD HH24:MI')
+		  , #{ imporMail }
+		  , #{ reference }
+		  , #{ hiddenReference }
+		  )
 	</insert>
+	
+	<insert id="insertAttachment">
+		insert 
+		  into attachment
+		  (
+		    ATTACH_NO
+		  , REF_NO
+	  	  , ORIGIN_NAME
+		  , CHANGE_NAME
+		  , FILE_PATH
+		  , UPLOAD_DATE
+		  , DIVISION
+		  )
+		  values
+		  (
+		    seq_attno.nextval
+		  , seq_mano.currval
+		  , #{ originName }
+		  , #{ changeName }
+		  , #{ filePath }
+		  , to_char(sysdate, 'YYYY-MM-DD HH24:MI')
+		  , 'M'
+		  )
+	</insert>
+	
+	<select id="selectMail" resultMap="MailResult">
+		select
+			   RECEP_MAIL_NO
+			 , MAIL_NO
+			 , TAG_NO
+			 , emp_name
+			 , SEND_MAIL_ADDRESS
+			 , MAIL_TITLE
+			 , MAIL_CONTENT
+			 , REC_CHECK
+			 , to_char(REC_DATE , 'YYYY-MM-DD HH24:MI') "REC_DATE"
+			 , IMPOR_MAIL
+			 , REFERENCE
+			 , HIDDEN_REFERENCE
+	      from rec_mail r
+	      join employee e on r.send_mail_address = e.email
+	     where 
+			   MAIL_NO = #{ mailNo }
+		   and RECEP_MAIL_NO = #{ recMailNo }
+	</select>
+	
+	<select id="selectReceiverList" resultMap="MailResult">
+		select
+			   RECEP_MAIL_NO
+			 , MAIL_NO
+			 , emp_name
+			 , RECEP_MAIL_ADDRESS
+			 , REFERENCE
+			 , HIDDEN_REFERENCE
+	      from rec_mail r
+	      join employee e on r.recep_mail_address = e.email
+	     where 
+			   MAIL_NO = #{ mailNo }
+	</select>
 
 </mapper>

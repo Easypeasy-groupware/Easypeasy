@@ -9,6 +9,7 @@ import com.ep.spring.approval.model.vo.OverTimeForm;
 import com.ep.spring.approval.model.vo.VacationForm;
 import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
+import com.ep.spring.login.model.vo.Employee;
 
 public interface ApprovalService {
 	
@@ -20,7 +21,7 @@ public interface ApprovalService {
 	
 	// 10. 기안문서 등록을 위한 서비스
 	// 작성자정보와 작성일 조회용 서비스
-	Approval selectEnrollInfo(int eNo);
+	Employee selectEnrollInfo(int eNo);
 	
 	// 2. 결재대기문서 조회용 서비스(페이징)
 	int selectWaitingAListCount(int eNo);
@@ -71,6 +72,9 @@ public interface ApprovalService {
 	
 	// 13. 결재대기/ 결재전체 문서 상세페이지 조회용 서비스
 	Approval selectDetailRec(Approval a);
+	
+	// 14. 참조자 조회수 증가 서비스
+	int updateCount(Approval a);
 
 	
 

@@ -2,6 +2,7 @@ package com.ep.spring.reservation.model.service;
 
 import java.util.ArrayList;
 
+import com.ep.spring.reservation.model.vo.Reservation;
 import com.ep.spring.reservation.model.vo.Resource;
 
 public interface ReservationService {
@@ -21,12 +22,16 @@ public interface ReservationService {
 	// 1-1. 빔프로젝터 자산 조회
 	ArrayList<Resource> selectSettingBeamProjector();
 	
-	// 1-2. 빔프로젝터 자산 추가
+	// 2-1. 빔프로젝터 자산 추가
 	int addBeamProjectorResource(Resource rsc);
 	
-	// 3. 빔프로젝터 자산 수정
+	// 3-1. 빔프로젝터 자산 수정
 	int BeamProjectorUpdate(Resource rsc);
 	
-	// 4. 빔프로젝터 자산 삭제
+	// 4-1. 빔프로젝터 자산 삭제
 	int BeamProjectorDelete(int resourceNo);
+	
+	// 5. 예약
+	int insertReservation(Reservation r);
+	
 }

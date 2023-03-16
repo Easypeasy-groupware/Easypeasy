@@ -14,6 +14,7 @@ import com.ep.spring.approval.model.vo.OverTimeForm;
 import com.ep.spring.approval.model.vo.VacationForm;
 import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
+import com.ep.spring.login.model.vo.Employee;
 
 @Service
 public class ApprovalServiceImpl implements ApprovalService{
@@ -36,7 +37,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 	
 	@Override
-	public Approval selectEnrollInfo(int eNo) {
+	public Employee selectEnrollInfo(int eNo) {
 		
 		return aDao.selectEnrollInfo(sqlSession, eNo);
 	}
@@ -175,6 +176,11 @@ public class ApprovalServiceImpl implements ApprovalService{
 	@Override
 	public Approval selectDetailRec(Approval a) {
 		return aDao.selectDetailRec(sqlSession, a);
+	}
+
+	@Override
+	public int updateCount(Approval a) {
+		return aDao.updateCount(sqlSession, a);
 	}
 
 

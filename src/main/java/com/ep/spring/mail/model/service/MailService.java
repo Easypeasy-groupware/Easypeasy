@@ -2,6 +2,7 @@ package com.ep.spring.mail.model.service;
 
 import java.util.ArrayList;
 
+import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.mail.model.vo.Mail;
 import com.ep.spring.mail.model.vo.MailTag;
 
@@ -18,9 +19,19 @@ public interface MailService {
 	// 2. 태그 생성
 	int insertTag(MailTag t);
 
-	// 3. 메일 보내기
-	int sendMail(Mail m, ArrayList<Mail> mList);
+	// 3. 메일 발신
+	int sendMail(Mail m, ArrayList<Mail> mList, ArrayList<Attachment> atList);
 
+	// 4. 메일 상세조회하기
+	// 보낸 메일 정보
+	Mail selectMail(Mail m);
+	// 수신자 리스트 조회
+	ArrayList<Mail> selectReceiverList(Mail m);
+	// 첨부파일 리스트 조회
+	ArrayList<Attachment> selectAttachmentList(Mail m);
+
+	
+	
 	
 
 	

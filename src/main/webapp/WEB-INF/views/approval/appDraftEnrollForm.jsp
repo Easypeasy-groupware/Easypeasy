@@ -198,14 +198,14 @@
 	    	
 	    	$.ajax({
 	    		url:"enrollinfo.ap",
-	    		success:function(a){
+	    		success:function(result){
+	    				    			
+	    			$("#writer").val(result.a.empName);
+	    			$("#dept").val(result.a.deptName);
+	    			$("#appChange").val(result.appChange);
 	    			
-	    			$("#writer").val(a.empName);
-	    			$("#dept").val(a.deptName);
-	    			$("#appChange").val(a.appChange);
-	    			
-	    		}, error:function(){
-	    			//console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+	    		}, error:function(request, status, error){
+	    			console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
 					console.log("직성용 정보 불러오기 ajax 통신실패");
 	    		}
 	    	});

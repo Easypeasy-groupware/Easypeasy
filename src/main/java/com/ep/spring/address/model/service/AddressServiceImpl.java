@@ -119,6 +119,31 @@ public class AddressServiceImpl implements AddressService {
 		return aDao.selectPersonalGroupList(sqlSession, empNo);
 	}
 
+	@Override
+	public Address selectPsAddDetail(int no) {
+		return aDao.selectPsAddDetail(sqlSession, no);
+	}
+
+	@Override
+	public int updatePsAdd(Address a) {
+		return aDao.updatePsAdd(sqlSession, a);
+	}
+
+	@Override
+	public int selectExtSharedGroup(AddGroup ag) {
+		return aDao.selectExtSharedGroup(sqlSession, ag);
+	}
+
+	@Override
+	public int insertNewSharedGroup(AddGroup ag) {
+		return aDao.insertNewSharedGroup(sqlSession, ag);
+	}
+
+	@Override
+	public ArrayList<Employee> selectEmployeeList(Employee e) {
+		return aDao.selectEmployeeList(sqlSession, e);
+	}
+
 
 
 

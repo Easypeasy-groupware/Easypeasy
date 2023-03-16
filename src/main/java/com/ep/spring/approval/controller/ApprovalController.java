@@ -93,12 +93,13 @@ public class ApprovalController {
 		String appChange = currentTime + ranNum;
 			
 		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		Employee a = aService.selectEnrollInfo(eNo); 
+
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("a", a);
+		map.put("appChange", appChange);
 		
-		Approval a = aService.selectEnrollInfo(eNo); 
-		
-		a.setAppChange(appChange); 
-		
-		return new Gson().toJson(a);
+		return new Gson().toJson(map);
 		
 	}
 	
@@ -202,18 +203,24 @@ public class ApprovalController {
 		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		
 		
-		
 		Approval a = new Approval();
 		a.setAppNo(appNo);
 		a.setFormName(formName);
-		a.setWriterNo(eNo);
+		
 		
 		if(st.equals("기안진행")) {
 			a.setTstatus("진행중");
-		}	
+		}
+		if(st.equals("부서기안완료")) {
+			a.setSt("부서기안완료");
+			a.setTstatus("결재");
+		}else {
+			a.setWriterNo(eNo);
+		}
 		
 		Approval ap = aService.selectDetailSPrgAp(a);
 			
+		System.out.println(ap);
 		
 		ArrayList<ApprovalLine> list1 = aService.selectDetailSPrgAl(a);
 		ArrayList<Attachment> list3 = aService.selectDetailSPrgAt(a);
@@ -309,7 +316,6 @@ public class ApprovalController {
 		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		
 		
-		
 		Approval a = new Approval();
 		a.setAppNo(no);
 		a.setFormName(form);
@@ -317,9 +323,27 @@ public class ApprovalController {
 		
 		if(st.equals("결재대기")) {
 			a.setTstatus("진행중");
-		}	
+		}
 		
 		Approval ap = aService.selectDetailRec(a);
+		
+		if(st.equals("참조대기")) {
+			ap.setSt("참조대기");
+			
+			int result = aService.updateCount(a);
+			
+			if(result < 0) {
+				AlertMsg msg = new AlertMsg("페이지 요청실패", "페이지요청에 실패했습니다.");
+				session.setAttribute("failMsg", msg);
+				return"redirect:main.ap";
+			}
+			
+		}else if(st.equals("참조전체")) {
+			ap.setSt("참조전체");
+		}else if(st.equals("부서참조")) {
+			ap.setSt("부서참조");
+		}
+		
 		
 		ArrayList<ApprovalLine> list1 = aService.selectDetailSPrgAl(a);
 		ArrayList<Attachment> list3 = aService.selectDetailSPrgAt(a);

@@ -124,7 +124,7 @@
 	                    <tr>
 	                        <td>${ rm.resourceName }</td>
 	                        <td>
-	                            <button onclick="" class="btn btn-sm btn-light" data-toggle="modal" data-target="#myModal" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">예약</button>
+	                            <button class="btn btn-sm btn-light" onclick="openModal('${ rm.resourceNo }');" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">예약</button>
 	                        </td>
 	                    </tr>
                     </c:forEach>
@@ -133,6 +133,13 @@
         </div>
     </div>
     
+    <script>
+    	function openModal(no){
+    		$("input[name=resourceNo]").val(no);
+    		$("#myModal").modal("show");
+    		//console.log($("input[name=resourceNo]").val())
+    	}
+    </script>
     
     <!-- myModal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -145,16 +152,21 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button> 
                 </div>
                 <br>
-                <form action="예약등록" method="post">
+                <form action="insertReservationMe.re" method="post">
+                
+                <input type="hidden" name="resourceNo">
+                
+                <input type="hidden" name="reWriter" value="${ loginUser.empNo }">  
+                
                     <!-- Modal Body -->
                     <div style="margin: 20px;">
                         <table id="modal">
                             <tr style="height: 45px;">
                                 <td style="width: 80px;">예약일</td>
                                 <td>
-                                    <input type="text" id="sDate" size="11" name="">
+                                    <input type="text" id="sDate" size="11" name="startDate">
                                     <span>
-                                        <select class="sel" name="" id="sel1">
+                                        <select class="sel" name="startTime" id="sel1">
                                             <option value="08:00">08:00</option>
                                             <option value="08:30">08:30</option>
                                             <option value="09:00">09:00</option>
@@ -189,9 +201,9 @@
                                         </select>
                                     </span>
                                     <span>~</span>
-                                    <input type="text" id="eDate" size="11" name="">
+                                    <input type="text" id="eDate" size="11" name="endDate">
                                     <span>
-                                        <select class="sel" name="" id="sel2">
+                                        <select class="sel" name="endTime" id="sel2">
                                             <option value="08:00">08:00</option>
                                             <option value="08:30">08:30</option>
                                             <option value="09:00">09:00</option>
@@ -227,14 +239,14 @@
                                     </span>
                                     &nbsp;
                                     <div class="custom-control custom-checkbox" style="display: inline-block;">
-                                        <input type="checkbox" class="custom-control-input" name="" id="allDay" onclick="allDayShowHidden();">
+                                        <input type="checkbox" class="custom-control-input" name="allDay" value="N" id="allDay" onclick="allDayShowHidden();">
                                         <label class="custom-control-label" for="allDay">종일</label>
                                     </div>
                                 </td>
                             </tr>
                             <tr style="height: 45px;">
                             <td>목적</td>
-                            <td colspan="6"><input type="text" name="" size="60" placeholder=" 목적을 입력해주세요" required></td> 
+                            <td colspan="6"><input type="text" name="rePurpose" size="60" placeholder=" 목적을 입력해주세요" required></td> 
                             </tr>
                         </table>
                     </div>
@@ -323,7 +335,10 @@
                     console.log(hhmmEnd);
 
                     if(yymmddStart > tDate) { // 오늘 날짜 이후 선택시
-                        $("#myModal").modal("show");
+                        
+                    	$("input[name=resourceNo]").val(info.resource.id); // info.resource.id : 해당 이벤트 아이디 반환해줌
+                    	//console.log($("input[name=resourceNo]").val());
+                		$("#myModal").modal("show");
 
                         // option태그의 value값이 선택된 시간과 같은 경우 selected(선택)되도록!
                         $("#sel1").val(hhmmStart).prop("selected", true);
@@ -336,7 +351,10 @@
                     }else if(hhmmStart < tHhmm) { // 오늘 날짜에서 지나간 시간 선택시
                         alert("예약 불가능한 시간");
                     }else{
-                        $("#myModal").modal("show");
+                        
+                    	$("input[name=resourceNo]").val(info.resource.id); // info.resource.id : 해당 이벤트 아이디 반환해줌
+                    	//console.log($("input[name=resourceNo]").val());
+                		$("#myModal").modal("show");
 
                         // option태그의 value값이 선택된 시간과 같은 경우 selected(선택)되도록!
                         $("#sel1").val(hhmmStart).prop("selected", true);

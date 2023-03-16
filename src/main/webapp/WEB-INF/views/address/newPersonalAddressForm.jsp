@@ -14,15 +14,18 @@
     .content-outer *{box-sizing: border-box;}
     #address-group{font-size:22px; font-weight:600;}
     
-    .nav-link{color:black;}
-    .active{font-weight: 600;}
-   
+    /*a태그*/
+   	#public-a{color:black;}
+   	#personal-a{color:rgb(73, 84, 60); font-weight: 600;}
+   	#public-a:hover{font-weight: 600;}
+
 
     /*테이블*/
     .input-table{
-        margin-top:20px; margin-left:80px; 
+        margin:auto; 
         border-collapse: separate; border-spacing:0px 10px; /*셀간격*/
     }
+    .input-table td{height:30px;}
     .tb-input{
         width:100%; height:100%;
         border:1px solid gray; border-radius:5px;
@@ -37,11 +40,12 @@
         border:0; border-radius:5px; 
         color:white; background:rgb(166, 184, 145);
     }
+    #add-btn:hover{background:rgb(73, 84, 60);}
     .td-textarea{border:1px solid gray; border-radius:5px;}
 
     /*버튼*/
     .set-btn{border:0; border-radius: 5px; width:90px; height:30px; color:white;}
-    #reset-btn{background:rgb(158, 158, 158); margin:0 5px 0 350px;}
+    #reset-btn{background:rgb(158, 158, 158); margin:0 5px 0 450px;}
     #submit-btn{background:rgb(166, 184, 145);}
 
     /*그룹추가용 모달*/
@@ -63,15 +67,15 @@
 
         <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="createNewPs.add">개인</a>
+              <a class="nav-link active" aria-current="page" href="newPsForm.add" id="personal-a">개인</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="newShForm.add">공용</a>
+              <a class="nav-link" href="newShForm.add" id="public-a">공용</a>
             </li>
         </ul>
 
         <br>
-        <form action="insertNewPs.add">
+        <form action="insertNewPs.add" method="post">
         	<input type="hidden" name="empNo" value="${ loginUser.empNo }">
             <table class="input-table">
                 <colgroup>
@@ -118,11 +122,11 @@
                 <tr>
                     <td>그룹</td>
                     <td>
-                        <select class="td-select">
+                        <select class="td-select" name="groupNo" >
                             <option>선택안함</option>
 
                             <c:forEach var="p" items="${ pList }">
-				        		<option name="groupNo" value="${ p.groupNo }"> ${ p.groupName } </option>
+				        		<option value="${ p.groupNo }"> ${ p.groupName } </option>
 				        	</c:forEach>
 			        	
                         </select>
@@ -146,9 +150,7 @@
                 <tr>
                     <td>메모</td>
                     <td colspan="2">
-                        <textarea class="td-textarea" rows="4" style="resize:none; width:100%" name="memo">
-
-                        </textarea>
+                        <textarea class="td-textarea" rows="4" style="resize:none; width:100%" name="memo"></textarea>
                     </td>
                 </tr>
             </table>
@@ -165,7 +167,7 @@
     <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="background-color:rgb(166, 184, 145);">
                     <p class="modal-title" style="font-weight:600">새 그룹 추가</p>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -181,13 +183,7 @@
             </div>
           </div>
     </div>
-    <script>
-    	/* 
-    	$(function(){
-    		selectGroupList();
-    	}) 
-    	*/
-    	
+    <script>    	
     	function addGroup(){ /* 그룹 추가용 ajax */
     		if($(".group-input").val().trim().length > 0) {
     			
@@ -199,7 +195,7 @@
     				},
     				success:function(result){
     					if(result == "success") {
-    						console.log(result);
+    						
     						$(".group-input").val("");
     						swal({
             		            title: "그룹 추가", 
@@ -210,7 +206,7 @@
     						selectGroupList();
     					}else{
     						$(".group-input").val("");
-        					console.log(result);
+        					
         					swal({
             		            title: "그룹 추가", 
             		            text: "이미 중복된 그룹명이 있습니다", 

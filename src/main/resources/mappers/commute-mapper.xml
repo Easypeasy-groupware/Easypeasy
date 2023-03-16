@@ -51,8 +51,14 @@
 		   and enroll_date = #{enrollDate}
 	</update>
 	
-	<select id="commuteMainPage" resultMap="commuteResult">
+	<update id="updateStatus">
+		update
+		       employee
+		   set status = #{status}
+		 where emp_no = #{empNo}
+	</update>
 	
+	<select id="commuteMainPage" resultMap="commuteResult">
 		select
 			   com_code
 			 , emp_no
@@ -63,11 +69,9 @@
 			 , com_status
 		  from commute
 		 where emp_no = #{empNo}
-		   and enroll_date = to_char(sysdate, 'YYYY/MM/DD')
-		 
-		
+		   and enroll_date = (SELECT TO_CHAR(SYSDATE, 'YYYY/MM/DD') FROM DUAL)
 	</select>
-	
+
 
 	
 	<insert id="insertCommuteDay">
