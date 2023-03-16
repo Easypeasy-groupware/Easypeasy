@@ -141,13 +141,6 @@ public class MailController {
 			attach.setFilePath(FileUpload.saveFile(mf, session, path));
 			atList.add(attach);
 			System.out.println(atList);
-			try {
-				mf.transferTo(new File(saveFilePath));
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		}
 //			int insertAttachment = mService.insertAttachment(atList);
 		
