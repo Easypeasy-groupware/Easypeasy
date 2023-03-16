@@ -284,7 +284,7 @@
     
             <!-- Modal footer -->
             <div class="modal-footer"  style="margin:auto;">
-                <button type="submit" class="btn btn-light" data-dismiss="modal" data-toggle="modal" data-target="#ref-line">확인</button>
+                <button type="button" onclick="copyApp();" class="btn btn-light" data-dismiss="modal" data-toggle="modal" data-target="#ref-line">확인</button>
                 <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
             </div>
     
@@ -306,6 +306,7 @@
             let emp = $(this).parents("li");
             
                 emp.clone(true).appendTo(".appList"); 
+               
                 $(".appList button").text('-');
                 $(this).attr("disabled", true);
                 delApp();            
@@ -379,7 +380,7 @@
                              <span>참조</span> 
                              <span>ddd3</span>
                              <span>ddd3</span>
-                             <input type="hidden" class="empNo" name="empNo" value="3">
+                             <input type="hidden" class="empNo"  name="empNo" value="3">
                              <button class="btn btn-outline-secondary addbtn">+</button>
                          </li> 
                      </ul>
@@ -407,7 +408,7 @@
     
             <!-- Modal footer -->
             <div class="modal-footer"  style="margin:auto;">
-                <button type="submit" class="btn btn-light" data-toggle="modal" data-target="#ref-line">확인</button>
+                <button type="button" onclick="copyRef();" class="btn btn-light" data-toggle="modal" data-target="#ref-line">확인</button>
                 <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
             </div>
     
@@ -430,6 +431,7 @@
             let emp = $(this).parents("li");
             
                 emp.clone(true).appendTo(".repList"); 
+                 
                 $(".repList button").text('-');
                 $(this).attr("disabled", true);
                 delRep();            
@@ -461,6 +463,39 @@
 
             }
 
+        }
+        
+        function copyApp(){
+        	
+        	const arr1 = $(".appList .appEmp").children("input");
+        	let val = "";
+        	
+        	for(var i = 0; i < arr1.length; i++){
+        		
+        		val+= "<div>"
+        			+ "<img src='<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />' width='30px;'>"
+        			+ "<br><br>"
+        		  	+ arr1[i].value
+        		  	+ "<br> 결재 <br><br><br>";
+        	}
+        	$(".app-body").html(val);
+        	//console.log($(".appList .appEmp").children("span").text());
+        }
+        
+        function copyRef(){
+        	
+        	const arr2 = $(".repList .repEmp").children("input");
+        	let val = "";
+        	
+        	for(var i = 0; i < arr2.length; i++){
+        		
+        		val+= "<div>"
+        			+ "<img src='<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />' width='30px;'>"
+        			+ "<br><br>"
+        		  	+ arr2[i].value
+        		  	+ "<br> 결재 <br><br><br>";
+        	}
+        	$(".rep-body").html(val);
         }
         
     </script>

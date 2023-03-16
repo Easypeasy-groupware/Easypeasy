@@ -393,6 +393,7 @@
                                     	
                                     	$("#vacUse").val($("#vacUse").val() - 0.5) ;
                                     	$("input[type=radio][name=start-half]").prop('disabled', false);
+                                    	$("#start-half1").prop("checked", true);
                                     	
                                     	$("#vac-endHalf").prop("checked", false);
                                     	
@@ -404,6 +405,7 @@
                                     	
                                     	$("#vacUse").val($("#vacUse").val() - 0.5) ;
                                     	$("input[type=radio][name=end-half]").prop('disabled', false);
+                                    	$("#end-half1").prop("checked", true);
                                     	
                                     	$("#vac-startHalf").prop("checked", false);
                                     	
@@ -419,8 +421,6 @@
                               
                                     }
                                     
-                                    
-                                
                             }
                             
 
@@ -440,7 +440,7 @@
                         <tr></tr>
                         <tr></tr>
                         <tr>
-                            <td colspan="2">
+                            <td colspan="2" style="font-size:14px;">
                                 1. 연차의 사용은 근로기준법에 따라 전년도에 발생한 개인별 잔여 연차에 한하여 사용함을 원칙으로 한다. <br>
                                 &nbsp;&nbsp;&nbsp;&nbsp;단, 최초 입사시에는 근로 기준법에 따라 발생 예정된 연차를 차용하여 월 1회 사용 할 수 있다. <br>
                                 2. 경조사 휴가는 행사일을 증명할 수 있는 가족 관계 증명서 또는 등본, 청첩장 등 제출 <br>
@@ -462,17 +462,21 @@
 		               <div style=" padding:10px; font-size:20px;">
 		                    <p><b> 결재선</b></p>
 		               </div>
+		               
 	              
 		               <div class="app-comment" style="font-size:15px;">
-		                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
+		                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${loginUser.empName} ${loginUser.jobName}
 		                   <br>
-		                     회사명 | 부서명
+		                     이지피지 | ${loginUser.deptName}
 		                   <br>
 		                    기안
-		                   <br><br>
-		
-		                   <br>
+		                   <br><br><br>
+						
 		               </div>
+		               
+		               <div class="app-body">
+		               </div>
+		               
 		               <div class="app-comment" style="font-size:15px;">
 		                <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
 		                <br>
@@ -498,16 +502,9 @@
 		
 		                   <br>
 		               </div>
-		               <div class="app-comment" style="font-size:15px;">
-		                <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
-		                <br>
-		                    회사명 | 부서명
-		                <br>
-		                    참조
-		                <br><br>
-		
-		                <br>
-		              </div>		              
+		               
+		               <div class="rep-body">
+		               </div>		              
                </div>
                
                
