@@ -73,6 +73,16 @@ public class OrgServiceImpl implements OrgService {
 		return oDao.deleteMember(sqlSession);
 	}
 
+	@Override
+	public int selectSearchCount() {
+		return oDao.selectSearchCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Employee> selectSearchList(PageInfo pi) {
+		return oDao.selectSearchList(sqlSession, pi);
+	}
+
 	/*
 	 * @Override public ArrayList<Employee> selectSettingForm(Employee e) { return
 	 * oDao.selectSettingForm(sqlSession, e); }
