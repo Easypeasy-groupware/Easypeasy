@@ -99,77 +99,71 @@
             <div id="mail_detail_content">
                 <div>
                     <img id="favorite" style="width: 22px; margin-right: 20px; float: left;" src="resources/common_images/favorite.png">
-                    <div style="font-size: 17px; font-weight: 700;">메일제목 [영업 1팀] (수정) 인사 개편 관련 업무 소통</div><br>
+                    <div style="font-size: 17px; font-weight: 700;">메일제목 - ${ mail.mailTitle }</div><br>
                     <table>
                         <tr class="detail_info_tr">
                             <th class="detail_info_th">보낸 사람</th>
-                            <td style="width: 90%;">김이피 부장&nbsp;kim2p@esps.com</td>
+                            <td style="width: 90%;">${ mail.empName } ${ mail.sendMailAdd }</td>
                         </tr>
                         <tr class="detail_info_tr">
                             <th class="detail_info_th">받는 사람</th>
-                            <td>정형돈</td>
+                            <td>
+                                <c:forEach var="r" items="${ receiverList }">
+                                    <c:choose>
+                                        <c:when test="${ r.reference == 'N' && r.hiddenReference == 'N' }">
+                                            ${ r.empName } ${ r.recMailAdd }
+                                        </c:when>
+                                        <c:otherwise>
+                                        </c:otherwise>
+                                    </c:choose>    
+                                </c:forEach>
+                            </td>
                         </tr>
                         <tr class="detail_info_tr">
                             <th class="detail_info_th">참 조</th>
-                            <td>유재석 과장</td>
+                            <td>
+                                <c:forEach var="r" items="${ receiverList }">
+                                    <c:choose>
+                                        <c:when test="${ r.reference == 'Y' }">
+                                            <div>${ r.empName } ${ r.recMailAdd }</div>
+                                        </c:when>
+                                        <c:otherwise>
+                                        </c:otherwise>
+                                    </c:choose>    
+                                </c:forEach>
+                            </td>
                         </tr>
                         <tr class="detail_info_tr">
                             <th class="detail_info_th">보낸 날짜</th>
-                            <td>2023-02-17 월요일 오전 11:21:31</td>
+                            <td>${ mail.recDate }</td>
                         </tr>
                         <tr style="height: 10px;"></tr>
                         <tr class="detail_info_tr tr_attach">
                             <td colspan="2" style="padding: 4px; border: 2px solid gray; background: whitesmoke;">
                                 <div style="width: 10%; height: 100px; float: left;">
-                                    <img id="attach" src="images/attachment.png">
+                                    <img id="attach" src="resources/common_images/attachment.png">
                                 </div>
                                 <div class="detail_info_attach">
-                                    <div>첨부파일 이름</div>
-                                    <div>첨부파일 이름</div>
-                                    <div>첨부파일 이름</div>
-                                    <div>첨부파일 이름</div>
-                                    <div>첨부파일 이름</div>
+                                    <!-- <c:choose>
+                                        <c:when test="${ empty attachmentList }">
+                                            <div>첨부파일이 없습니다.</div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:forEach var="a" items="${ attachList }">
+                                                <c:choose>
+                                                    <c:if test="${ a.reference == 'Y' }">
+                                                        <div></div>
+                                                    </c:if>
+                                                </c:choose>    
+                                            </c:forEach>
+                                        </c:otherwise>
+                                    </c:choose> -->
                                 </div>
                             </td>
                         </tr>
                     </table>
                     <div id="content_text_area">
-                        <div>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                            블라블라블라 <br>
-                        </div>
+                        ${ mail.mailContent }
                     </div>
                 </div>
             </div>

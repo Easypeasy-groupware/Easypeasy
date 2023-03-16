@@ -10,9 +10,12 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ep.spring.common.model.vo.Attachment;
@@ -65,7 +68,7 @@ public class MailController {
 
 	
 	@RequestMapping(value = "send.ma")
-	public ModelAndView sendMail(MultipartHttpServletRequest multipartRequest, Attachment at, Mail m, ModelAndView mv, 
+	public ModelAndView sendMail(@RequestParam List<MultipartFile> originNames , Mail m, ModelAndView mv, 
 			  					 HttpSession session, String recMailAdd, String refList, String hRefList) {
 
 		String mAddList = recMailAdd.substring(0, recMailAdd.length()-1);
@@ -73,6 +76,7 @@ public class MailController {
 		String[] refAddList = refList.split("참조 - ");
 		String[] hidRefAddList = hRefList.split("숨은 참조 - ");
 		ArrayList<Mail> mList = new ArrayList<>();
+		ArrayList<Attachment> atList = new ArrayList<>();
 		
 		// mList에 수신 메일 추가
 		for(int i=0; i<receiverAddList.length; i++) {
@@ -126,26 +130,26 @@ public class MailController {
 		}
 		int sendResult = mService.sendMail(m, mList);
 		
-		if(!multipartRequest.getFiles("orginNames").isEmpty()) {
-			ArrayList<Attachment> atList = new ArrayList<>();
-			List<MultipartFile> fileList = multipartRequest.getFiles("originNames");
-			
-			String path = "resources/mail_attachFiles/";
-			for (MultipartFile mf : fileList) {
-				String originFileName = mf.getOriginalFilename();
-				String saveFilePath = FileUpload.saveFile(mf, session, path);
-				at.setOriginName(mf.getOriginalFilename());
-				at.setFilePath(FileUpload.saveFile(mf, session, path));
-				atList.add(at);
-				try {
-					mf.transferTo(new File(saveFilePath));
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+		
+		System.out.println(originNames);
+		String path = "resources/mail_attachFiles/";
+		for (MultipartFile mf : originNames) {
+			Attachment attach = new Attachment();
+			String originFileName = mf.getOriginalFilename();
+			String saveFilePath = FileUpload.saveFile(mf, session, path);
+			attach.setOriginName(mf.getOriginalFilename());
+			attach.setFilePath(FileUpload.saveFile(mf, session, path));
+			atList.add(attach);
+			System.out.println(atList);
+			try {
+				mf.transferTo(new File(saveFilePath));
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
+//			int insertAttachment = mService.insertAttachment(atList);
 		
 		if(sendResult > 0) {
 			mv.addObject("successMsg", "메일을 성공적으로 발송했습니다");
@@ -158,9 +162,14 @@ public class MailController {
 	
 	@RequestMapping("select.ma")
 	public ModelAndView selectMail(ModelAndView mv, Mail m) {
+		System.out.println(m);
 		Mail mail = mService.selectMail(m);
+		ArrayList<Mail> receiverList = mService.selectReceiverList(m);
+//		ArrayList<Attachment> attachmentList = mService.selectAttachmentList(m);
 		
 		mv.addObject("mail", mail);
+		mv.addObject("receiverList", receiverList);
+//		mv.addObject("attachmentList" attachmentList);
 		mv.setViewName("mail/receiveMail");
 		return mv;
 	}
