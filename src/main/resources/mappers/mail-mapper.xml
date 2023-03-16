@@ -124,18 +124,36 @@
 		  , #{ sendMailAdd }
 		  , #{ mailTitle }
 		  , #{ mailContent }
-		  , to_date(sysdate, 'YYYY-MM-DD HH24:MI')
+		  , to_char(sysdate, 'YYYY-MM-DD HH24:MI')
 		  , #{ imporMail }
 		  , #{ reference }
 		  , #{ hiddenReference }
 		  )
 	</insert>
 	
-	<!-- <insert id="insertAttachment">
+	<insert id="insertAttachment">
 		insert 
 		  into attachment
-		  
-	</insert> -->
+		  (
+		    ATTACH_NO
+		  , REF_NO
+	  	  , ORIGIN_NAME
+		  , CHANGE_NAME
+		  , FILE_PATH
+		  , UPLOAD_DATE
+		  , DIVISION
+		  )
+		  values
+		  (
+		    seq_attno.nextval
+		  , seq_mano.currval
+		  , #{ originName }
+		  , #{ changeName }
+		  , #{ filePath }
+		  , to_char(sysdate, 'YYYY-MM-DD HH24:MI')
+		  , 'M'
+		  )
+	</insert>
 	
 	<select id="selectMail" resultMap="MailResult">
 		select

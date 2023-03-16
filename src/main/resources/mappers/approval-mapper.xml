@@ -151,15 +151,7 @@
 		         where rnum between 1 and 5  
 	</select>
 	
-	<select id="selectEnrollInfo" resultMap="approvalResult">
-			select 
-			        distinct emp_name
-			      , dept_name
-			  from approval a  
-			  join employee e on (a.emp_no = e.emp_no)
-			  join department d on (d.dept_code = e.dept_code)
-			  where a.emp_no = #{empNo}		
-	</select>
+
 	
 	<select id="selectWaitingAListCount" resultType="_int">
 				select
@@ -174,7 +166,7 @@
                                      from app_line
                                     where ref_whether = 'N'
                                       and app_status ='미결재'
-                                      and emp_no = #{empNo}
+                                      and emp_no = #{eNo}
                                       and app_seq_no = b.app_sequence
                                        )
 		            order 
@@ -205,7 +197,7 @@
                                      from app_line
                                     where ref_whether = 'N'
                                       and app_status ='미결재'
-                                      and emp_no = #{empNo}
+                                      and emp_no = #{eNo}
                                       and app_seq_no = b.app_sequence
                                        )
 		            order 
