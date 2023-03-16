@@ -3,6 +3,7 @@ package com.ep.spring.commute.model.service;
 import java.util.ArrayList;
 
 import com.ep.spring.approval.model.vo.VacationForm;
+import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.commute.model.vo.Commute;
 import com.ep.spring.commute.model.vo.VacationRecode;
 import com.ep.spring.login.model.vo.Employee;
@@ -30,7 +31,8 @@ public interface CommuteService {
 		ArrayList<VacationForm> selectVacForm(int empNo);
 		
 	//인사계정 사원정보 리스트 조회
-	ArrayList<Employee> selectEmpList();
+	int selectListCount();
+	ArrayList<Employee> selectEmpList(PageInfo pi);
 	
 
 }

@@ -140,28 +140,35 @@
                     and a.form_code = 3
 	</select>
 	
+	<select id="selectListCount" resultType="_int">
+		select
+				count(*)
+			from employee
+		   where ent_yn = 'N'		
+	</select>
+	
 	<select id="selectEmpList" resultMap="employeeResult">
 				select
-			    emp_no
-			  , emp_name
-			  , emp_id
-			  , emp_pwd
-			  , email
-			  , address
-			  , phone
-			  , emp_profile
-			  , d.dept_code
-              , dept_name
-			  , j.job_code
-              , job_name
-			  , to_char(hire_date, 'YYYY"년"MM"월"DD"일"') as "hire_date"
-			  , ent_yn
-			  , ent_date
-			  , status
-		  from employee e
-          left join department d on (e.dept_code = d.dept_code)
-          left join job j on (e.job_code = j.job_code)
-		 where ent_yn = 'N'
+					    emp_no
+					  , emp_name
+					  , emp_id
+					  , emp_pwd
+					  , email
+					  , address
+					  , phone
+					  , emp_profile
+					  , d.dept_code
+		              , dept_name
+					  , j.job_code
+		              , job_name
+					  , to_char(hire_date, 'YYYY"년"MM"월"DD"일"') as "hire_date"
+					  , ent_yn
+					  , ent_date
+					  , status
+				  from employee e
+		          left join department d on (e.dept_code = d.dept_code)
+		          left join job j on (e.job_code = j.job_code)
+				 where ent_yn = 'N'
 	</select>
 	
 

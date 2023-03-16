@@ -2,10 +2,12 @@ package com.ep.spring.commute.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.ep.spring.approval.model.vo.VacationForm;
+import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.commute.model.vo.Commute;
 import com.ep.spring.commute.model.vo.VacationRecode;
 import com.ep.spring.login.model.vo.Employee;
@@ -52,9 +54,18 @@ public class CommuteDao {
 		return (ArrayList)sqlSession.selectList("commuteMapper.selectVacForm", empNo);
 	}
 	
+	//사원 정보 갯수 조회
+	public int selectListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("commuteMapper.selectListCount");
+	}
+	
 	//인사계정 사원 정보 리스트 조회
-	public ArrayList<Employee> selectEmpList(SqlSessionTemplate sqlSession){
-		return (ArrayList)sqlSession.selectList("commuteMapper.selectEmpList");
+	public ArrayList<Employee> selectEmpList(SqlSessionTemplate sqlSession, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("commuteMapper.selectEmpList", null, rowBounds);
 	}
 
 }

@@ -11,6 +11,8 @@
             width: 1200px;
             margin: auto;
         }
+        
+        
         .side{
             width: 200px;
             height: 900px;
@@ -218,22 +220,33 @@
         
 		<div align="center">
             <ul id="paging">
-                <li><a href=""> &lt; </a></li>
-                <li class='on'><a href=""> 1 </a></li>
-                <li><a href=""> 2 </a></li>
-                <li><a href=""> 3 </a></li>
-                <li><a href=""> 4 </a></li>
-                <li><a href=""> 5 </a></li>
-                <li><a href=""> &gt; </a></li>
+
+                <c:choose>
+                	<c:when test="${ pi.currentPage eq 1 }">
+						<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item"><a class="page-link" href="working.HR?cpage=${pi.currentPage-1 }">&lt;</a></li>
+					</c:otherwise>
+	            </c:choose>
+	            
+               		<c:forEach var="p" begin="${ pi.startPage }" end="${pi.endPage }">
+                    <li class="page-item"><a class="page-link" href="working.HR?cpage=${p }">${p }</a></li>
+                    </c:forEach>
+                    
+                    <c:choose>
+                	<c:when test="${ pi.currentPage eq pi.maxPage }">
+						<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item"><a class="page-link" href="working.HR?cpage=${pi.currentPage+1 }">&gt;</a></li>
+					</c:otherwise>
+	            </c:choose>
             </ul>
         </div>
-        <script>
-            $(function(){
-                 $("#ps-tbody").on("click", "tr", function(){
-                     location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
-                 })
-            })
-        </script>
+        
+ 
+
 
     </div>
 

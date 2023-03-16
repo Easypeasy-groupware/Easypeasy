@@ -8,11 +8,14 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ep.spring.approval.model.vo.VacationForm;
 import com.ep.spring.common.model.vo.AlertMsg;
+import com.ep.spring.common.model.vo.PageInfo;
+import com.ep.spring.common.template.Pagination;
 import com.ep.spring.commute.model.service.CommuteService;
 import com.ep.spring.commute.model.vo.Commute;
 import com.ep.spring.commute.model.vo.VacationRecode;
@@ -120,18 +123,25 @@ public class CommuteController {
 		
 		//근태관리 인사계정
 		@RequestMapping("working.HR")
-		public String hRWorkingStatus(HttpSession session) {
+		public ModelAndView hRWorkingStatus(ModelAndView mv, HttpSession session, @RequestParam(value="cpage", defaultValue="1")int currentPage) {
 			String deptCode = ((Employee)session.getAttribute("loginUser")).getDeptCode();
 			
 			if(deptCode.equals("D1")) {//로그인한 회원이 인사팀 일때 => 사원 정보 리스트 조회 => 페이지출력
-				ArrayList<Employee> list = cService.selectEmpList();
-				session.setAttribute("list", list);
-				return "commute/HRworkingStatus";
+				int listCount = cService.selectListCount();
+				
+				PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+				ArrayList<Employee> list = cService.selectEmpList(pi);
+				
+				mv.addObject("pi", pi).addObject("list", list).setViewName("commute/HRworkingStatus");
+				
+				return mv;
 				
 			}else {//로그인한 회원이 인사팀이 아닐때 => 알림창으로 인사팀만 접근가능하다고 알려주기
 				AlertMsg msg = new AlertMsg("인사 계정", "인사관리팀 외에는 인사계정 접근이 불가능합니다.");
-				session.setAttribute("failMsg", msg);
-				return "redirect:commute.ep";
+				mv.addObject("failMsg", msg)
+				  .setViewName("commute/commuteMain");
+				return mv;
+				
 			}
 			
 			
