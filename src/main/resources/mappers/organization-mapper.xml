@@ -171,5 +171,24 @@
           join job j on (e.job_code = j.job_code)
 	</select>
 	 -->
+	 
+	 <select id="selectSearchCount" resultType="_int">
+	 	select
+	 		   count(*)
+	 	  from employee 
+	 	 where ent_yn = 'N'
+	 </select>
+	 
+	 <select id="selectSearchList" resultMap="employeeResult">
+	 	select
+	 		   emp_no
+			 , emp_name
+			 , dept_name
+			 , job_name
+		  from employee e
+		  join department d on (e.dept_code = d.dept_code)
+          join job j on (e.job_code = j.job_code)
+          where ent_yn = 'N'
+	 </select>
 	
 </mapper>

@@ -72,7 +72,18 @@ public class OrgDao {
 	 */
 	
 	
+	public int selectSearchCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("organizationMapper.selectSearchCount");
+	}
 	
+	public ArrayList<Employee> selectSearchList(SqlSessionTemplate sqlSession, PageInfo pi){
+		
+		int offset = (pi.getCurrentPage() -1) *pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("organizationMapper.selectSearchList", null, rowBounds);
+	}
 	
 	
 }

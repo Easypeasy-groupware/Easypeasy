@@ -10,6 +10,21 @@
 		<result column="create_date" property="createDate" />
 	</resultMap>
 	
+	<resultMap id="reservationResult" type="Reservation">
+		<id column="re_no" property="reNo" />
+		<result column="resource_no" property="resourceNo" />
+		<result column="resource_name" property="resourceName" />
+		<result column="category_name" property="categoryName" />
+		<result column="emp_name" property="reWriter" />
+		<result column="re_purpose" property="rePurpose" />
+		<result column="start_date" property="startDate" />
+		<result column="end_date" property="endDate" />
+		<result column="start_time" property="startTime" />
+		<result column="end_time" property="endTime" />
+		<result column="re_allday" property="allDay" />
+		<result column="re_status" property="status" />
+	</resultMap>
+	
 	<select id="selectSettingMettingRoom" resultMap="resourceResult">
 		select
 			    resource_no
@@ -125,5 +140,102 @@
 		  , #{endTime}
 		  )
 	</insert>
+	
+	<select id="selectMettingRoomTimeGrid" resultMap="reservationResult">
+		select
+				re_no
+			  , resource_no
+			  , resource_name
+			  , emp_name
+			  , re_purpose
+			  , start_date
+			  , end_date
+			  , start_time
+			  , end_time
+			  , re_allday
+		   from reservation
+		   join employee on(emp_no = re_writer)
+		   join re_resource using(resource_no)
+		  where re_status = 'Y'
+		    and resource_no = #{resourceNo}
+		  order
+		     by re_no desc
+	</select>
+	
+	<select id="selectMettingRoomName" resultMap="resourceResult">
+		select
+			   resource_name
+		  from re_resource
+		 where resource_no = #{resourceNo}
+	</select>
+	
+	
+	<select id="selectMettingRoom" resultMap="reservationResult">
+		select
+				re_no
+			  , resource_no
+			  , resource_name
+			  , emp_name
+			  , re_purpose
+			  , start_date
+			  , end_date
+			  , start_time
+			  , end_time
+			  , re_allday
+		   from reservation
+		   join employee on(emp_no = re_writer)
+		   join re_resource using(resource_no)
+		  where re_status = 'Y'
+		    and category_name = '회의실'
+		  order
+		     by re_no desc
+	</select>
+	
+	<select id="selectBeamProjector" resultMap="reservationResult">
+		select
+				re_no
+			  , resource_no
+			  , resource_name
+			  , emp_name
+			  , re_purpose
+			  , start_date
+			  , end_date
+			  , start_time
+			  , end_time
+			  , re_allday
+		   from reservation
+		   join employee on(emp_no = re_writer)
+		   join re_resource using(resource_no)
+		  where re_status = 'Y'
+		    and category_name = '빔프로젝터'
+		  order
+		     by re_no desc
+	</select>
+	
+	<select id="selectReservation" resultMap="reservationResult">
+		select
+				re_no
+              , category_name
+              , resource_no
+			  , resource_name
+			  , start_date
+			  , end_date
+			  , start_time
+			  , end_time
+		   from reservation
+		   join employee on(emp_no = re_writer)
+		   join re_resource using(resource_no)
+		  where re_writer = #{reWriter}
+		    and re_status = 'Y'
+		  order
+		     by start_date desc
+	</select>
+	
+	<update id="reservationDelete">
+		update
+			   reservation
+		   set re_status = 'N'
+		 where re_no = #{reNo}
+	</update>
 	
 </mapper>

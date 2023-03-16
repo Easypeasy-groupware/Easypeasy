@@ -49,4 +49,32 @@ public class ReservationDao {
 	public int insertReservation(SqlSessionTemplate sqlSession, Reservation r) {
 		return sqlSession.insert("reservationMapper.insertReservation", r);
 	}
+	
+	public ArrayList<Reservation> selectMettingRoomTimeGrid(SqlSessionTemplate sqlSession, int resourceNo) {
+		return (ArrayList)sqlSession.selectList("reservationMapper.selectMettingRoomTimeGrid", resourceNo);
+	}
+	
+	public Resource selectMettingRoomName(SqlSessionTemplate sqlSession, int resourceNo) {
+		return sqlSession.selectOne("reservationMapper.selectMettingRoomName", resourceNo);
+	}
+	
+	public ArrayList<Reservation> selectbeamProjectorTimeGrid(SqlSessionTemplate sqlSession, int resourceNo) {
+		return (ArrayList)sqlSession.selectList("reservationMapper.selectMettingRoomTimeGrid", resourceNo); // 재사용
+	}
+	
+	public ArrayList<Reservation> selectMettingRoom(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("reservationMapper.selectMettingRoom");
+	}
+	
+	public ArrayList<Reservation> selectBeamProjector(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("reservationMapper.selectBeamProjector");
+	}
+	
+	public ArrayList<Reservation> selectReservation(SqlSessionTemplate sqlSession, int reWriter) {
+		return (ArrayList)sqlSession.selectList("reservationMapper.selectReservation", reWriter);
+	}
+	
+	public int reservationDelete(SqlSessionTemplate sqlSession, int reNo) {
+		return sqlSession.update("reservationMapper.reservationDelete", reNo);
+	}
 }

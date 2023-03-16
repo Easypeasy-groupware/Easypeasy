@@ -1,5 +1,6 @@
 package com.ep.spring.reservation.controller;
 
+
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -8,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ep.spring.common.model.vo.AlertMsg;
+import com.ep.spring.login.model.vo.Employee;
 import com.ep.spring.reservation.model.service.ReservationService;
 import com.ep.spring.reservation.model.vo.Reservation;
 import com.ep.spring.reservation.model.vo.Resource;
@@ -23,20 +27,37 @@ public class ReservationController {
 	@RequestMapping("main.re")
 	public String mainReservation(HttpSession session) {
 		ArrayList<Resource> meList = reService.selectSettingMettingRoom();
-		//System.out.println(list);
+		//System.out.println(meList);
 		session.setAttribute("meList", meList);
 		
 		ArrayList<Resource> beList = reService.selectSettingBeamProjector();
 		session.setAttribute("beList", beList);
+	
+
+		ArrayList<Reservation> mList = reService.selectMettingRoom();
+		session.setAttribute("mList", mList);
+		
+		ArrayList<Reservation> bList = reService.selectBeamProjector();
+		session.setAttribute("bList", bList);
+		
+		// 내 예약 현황
+		
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
+		ArrayList<Reservation> list = reService.selectReservation(empNo);
+		session.setAttribute("list", list);
 		
 		return "reservation/reservationMainView";
 	}
 	
 	@RequestMapping("beamProjectorMain.re")
-	public String beamMainReservation(HttpSession session) {
+	public String beamMainReservation(HttpSession session, Model model) {
 		
 		ArrayList<Resource> beList = reService.selectSettingBeamProjector();
 		session.setAttribute("beList", beList);
+		
+		ArrayList<Reservation> bList = reService.selectBeamProjector();
+		model.addAttribute("bList", bList);
 		
 		return "reservation/reservationMainBeamView";
 	}
@@ -313,4 +334,112 @@ public class ReservationController {
 		}
 			
 	}
+	
+	
+	
+	@RequestMapping("mettingRoomTimeGrid.re")
+	public ModelAndView selectMettingRoomTimeGrid(int mno, HttpSession session, ModelAndView mv) {
+		
+		ArrayList<Reservation> mList = reService.selectMettingRoomTimeGrid(mno);
+		
+		Resource mname = reService.selectMettingRoomName(mno);
+		
+		//System.out.println(mList);
+		
+		//System.out.println(mname);
+		
+		mv.addObject("mList", mList)
+		  .addObject("mno", mno)
+		  .addObject("mname", mname)
+		  .setViewName("reservation/reservationMettingRoomTimeGrid");
+		  return mv;
+	}
+	
+	@RequestMapping("beamProjectorTimeGrid.re")
+	public ModelAndView selectbeamProjectorTimeGrid(int bno, HttpSession session, ModelAndView mv) {
+		
+		ArrayList<Reservation> bList = reService.selectbeamProjectorTimeGrid(bno);
+		
+		Resource bname = reService.selectMettingRoomName(bno);
+		//System.out.println(bList);
+		
+		mv.addObject("bList", bList)
+		  .addObject("bno", bno)
+		  .addObject("bname", bname)
+		  .setViewName("reservation/reservationBeamProjectorTimeGrid");
+		  return mv;
+	}
+	
+	
+	@RequestMapping("insertReservationMeTimeGrid.re")
+	public String insertReservationMeTimeGrid(Reservation r, HttpSession session, Model model) {
+		
+		//System.out.println(r);
+	
+		if(r.getAllDay() == null) {
+			r.setAllDay("N");
+		}else {
+			r.setAllDay("Y");
+		}
+		
+		int result = reService.insertReservation(r);
+		
+		if(result > 0) {
+			AlertMsg msg = new AlertMsg("예약", "성공적으로 예약되었습니다");
+			session.setAttribute("successMsg", msg);
+			model.addAttribute("r", r);
+			return "redirect:mettingRoomTimeGrid.re?mno=" + r.getResourceNo();
+			
+		}else {
+			AlertMsg msg = new AlertMsg("예약", "예약 실패");
+			session.setAttribute("failMsg", msg);
+			return "redirect:mettingRoomTimeGrid.re?mno=" + r.getResourceNo();
+		}
+			
+	}
+	
+	@RequestMapping("insertReservationBeTimeGrid.re")
+	public String insertReservationBeTimeGrid(Reservation r, HttpSession session, Model model) {
+		
+		//System.out.println(r);
+	
+		if(r.getAllDay() == null) {
+			r.setAllDay("N");
+		}else {
+			r.setAllDay("Y");
+		}
+		
+		int result = reService.insertReservation(r);
+		
+		if(result > 0) {
+			AlertMsg msg = new AlertMsg("예약", "성공적으로 예약되었습니다");
+			session.setAttribute("successMsg", msg);
+			model.addAttribute("r", r);
+			return "redirect:beamProjectorTimeGrid.re?bno=" + r.getResourceNo();
+			
+		}else {
+			AlertMsg msg = new AlertMsg("예약", "예약 실패");
+			session.setAttribute("failMsg", msg);
+			return "redirect:beamProjectorTimeGrid.re?bno=" + r.getResourceNo();
+		}
+			
+	}
+	
+	@RequestMapping("reservationDel.re")
+	public String reservationDelete(int no, HttpSession session) {
+
+		int result = reService.reservationDelete(no);
+		
+		if(result > 0) {
+			AlertMsg msg = new AlertMsg("예약 취소", "성공적으로 취소되었습니다");
+			session.setAttribute("successMsg", msg);
+			return "redirect:main.re";
+		}else {
+			AlertMsg msg = new AlertMsg("예약 취소", "예약 취소 실패");
+			session.setAttribute("failMsg", msg);
+			return "redirect:main.re";
+		}
+		
+	}
+	
 }

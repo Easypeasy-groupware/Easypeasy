@@ -49,6 +49,11 @@ public class MailServiceImpl implements MailService {
 	}
 	
 	@Override
+	public int readMail(Mail m) {
+		return mDao.readMail(m, sqlSession);
+	}
+	
+	@Override
 	public Mail selectMail(Mail m) {
 		return mDao.selectMail(m, sqlSession);
 	}
@@ -62,6 +67,8 @@ public class MailServiceImpl implements MailService {
 	public ArrayList<Attachment> selectAttachmentList(Mail m) {
 		return mDao.selectAttachmentList(m, sqlSession);
 	}
+
+	
 
 	
 

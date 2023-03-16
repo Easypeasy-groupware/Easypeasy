@@ -29,8 +29,18 @@ public class AddressController {
 	private AddressService aService;
 	
 	@RequestMapping("favorite.add") // 즐겨찾기 
-	public String addFavList() {
-		return "address/addFavoriteList";
+	public ModelAndView addFavList(HttpSession session, ModelAndView mv) {
+		int no = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
+		ArrayList<Address> pList = aService.selectPersonalFavAddList(no);
+		ArrayList<Employee> eList = aService.selectEmpFavAddList(no);
+		ArrayList<Address> sList = aService.selectExternalFavAddList(no);
+		
+		mv.addObject("p", pList)
+		  .addObject("e", eList)
+		  .addObject("s", sList)
+		  .setViewName("address/addFavoriteList");
+		return mv;
 	}
 	
 	@RequestMapping("newPsForm.add") // 개인주소록 등록화면
@@ -40,7 +50,7 @@ public class AddressController {
 	
 	@RequestMapping("insertNewPs.add")
 	public String insertPersonalAdd(Address a, HttpSession session) {
-		System.out.println(a);
+
 		int result = aService.insertPersonalAdd(a);
 		
 		if(result > 0) {

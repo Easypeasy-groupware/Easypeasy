@@ -16,6 +16,14 @@ public interface AddressService {
 	ArrayList<AddGroup> selectSharedAddGroup();
 	
 	// 1. 즐겨찾기 리스트 조회 서비스
+	// 1_1. 개인주소록 즐겨찾기 리스트
+	ArrayList<Address> selectPersonalFavAddList(int empNo);
+	
+	// 1_2. 사원주소록 즐겨찾기 리스트
+	ArrayList<Employee> selectEmpFavAddList(int empNo);
+	
+	// 1_3. 외부주소록 즐겨찾기 리스트
+	ArrayList<Address> selectExternalFavAddList(int empNo);
 	
 	// 2. 개인주소록 추가
 	int insertPersonalAdd(Address a);

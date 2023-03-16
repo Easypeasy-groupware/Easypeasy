@@ -36,4 +36,8 @@ public interface OrgService {
 	/*
 	 * // 7. 설정 조회 서비스 ArrayList<Employee> selectSettingForm(Employee e);
 	 */
+	
+	// 8. 사원 검색 서비스
+	int selectSearchCount();
+	ArrayList<Employee> selectSearchList(PageInfo pi);
 }

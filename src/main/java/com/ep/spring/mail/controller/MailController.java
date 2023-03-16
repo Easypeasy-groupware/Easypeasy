@@ -145,6 +145,18 @@ public class MailController {
 			mList.add(mail);
 			System.out.println(mList);
 		}
+		
+		System.out.println(originNames);
+		String path = "resources/mail_attachFiles/";
+		for (MultipartFile mf : originNames) {
+			Attachment attach = new Attachment();
+			String originFileName = mf.getOriginalFilename();
+			String saveFilePath = FileUpload.saveFile(mf, session, path);
+			attach.setOriginName(mf.getOriginalFilename());
+			attach.setFilePath(FileUpload.saveFile(mf, session, path));
+			atList.add(attach);
+			System.out.println(atList);
+		}
 		int sendResult = mService.sendMail(m, mList, atList);
 		
 		if(sendResult > 0) {
@@ -157,7 +169,10 @@ public class MailController {
 	}
 	
 	@RequestMapping("select.ma")
-	public ModelAndView selectMail(ModelAndView mv, Mail m) {
+	public ModelAndView selectMail(HttpSession session, ModelAndView mv, Mail m) {
+		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+		System.out.println(m);
+		mService.readMail(m);
 		Mail mail = mService.selectMail(m);
 		ArrayList<Mail> receiverList = mService.selectReceiverList(m);
 		ArrayList<Attachment> attachmentList = mService.selectAttachmentList(m);

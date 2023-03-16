@@ -84,6 +84,90 @@
          where add_type = 'S'
 	</select>
 	
+	<select id="selectPersonalFavAddList" resultMap="addressResult">
+		select
+		       a.ADD_NO
+		     , f.EMP_NO
+		     , a.ADD_TYPE
+		     , ADD_NAME
+		     , EMAIL
+		     , PHONE
+		     , ADD_EMP
+		     , ADD_DEPT
+		     , ADD_JOB
+		     , a.GROUP_NO
+		     , GROUP_NAME
+		     , EMP_PHONE
+		     , EMP_ADDRESS
+		     , MEMO
+		     , CREATE_DATE
+		     , MODIFY_DATE
+		     , DELETE_DATE
+		     , ADD_BIN
+		     , EDITABLE
+		 from address a
+         left join add_group g on (a.group_no = g.group_no)
+         right join add_fav f on (a.emp_no = f.emp_no)
+		 where f.emp_no = #{empNo}
+		   and a.add_type = 'P'
+           and f.add_no = a.add_no
+		   and add_bin = 'N'
+		 order
+             by f.enroll_date desc
+		      
+	</select>
+	
+	<select id="selectEmpFavAddList" resultMap="empResult">
+		select
+		       e.emp_no
+		     , emp_name
+		     , email 
+		     , address
+		     , phone
+		     , emp_profile
+		     , dept_name
+		     , job_name
+		  from employee e
+          left join department d on (e.dept_code = d.dept_code)
+          left join job j on (e.job_code = j.job_code)
+         right join add_fav f on (e.emp_no = f.add_emp_no)
+		 where ent_yn = 'N'
+           and f.emp_no = #{empNo}
+          order
+             by f.enroll_date desc
+	</select>
+	
+	<select id="selectExternalFavAddList" resultMap="addressResult">
+		select
+		       a.ADD_NO
+		     , f.EMP_NO
+		     , a.ADD_TYPE
+		     , ADD_NAME
+		     , EMAIL
+		     , PHONE
+		     , ADD_EMP
+		     , ADD_DEPT
+		     , ADD_JOB
+		     , a.GROUP_NO
+		     , GROUP_NAME
+		     , EMP_PHONE
+		     , EMP_ADDRESS
+		     , MEMO
+		     , CREATE_DATE
+		     , MODIFY_DATE
+		     , DELETE_DATE
+		     , ADD_BIN
+		     , EDITABLE
+		 from address a
+         left join add_group g on (a.group_no = g.group_no)
+         right join add_fav f on (a.emp_no = f.emp_no)
+		 where f.emp_no = #{empNo}
+		   and a.add_type = 'S'
+           and f.add_no = a.add_no
+		   and add_bin = 'N'
+		 order
+             by f.enroll_date desc
+	</select>
 	<insert id="insertPersonalAdd">
 		insert
 		  into address
@@ -431,6 +515,8 @@
 			    by emp_name asc
 		</if>
 	</select>
+	
+
 
 
 

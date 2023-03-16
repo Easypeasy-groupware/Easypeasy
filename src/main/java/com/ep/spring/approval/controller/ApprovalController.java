@@ -98,7 +98,6 @@ public class ApprovalController {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("a", a);
 		map.put("appChange", appChange);
-		
 		return new Gson().toJson(map);
 		
 	}
@@ -219,8 +218,8 @@ public class ApprovalController {
 		}
 		
 		Approval ap = aService.selectDetailSPrgAp(a);
-			
-		System.out.println(ap);
+		
+		
 		
 		ArrayList<ApprovalLine> list1 = aService.selectDetailSPrgAl(a);
 		ArrayList<Attachment> list3 = aService.selectDetailSPrgAt(a);
