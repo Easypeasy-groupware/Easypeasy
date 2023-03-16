@@ -169,7 +169,10 @@ public class MailController {
 	}
 	
 	@RequestMapping("select.ma")
-	public ModelAndView selectMail(ModelAndView mv, Mail m) {
+	public ModelAndView selectMail(HttpSession session, ModelAndView mv, Mail m) {
+		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+		System.out.println(m);
+		mService.readMail(m);
 		Mail mail = mService.selectMail(m);
 		ArrayList<Mail> receiverList = mService.selectReceiverList(m);
 		ArrayList<Attachment> attachmentList = mService.selectAttachmentList(m);
