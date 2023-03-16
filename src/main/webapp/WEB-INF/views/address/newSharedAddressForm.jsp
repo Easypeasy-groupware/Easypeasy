@@ -202,6 +202,8 @@
                                 <input type="text" id="search-emp">
                                 <br><br>
                                 <table class="list-show">	
+                                	<tbody id="tbd">
+                                	</tbody>
                                 </table>
                             </div>
                             <div class="empBox-mini emp-mini2">
@@ -245,7 +247,7 @@
                 	success:function(list){
                 		let value="";
                 		for(let i=0; i<list.length; i++){
-                			value += "<tr class='indiv-emp' id='emp" + list[i].empNo + "'> ";
+                			value += "<tr id='emp" + list[i].empNo + "'>";
                 			if(list[i].deptName != null){
                 				value += "<td style='width:70px;'>" + list[i].deptName + "</td>";
                 			}else{
@@ -257,21 +259,28 @@
 							}else{
 								value += "<td style='width:40px;'></td>";
 							}
-							value += "<td>" + list[i].empName + "</td></tr>";
+							value += "<td class='edit-empName'>" + list[i].empName + "</td></tr>";
                 		}
 
-                		$(".list-show").html(value);
+                		$("#tbd").html(value);
+                		/* console.log("tbd : " + $("#tbd").html());
+                		console.log("tr : " +$("#tbd>tr").html());
+                		console.log("td : " +$("#tbd>tr>td").html()); */
                 	},error:function(){
                 		console.log("사원리스트 조회용 ajax 통신 실패");
                 	}
                 })
 
             })
+           
+           $(function(){
+        	   $("#tbd>tr").on("click", $("#tbd>tr"), function(){
+                   let val = $(this).html();
+                   console.log(val);
+               })
+           })
+           
             
-            $(".input-table").on("click", $(".list-show>tr"),function(){
-                let val = $(".list-show>tr").children().eq(0).text();
-                console.log(val);
-            })
             
         </script>
 
