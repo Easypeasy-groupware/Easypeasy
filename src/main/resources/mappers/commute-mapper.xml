@@ -171,5 +171,17 @@
 				 where ent_yn = 'N'
 	</select>
 	
+	<select id="monthlyWorkingStatus" resultMap="commuteResult">
+			select
+			        emp_no
+			      , replace(enroll_date, '/', '-') as "enroll_date"
+			      , start_time
+			      , end_time
+			      , work_time
+			      , com_status
+		       from commute
+		      where emp_no = #{empNo}
+	</select>
+	
 
 </mapper>

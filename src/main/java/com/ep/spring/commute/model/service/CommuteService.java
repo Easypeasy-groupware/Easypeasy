@@ -27,12 +27,14 @@ public interface CommuteService {
 	int insertCommuteDay();
 	
 	//(일반사용자)휴가 메인페이지
-		ArrayList<VacationRecode> selectVacMain(int empNo);
-		ArrayList<VacationForm> selectVacForm(int empNo);
+	ArrayList<VacationRecode> selectVacMain(int empNo);
+	ArrayList<VacationForm> selectVacForm(int empNo);
 		
 	//인사계정 사원정보 리스트 조회
 	int selectListCount();
 	ArrayList<Employee> selectEmpList(PageInfo pi);
 	
+	// 근무현황 및 계획(일반)
+	ArrayList<Commute> monthlyWorkingStatus(int empNo);
 
 }

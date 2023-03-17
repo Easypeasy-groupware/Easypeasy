@@ -80,6 +80,8 @@
                         center : 'title',
                         end : 'dayGridMonth,dayGridWeek,dayGridDay'
                     },
+                    
+
                     titleFormat : function(date) {
                         return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
                     },
@@ -88,7 +90,25 @@
                     droppable : true,
                     editable : true,
                     nowIndicator: true, // 현재 시간 마크
-                    locale: 'ko' // 한국어 설정
+                    locale: 'ko', // 한국어 설정
+                    events: [
+                        	<c:forEach var="c" items="${ list }">
+                            	{ 
+                            	  start: '${ c.enrollDate }', 
+                            	  end: '${ c.enrollDate }', 
+                            	  title: '출근: ${ c.startTime }',
+                            	  
+                            	   },
+                            </c:forEach>
+                            <c:forEach var="c" items="${ list }">
+                               	{ 
+                               	  start: '${ c.enrollDate }', 
+                               	  end: '${ c.enrollDate }', 
+                               	  title: ' 퇴근: ${ c.endTime }',
+                               	  
+                               	   },
+                               </c:forEach>
+                        ]
                 });
                 calendar.render();
             });
