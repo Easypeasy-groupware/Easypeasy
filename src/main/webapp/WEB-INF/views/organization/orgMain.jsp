@@ -31,6 +31,7 @@
       border-radius: 5px;
       box-shadow: 2px 2px 5px #ddd;
       text-align: center;
+      z-index:-99;
   }
   .imagecard {
   	  display: inline-block;
@@ -104,7 +105,7 @@
 	          </div>
 	          <br> -->
 	          
-	          <div class="card">
+	           <div class="card">
 	            <table>
 	            	<tr>
 	            		<td><img src="resources/common_images/default_profile.png"  style="width:80px;"></td>
@@ -113,6 +114,7 @@
 	            </table>
 	          </div>
 	          <br>
+	        
 	          
 	          <div class="card">
 	            <table>
@@ -199,6 +201,9 @@
 	    };
 	  </script>
 	    
+	    
+	    
+	    
 	  <!-- 검색/조직도 트리 -->
 		<!-- 모달 -->
 		<div class="modal fade" id="tree-modal" tabindex="-1" role="dialog" aria-labelledby="tree-modal-label" aria-hidden="true">
@@ -207,9 +212,9 @@
 					<div class="modal-header">
 						<h5 class="modal-title" id="tree-modal-label">
 						
-							<form id="searchForm.org" method="Get">
+							<form action="searchForm.org" method="Get" id="searchForm">
 							<input type="hidden" name="cpage" value="1">
-								<input type="text" placeholder="사원 검색"></h5>
+								<input type="text" name="keyword" value="${keyword}" id="search" placeholder="사원 검색"></h5>
 								<button type="submit" class="btn btn-success">검색</button>
 							</form>
 							
@@ -228,6 +233,12 @@
 								<ul id="browser" class="filetree treeview-famfamfam">
 									<li><span class="folder">이지피지</span>
 										<ul>
+											<%-- <c:forEach var="e" items="${list}">
+												<c:if test="${empty e.deptCode}">
+													<li><span class="file">${ e.empName }</span></li>
+												</c:if> 
+											</c:forEach> --%>
+											
 											<li><span class="file">대표</span></li>
 											<li><span class="file">상무</span></li>
 											
@@ -288,6 +299,26 @@
 					});
 				});
 			</script>
+			
+		<!-- 사원 검색 -->
+		<script>
+			$(function(){
+				
+				if($("#search").val.trim().length > 0){
+					$.ajax({
+						uri:"searchForm.org"
+						data:{},
+						success:function(result){
+							if(result == "success"){
+								$()
+							}
+						}
+					})
+				}
+				
+			})
+		</script>
+		
 		
 </body>
 </html>

@@ -39,10 +39,6 @@ public class OrgController {
 		ArrayList<Department> deptList = oService.selectDept();
 		ArrayList<Job> jList = oService.selectJob();
 		
-		//System.out.println(list);
-		//System.out.println(deptList);
-		//System.out.println(jList); 
-		
 		model.addAttribute("jList", jList);
 		model.addAttribute("deptList", deptList);
 		model.addAttribute("list", list);
@@ -111,8 +107,6 @@ public class OrgController {
 				
 	}
 	
-	
-	
 	@RequestMapping("update.org")
 	public String updateMember(Employee e, HttpSession session, Model model) {
 		
@@ -138,38 +132,124 @@ public class OrgController {
 			model.addAttribute("errorMsg", "사원정보 삭제 실패");
 			return "common/errorPage";	
 		}
-		
 	}
 	
 	
-	/*
-	 * @RequestMapping("settings.org") public ModelAndView
-	 * selectSettingForm(Employee e, ModelAndView mv) {
-	 * 
-	 * ArrayList<Employee> list = oService.selectSettingForm(e);
-	 * 
-	 * mv.addObject("list", list).setViewName("organization/orgSettings");
-	 * 
-	 * return mv; }
-	 */
-	
-	
 	@RequestMapping("searchForm.org")
-	public String selectSearchList(@RequestParam(value="cpage", defaultValue="1")int currentPage, HttpSession session, Model model) {
+	public String selectSearchList(String keyword, @RequestParam(value="cpage", defaultValue="1")int currentPage, HttpSession session, Model model) {
 		
-		int searchCount = oService.selectListCount();
+		int searchCount = oService.selectSearchCount(keyword);
 		
 		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 5, 10);
-		ArrayList<Employee> list = oService.selectSearchList(pi);
+		ArrayList<Employee> list = oService.selectSearchList(pi, keyword);
 		
-		System.out.println(list);
-		
+		model.addAttribute("keyword", keyword);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
 		return "organization/orgMain";
 		
 	}
+	
+	
+	@RequestMapping("settings.org") 
+	public ModelAndView selectSettingForm(Employee e, ModelAndView mv) {
+		
+		ArrayList<Department> dList = oService.selectSettingForm();
+		ArrayList<Job> jList = oService.selectSettingJob();
+		mv.addObject("dList", dList).addObject("jList", jList).setViewName("organization/orgSettings");
+		return mv;
+		
+	}
+	
+	@RequestMapping("insertDept.org")
+	public String insertDept(Department d, HttpSession session, Model model) {
+		
+		int result = oService.insertDept(d);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 등록되었습니다.");
+			return "redirect:settings.org";
+		}else {
+			model.addAttribute("errorMsg", "실패");
+			return "common/errorPage";
+		}
+	}
+	
+	@RequestMapping("updateDept.org")
+	public String updateDept(Department d, HttpSession session, Model model) {
+		
+		int result = oService.updateDept(d);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 수정되었습니다.");
+			return "organization/orgSettings";
+		}else {
+			model.addAttribute("errorMsg", "실패");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	@RequestMapping("deleteDept.org")
+	public String deleteDept(Department d, HttpSession session, Model model) {
+		
+		int result = oService.deleteDept(d);
+		
+		System.out.println(result);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "성공적으로 부서정보가 삭제되었습니다.");
+			return "redirect:/";
+		}else {
+			model.addAttribute("errorMsg", "부서정보 삭제 실패");
+			return "common/errorPage";	
+		}
+	}
+	
+	
+	@RequestMapping("insertJob.org")
+	public String insertJob(Job j, HttpSession session, Model model) {
+		
+		int result = oService.insertJob(j);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 직위등록되었습니다.");
+			return "redirect:settings.org";
+		}else {
+			model.addAttribute("errorMsg", "실패");
+			return "common/errorPage";
+		}
+	}
+	
+	@RequestMapping("updateJob.org")
+	public String updateJob(Job j, HttpSession session, Model model) {
+		
+		int result = oService.updateJob(j);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 직위수정되었습니다.");
+			return "redirect:settings.org";
+		}else {
+			model.addAttribute("errorMsg", "실패");
+			return "common/errorPage";
+		}
+	}
+	
+	@RequestMapping("deleteJob.org")
+	public String deleteJob(Job j, HttpSession session, Model model) {
+		
+		int result = oService.deleteJob(j);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "성공적으로 직위정보가 삭제되었습니다.");
+			return "redirect:/";
+		}else {
+			model.addAttribute("errorMsg", "직위정보 삭제 실패");
+			return "common/errorPage";	
+		}
+	}
+	
 	
 	
 	

@@ -34,11 +34,12 @@
 <body>
 	 <div class="sidebar">
 	    	<div class="menu-title">
-				<a href="" id="title">조직도</a>
+				<a href="" id="org-title">조직도</a>
 			</div>
-	    	
-	    	<button type="button" class="btn btn-success" id="topbtn" onclick="location.href='adminList.org';"> 관리자 </button>
-	        
+			
+	    	<%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> --%>
+	    		<button type="button" class="btn btn-success" id="topbtn" onclick="location.href='adminList.org';"> 관리자 </button>
+	        <%-- </c:if> --%>
 	      
 	      <div class="menu">
 	        <ul>

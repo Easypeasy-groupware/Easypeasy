@@ -17,7 +17,7 @@
 	.board>.board2{width:50%; float:right;}
 	.container {margin: 10px auto; width: 90%;  padding: 20px;}
     table {border-collapse: collapse; width: 100%;}
-	th, td {text-align: center; padding: 8px; border-bottom: 1px solid #ccc;}
+	tr, th, td {text-align: center; padding: 8px; border-bottom: 1px solid #ccc;}
 	th {background-color: #ddd;}
 	tr:hover {background-color: #f5f5f5;}
     input[type="text"],
@@ -60,72 +60,107 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="e" items="${list}">
+							<c:forEach var="d" items="${dList}">
 								<tr>
-									<td>${e.deptCode}</td>
-									<td>${e.deptName}</td>
+									<td>${d.deptCode}</td>
+									<td>${d.deptName}</td>
 								</tr>
 							</c:forEach>
-							
-							<tr>
-								<td>D2</td>
-								<td>경영지원부</td>
-							</tr>
-							<tr>
-								<td>D3</td>
-								<td>영업1팀</td>
-							</tr>
-							<tr>
-								<td>D4</td>
-								<td>영업2</td>
-							</tr>
-							<tr>
-								<td>D5</td>
-								<td>영업3</td>
-							</tr>
-							<tr>
-								<td>D6</td>
-								<td>마케팅부</td>
-							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
-			<!-- The Modal -->
+			<!-- 등록 The Modal -->
 			<div class="modal" id="myModal">
 				<div class="modal-dialog">
-				<div class="modal-content">
-			
-					<!-- Modal Header -->
-					<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<div class="modal-content">
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+				
+						<!-- Modal body -->
+						<form action="insertDept.org" method="post">
+							<div class="modal-body">
+								<label for="depCode">부서코드 :</label>
+								<input type="text" id="deptCode" name="deptCode" required />
+		
+								<label for="depName">부서명 :</label>
+								<input type="text" id="deptName" name="deptName" required />
+							</div>
+						<!-- Modal footer -->
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-success" >등록하기</button>
+							</div>
+						</form>
 					</div>
-			
-					<!-- Modal body -->
-					<div class="modal-body">
-						<label for="empNo">부서코드 :</label>
-						<input type="text" id="depCode" name="depCode" required />
-
-						<label for="empNo">직무명 :</label>
-						<input type="text" id="depName" name="depName" required />
-					</div>
-			
-					<!-- Modal footer -->
-					<div class="modal-footer">
-					<button type="submit" class="btn btn-success" data-dismiss="modal">등록하기</button>
-					</div>
-			
 				</div>
-				</div>
-				<script>
-					$(function(){
-						$("#noticeList>tbody>tr").click(function(){
-							/* 모달안에 멀티모달 적용  */
-						})
-					})
-				</script>    
 			</div>
+			
+			<!-- 수정/삭제 The Modal -->
+			<div class="modal" id="udModal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+				
+						<!-- Modal body -->
+						<form action="updateDept.org" method="post" id="updateDept">
+							<div class="modal-body">
+								<label for="deptCode">부서코드 :</label>
+								<input type="text" id="deptCode" name="deptCode" value="${d.deptCode}" />
+		
+								<label for="deptName">부서명 :</label>
+								<input type="text" id="deptName" name="deptName" value="${d.deptName}" />
+							</div>
+						<!-- Modal footer -->
+							<div class="modal-footer">
+								<a class="btn btn-danger" onclick="updateSubmit();">수정하기</a>
+								<a class="btn btn-dark" onclick="deleteSubmit();" >삭제하기</a> 
+							</div>
+						</form>
+						
+						<script>
+							function updateSubmit(){
+								$("#updateDept").attr("action", "updateDept.org").submit();
+							}
+							
+							function deleteSubmit(){
+								$("#updateDept").attr("action", "deleteDept.org").submit();
+							}
+						</script>
+						
+						
+					</div>
+				</div>
+			</div>
+			
+				<script>
+					$(document).ready(function() {
+						  $('#depList tbody tr').click(function() {
+						    // tr 클릭시 이벤트 처리
+						    var deptCode = $(this).find('td:first').text();
+						    var deptName = $(this).find('td:eq(1)').text();
+	
+						 	// 모달창에 부서코드와 직무명 출력
+						    $('#udModal #deptCode').val(deptCode);
+						    $('#udModal #deptName').val(deptName);
 
+						    // 모달창 열기
+						    $('#udModal').modal('show');
+						  });
+
+						  // 모달창 내부 "닫기" 버튼 클릭 이벤트 처리
+						  $('#udModal .close').click(function() {
+						    $('#udModal').modal('hide');
+						  });
+					});
+				</script>   
+				
+	<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+				
 			<div class="board2">
 				<br><br>
 				<h2>직위관리</h2>
@@ -133,7 +168,7 @@
 				<div class="container position">
 					<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#jobModal" style="float:right;">등록하기</button>
 					<br><br>
-					<table id="depList">
+					<table id="jobList">
 						<thead>
 							<tr>
 								<th>직위코드</th>
@@ -141,30 +176,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>J1</td>
-								<td>대표</td>
-							</tr>
-							<tr>
-								<td>J2</td>
-								<td>이사</td>
-							</tr>
-							<tr>
-								<td>J3</td>
-								<td>부장</td>
-							</tr>
-							<tr>
-								<td>J4</td>
-								<td>과장</td>
-							</tr>
-							<tr>
-								<td>J5</td>
-								<td>대리</td>
-							</tr>
-							<tr>
-								<td>J6</td>
-								<td>사원</td>
-							</tr>
+							<c:forEach var="j" items="${jList}">
+								<tr>
+									<td>${j.jobCode}</td>
+									<td>${j.jobName}</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -176,33 +193,89 @@
 			
 					<!-- Modal Header -->
 					<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 			
 					<!-- Modal body -->
-					<div class="modal-body">
-						<label for="empNo">직위코드 :</label>
-						<input type="text" id="depCode" name="depCode" required />
-
-						<label for="empNo">직위명 :</label>
-						<input type="text" id="depName" name="depName" required />
-					</div>
-			
-					<!-- Modal footer -->
-					<div class="modal-footer">
-					<button type="button" class="btn btn-success" data-dismiss="modal">등록하기</button>
-					</div>
-			
+					<form action="insertJob.org" method="post">
+						<div class="modal-body">
+							<label for="empNo">직위코드 :</label>
+							<input type="text" id="jobCode" name="jobCode" value="${j.jobCode}" required />
+	
+							<label for="empNo">직위명 :</label>
+							<input type="text" id="jobName" name="jobName" value="${j.jobName}" required />
+						</div>
+				
+						<!-- Modal footer -->
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-success">등록하기</button>
+						</div>
+					</form>
 				</div>
 				</div>
-				<script>
-					$(function(){
-						$("#noticeList>tbody>tr").click(function(){
-							
-						})
-					})
-				</script>    
 			</div>
+			
+			<!-- 수정/삭제 The Modal -->
+			<div class="modal" id="jjModal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+				
+						<!-- Modal body -->
+						<form action="updateJob.org" method="post" id="updateJob">
+							<div class="modal-body">
+								<label for="jobCode">직위코드 :</label>
+								<input type="text" id="jobCode" name="jobCode" value="${j.jobCode}" />
+		
+								<label for="jobName">직위명 :</label>
+								<input type="text" id="jobName" name="jobName" value="${j.jobName}" />
+							</div>
+						<!-- Modal footer -->
+							<div class="modal-footer">
+								<a class="btn btn-danger" onclick="updateJSubmit();">수정하기</a>
+								<a class="btn btn-dark" onclick="deleteJSubmit();" >삭제하기</a> 
+							</div>
+						</form>
+						
+						<script>
+							function updateJSubmit(){
+								$("#updateJob").attr("action", "updateJob.org").submit();
+							}
+							
+							function deleteJSubmit(){
+								$("#updateJob").attr("action", "deleteJob.org").submit();
+							}
+						</script>
+						
+						
+					</div>
+				</div>
+			</div>
+			
+				<script>
+					$(document).ready(function() {
+						  $('#jobList tbody tr').click(function() {
+						    // tr 클릭시 이벤트 처리
+						    var deptCode = $(this).find('td:first').text();
+						    var deptName = $(this).find('td:eq(1)').text();
+	
+						 	// 모달창에 부서코드와 직무명 출력
+						    $('#jjModal #jobCode').val(deptCode);
+						    $('#jjModal #jobName').val(deptName);
+
+						    // 모달창 열기
+						    $('#jjModal').modal('show');
+						  });
+
+						  // 모달창 내부 "닫기" 버튼 클릭 이벤트 처리
+						  $('#jjModal .close').click(function() {
+						    $('#jjModal').modal('hide');
+						  });
+					});
+				</script>   
 			
 		</div>
 	</div>

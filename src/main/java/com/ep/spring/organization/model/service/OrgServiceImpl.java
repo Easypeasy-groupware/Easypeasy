@@ -73,19 +73,64 @@ public class OrgServiceImpl implements OrgService {
 		return oDao.deleteMember(sqlSession);
 	}
 
+	@Override 
+	public ArrayList<Department> selectSettingForm() { 
+		return oDao.selectSettingForm(sqlSession); 
+	}
+	 
+	 @Override
+	public ArrayList<Job> selectSettingJob() {
+		return oDao.selectSettingJob(sqlSession); 
+	}
+	 
 	@Override
-	public int selectSearchCount() {
-		return oDao.selectSearchCount(sqlSession);
+	public int selectSearchCount(String keyword) {
+		return oDao.selectSearchCount(sqlSession, keyword);
 	}
 
 	@Override
-	public ArrayList<Employee> selectSearchList(PageInfo pi) {
-		return oDao.selectSearchList(sqlSession, pi);
+	public ArrayList<Employee> selectSearchList(PageInfo pi, String keyword) {
+		return oDao.selectSearchList(sqlSession, pi, keyword);
 	}
 
-	/*
-	 * @Override public ArrayList<Employee> selectSettingForm(Employee e) { return
-	 * oDao.selectSettingForm(sqlSession, e); }
-	 */
+	@Override
+	public int insertDept(Department d) {
+		return oDao.insertDept(sqlSession, d);
+	}
+
+	@Override
+	public int updateDept(Department d) {
+		return oDao.updateDept(sqlSession, d);
+	}
+
+	@Override
+	public int deleteDept(Department d) {
+		/* return oDao.deleteDept(sqlSession, d); */
+		 int result = oDao.deleteDept(sqlSession, d); 
+		 
+		 System.out.println(result);
+		 
+		 return result;
+		 
+	}
+
+	@Override
+	public int insertJob(Job j) {
+		return oDao.insertJob(sqlSession, j);
+	}
+
+	@Override
+	public int updateJob(Job j) {
+		return oDao.updateJob(sqlSession, j);
+	}
+
+	@Override
+	public int deleteJob(Job j) {
+		return oDao.deleteJob(sqlSession, j);
+	}
+
+	
+
+	
 
 }

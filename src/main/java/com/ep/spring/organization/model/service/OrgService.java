@@ -33,11 +33,25 @@ public interface OrgService {
 	// 6. 사원 삭제 서비스
 	int deleteMember();
 	
-	/*
-	 * // 7. 설정 조회 서비스 ArrayList<Employee> selectSettingForm(Employee e);
-	 */
+	// 7. 설정 조회 서비스 
+	ArrayList<Department> selectSettingForm();
+	ArrayList<Job> selectSettingJob();
 	
 	// 8. 사원 검색 서비스
-	int selectSearchCount();
-	ArrayList<Employee> selectSearchList(PageInfo pi);
+	int selectSearchCount(String keyword);
+	ArrayList<Employee> selectSearchList(PageInfo pi, String keyword);
+	
+	// 9. 부서 등록/수정/삭제 서비스
+	int insertDept(Department d);
+	int updateDept(Department d);
+	int deleteDept(Department d);
+	
+	// 10. 직위 등록/수정/삭제 서비스
+	int insertJob(Job j);
+	int updateJob(Job j);
+	int deleteJob(Job j);
+	
+	
+	
+	
 }
