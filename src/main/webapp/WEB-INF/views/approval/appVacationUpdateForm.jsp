@@ -38,6 +38,40 @@
             margin-left: -10px;
             margin-top: -20px;
         } 
+		/* 말풍선 적절한 top 과 margin-left 로 위치조정 */
+		.arrow_box {
+		  display: none;
+		  position: absolute;
+		  width: 200px;
+		  padding: 8px;
+		  left: 660px;
+		  -webkit-border-radius: 8px;
+		  -moz-border-radius: 8px;
+		  border-radius: 8px;
+		  background: #33333374;
+		  color: #fff;
+		  font-size: 14px;
+		}
+		
+		.arrow_box:after {
+		  position: absolute;
+		  bottom: 100%;
+		  left: 50%;
+		  width: 0;
+		  height: 0;
+		  margin-left: -10px;
+		  border: solid transparent;
+		  border-color: rgba(91, 91, 91, 0);
+		  border-bottom-color:  #33333374;
+		  border-width: 10px;
+		  pointer-events: none;
+		  content: ' ';
+		}
+		
+		#useHalf:hover + p.arrow_box {
+		  display: block;
+		  cursor:pointer
+		}        
 
     </style>
 </head>
@@ -147,25 +181,27 @@
                             <td>
                                 <input type="text" class="dateSelect-start" name="vac-start" onchange="diffDate();" > ~ 
                                 <input type="text" class="dateSelect-end" id="vac-end" name="vac-end"  onchange="diffDate();">
+                                <span id="useHalf" style="cursor:pointer">반차사용</span>
+                                <p class="arrow_box">클릭 시 반차 선택가능합니다.</p>
                             </td>                        
                         </tr>
 
-                        <tr>
+                        <tr style=" display:none;" id="half-area">
                             <td style="text-align:center">
                                 <label for="content">반차여부</label>
                             </td>
                             <td>
                                 &nbsp;&nbsp;<input type="checkbox" id="vac-startHalf" onclick="halfCheck();"> 
                                 <label for="vac-startHalf">시작일</label> 
-                                ( <input type="radio" name="start-half" id="start-half1" value="am">  &nbsp; <label for="start-half1">오전</label>  &nbsp;
-                                <input type="radio" name="start-half" id="start-half2" value="pm">  &nbsp; <label for="start-half2">오후</label> )
+                                ( <input type="radio" name="start-half" id="start-half1" value="am" >  &nbsp; <label for="start-half1">오전</label>  &nbsp;
+                                <input type="radio" name="start-half" id="start-half2" >  &nbsp; <label for="start-half2">오후</label> )
                                 &nbsp;&nbsp;<input type="checkbox" id="vac-endHalf" onclick="halfCheck();">
                                 <label for="vac-endHalf">종료일</label> 
-                                ( <input type="radio" name="end-half" id="end-half1" value="am">  &nbsp; <label for="end-half1">오전</label> &nbsp;
-                                <input type="radio" name="end-half" id="end-half2" value="pm">  &nbsp; <label for="end-half2">오후</label> )
-
-                            </td>
-                        </tr>
+                                ( <input type="radio" name="end-half" id="end-half1" >  &nbsp; <label for="end-half1">오전</label> &nbsp;
+                                <input type="radio" name="end-half" id="end-half2" >  &nbsp; <label for="end-half2">오후</label> )
+								
+								
+                            </td>                       </tr>
                         <tr>
                             <td style="text-align:center">
                                 연차일수 
@@ -176,154 +212,6 @@
 
                             </td>
                         </tr>
-                        <script>
-                           document.getElementById("enrollDate").value = new Date().toISOString().substring(0, 10);
-
-                            var dateSelector1 = document.querySelector('.dateSelect-start');
-                            
-                            dateSelector1.flatpickr();
-                            dateSelector1.flatpickr({
-                            local: 'ko',
-                            disable: [
-                            
-                            // 주말 제외 (토, 일)
-                            function(date) {
-                            // return true to disable
-                            return (date.getDay() === 0 || date.getDay() === 6);
-                            }
-                            ],
-                            dateFormat: "Y-m-d",
-                            minDate: "today",
-                            maxDate:new Date().fp_incr(30)                             
-                            });
-
-                            var dateSelector2 = document.querySelector('.dateSelect-end');
-                            dateSelector2.flatpickr();
-                            dateSelector2.flatpickr({
-                            local: 'ko',
-                            disable: [
-                            
-                            // 주말 제외 (토, 일)
-                            function(date) {
-                            // return true to disable
-                            return (date.getDay() === 0 || date.getDay() === 6);
-                            }
-                            ],
-                            dateFormat: "Y-m-d",
-                            minDate: "today",
-                            maxDate:new Date().fp_incr(30) // 오늘날짜로부터 30일이내
-
-                            });
-
-
-                            function diffDate(){
-                            let date1 = new Date($(".dateSelect-start").flatpickr().input.value); 
-                                    
-                                    dateSelector1.flatpickr();
-                                    dateSelector1.flatpickr({
-                                    local: 'ko',
-                                    disable: [
-                                    
-                                    // 주말 제외 (토, 일)
-                                    function(date) {
-                                    // return true to disable
-                                    return (date.getDay() === 0 || date.getDay() === 6);
-                                    }
-                                    ],
-                                    dateFormat: "Y-m-d",
-                                    minDate: "today",
-                                    maxDate:new Date().fp_incr(30)
-                                    
-                                    })
-
-                            let date2 = new Date($(".dateSelect-end").flatpickr().input.value); 
-                                    
-                                    dateSelector2.flatpickr();
-                                    dateSelector2.flatpickr({
-                                    local: 'ko',
-                                    disable: [
-                                    
-                                    // 주말 제외 (토, 일)
-                                    function(date) {
-                                    // return true to disable
-                                    return (date.getDay() === 0 || date.getDay() === 6);
-                                    }
-                                    ],
-                                    dateFormat: "Y-m-d",
-                                    minDate: "today",
-                                    maxDate:new Date().fp_incr(30)
-                                    })                                       
-
-
-                                    if(date1 > date2){
-                                        alert("날짜를 다시 선택해주세요.");
-                                        document.querySelector('.dateSelect-start').value="";
-                                        document.querySelector('.dateSelect-end').value="";
-                                        //console.log("count :" + count);
-                                        
-                                    }else{
-
-                                        let diff1 = date1.getTime()/ (24 * 60 * 60 * 1000);
-                                        let diff2 = date2.getTime()/ (24 * 60 * 60 * 1000);
-                                        let temp = date1.getDay();
-                                        //console.log(diff1, diff2, temp);
-
-                                        let count = 0;
-                                        for(var i = diff1 ; i <= diff2; i++){
-
-                                            if(temp == 0 || temp == 6){
-                                                //i--;
-                                                //console.log("주말");
-                                            }else{
-                                                //console.log(i);
-                                                //console.log(temp);
-                                                count++;
-                                                //console.log("평일");
-                                            }
-                                            if(temp == 6) {temp-=6;
-                                            }else{ temp++};
-
-                                        }
-
-                                        $("#vacUse").val(count);
-
-                                        // 기간 및 일시 신청연차 계산 확인
-                                        // 신청연차가 1일 때 종료일을 비활성화
-                                        if(diff1 == diff2){
-                                            $("#vac-endHalf").attr("disabled", true);
-                                            $("#end-half1").attr("disabled", true);
-                                            $("#end-half2").attr("disabled", true);
-                                        }
-
-                                        
-                                    } 
-                                    // $("#vac-startHalf").attr("checked", false); 
-                                    // $("#vac-endHalf").attr("checked", false); 
-
-                            }                            
-
-                            function halfCheck(){
-                            
-                            diffDate();
-
-                            if($("#vac-startHalf").prop("checked") && $("#vac-endHalf").prop("checked")){
-                                $("#start-half1").attr("disabled", true);
-                                $("#end-half2").attr("disabled", true);
-                                $("#vacUse").val($("#vacUse").val() - 1) ;
-                                
-                            }else if($("#vac-startHalf").prop("checked") || $("#vac-endHalf").prop("checked")){
-                                $("#vacUse").val($("#vacUse").val() - 0.5) ;
-                            
-                            }else if(!($("#vac-startHalf").prop("checked"))){
-                                $("#start-half1").attr("checked", false);
-                                $("#start-half2").attr("checked", false);
-                            }else if(!($("#vac-endHalf").prop("checked"))){
-                                $("#end-half1").attr("checked", false);
-                                $("#end-half2").attr("checked", false);
-                            }
-                            }
-                    </script>                
-                               
                         <tr>
                             <td rowspan="5" style="text-align:center">
                                 <label for="content">휴가사유</label>
@@ -349,7 +237,20 @@
                                 <label for="attachment">첨부파일</label>
                             </td>
                             <td>
-                                <input type="file">
+                                <button id="file_choose" type="button" class="btn btn-outline-secondary btn-sm">파일 선택</button>
+                                <button id="file_delete" type="button" class="btn btn-outline-secondary btn-sm">모두 삭제</button>
+                            </td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <td colspan="2" id="attach_area">
+                                <div id="no_attachment" >
+                                    <img id="attach" src="resources/common_images/attachment.png" width="30px;">
+                                    <div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
+                                </div>
+                                <div id="in_attachments">
+                                </div>
+                                <input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
                             </td>
                         </tr>
                     </table>
@@ -385,6 +286,263 @@
         </div>
  
     </div>
+
+    <script>
+        
+        document.getElementById("enrollDate").value = new Date().toISOString().substring(0, 10);
+
+        var dateSelector1 = document.querySelector('.dateSelect-start');
+        
+        dateSelector1.flatpickr();
+        dateSelector1.flatpickr({
+        local: 'ko',
+        disable: [
+        
+        // 주말 제외 (토, 일)
+        function(date) {
+        // return true to disable
+        return (date.getDay() === 0 || date.getDay() === 6);
+        }
+        ],
+        dateFormat: "Y-m-d",
+        minDate: "today",
+        defaultDate :"today",
+        maxDate:new Date().fp_incr(30)                             
+        });
+
+        var dateSelector2 = document.querySelector('.dateSelect-end');
+        dateSelector2.flatpickr();
+        dateSelector2.flatpickr({
+        local: 'ko',
+        disable: [
+        
+        // 주말 제외 (토, 일)
+        function(date) {
+        // return true to disable
+        return (date.getDay() === 0 || date.getDay() === 6);
+        }
+        ],
+        dateFormat: "Y-m-d",
+        minDate: "today",
+        maxDate:new Date().fp_incr(30) // 오늘날짜로부터 30일이내
+
+        });
+
+
+        function diffDate(){
+        let date1 = new Date($(".dateSelect-start").flatpickr().input.value); 
+                
+                dateSelector1.flatpickr();
+                dateSelector1.flatpickr({
+                local: 'ko',
+                disable: [
+                
+                // 주말 제외 (토, 일)
+                function(date) {
+                // return true to disable
+                return (date.getDay() === 0 || date.getDay() === 6);
+                }
+                ],
+                dateFormat: "Y-m-d",
+                minDate: "today",
+                maxDate:new Date().fp_incr(30)
+                
+                })
+
+        let date2 = new Date($(".dateSelect-end").flatpickr().input.value); 
+                
+                dateSelector2.flatpickr();
+                dateSelector2.flatpickr({
+                local: 'ko',
+                disable: [
+                
+                // 주말 제외 (토, 일)
+                function(date) {
+                // return true to disable
+                return (date.getDay() === 0 || date.getDay() === 6);
+                }
+                ],
+                dateFormat: "Y-m-d",
+                minDate: "today",
+                maxDate:new Date().fp_incr(30)
+                })                                       
+
+
+                if(date1 > date2){
+                    alert("날짜를 다시 선택해주세요.");
+                    document.querySelector('.dateSelect-start').value="";
+                    document.querySelector('.dateSelect-end').value="";
+                    //console.log("count :" + count);
+                    
+                }else{
+
+                    let diff1 = date1.getTime()/ (24 * 60 * 60 * 1000);
+                    let diff2 = date2.getTime()/ (24 * 60 * 60 * 1000);
+                    let temp = date1.getDay();
+                    //console.log(diff1, diff2, temp);
+
+                    let count = 0;
+                    for(var i = diff1 ; i <= diff2; i++){
+
+                        if(temp == 0 || temp == 6){
+                            //i--;
+                            //console.log("주말");
+                        }else{
+                            //console.log(i);
+                            //console.log(temp);
+                            count++;
+                            //console.log("평일");
+                        }
+                        if(temp == 6) {temp-=6;
+                        }else{ temp++};
+
+                    }
+
+                    $("#vacUse").val(count);
+
+                    // 기간 및 일시 신청연차 계산 확인
+                    // 신청연차가 1일 때 종료일을 비활성화
+                    if(diff1 == diff2){
+                        $("#vac-endHalf").attr("disabled", true);
+                        $("#end-half1").attr("disabled", true);
+                        $("#end-half2").attr("disabled", true);
+                    }
+
+                    
+                } 
+
+        }     
+        
+        $(function(){
+            $("#useHalf").click(function(){
+                // $(this) : 클릭 이벤트가 발생된 div 요소를 가리킴
+                // $(this).next() : 클릭이벤트가 발생된 div요소 뒤에 있는 p 요소
+                //$(this).next().slideDown();
+                // $p : 제이쿼리 형식이라는 것을 보여주기 위해 $붙여줬음
+                const $p = $("#half-area"); // jQuery 방식으로 선택된 요소를 담기위해
+                
+                if($("#half-area").css("display") == "none"){ // css는 스타일 속성값을 반환해주는 역할도 해줌
+
+                    $p.slideDown(); // 보여지게
+                    
+                }else{
+                    $p.slideUp(); // 사라지게
+                }
+                
+            });
+                            
+            $("input[type=radio][name=end-half]").click(function(){
+                $("#vac-endHalf").prop("checked", true);
+            });
+            
+            $("input[type=radio][name=start-half]").click(function(){
+                $("#vac-startHalf").prop("checked", true);
+            });
+            
+        });
+
+        function halfCheck(){
+                            	
+            diffDate();
+
+                if($("#vac-startHalf").prop("checked")){
+                    
+                    $("#vacUse").val($("#vacUse").val() - 0.5) ;
+                    $("input[type=radio][name=start-half]").prop('disabled', false);
+                    $("#start-half1").prop("checked", true);
+                    
+                    $("#vac-endHalf").prop("checked", false);
+                    
+                    $("input[type=radio][name=end-half]").prop('disabled', true);
+                    $("#end-half1").prop("checked", false);
+                    $("#end-half2").prop("checked", false);
+                    
+                } else if($("#vac-endHalf").prop("checked")){
+                    
+                    $("#vacUse").val($("#vacUse").val() - 0.5) ;
+                    $("input[type=radio][name=end-half]").prop('disabled', false);
+                    $("#end-half1").prop("checked", true);
+                    
+                    $("#vac-startHalf").prop("checked", false);
+                    
+                    $("input[type=radio][name=start-half]").prop('disabled', true);
+                    $("#start-half1").prop("checked", false);
+                    $("#start-half2").prop("checked", false);
+                    
+                } else {
+                        $("#end-half1").prop("checked", false);
+                        $("#end-half2").prop("checked", false);
+                        $("#start-half1").prop("checked", false);
+                        $("#start-half2").prop("checked", false);
+            
+                }
+                
+        }
+
+
+        // 첨부파일 업로드 하기
+        // 버튼 클릭해서 선택해오기
+        let fileNames = [];
+        let noAttach = document.getElementById("no_attachment");
+        let inAttachs = document.getElementById("in_attachments");
+        document.getElementById("file_choose").addEventListener('click', function(){
+            let attachFile = document.getElementById("attach_files");
+            attachFile.click();
+            attachFile.addEventListener('change', function(){
+                let vaildFile = attachFile.files.length >= 0;
+                if(vaildFile){
+                    inAttachs.innerText = ''
+                    noAttach.style.display = "none";
+                    for(let i=0; i<attachFile.files.length; i++){
+                        inAttachs.innerHTML += "첨부파일명 : " + attachFile.files[i].name + "&nbsp;&nbsp;&nbsp; <br>"
+                    };
+                    inAttachs.style.overflowY = 'auto';
+                    inAttachs.style.display = "block";
+                };
+            });  
+        });
+
+        let uploadBox = document.querySelector('#attach_area');
+
+        // 박스 안에 Drag를 하고 있을 때
+        uploadBox.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.backgroundColor = 'white';
+        });
+        
+        // 박스 밖으로 Drag가 나갈 때
+        uploadBox.addEventListener('dragleave', function(e) {
+            this.style.backgroundColor = 'whitesmoke';
+        });
+        // 박스 안에서 Drag를 Drop했을 때
+        uploadBox.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.style.backgroundColor = 'whitesmoke';
+            let attachFile = e.dataTransfer.files
+            let vaildFile = e.dataTransfer.types.indexOf('Files') >= 0;
+            if(vaildFile){
+                inAttachs.innerText = ''
+                noAttach.style.display = "none";
+                for(let i=0; i<attachFile.length; i++){
+                    inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile[i].name + "&nbsp;&nbsp;&nbsp;<br>"
+                };
+                inAttachs.style.overflowY = 'auto';
+                inAttachs.style.display = "block";
+            };
+        });        
+
+        // 첨부파일 전체 삭제
+        document.getElementById('file_delete').addEventListener('click', function(){
+            let attachFile = document.getElementById("attach_files");
+            attachFile.value = ''
+            inAttachs.innerText = ''
+            inAttachs.style.display = "none";
+            noAttach.style.display = "block";
+        });
+
+    </script>                
+                               
+
 
 </body>
 </html>

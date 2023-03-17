@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ep.spring.approval.model.service.ApprovalService;
 import com.ep.spring.approval.model.vo.Approval;
@@ -378,6 +379,15 @@ public class ApprovalController {
 		}
 		
 	}
+	
+	@RequestMapping("insert.ap")
+	public String insertApproval(HttpSession session, Model model, ArrayList<MultipartFile> upfile, 
+								 ArrayList<ApprovalLine> appLine, Approval ap, VacationForm vf, OverTimeForm ot) {
+		
+		return "";
+	}
+	
+	
 	
 	/*
 	@RequestMapping("search.ap")
