@@ -46,8 +46,13 @@
     <jsp:include page="appMenubar.jsp" />
     <div class="form-outer">
         <div class="left-outer">
+        	<form id="contentArea">        
             <div class="left-form1">
-                <p><b style="font-size:30px;">일반품의서</b></p>
+                <p>
+                	<b style="font-size:30px;">일반품의서</b>
+	                <input type="hidden" name="formCode" value="2">
+	                <input type="hidden" name="formName" value="일반품의서"> 
+                </p>
                 <br>
             </div>
             <div class="left-form2">
@@ -172,7 +177,8 @@
                 <br>
             </div>
                 </div>
-            </div>
+            </form>
+            
         </div>
  
     </div>

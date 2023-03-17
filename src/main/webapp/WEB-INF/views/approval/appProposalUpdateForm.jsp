@@ -46,8 +46,13 @@
     <jsp:include page="appMenubar.jsp" />
     <div class="form-outer">
         <div class="left-outer">
+        	<form id="contentArea">           
             <div class="left-form1">
-                <p><b style="font-size:30px;">일반품의서</b></p>
+                <p>
+                	<b style="font-size:30px;">일반품의서</b>
+	                <input type="hidden" name="formCode" value="2">
+	                <input type="hidden" name="formName" value="일반품의서"> 
+                </p>
             </div>
             <div class="left-form2"><a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
                                     <a href="" style="padding:20px; color:rgb(71, 71, 71);">임시저장</a>|
@@ -172,36 +177,37 @@
                 </div>
                 <br>
             <div class="left-form6">
-                <div style=" padding:10px; font-size:20px;">
-                    <p><b> 결재선</b></p>
-               </div>
-              
-               <div class="app-comment" style="font-size:15px;">
-                   <img src="img/user.png" width="30px;" alt=""> &nbsp;정형돈 과장
-                   <br>
-                     회사명 | 부서명
-                   <br>
-                    기안
-                   <br><br>
-
-                   <br>
-               </div>
-               <div class="app-comment" style="font-size:15px;">
-                <img src="img/user.png" width="30px;" alt=""> &nbsp;정형돈 과장
-                <br>
-                    회사명 | 부서명
-                <br>
-                    결재
-                <br><br>
-
-                <br>
-            </div>
+	                <div style=" padding:10px; font-size:20px;">
+	                    <p><b> 결재선</b></p>
+	               </div>
+	              
+	               <div class="app-comment" style="font-size:15px;">
+	                   <img src="img/user.png" width="30px;" alt=""> &nbsp;정형돈 과장
+	                   <br>
+	                     회사명 | 부서명
+	                   <br>
+	                    기안
+	                   <br><br>
+	
+	                   <br>
+	               </div>
+	               <div class="app-comment" style="font-size:15px;">
+	                <img src="img/user.png" width="30px;" alt=""> &nbsp;정형돈 과장
+	                <br>
+	                    회사명 | 부서명
+	                <br>
+	                    결재
+	                <br><br>
+	
+	                <br>
+	            	</div>
                 </div>
             </div>
+            
+            </form>
         </div>
- 
     </div>
-</div>
+
 
     <script>
         $('.summernote').summernote({

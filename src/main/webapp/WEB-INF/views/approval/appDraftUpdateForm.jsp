@@ -46,8 +46,12 @@
     <jsp:include page="appMenubar.jsp" />
     <div class="form-outer">
         <div class="left-outer">
+        	<form id="contentArea">
+        
             <div class="left-form1">
-                <p><b style="font-size:30px;"> 업무기안</b></p>
+               	<b style="font-size:30px;"> 업무기안</b>
+                <input type="hidden" name="formCode" value="1">
+                <input type="hidden" name="formName" value="업무기안"> 
             </div>
             <div class="left-form2"><a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
                                     <a href="" style="padding:20px; color:rgb(71, 71, 71);">임시저장</a>|
@@ -196,9 +200,10 @@
                 <br><br>
 
                 <br>
-            </div>
+            	</div>
                 </div>
-            </div>
+           
+            </form>
         </div>
  
     </div>

@@ -80,8 +80,13 @@
     <jsp:include page="appMenubar.jsp" />
     <div class="form-outer">
         <div class="left-outer">
+        <form id="contentArea">
             <div class="left-form1">
-                <p><b style="font-size:30px;">휴가신청서</b></p>
+                <p>
+	                <b style="font-size:30px;">휴가신청서</b>
+	                <input type="hidden" name="formCode" value="3">
+	                <input type="hidden" name="formName" value="휴가신청서">	                
+                </p>
             </div>
             <div class="left-form2">
                 <a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
@@ -271,21 +276,22 @@
 
                    <br>
                </div>
-               <div class="app-comment" style="font-size:15px;">
-                <img src="img/user.png" width="30px;" alt=""> &nbsp;정형돈 과장
+	               <div class="app-comment" style="font-size:15px;">
+	                <img src="img/user.png" width="30px;" alt=""> &nbsp;정형돈 과장
+	                <br>
+	                    회사명 | 부서명
+	                <br>
+	                    결재
+	                <br><br>
+	
                 <br>
-                    회사명 | 부서명
-                <br>
-                    결재
-                <br><br>
-
-                <br>
-            </div>
+	            	</div>
                 </div>
+                </form>
             </div>
         </div>
  
-    </div>
+
 
     <script>
         

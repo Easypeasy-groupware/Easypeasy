@@ -484,7 +484,7 @@
         		val+= "<div>"
         			+ "<img src='<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />' width='30px;'>"
         			+ "<br><br>"
-        		  	+ arr1[i].value
+        		  	+ "<input type='hidden' name='recEmpNo' value='"+ arr1[i].value +"'>" + arr1[i].value
         		  	+ "<br> 결재 <br><br><br>";
         	}
         	$(".app-body").html(val);
@@ -501,7 +501,7 @@
         		val+= "<div>"
         			+ "<img src='<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />' width='30px;'>"
         			+ "<br><br>"
-        		  	+ arr2[i].value
+        			+ "<input type='hidden' name='recEmpNo' value='"+ arr2[i].value +"'>" + arr2[i].value
         		  	+ "<br> 결재 <br><br><br>";
         	}
         	$(".rep-body").html(val);
@@ -521,32 +521,32 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
     
+
+            <form action="" >
             <!-- Modal body -->
-            <div class="modal-body">
-                    <form action="">
-                        <table class="table-borderless" style="width:100%; height:150px;">
-                            
-                                <tr>
-                                    <td>결재문서명</td>
-                                    <td>결재문서제목</td>
-                                </tr>
-                                <tr>
-                                    <td>기안의견</td>
-                                    <td>
-                                        <textarea name="writerComment" id="writerComment" cols="30" rows="3" style="resize:none"></textarea>
-                                    </td>
-                                </tr>
-                            
-                        </table>
-                           
-            </div>
-    
-            <!-- Modal footer -->
-            <div class="modal-footer" style="margin:auto;">
-                <button type="button" onclick="insertApp();" class="btn btn-light">결재요청</button>
-                <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
-            </div>
-   		 </form> 
+	            <div class="modal-body">
+                    <table class="table-borderless" style="width:100%; height:150px;">
+                        
+                            <tr>
+                                <td>결재문서명</td>
+                                <td>결재문서제목</td>
+                            </tr>
+                            <tr>
+                                <td>기안의견</td>
+                                <td>
+                                    <textarea name="writerComment" id="writerComment" cols="30" rows="3" style="resize:none"></textarea>
+                                </td>
+                            </tr>
+                    </table>
+	                           
+	            </div>
+	    
+	            <!-- Modal footer -->
+	            <div class="modal-footer" style="margin:auto;">
+	                <button type="button" id="insertBtn" onclick="insertApp();" class="btn btn-light">결재요청</button>
+	                <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
+	            </div>
+		   </form> 
         </div>
         </div>
     </div>

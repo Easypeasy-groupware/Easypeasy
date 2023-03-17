@@ -12,21 +12,21 @@ import lombok.ToString;
 public class Approval {
 	
 	private int appNo;
-	private String enrollDate;
+	private String enrollDate;//
 	private String status;
 	private String tstatus;
-	private String writerComment;
+	private String writerComment;//
 	private String title;
-	private String content;
-	private int writerNo;
-	private String formName;
-	private int conPeriod;
-	private String secGrade;
-	private int formCode;
+	private String content;//
+	private int writerNo;// --> 컨트롤러에서 정함
+	private String formName;//
+	private int conPeriod; // --> 컨트롤러에서 정함
+	private String secGrade;// --> 컨트롤러에서 정함
+	private int formCode;//
 	private int appAmount;
 	private int appSequence;
 	private String empName;
-	private String appChange;
+	private String appChange;//
 	private String deptName;
 	private String originName;
 	private int count;
