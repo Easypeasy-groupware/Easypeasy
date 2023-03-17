@@ -95,6 +95,15 @@
         .moal{z-index:10000;
         	/* z-index: 2147483647; */
         }
+
+        /* 첨부파일 스타일 */
+        #attach_area{height: 100px; border: 1px solid gray; background: whitesmoke; vertical-align: middle;}
+        #no_attachment{width: 360px; margin: auto; display: block;}
+        #no_attachment img, #no_attachment div{float: left;}
+        #no_attachment div{margin-left: 10px; line-height: 26px; font-size: 15px; font-weight: 400; color: gray;}
+        #in_attachments{width: 100%; max-height: 100px; padding-left: 20px; display: none;}
+        #attach{width: 25px;}
+        .attach_delete_btn{border: none;}          
     </style>
     
     <!-- 부트스트랩 -->
@@ -524,23 +533,24 @@
                                 <tr>
                                     <td>기안의견</td>
                                     <td>
-                                        <textarea name="" id="" cols="30" rows="3" style="resize:none"></textarea>
+                                        <textarea name="writerComment" id="writerComment" cols="30" rows="3" style="resize:none"></textarea>
                                     </td>
                                 </tr>
                             
                         </table>
-                    </form>        
+                           
             </div>
     
             <!-- Modal footer -->
             <div class="modal-footer" style="margin:auto;">
-                <button type="submit" class="btn btn-light">결재요청</button>
+                <button type="button" onclick="insertApp();" class="btn btn-light">결재요청</button>
                 <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
             </div>
-    
+   		 </form> 
         </div>
         </div>
     </div>
+
 
 </body>
 </html>
