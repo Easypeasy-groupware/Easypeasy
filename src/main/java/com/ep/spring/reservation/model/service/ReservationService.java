@@ -49,4 +49,10 @@ public interface ReservationService {
 	
 	// 7. 예약 취소
 	int reservationDelete(int reNo);
+	
+	// 8. 예약 상세 조회 위한
+	Reservation selectDetailReservation(int reNo);
+	
+	// 9. 예약 수정
+	int reservationUpdate(Reservation r);
 }

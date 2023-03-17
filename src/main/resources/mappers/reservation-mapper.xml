@@ -238,4 +238,35 @@
 		 where re_no = #{reNo}
 	</update>
 	
+	<select id="selectDetailReservation" resultMap="reservationResult">
+		select
+				re_no
+			  , emp_name
+              , resource_no
+              , resource_name
+              , category_name
+              , start_date
+              , end_date
+              , start_time
+              , end_time
+              , re_allday
+              , re_purpose
+		   from reservation
+		   join employee on(emp_no = re_writer)
+		   join re_resource using(resource_no)
+		  where re_no = #{reNo}
+	</select>
+	
+	<update id="reservationUpdate">
+		update
+			   reservation
+		   set start_date = #{startDate}
+		     , end_date = #{endDate}
+		     , start_time = #{startTime}
+		     , end_time = #{endTime}
+		     , re_allday = #{allDay}
+		     , re_purpose = #{rePurpose}
+		 where re_no = #{reNo}
+	</update>
+	
 </mapper>

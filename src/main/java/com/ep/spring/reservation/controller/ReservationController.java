@@ -442,4 +442,29 @@ public class ReservationController {
 		
 	}
 	
+	@RequestMapping("reservationUpdel.re")
+	public String reservationUpDel(int no, HttpSession session, Model model) {
+
+		Reservation r = reService.selectDetailReservation(no);
+		model.addAttribute("r", r);
+		return "reservation/reservationUpDel";
+	}
+	
+	@RequestMapping("reservationUpdate.re")
+	public String reservationUpdate(Reservation r, HttpSession session, Model model) {
+
+		int result = reService.reservationUpdate(r);
+		
+		if(result > 0) {
+			AlertMsg msg = new AlertMsg("예약 수정", "성공적으로 수정되었습니다");
+			session.setAttribute("successMsg", msg);
+			return "redirect:main.re";
+		}else {
+			AlertMsg msg = new AlertMsg("예약 수정", "예약 수정 실패");
+			session.setAttribute("failMsg", msg);
+			return "redirect:main.re";
+		}
+		
+	}
+	
 }

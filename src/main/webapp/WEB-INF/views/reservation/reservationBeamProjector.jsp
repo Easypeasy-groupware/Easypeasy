@@ -293,6 +293,12 @@
                 		{ id: '${ b.reNo }', resourceId: '${ b.resourceNo }', start: '${ b.startDate } ${ b.startTime }', end: '${ b.endDate } ${ b.endTime }', title: '${ b.reWriter } ${ b.startTime }~${ b.endTime }', color: '#d6dfcc' },
                 	</c:forEach>
                 ],
+				eventClick: function(info){
+                	
+                	location.href = "reservationUpdel.re?no=" + info.event.id; // 상세페이지 이동
+                	
+                	info.el.style.borderColor = '#b9bbdd'; // 테두리 색 지정
+                },
                 select: function(info) { // 클릭&드래그
                 
                     // 클릭한 날짜

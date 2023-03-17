@@ -102,6 +102,15 @@ public class ReservationServiceImpl implements ReservationService {
 		return reDao.reservationDelete(sqlSession, reNo);
 	}
 
+	@Override
+	public Reservation selectDetailReservation(int reNo) {
+		return reDao.selectDetailReservation(sqlSession, reNo);
+	}
+
+	@Override
+	public int reservationUpdate(Reservation r) {
+		return reDao.reservationUpdate(sqlSession, r);
+	}
 	
 	
 }

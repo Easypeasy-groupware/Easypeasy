@@ -77,4 +77,12 @@ public class ReservationDao {
 	public int reservationDelete(SqlSessionTemplate sqlSession, int reNo) {
 		return sqlSession.update("reservationMapper.reservationDelete", reNo);
 	}
+	
+	public Reservation selectDetailReservation(SqlSessionTemplate sqlSession, int reNo) {
+		return sqlSession.selectOne("reservationMapper.selectDetailReservation", reNo);
+	}
+	
+	public int reservationUpdate(SqlSessionTemplate sqlSession, Reservation r) {
+		return sqlSession.update("reservationMapper.reservationUpdate", r);
+	}
 }
