@@ -24,6 +24,19 @@ public class AddressDao {
 		return (ArrayList)sqlSession.selectList("addressMapper.selectSharedAddGroup");
 	}
 	
+	public ArrayList<Address> selectPersonalFavAddList(SqlSessionTemplate sqlSession, int empNo) {
+		return (ArrayList)sqlSession.selectList("addressMapper.selectPersonalFavAddList", empNo);
+	}
+
+	public ArrayList<Employee> selectEmpFavAddList(SqlSessionTemplate sqlSession, int empNo) {
+		return (ArrayList)sqlSession.selectList("addressMapper.selectEmpFavAddList", empNo);
+	}
+
+	public ArrayList<Address> selectExternalFavAddList(SqlSessionTemplate sqlSession, int empNo) {
+		return (ArrayList)sqlSession.selectList("addressMapper.selectExternalFavAddList", empNo);
+	}
+
+	
 	public int insertPersonalAdd(SqlSessionTemplate sqlSession, Address a) {
 		return sqlSession.insert("addressMapper.insertPersonalAdd", a);
 	}
@@ -127,6 +140,7 @@ public class AddressDao {
 	public ArrayList<Employee> selectEmployeeList(SqlSessionTemplate sqlSession, Employee e) {
 		return (ArrayList)sqlSession.selectList("addressMapper.selectEmployeeList", e);
 	}
+
 
 
 

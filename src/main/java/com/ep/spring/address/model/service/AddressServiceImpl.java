@@ -35,6 +35,21 @@ public class AddressServiceImpl implements AddressService {
 	}
 	
 	@Override
+	public ArrayList<Address> selectPersonalFavAddList(int empNo) {
+		return aDao.selectPersonalFavAddList(sqlSession, empNo);
+	}
+
+	@Override
+	public ArrayList<Employee> selectEmpFavAddList(int empNo) {
+		return aDao.selectEmpFavAddList(sqlSession, empNo);
+	}
+
+	@Override
+	public ArrayList<Address> selectExternalFavAddList(int empNo) {
+		return aDao.selectExternalFavAddList(sqlSession, empNo);
+	}
+	
+	@Override
 	public int insertPersonalAdd(Address a) {
 		return aDao.insertPersonalAdd(sqlSession, a);
 	}
@@ -143,6 +158,8 @@ public class AddressServiceImpl implements AddressService {
 	public ArrayList<Employee> selectEmployeeList(Employee e) {
 		return aDao.selectEmployeeList(sqlSession, e);
 	}
+
+
 
 
 
