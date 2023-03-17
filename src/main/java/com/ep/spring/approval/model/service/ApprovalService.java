@@ -1,6 +1,7 @@
 package com.ep.spring.approval.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.ep.spring.approval.model.vo.Approval;
 import com.ep.spring.approval.model.vo.ApprovalLine;
@@ -76,6 +77,7 @@ public interface ApprovalService {
 	// 14. 참조자 조회수 증가 서비스
 	int updateCount(Approval a);
 
-	
+	// 15. 결재문서 상신을 위한 서비스
+	int insertApproval(HashMap map);
 
 }

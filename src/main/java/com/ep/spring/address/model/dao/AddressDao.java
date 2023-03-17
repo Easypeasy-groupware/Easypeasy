@@ -141,6 +141,22 @@ public class AddressDao {
 		return (ArrayList)sqlSession.selectList("addressMapper.selectEmployeeList", e);
 	}
 
+	public int deleteFavAdd(SqlSessionTemplate sqlSession, AddFavorite ag) {
+		return sqlSession.delete("addressMapper.deleteFavAdd", ag);
+	}
+
+	public int deleteFavEmp(SqlSessionTemplate sqlSession, AddFavorite ag) {
+		return sqlSession.delete("addressMapper.deleteFavEmp", ag);
+	}
+
+	public int insertFavAdd(SqlSessionTemplate sqlSession, AddFavorite af) {
+		return sqlSession.insert("addressMapper.insertFavAdd", af);
+	}
+
+	public int insertFavEmp(SqlSessionTemplate sqlSession, AddFavorite af) {
+		return sqlSession.insert("addressMapper.insertFavEmp", af);
+	}
+
 
 
 

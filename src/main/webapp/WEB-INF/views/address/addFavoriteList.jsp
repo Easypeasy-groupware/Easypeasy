@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,12 +41,12 @@
         border-collapse: collapse;
     }
     .like-tb tr{border-radius:5px;}
-    .like-tb tbody>tr:hover{background:rgb(233, 233, 233); font-weight:600;}
+    .like-tb tbody>tr:hover{background:rgb(233, 233, 233); font-weight:600; cursor:pointer;}
     .like-tb thead>tr{background-color:rgb(210, 217, 201); position: sticky; top:0;}
     .like-tb th{padding:8px 0 8px 0;}
     .like-tb td{padding:3px 0 3px 0;}
     .like-tb input[type="checkbox"]{accent-color:rgb(166, 184, 145);}
-    .like:hover{cursor: pointer;}
+    .addLike:hover, .empLike:hover{cursor: pointer;}
     
     /*스크롤*/
 	#psLike::-webkit-scrollbar, #pbLike::-webkit-scrollbar{width:5px;}
@@ -78,7 +79,7 @@
         <br><br>
 
         <button id="sendMail">메일쓰기</button>
-        <span class="subheading" id="psSubheading"><b>개인주소록 (3개)</b></span>
+        <span class="subheading" id="psSubheading"><b>개인주소록 (${fn:length(p)}개)</b></span>
 
         <br>
 
@@ -108,19 +109,19 @@
                 <c:choose>
                 	<c:when test="${ empty p }">
                 		<tr>
-                			<td colspan="8" style="text-align:center;">😓 즐겨찾기한 주소록이 없습니다</td>
+                			<td colspan="7" style="text-align:center;">😓 즐겨찾는 개인주소록이 없습니다</td>
                 		</tr>
                 	</c:when>
                 	<c:otherwise>
 	                	<c:forEach var="p" items="${ p }">
 		                    <tr>
-		                        <td style="display:none">${ p.addNo }</td>
+		                        <td style="display:none" class="addNo-td">${ p.addNo }</td>
 		                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-		                        <td class="like">⭐</td>
+		                        <td class="addLike starLike">⭐</td>
 		                        <td class="clck-detail">${ p.addName }</td>
 		                        <td class="clck-detail">${ p.phone }</td>
 		                        <td class="clck-detail">${ p.email }</td>
-		                        <td></td>
+		                        <td>${ p.memo }</td>
 		                        <td>${ p.group.groupName }</td>
 		                    </tr>
 	                	</c:forEach>
@@ -144,7 +145,7 @@
 
         <br><br>
 
-		<span class="subheading" id="pbSubheading"><b>공유주소록 (5개)</b></span>
+		<span class="subheading" id="pbSubheading"><b>공유주소록 (${fn:length(e) + fn:length(s)}개)</b></span>
         <div id="pbLike">
             <table class="like-tb pbLike-tb">
                 <colgroup>
@@ -171,15 +172,15 @@
                     <c:choose>
                 	<c:when test="${ empty e and empty s }">
                 		<tr>
-                			<td colspan="8" style="text-align:center;">😓 즐겨찾기한 주소록이 없습니다</td>
+                			<td colspan="7" style="text-align:center;">😓 즐겨찾는 공유주소록이 없습니다</td>
                 		</tr>
                 	</c:when>
                 	<c:otherwise>
 	                	<c:forEach var="e" items="${ e }">
 		                    <tr>
-		                        <td style="display:none">${ e.empNo }</td>
+		                        <td style="display:none" class="empNo-td">${ e.empNo }</td>
 		                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-		                        <td class="like">⭐</td>
+		                        <td class="empLike starLike">⭐</td>
 		                        <td class="clck-detail">${ e.empName }</td>
 		                        <td class="clck-detail">${ e.phone }</td>
 		                        <td class="clck-detail">${ e.email }</td>
@@ -189,13 +190,13 @@
 	                	</c:forEach>
 	                	<c:forEach var="s" items="${ s }">
 		                    <tr>
-		                        <td style="display:none">${ s.addNo }</td>
+		                        <td style="display:none" class="addNo-td">${ s.addNo }</td>
 		                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-		                        <td class="like">⭐</td>
+		                        <td class="addLike starLike">⭐</td>
 		                        <td class="clck-detail">${ s.addName }</td>
 		                        <td class="clck-detail">${ s.phone }</td>
 		                        <td class="clck-detail">${ s.email }</td>
-		                        <td></td>
+		                        <td>${ s.memo }</td>
 		                        <td>${ s.group.groupName }</td>
 		                    </tr>
 	                	</c:forEach>
@@ -222,7 +223,42 @@
 	        	}
 	        })
 
-            $(".like").click(function(){ /*별 누르면 실행할 내용*/
+            $(".addLike").click(function(){ /*개인주소록 & 외부주소록 별 누르면 실행할 내용*/
+            	$(this).parent().remove();
+                $.ajax({
+                	url:"deleteFavAdd.add",
+                	data:{
+                		empNo:${loginUser.empNo},
+                		addNo:$(this).siblings().eq(0).text()
+                	},
+                	success:function(result){
+                		if(result == "fail"){
+                			console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                		}
+                	},error:function(){
+                		console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                	}
+                })
+                
+            })
+            
+            $(".empLike").click(function(){ /*별 누르면 실행할 내용*/
+            	$(this).parent().remove();
+                $.ajax({
+                	url:"deleteFavEmp.add",
+                	data:{
+                		empNo:${loginUser.empNo},
+                		addEmpNo:$(this).siblings().eq(0).text()
+                	},
+                	success:function(result){
+                		if(result == "fail"){
+                			console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                			$(this).parent().remove();
+                		}
+                	},error:function(){
+                		console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                	}
+                })
                 
             })
 
