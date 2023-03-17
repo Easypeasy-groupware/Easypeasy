@@ -128,7 +128,7 @@
 
         <div id="content-1">
             <h5>
-                <span>내 예약/대여 현황</span>
+                <span>내 예약 현황</span>
             </h5>
             <table align="center" class="table table-hover table-sm">
                 <thead>
@@ -140,22 +140,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>빔프로젝터</td>
-                        <td>1번 프로젝터</td>
-                        <td>2023-02-27 13:00 ~ 2023-02-27 15:00</td>
-                        <td>
-                            <button onclick="" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">취소</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>회의실</td>
-                        <td>1번 회의실</td>
-                        <td>2023-02-27 13:00 ~ 2023-02-27 15:00</td>
-                        <td>
-                            <button onclick="" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">취소</button>
-                        </td>
-                    </tr>
+                    <c:forEach var="l" items="${ list }">
+                		<tr>
+	                        <td>${ l.categoryName }</td>
+	                        <td>${ l.resourceName }</td>
+	                        <td>${ l.startDate } ${ l.startTime } ~ ${ l.endDate } ${ l.endTime }</td>
+	                        <td>
+	                            <a href="reservationDel.re?no=${ l.reNo }" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">취소</a>
+	                        </td>
+                    	</tr>
+                	</c:forEach>
                 </tbody>
             </table>
         </div>
@@ -309,6 +303,16 @@
                 		{ id: '${ rm.resourceNo }', title: '${ rm.resourceName }'},
                     </c:forEach>
                 ],
+                events: [
+                	<c:forEach var="m" items="${ mList }">
+                    	{ id: '${ m.reNo }', resourceId: '${ m.resourceNo }', start: '${ m.startDate } ${ m.startTime }', end: '${ m.endDate } ${ m.endTime }', title: '${ m.reWriter } ${ m.startTime }~${ m.endTime }', color: '#d6dfcc' },
+                    </c:forEach>
+                ],
+                eventClick: function(info){
+                	
+                	console.log(info.event.id);
+                	
+                },
                 select: function(info) { // 클릭&드래그
                     // 클릭한 날짜
                     const start = info.startStr;
@@ -350,9 +354,9 @@
 
                     //console.log("체크날짜" + yymmddStart);
                     //console.log("오늘 날짜" + tDate);
-                    console.log(hhmmStart);
+                    //console.log(hhmmStart);
                     //console.log(tHhmm);
-                    console.log(hhmmEnd);
+                    //console.log(hhmmEnd);
 
                     if(yymmddStart > tDate) { // 오늘 날짜 이후 선택시
                     	
@@ -407,8 +411,8 @@
                 slotMinTime: "08:00:00", // 최소시간
                 slotMaxTime: "23:00:00", // 최대시간 (23시까지만 화면에 보여짐)
                 selectable : true, // 달력 일자 드래그 설정가능
-                droppable : true,
-                editable : true,
+                //droppable : true,
+                //editable : true,
                 nowIndicator: true, // 현재 시간 마크
                 eventLimit: true, // 달력상에 셀 크기보다 많은 이벤트가 등록되어 있는 경우 'more' 표기
                 locale: 'ko' // 한국어 설정

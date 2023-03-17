@@ -18,7 +18,7 @@
         .form-outer>div{float:left;}
         .left-outer{width:100%; padding:30px;}    
         .left-form3 table{float:left;}
-        .left-form1, .left-form2 ,.left-form3,.left-form4,.left-form5,.left-form6{width:100%;}
+        .left-form1, .left-form2 ,.left-form4,.left-form5,.left-form6{width:100%;}
         .speech-bubble {
             position: relative;
             background: #d1d2d2;
@@ -48,42 +48,14 @@
     <div class="form-outer">
         <div class="left-outer">
             <div class="left-form1">
-                <p><b style="font-size:30px;"> 업무기안</b></p>
+                <p><b style="font-size:30px;"> 업무기안</b></p><br>
             </div>
-            <div class="left-form2"><a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
-                                    <a href="" style="padding:20px; color:rgb(71, 71, 71);">임시저장</a>|
-                                    <a href="" style="padding:20px; color:rgb(71, 71, 71);">취소</a>|
-                                    <a href="" style="padding:20px; color:rgb(71, 71, 71);"  data-toggle="modal" data-target="#app-line">결재선지정</a>
-                                    <br><br></div>
-            <div class="left-form3">
-
-                <table class="draft" style="width:100px; text-align:center; font-size:12px; margin-right:10px;" border="1">
-                    <tr>
-                        <td rowspan="4" style="background:rgb(223, 221, 221);">신<br>청</td>
-                        <td>직급</td>
-                    </tr>
-                    <tr>
-                        <td>도장 <br>이름</td>
-                    </tr>
-                    <tr>
-                        <td>날짜</td>
-                    </tr>
-                </table>
-                
-                <table class="draft" style="width:100px; text-align:center; font-size:12px;" border="1">
-                    <tr>
-                        <td rowspan="4" style="background:rgb(223, 221, 221);">승<br>인</td>
-                        <td>직급</td>
-                    </tr>
-                    <tr>
-                        <td>도장 <br>이름</td>
-                    </tr>
-                    <tr>
-                        <td>날짜</td>
-                    </tr>
-                </table>
-                <br><br><br><br>
-                
+            <div class="left-form2">
+	            <a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
+	            <a href="" style="padding:20px; color:rgb(71, 71, 71);">임시저장</a>|
+	            <a href="" style="padding:20px; color:rgb(71, 71, 71);">취소</a>|
+	            <a href="" style="padding:20px; color:rgb(71, 71, 71);"  data-toggle="modal" data-target="#app-line">결재선지정</a>
+	            <br><br><br>
             </div>
                 <div class="left-form4">
                     <table class="table-bordered">
@@ -155,7 +127,20 @@
                                 <label for="attachment">첨부파일</label>
                             </td>
                             <td>
-                                <input type="file">
+                                <button id="file_choose" type="button" class="btn btn-outline-secondary btn-sm">파일 선택</button>
+                                <button id="file_delete" type="button" class="btn btn-outline-secondary btn-sm">모두 삭제</button>
+                            </td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <td colspan="2" id="attach_area">
+                                <div id="no_attachment" >
+                                    <img id="attach" src="resources/common_images/attachment.png" width="30px;">
+                                    <div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
+                                </div>
+                                <div id="in_attachments">
+                                </div>
+                                <input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
                             </td>
                         </tr>
                     </table>
@@ -229,8 +214,68 @@
 			  ],
 			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']           });
-        </script>
-    <!-- 결재선 선택하는 모달 -->
+
+
+        // 첨부파일 업로드 하기
+        // 버튼 클릭해서 선택해오기
+        let fileNames = [];
+        let noAttach = document.getElementById("no_attachment");
+        let inAttachs = document.getElementById("in_attachments");
+        document.getElementById("file_choose").addEventListener('click', function(){
+            let attachFile = document.getElementById("attach_files");
+            attachFile.click();
+            attachFile.addEventListener('change', function(){
+                let vaildFile = attachFile.files.length >= 0;
+                if(vaildFile){
+                    inAttachs.innerText = ''
+                    noAttach.style.display = "none";
+                    for(let i=0; i<attachFile.files.length; i++){
+                        inAttachs.innerHTML += "첨부파일명 : " + attachFile.files[i].name + "&nbsp;&nbsp;&nbsp; <br>"
+                    };
+                    inAttachs.style.overflowY = 'auto';
+                    inAttachs.style.display = "block";
+                };
+            });  
+        });
+
+        let uploadBox = document.querySelector('#attach_area');
+
+        // 박스 안에 Drag를 하고 있을 때
+        uploadBox.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.backgroundColor = 'white';
+        });
+        
+        // 박스 밖으로 Drag가 나갈 때
+        uploadBox.addEventListener('dragleave', function(e) {
+            this.style.backgroundColor = 'whitesmoke';
+        });
+        // 박스 안에서 Drag를 Drop했을 때
+        uploadBox.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.style.backgroundColor = 'whitesmoke';
+            let attachFile = e.dataTransfer.files
+            let vaildFile = e.dataTransfer.types.indexOf('Files') >= 0;
+            if(vaildFile){
+                inAttachs.innerText = ''
+                noAttach.style.display = "none";
+                for(let i=0; i<attachFile.length; i++){
+                    inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile[i].name + "&nbsp;&nbsp;&nbsp;<br>"
+                };
+                inAttachs.style.overflowY = 'auto';
+                inAttachs.style.display = "block";
+            };
+        });        
+
+        // 첨부파일 전체 삭제
+        document.getElementById('file_delete').addEventListener('click', function(){
+            let attachFile = document.getElementById("attach_files");
+            attachFile.value = ''
+            inAttachs.innerText = ''
+            inAttachs.style.display = "none";
+            noAttach.style.display = "block";
+        });
+    </script>
 
 </body>
 </html>

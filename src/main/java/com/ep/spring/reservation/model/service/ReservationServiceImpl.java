@@ -65,6 +65,43 @@ public class ReservationServiceImpl implements ReservationService {
 	public int insertReservation(Reservation r) {
 		return reDao.insertReservation(sqlSession, r);
 	}
+
+	@Override
+	public ArrayList<Reservation> selectMettingRoomTimeGrid(int resourceNo) {
+		return reDao.selectMettingRoomTimeGrid(sqlSession, resourceNo);
+	}
+	
+	@Override
+	public Resource selectMettingRoomName(int resourceNo) {
+		return reDao.selectMettingRoomName(sqlSession, resourceNo);
+	}
+	
+
+	@Override
+	public ArrayList<Reservation> selectbeamProjectorTimeGrid(int resourceNo) {
+		return reDao.selectbeamProjectorTimeGrid(sqlSession, resourceNo);
+	}
+
+	@Override
+	public ArrayList<Reservation> selectMettingRoom() {
+		return reDao.selectMettingRoom(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Reservation> selectBeamProjector() {
+		return reDao.selectBeamProjector(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Reservation> selectReservation(int reWriter) {
+		return reDao.selectReservation(sqlSession, reWriter);
+	}
+
+	@Override
+	public int reservationDelete(int reNo) {
+		return reDao.reservationDelete(sqlSession, reNo);
+	}
+
 	
 	
 }

@@ -3,6 +3,7 @@ package com.ep.spring.address.model.service;
 import java.util.ArrayList;
 
 import com.ep.spring.address.model.vo.AddDept;
+import com.ep.spring.address.model.vo.AddEdit;
 import com.ep.spring.address.model.vo.AddFavorite;
 import com.ep.spring.address.model.vo.AddGroup;
 import com.ep.spring.address.model.vo.Address;
@@ -16,12 +17,20 @@ public interface AddressService {
 	ArrayList<AddGroup> selectSharedAddGroup();
 	
 	// 1. 즐겨찾기 리스트 조회 서비스
+	// 1_1. 개인주소록 즐겨찾기 리스트
+	ArrayList<Address> selectPersonalFavAddList(int empNo);
+	
+	// 1_2. 사원주소록 즐겨찾기 리스트
+	ArrayList<Employee> selectEmpFavAddList(int empNo);
+	
+	// 1_3. 외부주소록 즐겨찾기 리스트
+	ArrayList<Address> selectExternalFavAddList(int empNo);
 	
 	// 2. 개인주소록 추가
 	int insertPersonalAdd(Address a);
 	
 	// 3. 공유주소록 추가
-	int insertSharedAdd(Address a);
+	int insertSharedAdd(Address a, ArrayList<AddEdit> eList);
 	
 	// 4. 전체 사내주소록 조회
 	int selectEntEmpListCount(int no);
@@ -70,6 +79,18 @@ public interface AddressService {
 	
 	// 14. 검색한 사원리스트 조회(ajax)
 	ArrayList<Employee> selectEmployeeList(Employee e);
+	
+	// 15. 개인주소록 & 외부주소록 즐겨찾기 리스트 삭제(ajax)
+	int deleteFavAdd(AddFavorite af);
+	
+	// 16. 사내주소록 즐겨찾기 리스트 삭제(ajax)
+	int deleteFavEmp(AddFavorite af);
+	
+	// 17. 개인주소록 & 외부주소록 즐겨찾기 리스트 저장(ajax)
+	int insertFavAdd(AddFavorite af);
+	
+	// 18. 사내주소록 즐겨찾기 리스트 저장(ajax)
+	int insertFavEmp(AddFavorite af);
 
 	
 	

@@ -289,6 +289,11 @@
                 		{ id: '${ rm.resourceNo }', title: '${ rm.resourceName }'},
                     </c:forEach>
                 ],
+                events: [
+                	<c:forEach var="m" items="${ mList }">
+                    	{ id: '${ m.reNo }', resourceId: '${ m.resourceNo }', start: '${ m.startDate } ${ m.startTime }', end: '${ m.endDate } ${ m.endTime }', title: '${ m.reWriter } ${ m.startTime }~${ m.endTime }', color: '#d6dfcc' },
+                    </c:forEach>
+                ],
                 select: function(info) { // 클릭&드래그
                     // 클릭한 날짜
                     const start = info.startStr;

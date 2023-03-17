@@ -32,7 +32,7 @@
     .wrap{width:1200px; margin:auto; box-sizing:border-box;}
     .header{position:fixed; top:0; background:white;}
     #header1{width:1200px; height:60px; background-color: white;} 
-    #header2{width:1200px; height:40px; background-color:rgb(185, 187, 221)}
+    #header2{width:1200px; height:40px; background-color:rgb(185, 187, 221);}
 
     /*header1영역*/
     #header1>div{float:left; height:100%;}
@@ -85,7 +85,11 @@
 
     /**/
     .outer{margin-top:100px; padding-top:15px;}
-
+    
+	/*스크롤*/
+	body::-webkit-scrollbar{width:20px;}
+	body::-webkit-scrollbar-thumb{background-color:rgb(185, 187, 221); border-radius:10px;}
+	body::-webkit-scrollbar-track{background-color:white;}
 </style>
 </head>
 <body>

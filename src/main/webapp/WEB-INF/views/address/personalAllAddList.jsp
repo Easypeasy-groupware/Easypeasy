@@ -165,29 +165,40 @@
                     </tr>
                 </thead>
                 <tbody align="center" id="ps-tbody">
-                	<c:forEach var="a" items="${ list }">
-	                    <tr>
-	                        <td style="display:none">${ a.addNo }</td>
-	                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-	                        <td class="like">
-								<c:forEach var = "f" items="${ fList }">
-		                        
-		                        	<c:if test="${ a.addNo eq f.addNo}">
-		                        		⭐
-		                        	</c:if>
-		                        	
-		                        </c:forEach>
-							</td>
-	                        <td class="clck-detail">${ a.addName }</td>
-	                        <td class="clck-detail">${ a.addJob }</td>
-	                        <td class="clck-detail">${ a.phone }</td>
-	                        <td class="clck-detail">${ a.email }</td>
-	                        <td class="clck-detail">${ a.addDept }</td>
-	                        <td class="clck-detail">${ a.addEmp }</td>
-	                        <td>${ a.memo }</td>
-	                        <td>${ a.group.groupName }</td>
-	                    </tr>
-                    </c:forEach>
+                <c:choose>
+                	<c:when test="${ empty list }">
+                		<tr><td colspan="11"> 등록된 개인주소록이 없습니다 🤐</td></tr>
+                	</c:when>
+                	<c:otherwise>
+	                	<c:forEach var="a" items="${ list }">
+		                    <tr>
+		                        <td style="display:none">${ a.addNo }</td>
+		                        <td><input type="checkbox" class="ps-checkbox"></input></td>
+		                        <td class="like">
+									<c:forEach var = "f" items="${ fList }">
+			                        
+			                        	<c:if test="${ a.addNo eq f.addNo}">
+			                        		⭐
+			                        	</c:if>
+			                        	
+			                        </c:forEach>
+								</td>
+		                        <td class="clck-detail">${ a.addName }</td>
+		                        <td class="clck-detail">${ a.addJob }</td>
+		                        <td class="clck-detail">${ a.phone }</td>
+		                        <td class="clck-detail">${ a.email }</td>
+		                        <td class="clck-detail">${ a.addDept }</td>
+		                        <td class="clck-detail">${ a.addEmp }</td>
+		                        <td>
+		                        <c:if test="${ not empty a.memo }">
+		                        	<img src="resources/common_images/memo-img.png">
+		                        </c:if>
+		                        </td>
+		                        <td>${ a.group.groupName }</td>
+		                    </tr>
+	                    </c:forEach>
+                	</c:otherwise>
+                </c:choose>  
                 </tbody>
             </table>
         </div>
@@ -221,13 +232,41 @@
             
             $(".like").click(function(){ //즐겨찾기
                 if($(this).html()=="⭐"){
-                    $(this).html('<i class="fi fi-rr-star"></i>');
+                    $(this).html('<img src="resources/common_images/star_vacant.png">');
+                    $.ajax({
+                    	url:"deleteFavAdd.add",
+                    	data:{
+                    		empNo:${loginUser.empNo},
+                    		addNo:$(this).siblings().eq(0).text()
+                    	},
+                    	success:function(result){
+                    		if(result == "fail"){
+                    			console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                    		}
+                    	},error:function(){
+                    		console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                    	}
+                    })
                 }else{
                     $(this).html("⭐");
+                    $.ajax({
+                    	url:"insertFavAdd.add",
+                    	data:{
+                    		empNo:${loginUser.empNo},
+                    		addNo:$(this).siblings().eq(0).text()
+                    	},
+                    	success:function(result){
+                    		if(result == "fail"){
+                    			console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                    		}
+                    	},error:function(){
+                    		console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                    	}
+                    })
                 }
             })
 
-			$(function(){
+			$(function(){ // 상세페이지
                 $('.clck-detail').on("click", $('.clck-detail'), function(){
                     location.href = 'psAddInfo.ad?no=' + $(this).siblings().eq(0).text(); 
                 })

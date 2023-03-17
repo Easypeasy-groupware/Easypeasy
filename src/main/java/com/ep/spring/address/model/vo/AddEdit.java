@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class EddEdit {
+public class AddEdit {
 
 	private int addNo;
 	private int empNo;

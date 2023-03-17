@@ -39,7 +39,7 @@
 	#addList td{padding:3px 0 3px 0; height:40px;}
 	#addList input[type="checkbox"]{accent-color:rgb(166, 184, 145);}
 	.like:hover{cursor: pointer;}
-	#addList tbody>tr:hover{background:rgb(233, 233, 233); font-weight:600;}
+	#addList tbody>tr:hover{background:rgb(233, 233, 233); font-weight:600; cursor:pointer;}
 	
 	/*페이징바*/
 	#paging{text-align: center; display: inline-block; padding-left :0;}
@@ -180,18 +180,44 @@
             })
 
             $(".like").click(function(){ // 즐겨찾기
-                if($(this).html()=="⭐"){
-                    $(this).html('<i class="fi fi-rr-star"></i>');
+            	if($(this).html()=="⭐"){
+                    $(this).html('<img src="resources/common_images/star_vacant.png">');
+                    $.ajax({
+                    	url:"deleteFavEmp.add",
+                    	data:{
+                    		empNo:${loginUser.empNo},
+                    		addEmpNo:$(this).siblings().eq(0).text()
+                    	},
+                    	success:function(result){
+                    		if(result == "fail"){
+                    			console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                    		}
+                    	},error:function(){
+                    		console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                    	}
+                    })
                 }else{
                     $(this).html("⭐");
+                    $.ajax({
+                    	url:"insertFavEmp.add",
+                    	data:{
+                    		empNo:${loginUser.empNo},
+                    		addEmpNo:$(this).siblings().eq(0).text()
+                    	},
+                    	success:function(result){
+                    		if(result == "fail"){
+                    			console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                    		}
+                    	},error:function(){
+                    		console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                    	}
+                    })
                 }
             })
             
             
-            $(function(){ // 사원정보 상세페이지
-                $('.clck-detail').on("click", $('.clck-detail'), function(){
-                    location.href = 'empInfo.add?no=' + $(this).siblings().eq(0).text(); 
-                })
+            $(".clck-detail").click(function(){
+                location.href = 'empInfo.add?no=' + $(this).siblings().eq(0).text(); 
             })
 
 

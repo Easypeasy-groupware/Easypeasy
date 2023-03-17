@@ -6,90 +6,96 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
-    <style>
-        .content-outer{width:1000px; margin-left:200px;}
-        .content-outer *{box-sizing: border-box;}
-        #address-group{font-size:22px; font-weight:600;}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+<style>
+	.content-outer{width:1000px; margin-left:200px;}
+    .content-outer *{box-sizing: border-box;}
+    #address-group{font-size:22px; font-weight:600;}
 
-		/*a태그*/
-       	#personal-a{color:black;}
-       	#public-a{color:rgb(73, 84, 60); font-weight: 600;}
-       	#personal-a:hover{font-weight: 600;}
+	/*a태그*/
+    #personal-a{color:black;}
+    #public-a{color:rgb(73, 84, 60); font-weight: 600;}
+    #personal-a:hover{font-weight: 600;}
 
-        /*테이블*/
-        .input-table{
-            margin:auto; 
-            border-collapse: separate; border-spacing:0px 10px; /*셀간격*/
-        }
-        .input-table td{height:30px;}
-        .tb-input{
-            width:100%; height:100%;
-            border:1px solid gray; border-radius:5px;
-        }
+	/*테이블*/
+	.input-table{
+		margin:auto; 
+        border-collapse: separate; border-spacing:0px 10px; /*셀간격*/
+     }
+	.input-table td{height:30px;}
+	.tb-input{
+	    width:100%; height:100%;
+	    border:1px solid gray; border-radius:5px;
+	}
+	
+	.td-select{
+	    width:98%; height:100%;
+	    border:1px solid gray; border-radius:5px;
+	}
+	#add-btn{
+	    width:100%; height:100%;
+	    border:0; border-radius:5px; 
+	    color:white; background:rgb(166, 184, 145);
+	}
+	#add-btn:hover{background:rgb(73, 84, 60);}
+	.td-textarea{border:1px solid gray; border-radius:5px;}
+	
+	/*버튼*/
+	.set-btn{border:0; border-radius: 5px; width:90px; height:30px; color:white;}
+	#reset-btn{background:rgb(158, 158, 158); margin:0 5px 0 450px;}
+	#submit-btn{background:rgb(166, 184, 145);}
 
-        .td-select{
-            width:98%; height:100%;
-            border:1px solid gray; border-radius:5px;
-        }
-        #add-btn{
-            width:100%; height:100%;
-            border:0; border-radius:5px; 
-            color:white; background:rgb(166, 184, 145);
-        }
-        #add-btn:hover{background:rgb(73, 84, 60);}
-        .td-textarea{border:1px solid gray; border-radius:5px;}
+	/*그룹추가용 모달*/
+	.modal-body, .modal-footer{text-align: center;}
+	#modal-input{width:60%; height:40px; margin-top:10px; border:1px solid gray; border-radius:5px;}
+	#modal-close-btn{width:130px; height:40px; border:0; border-radius:5px; color:white; background:rgb(158, 158, 158); display:inline-block;}
+	#modal-add-btn{width:130px; height:40px; border:0; border-radius:5px; color:white; background:rgb(166, 184, 145); display:inline-block;}
 
-        /*버튼*/
-        .set-btn{border:0; border-radius: 5px; width:90px; height:30px; color:white;}
-        #reset-btn{background:rgb(158, 158, 158); margin:0 5px 0 450px;}
-        #submit-btn{background:rgb(166, 184, 145);}
+	/*편집가능여부 체크박스*/
+	.editable-check{
+	    position: relative;
+	    width: 40px;
+	    height: 20px;
+	    -webkit-appearance: none;
+	    background: #c6c6c6;
+	    outline: none;
+	    border-radius: 10px;
+	    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+	    transition: 0.3s;
+	}
+	.editable-check:checked {background:rgb(135, 154, 114);}
+	.editable-check::before {
+		 content: ' ';
+		 position: absolute;
+		 width: 20px;
+		 height: 20px;
+		 border-radius: 10px;
+		 top: 0;
+		 left: 0;
+		 background: #fff;
+		 transform: scale(1.1);
+		 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+		 transition: .3s;
+	}
+	.editable-check:checked::before {left: 20px;}
 
-		/*그룹추가용 모달*/
-	    .modal-body, .modal-footer{text-align: center;}
-	    #modal-input{width:60%; height:40px; margin-top:10px; border:1px solid gray; border-radius:5px;}
-	    #modal-close-btn{width:130px; height:40px; border:0; border-radius:5px; color:white; background:rgb(158, 158, 158); display:inline-block;}
-	    #modal-add-btn{width:130px; height:40px; border:0; border-radius:5px; color:white; background:rgb(166, 184, 145); display:inline-block;}
-    
-        /*편집가능여부 체크박스*/
-        .editable-check{
-            position: relative;
-            width: 40px;
-            height: 20px;
-            -webkit-appearance: none;
-            background: #c6c6c6;
-            outline: none;
-            border-radius: 10px;
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-            transition: 0.3s;
-        }
-        .editable-check:checked {background:rgb(135, 154, 114);}
-        .editable-check::before {
-            content: ' ';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 10px;
-            top: 0;
-            left: 0;
-            background: #fff;
-            transform: scale(1.1);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: .3s;
-        }
-        .editable-check:checked::before {left: 20px;}
-
-        /*사원추가 div*/
-        .empBox-mini{overflow:auto; width:48%; height:150px; float:left; border:1px solid gray; padding:10px; border-radius:10px;}
-        .emp-mini2{margin-left:15px;}
-        #search-emp{width:100%; margin:auto;}
-        /*사원리스트테이블*/
-        .list-show{font-size:14px; margin:auto;}
-        .list-show tr:hover{font-weight:600; cursor:pointer;}
-
-    </style>
+    /*사원추가 div*/
+    .empBox-mini{overflow:auto; width:48%; height:150px; float:left; border:1px solid gray; padding:0 10px 10px 10px; border-radius:10px;}
+    .emp-mini2{margin-left:15px;}
+    #search-emp{width:100%; margin:auto; position: sticky; top:10px;}
+    /* 1) 사원 검색 리스트테이블*/
+    .list-show{font-size:14px; margin:auto;}
+    .list-show tr:hover{font-weight:600; cursor:pointer;}
+	/* 2) 선택된 사원 리스트테이블*/
+	.emp-delete:hover{cursor:pointer;}
+	
+	/*스크롤*/
+	.empBox-mini::-webkit-scrollbar{width:5px;}
+	.empBox-mini::-webkit-scrollbar-thumb{background-color:rgb(166, 184, 145); border-radius:5px;}
+	.empBox-mini::-webkit-scrollbar-track{background-color:white;}
+</style>
 </head>
 <body>
 	
@@ -111,7 +117,7 @@
         </ul>
 
         <br>
-        <form action="">
+		<form action="insertNewSh.add" method="post">
             <table class="input-table">
                 <colgroup>
                     <col style="width:150px;">
@@ -121,37 +127,37 @@
                 <tr>
                     <td>이름</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input" required>
+                        <input type="text" class="tb-input" name="addName">
                     </td>
                 </tr>
                 <tr>
                     <td>회사</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input">
+                        <input type="text" class="tb-input" name="addEmp">
                     </td>
                 </tr>
                 <tr>
                     <td>부서</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input">
+                        <input type="text" class="tb-input" name="addDept">
                     </td>
                 </tr>
                 <tr>
                     <td>직위</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input">
+                        <input type="text" class="tb-input" name="addJob">
                     </td>
                 </tr>
                 <tr>
                     <td>이메일</td>
                     <td colspan="2">
-                        <input type="email" class="tb-input">
+                        <input type="email" class="tb-input" name="email">
                     </td>
                 </tr>
                 <tr>
                     <td>휴대폰</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input">
+                        <input type="text" class="tb-input" name="phone">
                     </td>
                 </tr>
                 <tr>
@@ -171,60 +177,50 @@
                 <tr>
                     <td>회사전화</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input">
+                        <input type="text" class="tb-input" id="empPhone">
                     </td>
                 </tr>
                 <tr>
                     <td>회사주소</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input">
+                        <input type="text" class="tb-input" id="empAddress">
                     </td>
                 </tr>
                 <tr>
                     <td>메모</td>
                     <td colspan="2">
-                        <textarea class="td-textarea" rows="4" style="resize:none; width:100%">
-
-                        </textarea>
+                        <textarea class="td-textarea" rows="4" style="resize:none; width:100%" id="memo"></textarea>
                     </td>
                 </tr>
                 <tr>
                     <td>편집가능여부</td>
                     <td colspan="2">
-                        <input type="checkbox" class="editable-check"> 
+                        <input type="checkbox" class="editable-check" id="editable"> 
                     </td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td colspan="2">
+                    <td colspan="2" id="empList-td">
                         <div class="empBox" style="width:100%; display:none;">
                             <div class="empBox-mini emp-mini1">
+                            	<div style="background-color:white; width:100%; height:10px; top:0; position:sticky;"></div>
                                 <input type="text" id="search-emp">
                                 <br><br>
                                 <table class="list-show">	
                                 </table>
                             </div>
-                            <div class="empBox-mini emp-mini2">
-                                <p>과장 홍길동</p>
-                                <p>과장 홍길동</p>
-                                <p>과장 홍길동</p>
-                                <p>과장 홍길동</p>
-                                <p>과장 홍길동</p>
-                                <p>과장 홍길동</p>
-                                <p>과장 홍길동</p>
-
-                            </div>
+                            <div class="empBox-mini emp-mini2"></div>
                         </div>
                     </td>
                 </tr>
             </table>
             
             <br>
-
+			<input type="hidden" name="editNo">
             <button type="reset" class="set-btn" id="reset-btn">초기화</button>
             <button type="submit" class="set-btn" id="submit-btn">추가</button>
-
-        </form>
+		</form>
+        
         <script>
             
             $(".editable-check").click(function(){ // 편집가능 체크박스
@@ -245,7 +241,7 @@
                 	success:function(list){
                 		let value="";
                 		for(let i=0; i<list.length; i++){
-                			value += "<tr class='indiv-emp' id='emp" + list[i].empNo + "'> ";
+                			value += "<tr class='indiv-emp'><td style='display:none;'>" + list[i].empNo + "</td>";
                 			if(list[i].deptName != null){
                 				value += "<td style='width:70px;'>" + list[i].deptName + "</td>";
                 			}else{
@@ -261,6 +257,10 @@
                 		}
 
                 		$(".list-show").html(value);
+                		
+                		
+                		 
+                         
                 	},error:function(){
                 		console.log("사원리스트 조회용 ajax 통신 실패");
                 	}
@@ -268,13 +268,34 @@
 
             })
             
-            $(".input-table").on("click", $(".list-show>tr"),function(){
-                let val = $(".list-show>tr").children().eq(0).text();
-                console.log(val);
+            var editList = "";
+            
+          	$(".list-show").on("click", ".indiv-emp", function(){ // 사원 리스트에 추가
+          		var empNo = $(this).children().eq(0).text();
+          		var empDept = $(this).children().eq(1).text();
+          		var empJob = $(this).children().eq(2).text();
+          		var empName = $(this).children().eq(3).text();
+          		var emp = "<div name='empNo' value='"+ empNo +"'>" + empDept +"&nbsp; <b>" + empName + "</b>&nbsp;" + empJob + " <img src='resources/common_images/delete-img.png' class='emp-delete' style='width:8px;'></div>";
+               	$(".emp-mini2").append(emp);
+
+               	editList += empNo + ","; 
+               	
+               	editList = editList.substring(0, editList.length-1);
+               	
+               	$("input[name='editNo']").val(editList);
+               	
+               	console.log($("input[name='editNo']").val());
+               	
+            })
+
+            
+            $(".emp-mini2").on("click", ".emp-delete", function(){ // 사원 리스트에서 삭제
+                $(this).parent().remove();
             })
             
+            
+            
         </script>
-
         
     </div>
     

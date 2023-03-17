@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ep.spring.address.model.dao.AddressDao;
 import com.ep.spring.address.model.vo.AddDept;
+import com.ep.spring.address.model.vo.AddEdit;
 import com.ep.spring.address.model.vo.AddFavorite;
 import com.ep.spring.address.model.vo.AddGroup;
 import com.ep.spring.address.model.vo.Address;
@@ -35,13 +36,31 @@ public class AddressServiceImpl implements AddressService {
 	}
 	
 	@Override
+	public ArrayList<Address> selectPersonalFavAddList(int empNo) {
+		return aDao.selectPersonalFavAddList(sqlSession, empNo);
+	}
+
+	@Override
+	public ArrayList<Employee> selectEmpFavAddList(int empNo) {
+		return aDao.selectEmpFavAddList(sqlSession, empNo);
+	}
+
+	@Override
+	public ArrayList<Address> selectExternalFavAddList(int empNo) {
+		return aDao.selectExternalFavAddList(sqlSession, empNo);
+	}
+	
+	@Override
 	public int insertPersonalAdd(Address a) {
 		return aDao.insertPersonalAdd(sqlSession, a);
 	}
 	
 	@Override
-	public int insertSharedAdd(Address a) {
-		return aDao.insertSharedAdd(sqlSession, a);
+	public int insertSharedAdd(Address a, ArrayList<AddEdit> eList) {
+		int result1 = aDao.insertSharedAdd(sqlSession, a);
+		int result2 = aDao.insertEditableEmpList(sqlSession, eList);
+		
+		return result1*result2;
 	}
 	
 	@Override
@@ -143,6 +162,28 @@ public class AddressServiceImpl implements AddressService {
 	public ArrayList<Employee> selectEmployeeList(Employee e) {
 		return aDao.selectEmployeeList(sqlSession, e);
 	}
+
+	@Override
+	public int deleteFavAdd(AddFavorite af) {
+		return aDao.deleteFavAdd(sqlSession, af);
+	}
+
+	@Override
+	public int deleteFavEmp(AddFavorite af) {
+		return aDao.deleteFavEmp(sqlSession, af);
+	}
+
+	@Override
+	public int insertFavAdd(AddFavorite af) {
+		return aDao.insertFavAdd(sqlSession, af);
+	}
+
+	@Override
+	public int insertFavEmp(AddFavorite af) {
+		return aDao.insertFavEmp(sqlSession, af);
+	}
+
+
 
 
 

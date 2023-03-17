@@ -32,7 +32,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"></script>
 <style>
 	*{padding:0; margin:0}
-	.menubar{width:200px; background:white; float:left; border-right: 2px solid rgb(185, 187, 221); height: 750px;}
+	.menubar{width:200px; background:white; float:left; border-right: 2px solid rgb(185, 187, 221); height: 900px;}
 	a{text-decoration:none; color:black;}
 	a:hover{font-weight:600; color:black;}
 	li{list-style:none;}
@@ -89,7 +89,7 @@
         </div>
         <ul class="submenu" id="inlist" style="display:none;">
         	<c:forEach var="rm" items="${ meList }">
-        		<li><a href="mettingRoomDetail.re?mno=${ rm.resourceNo }">- ${ rm.resourceName }</a></li>
+        		<li><a href="mettingRoomTimeGrid.re?mno=${ rm.resourceNo }">- ${ rm.resourceName }</a></li>
             </c:forEach>
         </ul>
 
@@ -99,7 +99,7 @@
         </div>
         <ul class="submenu" id="exlist" style="display:none;">
             <c:forEach var="rb" items="${ beList }">
-        		<li><a href="externalGroup.add?group=">- ${ rb.resourceName }</a></li>
+        		<li><a href="beamProjectorTimeGrid.re?bno=${ rb.resourceNo }">- ${ rb.resourceName }</a></li>
         	</c:forEach>
         </ul>
        

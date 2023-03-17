@@ -1,6 +1,7 @@
 package com.ep.spring.approval.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -181,6 +182,11 @@ public class ApprovalServiceImpl implements ApprovalService{
 	@Override
 	public int updateCount(Approval a) {
 		return aDao.updateCount(sqlSession, a);
+	}
+
+	@Override
+	public int insertApproval(HashMap map) {
+		return 0;
 	}
 
 

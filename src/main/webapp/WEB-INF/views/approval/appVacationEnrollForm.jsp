@@ -16,7 +16,7 @@
         .form-outer>div{float:left;}
         .left-outer{width:100%; padding:30px;}  
         .left-form3 table{float:left;}
-        .left-form1, .left-form2 ,.left-form3,.left-form4,.left-form5,.left-form6{width:100%;}
+        .left-form1, .left-form2 ,.left-form4,.left-form5,.left-form6{width:100%;}
         .speech-bubble {
             position: relative;
             background: #d1d2d2;
@@ -44,7 +44,7 @@
 		  position: absolute;
 		  width: 200px;
 		  padding: 8px;
-		  left: 930px;
+		  left: 660px;
 		  -webkit-border-radius: 8px;
 		  -moz-border-radius: 8px;
 		  border-radius: 8px;
@@ -71,8 +71,9 @@
 		#useHalf:hover + p.arrow_box {
 		  display: block;
 		  cursor:pointer
-		}        
+		}
         
+
     </style>
 </head>
 <body>
@@ -82,44 +83,16 @@
         <div class="left-outer">
             <div class="left-form1">
                 <p><b style="font-size:30px;">휴가신청서</b></p>
+                <br>
             </div>
             <div class="left-form2">
                 <a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
                 <a href="" style="padding:20px; color:rgb(71, 71, 71);">임시저장</a>|
                 <a href="" style="padding:20px; color:rgb(71, 71, 71);">취소</a>|
                 <a href="" style="padding:20px; color:rgb(71, 71, 71);"  data-toggle="modal" data-target="#app-line">결재선지정</a>
-                <br><br>
+                <br><br><br>
             </div>
-            <div class="left-form3">
 
-                <table class="draft" style="width:100px; text-align:center; font-size:12px; margin-right:10px;" border="1">
-                    <tr>
-                        <td rowspan="4" style="background:rgb(223, 221, 221);">신<br>청</td>
-                        <td>직급</td>
-                    </tr>
-                    <tr>
-                        <td>도장 <br>이름</td>
-                    </tr>
-                    <tr>
-                        <td>날짜</td>
-                    </tr>
-                </table>
-                
-                <table class="draft" style="width:100px; text-align:center; font-size:12px;" border="1">
-                    <tr>
-                        <td rowspan="4" style="background:rgb(223, 221, 221);">승<br>인</td>
-                        <td>직급</td>
-                    </tr>
-                    <tr>
-                        <td>도장 <br>이름</td>
-                    </tr>
-                    <tr>
-                        <td>날짜</td>
-                    </tr>
-                </table>
-                <br><br><br><br>
-                
-            </div>
                 <div class="left-form4">
                     <table class="table-bordered">
                         <tr>
@@ -212,219 +185,7 @@
                                 신청연차 : <input type="number" id="vacUse" name="vacUse" style="width:50px;" readonly>
                             </td>
                         </tr>
-                        <script>
-                        
-                	    // 회원정보흘 가져오는 ajax
-                	    $(function(){
-                	    	
-                	    	$.ajax({
-                	    		url:"enrollinfo.ap",
-                	    		success:function(result){
-                	    				    			
-                	    			$("#writer").val(result.a.empName);
-                	    			$("#dept").val(result.a.deptName);
-                	    			$("#appChange").val(result.appChange);
-                	    			
-                	    		}, error:function(request, status, error){
-                	    			console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
-                					console.log("직성용 정보 불러오기 ajax 통신실패");
-                	    		}
-                	    	});
-                	    	
-                	    	
 
-                            $("#useHalf").click(function(){
-                                // $(this) : 클릭 이벤트가 발생된 div 요소를 가리킴
-                                // $(this).next() : 클릭이벤트가 발생된 div요소 뒤에 있는 p 요소
-                                //$(this).next().slideDown();
-                                // $p : 제이쿼리 형식이라는 것을 보여주기 위해 $붙여줬음
-                                const $p = $("#half-area"); // jQuery 방식으로 선택된 요소를 담기위해
-								
-                                if($("#half-area").css("display") == "none"){ // css는 스타일 속성값을 반환해주는 역할도 해줌
-
-                                    $p.slideDown(); // 보여지게
-                                    
-                                }else{
-                                    $p.slideUp(); // 사라지게
-                                }
-                                
-                            });
-                            
-                            $("input[type=radio][name=end-half]").click(function(){
-                            	$("#vac-endHalf").prop("checked", true);
-                            });
-                            
-                            $("input[type=radio][name=start-half]").click(function(){
-                            	$("#vac-startHalf").prop("checked", true);
-                            });
-                	    	
-                	    	
-                	    })
-                           
-                           document.getElementById("enrollDate").value = new Date().toISOString().substring(0, 10);
-
-                              var dateSelector1 = document.querySelector('.dateSelect-start');
-                                
-                                dateSelector1.flatpickr();
-                                dateSelector1.flatpickr({
-                                local: 'ko',
-                                disable: [
-                                
-                                // 주말 제외 (토, 일)
-                                function(date) {
-                                // return true to disable
-                                return (date.getDay() === 0 || date.getDay() === 6);
-                                }
-                                ],
-                                dateFormat: "Y-m-d",
-                                minDate: "today",
-                                maxDate:new Date().fp_incr(30)                             
-                                });
-            
-                                var dateSelector2 = document.querySelector('.dateSelect-end');
-                                dateSelector2.flatpickr();
-                                dateSelector2.flatpickr({
-                                local: 'ko',
-                                disable: [
-                                
-                                // 주말 제외 (토, 일)
-                                function(date) {
-                                // return true to disable
-                                return (date.getDay() === 0 || date.getDay() === 6);
-                                }
-                                ],
-                                dateFormat: "Y-m-d",
-                                minDate: "today",
-                                maxDate:new Date().fp_incr(30) // 오늘날짜로부터 30일이내
-
-                                });
-                            
-
-                            function diffDate(){
-                                let date1 = new Date($(".dateSelect-start").flatpickr().input.value); 
-                                        
-                                        dateSelector1.flatpickr();
-                                        dateSelector1.flatpickr({
-                                        local: 'ko',
-                                        disable: [
-                                        
-                                        // 주말 제외 (토, 일)
-                                        function(date) {
-                                        // return true to disable
-                                        return (date.getDay() === 0 || date.getDay() === 6);
-                                        }
-                                        ],
-                                        dateFormat: "Y-m-d",
-                                        minDate: "today",
-                                        maxDate:new Date().fp_incr(30)
-                                        
-                                        })
-
-                                let date2 = new Date($(".dateSelect-end").flatpickr().input.value); 
-                                       
-                                        dateSelector2.flatpickr();
-                                        dateSelector2.flatpickr({
-                                        local: 'ko',
-                                        disable: [
-                                        
-                                        // 주말 제외 (토, 일)
-                                        function(date) {
-                                        // return true to disable
-                                        return (date.getDay() === 0 || date.getDay() === 6);
-                                        }
-                                        ],
-                                        dateFormat: "Y-m-d",
-                                        minDate: "today",
-                                        maxDate:new Date().fp_incr(30)
-                                        })                                       
-
-
-                                        if(date1 > date2){
-                                            alert("날짜를 다시 선택해주세요.");
-                                            document.querySelector('.dateSelect-start').value="";
-                                            document.querySelector('.dateSelect-end').value="";
-                                            //console.log("count :" + count);
-                                            
-                                        }else{
-
-                                            let diff1 = date1.getTime()/ (24 * 60 * 60 * 1000);
-                                            let diff2 = date2.getTime()/ (24 * 60 * 60 * 1000);
-                                            let temp = date1.getDay();
-                                            //console.log(diff1, diff2, temp);
-
-                                            let count = 0;
-                                            for(var i = diff1 ; i <= diff2; i++){
-
-                                                if(temp == 0 || temp == 6){
-                                                    //i--;
-                                                    //console.log("주말");
-                                                }else{
-                                                    //console.log(i);
-                                                    //console.log(temp);
-                                                    count++;
-                                                    //console.log("평일");
-                                                }
-                                                if(temp == 6) {temp-=6;
-                                                }else{ temp++};
-
-                                            }
-
-                                            $("#vacUse").val(count);
-
-                                            // 기간 및 일시 신청연차 계산 확인
-                                            // 신청연차가 1일 때 종료일을 비활성화
-                                            if(diff1 == diff2){
-                                                $("#vac-endHalf").attr("disabled", true);
-                                                $("#end-half1").attr("disabled", true);
-                                                $("#end-half2").attr("disabled", true);
-                                            }
-
-                                            
-                                        } 
-                                       
-								//halfCheck();
-                            }                            
-                              
-                            function halfCheck(){
-                            	
-                                diffDate();
-	
-                                    if($("#vac-startHalf").prop("checked")){
-                                    	
-                                    	$("#vacUse").val($("#vacUse").val() - 0.5) ;
-                                    	$("input[type=radio][name=start-half]").prop('disabled', false);
-                                    	$("#start-half1").prop("checked", true);
-                                    	
-                                    	$("#vac-endHalf").prop("checked", false);
-                                    	
-                                        $("input[type=radio][name=end-half]").prop('disabled', true);
-                                        $("#end-half1").prop("checked", false);
-                                        $("#end-half2").prop("checked", false);
-                                    	
-                                    } else if($("#vac-endHalf").prop("checked")){
-                                    	
-                                    	$("#vacUse").val($("#vacUse").val() - 0.5) ;
-                                    	$("input[type=radio][name=end-half]").prop('disabled', false);
-                                    	$("#end-half1").prop("checked", true);
-                                    	
-                                    	$("#vac-startHalf").prop("checked", false);
-                                    	
-                                    	$("input[type=radio][name=start-half]").prop('disabled', true);
-                                        $("#start-half1").prop("checked", false);
-                                        $("#start-half2").prop("checked", false);
-                                        
-                                    } else {
-                                         $("#end-half1").prop("checked", false);
-                                         $("#end-half2").prop("checked", false);
-                                         $("#start-half1").prop("checked", false);
-                                         $("#start-half2").prop("checked", false);
-                              
-                                    }
-                                    
-                            }
-                            
-
-                    </script>                
                               
  
                         <tr>
@@ -452,12 +213,26 @@
                                 <label for="attachment">첨부파일</label>
                             </td>
                             <td>
-                                <input type="file">
+                                <button id="file_choose" type="button" class="btn btn-outline-secondary btn-sm">파일 선택</button>
+                                <button id="file_delete" type="button" class="btn btn-outline-secondary btn-sm">모두 삭제</button>
+                            </td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <td colspan="2" id="attach_area">
+                                <div id="no_attachment" >
+                                    <img id="attach" src="resources/common_images/attachment.png" width="30px;">
+                                    <div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
+                                </div>
+                                <div id="in_attachments">
+                                </div>
+                                <input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
                             </td>
                         </tr>
                     </table>
                 </div>
                 <br>
+
            		 <div class="left-form6">
 		               <div style=" padding:10px; font-size:20px;">
 		                    <p><b> 결재선</b></p>
@@ -512,7 +287,290 @@
             </div>
         </div>
  
-    </div>
+    </div>                        
+    <script>
+    
+    // 회원정보흘 가져오는 ajax
+    $(function(){
+        
+        $.ajax({
+            url:"enrollinfo.ap",
+            success:function(result){
+                                    
+                $("#writer").val(result.a.empName);
+                $("#dept").val(result.a.deptName);
+                $("#appChange").val(result.appChange);
+                
+            }, error:function(request, status, error){
+                console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+                console.log("직성용 정보 불러오기 ajax 통신실패");
+            }
+        });
+        
+        
 
+        $("#useHalf").click(function(){
+            // $(this) : 클릭 이벤트가 발생된 div 요소를 가리킴
+            // $(this).next() : 클릭이벤트가 발생된 div요소 뒤에 있는 p 요소
+            //$(this).next().slideDown();
+            // $p : 제이쿼리 형식이라는 것을 보여주기 위해 $붙여줬음
+            const $p = $("#half-area"); // jQuery 방식으로 선택된 요소를 담기위해
+            
+            if($("#half-area").css("display") == "none"){ // css는 스타일 속성값을 반환해주는 역할도 해줌
+
+                $p.slideDown(); // 보여지게
+                
+            }else{
+                $p.slideUp(); // 사라지게
+            }
+            
+        });
+        
+        $("input[type=radio][name=end-half]").click(function(){
+            $("#vac-endHalf").prop("checked", true);
+        });
+        
+        $("input[type=radio][name=start-half]").click(function(){
+            $("#vac-startHalf").prop("checked", true);
+        });
+        
+        
+    })
+        
+        document.getElementById("enrollDate").value = new Date().toISOString().substring(0, 10);
+
+            var dateSelector1 = document.querySelector('.dateSelect-start');
+            
+            dateSelector1.flatpickr();
+            dateSelector1.flatpickr({
+            local: 'ko',
+            disable: [
+            
+            // 주말 제외 (토, 일)
+            function(date) {
+            // return true to disable
+            return (date.getDay() === 0 || date.getDay() === 6);
+            }
+            ],
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            defaultDate :"today",
+            maxDate:new Date().fp_incr(30)                             
+            });
+
+            var dateSelector2 = document.querySelector('.dateSelect-end');
+            dateSelector2.flatpickr();
+            dateSelector2.flatpickr({
+            local: 'ko',
+            disable: [
+            
+            // 주말 제외 (토, 일)
+            function(date) {
+            // return true to disable
+            return (date.getDay() === 0 || date.getDay() === 6);
+            }
+            ],
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            maxDate:new Date().fp_incr(30) // 오늘날짜로부터 30일이내
+
+            });
+        
+
+        function diffDate(){
+            let date1 = new Date($(".dateSelect-start").flatpickr().input.value); 
+                    
+                    dateSelector1.flatpickr();
+                    dateSelector1.flatpickr({
+                    local: 'ko',
+                    disable: [
+                    
+                    // 주말 제외 (토, 일)
+                    function(date) {
+                    // return true to disable
+                    return (date.getDay() === 0 || date.getDay() === 6);
+                    }
+                    ],
+                    dateFormat: "Y-m-d",
+                    minDate: "today",
+                    maxDate:new Date().fp_incr(30)
+                    
+                    })
+
+            let date2 = new Date($(".dateSelect-end").flatpickr().input.value); 
+                    
+                    dateSelector2.flatpickr();
+                    dateSelector2.flatpickr({
+                    local: 'ko',
+                    disable: [
+                    
+                    // 주말 제외 (토, 일)
+                    function(date) {
+                    // return true to disable
+                    return (date.getDay() === 0 || date.getDay() === 6);
+                    }
+                    ],
+                    dateFormat: "Y-m-d",
+                    minDate: "today",
+                    maxDate:new Date().fp_incr(30)
+                    })                                       
+
+
+                    if(date1 > date2){
+                        alert("날짜를 다시 선택해주세요.");
+                        document.querySelector('.dateSelect-start').value="";
+                        document.querySelector('.dateSelect-end').value="";
+                        //console.log("count :" + count);
+                        
+                    }else{
+
+                        let diff1 = date1.getTime()/ (24 * 60 * 60 * 1000);
+                        let diff2 = date2.getTime()/ (24 * 60 * 60 * 1000);
+                        let temp = date1.getDay();
+
+                        let count = 0;
+                        for(var i = diff1 ; i <= diff2; i++){
+
+                            if(temp == 0 || temp == 6){
+
+                            }else{
+
+                                count++;
+                            }
+                            if(temp == 6) {temp-=6;
+                            }else{ temp++};
+
+                        }
+
+                        $("#vacUse").val(count);
+
+                        // 기간 및 일시 신청연차 계산 확인
+                        // 신청연차가 1일 때 종료일을 비활성화
+                        if(diff1 == diff2){
+                            $("#vac-endHalf").attr("disabled", true);
+                            $("#end-half1").attr("disabled", true);
+                            $("#end-half2").attr("disabled", true);
+                        }
+
+                        
+                    } 
+                    
+            //halfCheck();
+        }                            
+            
+        function halfCheck(){
+            
+            diffDate();
+
+                if($("#vac-startHalf").prop("checked")){
+                    
+                    $("#vacUse").val($("#vacUse").val() - 0.5) ;
+                    $("input[type=radio][name=start-half]").prop('disabled', false);
+                    $("#start-half1").prop("checked", true);
+                    
+                    $("#vac-endHalf").prop("checked", false);
+                    
+                    $("input[type=radio][name=end-half]").prop('disabled', true);
+                    $("#end-half1").prop("checked", false);
+                    $("#end-half2").prop("checked", false);
+                    
+                } else if($("#vac-endHalf").prop("checked")){
+                    
+                    $("#vacUse").val($("#vacUse").val() - 0.5) ;
+                    $("input[type=radio][name=end-half]").prop('disabled', false);
+                    $("#end-half1").prop("checked", true);
+                    
+                    $("#vac-startHalf").prop("checked", false);
+                    
+                    $("input[type=radio][name=start-half]").prop('disabled', true);
+                    $("#start-half1").prop("checked", false);
+                    $("#start-half2").prop("checked", false);
+                    
+                } else {
+                        $("#end-half1").prop("checked", false);
+                        $("#end-half2").prop("checked", false);
+                        $("#start-half1").prop("checked", false);
+                        $("#start-half2").prop("checked", false);
+            
+                }
+                
+        }
+                            
+
+
+        // 첨부파일 업로드 하기
+        // 버튼 클릭해서 선택해오기
+        let fileNames = [];
+        let noAttach = document.getElementById("no_attachment");
+        let inAttachs = document.getElementById("in_attachments");
+        document.getElementById("file_choose").addEventListener('click', function(){
+            let attachFile = document.getElementById("attach_files");
+            attachFile.click();
+            attachFile.addEventListener('change', function(){
+                let vaildFile = attachFile.files.length >= 0;
+                if(vaildFile){
+                    inAttachs.innerText = ''
+                    noAttach.style.display = "none";
+                    for(let i=0; i<attachFile.files.length; i++){
+                        inAttachs.innerHTML += "첨부파일명 : " + attachFile.files[i].name + "&nbsp;&nbsp;&nbsp; <br>"
+                    };
+                    inAttachs.style.overflowY = 'auto';
+                    inAttachs.style.display = "block";
+                };
+            });  
+        });
+
+        let uploadBox = document.querySelector('#attach_area');
+
+        // 박스 안에 Drag를 하고 있을 때
+        uploadBox.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.backgroundColor = 'white';
+        });
+        
+        // 박스 밖으로 Drag가 나갈 때
+        uploadBox.addEventListener('dragleave', function(e) {
+            this.style.backgroundColor = 'whitesmoke';
+        });
+        // 박스 안에서 Drag를 Drop했을 때
+        uploadBox.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.style.backgroundColor = 'whitesmoke';
+            let attachFile = e.dataTransfer.files
+            let vaildFile = e.dataTransfer.types.indexOf('Files') >= 0;
+            if(vaildFile){
+                inAttachs.innerText = ''
+                noAttach.style.display = "none";
+                for(let i=0; i<attachFile.length; i++){
+                    inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile[i].name + "&nbsp;&nbsp;&nbsp;<br>"
+                };
+                inAttachs.style.overflowY = 'auto';
+                inAttachs.style.display = "block";
+            };
+        });        
+
+        // 첨부파일 전체 삭제
+        document.getElementById('file_delete').addEventListener('click', function(){
+            let attachFile = document.getElementById("attach_files");
+            attachFile.value = ''
+            inAttachs.innerText = ''
+            inAttachs.style.display = "none";
+            noAttach.style.display = "block";
+        });
+        
+        
+        // 유효한 기안의견 작성 시 insert 요청되게 하기
+        function insertApp(){
+        	
+        	if($("#writerComment").val().trim().length>0){
+        		location.href="insert.ap";
+        	}else{
+        		swal("의견 작성 후 상신요청해주세요.");
+        	}
+        	
+        }
+       
+                
+    </script>
 </body>
 </html>
