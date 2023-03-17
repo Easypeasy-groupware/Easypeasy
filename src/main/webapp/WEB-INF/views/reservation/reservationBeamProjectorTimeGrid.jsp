@@ -7,41 +7,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	div{
-        box-sizing: border-box;
-    }
-    
-    #content{
-        width: 1000px;
-        float: left;
-        box-sizing: border-box;
-    }
-
-    #con-title h5{
+	#con-title h5{
     	color:rgb(93, 109, 75);
         padding-left: 10px;
         padding-top: 12px;
         display: inline-block;
-    }
-    #con-title>select{
-        width: 110px;
-        height: 30px;
-        margin-left: 755px;
-        display: inline-block;
-    }
-
-	#content-1{
-		width: 990px;
-		padding-left: 10px;
-	}
-    #content-1>h5{
-    	color:rgb(93, 109, 75);
-        margin-left: 5px;
-        padding-top: 20px;
-    }
-    #content-1>table{
-        width: 980px;
-        text-align: center;
     }
 
     #modal select{
@@ -58,49 +28,15 @@
         border-radius: 5px;
     }
 
-	.dropdown{
-		margin-top: 10px;
-		float: right;
-	}
-	.dropdown button{
-		background: rgb(214, 223, 204);
-		color: white;
-		border: none;
-	}
-	.btn:not(:disabled):not(.disabled) {
-    	cursor: pointer;
-    	background: rgb(214, 223, 204);
-		color: white;
-	}
-
-
-    /* 풀캘린더 */
-    /* 전체적인 크기 */
-    #calendar{
-        height: 250px;
+    #modal select[id="sel3"]{
+        width: 140px;
+        height: 35px;
+        margin-top: 15px;
     }
-    /* 달력제목 */
-    #fc-dom-1{
-        color: gray;
-    }
-    /*일자*/
-    .fc-timeline-slot-cushion{
-        color: gray;
-        font-size:1em;
-    }
-    /*일정시간*/
-    .fc-daygrid-event > .fc-event-time{
-        color:#000;
-    }
-    /*시간제목*/
-    .fc-daygrid-dot-event > .fc-event-title{
-        color:#000 !important;
-    }
-    
 </style>
 </head>
 <body>
-	
+
 	<jsp:include page="../common/header.jsp"/>
 
     <jsp:include page="sidebar.jsp"/>
@@ -108,60 +44,15 @@
     <div id="content">
         <div id="con-title">
             <span>
-                <h5>자산 예약 현황</h5>
+                <h5>
+	                ${ bname.resourceName }
+                </h5>
             </span>
-            <div class="dropdown">
-			  	<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
-			    	회의실/빔프로젝터
-			  	</button>
-			  	<div class="dropdown-menu">
-				    <a class="dropdown-item" href="main.re">회의실</a>
-				    <a class="dropdown-item" href="beamProjectorMain.re">빔프로젝터</a>
-			  	</div>
-			</div>
         </div>
         <br>
-        <div id="calendar" style="padding-left: 10px; width: 990px; height: 200px;">
-            
-        </div>
-		<br>
-
-        <div id="content-1">
-            <h5>
-                <span>내 예약/대여 현황</span>
-            </h5>
-            <table align="center" class="table table-hover table-sm">
-                <thead>
-                    <tr>
-                        <th>자산</th>
-                        <th>이름</th>
-                        <th>예약시간</th>
-                        <th>취소</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>빔프로젝터</td>
-                        <td>1번 프로젝터</td>
-                        <td>2023-02-27 13:00 ~ 2023-02-27 15:00</td>
-                        <td>
-                            <button onclick="" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">취소</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>회의실</td>
-                        <td>1번 회의실</td>
-                        <td>2023-02-27 13:00 ~ 2023-02-27 15:00</td>
-                        <td>
-                            <button onclick="" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">취소</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <div id="calendar"></div>
     </div>
-
-
+    
     <!-- myModal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -173,9 +64,10 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button> 
                 </div>
                 <br>
-                <form action="insertReservationMeMain.re" method="post">
+                <form action="insertReservationBeTimeGrid.re" method="post">
                 
-                <input type="hidden" name="resourceNo">
+                <input type="hidden" name="resourceNo" value=${ bno }>
+                <input type="hidden" name="resourceName" value="${ bname.resourceName }">
                 
                 <input type="hidden" name="reWriter" value="${ loginUser.empNo }">
                     <!-- Modal Body -->
@@ -282,36 +174,32 @@
         </div>
     </div>
 
-	
-    <!-- 타임라인 프리미엄 -->
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.4/index.global.min.js'></script>
+
     <script>
         // FullCalendar
         document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
+        	var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
-                initialView: 'resourceTimeline', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
-                resourceAreaWidth: '20%', // 회의실 가로길이
+                initialView : 'timeGridWeek', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
                 headerToolbar : { // 헤더에 표시할 툴 바
                     start : 'prev,next today',
                     center : 'title',
-                    end : ''
+                    end : 'timeGridWeek,timeGridDay'
                 },
                 resourceAreaColumns: [
                     {
                         field: 'title',
-                        headerContent: '회의실'
+                        headerContent: '빔프로젝터'
                     },
                 ],
                 resources: [
-                	<c:forEach var="rm" items="${ meList }">
-                		{ id: '${ rm.resourceNo }', title: '${ rm.resourceName }'},
+                	<c:forEach var="rb" items="${ beList }">
+                		{ id: '${ rb.resourceNo }', title: '${ rb.resourceName }'},
                     </c:forEach>
                 ],
                 events: [
-                	<c:forEach var="m" items="${ mList }">
-                    	{ id: '${ m.reNo }', resourceId: '${ m.resourceNo }', start: '${ m.startDate } ${ m.startTime }', end: '${ m.endDate } ${ m.endTime }', title: '${ m.reWriter } ${ m.startTime }~${ m.endTime }', color: '#d6dfcc' },
+                	<c:forEach var="b" items="${ bList }">
+                    	{ id: '${ b.reNo }', resourceId: '${ b.resourceNo }', start: '${ b.startDate } ${ b.startTime }', end: '${ b.endDate } ${ b.endTime }', title: '${ b.reWriter }', color: '#d6dfcc' },
                     </c:forEach>
                 ],
                 select: function(info) { // 클릭&드래그
@@ -361,8 +249,6 @@
 
                     if(yymmddStart > tDate) { // 오늘 날짜 이후 선택시
                     	
-                    	$("input[name=resourceNo]").val(info.resource.id); // info.resource.id : 해당 이벤트 아이디 반환해줌
-                    	//console.log($("input[name=resourceNo]").val());
                 		$("#myModal").modal("show");
                 		
                         // option태그의 value값이 선택된 시간과 같은 경우 selected(선택)되도록!
@@ -377,8 +263,6 @@
                         alert("예약 불가능한 시간");
                     }else{
                         
-                    	$("input[name=resourceNo]").val(info.resource.id); // info.resource.id : 해당 이벤트 아이디 반환해줌
-                    	//console.log($("input[name=resourceNo]").val());
                 		$("#myModal").modal("show");
 
                         // option태그의 value값이 선택된 시간과 같은 경우 selected(선택)되도록!
@@ -407,6 +291,11 @@
                     $("#eDate").datepicker("setDate", endDayStr);
                     */
                 },
+                events: [
+                	<c:forEach var="b" items="${ bList }">
+                    	{ id: '${ b.reNo }', resourceId: '${ b.resourceNo }', start: '${ b.startDate } ${ b.startTime }', end: '${ b.endDate } ${ b.endTime }', title: '${ b.reWriter }', color: '#d6dfcc' },
+                    </c:forEach>
+                ],
                 //initialDate: '2021-07-15', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
                 allDaySlot: false, // allDay 여부 (default : true)
                 slotMinTime: "08:00:00", // 최소시간
@@ -474,7 +363,6 @@
             }
         }
     </script>
-    
-        
+
 </body>
 </html>
