@@ -113,7 +113,7 @@
            and f.add_no = a.add_no
 		   and add_bin = 'N'
 		 order
-             by f.enroll_date desc
+             by f.enroll_date
 		      
 	</select>
 	
@@ -134,7 +134,7 @@
 		 where ent_yn = 'N'
            and f.emp_no = #{empNo}
           order
-             by f.enroll_date desc
+             by f.enroll_date
 	</select>
 	
 	<select id="selectExternalFavAddList" resultMap="addressResult">
@@ -323,6 +323,8 @@
 		 where a.emp_no = #{empNo}
 		   and a.add_type = 'P'
 		   and add_bin = 'N'
+		 order
+		    by create_date
 	</select>
 	
 	<select id="selectPsFavList" resultMap="addFavoriteResult">
@@ -372,7 +374,7 @@
 		     , EDITABLE
 		  from address a
           left join add_group g on (a.group_no = g.group_no)
-		  where a.emp_no = #{empNo}
+		 where a.emp_no = #{empNo}
 		<choose>
 			<when test="groupNo != null">
 				and a.group_no = #{groupNo}
@@ -383,7 +385,8 @@
 		</choose>
 		    and a.add_type = 'P'
 		    and add_bin = 'N'
-		
+		  order
+		     by create_date
 	</select>
 	
 	<select id="selectAddGroup" resultMap="addGroupResult">
@@ -516,6 +519,52 @@
 		</if>
 	</select>
 	
+	<delete id="deleteFavAdd">
+		delete
+		  from add_fav
+		 where emp_no = #{empNo}
+		   and add_no = #{addNo}
+	</delete>
+	
+	<delete id="deleteFavEmp">
+		delete
+		  from add_fav
+		 where emp_no = #{empNo}
+		   and add_emp_no = #{addEmpNo}
+	</delete>
+	
+	<insert id="insertFavAdd">
+		insert
+		  into add_fav
+		     (
+		       add_no
+		     , emp_no
+		     , enroll_date
+		     )
+		values
+		     (
+		       #{addNo}
+		     , #{empNo}
+		     , sysdate
+		     )
+	</insert>
+	
+	<insert id="insertFavEmp">
+		insert
+		  into add_fav
+		     (
+		       emp_no
+		     , add_emp_no
+		     , enroll_date
+		     )
+		values
+		     (
+		       #{empNo}
+		     , #{addEmpNo}
+		     , sysdate
+		     )
+	</insert>
+
 
 
 

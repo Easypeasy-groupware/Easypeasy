@@ -78,6 +78,18 @@ public interface AddressService {
 	
 	// 14. 검색한 사원리스트 조회(ajax)
 	ArrayList<Employee> selectEmployeeList(Employee e);
+	
+	// 15. 개인주소록 & 외부주소록 즐겨찾기 리스트 삭제(ajax)
+	int deleteFavAdd(AddFavorite af);
+	
+	// 16. 사내주소록 즐겨찾기 리스트 삭제(ajax)
+	int deleteFavEmp(AddFavorite af);
+	
+	// 17. 개인주소록 & 외부주소록 즐겨찾기 리스트 저장(ajax)
+	int insertFavAdd(AddFavorite af);
+	
+	// 18. 사내주소록 즐겨찾기 리스트 저장(ajax)
+	int insertFavEmp(AddFavorite af);
 
 	
 	

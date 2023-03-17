@@ -77,7 +77,7 @@
         </div>
 
         <div class="menu-like">
-            <a href="#" id="like-page">⭐ 즐겨찾기</a>
+            <a href="favorite.add" id="like-page">⭐ 즐겨찾기</a>
         </div>
 
         <div class="add-type">

@@ -159,6 +159,26 @@ public class AddressServiceImpl implements AddressService {
 		return aDao.selectEmployeeList(sqlSession, e);
 	}
 
+	@Override
+	public int deleteFavAdd(AddFavorite af) {
+		return aDao.deleteFavAdd(sqlSession, af);
+	}
+
+	@Override
+	public int deleteFavEmp(AddFavorite af) {
+		return aDao.deleteFavEmp(sqlSession, af);
+	}
+
+	@Override
+	public int insertFavAdd(AddFavorite af) {
+		return aDao.insertFavAdd(sqlSession, af);
+	}
+
+	@Override
+	public int insertFavEmp(AddFavorite af) {
+		return aDao.insertFavEmp(sqlSession, af);
+	}
+
 
 
 

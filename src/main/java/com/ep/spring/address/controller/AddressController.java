@@ -276,9 +276,39 @@ public class AddressController {
 	}
 	
 	
+	@ResponseBody
+	@RequestMapping(value="deleteFavAdd.add")
+	public String ajaxDeleteFavAdd(AddFavorite af) { // ajax 개인주소록 & 외부주소록 즐겨찾기 리스트 삭제
+		
+		int result = aService.deleteFavAdd(af);
+		
+		return result > 0 ? "success" : "fail";
+	}
 	
+	@ResponseBody
+	@RequestMapping(value="deleteFavEmp.add")
+	public String ajaxDeleteFavEmp(AddFavorite af) { // ajax 사내주소록 즐겨찾기 리스트 삭제
+		
+		int result = aService.deleteFavEmp(af);
+		
+		return result > 0 ? "success" : "fail";
+	}
 	
+	@ResponseBody
+	@RequestMapping(value="insertFavAdd.add")
+	public String ajaxInsertFavAdd(AddFavorite af) {
+		int result = aService.insertFavAdd(af);
+		
+		return result > 0 ? "success" : "fail";
+	}
 	
+	@ResponseBody
+	@RequestMapping(value="insertFavEmp.add")
+	public String ajaxInsertFavEmp(AddFavorite af) {
+		int result = aService.insertFavEmp(af);
+		
+		return result > 0 ? "success" : "fail";
+	}
 	
 	
 	
