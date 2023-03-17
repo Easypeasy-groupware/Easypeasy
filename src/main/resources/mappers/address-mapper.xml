@@ -207,7 +207,59 @@
 	</insert>
 	
 	<insert id="insertSharedAdd">
-		
+		insert
+		  into address
+		     ( 
+		       ADD_NO
+			 , EMP_NO
+			 , ADD_TYPE
+			 , ADD_NAME
+			 , EMAIL
+			 , PHONE
+			 , ADD_EMP
+			 , ADD_DEPT
+			 , ADD_JOB
+			 , GROUP_NO
+			 , EMP_PHONE
+			 , EMP_ADDRESS
+			 , MEMO
+			 , CREATE_DATE
+			 , EDITABLE
+		     )
+		values
+			 (
+			   seq_addno.nextval
+			 , #{empNo}
+			 , 'P'
+			 , #{addName}
+			 , #{email}
+			 , #{phone}
+			 , #{addEmp}
+			 , #{addDept}
+			 , #{addJob}
+			 , #{groupNo}
+			 , #{empPhone}
+			 , #{empAddress}
+			 , #{memo}
+			 , sysdate
+			 , #{editable}
+			 )
+	</insert>
+	
+	<insert id="insertEditableEmpList">
+	<foreach collection="eList" item="e">
+		insert
+		  into edd_edit
+		     (
+		       ADD_NO
+	         , EMP_NO
+		     )
+	    values
+	         (
+	           seq_addno.currval
+	         , #{e.empNo}
+	         )
+	</foreach>	  
 	</insert>
 	
 	

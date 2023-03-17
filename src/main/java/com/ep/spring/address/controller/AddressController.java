@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ep.spring.address.model.service.AddressService;
 import com.ep.spring.address.model.vo.AddDept;
+import com.ep.spring.address.model.vo.AddEdit;
 import com.ep.spring.address.model.vo.AddFavorite;
 import com.ep.spring.address.model.vo.AddGroup;
 import com.ep.spring.address.model.vo.Address;
@@ -67,6 +68,41 @@ public class AddressController {
 	@RequestMapping("newShForm.add") 
 	public String newShAddForm() {
 		return "address/newSharedAddressForm";
+	}
+	
+	@RequestMapping("insertNewSh.add")
+	public String insertSharedAdd(Address a, AddEdit e, HttpSession session) {
+		
+		if(a.getEditable() != null) {
+			a.setEditable("Y");
+		}else {
+			a.setEditable("N");
+		}
+		
+		
+		// 편집가능한사원리스트를 배열에 담기
+		String[] editArr = a.getEditNo().split(","); //문자열을 배열로 분리
+		ArrayList<AddEdit> eList = new ArrayList<>(); // 새로운 ArrayList 생성
+		
+		for(int i = 0; i<editArr.length; i++) { // 반복문 돌리면서 문자열배열을 ArrayList에 담기
+			AddEdit ed = new AddEdit();
+			ed.setEmpNo(Integer.parseInt(editArr[i]));
+			eList.add(ed);
+		}
+		
+		// 2. 새로운 주소록 + 편집가능한 사원리스트 insert
+		int result = aService.insertSharedAdd(a, eList);
+		
+		if(result> 0) {
+			AlertMsg msg = new AlertMsg("주소록 추가", "성공적으로 추가되었습니다");
+			session.setAttribute("successMsg", msg);
+			return "redirect:newShForm.add";
+			
+		}else {
+			AlertMsg msg = new AlertMsg("주소록 추가", "주소록추가 실패");
+			session.setAttribute("failMsg", msg);
+			return "redirect:newShForm.add";
+		}
 	}
 
 	@RequestMapping("internalEnt.add") // 사내주소록 전체리스트

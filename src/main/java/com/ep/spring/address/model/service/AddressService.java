@@ -3,6 +3,7 @@ package com.ep.spring.address.model.service;
 import java.util.ArrayList;
 
 import com.ep.spring.address.model.vo.AddDept;
+import com.ep.spring.address.model.vo.AddEdit;
 import com.ep.spring.address.model.vo.AddFavorite;
 import com.ep.spring.address.model.vo.AddGroup;
 import com.ep.spring.address.model.vo.Address;
@@ -29,7 +30,7 @@ public interface AddressService {
 	int insertPersonalAdd(Address a);
 	
 	// 3. 공유주소록 추가
-	int insertSharedAdd(Address a);
+	int insertSharedAdd(Address a, ArrayList<AddEdit> eList);
 	
 	// 4. 전체 사내주소록 조회
 	int selectEntEmpListCount(int no);

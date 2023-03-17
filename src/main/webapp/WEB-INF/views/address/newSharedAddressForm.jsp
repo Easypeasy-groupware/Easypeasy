@@ -117,7 +117,7 @@
         </ul>
 
         <br>
-        <form action="">
+		<form action="insertNewSh.add" method="post">
             <table class="input-table">
                 <colgroup>
                     <col style="width:150px;">
@@ -127,37 +127,37 @@
                 <tr>
                     <td>이름</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input" required>
+                        <input type="text" class="tb-input" name="addName">
                     </td>
                 </tr>
                 <tr>
                     <td>회사</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input">
+                        <input type="text" class="tb-input" name="addEmp">
                     </td>
                 </tr>
                 <tr>
                     <td>부서</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input">
+                        <input type="text" class="tb-input" name="addDept">
                     </td>
                 </tr>
                 <tr>
                     <td>직위</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input">
+                        <input type="text" class="tb-input" name="addJob">
                     </td>
                 </tr>
                 <tr>
                     <td>이메일</td>
                     <td colspan="2">
-                        <input type="email" class="tb-input">
+                        <input type="email" class="tb-input" name="email">
                     </td>
                 </tr>
                 <tr>
                     <td>휴대폰</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input">
+                        <input type="text" class="tb-input" name="phone">
                     </td>
                 </tr>
                 <tr>
@@ -177,27 +177,25 @@
                 <tr>
                     <td>회사전화</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input">
+                        <input type="text" class="tb-input" id="empPhone">
                     </td>
                 </tr>
                 <tr>
                     <td>회사주소</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input">
+                        <input type="text" class="tb-input" id="empAddress">
                     </td>
                 </tr>
                 <tr>
                     <td>메모</td>
                     <td colspan="2">
-                        <textarea class="td-textarea" rows="4" style="resize:none; width:100%">
-
-                        </textarea>
+                        <textarea class="td-textarea" rows="4" style="resize:none; width:100%" id="memo"></textarea>
                     </td>
                 </tr>
                 <tr>
                     <td>편집가능여부</td>
                     <td colspan="2">
-                        <input type="checkbox" class="editable-check"> 
+                        <input type="checkbox" class="editable-check" id="editable"> 
                     </td>
                 </tr>
                 <tr>
@@ -218,11 +216,11 @@
             </table>
             
             <br>
-
+			<input type="hidden" name="editNo">
             <button type="reset" class="set-btn" id="reset-btn">초기화</button>
             <button type="submit" class="set-btn" id="submit-btn">추가</button>
-
-        </form>
+		</form>
+        
         <script>
             
             $(".editable-check").click(function(){ // 편집가능 체크박스
@@ -270,6 +268,8 @@
 
             })
             
+            var editList = "";
+            
           	$(".list-show").on("click", ".indiv-emp", function(){ // 사원 리스트에 추가
           		var empNo = $(this).children().eq(0).text();
           		var empDept = $(this).children().eq(1).text();
@@ -277,13 +277,24 @@
           		var empName = $(this).children().eq(3).text();
           		var emp = "<div name='empNo' value='"+ empNo +"'>" + empDept +"&nbsp; <b>" + empName + "</b>&nbsp;" + empJob + " <img src='resources/common_images/delete-img.png' class='emp-delete' style='width:8px;'></div>";
                	$(".emp-mini2").append(emp);
-               
+
+               	editList += empNo + ","; 
+               	
+               	editList = editList.substring(0, editList.length-1);
+               	
+               	$("input[name='editNo']").val(editList);
+               	
+               	console.log($("input[name='editNo']").val());
+               	
             })
-            
+
             
             $(".emp-mini2").on("click", ".emp-delete", function(){ // 사원 리스트에서 삭제
                 $(this).parent().remove();
             })
+            
+            
+            
         </script>
         
     </div>

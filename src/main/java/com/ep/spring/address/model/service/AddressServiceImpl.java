@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ep.spring.address.model.dao.AddressDao;
 import com.ep.spring.address.model.vo.AddDept;
+import com.ep.spring.address.model.vo.AddEdit;
 import com.ep.spring.address.model.vo.AddFavorite;
 import com.ep.spring.address.model.vo.AddGroup;
 import com.ep.spring.address.model.vo.Address;
@@ -55,8 +56,11 @@ public class AddressServiceImpl implements AddressService {
 	}
 	
 	@Override
-	public int insertSharedAdd(Address a) {
-		return aDao.insertSharedAdd(sqlSession, a);
+	public int insertSharedAdd(Address a, ArrayList<AddEdit> eList) {
+		int result1 = aDao.insertSharedAdd(sqlSession, a);
+		int result2 = aDao.insertEditableEmpList(sqlSession, eList);
+		
+		return result1*result2;
 	}
 	
 	@Override

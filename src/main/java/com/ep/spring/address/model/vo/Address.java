@@ -35,5 +35,7 @@ public class Address {
 	private String addProfile;
 	private AddGroup group;
 	
+	private String editNo;
+	
 
 }
