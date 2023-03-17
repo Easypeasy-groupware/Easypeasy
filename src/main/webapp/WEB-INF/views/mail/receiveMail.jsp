@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>EasyPeasy-mail</title>
-
 <style>
     *{box-sizing: content-box;}
 
@@ -22,6 +21,7 @@
     .menu1{width: 100px;}
     .menu2{width: 80px;}
     .menu3{width: 120px;}
+    .mail_img{width: 20px; padding-bottom: 3px; margin-right: 5px;}
 
     .block{width: 220px; min-height: 150px; max-height: 300px; background: white; border-radius: 10px; border: 1px solid rgb(185, 187, 221); 
                position: absolute; left: 550px; text-align: center; display: none;}
@@ -86,7 +86,16 @@
                 <div class="menu menu2" id="tag"><img src="">태그</div>
                 <div class="menu menu2" id="forward"><img src="">전달</div>
                 <div class="menu menu2" id="shift"><img src="">이동</div>
-                <div class="menu menu3" id="read_unread"><img src="">읽음/안읽음</div>
+                <c:choose>
+                    <c:when test="${ mail.recCheck == 'Y' }">
+                        <div class="menu menu3" id="read" style="display: block;"><img class="mail_img" src="resources/common_images/mail_read.png">읽음</div>
+                        <div class="menu menu3" id="unRead" style="display: none;"><img class="mail_img" src="resources/common_images/mail_unRead.png">안읽음</div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="menu menu3" id="unRead" style="display: block;"><img class="mail_img" src="resources/common_images/mail_unRead.png">안읽음</div>
+                        <div class="menu menu3" id="read" style="display: none;"><img class="mail_img" src="resources/common_images/mail_read.png">읽음</div>
+                    </c:otherwise>
+                </c:choose>
                 <div class="menu menu1" style="float: right; margin-left: 10px;" id="after_mail">
                     다음 메일
                     <div class="material-symbols-outlined" style="display: block; padding-top: 8px; float: right;">expand_more</div>
@@ -166,31 +175,6 @@
         </div>
     </div>
     <script>
-        // 메일 상세조회
-        let mailSelectList = document.querySelectorAll('.mail_select_area');
-        mailSelectList.forEach(function(select){
-            // select.addEventListener('click', function(){
-            //     let mailNo = this.getElementsByClassName('mailNo').mailNo.value;
-            //     console.log(mailNo);
-            //     let link = this.getElementsByClassName('mail_select_area');
-            //     console.log(link);
-            // });
-            select.addEventListener('click', function(){
-                this.action = "www.naver.com";
-                this.method = "POST";
-                this.submit();
-            });
-        });
-
-        // 전체 체크박스
-        let checkAll = document.getElementById("check_all");
-        let mailCheckBox = document.querySelectorAll('.mail_checkbox');
-        checkAll.addEventListener('change', function(event){
-            mailCheckBox.forEach((checkbox) => {
-                checkbox.checked = checkAll.checked;
-            })
-        });
-
         // 스팸 등록
         let spamEnroll = document.getElementById("spam");
         let mailNoList = document.getElementsByClassName("mailNo");
@@ -314,31 +298,57 @@
         });
 
         // 읽음 처리 - 스팸 처리와 동일
-        let readAndUnread = document.getElementById("read_unread");
-        readAndUnread.addEventListener('click', function(){
-            let checkedBoxSum = 0
-            let count = 0;
-            let arr = [];
-            let form = document.createElement("form");
-                mailCheckBox.forEach((i) => {
-                    if(i.checked == true) {
-                        checkedBoxSum += 1;
-                        arr[count] = mailNoList[i.value].value;
-                        count += 1; 
+        window.onload = function(){
+            let read = document.getElementById("read");
+            let unread = document.getElementById("unRead");
+            read.addEventListener('click', function(){
+                $.ajax({
+                    url: "updateReadUnread.ma",
+                    type: "POST",
+                    data: {
+                        mailNo : "${ mail.mailNo }",
+                        recMailNo : "${ mail.recMailNo }",
+                        recMailAdd: "${loginUser.email}",
+                        recCheck : "N"
+                    },
+                    success: function(result){
+                        if(result == "N") {
+                            read.style.display = 'none';
+                            unread.style.display = 'block';
+                            console.log("성공");
+                        }
+                    }, error: function(){
+                        console.log("실패");
                     }
-                })
-            if(checkedBoxSum != 0) {
-
-            }else{
-                alert('체크박스를 선택해주세요');
-            }
-        }); 
+                });
+            });
+            unread.addEventListener('click', function(){
+                $.ajax({
+                    url: "updateReadUnread.ma",
+                    type: "POST",
+                    data: {
+                        mailNo : "${ mail.mailNo }",
+                        recMailNo : "${ mail.recMailNo }",
+                        recMailAdd: "${loginUser.email}",
+                        recCheck : "Y"
+                    },
+                    success: function(result){
+                        unread.style.display = 'none';
+                        read.style.display = 'block';
+                        console.log("성공");
+                    }, error: function(){
+                        console.log("실패");
+                    }
+                });
+            });
+        };
+       
 
         // 새로고침
-        let refresh = document.getElementById("refresh");
-        refresh.addEventListener('click', function(){
+        // let refresh = document.getElementById("refresh");
+        // refresh.addEventListener('click', function(){
             
-        });
+        // });
 
         // 즐겨찾기
         let favoriteList = document.querySelectorAll('.favorite');

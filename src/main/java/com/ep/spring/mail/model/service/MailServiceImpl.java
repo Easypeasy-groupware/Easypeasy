@@ -49,8 +49,13 @@ public class MailServiceImpl implements MailService {
 	}
 	
 	@Override
-	public int readMail(Mail m) {
-		return mDao.readMail(m, sqlSession);
+	public void readMail(Mail m) {
+		mDao.readMail(m, sqlSession);
+	}
+	
+	@Override
+	public int unReadCount(Mail m) {
+		return mDao.unReadCount(m, sqlSession);
 	}
 	
 	@Override
@@ -67,6 +72,13 @@ public class MailServiceImpl implements MailService {
 	public ArrayList<Attachment> selectAttachmentList(Mail m) {
 		return mDao.selectAttachmentList(m, sqlSession);
 	}
+
+	@Override
+	public void updateReadUnreadMail(Mail m) {
+		mDao.readUnreadMail(m, sqlSession);
+	}
+
+	
 
 	
 

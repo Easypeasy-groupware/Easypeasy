@@ -124,7 +124,7 @@
 		  , #{ sendMailAdd }
 		  , #{ mailTitle }
 		  , #{ mailContent }
-		  , to_char(sysdate, 'YYYY-MM-DD HH24:MI')
+		  , to_date(sysdate, 'YYYY-MM-DD HH24:MI')
 		  , #{ imporMail }
 		  , #{ reference }
 		  , #{ hiddenReference }
@@ -150,7 +150,7 @@
 		  , #{ originName }
 		  , #{ changeName }
 		  , #{ filePath }
-		  , to_char(sysdate, 'YYYY-MM-DD HH24:MI')
+		  , to_date(sysdate, 'YYYY-MM-DD HH24:MI')
 		  , 'M'
 		  )
 	</insert>
@@ -161,6 +161,13 @@
 		 where mail_no = #{ mailNo }
 		   and recep_mail_address = #{ recMailAdd }
 	</update>
+	
+	<select id="unReadCount" resultType="_int">
+		select count(mail_no)
+		  from rec_mail
+		 where rec_check = 'N'
+		   and recep_mail_address = #{ recMailAdd }
+	</select>
 	
 	<select id="selectMail" resultMap="MailResult">
 		select
@@ -196,5 +203,12 @@
 	     where 
 			   MAIL_NO = #{ mailNo }
 	</select>
-
+	
+	<update id="readUnreadMail">
+		update rec_mail
+		   set 
+  	   		   rec_check = #{ recCheck }
+		 where mail_no = #{ mailNo }
+	</update>
+	
 </mapper>

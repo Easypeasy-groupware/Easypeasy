@@ -44,8 +44,12 @@ public class MailDao {
 		return result;
 	}
 	
-	public int readMail(Mail m, SqlSessionTemplate sqlSession) {
-		return sqlSession.update("mailMapper.readMail", m);
+	public void readMail(Mail m, SqlSessionTemplate sqlSession) {
+		sqlSession.update("mailMapper.readMail", m);
+	}
+	
+	public int unReadCount(Mail m, SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("mailMapper.unReadCount", m);
 	}
 
 	public Mail selectMail(Mail m, SqlSessionTemplate sqlSession) {
@@ -59,6 +63,12 @@ public class MailDao {
 	public ArrayList<Attachment> selectAttachmentList(Mail m, SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("attachmentMapper.selectMailAttachmentList", m);
 	}
+
+	public void readUnreadMail(Mail m, SqlSessionTemplate sqlSession) {
+		sqlSession.update("mailMapper.readUnreadMail", m);
+	}
+
+	
 
 	
 }
