@@ -18,7 +18,7 @@
         .form-outer>div{float:left;}
         .left-outer{width:100%; padding:30px;}    
         .left-form3 table{float:left;}
-        .left-form1, .left-form2 ,.left-form3,.left-form4,.left-form5,.left-form6{width:100%;}
+        .left-form1, .left-form2 ,.left-form4,.left-form5,.left-form6{width:100%;}
         .speech-bubble {
             position: relative;
             background: #d1d2d2;
@@ -48,42 +48,14 @@
     <div class="form-outer">
         <div class="left-outer">
             <div class="left-form1">
-                <p><b style="font-size:30px;"> 업무기안</b></p>
+                <p><b style="font-size:30px;"> 업무기안</b></p><br>
             </div>
-            <div class="left-form2"><a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
-                                    <a href="" style="padding:20px; color:rgb(71, 71, 71);">임시저장</a>|
-                                    <a href="" style="padding:20px; color:rgb(71, 71, 71);">취소</a>|
-                                    <a href="" style="padding:20px; color:rgb(71, 71, 71);"  data-toggle="modal" data-target="#app-line">결재선지정</a>
-                                    <br><br></div>
-            <div class="left-form3">
-
-                <table class="draft" style="width:100px; text-align:center; font-size:12px; margin-right:10px;" border="1">
-                    <tr>
-                        <td rowspan="4" style="background:rgb(223, 221, 221);">신<br>청</td>
-                        <td>직급</td>
-                    </tr>
-                    <tr>
-                        <td>도장 <br>이름</td>
-                    </tr>
-                    <tr>
-                        <td>날짜</td>
-                    </tr>
-                </table>
-                
-                <table class="draft" style="width:100px; text-align:center; font-size:12px;" border="1">
-                    <tr>
-                        <td rowspan="4" style="background:rgb(223, 221, 221);">승<br>인</td>
-                        <td>직급</td>
-                    </tr>
-                    <tr>
-                        <td>도장 <br>이름</td>
-                    </tr>
-                    <tr>
-                        <td>날짜</td>
-                    </tr>
-                </table>
-                <br><br><br><br>
-                
+            <div class="left-form2">
+	            <a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
+	            <a href="" style="padding:20px; color:rgb(71, 71, 71);">임시저장</a>|
+	            <a href="" style="padding:20px; color:rgb(71, 71, 71);">취소</a>|
+	            <a href="" style="padding:20px; color:rgb(71, 71, 71);"  data-toggle="modal" data-target="#app-line">결재선지정</a>
+	            <br><br><br>
             </div>
                 <div class="left-form4">
                     <table class="table-bordered">
