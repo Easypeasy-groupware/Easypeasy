@@ -23,4 +23,5 @@ public class Reservation {
 	private String status;
 	
 	private String resourceName;
+	private String categoryName;
 }

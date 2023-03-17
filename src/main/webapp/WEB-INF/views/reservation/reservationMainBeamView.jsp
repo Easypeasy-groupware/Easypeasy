@@ -129,7 +129,7 @@
 
         <div id="content-1">
             <h5>
-                <span>내 예약/대여 현황</span>
+                <span>내 예약 현황</span>
             </h5>
             <table align="center" class="table table-hover table-sm">
                 <thead>
@@ -141,22 +141,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>빔프로젝터</td>
-                        <td>1번 프로젝터</td>
-                        <td>2023-02-27 13:00 ~ 2023-02-27 15:00</td>
-                        <td>
-                            <button onclick="" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">취소</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>회의실</td>
-                        <td>1번 회의실</td>
-                        <td>2023-02-27 13:00 ~ 2023-02-27 15:00</td>
-                        <td>
-                            <button onclick="" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">취소</button>
-                        </td>
-                    </tr>
+                	<c:forEach var="l" items="${ list }">
+                		<tr>
+	                        <td>${ l.categoryName }</td>
+	                        <td>${ l.resourceName }</td>
+	                        <td>${ l.startDate } ${ l.startTime } ~ ${ l.endDate } ${ l.endTime }</td>
+	                        <td>
+	                            <a href="reservationDel.re?no=${ l.reNo }" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">취소</a>
+	                        </td>
+                    	</tr>
+                	</c:forEach>
                 </tbody>
             </table>
         </div>

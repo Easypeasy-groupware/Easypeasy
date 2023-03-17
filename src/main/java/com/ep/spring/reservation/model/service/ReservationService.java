@@ -43,4 +43,10 @@ public interface ReservationService {
 	// 5-1. 메인 예약 조회
 	ArrayList<Reservation> selectMettingRoom();
 	ArrayList<Reservation> selectBeamProjector();
+	
+	// 6. 내 예약 현황 조회
+	ArrayList<Reservation> selectReservation(int reWriter);
+	
+	// 7. 예약 취소
+	int reservationDelete(int reNo);
 }

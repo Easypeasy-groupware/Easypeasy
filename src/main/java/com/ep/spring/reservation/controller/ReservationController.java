@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ep.spring.common.model.vo.AlertMsg;
+import com.ep.spring.login.model.vo.Employee;
 import com.ep.spring.reservation.model.service.ReservationService;
 import com.ep.spring.reservation.model.vo.Reservation;
 import com.ep.spring.reservation.model.vo.Resource;
@@ -38,6 +39,13 @@ public class ReservationController {
 		
 		ArrayList<Reservation> bList = reService.selectBeamProjector();
 		session.setAttribute("bList", bList);
+		
+		// 내 예약 현황
+		
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
+		ArrayList<Reservation> list = reService.selectReservation(empNo);
+		session.setAttribute("list", list);
 		
 		return "reservation/reservationMainView";
 	}
@@ -415,6 +423,23 @@ public class ReservationController {
 			return "redirect:beamProjectorTimeGrid.re?bno=" + r.getResourceNo();
 		}
 			
+	}
+	
+	@RequestMapping("reservationDel.re")
+	public String reservationDelete(int no, HttpSession session) {
+
+		int result = reService.reservationDelete(no);
+		
+		if(result > 0) {
+			AlertMsg msg = new AlertMsg("예약 취소", "성공적으로 취소되었습니다");
+			session.setAttribute("successMsg", msg);
+			return "redirect:main.re";
+		}else {
+			AlertMsg msg = new AlertMsg("예약 취소", "예약 취소 실패");
+			session.setAttribute("failMsg", msg);
+			return "redirect:main.re";
+		}
+		
 	}
 	
 }

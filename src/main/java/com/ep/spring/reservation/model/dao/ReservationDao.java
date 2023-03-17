@@ -69,4 +69,12 @@ public class ReservationDao {
 	public ArrayList<Reservation> selectBeamProjector(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("reservationMapper.selectBeamProjector");
 	}
+	
+	public ArrayList<Reservation> selectReservation(SqlSessionTemplate sqlSession, int reWriter) {
+		return (ArrayList)sqlSession.selectList("reservationMapper.selectReservation", reWriter);
+	}
+	
+	public int reservationDelete(SqlSessionTemplate sqlSession, int reNo) {
+		return sqlSession.update("reservationMapper.reservationDelete", reNo);
+	}
 }

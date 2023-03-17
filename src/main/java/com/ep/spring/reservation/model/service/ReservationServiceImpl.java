@@ -92,7 +92,16 @@ public class ReservationServiceImpl implements ReservationService {
 		return reDao.selectBeamProjector(sqlSession);
 	}
 
-	
+	@Override
+	public ArrayList<Reservation> selectReservation(int reWriter) {
+		return reDao.selectReservation(sqlSession, reWriter);
+	}
+
+	@Override
+	public int reservationDelete(int reNo) {
+		return reDao.reservationDelete(sqlSession, reNo);
+	}
+
 	
 	
 }
