@@ -289,9 +289,9 @@
                     </c:forEach>
                 ],
                 events: [
-                	<c:forEach var="rb" items="${ beList }">
-                    	{ id: '${ rb.resourceNo }', resourceId: '${ rb.resourceNo }', start: '2023-03-15 08:00', end: '2023-03-15 23:00', title: 'dd 12:00 ~ 15:00', color: '#d6dfcc' },
-                    </c:forEach>
+                	<c:forEach var="b" items="${ bList }">
+                		{ id: '${ b.reNo }', resourceId: '${ b.resourceNo }', start: '${ b.startDate } ${ b.startTime }', end: '${ b.endDate } ${ b.endTime }', title: '${ b.reWriter } ${ b.startTime }~${ b.endTime }', color: '#d6dfcc' },
+                	</c:forEach>
                 ],
                 select: function(info) { // 클릭&드래그
                 
