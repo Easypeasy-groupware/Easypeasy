@@ -115,9 +115,16 @@ public class CommuteController {
 			return result > 0 ? "success" : "fail";
 		}
 		
-	
+		
+		// 근무현황 및 계획(일반)
 		@RequestMapping("working.ep")
-		public String monthlyWorkingStatus() {
+		public String monthlyWorkingStatus(HttpSession session) {
+			int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+			
+			ArrayList<Commute> list = cService.monthlyWorkingStatus(empNo);
+			session.setAttribute("list", list);
+			
+			//System.out.println(list);
 			return "commute/monthlyWorkingStatus";
 		}
 		

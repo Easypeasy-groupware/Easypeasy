@@ -83,6 +83,13 @@ public class CommuteServiceImpl implements CommuteService{
 		
 		return cDao.selectListCount(sqlSession);
 	}
+
+	//근무현황 및 계획 (일반)
+	@Override
+	public ArrayList<Commute> monthlyWorkingStatus(int empNo) {
+		
+		return cDao.monthlyWorkingStatus(sqlSession, empNo);
+	}
 	
 	
 
