@@ -18,6 +18,7 @@
 		<result column="app_amount" property="appAmount" /> 
 		<result column="app_sequence" property="appSequence" /> 
 		<result column="emp_name" property="empName" />
+		<result column="app_change" property="appChange" />
  		<result column="dept_name" property="deptName" />
  		<result column="origin_name" property="originName" />
  		<result column="update_date" property="updateDate" />
@@ -516,12 +517,14 @@
 				  join employee b on (a.emp_no = b.emp_no)
 				  join department c on (b.dept_code = c.dept_code)
 				  where a.status = '1'
-				   <if test="#{st} == null">
+				  <choose>
+				   <when test="st == null">
 				    and a.emp_no = #{writerNo}
-				  </if>
-                  
+				  </when>
+                  <otherwise>
                   	and app_tstatus = #{tstatus}
-                  
+                  </otherwise>
+                  </choose>
 				    and app_no = #{appNo}	
 	</select>
 	
@@ -684,6 +687,148 @@
 				                        )	
 	</update>
 	
+	<insert id="insertApproval">
+			insert
+			  into approval
+			  (
+			     app_no
+			   , enroll_date
+			   , writer_comment
+			   , title
+			   , content
+			   , emp_no
+			   , form_name
+			   , conser_period
+			   , sec_grade
+			   , form_code
+			   , app_amount
+			   , app_sequence
+			   , app_change
+			  )
+			    values
+			  (
+			     seq_apno.nextval
+			   , #{enrollDate}
+			   , #{writerComment}
+			   , #{title}
+			   , #{content}
+			   , #{writerNo}
+			   , #{formName}
+			   , #{conPeriod}
+			   , #{secGrade}
+			   , #{formCode}
+			   , #{appAmount}
+			   , #{appSequence}
+			   , #{appChange}
+			  )  	
+	</insert>
+	
+	<insert id="insertApprovalLine">
+			 insert
+			   into app_line
+			      (
+			        app_line_no
+			      , ref_whether
+			      , app_seq_no
+			      , emp_no
+			      , app_no
+			      )  
+			        values
+			      (
+			        seq_alno.nextval
+			      , #{refWhether}
+			      , (
+			           SELECT count(*)+ 1 
+			             FROM  app_line
+			            where  app_no = (select max(app_no)
+			                               from approval
+			                            )
+			         )
+			      , #{recEmpNo} 
+			      , (
+			         select max(app_no)
+			           from approval
+			        )
+			      ) 	
+	
+	</insert>
+	
+	<insert id="insertAttachment">
+			insert
+			  into attachment
+			      (
+			       attach_no
+			     , ref_no
+			     , origin_name
+			     , change_name
+			     , file_path
+			     , division
+			      )
+			        values
+			    (
+			       seq_attno.nextval
+			     , (
+			         select max(app_no)
+			           from approval
+			        )
+			     , #{originName}
+			     , #{changeName}
+			     , #{filePath}
+			     , 'A'
+			    )
+	</insert>
+	
+	<insert id="insertVacationForm">
+			insert
+			  into vac_form
+			  (
+			  app_no
+			  , vac_kind
+			  , vac_start
+			  , vac_end
+			  , half_status
+			  , vac_use
+			  , half_day
+			  )
+			  values
+			  (
+			      (
+			        select max(app_no)
+			          from approval
+			      )
+			    , #{vacKind}
+			    , #{vacStart}
+			    , #{vacEnd}
+			    , #{halfStatus}
+			    , #{vacUse}
+			    , #{halfDay}
+			  )	
+	</insert>
+	
+	<insert id="insertOverTimeForm">
+			insert
+			  into ot_form
+			      (
+			      app_no
+			      , overtime_kind
+			      , over_date
+			      , over_start_hour
+			      , over_end_hour
+			      , over_use_time
+			      )
+			        values
+			     (
+			         (
+			            select max(app_no)
+			              from approval
+			         )
+			       , #{otKind}
+			       , #{otDate}
+			       , #{otStart}
+			       , #{otEnd}
+			       , #{otUseTime}
+			     )  	
+	</insert>
 	
 	
 </mapper>

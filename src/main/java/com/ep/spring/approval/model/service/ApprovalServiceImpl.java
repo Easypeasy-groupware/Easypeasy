@@ -185,8 +185,31 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 	@Override
-	public int insertApproval(HashMap map) {
-		return 0;
+	public int insertApproval(Approval ap, ArrayList<ApprovalLine> al, VacationForm vf, OverTimeForm ot, ArrayList<Attachment> atList) {
+		
+		int a = aDao.insertApproval(sqlSession, ap);
+		
+		int b = 1;
+		int c = 1;
+		int d = 1;
+		int e = 1;
+		
+		if(al.size() != 0) {
+			b = aDao.insertApprovalLine(sqlSession, al);
+		}
+		
+		if(atList.size() != 0) {
+		  c = aDao.insertAttachment(sqlSession, atList);
+		}
+		
+		if(vf != null) {
+			d = aDao.insertVacationForm(sqlSession, vf);
+			
+		}else if(ot != null) {
+			e = aDao.insertOverTimeForm(sqlSession, ot);
+		}
+		
+		return a * b * c * d * e;
 	}
 
 

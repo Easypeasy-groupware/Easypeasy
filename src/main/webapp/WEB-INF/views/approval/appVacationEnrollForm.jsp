@@ -573,8 +573,13 @@
         	
         	if($("#writerComment").val().trim().length>0){
         		
-        		if($("#content").val().trim().length>0){
+        		if(!($("#content").val().trim().length>0)){
         			swal("내용 작성 후 상신요청해주세요.");
+        		}
+        		
+        		
+        		if($(".app-body input").html() == null){
+        			swal("결재선 선택 후 상신요청해주세요.");
         		}
         		
         		const appContent = $("#contentArea");

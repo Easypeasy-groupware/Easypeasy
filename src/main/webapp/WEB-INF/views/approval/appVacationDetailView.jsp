@@ -447,7 +447,7 @@
 	    				data:{
 	    					replyContent:$("#content").val(),
 	    					replyWriter:'${loginUser.empNo}', 
-	    					appNo:${ap.appNo}
+	    					appNo:'${ap.appNo}'
 	    				}, success:function(result){
 	    					
 	    					if(result == "success"){
@@ -472,7 +472,7 @@
 	    	function selectReplyList(){ // 해당 게시글에 딸린 댓글리스트 조회용 ajax
 	    		$.ajax({
 	    			url:"rlist.ap",
-	    			data:{no:${ap.appNo}},
+	    			data:{no:'${ap.appNo}'},
 	    			success:function(list){
 	    					    				
 	    				let value="";
@@ -504,10 +504,12 @@
 	    				$("#rcount").text(list.length);
 	    				
 	    				
-	    			}, error:function(){
+	    			}, error:function(request, status, error){
 	    				console.log("댓글리스트 조회용 ajax 통신실패");
+    					alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+
 	    			}
-	    		})
+	    		});
 	    		
 	    	}
 	    	

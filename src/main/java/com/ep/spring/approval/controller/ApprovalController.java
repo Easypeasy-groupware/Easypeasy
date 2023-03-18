@@ -26,6 +26,7 @@ import com.ep.spring.approval.model.vo.VacationForm;
 import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
+import com.ep.spring.common.template.FileUpload;
 import com.ep.spring.common.template.Pagination;
 import com.ep.spring.login.model.vo.Employee;
 import com.google.gson.Gson;
@@ -212,6 +213,7 @@ public class ApprovalController {
 		if(st.equals("기안진행")) {
 			a.setTstatus("진행중");
 		}
+		
 		if(st.equals("부서기안완료")) {
 			a.setSt("부서기안완료");
 			a.setTstatus("결재");
@@ -219,6 +221,7 @@ public class ApprovalController {
 			a.setWriterNo(eNo);
 		}
 		
+		System.out.println(a);
 		Approval ap = aService.selectDetailSPrgAp(a);
 		
 		
@@ -229,6 +232,10 @@ public class ApprovalController {
 		model.addAttribute("ap", ap);
 		model.addAttribute("list1", list1);
 		model.addAttribute("list3", list3);
+		
+		System.out.println(ap);
+		System.out.println(list1);
+		System.out.println(list3);
 
 		if(a.getFormName().equals("업무기안")) {
 			
@@ -262,7 +269,7 @@ public class ApprovalController {
 	public String selectReplyList(@RequestParam(value="no") int appNo) {
 		
 		ArrayList<ApprovalReply> list = aService.selectReplyList(appNo);
-		
+		System.out.println(list);
 		return new Gson().toJson(list);
 	}
 	
@@ -396,9 +403,13 @@ public class ApprovalController {
 			ap.setConPeriod(5);
 			ap.setSecGrade("A");
 		}
-	
+		
+		System.out.println(ap);
 		
 		// 결재자 ApprovalLine에 담기
+		
+		
+		
 		ap.setAppSequence(1);
 		ap.setAppAmount(ap.getAlList().size());
 		
@@ -417,6 +428,8 @@ public class ApprovalController {
 			num++;
 		}
 		
+		System.out.println(al);
+		
 		// 휴가작성폼 셋팅하기
 		if(vf.getHalfOption() != null){
 			if(vf.getHalfOption().equals("start")) {
@@ -426,12 +439,41 @@ public class ApprovalController {
 			}
 		}
 		
-		System.out.println(vf);
+		//System.out.println(vf);
 		
 		
 		// 첨부파일 처리하기
 		
-		return "";
+		ArrayList <Attachment> atList = new ArrayList<>();
+		
+		if(originNames.size() > 1) {
+			String path = "resources/approval_attachFiles/";
+			
+			for(MultipartFile mf : originNames) {
+				Attachment at = new Attachment();
+				String originName = mf.getOriginalFilename();
+				String saveFilePath = FileUpload.saveFile(mf, session, path);
+				String[] changeNameArr = saveFilePath.split("/");
+				String changeName = changeNameArr[2];
+				at.setOriginName(originName);
+				at.setChangeName(changeName);
+				at.setFilePath(saveFilePath);
+				atList.add(at);
+			}
+		}
+		
+		int result = aService.insertApproval(ap, al, vf, ot, atList);
+		
+		if(result > 0) {
+			AlertMsg msg = new AlertMsg("결재상신", "성공적으로 문서상신 완료되었습니다!");
+			session.setAttribute("successMsg", msg);
+			return "redirect:main.ap";			
+		}else {
+			AlertMsg msg = new AlertMsg("상신실패", "문서 상신에 실패했습니다.");
+			session.setAttribute("failMsg", msg);
+			return "redirect:main.ap";
+		}
+		
 	}
 	
 	

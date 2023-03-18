@@ -149,7 +149,7 @@
     	     	// 상세페이지로 이동하는 function
     	     	if(${not empty list}){
     		        $("table tbody").on("click", "tr", function(){
-    		            location.href = 'detailSPrg.ap?no=' + $(this).children().eq(0).find("#num").val()+"&form="+ $(this).children().eq(2).text()+"&st='기안전체'"; 
+    		            location.href = 'detailSPrg.ap?no=' + $(this).children().eq(0).find("#num").val()+"&form="+ $(this).children().eq(2).text()+"&st=기안전체"; 
     		        }); 
     	        }
             });

@@ -1,7 +1,6 @@
 package com.ep.spring.approval.model.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.ep.spring.approval.model.vo.Approval;
 import com.ep.spring.approval.model.vo.ApprovalLine;
@@ -78,6 +77,6 @@ public interface ApprovalService {
 	int updateCount(Approval a);
 
 	// 15. 결재문서 상신을 위한 서비스
-	int insertApproval(HashMap map);
+	int insertApproval(Approval ap, ArrayList<ApprovalLine> al, VacationForm vf, OverTimeForm ot, ArrayList<Attachment> atList);
 
 }
