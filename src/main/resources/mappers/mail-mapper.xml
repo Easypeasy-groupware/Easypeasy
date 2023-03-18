@@ -51,7 +51,6 @@
 	      join employee e on r.send_mail_address = e.email
 	     where 
 			   recep_mail_address = #{email}
-		   and r.status = 'Y'
 	     order
 	        by recep_mail_no desc
 	</select>
@@ -210,7 +209,14 @@
 		update rec_mail
 		   set 
   	   		   rec_check = #{ recCheck }
-		 where mail_no = #{ mailNo }
+		 where recep_mail_no = #{ recMailNo }
+	</update>
+	
+	<update id="deleteMail">
+		update rec_mail
+		   set 
+		       status = 'N'
+		 where recep_mail_no = #{ recMailNo }
 	</update>
 	
 </mapper>

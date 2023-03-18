@@ -334,6 +334,7 @@
 					<c:choose>
 						<c:when test="${ not empty recMailList }">
 							<c:forEach var="m" begin="0" end="5" items="${ recMailList }">
+								<c:if test="${ m.status == 'Y' }">
 									<tr class="mailOne">
 										<td>
 											<div style="width: 230px; height: 25px;">
@@ -350,6 +351,7 @@
 											<input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
 										</td>
 									</tr>
+								</c:if>
 							</c:forEach>
 						</c:when>
 						<c:otherwise>
