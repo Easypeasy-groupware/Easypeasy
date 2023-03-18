@@ -50,7 +50,7 @@
             </span>
         </div>
         <br>
-        <div id="calendar"></div>
+        <div id="calendar" style="width: 1000px; padding-left: 10px;"></div>
     </div>
     
     <!-- myModal -->

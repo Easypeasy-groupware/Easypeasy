@@ -21,7 +21,8 @@
     }
 
     #content>table{
-        width: 950px;
+    	margin-left: 20px;
+        width: 98%;
         text-align: center;
     }
     #content>table>thead{
@@ -120,7 +121,7 @@
             </tfoot>
         </table>
         <br>
-        <div style="margin-left: 935px">
+        <div style="margin-left: 955px">
             <a href="list.db" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">목록</a>
         </div>
         <br>
