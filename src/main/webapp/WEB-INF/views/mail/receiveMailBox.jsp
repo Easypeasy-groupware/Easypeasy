@@ -46,10 +46,10 @@
     .mail_check{width: 30px; padding-top: 2px;}
     .mail_imgList{width: 110px; text-align: center; line-height: 43px;}
     .mail_img{width: 30px; line-height: 2.5;}
-    .mail_sender_name{width: 80px}
-    .mail_sender{width: 200px; overflow: hidden;}
-    .mail_title{width: 400px; overflow: hidden;}
-    .mail_date{width: 130px; text-align: right;}
+    .mail_sender_name{width: 60px; margin-right: 15px; overflow: hidden;}
+    .mail_sender{width: 180px; margin-right: 15px; overflow: hidden;}
+    .mail_title{width: 400px; margin-right: 15px; overflow: hidden;}
+    .mail_date{width: 145px; text-align: right;}
 
     #paging{text-align: center; display: inline-block; padding-left :0;}
     #paging li {text-align: center; float: left; list-style:none; border-radius:10px; margin:2px; background-color: rgb(234, 234, 234);}
@@ -72,16 +72,28 @@
                 <div id="mail_header_info">
                     <b>받은 메일함</b>
                     <img src="">
-                    <b>전체메일 </b><b style="color: dodgerblue;">${ fn:length(mailList) } </b><b>/ </b>
-                    <b style="color: crimson">
-                        <c:forEach var="m" items="${ mailList }" varStatus="status">
-                            <c:if test="${ m.recCheck == 'N' }">
-                                <c:set var="unReadMail" value="${unReadMail + 1}" />
+                    <b style="font-size: 20px;">전체메일 </b>
+                    <b style="color: dodgerblue; font-size: 23px;">${ fn:length(mailList) } </b>
+                    <b>/ </b>
+                    <b style="font-size: 20px;">안읽은 메일 </b>
+                    <b style="color: crimson; font-size: 23px;">
+                        <c:forEach var="m" items="${ mailList }">
+                            <c:if test="${ m.status == 'Y' }">
+                                <c:set var="allMail" value="${allMail + 1}" />
                             </c:if>
+                            <c:choose>
+                                <c:when test="${ m.recCheck == 'Y' }">
+                                    <c:set var="readMail" value="${readMail + 1}" />
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="readMail" value="0" />
+                                </c:otherwise>
+                            </c:choose>
                         </c:forEach>
-                        ${ unReadMail }
+                        ${allMail-readMail}
                     </b>
                 </div>
+                
                 <div id="search_bar">
                     <form action="">
                         <select name="search" id="">

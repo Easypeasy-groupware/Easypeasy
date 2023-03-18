@@ -161,10 +161,12 @@ public class MailController {
 		Mail mail = mService.selectMail(m);
 		ArrayList<Mail> receiverList = mService.selectReceiverList(m);
 		ArrayList<Attachment> attachmentList = mService.selectAttachmentList(m);
+		ArrayList<Mail> mailList = mService.selectReceiveMailList(m.getRecMailAdd());
 		
 		mv.addObject("mail", mail);
 		mv.addObject("receiverList", receiverList);
 		mv.addObject("attachmentList", attachmentList);
+		mv.addObject("mailList", mailList);
 		mv.setViewName("mail/receiveMail");
 		return mv;
 	}

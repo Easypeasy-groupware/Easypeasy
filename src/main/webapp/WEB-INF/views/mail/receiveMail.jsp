@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,9 +63,26 @@
         <div id="mail_header">
             <div id="mail_header1" style="width:100%; float:left">
                 <div id="mail_header_info">
-                    <b>받은 메일함</b>
-                    <img src="">
-                    <b>전체메일 </b><b style="color: dodgerblue;"></b><b>/ </b><b style="color: crimson">75</b>
+                    <b style="font-size: 20px;">전체메일 </b>
+                    <b style="color: dodgerblue; font-size: 23px;">${ fn:length(mailList) } </b>
+                    <b>/ </b>
+                    <b style="font-size: 20px;">안읽은 메일 </b>
+                    <b style="color: crimson; font-size: 23px;">
+                        <c:forEach var="m" items="${ mailList }">
+                            <c:if test="${ m.status == 'Y' }">
+                                <c:set var="allMail" value="${allMail + 1}" />
+                            </c:if>
+                            <c:choose>
+                                <c:when test="${ m.recCheck == 'Y' }">
+                                    <c:set var="readMail" value="${readMail + 1}" />
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="readMail" value="0" />
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                        ${allMail-readMail}
+                    </b>
                 </div>
                 <div id="search_bar">
                     <form action="">

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -317,8 +319,8 @@
 	
 	        <table>
 	            <colgroup>
-	                <col style="width:15%;">
-	                <col sytle="width:55%;">
+	                <col style="width:30%;">
+	                <col sytle="width:45%;">
 	                <col style="width:25%;">
 	            </colgroup>
 	            <thead>
@@ -328,36 +330,55 @@
 	                    <th>수신일</th>
 	                </tr>
 	            </thead>
-	            <tbody align="center">
-	                <tr>
-	                    <td>유재석</td>
-	                    <td>일하기 싫으면 떠나라</td>
-	                    <td>2023-03-02 09:03:02</td>
-	                </tr>
-	                <tr>
-	                    <td>유재석</td>
-	                    <td>일하기 싫으면 떠나라</td>
-	                    <td>2023-03-02 09:03:02</td>
-	                </tr>
-	                <tr>
-	                    <td>유재석</td>
-	                    <td>일하기 싫으면 떠나라</td>
-	                    <td>2023-03-02 09:03:02</td>
-	                </tr>
-	                <tr>
-	                    <td>유재석</td>
-	                    <td>일하기 싫으면 떠나라</td>
-	                    <td>2023-03-02 09:03:02</td>
-	                </tr>
-	                <tr>
-	                    <td>유재석</td>
-	                    <td>일하기 싫으면 떠나라</td>
-	                    <td>2023-03-02 09:03:02</td>
-	                </tr>
+	            <tbody>
+					<c:choose>
+						<c:when test="${ not empty recMailList }">
+							<c:forEach var="m" begin="0" end="5" items="${ recMailList }">
+									<tr class="mailOne">
+										<td>
+											<div style="width: 200px; height: 25px;">
+												<div style="float: left;">${ m.empName }&nbsp;</div>
+												<div div style="width: 140px; float: left; overflow: hidden; text-overflow: ellipsis;">${ i.sendMailAdd }</div>
+											</div>
+										</td>
+										<td>
+											<div style="overflow: hidden;">${ m.mailTitle }</div>
+										</td>
+										<td>
+											${ m.recDate }
+											<input class="mailNo" type="hidden" name="mailNo" value="${ m.mailNo }">
+											<input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
+										</td>
+									</tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td colspan="3" style="text-align: center;">수신 메일이 없습니다.</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
 	            </tbody>
 	        </table>
+
+			<script>
+				document.querySelectorAll(".mailOne").forEach(function(mailOne){
+					mailOne.addEventListener('click', function(){
+						const form = document.createElement("form");
+						const table = document.createElement("table");
+						const tr = this.cloneNode(true)
+						table.append(tr);
+						form.append(table);
+						form.setAttribute("style", "display:none;")
+						form.action = "select.ma";
+						form.method = "POST";
+						document.body.append(form);
+						form.submit();
+					})
+				});
+			</script>
+
 	    </div>
-	
 	</div>
 	<div id="right-col">
 	    <div class="attendance">

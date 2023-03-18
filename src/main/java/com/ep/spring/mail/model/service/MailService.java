@@ -37,6 +37,7 @@ public interface MailService {
 	// 5. 메일 읽음/안읽음 처리
 	void updateReadUnreadMail(Mail m);
 
+
 	
 
 	

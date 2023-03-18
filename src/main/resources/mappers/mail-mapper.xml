@@ -40,16 +40,18 @@
 			 , MAIL_TITLE
 			 , MAIL_CONTENT
 			 , REC_CHECK
-			 , to_char(REC_DATE , 'YYYY-MM-DD HH24:MI') "REC_DATE"
+			 , REC_DATE
 			 , IMPOR_MAIL
 			 , JUNK_MAIL
 			 , RESER_MAIL
+			 , r.STATUS
 			 , REFERENCE
 			 , HIDDEN_REFERENCE
 	      from rec_mail r
 	      join employee e on r.send_mail_address = e.email
 	     where 
 			   recep_mail_address = #{email}
+		   and r.status = 'Y'
 	     order
 	        by recep_mail_no desc
 	</select>
@@ -124,7 +126,7 @@
 		  , #{ sendMailAdd }
 		  , #{ mailTitle }
 		  , #{ mailContent }
-		  , to_date(sysdate, 'YYYY-MM-DD HH24:MI')
+		  , to_char(sysdate, 'YYYY-MM-DD HH24:mi:SS')
 		  , #{ imporMail }
 		  , #{ reference }
 		  , #{ hiddenReference }
@@ -150,7 +152,7 @@
 		  , #{ originName }
 		  , #{ changeName }
 		  , #{ filePath }
-		  , to_date(sysdate, 'YYYY-MM-DD HH24:MI')
+		  , to_char(sysdate, 'YYYY-MM-DD HH24:mi:SS')
 		  , 'M'
 		  )
 	</insert>
@@ -179,7 +181,7 @@
 			 , MAIL_TITLE
 			 , MAIL_CONTENT
 			 , REC_CHECK
-			 , to_char(REC_DATE , 'YYYY-MM-DD HH24:MI') "REC_DATE"
+			 , REC_DATE
 			 , IMPOR_MAIL
 			 , REFERENCE
 			 , HIDDEN_REFERENCE
