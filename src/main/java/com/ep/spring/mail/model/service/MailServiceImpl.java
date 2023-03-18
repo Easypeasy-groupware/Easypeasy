@@ -74,8 +74,13 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public void updateReadUnreadMail(Mail m) {
-		mDao.readUnreadMail(m, sqlSession);
+	public int updateReadUnreadMail(Mail m) {
+		return mDao.readUnreadMail(m, sqlSession);
+	}
+
+	@Override
+	public int deleteMail(Mail m) {
+		return mDao.deleteMail(m, sqlSession);
 	}
 
 	

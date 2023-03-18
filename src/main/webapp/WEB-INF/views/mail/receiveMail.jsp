@@ -64,22 +64,28 @@
             <div id="mail_header1" style="width:100%; float:left">
                 <div id="mail_header_info">
                     <b style="font-size: 20px;">전체메일 </b>
-                    <b style="color: dodgerblue; font-size: 23px;">${ fn:length(mailList) } </b>
+                    <b style="color: dodgerblue; font-size: 23px;">
+                        <c:forEach var="m" items="${ mailList }">
+                            <c:if test="${ m.status == 'Y' }">
+                                <c:set var="allMail" value="${allMail + 1}" />
+                            </c:if>
+                        </c:forEach>
+                        ${allMail}
+                    </b>
                     <b>/ </b>
                     <b style="font-size: 20px;">안읽은 메일 </b>
                     <b style="color: crimson; font-size: 23px;">
                         <c:forEach var="m" items="${ mailList }">
                             <c:if test="${ m.status == 'Y' }">
-                                <c:set var="allMail" value="${allMail + 1}" />
+                                <c:choose>
+                                    <c:when test="${ m.recCheck == 'Y' }">
+                                        <c:set var="readMail" value="${readMail + 1}" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="readMail" value="0" />
+                                    </c:otherwise>
+                                </c:choose>
                             </c:if>
-                            <c:choose>
-                                <c:when test="${ m.recCheck == 'Y' }">
-                                    <c:set var="readMail" value="${readMail + 1}" />
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="readMail" value="0" />
-                                </c:otherwise>
-                            </c:choose>
                         </c:forEach>
                         ${allMail-readMail}
                     </b>
@@ -254,24 +260,36 @@
         // 메일 삭제 - 스팸 등록과 동일
         let deleteMail = document.getElementById("delete");
         deleteMail.addEventListener('click', function(){
-            let checkedBoxSum = 0
-            let count = 0;
-            let arr = [];
-            let form = document.createElement("form");
-                mailCheckBox.forEach((i) => {
-                    if(i.checked == true) {
-                        checkedBoxSum += 1;
-                        arr[count] = mailNoList[i.value].value;
-                        count += 1; 
-                    }
-                })
-                console.log(arr);
-
-            if(checkedBoxSum != 0) {
-
-            }else{
-                alert('체크박스를 선택해주세요');
-            }
+        swal({
+            title: "정말로 삭제하시겠습니까?",
+            text: "삭제된 메세지는 휴지통으로 이동됩니다.",
+            icon: "warning",
+            buttons: ["취소", "삭제"],
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+                const form = document.createElement("form");
+                const input1 = document.createElement("input");
+                const input2 = document.createElement("input");
+                const input3 = document.createElement("input");
+                const input4 = document.createElement("input");
+                input1.setAttribute("name", "mailNo");
+                input2.setAttribute("name", "recMailNo");
+                input3.setAttribute("name", "recMailAdd");
+                input4.setAttribute("name", "empNo");
+                input1.value = "${ mail.mailNo }";
+                input2.value = "${ mail.recMailNo }";
+                input3.value = "${loginUser.email}";
+                input4.value = "${loginUser.empNo}";
+                form.append(input1);
+                form.append(input2);
+                form.append(input3);
+                form.append(input4);
+                form.action = "delete.ma"
+                form.method = "POST"
+                document.body.append(form);
+                form.submit();
+            });
         });
 
         // 태그
@@ -362,12 +380,6 @@
             });
         };
        
-
-        // 새로고침
-        // let refresh = document.getElementById("refresh");
-        // refresh.addEventListener('click', function(){
-            
-        // });
 
         // 즐겨찾기
         let favoriteList = document.querySelectorAll('.favorite');

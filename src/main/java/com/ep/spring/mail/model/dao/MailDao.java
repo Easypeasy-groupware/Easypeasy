@@ -64,8 +64,12 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("attachmentMapper.selectMailAttachmentList", m);
 	}
 
-	public void readUnreadMail(Mail m, SqlSessionTemplate sqlSession) {
-		sqlSession.update("mailMapper.readUnreadMail", m);
+	public int readUnreadMail(Mail m, SqlSessionTemplate sqlSession) {
+		return sqlSession.update("mailMapper.readUnreadMail", m);
+	}
+
+	public int deleteMail(Mail m, SqlSessionTemplate sqlSession) {
+		return sqlSession.update("mailMapper.deleteMail", m);
 	}
 
 	

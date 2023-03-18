@@ -13,8 +13,10 @@
     #title{font-size:20px; font-weight:600; color:rgb(93, 109, 75);}
     #title:hover{color:rgb(58, 69, 47); text-decoration:none;}
     .menu-btn{width:70%; height:35px; margin:auto; margin-bottom:15px; padding:5px 0 5px 0; background-color: rgb(142, 161, 122); border-radius:4px; text-align:center;}
-	#menu-add-btn{color:white; text-decoration:none;}
+	#menu-add-btn{color:white; text-decoration:none; cursor: pointer;}
 	.menu-btn:hover{background-color: rgb(93, 105, 81);}
+    .mailbox:hover{font-weight: 600; cursor: pointer;}
+    .tagOne:hover{font-weight: 600; cursor: pointer;}
     #mail_side_bar{width: 200px; height: 1000px; float: left; border-right: 2px solid rgb(185, 187, 221); padding: 10px;}
     .mailbox_subject{width: 157px; float: left; font-size: 18px; font-weight: 700; color: darkslategrey;}
     .settings{width: 13px; padding-top: 5px;}
@@ -56,9 +58,9 @@
             <img class="settings" src="resources/common_images/setting.png">
             <br><br>
             <div class="boxList">
-                <div>안읽은 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
-                <div>중요 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
-                <div>작성중인 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
+                <div class="mailbox">안읽은 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
+                <div class="mailbox">중요 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
+                <div class="mailbox">작성중인 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
             </div>
         </div>
         <br><br>
@@ -69,7 +71,7 @@
                 <c:if test="${ not empty tagList }" >
                     <c:forEach var="t" items="${ tagList }" >
                         <div class="tag">
-                            <div class="tagTriangle" style="border-left: 15px solid ${t.tagColor};"></div><div>${ t.tagName }</div>
+                            <div class="tagTriangle" style="border-left: 15px solid ${t.tagColor};"></div><div class="tagOne">${ t.tagName }</div>
                         </div>
                     </c:forEach>
                 </c:if>
@@ -118,23 +120,45 @@
                 </div>
             </form>
         </div>
+
+        <script>
+            // 태그 추가 화면
+            document.getElementById("add_tag").addEventListener('click', function(){
+                document.getElementById("add_tag_view").style.display = 'block'
+            });
+            
+            // tag_color 선택
+            let tagColorList = document.querySelectorAll("#select_tag_color div");
+            tagColorList.forEach(function(tagColor){
+                tagColor.addEventListener('click', function(){
+                    tagColorList.forEach(function(tagColor){
+                        tagColor.style.border = "none"
+                    });
+                    this.style.border = "2px dashed white";
+                    const inputColor = document.getElementById("tagColor");
+                    let colorValue = this.getAttribute("style").split(': ', 2)[1].split(';', 1)[0];
+                    inputColor.setAttribute("value", colorValue);
+                });
+            });
+        </script>
+
         <div>
             <div class="mailbox_subject">메일함</div>
             <img class="settings" src="resources/common_images/setting.png">
             <br><br>
             <div class="boxList">
-                <div>받은 메일함(전체)</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div>오늘 온 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div>내게 쓴 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div>첨부 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div>보낸 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div>예약 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div class="mailbox">받은 메일함(전체)</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div class="mailbox">오늘 온 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div class="mailbox">내게 쓴 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div class="mailbox">첨부 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div class="mailbox">보낸 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div class="mailbox">예약 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
                 <div style="width: 200px;">
-                    <div id="spambox">스팸 메일함 </div>
+                    <div class="mailbox" id="spambox">스팸 메일함 </div>
                     <button class="btn btn-outline-secondary btn-sm">비우기</button>
                 </div>
                 <div style="width: 200px;">
-                    <div id="trashcan">휴지통 </div>
+                    <div class="mailbox" id="trashcan">휴지통 </div>
                     <button class="btn btn-outline-secondary btn-sm">비우기</button>
                 </div>
             </div>
@@ -143,25 +167,11 @@
     </div>
 
     <script>
-        // 태그 추가 화면
-        document.getElementById("add_tag").addEventListener('click', function(){
-            document.getElementById("add_tag_view").style.display = 'block'
-        });
-        
-        // tag_color 선택
-        let tagColorList = document.querySelectorAll("#select_tag_color div");
-        tagColorList.forEach(function(tagColor){
-            tagColor.addEventListener('click', function(){
-                tagColorList.forEach(function(tagColor){
-                    tagColor.style.border = "none"
-                });
-                this.style.border = "2px dashed white";
-                const inputColor = document.getElementById("tagColor");
-                let colorValue = this.getAttribute("style").split(': ', 2)[1].split(';', 1)[0];
-                inputColor.setAttribute("value", colorValue);
-            });
-        });
+        document.getElementById("trashcan").addEventListener("click", function(){
+            location.href="deleteList.ma"
+        })
     </script>
-	
+    
+
 </body>
 </html>

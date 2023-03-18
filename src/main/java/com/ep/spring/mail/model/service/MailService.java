@@ -35,7 +35,10 @@ public interface MailService {
 	ArrayList<Attachment> selectAttachmentList(Mail m);
 
 	// 5. 메일 읽음/안읽음 처리
-	void updateReadUnreadMail(Mail m);
+	int updateReadUnreadMail(Mail m);
+
+	// 6. 메일 삭제처리
+	int deleteMail(Mail m);
 
 
 	

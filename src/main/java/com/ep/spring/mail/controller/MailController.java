@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.template.FileUpload;
 import com.ep.spring.login.model.vo.Employee;
@@ -28,7 +30,6 @@ public class MailController {
 	@Autowired
 	private MailService mService;
 	
-	
 	@RequestMapping("list.ma")
 	public ModelAndView selectMailList(HttpSession session, ModelAndView mv) {
 		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
@@ -36,8 +37,8 @@ public class MailController {
 		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
 		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
 		
+		session.setAttribute("tagList", tagList);
 		mv.addObject("mailList", mailList);
-		mv.addObject("tagList", tagList);
 		mv.setViewName("mail/receiveMailBox");
 		return mv;
 	}
@@ -153,6 +154,7 @@ public class MailController {
 		return mv;
 	}
 	
+	// 메일 상세 조회
 	@RequestMapping("select.ma")
 	public ModelAndView selectMail(HttpSession session, ModelAndView mv, Mail m) {
 		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
@@ -171,20 +173,55 @@ public class MailController {
 		return mv;
 	}
 	
+	// 메일 읽음/안읽음 처리
 	@ResponseBody
 	@RequestMapping(value="updateReadUnread.ma")
-	public void updateReadMail(HttpServletResponse response, HttpSession session, Mail m) {
-		mService.updateReadUnreadMail(m);
-		m = mService.selectMail(m);
-		String recCheck = m.getRecCheck();
-		System.out.println(recCheck);
-		
-		response.setContentType("text/html; charset=UTF-8");
-		try {
+	public void updateReadMail(HttpServletResponse response, HttpSession session, Mail m) throws IOException {
+		int result = mService.updateReadUnreadMail(m);
+		if(result > 0) {
+			m = mService.selectMail(m);
+			String recCheck = m.getRecCheck();
+			
+			response.setContentType("text/html; charset=UTF-8");
 			response.getWriter().print(recCheck);
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping("delete.ma")
+	public ModelAndView deleateMail(ModelAndView mv, Mail m, int empNo) {
+		int result = mService.deleteMail(m);
+		
+		AlertMsg msg = new AlertMsg();
+		if(result > 0) {
+			ArrayList<Mail> mailList = mService.selectReceiveMailList(m.getRecMailAdd());
+			ArrayList<MailTag> tagList = mService.selectTagList(empNo);
+			
+			mv.addObject("mailList", mailList);
+			mv.addObject("tagList", tagList);
+			
+			msg.setTitle("메일 삭제");
+			msg.setContent("메일을 성공적으로 삭제했습니다.");
+			mv.addObject("successMsg", msg);
+			mv.setViewName("mail/receiveMailBox");
+			return mv;
+		}else {
+			msg.setTitle("메일 삭제");
+			msg.setContent("메일을 성공적으로 삭제했습니다.");
+			mv.addObject("failMsg", msg);
+			mv.setViewName("mail/receiveMailBox");
+			return mv;
+		}
+		
+	}
+	
+	@RequestMapping("deleteList.ma")
+	public ModelAndView deleteMailList(ModelAndView mv, HttpSession session) {
+		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
+		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
+		
+		mv.addObject("mailList", mailList);
+		mv.setViewName("mail/deleteMailBox");
+		return mv;
 	}
 	
 }
