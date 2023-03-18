@@ -336,13 +336,13 @@
 							<c:forEach var="m" begin="0" end="5" items="${ recMailList }">
 									<tr class="mailOne">
 										<td>
-											<div style="width: 200px; height: 25px;">
+											<div style="width: 230px; height: 25px;">
 												<div style="float: left;">${ m.empName }&nbsp;</div>
-												<div div style="width: 140px; float: left; overflow: hidden; text-overflow: ellipsis;">${ i.sendMailAdd }</div>
+												<div div style="width: 160px; float: left; overflow: hidden; text-overflow: ellipsis;">${ m.sendMailAdd }</div>
 											</div>
 										</td>
 										<td>
-											<div style="overflow: hidden;">${ m.mailTitle }</div>
+											<div style="width: 360px; margin-right: 20px; overflow: hidden; text-overflow: ellipsis;">${ m.mailTitle }</div>
 										</td>
 										<td>
 											${ m.recDate }
