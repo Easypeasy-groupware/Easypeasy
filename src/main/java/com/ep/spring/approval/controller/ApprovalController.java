@@ -292,7 +292,7 @@ public class ApprovalController {
 
 		int result = aService.deleteApproval(appNo);
 		
-		System.out.println(result);
+		//System.out.println(result);
 		
 		if(result > 0) {
 				for(int i= 0; i < filePath.size(); i++) {
@@ -384,9 +384,53 @@ public class ApprovalController {
 	@RequestMapping("insert.ap")
 	public String insertApproval(HttpSession session, Model model, List<MultipartFile> originNames, 
 								 Approval ap, VacationForm vf, OverTimeForm ot) {
-		System.out.println(ap);
+		//System.out.println(ap);
+		//System.out.println(originNames);
+		
+		ap.setWriterNo(((Employee)session.getAttribute("loginUser")).getEmpNo());
+		if(ap.getFormCode() == 3 || ap.getFormCode() == 4) {
+			ap.setTitle(ap.getFormName());
+			ap.setConPeriod(3);
+			ap.setSecGrade("B");
+		}else {
+			ap.setConPeriod(5);
+			ap.setSecGrade("A");
+		}
+	
+		
+		// 결재자 ApprovalLine에 담기
+		ap.setAppSequence(1);
+		ap.setAppAmount(ap.getAlList().size());
+		
+		ArrayList<ApprovalLine> al = new ArrayList<>();
+		for(int i = 0; i< ap.getAlList().size(); i++) {
+			ap.getAlList();
+			al.add(i, ap.getAlList().get(i));
+			al.get(i).setRefWhether("N");
+		}
+		
+		// 참조자 ApprovalLine에 담기
+		int num = 0;
+		for(int j = ap.getAlList().size(); j< (ap.getAlList().size() + ap.getRefList().size()); j++) {
+			al.add(j, ap.getRefList().get(num));
+			al.get(j).setRefWhether("Y");
+			num++;
+		}
+		
+		// 휴가작성폼 셋팅하기
+		if(vf.getHalfOption() != null){
+			if(vf.getHalfOption().equals("start")) {
+				vf.setHalfDay(vf.getVacStart());
+			}else {
+				vf.setHalfDay(vf.getVacEnd());
+			}
+		}
+		
 		System.out.println(vf);
-		System.out.println(originNames);
+		
+		
+		// 첨부파일 처리하기
+		
 		return "";
 	}
 	

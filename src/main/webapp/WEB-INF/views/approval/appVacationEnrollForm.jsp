@@ -169,11 +169,11 @@
 	                                <label for="content">반차여부</label>
 	                            </td>
 	                            <td>
-	                                &nbsp;&nbsp;<input type="checkbox" id="vac-startHalf" onclick="halfCheck();"> 
+	                                &nbsp;&nbsp;<input type="checkbox" name="halfOption" id="vac-startHalf" value="start" onclick="halfCheck();"> 
 	                                <label for="vac-startHalf">시작일</label> 
 	                                ( <input type="radio" name="start-half" id="start-half1" value="AM" >  &nbsp; <label for="start-half1">오전</label>  &nbsp;
 	                                <input type="radio" name="start-half" id="start-half2" value="PM">  &nbsp; <label for="start-half2">오후</label> )
-	                                &nbsp;&nbsp;<input type="checkbox" id="vac-endHalf" onclick="halfCheck();">
+	                                &nbsp;&nbsp;<input type="checkbox" id="vac-endHalf" name="halfOption" value="end" onclick="halfCheck();">
 	                                <label for="vac-endHalf">종료일</label> 
 	                                ( <input type="radio" name="end-half" id="end-half1" value="AM">  &nbsp; <label for="end-half1">오전</label> &nbsp;
 	                                <input type="radio" name="end-half" id="end-half2" value="PM">  &nbsp; <label for="end-half2">오후</label> )

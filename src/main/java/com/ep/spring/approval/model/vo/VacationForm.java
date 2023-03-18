@@ -18,4 +18,5 @@ public class VacationForm {
 	private String halfStatus;
 	private double vacUse;
 	private String halfDay;
+	private String halfOption;
 }
