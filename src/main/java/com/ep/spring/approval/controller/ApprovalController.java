@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -381,9 +382,11 @@ public class ApprovalController {
 	}
 	
 	@RequestMapping("insert.ap")
-	public String insertApproval(HttpSession session, Model model, ArrayList<MultipartFile> upfile, 
-								 ArrayList<ApprovalLine> appLine, Approval ap, VacationForm vf, OverTimeForm ot) {
-		
+	public String insertApproval(HttpSession session, Model model, List<MultipartFile> originNames, 
+								 Approval ap, VacationForm vf, OverTimeForm ot) {
+		System.out.println(ap);
+		System.out.println(vf);
+		System.out.println(originNames);
 		return "";
 	}
 	

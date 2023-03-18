@@ -1,5 +1,7 @@
 package com.ep.spring.approval.model.vo;
 
+import java.util.ArrayList;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,5 +36,8 @@ public class Approval {
 	private String jobCode;
 	private int receiverNo;
 	private String st;
+	
+	private ArrayList<ApprovalLine> alList;
+	private ArrayList<ApprovalLine> refList;
 	
 }

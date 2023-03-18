@@ -81,7 +81,7 @@
     <jsp:include page="appMenubar.jsp" />
     <div class="form-outer">
         <div class="left-outer">
-	        <form id="contentArea">
+	        <form id="contentArea" action="insert.ap" method="POST" enctype="multipart/form-data">
 	            <div class="left-form1">
 	                <p>
 		                <b style="font-size:30px;">휴가신청서</b>
@@ -171,12 +171,12 @@
 	                            <td>
 	                                &nbsp;&nbsp;<input type="checkbox" id="vac-startHalf" onclick="halfCheck();"> 
 	                                <label for="vac-startHalf">시작일</label> 
-	                                ( <input type="radio" name="start-half" id="start-half1" value="am" >  &nbsp; <label for="start-half1">오전</label>  &nbsp;
-	                                <input type="radio" name="start-half" id="start-half2" >  &nbsp; <label for="start-half2">오후</label> )
+	                                ( <input type="radio" name="start-half" id="start-half1" value="AM" >  &nbsp; <label for="start-half1">오전</label>  &nbsp;
+	                                <input type="radio" name="start-half" id="start-half2" value="PM">  &nbsp; <label for="start-half2">오후</label> )
 	                                &nbsp;&nbsp;<input type="checkbox" id="vac-endHalf" onclick="halfCheck();">
 	                                <label for="vac-endHalf">종료일</label> 
-	                                ( <input type="radio" name="end-half" id="end-half1" >  &nbsp; <label for="end-half1">오전</label> &nbsp;
-	                                <input type="radio" name="end-half" id="end-half2" >  &nbsp; <label for="end-half2">오후</label> )
+	                                ( <input type="radio" name="end-half" id="end-half1" value="AM">  &nbsp; <label for="end-half1">오전</label> &nbsp;
+	                                <input type="radio" name="end-half" id="end-half2" value="PM">  &nbsp; <label for="end-half2">오후</label> )
 									
 	                            </td>
 	                        </tr>
@@ -573,7 +573,9 @@
         	
         	if($("#writerComment").val().trim().length>0){
         		
-        		//$("#commentArea").html($("#writerComment").text());
+        		if($("#content").val().trim().length>0){
+        			swal("내용 작성 후 상신요청해주세요.");
+        		}
         		
         		const appContent = $("#contentArea");
         		
@@ -586,18 +588,28 @@
         		
         		
         		for(let i = 0; i < appBody.length; i++){
-        			recEmpNo.push(appBody[i].value);
-        		}
-        		
-        		for(let j = 0; j < refBody.length; i++){
-        			refList.push(refBody[j].value);
+        			console.log(appBody[i]);
+        			appBody[i].setAttribute('name', 'alList['+ i +'].recEmpNo');
+        	
         		}
 
+        		for(let j = 0; j < refBody.length; j++){
+        			refBody[j].setAttribute('name', 'refList[' + j + '].recEmpNo');
+        	
+        		}
+			
 				let value = "";
 				value += "<input type='hidden' name='writerComment' value='"+ $("#writerComment").val() +"'>";
 				$("#commentArea").html(value);
 				
+				$("input[type=radio][name=start-half]").attr('name', 'halfStatus');
+				$("input[type=radio][name=end-half]").attr('name','halfStatus');
 				
+				appContent.submit();
+				
+				//console.log($(".app-body").html());
+				//console.log($(".rep-body").html());
+				//console.log($("#commentArea").html());
         		//location.href="insert.ap";
         		
         	}else{
