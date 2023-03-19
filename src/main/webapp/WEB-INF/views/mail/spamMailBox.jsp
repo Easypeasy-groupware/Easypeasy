@@ -72,12 +72,13 @@
         <div id="mail_header">
             <div id="mail_header1" style="width:100%; float:left">
                 <div id="mail_header_info">
-                    <b>휴지통</b>
-                    <b style="font-size: 20px;">삭제메일 </b>
+                    <b>스팸 메일함</b>
+                    <img src="">
+                    <b style="font-size: 20px;">스팸메일 </b>
                     <b style="color: cadetblue; font-size: 23px;">
                         <c:forEach var="m" items="${ mailList }">
                             <c:choose>  
-                                <c:when test="${ m.status == 'N' }">
+                                <c:when test="${ m.junkMail == 'Y' }">
                                     <c:set var="allMail" value="${allMail + 1}" />
                                 </c:when>
                                 <c:otherwise>
@@ -104,7 +105,7 @@
             </div><br>
             <div id="mail_header2">
                 <div style="width: 27px; float: left; padding-left: 5px; padding-top: 8px;"><input type="checkbox" name="" id="check_all"></div>
-                <div class="menu menu1" id="spam"><img src="">스팸 등록</div>
+                <div class="menu menu1" id="spam_clear"><img src="">스팸 해제</div>
                 <div class="menu menu2" id="complete_delete"><img src="">영구 삭제</div>
                 <div class="menu menu2" id="shift"><img src="">이동</div>
                 <div style="float: right; width: 150px; font-size: 12px;">
@@ -140,7 +141,7 @@
                 <c:when test="${ not empty mailList }">
                     <c:forEach var="m" items="${ mailList }">
                         <c:choose>
-                            <c:when test="${ m.status == 'N' }">
+                            <c:when test="${ m.junkMail == 'Y' }">
                                 <div class="mail_one" >
                                     <div class="mail_check">
                                         <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="">
@@ -192,11 +193,11 @@
                         </c:choose>
                     </c:forEach>
                     <c:if test="${count > 0}">
-                        <div class="empty">휴지통이 비었습니다.</div>
+                        <div class="empty">스팸 메일함이 비었습니다.</div>
                     </c:if>
                 </c:when>
                 <c:otherwise>
-                    <div class="empty">휴지통이 비었습니다.</div>
+                    <div class="empty">스팸 메일함이 비었습니다.</div>
                 </c:otherwise>
             </c:choose>
         </div>
@@ -231,38 +232,40 @@
                  })
             })
 
-        // 스팸 등록
-        let spamEnroll = document.getElementById("spam");
-        let mailNoList = document.getElementsByClassName("mailNo");
-        spamEnroll.addEventListener('click', function(){
+        // 전체 체크박스 선택 취소
+        let checkAll = document.getElementById("check_all");
+        let mailCheckBox = document.querySelectorAll('.mail_checkbox');
+        checkAll.addEventListener('change', function(event){
+            mailCheckBox.forEach((checkbox) => {
+                checkbox.checked = checkAll.checked;
+            })
+        });
+
+        // 스팸 해제
+        let spamClear = document.getElementById("spam_clear");
+        spamClear.addEventListener('click', function(){
         let checkedBoxSum = 0
         let count = 0;
         let arr = [];
-        let form = document.createElement("form");
             mailCheckBox.forEach((i) => {
                 if(i.checked == true) {
                     checkedBoxSum += 1;
-                    arr[count] = mailNoList[i.value].value;
-                    count += 1; 
+                    let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
+                    arr.push(value);
                 }
             })
-            console.log(arr);
 
             if(checkedBoxSum != 0) {
-
-            // form.setAttribute("charset", "UTF-8");
-            // form.setAttribute("method", "POST");  
-            // form.setAttribute("action", "액션 주소");
-
-            // let hiddenInput = document.createElement("input");
-            // hiddenInput.setAttribute("type", "hidden");
-            // hiddenInput.setAttribute("name", "mailNoArr");
-            // hiddenInput.setAttribute("value", arr);
-            // form.appendChild(hiddenInput);
-
-            // document.body.appendChild(form);
-            // form.submit();
-
+                const form = document.createElement("form");
+                const input = document.createElement("input");
+                input.setAttribute("name", "mailNoList");
+                input.setAttribute("multiple", "multiple")
+                input.setAttribute("value", arr)
+                form.append(input)
+                form.method = "POST"
+                form.action = "spamClear.ma"
+                document.body.append(form)
+                form.submit();
             }else {
                 alert('체크박스를 선택해주세요');
             }

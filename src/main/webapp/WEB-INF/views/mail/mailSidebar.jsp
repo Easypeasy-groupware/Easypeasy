@@ -173,6 +173,9 @@
         });
 
         // 스팸 메일함 이동
+        document.getElementById("spambox").addEventListener("click", function(){
+            location.href="spamList.ma";
+        });
 
         // 스팸 메일함 비우기
         document.getElementById("spam_completeDel").addEventListener("click", function(){

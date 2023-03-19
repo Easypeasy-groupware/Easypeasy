@@ -88,6 +88,16 @@ public class MailServiceImpl implements MailService {
 		return mDao.completeDeleteMail(m, sqlSession);
 	}
 
+	@Override
+	public int spamEnroll(Mail m, int[] mailNoList) {
+		return mDao.spamEnroll(m, mailNoList, sqlSession);
+	}
+
+	@Override
+	public int spamClear(Mail m, int[] mailNoList) {
+		return mDao.spamClear(m, mailNoList, sqlSession);
+	}
+
 	
 
 	

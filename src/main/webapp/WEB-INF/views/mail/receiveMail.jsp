@@ -63,32 +63,72 @@
         <div id="mail_header">
             <div id="mail_header1" style="width:100%; float:left">
                 <div id="mail_header_info">
-                    <b style="font-size: 20px;">전체메일 </b>
-                    <b style="color: dodgerblue; font-size: 23px;">
-                        <c:forEach var="m" items="${ mailList }">
-                            <c:if test="${ m.status == 'Y' }">
-                                <c:set var="allMail" value="${allMail + 1}" />
-                            </c:if>
-                        </c:forEach>
-                        ${allMail}
-                    </b>
-                    <b>/ </b>
-                    <b style="font-size: 20px;">안읽은 메일 </b>
-                    <b style="color: crimson; font-size: 23px;">
-                        <c:forEach var="m" items="${ mailList }">
-                            <c:if test="${ m.status == 'Y' }">
-                                <c:choose>
-                                    <c:when test="${ m.recCheck == 'Y' }">
-                                        <c:set var="readMail" value="${readMail + 1}" />
-                                    </c:when>
-                                    <c:otherwise>
-                                        <c:set var="readMail" value="0" />
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:if>
-                        </c:forEach>
-                        ${allMail-readMail}
-                    </b>
+                    <c:choose>
+                        <c:when test="${mail.status == 'Y' && mail.junkMail == 'N'}">
+                            <b style="font-size: 20px;">전체메일 </b>
+                            <b style="color: dodgerblue; font-size: 23px;">
+                                <c:forEach var="m" items="${ mailList }">
+                                    <c:if test="${ m.status == 'Y' }">
+                                        <c:set var="allMail" value="${allMail + 1}" />
+                                    </c:if>
+                                </c:forEach>
+                                ${allMail}
+                            </b>
+                            <b>/ </b>
+                            <b style="font-size: 20px;">안읽은 메일 </b>
+                            <b style="color: crimson; font-size: 23px;">
+                                <c:forEach var="m" items="${ mailList }">
+                                    <c:if test="${ m.status == 'Y' }">
+                                        <c:choose>
+                                            <c:when test="${ m.recCheck == 'Y' }">
+                                                <c:set var="readMail" value="${readMail + 1}" />
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:set var="readMail" value="0" />
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if>
+                                </c:forEach>
+                                ${allMail-readMail}
+                            </b>
+                        </c:when>
+                        <c:when test="${mail.status == 'N' && mail.junkMail == 'N'}">
+                            <b>휴지통</b>
+                            <b style="font-size: 20px;">삭제메일 </b>
+                            <b style="color: cadetblue; font-size: 23px;">
+                                <c:forEach var="m" items="${ mailList }">
+                                    <c:choose>  
+                                        <c:when test="${ m.status == 'N' }">
+                                            <c:set var="allMail" value="${allMail + 1}" />
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:set var="allMail" value="0" />
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                                ${allMail}
+                            </b>
+                        </c:when>
+                        <c:otherwise>
+                            <b>스팸 메일함</b>
+                            <img src="">
+                            <b style="font-size: 20px;">스팸메일 </b>
+                            <b style="color: cadetblue; font-size: 23px;">
+                                <c:forEach var="m" items="${ mailList }">
+                                    <c:choose>  
+                                        <c:when test="${ m.junkMail == 'Y' }">
+                                            <c:set var="allMail" value="${allMail + 1}" />
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:set var="allMail" value="0" />
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                                ${allMail}
+                            </b>
+                        </c:otherwise>
+                    </c:choose>
+                    
                 </div>
                 <div id="search_bar">
                     <form action="">
@@ -104,23 +144,43 @@
                 </div>
             </div><br>
             <div id="mail_header2">
-                <div class="menu" style="width: 27px;"><input type="checkbox" name="" id="check_all"></div>
-                <div class="menu menu1" id="spam"><img src="">스팸 등록</div>
-                <div class="menu menu2" id="reply"><img src="">답장</div>
-                <div class="menu menu2" id="delete"><img src="">삭제</div>
-                <div class="menu menu2" id="tag"><img src="">태그</div>
-                <div class="menu menu2" id="forward"><img src="">전달</div>
-                <div class="menu menu2" id="shift"><img src="">이동</div>
+                <!-- 메일함에 따라 보여지는 메뉴 탭 -->
                 <c:choose>
-                    <c:when test="${ mail.recCheck == 'Y' }">
-                        <div class="menu menu3" id="read" style="display: block;"><img class="mail_img" src="resources/common_images/mail_read.png">읽음</div>
-                        <div class="menu menu3" id="unRead" style="display: none;"><img class="mail_img" src="resources/common_images/mail_unRead.png">안읽음</div>
+                    <c:when test="${mail.junkMail == 'Y'}">
+                        <div class="menu menu1" id="spam_clear">스팸 해제</div>
                     </c:when>
                     <c:otherwise>
-                        <div class="menu menu3" id="unRead" style="display: block;"><img class="mail_img" src="resources/common_images/mail_unRead.png">안읽음</div>
-                        <div class="menu menu3" id="read" style="display: none;"><img class="mail_img" src="resources/common_images/mail_read.png">읽음</div>
+                        <div class="menu menu1" id="spam">스팸 등록</div>
                     </c:otherwise>
                 </c:choose>
+                <c:choose>
+                    <c:when test="${mail.status == 'Y' && mail.junkMail == 'N'}">
+                        <div class="menu menu2" id="reply">답장</div>
+                        <div class="menu menu2" id="delete">삭제</div>
+                        <div class="menu menu2" id="tag">태그</div>
+                        <div class="menu menu2" id="forward">전달</div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="menu menu2" id="complete_delete">영구 삭제</div>
+                    </c:otherwise>
+                </c:choose>
+                <div class="menu menu2" id="shift">이동</div>
+
+                <!-- 메일 수신 처리 -->
+                <c:if test="${mail.status == 'Y' && mail.junkMail == 'N'}">
+                    <c:choose>
+                        <c:when test="${ mail.recCheck == 'Y' }">
+                            <div class="menu menu3" id="read" style="display: block;"><img class="mail_img" src="resources/common_images/mail_read.png">읽음</div>
+                            <div class="menu menu3" id="unRead" style="display: none;"><img class="mail_img" src="resources/common_images/mail_unRead.png">안읽음</div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="menu menu3" id="unRead" style="display: block;"><img class="mail_img" src="resources/common_images/mail_unRead.png">안읽음</div>
+                            <div class="menu menu3" id="read" style="display: none;"><img class="mail_img" src="resources/common_images/mail_read.png">읽음</div>
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
+                
+                <!-- 메일 위치 이동 -->
                 <div class="menu menu1" style="float: right; margin-left: 10px;" id="after_mail">
                     다음 메일
                     <div class="material-symbols-outlined" style="display: block; padding-top: 8px; float: right;">expand_more</div>
@@ -199,42 +259,19 @@
             </div>
         </div>
     </div>
+
     <script>
         // 스팸 등록
-        let spamEnroll = document.getElementById("spam");
-        let mailNoList = document.getElementsByClassName("mailNo");
-        spamEnroll.addEventListener('click', function(){
-        let checkedBoxSum = 0
-        let count = 0;
-        let arr = [];
-        let form = document.createElement("form");
-            mailCheckBox.forEach((i) => {
-                if(i.checked == true) {
-                    checkedBoxSum += 1;
-                    arr[count] = mailNoList[i.value].value;
-                    count += 1; 
-                }
-            })
-            console.log(arr);
-
-            if(checkedBoxSum != 0) {
-
-            // form.setAttribute("charset", "UTF-8");
-            // form.setAttribute("method", "POST");  
-            // form.setAttribute("action", "액션 주소");
-
-            // let hiddenInput = document.createElement("input");
-            // hiddenInput.setAttribute("type", "hidden");
-            // hiddenInput.setAttribute("name", "mailNoArr");
-            // hiddenInput.setAttribute("value", arr);
-            // form.appendChild(hiddenInput);
-
-            // document.body.appendChild(form);
-            // form.submit();
-
-            }else {
-                alert('체크박스를 선택해주세요');
-            }
+        document.getElementById("spam").addEventListener('click', function(){
+            const form = document.createElement("form");
+            const input = document.createElement("input");
+            input.setAttribute("name", "recMailNo");
+            input.value = "${ mail.recMailNo }";
+            form.append(input);
+            form.action = "spamEnroll.ma"
+            form.method = "POST"
+            document.body.append(form);
+            form.submit();
         });
 
         // 답장
