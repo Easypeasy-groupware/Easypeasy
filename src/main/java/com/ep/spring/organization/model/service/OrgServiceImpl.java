@@ -20,7 +20,7 @@ public class OrgServiceImpl implements OrgService {
 
 	@Autowired
 	private OrgDao oDao;
-
+	
 	@Override
 	public ArrayList<Department> selectDept() {
 		return oDao.selectDept(sqlSession);
@@ -48,9 +48,10 @@ public class OrgServiceImpl implements OrgService {
 
 	@Override
 	public int insertMember(Employee e) {
-
 		int result = oDao.insertMember(sqlSession, e);
+		
 		return result;
+		
 	}
 
 	@Override

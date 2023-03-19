@@ -254,7 +254,7 @@
                                         </span>
                                         &nbsp;
                                         <div class="custom-control custom-checkbox" style="display: inline-block;">
-                                            <input type="checkbox" class="custom-control-input" name="" id="allDay" onclick="allDayShowHidden();">
+                                            <input type="checkbox" class="custom-control-input" name="allDay" value="" id="allDay" onclick="allDayShowHidden();">
                                             <label class="custom-control-label" for="allDay">종일</label>
                                         </div>
                                     </td>
@@ -273,10 +273,17 @@
                                 <tr height="55">
                                     <th>내 캘린더</th>
                                     <td colspan="2">
-                                        <select class="custom-select mb-3" name="" id="sel3">
-                                            <option value="">(기본)내 일정</option>
-                                            <option value="">희희</option>
-                                            <option value="">크크</option>
+                                        <select class="custom-select mb-3" name="calNo" id="sel3">
+                                        	<c:forEach var="c" items="${ myCalList }">
+                                        		<c:choose>
+                                        			<c:when test="${ c.calDefault eq 'Y' }">
+                                        				<option value="${ c.calTitle }">(기본) ${ c.calTitle }</option>
+                                        			</c:when>
+                                        			<c:otherwise>
+                                        				<option value="${ c.calTitle }">${ c.calTitle }</option>
+                                        			</c:otherwise>
+                                        		</c:choose>
+                                       		</c:forEach>
                                         </select>
                                     </td>
                                 </tr>
@@ -296,14 +303,23 @@
                     <div class="modal-footer">
                         <a href="" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">일정상세 입력</a>&nbsp;
                         <button type="submit" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">확인</button>&nbsp;
-                        <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">취소</button>
+                        <button type="button" id="close" class="btn btn-sm btn-light" data-dismiss="modal">취소</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
+    
     <script>
+    	
+    	$(".close").click(function(){
+    		$("#myModal").modal("hide");
+    	})
+    	$("#close").click(function(){
+    		$("#myModal").modal("hide");
+    	})
+    	
         // FullCalendar
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
@@ -419,13 +435,17 @@
 
         })
 
-        // 종일 체크시 시간 선택 숨기기
+     // 종일 체크시 시간 선택 숨기기
         function allDayShowHidden(){
             if($("input:checkbox[id='allDay']").is(":checked") == true) {
-                $(".sel").attr("hidden", true);    
+                $(".sel").attr("hidden", true);
+                $("#sel1").val("00:00"); // 시간 값 00:00시부터
+                $("#sel2").val("23:30"); // 23:30시까지
+                $("input[name=allDay]").val("Y");
             } else {
+            	//console.log($("input:checkbox[id='allDay']").prop("checked", false));
                 $(".sel").attr("hidden", false);
-            }
+            } 
         }
 
         // 전사일정 체크 확인
@@ -436,6 +456,7 @@
                 $(".body").attr("hidden", false);
             }
         }
+        
     </script>
 
 </body>

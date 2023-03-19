@@ -2,4 +2,62 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="scheduleMapper">
 
+	<resultMap id="calendarResult" type="Calendar">
+		<id column="cal_no" property="calNo" />
+		<result column="emp_no" property="empNo" />
+		<result column="cal_title" property="calTitle" />
+		<result column="cal_default" property="calDefault" />
+		<result column="create_date" property="createDate" />
+		<result column="cal_color" property="calColor" />
+	</resultMap>
+
+	<insert id="insertDefaultCalendar">
+		insert
+		  into my_calendar
+		  (
+		  	cal_no
+		  , emp_no
+		  , cal_title
+		  , cal_default
+		  )
+		  values
+		  (
+		  	seq_calno.nextval
+		  , seq_empno.currval
+		  , '내 일정'
+		  , 'Y'
+		  )
+	</insert>
+	
+	<select id="selectMyCalendar" resultMap="calendarResult">
+		select
+			    cal_no
+			  , emp_name
+			  , cal_title
+			  , cal_default
+			  , create_date
+			  , cal_color
+		   from my_calendar
+		   join employee using(emp_no)
+		  where emp_no = #{empNo}
+	</select>
+	
+	<insert id="insertCalendar">
+		insert
+		  into my_calendar
+		  (
+		  	cal_no
+		  , emp_no
+		  , cal_title
+		  , cal_color
+		  )
+		  values
+		  (
+		  	seq_calno.nextval
+		  , #{empNo}
+		  , #{calTitle}
+		  , #{calColor}
+		  )
+	</insert>
+
 </mapper>

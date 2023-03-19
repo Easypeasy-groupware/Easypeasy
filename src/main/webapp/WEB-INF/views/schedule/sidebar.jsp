@@ -37,7 +37,7 @@
 	a:hover{font-weight:600; color:black;}
 	li{list-style:none;}
 	
-	/*일정추가버튼*/
+	/*일정등록버튼*/
 	.menu-btn{width:70%; height:35px; margin:auto; margin-bottom:15px; padding:5px 0 5px 0; background-color: rgb(142, 161, 122); border-radius:4px; text-align:center;}
 	#menu-add-btn{color:white; text-decoration:none;}
 	.menu-btn:hover{background-color: rgb(93, 105, 81);}
@@ -57,6 +57,10 @@
 	.menu-a b{font-size:15px;}
 	.menu-a:hover{text-decoration:none; color:black;}
 	
+	#add_calendar{width:98%; height:35px; margin:auto; text-align:center; padding:5px 10px 3px 0;}
+	.checkbox-company{width:98%; height:35px; margin:auto; text-align:center; padding:5px 0 3px 5px;}
+	#calList-in{width:98%; height:35px; margin:auto; text-align:center; padding:5px 10px 3px 0;}
+	
 	/*제목 리스트*/
 	.add-in, .add-ex{color:rgb(53, 62, 42);}
 	.add-in:hover, .add-ex:hover{text-decoration:none; color:black;}
@@ -71,6 +75,21 @@
 	.menu-list{width:98%; height:35px; margin:auto; padding:5px 0 15px 50px; border-radius:4px;}
 	.menu-list:hover{background-color: rgb(246, 246, 246); text-decoration:none;}
 
+
+	#add_calendar_view {
+	    width: 300px;
+	    height: 280px;
+	    padding-top: 15px;
+	    position: absolute;
+	    top: 400px;
+	    left: 110px;
+	    border-radius: 10px;
+	    border: 1px solid rgb(185, 187, 221);
+	    background: white;
+	    z-index: 10;
+	    display: none;
+	}
+
 </style>
 </head>
 <body>
@@ -82,86 +101,88 @@
         </div>
         
         <div class="menu-btn">
-            <a href="" id="menu-add-btn">일정 추가</a>
+            <a href="insert.sc" id="menu-add-btn">일정 등록</a>
         </div>
         
         <div class="add-type">
             <a href="#" class="menu-a">
-                <b>전사자산</b>
+                <b>내 캘린더</b>
             </a>
-            <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="shlist-key"></span>
+            <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="calList-key"></span>
         </div>
 
-        <div class="add-type" id="add-in" style="display:none;">
-            <a href="" class="add-in"><b>회의실</b></a>
-            <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="inlist-key"></span>
+        <div id="calList-in" style="display:none;">
+        	<div class="custom-control custom-checkbox" style="display: inline-block;">
+	            <input type="checkbox" class="custom-control-input" name="scCompany" id="myCal">
+	            <label class="custom-control-label" for="myCal">내캘린더들</label>
+        	</div>
         </div>
-        <ul class="submenu" id="inlist" style="display:none;">
-        	
-        </ul>
-
         <br>
+        
+        <div id="add_calendar"> + 내 캘린더 추가</div>
+
+        <!-- 캘린더 추가 화면 -->
+        <form id="add_calendar_view" action="insert.cal" method="POST">
+            <b style="line-height: 50px; font-size: 20px; padding-left: 30px; color: grey;">내 캘린더 추가</b>
+            <br>
+            <div style="width: 80%; margin: auto;">
+                <b style="color: rgb(80, 80, 80); margin-bottom: 3px;">추가할 일정 이름을 입력해주세요</b>
+                <input type="text" name="calTitle" style="width: 100%; margin-top: 5px; box-sizing: border-box;">
+            </div>
+           	<br>
+           	<div style="width: 80%; margin: auto;">
+                <b style="color: rgb(80, 80, 80); margin-bottom: 3px;">일정 색상을 선택해주세요</b><br>
+                <input type="color" name="calColor" style="width: 20%; margin-top: 5px; box-sizing: border-box;">
+            </div>
+           	<br>
+            <div style="width: 100%; text-align: center;">
+                <button class="btn btn-sm btn-light" style="background: rgb(214, 223, 204); color: white;">추가</button>
+                <button class="btn btn-sm btn-light" id="close" type="button">취소</button>
+            </div>
+            <input type="hidden" name="empNo" value="${loginUser.empNo}">
+        </form>
+
+        <script>
+            // 캘린더 추가 화면
+            $("#add_calendar").click(function(){
+            	$("#add_calendar_view").css("display", "block");
+            })
+            
+            $("#close").click(function(){
+            	$("#add_calendar_view").css("display", "none");
+            })
+        </script>
+        
+        <div class="custom-control custom-checkbox checkbox-company" style="display: inline-block;">
+            <input type="checkbox" class="custom-control-input" name="scCompany" id="side-company">
+            <label class="custom-control-label" for="side-company">전사 일정</label>
+        </div>
+
+        <br><br>
         <div class="menu-list">
            <a href="#" class="menu-a">
-               <img src="resources/common_images/admin-setting.png" style="width:15px; color:orange;"> <b>예약 관리</b>
+               <img src="resources/common_images/admin-setting.png" style="width:15px; color:orange;"> <b>일정 관리</b>
            </a>
-           <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="setting-key"></span>
        	</div>
-       
-       	<div class="add-type" id="setting-in" style="display:none;">
-        	<a href="settingMettingRoomView.re" class="add-in" style="margin-left: -15px"><b> 자산 관리</b></a>
-        </div>
+     
     </div>
     
     <script>
     	$(function(){
-    		$("#pslist-key").click(function(){
+    		
+    		
+    		$("#calList-key").click(function(){
     			if($(this).attr("src") === "resources/common_images/list-down.png"){
     				$(this).attr("src", "resources/common_images/list-up.png");	
-    				$("#pslist").show();
+    				$("#calList-in").show();
+    				$("#calList-in").show();
     			}else {
     				$(this).attr("src", "resources/common_images/list-down.png");
-    				$("#pslist").hide();
+    				$("#calList-in").hide();
+    				$("#calList-in").hide();
     			}
     		})
     		
-    		$("#shlist-key").click(function(){
-    			if($(this).attr("src") === "resources/common_images/list-down.png"){
-    				$(this).attr("src", "resources/common_images/list-up.png");	
-    				$("#add-in").show();
-    				$("#add-ex").show();
-    			}else {
-    				$(this).attr("src", "resources/common_images/list-down.png");
-    				$("#inlist-key").attr("src", "resources/common_images/list-down.png");
-    				$("#exlist-key").attr("src", "resources/common_images/list-down.png");
-    				$("#add-in").hide();
-    				$("#add-ex").hide();
-    				$("#inlist").hide();
-    				$("#exlist").hide();
-    			}
-    		})
-    		
-    		$('#inlist-key').on("click", $('#inlist-key'), function(){
-    			
-	   			if($(this).attr("src") === "resources/common_images/list-down.png"){
-	   				$(this).attr("src", "resources/common_images/list-up.png");	
-	   				$("#inlist").show();
-	   			}else {
-	   				$(this).attr("src", "resources/common_images/list-down.png");
-	   				$("#inlist").hide();
-	   			}
-    		}) 
-    		
-			$('#exlist-key').on("click", $('#exlist-key'), function(){
-    			
-	   			if($(this).attr("src") === "resources/common_images/list-down.png"){
-	   				$(this).attr("src", "resources/common_images/list-up.png");	
-	   				$("#exlist").show();
-	   			}else {
-	   				$(this).attr("src", "resources/common_images/list-down.png");
-	   				$("#exlist").hide();
-	   			}
-    		}) 
     		
     		$("#setting-key").click(function(){
     			if($(this).attr("src") === "resources/common_images/list-down.png"){
