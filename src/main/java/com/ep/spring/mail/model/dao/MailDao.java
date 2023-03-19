@@ -76,6 +76,32 @@ public class MailDao {
 		return sqlSession.delete("mailMapper.completeDeleteMail", m);
 	}
 
+	public int spamEnroll(Mail m, int[] mailNoList, SqlSessionTemplate sqlSession) {
+		int result = 0;
+		if(mailNoList.length > 0) {
+			for(int mail : mailNoList) {
+				m.setRecMailNo(mail);
+				result += sqlSession.update("mailMapper.spamEnroll", m);
+			}
+		}else {
+			result = sqlSession.update("mailMapper.spamEnroll", m);
+		}
+		return result;
+	}
+
+	public int spamClear(Mail m, int[] mailNoList, SqlSessionTemplate sqlSession) {
+		int result = 0;
+		if(mailNoList.length > 0) {
+			for(int mail : mailNoList) {
+				m.setRecMailNo(mail);
+				result += sqlSession.update("mailMapper.spamClear", m);
+			}
+		}else {
+			result = sqlSession.update("mailMapper.spamClear", m);
+		}
+		return result;
+	}
+
 	
 
 	

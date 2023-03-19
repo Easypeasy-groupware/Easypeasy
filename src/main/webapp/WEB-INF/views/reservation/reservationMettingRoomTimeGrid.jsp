@@ -167,7 +167,7 @@
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">확인</button>&nbsp;
-                        <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">취소</button>
+                        <button type="button" id="close" class="btn btn-sm btn-light" data-dismiss="modal">취소</button>
                     </div>
                 </form>
             </div>
@@ -176,6 +176,14 @@
 
 
     <script>
+    
+	    $(".close").click(function(){
+			$("#myModal").modal("hide");
+		})
+		$("#close").click(function(){
+			$("#myModal").modal("hide");
+		})
+    
         // FullCalendar
         document.addEventListener('DOMContentLoaded', function() {
         	var calendarEl = document.getElementById('calendar');

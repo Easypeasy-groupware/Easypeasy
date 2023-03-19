@@ -19,12 +19,16 @@ import com.ep.spring.login.model.vo.Department;
 import com.ep.spring.login.model.vo.Employee;
 import com.ep.spring.login.model.vo.Job;
 import com.ep.spring.organization.model.service.OrgService;
+import com.ep.spring.schedule.model.service.ScheduleService;
 
 @Controller
 public class OrgController {
 
 	@Autowired
 	private OrgService oService;
+	
+	@Autowired
+	private ScheduleService scService;
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -77,6 +81,7 @@ public class OrgController {
 		int result = oService.insertMember(e);
 		
 		if(result > 0) {
+			int calResult = scService.insertDefaultCalendar();
 			session.setAttribute("alertMsg", "성공적으로 등록되었습니다.");
 			return "redirect:/";
 		}else {

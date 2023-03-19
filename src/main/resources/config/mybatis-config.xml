@@ -32,6 +32,9 @@
 		<typeAlias type="com.ep.spring.dataBoard.model.vo.DataBoard" alias="DataBoard" />
 		<typeAlias type="com.ep.spring.reservation.model.vo.Reservation" alias="Reservation" />
 		<typeAlias type="com.ep.spring.reservation.model.vo.Resource" alias="Resource" />
+		<typeAlias type="com.ep.spring.schedule.model.vo.Schedule" alias="Schedule" />
+		<typeAlias type="com.ep.spring.schedule.model.vo.Calendar" alias="Calendar" />
+		<typeAlias type="com.ep.spring.schedule.model.vo.Attendee" alias="Attendee" />
 		<typeAlias type="com.ep.spring.commute.model.vo.Commute" alias="Commute" />
 		<typeAlias type="com.ep.spring.commute.model.vo.VacationRecode" alias="VacationRecode" />
 		<typeAlias type="com.ep.spring.login.model.vo.Department" alias="Department" />

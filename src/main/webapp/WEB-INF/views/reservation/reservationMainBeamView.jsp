@@ -269,7 +269,7 @@
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">확인</button>&nbsp;
-                        <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">취소</button>
+                        <button type="button" id="close" class="btn btn-sm btn-light" data-dismiss="modal" style="background: white; color: gray;">취소</button>
                     </div>
                 </form>
             </div>
@@ -280,6 +280,14 @@
     <!-- 타임라인 프리미엄 -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.4/index.global.min.js'></script>
     <script>
+    
+	    $(".close").click(function(){
+			$("#myModal").modal("hide");
+		})
+		$("#close").click(function(){
+			$("#myModal").modal("hide");
+		})
+    
         // FullCalendar
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');

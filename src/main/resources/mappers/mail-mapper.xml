@@ -184,6 +184,8 @@
 			 , IMPOR_MAIL
 			 , REFERENCE
 			 , HIDDEN_REFERENCE
+			 , junk_mail
+			 , r.status
 	      from rec_mail r
 	      join employee e on r.send_mail_address = e.email
 	     where 
@@ -231,4 +233,17 @@
 	 	   </if>
 	</delete>
 	
+	<update id="spamEnroll">
+		update rec_mail
+		   set
+		       junk_mail = 'Y'
+		 where recep_mail_no = #{ recMailNo }
+	</update>
+	
+	<update id="spamClear">
+		update rec_mail
+		   set
+		       junk_mail = 'N'
+		 where recep_mail_no = #{ recMailNo }
+	</update>
 </mapper>

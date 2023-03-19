@@ -45,7 +45,7 @@
     <jsp:include page="appMenubar.jsp" />
     <div class="form-outer">
         <div class="left-outer">
-        	<form id="contentArea">
+        	<form id="contentArea" action="insert.ap" method="POST" enctype="multipart/form-data">
 		            <div class="left-form1">
 		                <p>
 		                	<b style="font-size:30px;">연장근무신청서</b>
@@ -103,7 +103,7 @@
 		
 		                        <tr>
 		                            <td style="text-align:center; width:100px;">
-		                                <label for="title">신청현황</label>ㄴ
+		                                <label for="title">신청현황</label>
 		                            </td>
 		                            <td style="width:700px;">
 		                                * * 자정 이후 근무시작인 경우 날짜를 다음날로 지정해주세요.
@@ -114,7 +114,7 @@
 		                                <label for="content">근무구분</label>
 		                            </td>    
 		                            <td>
-		                                &nbsp;&nbsp;<input type="radio" id="extension" name="otKind" value="연장">  <label for="extension" >연장</label>
+		                                &nbsp;&nbsp;<input type="radio" id="extension" name="otKind" value="연장" checked>  <label for="extension" >연장</label>
 		                                &nbsp;&nbsp;<input type="radio" id="night" name="otKind" value="야간">  <label for="night" >야간</label>     
 		                                &nbsp;&nbsp;<input type="radio" id="holiday" name="otKind" value="휴일">  <label for="holiday">휴일</label>
 		                            </td>                        
@@ -125,10 +125,11 @@
 		                            </td>
 		                            <td>
 		                                &nbsp;&nbsp;
-		                                <input  class="dateSelect"  name="" id="" required >
+		                                <input  class="dateSelect"  name="otDate" id="" required >
 		                                <input type="number"  class="dateSelect-start"  name="otStart" id="overStartHour" required style="width:80px;" min="0" max="24"> ~ 
-		                                <input type="number" class="dateSelect-end" name="otEnd" id="overEndHour" required style="width:80px;" min="0" max="24">
-		                                <button onclick="diffTime()">계산</button>
+		                                <input type="number" class="dateSelect-end" name="otEnd" id="overEndHour" required style="width:80px;" min="0" max="24" onchange="diffTime();">
+		                                <span id="diff"></span>
+		                                <!-- <button onclick="diffTime();">계산</button> -->
 		                            </td>
 		                        </tr>
 		                        <tr>
@@ -155,7 +156,7 @@
 		                                <label for="content">신청사유</label>
 		                            </td>
 		                            <td rowspan="5" height="150px;">
-		                                <textarea class="form-control" name="" id="content" rows="10" style="resize:none;"></textarea>
+		                                <textarea class="form-control" name="content" id="content" rows="10" style="resize:none;"></textarea>
 		                            </td>
 		                        </tr>
 		                        <tr></tr>
@@ -192,26 +193,47 @@
 		                        <p><b> 결재선</b></p>
 		                   </div>
 		                  
-		                   <div class="app-comment" style="font-size:15px;">
-		                       <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
-		                       <br>
-		                         회사명 | 부서명
-		                       <br>
-		                        기안
-		                       <br><br>
-		    
-		                       <br>
-		                   </div>
+			               <div class="app-comment" style="font-size:15px;">
+			                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${loginUser.empName} ${loginUser.jobName}
+			                   <br>
+			                     이지피지 | ${loginUser.deptName}
+			                   <br>
+			                    기안
+			                   <br><br><br>
+							
+			               </div>
+			               
+			               <div class="app-body">
+			               </div>
+			               		                   
 		                   <div class="app-comment" style="font-size:15px;">
 		                    <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
 		                    <br>
 		                        회사명 | 부서명
 		                    <br>
 		                        결재
-		                    <br><br>
-		    
-		                    <br>
+		                    <br><br><br>
 		                	</div>
+
+			                <div style=" padding:10px; font-size:20px;">
+			                    <p><b> 참조자</b></p>
+			               </div>
+			               		                	
+			               <div class="app-comment" style="font-size:15px;">
+			                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
+			                   <br>
+			                     회사명 | 부서명
+			                   <br>
+			                    참조
+			                   <br><br><br>
+			               </div>
+			               
+			               <div class="rep-body">
+			               </div>
+			               
+			               <div id="commentArea">
+			               
+			               </div>		                	
 	                    </div>
                     
                     </form>
@@ -249,12 +271,13 @@
                 const diff = endTime.value - startTime.value;
 
                 if(startTime.value > endTime.value || startTime.value == endTime.value){
-                    alert("시작시간과 종료시간을 다시 확인해주세요.");
+                    $("#diff").text("시작시간과 종료시간을 다시 확인해주세요.");
                     startTime.value = "";
                     endTime.value = "";
                     document.getElementById("overUseTime").value = "";
                     document.getElementById("overUseTime").innerHTML = "";
                 }else{
+                	$("#diff").text("");
                     document.getElementById("overUseTime").value = diff;
                     document.getElementById("overUseTime").innerHTML = "총 " + diff + "시간";
                 }
@@ -342,6 +365,57 @@
             noAttach.style.display = "block";
         }); 
 
+        // 유효한 기안의견 작성 시 insert 요청되게 하기
+        function insertApp(){
+        	
+        	if($("#writerComment").val().trim().length>0){
+        		
+        		if(!($("#content").val().trim().length>0)){
+        			swal("내용 작성 후 상신요청해주세요.");
+        		}
+        		
+        		
+        		if($(".app-body input").html() == null){
+        			swal("결재선 선택 후 상신요청해주세요.");
+        		}
+        		
+        		const appContent = $("#contentArea");
+        		
+        		// 결재 / 참조자 목록들 배열에 담기
+        		const recEmpNo = [];
+        		const refList = [];
+        		
+        		const appBody = $(".app-body input");
+        		const refBody = $(".rep-body input");
+        		
+        		
+        		for(let i = 0; i < appBody.length; i++){
+        			console.log(appBody[i]);
+        			appBody[i].setAttribute('name', 'alList['+ i +'].recEmpNo');
+        	
+        		}
+
+        		for(let j = 0; j < refBody.length; j++){
+        			refBody[j].setAttribute('name', 'refList[' + j + '].recEmpNo');
+        	
+        		}
+			
+				let value = "";
+				value += "<input type='hidden' name='writerComment' value='"+ $("#writerComment").val() +"'>";
+				$("#commentArea").html(value);
+				
+				$("input[type=radio][name=start-half]").attr('name', 'halfStatus');
+				$("input[type=radio][name=end-half]").attr('name','halfStatus');
+				
+				appContent.submit();
+
+        		
+        	}else{
+        		
+        		swal("의견 작성 후 상신요청해주세요.");
+        	}
+        	
+        }
 
     </script>
 
