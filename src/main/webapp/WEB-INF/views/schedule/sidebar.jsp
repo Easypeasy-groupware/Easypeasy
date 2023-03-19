@@ -37,6 +37,11 @@
 	a:hover{font-weight:600; color:black;}
 	li{list-style:none;}
 	
+	/*일정추가버튼*/
+	.menu-btn{width:70%; height:35px; margin:auto; margin-bottom:15px; padding:5px 0 5px 0; background-color: rgb(142, 161, 122); border-radius:4px; text-align:center;}
+	#menu-add-btn{color:white; text-decoration:none;}
+	.menu-btn:hover{background-color: rgb(93, 105, 81);}
+	
 	/*메뉴이름*/
 	.menu-title{margin:10px 0 20px 0; text-align:center;}
 	#title{font-size:20px; font-weight:600; color:rgb(93, 109, 75);}
@@ -73,7 +78,11 @@
 	<div class="menubar">
 
         <div class="menu-title">
-            <a href="main.re" id="title"><img src="resources/common_images/re-logo.png" style="width:20px;">  예약</a>
+            <a href="main.sc" id="title"><img src="resources/common_images/sc-logo.png" style="width:20px;">  일정</a>
+        </div>
+        
+        <div class="menu-btn">
+            <a href="" id="menu-add-btn">일정 추가</a>
         </div>
         
         <div class="add-type">
@@ -84,39 +93,24 @@
         </div>
 
         <div class="add-type" id="add-in" style="display:none;">
-            <a href="mettingRoom.re" class="add-in"><b>회의실</b></a>
+            <a href="" class="add-in"><b>회의실</b></a>
             <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="inlist-key"></span>
         </div>
         <ul class="submenu" id="inlist" style="display:none;">
-        	<c:forEach var="rm" items="${ meList }">
-        		<li><a href="mettingRoomTimeGrid.re?mno=${ rm.resourceNo }">- ${ rm.resourceName }</a></li>
-            </c:forEach>
+        	
         </ul>
 
-        <div class="add-type" id="add-ex"  style="display:none;">
-            <a href="beamProjector.re" class="add-ex"><b>빔프로젝터</b></a>
-            <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="exlist-key"></span>
-        </div>
-        <ul class="submenu" id="exlist" style="display:none;">
-            <c:forEach var="rb" items="${ beList }">
-        		<li><a href="beamProjectorTimeGrid.re?bno=${ rb.resourceNo }">- ${ rb.resourceName }</a></li>
-        	</c:forEach>
-        </ul>
-       
         <br>
-        <!-- 경영지원팀만 수정 할 수 있도록 -->
-        <c:if test="${ loginUser.deptCode eq 'D2' }">
-	        <div class="menu-list">
-	            <a href="#" class="menu-a">
-	                <img src="resources/common_images/admin-setting.png" style="width:15px; color:orange;"> <b>예약 관리</b>
-	            </a>
-	            <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="setting-key"></span>
-	        </div>
-	        
-	        <div class="add-type" id="setting-in" style="display:none;">
-            	<a href="settingMettingRoomView.re" class="add-in" style="margin-left: -15px"><b> 자산 관리</b></a>
-            </div>
-        </c:if>
+        <div class="menu-list">
+           <a href="#" class="menu-a">
+               <img src="resources/common_images/admin-setting.png" style="width:15px; color:orange;"> <b>예약 관리</b>
+           </a>
+           <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="setting-key"></span>
+       	</div>
+       
+       	<div class="add-type" id="setting-in" style="display:none;">
+        	<a href="settingMettingRoomView.re" class="add-in" style="margin-left: -15px"><b> 자산 관리</b></a>
+        </div>
     </div>
     
     <script>

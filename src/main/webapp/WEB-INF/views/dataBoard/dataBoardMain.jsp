@@ -34,6 +34,11 @@
         padding-top: 10px;
         position: inherit;
     }
+    
+    button[type=submit]{
+    	border: none;
+    	background: rgb(214, 223, 204);
+    }
 
     #content>table{
     	margin-left: 20px;
@@ -41,10 +46,6 @@
         text-align: center;
     }
     
-    button[type=submit]{
-    	border: none;
-    	background:rgb(166, 184, 145);
-    }
     
     /* 페이징바 */
     #paging {
