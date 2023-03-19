@@ -72,6 +72,10 @@ public class MailDao {
 		return sqlSession.update("mailMapper.deleteMail", m);
 	}
 
+	public int completeDeleteMail(Mail m, SqlSessionTemplate sqlSession) {
+		return sqlSession.delete("mailMapper.completeDeleteMail", m);
+	}
+
 	
 
 	

@@ -262,33 +262,35 @@
         deleteMail.addEventListener('click', function(){
         swal({
             title: "정말로 삭제하시겠습니까?",
-            text: "삭제된 메세지는 휴지통으로 이동됩니다.",
+            text: "삭제된 메일은 휴지통으로 이동됩니다.",
             icon: "warning",
             buttons: ["취소", "삭제"],
             dangerMode: true,
             })
             .then((willDelete) => {
-                const form = document.createElement("form");
-                const input1 = document.createElement("input");
-                const input2 = document.createElement("input");
-                const input3 = document.createElement("input");
-                const input4 = document.createElement("input");
-                input1.setAttribute("name", "mailNo");
-                input2.setAttribute("name", "recMailNo");
-                input3.setAttribute("name", "recMailAdd");
-                input4.setAttribute("name", "empNo");
-                input1.value = "${ mail.mailNo }";
-                input2.value = "${ mail.recMailNo }";
-                input3.value = "${loginUser.email}";
-                input4.value = "${loginUser.empNo}";
-                form.append(input1);
-                form.append(input2);
-                form.append(input3);
-                form.append(input4);
-                form.action = "delete.ma"
-                form.method = "POST"
-                document.body.append(form);
-                form.submit();
+                if(willDelete){
+                    const form = document.createElement("form");
+                    const input1 = document.createElement("input");
+                    const input2 = document.createElement("input");
+                    const input3 = document.createElement("input");
+                    const input4 = document.createElement("input");
+                    input1.setAttribute("name", "mailNo");
+                    input2.setAttribute("name", "recMailNo");
+                    input3.setAttribute("name", "recMailAdd");
+                    input4.setAttribute("name", "empNo");
+                    input1.value = "${ mail.mailNo }";
+                    input2.value = "${ mail.recMailNo }";
+                    input3.value = "${loginUser.email}";
+                    input4.value = "${loginUser.empNo}";
+                    form.append(input1);
+                    form.append(input2);
+                    form.append(input3);
+                    form.append(input4);
+                    form.action = "delete.ma"
+                    form.method = "POST"
+                    document.body.append(form);
+                    form.submit();
+                }
             });
         });
 

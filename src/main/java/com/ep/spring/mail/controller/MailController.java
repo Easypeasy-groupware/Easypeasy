@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -222,6 +221,14 @@ public class MailController {
 		mv.addObject("mailList", mailList);
 		mv.setViewName("mail/deleteMailBox");
 		return mv;
+	}
+	
+	@RequestMapping("completeDelete.ma")
+	public String completeDeleteMail(Mail m) {
+		System.out.println(m);
+		int result = mService.completeDeleteMail(m);
+		
+		return "mail/receiveMailBox";
 	}
 	
 }

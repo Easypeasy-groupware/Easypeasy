@@ -40,6 +40,9 @@ public interface MailService {
 	// 6. 메일 삭제처리
 	int deleteMail(Mail m);
 
+	// 7. 비우기 처리
+	int completeDeleteMail(Mail m);
+
 
 	
 

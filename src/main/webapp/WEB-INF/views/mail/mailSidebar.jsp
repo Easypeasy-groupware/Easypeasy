@@ -147,7 +147,7 @@
             <img class="settings" src="resources/common_images/setting.png">
             <br><br>
             <div class="boxList">
-                <div class="mailbox">받은 메일함(전체)</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div id="recMailbox" class="mailbox">받은 메일함(전체)</div><img class="favorite" src="resources/common_images/unFavorite.png">
                 <div class="mailbox">오늘 온 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
                 <div class="mailbox">내게 쓴 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
                 <div class="mailbox">첨부 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
@@ -155,11 +155,11 @@
                 <div class="mailbox">예약 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
                 <div style="width: 200px;">
                     <div class="mailbox" id="spambox">스팸 메일함 </div>
-                    <button class="btn btn-outline-secondary btn-sm">비우기</button>
+                    <button id="spam_completeDel" class="btn btn-outline-secondary btn-sm">비우기</button>
                 </div>
                 <div style="width: 200px;">
                     <div class="mailbox" id="trashcan">휴지통 </div>
-                    <button class="btn btn-outline-secondary btn-sm">비우기</button>
+                    <button id="trashcan_completeDel" class="btn btn-outline-secondary btn-sm">비우기</button>
                 </div>
             </div>
         </div>
@@ -167,9 +167,66 @@
     </div>
 
     <script>
+        // 받은 메일함 이동
+        document.getElementById("recMailbox").addEventListener("click", function(){
+            location.href="list.ma";
+        });
+
+        // 스팸 메일함 이동
+
+        // 스팸 메일함 비우기
+        document.getElementById("spam_completeDel").addEventListener("click", function(){
+            swal({
+                title: "영구 삭제하시겠습니까?",
+                text: "삭제된 메일들은 복구되지 않습니다.",
+                icon: "warning",
+                buttons: ["취소", "삭제"],
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if(willDelete){
+                    let form = document.createElement("form");
+                    let input = document.createElement("input");
+                    input.setAttribute("name", "junkMail");
+                    input.setAttribute("value", "Y");
+                    form.action = "completeDelete.ma";
+                    form.method = "POST";
+                    form.append(input);
+                    document.body.append(form);
+                    console.log(input)
+                    form.submit();
+                }
+            });
+        });
+
+        // 휴지통 이동
         document.getElementById("trashcan").addEventListener("click", function(){
-            location.href="deleteList.ma"
-        })
+            location.href="deleteList.ma";
+        });
+
+        // 휴지통 비우기
+        document.getElementById("trashcan_completeDel").addEventListener("click", function(){
+            swal({
+                title: "영구 삭제하시겠습니까?",
+                text: "삭제된 메일들은 복구되지 않습니다.",
+                icon: "warning",
+                buttons: ["취소", "삭제"],
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if(willDelete){
+                    let form = document.createElement("form");
+                    let input = document.createElement("input");
+                    input.setAttribute("name", "status");
+                    input.setAttribute("value", "N");
+                    form.action = "completeDelete.ma";
+                    form.method = "POST";
+                    form.append(input);
+                    document.body.append(form);
+                    form.submit();
+                }
+            });
+        });
     </script>
     
 

@@ -219,4 +219,16 @@
 		 where recep_mail_no = #{ recMailNo }
 	</update>
 	
+	<delete id="completeDeleteMail">
+		delete 
+		  from rec_mail
+		 where 
+	 	   <if test='junkMail == "Y"'>
+	 	       junk_mail = #{ junkMail }		
+	 	   </if>
+	 	   <if test='status == "N"'>
+	 	   	   status = #{ status }
+	 	   </if>
+	</delete>
+	
 </mapper>
