@@ -107,7 +107,7 @@
                        join  employee e on (b.emp_no = e.emp_no)
 					  where b.status = '1'
 					    and app_tstatus = '진행중'
-					    and app_no = (
+					    and app_no IN (
                                     select app_no
                                       from app_line
                                      where ref_whether = 'N'

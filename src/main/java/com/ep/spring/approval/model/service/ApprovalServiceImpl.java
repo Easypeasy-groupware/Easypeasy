@@ -202,10 +202,13 @@ public class ApprovalServiceImpl implements ApprovalService{
 		  c = aDao.insertAttachment(sqlSession, atList);
 		}
 		
-		if(vf != null) {
+		System.out.println(vf);
+		System.out.println(ot);
+		
+		if(vf.getVacStart() != null) {
 			d = aDao.insertVacationForm(sqlSession, vf);
 			
-		}else if(ot != null) {
+		}else if(ot.getOtDate() != null) {
 			e = aDao.insertOverTimeForm(sqlSession, ot);
 		}
 		

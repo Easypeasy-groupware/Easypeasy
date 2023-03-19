@@ -114,7 +114,7 @@
 		                                <label for="content">근무구분</label>
 		                            </td>    
 		                            <td>
-		                                &nbsp;&nbsp;<input type="radio" id="extension" name="otKind" value="연장">  <label for="extension" >연장</label>
+		                                &nbsp;&nbsp;<input type="radio" id="extension" name="otKind" value="연장" checked>  <label for="extension" >연장</label>
 		                                &nbsp;&nbsp;<input type="radio" id="night" name="otKind" value="야간">  <label for="night" >야간</label>     
 		                                &nbsp;&nbsp;<input type="radio" id="holiday" name="otKind" value="휴일">  <label for="holiday">휴일</label>
 		                            </td>                        
@@ -127,8 +127,9 @@
 		                                &nbsp;&nbsp;
 		                                <input  class="dateSelect"  name="otDate" id="" required >
 		                                <input type="number"  class="dateSelect-start"  name="otStart" id="overStartHour" required style="width:80px;" min="0" max="24"> ~ 
-		                                <input type="number" class="dateSelect-end" name="otEnd" id="overEndHour" required style="width:80px;" min="0" max="24">
-		                                <button onclick="diffTime()">계산</button>
+		                                <input type="number" class="dateSelect-end" name="otEnd" id="overEndHour" required style="width:80px;" min="0" max="24" onchange="diffTime();">
+		                                <span id="diff"></span>
+		                                <!-- <button onclick="diffTime();">계산</button> -->
 		                            </td>
 		                        </tr>
 		                        <tr>
@@ -270,12 +271,13 @@
                 const diff = endTime.value - startTime.value;
 
                 if(startTime.value > endTime.value || startTime.value == endTime.value){
-                    alert("시작시간과 종료시간을 다시 확인해주세요.");
+                    $("#diff").text("시작시간과 종료시간을 다시 확인해주세요.");
                     startTime.value = "";
                     endTime.value = "";
                     document.getElementById("overUseTime").value = "";
                     document.getElementById("overUseTime").innerHTML = "";
                 }else{
+                	$("#diff").text("");
                     document.getElementById("overUseTime").value = diff;
                     document.getElementById("overUseTime").innerHTML = "총 " + diff + "시간";
                 }
