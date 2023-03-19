@@ -134,7 +134,7 @@ public class OrgController {
 		}
 	}
 	
-	
+	// ajax
 	@RequestMapping("searchForm.org")
 	public String selectSearchList(String keyword, @RequestParam(value="cpage", defaultValue="1")int currentPage, HttpSession session, Model model) {
 		

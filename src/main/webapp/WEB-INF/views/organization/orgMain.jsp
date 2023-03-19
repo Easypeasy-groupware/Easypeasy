@@ -85,74 +85,32 @@
 	  
 	  
 	    <div class="board">
-	    	<h2>조직도</h2><br>
+	    	<h2>조직도</h2>
 			<div class="container">
-	          <h6>인사관리부</h6>
-	          
 	          <form>
 	              <div class="search-container">
 	                  <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#tree-modal">사원 검색</button>
 	              </div>
 	          </form>
-	        
-	          <!-- <div class="card">
-	            <div class="imagecard">
-	                <img src="resources/common_images/default_profile.png">
-	            </div>
-	            <div class="details">
-	                <h4>부장 홍길동</h4>
-	            </div>
-	          </div>
-	          <br> -->
 	          
-	           <div class="card">
-	            <table>
-	            	<tr>
-	            		<td><img src="resources/common_images/default_profile.png"  style="width:80px;"></td>
-	            		<td><br><h4>부장 홍길동</h4></td>
-	            	</tr>
-	            </table>
-	          </div>
-	          <br>
-	        
-	          
-	          <div class="card">
-	            <table>
-	            	<tr>
-	            		<td><img src="resources/common_images/default_profile.png"  style="width:80px;"></td>
-	            		<td><br><h4>과장 홍길동</h4></td>
-	            	</tr>
-	            </table>
-	          </div>
-	          <br>
-	          
-	          <div class="card">
-	            <table>
-	            	<tr>
-	            		<td><img src="resources/common_images/default_profile.png"  style="width:80px;"></td>
-	            		<td><br><h4>대리 홍길동</h4></td>
-	            	</tr>
-	            </table>
-	          </div>
-	          <div class="card">
-	            <table>
-	            	<tr>
-	            		<td><img src="resources/common_images/default_profile.png"  style="width:80px;"></td>
-	            		<td><br><h4>대리 홍길동</h4></td>
-	            	</tr>
-	            </table>
-	          </div>
-	          <br>
-	          
-	          <div class="card">
-	            <table>
-	            	<tr>
-	            		<td><img src="resources/common_images/default_profile.png"  style="width:80px;"></td>
-	            		<td><br><h4>사원 홍길동</h4></td>
-	            	</tr>
-	            </table>
-	          </div>
-	          <br>
+	          <c:forEach var="d" items="${deptList}">
+		          <c:if test="${d.deptCode eq 'D1'}">
+			          <h4>${d.deptName}</h4>
+			      
+			          <c:forEach var="e" items="${list}">
+			          	<c:if test="${e.deptCode eq d.deptCode}">
+				           <div class="card" data-toggle="modal" data-target="#myModal">
+				            <table>
+				            	<tr>
+				            		<td><img src="${e.empProfile}"  style="width:80px;"></td>
+				            			<td><br><h4>${e.jobName} | ${e.empName}</h4></td>
+				            	</tr>
+				            </table>
+				           </div><br>
+				          </c:if>
+			          </c:forEach>
+		          </c:if>   
+	          </c:forEach>
 	          
 	      </div>
 	    </div>
@@ -165,11 +123,11 @@
 	      <div class="modal-body">
 	        <table>
 	          <tr>
-	            <td><img src="resources/common_images/default_profile.png" alt="Profile Image"  style="width:80%;"></td>
-	            <td><h3>홍길동</h3>
-	              <p>부장</p>
-	              <p>인사관리부</p>
-	              <p>honggildong@company.com</p></td>
+	            <td><img src="${e.empProfile}" alt="Profile Image"  style="width:80%;"></td>
+	            <td><h3>${e.empName }</h3>
+	              <p>${e.jobName }</p>
+	              <p>${e.deptName }</p>
+	              <p>${e.email }</p></td>
 	          </tr>
 	        </table>
 	      </div>
@@ -177,28 +135,30 @@
 	  </div>
 	
 	  <script>
-	    // 모달을 위한 JavaScript 코드
-	    var modal = document.getElementById("myModal");
-	    var card = document.querySelector(".card");
-	    var img = document.querySelector(".card img");
-	    var span = document.getElementsByClassName("close")[0];
-	
-	    card.addEventListener("click", function() {
-	      modal.style.display = "block";
-	      img.classList.add("modal-image");
-	    });
-	
-	    span.onclick = function() {
-	      modal.style.display = "none";
-	      img.classList.remove("modal-image");
-	    };
-	
-	    window.onclick = function(event) {
-	      if (event.target == modal) {
-	        modal.style.display = "none";
-	        img.classList.remove("modal-image");
-	      }
-	    };
+	  $(document).ready(function(){
+		  $(".card").on("click", function() {
+			  var empProfile = $(this).find("img").attr("src");
+			  var empName = $(this).find("h4").text().split(" | ")[1];
+			  var jobName = $(this).find("h4").text().split(" | ")[0];
+			  var deptName = $(this).closest("h4").text();
+			  var email = $(this).data("email");
+
+			  $("#myModal").find("img").attr("src", empProfile);
+			  $("#myModal").find("h3").text(empName);
+			  $("#myModal").find("p:eq(0)").text(jobName);
+			  $("#myModal").find("p:eq(1)").text(deptName);
+			  $("#myModal").find("p:eq(2)").text(email);
+			  $("#myModal").modal("show");
+			});
+
+			$(".close").on("click", function() {
+			  $("#myModal").modal("hide");
+			});
+		  
+			$(".card").click(function(){
+			  $("#myModal").show();
+			});
+		});
 	  </script>
 	    
 	    
@@ -215,7 +175,7 @@
 							<form action="searchForm.org" method="Get" id="searchForm">
 							<input type="hidden" name="cpage" value="1">
 								<input type="text" name="keyword" value="${keyword}" id="search" placeholder="사원 검색"></h5>
-								<button type="submit" class="btn btn-success">검색</button>
+								<button type="submit" class="btn btn-success" >검색</button>
 							</form>
 							
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -238,9 +198,15 @@
 													<li><span class="file">${ e.empName }</span></li>
 												</c:if> 
 											</c:forEach> --%>
+											<li><span class="file"><div id="result">결과</div></span></li>
 											
-											<li><span class="file">대표</span></li>
+											<c:forEach var="e" items="${list}">
+												<c:if test="${ e.jobCode eq 'J6' }">
+													<li><span class="file">${e.jobName} ${ e.empName }</span></li>
+												</c:if>
+											</c:forEach>
 											<li><span class="file">상무</span></li>
+											
 											
 											<c:forEach var="d" items="${deptList}">
 												<li class="closed">
@@ -248,7 +214,7 @@
 													<ul>
 														<c:forEach var="e" items="${list}">
 															<c:if test="${ e.deptName eq d.deptName }">
-																<li><span class="file">${ e.empName }</span></li>
+																<li><span class="file">${e.jobName} ${ e.empName }</span></li>
 															</c:if>
 														</c:forEach>
 													</ul>
@@ -306,14 +272,27 @@
 				
 				if($("#search").val.trim().length > 0){
 					$.ajax({
-						uri:"searchForm.org"
-						data:{},
-						success:function(result){
-							if(result == "success"){
-								$()
+						type:"GET",
+						uri:"searchForm.org",
+						data:{keyword:$("#empName").val()},
+						success:function(list){
+							console.log(list);
+							
+							let value = "";
+							for(let i=0; i<list.length; i++){
+								value += "<ul>"
+											+ "<li>" 
+												+  "<span>" +"<div>"+ list[i].empName +"</div>"+"</span>"
+											+ "</li>"
+										+"</ul>";
 							}
-						}
-					})
+							$("#result").html(value);
+							
+					    }, error:function(){
+							console.log("ajax 검색 통신 실패");
+						},
+						
+					});
 				}
 				
 			})

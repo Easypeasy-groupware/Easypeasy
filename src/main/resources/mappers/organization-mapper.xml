@@ -17,6 +17,7 @@
 		<result column="hire_date" property="hireDate" />
 		<result column="ent_yn" property="entYn" />
 		<result column="ent_date" property="entDate" />
+		<result column="emp_profile" property="empProfile" />
 	</resultMap>
 	
 	<resultMap id="departmentResult" type="Department">
@@ -56,10 +57,13 @@
 			 , dept_name
 			 , e.job_code
 			 , job_name
+			 , emp_profile
 		  from employee e
 		  join department d on (e.dept_code = d.dept_code)
           join job j on (e.job_code = j.job_code)
          where ent_yn = 'N'
+         order
+            by job_code desc
 	</select>
 	
 	<select id="selectListCount" resultType="_int">
