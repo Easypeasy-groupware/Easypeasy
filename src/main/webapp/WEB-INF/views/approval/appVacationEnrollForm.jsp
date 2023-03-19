@@ -611,11 +611,7 @@
 				$("input[type=radio][name=end-half]").attr('name','halfStatus');
 				
 				appContent.submit();
-				
-				//console.log($(".app-body").html());
-				//console.log($(".rep-body").html());
-				//console.log($("#commentArea").html());
-        		//location.href="insert.ap";
+
         		
         	}else{
         		

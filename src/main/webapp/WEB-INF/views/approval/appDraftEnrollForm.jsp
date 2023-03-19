@@ -47,7 +47,7 @@
     <jsp:include page="appMenubar.jsp" />
     <div class="form-outer">
         <div class="left-outer">
-        	<form id="contentArea">
+        	<form id="contentArea" action="insert.ap" method="POST" enctype="multipart/form-data">
 	            <div class="left-form1">
 	                <p>
 	                	<b style="font-size:30px;"> 업무기안</b>
@@ -113,7 +113,7 @@
 	                                <label for="title" width="700px;">제목</label>
 	                            </td>
 	                            <td>
-	                                <input type="text" style="width:100%;">
+	                                <input type="text" name="title" style="width:100%;">
 	                            </td>
 	                        </tr>
 	                        <tr>
@@ -121,7 +121,7 @@
 	                                <label for="content">내용</label>
 	                            </td>
 	                            <td rowspan="5" height="150px;">
-	                                <textarea class="summernote form-control" name="editordata" required name="" id="content" rows="10" style="resize:none;"></textarea>
+	                                <textarea class="summernote form-control" name="content" required id="content" rows="10" style="resize:none;"></textarea>
 	                            </td>
 	                        </tr>
 	                        <tr></tr>
@@ -158,15 +158,18 @@
 	               </div>
 	              
 	               <div class="app-comment" style="font-size:15px;">
-	                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
+	                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${loginUser.empName} ${loginUser.jobName}
 	                   <br>
-	                     회사명 | 부서명
+	                     이지피지 | ${loginUser.deptName}
 	                   <br>
 	                    기안
-	                   <br><br>
-	
-	                   <br>
+	                   <br><br><br>
+					
 	               </div>
+	               
+	               <div class="app-body">
+	               </div>	               
+	               
 	               <div class="app-comment" style="font-size:15px;">
 	                <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
 	                <br>
@@ -177,6 +180,14 @@
 	
 	                <br>
 	            </div>
+	            
+               <div class="rep-body">
+               </div>
+               
+               <div id="commentArea">
+               
+               </div>		            
+	            
                 </div>
                 </form>
             </div>
@@ -282,6 +293,59 @@
             inAttachs.style.display = "none";
             noAttach.style.display = "block";
         });
+        
+        // 유효한 기안의견 작성 시 insert 요청되게 하기
+        function insertApp(){
+        	
+        	if($("#writerComment").val().trim().length>0){
+        		
+        		if(!($("#content").val().trim().length>0)){
+        			swal("내용 작성 후 상신요청해주세요.");
+        		}
+        		
+        		
+        		if($(".app-body input").html() == null){
+        			swal("결재선 선택 후 상신요청해주세요.");
+        		}
+        		
+        		const appContent = $("#contentArea");
+        		
+        		// 결재 / 참조자 목록들 배열에 담기
+        		const recEmpNo = [];
+        		const refList = [];
+        		
+        		const appBody = $(".app-body input");
+        		const refBody = $(".rep-body input");
+        		
+        		
+        		for(let i = 0; i < appBody.length; i++){
+        			console.log(appBody[i]);
+        			appBody[i].setAttribute('name', 'alList['+ i +'].recEmpNo');
+        	
+        		}
+
+        		for(let j = 0; j < refBody.length; j++){
+        			refBody[j].setAttribute('name', 'refList[' + j + '].recEmpNo');
+        	
+        		}
+			
+				let value = "";
+				value += "<input type='hidden' name='writerComment' value='"+ $("#writerComment").val() +"'>";
+				$("#commentArea").html(value);
+				
+				$("input[type=radio][name=start-half]").attr('name', 'halfStatus');
+				$("input[type=radio][name=end-half]").attr('name','halfStatus');
+				
+				appContent.submit();
+				
+
+        		
+        	}else{
+        		
+        		swal("의견 작성 후 상신요청해주세요.");
+        	}
+        	
+        }        
     </script>
 
 </body>
