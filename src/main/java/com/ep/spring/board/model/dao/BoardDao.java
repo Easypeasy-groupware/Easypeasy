@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.ep.spring.board.model.vo.Board;
+import com.ep.spring.board.model.vo.BoardCate;
+import com.ep.spring.board.model.vo.BoardReply;
 import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
 
@@ -33,7 +35,7 @@ public class BoardDao {
 	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.insert("boardMapper.insertBoard", b);
 	}
-	/*
+	
 	public int increaseCount(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.update("boardMapper.increaseCount", boardNo);
 	}
@@ -41,7 +43,35 @@ public class BoardDao {
 	public Board selectBoard(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.selectOne("boardMapper.selectBoard", boardNo);
 	}
-	*/
+	
+	public int deleteBoard(SqlSessionTemplate sqlSession, int no) {
+		return sqlSession.update("boardMapper.deleteBoard", no);
+	}
+	
+	public int updateBoard(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.update("boardMapper.deleteBoard", b);
+	}
+	
+	public ArrayList<BoardReply> selectReplyList(SqlSessionTemplate sqlSession, int boardNo){
+		return (ArrayList)sqlSession.selectList("boardMapper.selectReplyList", boardNo);	
+	}
+	
+	public int insertReply(SqlSessionTemplate sqlSession, BoardReply r) {
+		return sqlSession.insert("boardMapper.inserReply", r);
+	}
+	
+	public ArrayList<BoardCate> selectSettings(SqlSessionTemplate sqlSession, BoardCate bc){
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSettings", bc);
+	}
+	
+	public int insertCate(SqlSessionTemplate sqlSession, BoardCate bc) {
+		return sqlSession.insert("boardMapper.insertCate", bc);
+	}
+	
+	
+	
+	
+	
 	
 	
 	

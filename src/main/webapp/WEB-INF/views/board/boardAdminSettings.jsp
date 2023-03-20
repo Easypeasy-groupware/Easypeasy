@@ -30,44 +30,31 @@
        
         <div class="board">
         
-        	<form action="" method="POST">
+        	<form action="insertSettings.bo" method="POST">
                 <h2>게시판 추가</h2>
                 <br><br>
-                    <label>게시판그룹</label>
-                        <select name="boardCno" required>
-                            <option value="1">전체 공지사항</option>
-                            <option value="2">식단표</option>
-                            <option value="3">자유게시판</option>
-                            <option value="4">커뮤니티</option>
-                            <option value="5">부서 공지사항</option>
-                            <option value="6">부서 자유게시판</option>
-                        </select><br>
-                    
-                    <hr>
                     
                     <label for="title">게시판 제목:</label>
-                        <input type="text" id="title" name="title" required /><br>
-                    <label for="about">설명:</label>
-                        <textarea name="" id="" cols="20" rows="3" required placeholder="내용을 입력하세요"></textarea><br>
-        
+                        <input type="text" id="title" name="boardCname" required /><br>
+                        
                     <hr>
         
                     <label>전체공개 설정</label><br>
-                        <input type="radio" id="all" name="display" checked/>전체 부서 공개  &nbsp;&nbsp;
-                        <input type="radio" id="dc" name="display" />해당 부서 공개 
+                        <input type="radio" id="dept" name="displayRange" value="1" checked/>전체 부서 공개  &nbsp;&nbsp;
+                        <input type="radio" id="dept" name="displayRange" value="2"  />해당 부서 공개 
                         <button type="button" class="btn btn-outline-primary">+ 부서 추가</button><br><br>
                     
                     <label>비공개 설정</label><br>
-                        <input type="radio" id="n" name="status" checked/>사용하지 않음  &nbsp;&nbsp;
-                        <input type="radio" id="y" name="status" />사용함<br><br>
+                        <input type="radio" id="private" name="privateStatus" value="N"  checked/>사용하지 않음  &nbsp;&nbsp;
+                        <input type="radio" id="private" name="privateStatus" value="Y"  />사용함<br><br>
                     
                     <label>익명 설정</label><br>
-                        <input type="radio" id="n" name="anonym" checked/>사용하지 않음  &nbsp;&nbsp;
-                        <input type="radio" id="y" name="anonym" />사용함<br><br>
+                        <input type="radio" id="anonym" name="anonymStatus" value="N"  checked/>사용하지 않음  &nbsp;&nbsp;
+                        <input type="radio" id="anonym" name="anonymStatus" value="Y"  />사용함<br><br>
                     
                     <label>댓글 작성</label><br>
-                        <input type="radio" id="y" name="reply" checked/>허용  &nbsp;&nbsp;
-                        <input type="radio" id="n" name="reply" />허용하지 않음<br>
+                        <input type="radio" id="reply" name="reply" value="Y"  checked/>허용  &nbsp;&nbsp;
+                        <input type="radio" id="reply" name="reply" value="N"  />허용하지 않음<br>
                     
                     <br><br><br>
 					<div align="center">

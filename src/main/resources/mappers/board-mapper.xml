@@ -23,6 +23,26 @@
 		<result column="upload_date" property="uploadDate" />
 		<result column="division" property="division" />
 	</resultMap>
+	
+	<resultMap id="boardcateResult" type="BoardCate">
+		<id column="board_cno" property="boardCno" />
+		<result column="board_cname" property="boardCname" />
+		<result column="display_range" property="displayRange" />
+		<result column="private_status" property="privateStatus" />
+		<result column="anonym_status" property="anonymStatus" />
+		<result column="dept_code" property="deptCode" />
+	</resultMap>
+	
+	<resultMap id="boardreplyResult" type="BoardReply">
+		<id column="reply_no" property="replyNo" />
+		<result column="board_no" property="boardNo" />
+		<result column="reply_content" property="replyContent" />
+		<result column="reply_writer" property="replyWriter" />
+		<result column="create_date" property="createDate" />
+		<result column="modify_date" property="modifyDate" />
+		<result column="status" property="status" />
+	</resultMap>
+	
 
 	<select id="selectListCount" resultType="_int">
 		select
@@ -42,7 +62,6 @@
 		     , board_pin
 		  from board 
 		 where delete_status = 'N'
-		   and board_cno = #{boardCno}
 		 order
 		    by board_no desc
 	</select>
@@ -64,24 +83,24 @@
 		  into board
 		  (
 		  	board_no
+		  , board_cno
 		  , board_title
 		  , board_writer
 		  , board_content
-		  , delete_status
 		  , board_pin
 		  ) 
 		  values
 		  (
-		  	sql_bno.nextval
+		  	seq_bno.nextval
+		  , #{boardCno}
 		  , #{boardTitle}
 		  , #{boardWriter}
 		  , #{boardContent}
-		  , #{delete_status}
-		  , #{board_pin}
+		  , #{boardPin}
 		  )
 	</insert>
 	
-	<!-- <update id="increaseCount">
+	<update id="increaseCount">
 		update
 		       board
 		   set board_count = board_count +1
@@ -99,7 +118,98 @@
 			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		  from board
 		 where board_no = #{boardNo}
-	</select> -->
+	</select>
+	
+	
+	<update id="deleteBoard">
+		update
+		       board
+		   set delete_status = 'Y'
+		 where board_no = #{boardNo}
+	</update>
+	
+	<update id="updateBoard">
+		update
+		       board
+		   set board_cno = #{boardCno}
+		     , board_title = #{boardTitle}
+		     , board_content = #{boardContent}
+		     , board_pin = #{boardPin}
+		 where board_no = #{boardNo}
+	</update>
+	
+	<select id="selectReplyList" resultMap="boardreplyResult">
+		select
+			   reply_no 						
+			 , reply_writer
+			 , reply_content
+			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		  from board_reply
+		 where status = 'N'
+		   and board_no = #{boardNo}		
+		 order
+		    by reply_no desc  
+	</select>
+	
+	<insert id="insertReply">
+		insert
+		  into board_reply
+		  (
+		    reply_no
+		  , reply_content
+		  , board_no
+		  , reply_writer
+		  )
+		  values
+		  (
+		    seq_brno.nextval
+		  , #{replyCotent}
+		  , #{boardNo}
+		  , #{replyWriter}
+		  )
+	</insert>
+	
+	<select id="selectSettings" resultMap="boardcateResult">
+		select
+			   board_cno
+			 , board_cname
+			 , display_range
+			 , private_status
+			 , anonym_status
+			 , dept_code
+	      from board_cate
+	</select>
+
+	<insert id="insertCate">
+		insert
+		  into board_cate
+		  (
+		    board_cno
+		  , board_cname
+		  , display_range
+		  , private_status
+		  , anonym_status
+		  , dept_code
+		  )
+		  values
+		  (
+		    seq_bcno.nextval
+		  , #{boardCname}
+		  , #{displayRange}
+		  , #{privateStatus}
+		  , #{anonymStatus}
+		  , #{deptCode}
+		  )
+	</insert>
+
+
+
+
+
+
+
+
+
 
 
 </mapper>

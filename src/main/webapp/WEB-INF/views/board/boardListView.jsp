@@ -67,10 +67,16 @@
                 </div>
             </form>
             <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enrollForm.bo';">새글쓰기</button>
+            <%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> --%>
+            	<button type="button" class="btn btn-outline-danger btn-sm" onclick="location.href='delete.bo';"> 삭제</button>
+            <%-- </c:if> --%>
             <br><br>
             <table id="boardList">
                 <thead>
                     <tr>
+                    	<%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> --%>
+                    		<th style="width: 10px;"><input type="checkbox" name="ckbAll" id="ckbAll"></th>
+                    	<%-- </c:if> --%>
                         <th>글번호</th>
                         <th>제목</th>
                         <th>작성자</th>
@@ -81,21 +87,43 @@
                 <tbody>
                 	<c:forEach var="b" items="${list}">
 	                    <tr>
+	                    	<%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> --%>
+	                    		<td><input type="checkbox" name="ckb"></td>
+	                    	<%-- </c:if> --%>
 	                        <td class="bno">${b.boardNo}</td>
 	                        <td class="notice">${b.boardTitle}</td>
 	                        <td>${b.boardWriter}</td>
 	                        <td>${b.createDate}</td>
-	                        <td class="views">${b.boardCount}</td>
+	                        <td>${b.boardCount}</td>
 	                    </tr>
                     </c:forEach>
                 </tbody>
             </table>
             	<script>
+            		// 태이블 클릭
 			        $(function(){
 		                 $("#boardList>tbody>tr").click(function(){
 		            			location.href='detailForm.bo?no=' + $(this).children(".bno").text();
 		            	})
 		            })
+		            
+		          
+	                // 체크박스 
+	                $(document).ready(function() {
+	                    $("#ckbAll").click(function() {
+	                      if($("#ckbAll").is(":checked")) $("input[name=ckb]").prop("checked", true);
+	                      else $("input[name=ckb]").prop("checked", false);
+	                    });
+	
+	                    $("input[name=ckb]").click(function() {
+	                      var total = $("input[name=ckb]").length;
+	                      var checked = $("input[name=ckb]:checked").length;
+	
+	                      if(total != checked) $("#ckbAll").prop("checked", false);
+	                      else $("#ckbAll").prop("checked", true); 
+	                    });
+	                  });
+           
 		        </script>
             
             <br><br>

@@ -32,22 +32,23 @@
           <h3>게시글 작성</h3>
           <br><br>
               <label>게시판그룹</label>
-                  <select name="boardType">
-                      <option value="">전체 공지사항</option>
-                      <option value="">식단표</option>
-                      <option value="">자유게시판</option>
-                      <option value="">커뮤니티</option>
-                      <option value="">부서 공지사항</option>
-                      <option value="">부서 자유게시판</option>
+                  <select name="boardCno">
+                      <option value="1" name="boardCno" id="1">전체 공지사항</option>
+                      <option value="2" name="boardCno" id="2">식단표</option>
+                      <option value="3" name="boardCno" id="3">자유게시판</option>
+                      <option value="4" name="boardCno" id="4">커뮤니티</option>
+                      <option value="5" name="boardCno" id="5">부서 공지사항</option>
+                      <option value="6" name="boardCno" id="6">부서 자유게시판</option>
                   </select><br>
               <label for="title">게시글 제목</label>
-                  <input type="text" id="title" name="title" required /><br>
-              <label for="title">파일첨부</label>
+                  <input type="text" id="boardTitle" name="boardTitle" required /><br>
+              <input type="hidden" name="boardWriter" value="${loginUser.empNo}">
+              <label for="file">파일첨부</label>
                   <input type="file" id="file" name="file" /><br>
-              <label for="about">내용</label>
-                  <textarea name="" id="" cols="30" rows="10" required placeholder="내용을 입력하세요"></textarea><br>
-              <label for="title">공지등록</label>
-                  <input type="checkbox" id="tckb" name="tckb" /><br>
+              <label for="content">내용</label>
+                  <textarea name="boardContent" id="boardContent" cols="30" rows="10" required placeholder="내용을 입력하세요"></textarea><br>
+              <label for="boardPin">공지등록</label>
+                  <input type="checkbox" id="N" name="boardPin" /><br>
                
                     <br><br>
               <div align="center">
