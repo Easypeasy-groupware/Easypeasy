@@ -42,4 +42,11 @@ public class ScheduleController {
 		return "redirect:main.sc";
 	}
 	
+	@RequestMapping("setting.sc")
+	public String mainSchedule() {
+		
+		return "schedule/scheduleSetting";
+	}
+	
+	
 }

@@ -13,6 +13,8 @@
 		<result column="mail_content" property="mailContent" />
 		<result column="rec_check" property="recCheck" />
 		<result column="rec_date" property="recDate" />
+		<result column="rec_date_day" property="recDateDay" />
+		<result column="rec_date_time" property="recDateTime" />
 		<result column="impor_mail" property="imporMail" />
 		<result column="junk_mail" property="junkMail" />
 		<result column="reser_mail" property="reserMail" />
@@ -41,6 +43,8 @@
 			 , MAIL_CONTENT
 			 , REC_CHECK
 			 , REC_DATE
+			 , substr(rec_date, 0, 11) "rec_date_day"
+             , substr(rec_date, 14) "rec_date_time"
 			 , IMPOR_MAIL
 			 , JUNK_MAIL
 			 , RESER_MAIL
@@ -125,7 +129,7 @@
 		  , #{ sendMailAdd }
 		  , #{ mailTitle }
 		  , #{ mailContent }
-		  , to_char(sysdate, 'YYYY-MM-DD HH24:mi:SS')
+		  , to_char(sysdate, 'YYYY-MM-DD DY HH24:mi:SS')
 		  , #{ imporMail }
 		  , #{ reference }
 		  , #{ hiddenReference }
@@ -181,6 +185,8 @@
 			 , MAIL_CONTENT
 			 , REC_CHECK
 			 , REC_DATE
+			 , substr(rec_date, 0, 11) "rec_date_day"
+             , substr(rec_date, 14) "rec_date_time"
 			 , IMPOR_MAIL
 			 , REFERENCE
 			 , HIDDEN_REFERENCE
@@ -244,6 +250,13 @@
 		update rec_mail
 		   set
 		       junk_mail = 'N'
+		 where recep_mail_no = #{ recMailNo }
+	</update>
+	
+	<update id="tagMail">
+		update rec_mail
+		   set 
+		       tag_no = #{ tagNo }
 		 where recep_mail_no = #{ recMailNo }
 	</update>
 </mapper>
