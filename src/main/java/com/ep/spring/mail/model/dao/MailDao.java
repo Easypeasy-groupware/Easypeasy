@@ -44,8 +44,12 @@ public class MailDao {
 		return result;
 	}
 	
-	public int readMail(Mail m, SqlSessionTemplate sqlSession) {
-		return sqlSession.update("mailMapper.readMail", m);
+	public void readMail(Mail m, SqlSessionTemplate sqlSession) {
+		sqlSession.update("mailMapper.readMail", m);
+	}
+	
+	public int unReadCount(Mail m, SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("mailMapper.unReadCount", m);
 	}
 
 	public Mail selectMail(Mail m, SqlSessionTemplate sqlSession) {
@@ -59,6 +63,46 @@ public class MailDao {
 	public ArrayList<Attachment> selectAttachmentList(Mail m, SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("attachmentMapper.selectMailAttachmentList", m);
 	}
+
+	public int readUnreadMail(Mail m, SqlSessionTemplate sqlSession) {
+		return sqlSession.update("mailMapper.readUnreadMail", m);
+	}
+
+	public int deleteMail(Mail m, SqlSessionTemplate sqlSession) {
+		return sqlSession.update("mailMapper.deleteMail", m);
+	}
+
+	public int completeDeleteMail(Mail m, SqlSessionTemplate sqlSession) {
+		return sqlSession.delete("mailMapper.completeDeleteMail", m);
+	}
+
+	public int spamEnroll(Mail m, int[] mailNoList, SqlSessionTemplate sqlSession) {
+		int result = 0;
+		if(mailNoList.length > 0) {
+			for(int mail : mailNoList) {
+				m.setRecMailNo(mail);
+				result += sqlSession.update("mailMapper.spamEnroll", m);
+			}
+		}else {
+			result = sqlSession.update("mailMapper.spamEnroll", m);
+		}
+		return result;
+	}
+
+	public int spamClear(Mail m, int[] mailNoList, SqlSessionTemplate sqlSession) {
+		int result = 0;
+		if(mailNoList.length > 0) {
+			for(int mail : mailNoList) {
+				m.setRecMailNo(mail);
+				result += sqlSession.update("mailMapper.spamClear", m);
+			}
+		}else {
+			result = sqlSession.update("mailMapper.spamClear", m);
+		}
+		return result;
+	}
+
+	
 
 	
 }

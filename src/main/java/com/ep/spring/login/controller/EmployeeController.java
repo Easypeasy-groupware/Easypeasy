@@ -18,6 +18,8 @@ import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.common.template.FileUpload;
 import com.ep.spring.login.model.service.EmployeeService;
 import com.ep.spring.login.model.vo.Employee;
+import com.ep.spring.mail.model.service.MailService;
+import com.ep.spring.mail.model.vo.Mail;
 
 @Controller
 public class EmployeeController {
@@ -29,6 +31,9 @@ public class EmployeeController {
 	
 	@Autowired
 	private AddressService aService;
+	
+	@Autowired
+	private MailService mService;
 	
 	//로그인
 	@RequestMapping("login.ep")
@@ -42,6 +47,8 @@ public class EmployeeController {
 		// 공용외부주소록 그룹리스트 조회
 		ArrayList<AddGroup> sharedGroup = aService.selectSharedAddGroup();
 		
+		// 받은 메일 조회
+		ArrayList<Mail> recMailList = mService.selectReceiveMailList(loginUser.getEmail());
 		
 		/*
 		if(loginUser == null) {//로그인실패
@@ -68,6 +75,7 @@ public class EmployeeController {
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("pList", userGroup); //로그인한 사원의 주소록 그룹리스트 세션에 저장
 			session.setAttribute("sList", sharedGroup); //외부 공유주소록 그룹리스트 세션에 저장
+			session.setAttribute("recMailList", recMailList);
 			return "common/main";
 		}else { // 실패
 			session.setAttribute("alertMsg", "로그인에 실패했습니다. 다시 시도 해주세요.");

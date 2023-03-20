@@ -13,8 +13,10 @@
     #title{font-size:20px; font-weight:600; color:rgb(93, 109, 75);}
     #title:hover{color:rgb(58, 69, 47); text-decoration:none;}
     .menu-btn{width:70%; height:35px; margin:auto; margin-bottom:15px; padding:5px 0 5px 0; background-color: rgb(142, 161, 122); border-radius:4px; text-align:center;}
-	#menu-add-btn{color:white; text-decoration:none;}
+	#menu-add-btn{color:white; text-decoration:none; cursor: pointer;}
 	.menu-btn:hover{background-color: rgb(93, 105, 81);}
+    .mailbox:hover{font-weight: 600; cursor: pointer;}
+    .tagOne:hover{font-weight: 600; cursor: pointer;}
     #mail_side_bar{width: 200px; height: 1000px; float: left; border-right: 2px solid rgb(185, 187, 221); padding: 10px;}
     .mailbox_subject{width: 157px; float: left; font-size: 18px; font-weight: 700; color: darkslategrey;}
     .settings{width: 13px; padding-top: 5px;}
@@ -56,9 +58,9 @@
             <img class="settings" src="resources/common_images/setting.png">
             <br><br>
             <div class="boxList">
-                <div>안읽은 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
-                <div>중요 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
-                <div>작성중인 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
+                <div class="mailbox">안읽은 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
+                <div class="mailbox">중요 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
+                <div class="mailbox">작성중인 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
             </div>
         </div>
         <br><br>
@@ -69,7 +71,7 @@
                 <c:if test="${ not empty tagList }" >
                     <c:forEach var="t" items="${ tagList }" >
                         <div class="tag">
-                            <div class="tagTriangle" style="border-left: 15px solid ${t.tagColor};"></div><div>${ t.tagName }</div>
+                            <div class="tagTriangle" style="border-left: 15px solid ${t.tagColor};"></div><div class="tagOne">${ t.tagName }</div>
                         </div>
                     </c:forEach>
                 </c:if>
@@ -118,24 +120,46 @@
                 </div>
             </form>
         </div>
+
+        <script>
+            // 태그 추가 화면
+            document.getElementById("add_tag").addEventListener('click', function(){
+                document.getElementById("add_tag_view").style.display = 'block'
+            });
+            
+            // tag_color 선택
+            let tagColorList = document.querySelectorAll("#select_tag_color div");
+            tagColorList.forEach(function(tagColor){
+                tagColor.addEventListener('click', function(){
+                    tagColorList.forEach(function(tagColor){
+                        tagColor.style.border = "none"
+                    });
+                    this.style.border = "2px dashed white";
+                    const inputColor = document.getElementById("tagColor");
+                    let colorValue = this.getAttribute("style").split(': ', 2)[1].split(';', 1)[0];
+                    inputColor.setAttribute("value", colorValue);
+                });
+            });
+        </script>
+
         <div>
             <div class="mailbox_subject">메일함</div>
             <img class="settings" src="resources/common_images/setting.png">
             <br><br>
             <div class="boxList">
-                <div>받은 메일함(전체)</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div>오늘 온 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div>내게 쓴 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div>첨부 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div>보낸 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div>예약 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div id="recMailbox" class="mailbox">받은 메일함(전체)</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div class="mailbox">오늘 온 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div class="mailbox">내게 쓴 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div class="mailbox">첨부 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div class="mailbox">보낸 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div class="mailbox">예약 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
                 <div style="width: 200px;">
-                    <div id="spambox">스팸 메일함 </div>
-                    <button class="btn btn-outline-secondary btn-sm">비우기</button>
+                    <div class="mailbox" id="spambox">스팸 메일함 </div>
+                    <button id="spam_completeDel" class="btn btn-outline-secondary btn-sm">비우기</button>
                 </div>
                 <div style="width: 200px;">
-                    <div id="trashcan">휴지통 </div>
-                    <button class="btn btn-outline-secondary btn-sm">비우기</button>
+                    <div class="mailbox" id="trashcan">휴지통 </div>
+                    <button id="trashcan_completeDel" class="btn btn-outline-secondary btn-sm">비우기</button>
                 </div>
             </div>
         </div>
@@ -143,25 +167,71 @@
     </div>
 
     <script>
-        // 태그 추가 화면
-        document.getElementById("add_tag").addEventListener('click', function(){
-            document.getElementById("add_tag_view").style.display = 'block'
+        // 받은 메일함 이동
+        document.getElementById("recMailbox").addEventListener("click", function(){
+            location.href="list.ma";
         });
-        
-        // tag_color 선택
-        let tagColorList = document.querySelectorAll("#select_tag_color div");
-        tagColorList.forEach(function(tagColor){
-            tagColor.addEventListener('click', function(){
-                tagColorList.forEach(function(tagColor){
-                    tagColor.style.border = "none"
-                });
-                this.style.border = "2px dashed white";
-                const inputColor = document.getElementById("tagColor");
-                let colorValue = this.getAttribute("style").split(': ', 2)[1].split(';', 1)[0];
-                inputColor.setAttribute("value", colorValue);
+
+        // 스팸 메일함 이동
+        document.getElementById("spambox").addEventListener("click", function(){
+            location.href="spamList.ma";
+        });
+
+        // 스팸 메일함 비우기
+        document.getElementById("spam_completeDel").addEventListener("click", function(){
+            swal({
+                title: "영구 삭제하시겠습니까?",
+                text: "삭제된 메일들은 복구되지 않습니다.",
+                icon: "warning",
+                buttons: ["취소", "삭제"],
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if(willDelete){
+                    let form = document.createElement("form");
+                    let input = document.createElement("input");
+                    input.setAttribute("name", "junkMail");
+                    input.setAttribute("value", "Y");
+                    form.action = "completeDelete.ma";
+                    form.method = "POST";
+                    form.append(input);
+                    document.body.append(form);
+                    console.log(input)
+                    form.submit();
+                }
+            });
+        });
+
+        // 휴지통 이동
+        document.getElementById("trashcan").addEventListener("click", function(){
+            location.href="deleteList.ma";
+        });
+
+        // 휴지통 비우기
+        document.getElementById("trashcan_completeDel").addEventListener("click", function(){
+            swal({
+                title: "영구 삭제하시겠습니까?",
+                text: "삭제된 메일들은 복구되지 않습니다.",
+                icon: "warning",
+                buttons: ["취소", "삭제"],
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if(willDelete){
+                    let form = document.createElement("form");
+                    let input = document.createElement("input");
+                    input.setAttribute("name", "status");
+                    input.setAttribute("value", "N");
+                    form.action = "completeDelete.ma";
+                    form.method = "POST";
+                    form.append(input);
+                    document.body.append(form);
+                    form.submit();
+                }
             });
         });
     </script>
-	
+    
+
 </body>
 </html>

@@ -255,7 +255,7 @@
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">확인</button>&nbsp;
-                        <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">취소</button>
+                        <button type="button" id="close" class="btn btn-sm btn-light" data-dismiss="modal">취소</button>
                     </div>
                 </form>
             </div>
@@ -266,6 +266,14 @@
     <!-- 타임라인 프리미엄 -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.4/index.global.min.js'></script>
     <script>
+    
+	    $(".close").click(function(){
+			$("#myModal").modal("hide");
+		})
+		$("#close").click(function(){
+			$("#myModal").modal("hide");
+		})
+    
         // FullCalendar
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
@@ -289,6 +297,17 @@
                 		{ id: '${ rm.resourceNo }', title: '${ rm.resourceName }'},
                     </c:forEach>
                 ],
+                events: [
+                	<c:forEach var="m" items="${ mList }">
+                    	{ id: '${ m.reNo }', resourceId: '${ m.resourceNo }', start: '${ m.startDate } ${ m.startTime }', end: '${ m.endDate } ${ m.endTime }', title: '${ m.reWriter } ${ m.startTime }~${ m.endTime }', color: '#d6dfcc' },
+                    </c:forEach>
+                ],
+				eventClick: function(info){
+                	
+                	location.href = "reservationUpdel.re?no=" + info.event.id; // 상세페이지 이동
+                	
+                	info.el.style.borderColor = '#b9bbdd'; // 테두리 색 지정
+                },
                 select: function(info) { // 클릭&드래그
                     // 클릭한 날짜
                     const start = info.startStr;
@@ -431,13 +450,17 @@
 
         })
 
-        // 종일 체크시 시간 선택 숨기기
+     	// 종일 체크시 시간 선택 숨기기
         function allDayShowHidden(){
             if($("input:checkbox[id='allDay']").is(":checked") == true) {
-                $(".sel").attr("hidden", true);    
+                $(".sel").attr("hidden", true);
+                $("#sel1").val("08:00"); // 시간 값 8시부터
+                $("#sel2").val("23:00"); // 23시까지
+                $("input[name=allDay]").val("Y");
             } else {
+            	//console.log($("input:checkbox[id='allDay']").prop("checked", false));
                 $(".sel").attr("hidden", false);
-            }
+            } 
         }
 
         // 전사일정 체크 확인

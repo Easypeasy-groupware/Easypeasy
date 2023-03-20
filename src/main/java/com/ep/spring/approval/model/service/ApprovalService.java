@@ -76,6 +76,7 @@ public interface ApprovalService {
 	// 14. 참조자 조회수 증가 서비스
 	int updateCount(Approval a);
 
-	
+	// 15. 결재문서 상신을 위한 서비스
+	int insertApproval(Approval ap, ArrayList<ApprovalLine> al, VacationForm vf, OverTimeForm ot, ArrayList<Attachment> atList);
 
 }

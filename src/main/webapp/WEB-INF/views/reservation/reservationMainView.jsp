@@ -128,7 +128,7 @@
 
         <div id="content-1">
             <h5>
-                <span>내 예약/대여 현황</span>
+                <span>내 예약 현황</span>
             </h5>
             <table align="center" class="table table-hover table-sm">
                 <thead>
@@ -140,22 +140,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>빔프로젝터</td>
-                        <td>1번 프로젝터</td>
-                        <td>2023-02-27 13:00 ~ 2023-02-27 15:00</td>
-                        <td>
-                            <button onclick="" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">취소</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>회의실</td>
-                        <td>1번 회의실</td>
-                        <td>2023-02-27 13:00 ~ 2023-02-27 15:00</td>
-                        <td>
-                            <button onclick="" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">취소</button>
-                        </td>
-                    </tr>
+                    <c:forEach var="l" items="${ list }">
+                		<tr>
+	                        <td>${ l.categoryName }</td>
+	                        <td>${ l.resourceName }</td>
+	                        <td>${ l.startDate } ${ l.startTime } ~ ${ l.endDate } ${ l.endTime }</td>
+	                        <td>
+	                            <a href="reservationDel.re?no=${ l.reNo }" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">취소</a>
+	                        </td>
+                    	</tr>
+                	</c:forEach>
                 </tbody>
             </table>
         </div>
@@ -274,8 +268,8 @@
                     
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">확인</button>&nbsp;
-                        <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">취소</button>
+                        <button type="submit" class="btn btn-sm" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">확인</button>&nbsp;
+                        <button type="button" id="close" class="btn btn-sm btn-light" data-dismiss="modal" style="background: white; color: gray;">취소</button>
                     </div>
                 </form>
             </div>
@@ -286,6 +280,14 @@
     <!-- 타임라인 프리미엄 -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.4/index.global.min.js'></script>
     <script>
+    
+	    $(".close").click(function(){
+			$("#myModal").modal("hide");
+		})
+		$("#close").click(function(){
+			$("#myModal").modal("hide");
+		})
+    	
         // FullCalendar
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
@@ -309,7 +311,20 @@
                 		{ id: '${ rm.resourceNo }', title: '${ rm.resourceName }'},
                     </c:forEach>
                 ],
+                events: [
+                	<c:forEach var="m" items="${ mList }">
+                    	{ id: '${ m.reNo }', resourceId: '${ m.resourceNo }', start: '${ m.startDate } ${ m.startTime }', end: '${ m.endDate } ${ m.endTime }', title: '${ m.reWriter } ${ m.startTime }~${ m.endTime }', color: '#d6dfcc' },
+                    </c:forEach>
+                ],
+                eventClick: function(info){
+                	
+                	location.href = "reservationUpdel.re?no=" + info.event.id; // 상세페이지 이동
+                	
+                	info.el.style.borderColor = '#b9bbdd'; // 테두리 색 지정
+                },
                 select: function(info) { // 클릭&드래그
+                	
+                	
                     // 클릭한 날짜
                     const start = info.startStr;
                     const end = info.endStr;
@@ -350,9 +365,9 @@
 
                     //console.log("체크날짜" + yymmddStart);
                     //console.log("오늘 날짜" + tDate);
-                    console.log(hhmmStart);
+                    //console.log(hhmmStart);
                     //console.log(tHhmm);
-                    console.log(hhmmEnd);
+                    //console.log(hhmmEnd);
 
                     if(yymmddStart > tDate) { // 오늘 날짜 이후 선택시
                     	
@@ -407,8 +422,8 @@
                 slotMinTime: "08:00:00", // 최소시간
                 slotMaxTime: "23:00:00", // 최대시간 (23시까지만 화면에 보여짐)
                 selectable : true, // 달력 일자 드래그 설정가능
-                droppable : true,
-                editable : true,
+                //droppable : true,
+                //editable : true,
                 nowIndicator: true, // 현재 시간 마크
                 eventLimit: true, // 달력상에 셀 크기보다 많은 이벤트가 등록되어 있는 경우 'more' 표기
                 locale: 'ko' // 한국어 설정
@@ -451,19 +466,23 @@
 
         })
 
-        // 종일 체크시 시간 선택 숨기기
+     	// 종일 체크시 시간 선택 숨기기
         function allDayShowHidden(){
             if($("input:checkbox[id='allDay']").is(":checked") == true) {
-                $(".sel").attr("hidden", true);    
+                $(".sel").attr("hidden", true);
+                $("#sel1").val("08:00"); // 시간 값 8시부터
+                $("#sel2").val("23:00"); // 23시까지
+                $("input[name=allDay]").val("Y");
             } else {
+            	//console.log($("input:checkbox[id='allDay']").prop("checked", false));
                 $(".sel").attr("hidden", false);
-            }
+            } 
         }
 
         // 전사일정 체크 확인
         function showHidden(){
             if($("input:checkbox[id='company']").is(":checked") == true) {
-                $(".body").attr("hidden", true);    
+                $(".body").attr("hidden", true);
             } else {
                 $(".body").attr("hidden", false);
             }

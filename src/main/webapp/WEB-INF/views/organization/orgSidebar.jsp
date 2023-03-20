@@ -34,25 +34,26 @@
 <body>
 	 <div class="sidebar">
 	    	<div class="menu-title">
-				<a href="" id="title">조직도</a>
+				<a href="" id="org-title">조직도</a>
 			</div>
-	    	
-	    	<button type="button" class="btn btn-success" id="topbtn" onclick="location.href='adminList.org';"> 관리자 </button>
-	        
+			
+	    	<c:if test="${ loginUser.deptCode eq 'D1' }">
+	    		<button type="button" class="btn btn-success" id="topbtn" onclick="location.href='adminList.org';"> 관리자 </button>
+	        </c:if>
 	      
 	      <div class="menu">
 	        <ul>
-	          <li><a href="#">인사관리부</a></li>
-	          <li><a href="#">경영지원부</a></li>
+	          <li><a href="list.org">인사관리부</a></li>
+	          <li><a href="list_d2.org">경영지원부</a></li>
 	          <li class="submenu">
 	          	 <a href="#" class="dep1">영업부<span class="collapse-indicator"></span></a>
 	                 <ul>
-	                      <li><a href="#">- 영업 1팀</a></li>
-	                      <li><a href="#">- 영업 2팀</a></li>
-	              		  <li><a href="#">- 영업 3팀</a></li>
+	                      <li><a href="list_d3.org">- 영업 1팀</a></li>
+	                      <li><a href="list_d4.org">- 영업 2팀</a></li>
+	              		  <li><a href="list_d5.org">- 영업 3팀</a></li>
 	                 </ul>
 	          </li>   
-	          <li><a href="#">마케팅부</a></li>
+	          <li><a href="list_d6.org">마케팅부</a></li>
 	        </ul>
 	      </div>
 	  </div>

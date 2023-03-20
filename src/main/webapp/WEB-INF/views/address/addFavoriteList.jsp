@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,16 +31,27 @@
     .subheading{margin-left:10px;}
     #pbSubheading{margin-left:90px;}
 
+	/*리스트 테이블을 감싸는 div*/
+	#psLike, #pbLike{height:250px; width:98%; overflow-y:auto;}
+	
+	
     /*주소록 리스트 테이블*/
-    table{
+    .like-tb{
         margin:auto;
         border-collapse: collapse;
     }
-    tbody>tr:hover{background:rgb(233, 233, 233); font-weight:600;}
-    th{border-bottom:1px solid gray; padding:5px 0 5px 0;}
-    td{padding:3px 0 3px 0;}
-    input[type="checkbox"]{accent-color:rgb(166, 184, 145);}
-    .like:hover{cursor: pointer;}
+    .like-tb tr{border-radius:5px;}
+    .like-tb tbody>tr:hover{background:rgb(233, 233, 233); font-weight:600; cursor:pointer;}
+    .like-tb thead>tr{background-color:rgb(210, 217, 201); position: sticky; top:0;}
+    .like-tb th{padding:8px 0 8px 0;}
+    .like-tb td{padding:3px 0 3px 0;}
+    .like-tb input[type="checkbox"]{accent-color:rgb(166, 184, 145);}
+    .addLike:hover, .empLike:hover{cursor: pointer;}
+    
+    /*스크롤*/
+	#psLike::-webkit-scrollbar, #pbLike::-webkit-scrollbar{width:5px;}
+	#psLike::-webkit-scrollbar-thumb, #pbLike::-webkit-scrollbar-thumb{background-color:rgb(166, 184, 145); border-radius:5px;}
+	#psLike::-webkit-scrollbar-track, #pbLike::-webkit-scrollbar-track{background-color:white;}
 
 </style>
 </head>
@@ -67,118 +79,54 @@
         <br><br>
 
         <button id="sendMail">메일쓰기</button>
-        <span class="subheading" id="psSubheading"><b>개인주소록 (3개)</b></span>
+        <span class="subheading" id="psSubheading"><b>개인주소록 (${fn:length(p)}개)</b></span>
 
         <br>
 
         <div id="psLike">
-            <table>
-                <copgroup>
-                    <col style="width:10px;">
-                    <col style="width:30px;">
-                    <col style="width:50px;"><!--이름-->
-                    <col style="width:50px;"><!--직위-->
+            <table class="like-tb psLike-tb">
+                <colgroup>
+                    <col style="width:50px;">
+                    <col style="width:50px;">
+                    <col style="width:150px;"><!--이름-->
                     <col style="width:150px;"><!--휴대폰-->
                     <col style="width:150px;"><!--이메일-->
-                    <col style="width:70px;"><!--부서-->
-                    <col style="width:120px;"><!--회사-->
-                    <col style="width:100px;"><!--회사전화-->
-                    <col style="width:150px;"><!--회사주소-->
-                    <col style="width:70px;"><!--메모-->
-                    <col style="width:50px;"><!--그룹-->
-                </copgroup>
+                    <col style="width:300px;"><!--메모-->
+                    <col style="width:150px;"><!--그룹-->
+                </colgroup>
                 <thead align="center">
                     <tr>
                         <th><input type="checkbox" id="psCheck"></input></th>
                         <th></th>
                         <th>이름</th>
-                        <th>직위</th>
                         <th>휴대폰</th>
                         <th>이메일</th>
-                        <th>부서</th>
-                        <th>회사</th>
-                        <th>회사전화</th>
-                        <th>회사주소</th>
                         <th>메모</th>
                         <th>그룹</th>
                     </tr>
                 </thead>
                 <tbody align="center" id="ps-tbody">
-                    <tr>
-                        <td style="display:none">1</td>
-                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-                        <td class="like">⭐</td>
-                        <td class="clck-detail">홍길동</td>
-                        <td class="clck-detail">사원</td>
-                        <td class="clck-detail">010-1111-2222</td>
-                        <td class="clck-detail">gildong@gmail.com</td>
-                        <td class="clck-detail">영업1팀</td>
-                        <td class="clck-detail">구디아카데미</td>
-                        <td>02-222-3333</td>
-                        <td>서울시 금천구 </td>
-                        <td></td>
-                        <td>friends</td>
-                    </tr>
-                    <tr>
-                        <td style="display:none">2</td>
-                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-                        <td class="like">⭐</td>
-                        <td class="clck-detail">홍길동</td>
-                        <td class="clck-detail">사원</td>
-                        <td class="clck-detail">010-1111-2222</td>
-                        <td class="clck-detail">gildong@gmail.com</td>
-                        <td class="clck-detail">영업1팀</td>
-                        <td class="clck-detail">구디아카데미</td>
-                        <td>02-222-3333</td>
-                        <td>서울시 금천구 </td>
-                        <td></td>
-                        <td>friends</td>
-                    </tr>
-                    <tr>
-                        <td style="display:none">3</td>
-                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-                        <td class="like">⭐</i></td>
-                        <td class="clck-detail">홍길동</td>
-                        <td class="clck-detail">사원</td>
-                        <td class="clck-detail">010-1111-2222</td>
-                        <td class="clck-detail">gildong@gmail.com</td>
-                        <td class="clck-detail">영업1팀</td>
-                        <td class="clck-detail">구디아카데미</td>
-                        <td>02-222-3333</td>
-                        <td>서울시 금천구 </td>
-                        <td></td>
-                        <td>friends</td>
-                    </tr>
-                    <tr>
-                        <td style="display:none">4</td>
-                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-                        <td class="like">⭐</td>
-                        <td class="clck-detail">홍길동</td>
-                        <td class="clck-detail">사원</td>
-                        <td class="clck-detail">010-1111-2222</td>
-                        <td class="clck-detail">gildong@gmail.com</td>
-                        <td class="clck-detail">영업1팀</td>
-                        <td class="clck-detail">구디아카데미</td>
-                        <td>02-222-3333</td>
-                        <td>서울시 금천구 </td>
-                        <td></td>
-                        <td>friends</td>
-                    </tr>
-                    <tr>
-                        <td style="display:none">5</td>
-                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-                        <td class="like">⭐</i></td>
-                        <td class="clck-detail">홍길동</td>
-                        <td class="clck-detail">사원</td>
-                        <td class="clck-detail">010-1111-2222</td>
-                        <td class="clck-detail">gildong@gmail.com</td>
-                        <td class="clck-detail">영업1팀</td>
-                        <td class="clck-detail">구디아카데미</td>
-                        <td>02-222-3333</td>
-                        <td>서울시 금천구 </td>
-                        <td></td>
-                        <td>friends</td>
-                    </tr>
+                <c:choose>
+                	<c:when test="${ empty p }">
+                		<tr>
+                			<td colspan="7" style="text-align:center;">😓 즐겨찾는 개인주소록이 없습니다</td>
+                		</tr>
+                	</c:when>
+                	<c:otherwise>
+	                	<c:forEach var="p" items="${ p }">
+		                    <tr>
+		                        <td style="display:none" class="addNo-td">${ p.addNo }</td>
+		                        <td><input type="checkbox" class="ps-checkbox"></input></td>
+		                        <td class="addLike starLike">⭐</td>
+		                        <td class="clck-detail">${ p.addName }</td>
+		                        <td class="clck-detail">${ p.phone }</td>
+		                        <td class="clck-detail">${ p.email }</td>
+		                        <td>${ p.memo }</td>
+		                        <td>${ p.group.groupName }</td>
+		                    </tr>
+	                	</c:forEach>
+                	</c:otherwise>
+                </c:choose>
                 </tbody>
             </table>
         </div>
@@ -192,120 +140,68 @@
                     $(".ps-checkbox").prop("checked", false);
                 }
             })
+            
         </script>
 
         <br><br>
 
+		<span class="subheading" id="pbSubheading"><b>공유주소록 (${fn:length(e) + fn:length(s)}개)</b></span>
         <div id="pbLike">
-            <span class="subheading" id="pbSubheading"><b>공유주소록 (5개)</b></span>
-            <table>
-                <copgroup>
-                    <col style="width:10px;">
-                    <col style="width:30px;">
-                    <col style="width:50px;"><!--이름-->
-                    <col style="width:50px;"><!--직위-->
+            <table class="like-tb pbLike-tb">
+                <colgroup>
+                    <col style="width:50px;">
+                    <col style="width:50px;">
+                    <col style="width:150px;"><!--이름-->
                     <col style="width:150px;"><!--휴대폰-->
                     <col style="width:150px;"><!--이메일-->
-                    <col style="width:70px;"><!--부서-->
-                    <col style="width:120px;"><!--회사-->
-                    <col style="width:100px;"><!--회사전화-->
-                    <col style="width:150px;"><!--회사주소-->
-                    <col style="width:70px;"><!--메모-->
-                    <col style="width:50px;"><!--그룹-->
-                </copgroup>
+                    <col style="width:300px;"><!--메모-->
+                    <col style="width:150px;"><!--그룹-->
+                </colgroup>
                 <thead align="center">
                     <tr>
-                        <th><input type="checkbox" id="pbCheck"></input></th>
+                        <th><input type="checkbox" id="psCheck"></input></th>
                         <th></th>
                         <th>이름</th>
-                        <th>직위</th>
                         <th>휴대폰</th>
                         <th>이메일</th>
-                        <th>부서</th>
-                        <th>회사</th>
-                        <th>회사전화</th>
-                        <th>회사주소</th>
                         <th>메모</th>
                         <th>그룹</th>
                     </tr>
                 </thead>
-                <tbody align="center">
-                    <tr>
-                        <td style="display:none">1</td>
-                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-                        <td class="like">⭐</td>
-                        <td class="clck-detail">홍길동</td>
-                        <td class="clck-detail">사원</td>
-                        <td class="clck-detail">010-1111-2222</td>
-                        <td class="clck-detail">gildong@gmail.com</td>
-                        <td class="clck-detail">영업1팀</td>
-                        <td class="clck-detail">구디아카데미</td>
-                        <td>02-222-3333</td>
-                        <td>서울시 금천구 </td>
-                        <td></td>
-                        <td>friends</td>
-                    </tr>
-                    <tr>
-                        <td style="display:none">2</td>
-                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-                        <td class="like">⭐</td>
-                        <td class="clck-detail">홍길동</td>
-                        <td class="clck-detail">사원</td>
-                        <td class="clck-detail">010-1111-2222</td>
-                        <td class="clck-detail">gildong@gmail.com</td>
-                        <td class="clck-detail">영업1팀</td>
-                        <td class="clck-detail">구디아카데미</td>
-                        <td>02-222-3333</td>
-                        <td>서울시 금천구 </td>
-                        <td></td>
-                        <td>friends</td>
-                    </tr>
-                    <tr>
-                        <td style="display:none">3</td>
-                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-                        <td class="like">⭐</i></td>
-                        <td class="clck-detail">홍길동</td>
-                        <td class="clck-detail">사원</td>
-                        <td class="clck-detail">010-1111-2222</td>
-                        <td class="clck-detail">gildong@gmail.com</td>
-                        <td class="clck-detail">영업1팀</td>
-                        <td class="clck-detail">구디아카데미</td>
-                        <td>02-222-3333</td>
-                        <td>서울시 금천구 </td>
-                        <td></td>
-                        <td>friends</td>
-                    </tr>
-                    <tr>
-                        <td style="display:none">4</td>
-                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-                        <td class="like">⭐</td>
-                        <td class="clck-detail">홍길동</td>
-                        <td class="clck-detail">사원</td>
-                        <td class="clck-detail">010-1111-2222</td>
-                        <td class="clck-detail">gildong@gmail.com</td>
-                        <td class="clck-detail">영업1팀</td>
-                        <td class="clck-detail">구디아카데미</td>
-                        <td>02-222-3333</td>
-                        <td>서울시 금천구 </td>
-                        <td></td>
-                        <td>friends</td>
-                    </tr>
-                    <tr>
-                        <td style="display:none">5</td>
-                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-                        <td class="like">⭐</i></td>
-                        <td class="clck-detail">홍길동</td>
-                        <td class="clck-detail">사원</td>
-                        <td class="clck-detail">010-1111-2222</td>
-                        <td class="clck-detail">gildong@gmail.com</td>
-                        <td class="clck-detail">영업1팀</td>
-                        <td class="clck-detail">구디아카데미</td>
-                        <td>02-222-3333</td>
-                        <td>서울시 금천구 </td>
-                        <td></td>
-                        <td>friends</td>
-                    </tr>
-                    
+                <tbody align="center" id="ps-tbody">
+                    <c:choose>
+                	<c:when test="${ empty e and empty s }">
+                		<tr>
+                			<td colspan="7" style="text-align:center;">😓 즐겨찾는 공유주소록이 없습니다</td>
+                		</tr>
+                	</c:when>
+                	<c:otherwise>
+	                	<c:forEach var="e" items="${ e }">
+		                    <tr>
+		                        <td style="display:none" class="empNo-td">${ e.empNo }</td>
+		                        <td><input type="checkbox" class="ps-checkbox"></input></td>
+		                        <td class="empLike starLike">⭐</td>
+		                        <td class="clck-detail">${ e.empName }</td>
+		                        <td class="clck-detail">${ e.phone }</td>
+		                        <td class="clck-detail">${ e.email }</td>
+		                        <td></td>
+		                        <td>${ e.deptName }</td>
+		                    </tr>
+	                	</c:forEach>
+	                	<c:forEach var="s" items="${ s }">
+		                    <tr>
+		                        <td style="display:none" class="addNo-td">${ s.addNo }</td>
+		                        <td><input type="checkbox" class="ps-checkbox"></input></td>
+		                        <td class="addLike starLike">⭐</td>
+		                        <td class="clck-detail">${ s.addName }</td>
+		                        <td class="clck-detail">${ s.phone }</td>
+		                        <td class="clck-detail">${ s.email }</td>
+		                        <td>${ s.memo }</td>
+		                        <td>${ s.group.groupName }</td>
+		                    </tr>
+	                	</c:forEach>
+                	</c:otherwise>
+                </c:choose>
                 </tbody>
             </table>
         </div>
@@ -327,7 +223,42 @@
 	        	}
 	        })
 
-            $(".like").click(function(){ /*별 누르면 실행할 내용*/
+            $(".addLike").click(function(){ /*개인주소록 & 외부주소록 별 누르면 실행할 내용*/
+            	$(this).parent().remove();
+                $.ajax({
+                	url:"deleteFavAdd.add",
+                	data:{
+                		empNo:${loginUser.empNo},
+                		addNo:$(this).siblings().eq(0).text()
+                	},
+                	success:function(result){
+                		if(result == "fail"){
+                			console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                		}
+                	},error:function(){
+                		console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                	}
+                })
+                
+            })
+            
+            $(".empLike").click(function(){ /*별 누르면 실행할 내용*/
+            	$(this).parent().remove();
+                $.ajax({
+                	url:"deleteFavEmp.add",
+                	data:{
+                		empNo:${loginUser.empNo},
+                		addEmpNo:$(this).siblings().eq(0).text()
+                	},
+                	success:function(result){
+                		if(result == "fail"){
+                			console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                			$(this).parent().remove();
+                		}
+                	},error:function(){
+                		console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                	}
+                })
                 
             })
 

@@ -10,7 +10,6 @@
 
 <style>
     *{box-sizing: content-box;}
-    
 
     /* 메일 컨텐트 css */
     #mail_content{width: 1000px; float: left;}
@@ -23,6 +22,7 @@
     .menu1{width: 100px;}
     .menu2{width: 80px;}
     .menu3{width: 120px;}
+    .menu:hover{font-size: 15px; cursor: pointer;}
 
     .block{width: 220px; min-height: 150px; max-height: 300px; background: white; border-radius: 10px; border: 1px solid rgb(185, 187, 221); 
                position: absolute; left: 850px; text-align: center; display: none;}
@@ -46,10 +46,11 @@
     .mail_check{width: 30px; padding-top: 2px;}
     .mail_imgList{width: 110px; text-align: center; line-height: 43px;}
     .mail_img{width: 30px; line-height: 2.5;}
-    .mail_sender_name{width: 80px}
-    .mail_sender{width: 200px; overflow: hidden;}
-    .mail_title{width: 400px; overflow: hidden;}
-    .mail_date{width: 130px; text-align: right;}
+    #selectMailLine:hover{font-weight: 600; cursor: pointer;}
+    .mail_sender_name{width: 60px; margin-right: 15px; overflow: hidden;}
+    .mail_sender{width: 180px; margin-right: 15px; overflow: hidden;}
+    .mail_title{width: 380px; margin-right: 15px; overflow: hidden;}
+    .mail_date{width: 160px; text-align: right;}
 
     #paging{text-align: center; display: inline-block; padding-left :0;}
     #paging li {text-align: center; float: left; list-style:none; border-radius:10px; margin:2px; background-color: rgb(234, 234, 234);}
@@ -72,16 +73,34 @@
                 <div id="mail_header_info">
                     <b>받은 메일함</b>
                     <img src="">
-                    <b>전체메일 </b><b style="color: dodgerblue;">${ fn:length(mailList) } </b><b>/ </b>
-                    <b style="color: crimson">
-                        <c:forEach var="m" items="${ mailList }" varStatus="status">
-                            <c:if test="${ m.recCheck == 'N' }">
-                                <c:set var="unReadMail" value="${unReadMail + 1}" />
+                    <b style="font-size: 20px;">전체메일 </b>
+                    <b style="color: dodgerblue; font-size: 23px;">
+                        <c:forEach var="m" items="${ mailList }">
+                            <c:if test="${ m.status == 'Y' }">
+                                <c:set var="allMail" value="${allMail + 1}" />
                             </c:if>
                         </c:forEach>
-                        ${ unReadMail }
+                        ${allMail}
+                    </b>
+                    <b>/ </b>
+                    <b style="font-size: 20px;">안읽은 메일 </b>
+                    <b style="color: crimson; font-size: 23px;">
+                        <c:forEach var="m" items="${ mailList }">
+                            <c:if test="${ m.status == 'Y' }">
+                                <c:choose>
+                                    <c:when test="${ m.recCheck == 'Y' }">
+                                        <c:set var="readMail" value="${readMail + 1}" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="readMail" value="0" />
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:if>
+                        </c:forEach>
+                        ${allMail-readMail}
                     </b>
                 </div>
+                
                 <div id="search_bar">
                     <form action="">
                         <select name="search" id="">
@@ -96,7 +115,7 @@
                 </div>
             </div><br>
             <div id="mail_header2">
-                <div class="menu" style="width: 27px;"><input type="checkbox" name="" id="check_all"></div>
+                <div style="width: 27px; float: left; padding-left: 5px; padding-top: 8px;"><input type="checkbox" name="" id="check_all"></div>
                 <div class="menu menu1" id="spam"><img src="">스팸 등록</div>
                 <div class="menu menu2" id="reply"><img src="">답장</div>
                 <div class="menu menu2" id="delete"><img src="">삭제</div>
@@ -159,48 +178,52 @@
         <div id="mail_list">
             <c:if test="${ not empty mailList }">
                 <c:forEach var="m" items="${ mailList }">
-                    <div class="mail_one" >
-                        <div class="mail_check">
-                            <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="">
+                    <c:if test="${ m.status == 'Y' and m.junkMail == 'N' }">
+                        <div class="mail_one" >
+                            <div class="mail_check">
+                                <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="">
+                            </div>
+                            <div class="mail_imgList">
+                                <c:choose>
+                                    <c:when test="${ m.imporMail == 'Y' }">
+                                        <div class="mail_img"><img class="mail_favorite" src="resources/common_images/favorite.png"></div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="mail_img"><img class="mail_favorite" src="resources/common_images/unFavorite.png"></div>
+                                    </c:otherwise>
+                                </c:choose>
+                                <c:choose>
+                                    <c:when test="${ m.recCheck == 'Y' }" >
+                                        <div class="mail_img"><img class="read" src="resources/common_images/mail_read.png"></div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="mail_img"><img class="read" src="resources/common_images/mail_unRead.png"></div>
+                                    </c:otherwise>
+                                </c:choose>
+                                <c:if test="${ not empty attachmentList }">
+                                    <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
+                                </c:if>
+                            </div>
+                            <form class="mail_select_area">
+                                <input class="mailNo" type="hidden" name="mailNo" value="${ m.mailNo }">
+                                <input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
+                                <div id="selectMailLine">
+                                    <div class="mail_sender_name">
+                                        ${m.empName}
+                                    </div>
+                                    <div class="mail_sender">
+                                        ${ m.sendMailAdd }
+                                    </div>
+                                    <div class="mail_title">
+                                        ${ m.mailTitle }
+                                    </div>
+                                    <div class="mail_date">
+                                        ${ m.recDate }
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        <div class="mail_imgList">
-                            <c:choose>
-                                <c:when test="${ m.imporMail == 'Y' }">
-                                    <div class="mail_img"><img class="mail_favorite" src="resources/common_images/favorite.png"></div>
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="mail_img"><img class="mail_favorite" src="resources/common_images/unFavorite.png"></div>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:choose>
-                                <c:when test="${ m.recCheck == 'Y' }" >
-                                    <div class="mail_img"><img class="read" src="resources/common_images/mail_read.png"></div>
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="mail_img"><img class="read" src="resources/common_images/mail_unRead.png"></div>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:if test="${ not empty attachmentList }">
-                                <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
-                            </c:if>
-                        </div>
-                        <form class="mail_select_area">
-                            <input class="mailNo" type="hidden" name="mailNo" value="${ m.mailNo }">
-                            <input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
-                            <div class="mail_sender_name">
-                                ${m.empName}
-                            </div>
-                            <div class="mail_sender">
-                                ${ m.sendMailAdd }
-                            </div>
-                            <div class="mail_title">
-                                ${ m.mailTitle }
-                            </div>
-                            <div class="mail_date">
-                                ${ m.recDate }
-                            </div>
-                        </form>
-                    </div>
+                    </c:if>
                 </c:forEach>
             </c:if>
         </div>
@@ -235,7 +258,7 @@
                  })
             })
 
-        // 전체 체크박스
+        // 전체 체크박스 선택 취소
         let checkAll = document.getElementById("check_all");
         let mailCheckBox = document.querySelectorAll('.mail_checkbox');
         checkAll.addEventListener('change', function(event){
@@ -246,39 +269,32 @@
 
         // 스팸 등록
         let spamEnroll = document.getElementById("spam");
-        let mailNoList = document.getElementsByClassName("mailNo");
         spamEnroll.addEventListener('click', function(){
-        let checkedBoxSum = 0
-        let count = 0;
-        let arr = [];
-        let form = document.createElement("form");
-            mailCheckBox.forEach((i) => {
-                if(i.checked == true) {
-                    checkedBoxSum += 1;
-                    arr[count] = mailNoList[i.value].value;
-                    count += 1; 
-                }
-            })
-            console.log(arr);
+            let checkedBoxSum = 0
+            let count = 0;
+            let arr = [];
+                mailCheckBox.forEach((i) => {
+                    if(i.checked == true) {
+                        let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
+                        arr.push(value);
+                        checkedBoxSum += 1;
+                    };
+                })
 
             if(checkedBoxSum != 0) {
-
-            // form.setAttribute("charset", "UTF-8");
-            // form.setAttribute("method", "POST");  
-            // form.setAttribute("action", "액션 주소");
-
-            // let hiddenInput = document.createElement("input");
-            // hiddenInput.setAttribute("type", "hidden");
-            // hiddenInput.setAttribute("name", "mailNoArr");
-            // hiddenInput.setAttribute("value", arr);
-            // form.appendChild(hiddenInput);
-
-            // document.body.appendChild(form);
-            // form.submit();
-
+                const form = document.createElement("form");
+                const input = document.createElement("input");
+                input.setAttribute("name", "mailNoList");
+                input.setAttribute("multiple", "multiple")
+                input.setAttribute("value", arr)
+                form.append(input)
+                form.method = "POST"
+                form.action = "spamEnroll.ma"
+                document.body.append(form)
+                form.submit();
             }else {
                 alert('체크박스를 선택해주세요');
-            }
+            };
         });
 
         // 답장
@@ -424,7 +440,6 @@
                 console.log("읽기");
             });
         });
-        
 
     </script>
 

@@ -49,8 +49,13 @@ public class MailServiceImpl implements MailService {
 	}
 	
 	@Override
-	public int readMail(Mail m) {
-		return mDao.readMail(m, sqlSession);
+	public void readMail(Mail m) {
+		mDao.readMail(m, sqlSession);
+	}
+	
+	@Override
+	public int unReadCount(Mail m) {
+		return mDao.unReadCount(m, sqlSession);
 	}
 	
 	@Override
@@ -67,6 +72,33 @@ public class MailServiceImpl implements MailService {
 	public ArrayList<Attachment> selectAttachmentList(Mail m) {
 		return mDao.selectAttachmentList(m, sqlSession);
 	}
+
+	@Override
+	public int updateReadUnreadMail(Mail m) {
+		return mDao.readUnreadMail(m, sqlSession);
+	}
+
+	@Override
+	public int deleteMail(Mail m) {
+		return mDao.deleteMail(m, sqlSession);
+	}
+
+	@Override
+	public int completeDeleteMail(Mail m) {
+		return mDao.completeDeleteMail(m, sqlSession);
+	}
+
+	@Override
+	public int spamEnroll(Mail m, int[] mailNoList) {
+		return mDao.spamEnroll(m, mailNoList, sqlSession);
+	}
+
+	@Override
+	public int spamClear(Mail m, int[] mailNoList) {
+		return mDao.spamClear(m, mailNoList, sqlSession);
+	}
+
+	
 
 	
 

@@ -254,7 +254,7 @@
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">확인</button>&nbsp;
-                        <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">취소</button>
+                        <button type="button" id="close" class="btn btn-sm btn-light" data-dismiss="modal">취소</button>
                     </div>
                 </form>
             </div>
@@ -265,6 +265,14 @@
     <!-- 타임라인 프리미엄 -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.4/index.global.min.js'></script>
     <script>
+    	
+	    $(".close").click(function(){
+			$("#myModal").modal("hide");
+		})
+		$("#close").click(function(){
+			$("#myModal").modal("hide");
+		})
+    
         // FullCalendar
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
@@ -289,10 +297,16 @@
                     </c:forEach>
                 ],
                 events: [
-                	<c:forEach var="rb" items="${ beList }">
-                    	{ id: '${ rb.resourceNo }', resourceId: '${ rb.resourceNo }', start: '2023-03-15 08:00', end: '2023-03-15 23:00', title: 'dd 12:00 ~ 15:00', color: '#d6dfcc' },
-                    </c:forEach>
+                	<c:forEach var="b" items="${ bList }">
+                		{ id: '${ b.reNo }', resourceId: '${ b.resourceNo }', start: '${ b.startDate } ${ b.startTime }', end: '${ b.endDate } ${ b.endTime }', title: '${ b.reWriter } ${ b.startTime }~${ b.endTime }', color: '#d6dfcc' },
+                	</c:forEach>
                 ],
+				eventClick: function(info){
+                	
+                	location.href = "reservationUpdel.re?no=" + info.event.id; // 상세페이지 이동
+                	
+                	info.el.style.borderColor = '#b9bbdd'; // 테두리 색 지정
+                },
                 select: function(info) { // 클릭&드래그
                 
                     // 클릭한 날짜

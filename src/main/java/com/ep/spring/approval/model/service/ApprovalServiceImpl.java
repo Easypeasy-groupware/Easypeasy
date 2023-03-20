@@ -1,6 +1,7 @@
 package com.ep.spring.approval.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -181,6 +182,37 @@ public class ApprovalServiceImpl implements ApprovalService{
 	@Override
 	public int updateCount(Approval a) {
 		return aDao.updateCount(sqlSession, a);
+	}
+
+	@Override
+	public int insertApproval(Approval ap, ArrayList<ApprovalLine> al, VacationForm vf, OverTimeForm ot, ArrayList<Attachment> atList) {
+		
+		int a = aDao.insertApproval(sqlSession, ap);
+		
+		int b = 1;
+		int c = 1;
+		int d = 1;
+		int e = 1;
+		
+		if(al.size() != 0) {
+			b = aDao.insertApprovalLine(sqlSession, al);
+		}
+		
+		if(atList.size() != 0) {
+		  c = aDao.insertAttachment(sqlSession, atList);
+		}
+		
+		System.out.println(vf);
+		System.out.println(ot);
+		
+		if(vf.getVacStart() != null) {
+			d = aDao.insertVacationForm(sqlSession, vf);
+			
+		}else if(ot.getOtDate() != null) {
+			e = aDao.insertOverTimeForm(sqlSession, ot);
+		}
+		
+		return a * b * c * d * e;
 	}
 
 

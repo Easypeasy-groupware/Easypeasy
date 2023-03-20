@@ -71,12 +71,12 @@
 			           <select name="jobCode" id="jcBox" >
 			             		<option value="${e.jobCode}" name="jobCode" id="J">${e.jobName}</option>
 			             		<option>-----수정----</option>
-			             		<option value="J2" name="jobCode" id="J6">사원</option>
-			             		<option value="J2" name="jobCode" id="J5">대리</option>
-						        <option value="J3" name="jobCode" id="J4">과장</option>
-						        <option value="J4" name="jobCode" id="J3">부장</option>
-						        <option value="J5" name="jobCode" id="J2">상무</option>
-						        <option value="J6" name="jobCode" id="J1">대표</option>
+			             		<option value="J2" name="jobCode" id="J1">사원</option>
+			             		<option value="J2" name="jobCode" id="J2">대리</option>
+						        <option value="J3" name="jobCode" id="J3">과장</option>
+						        <option value="J4" name="jobCode" id="J4">부장</option>
+						        <option value="J5" name="jobCode" id="J5">상무</option>
+						        <option value="J6" name="jobCode" id="J6">대표</option>
 					   </select>
 				       <script>
 					       $(function(){
@@ -96,7 +96,7 @@
 			                <option value="D5" name="deptCode" id="D5">영업3팀</option>
 			                <option value="D6" name="deptCode" id="D6">마케팅부</option>
 			            </select>
-			            <script> /* 찐 완성 아님ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ  */
+			            <script>
 					        $(function(){
 					        	$('select[name=deptCode] value=[${e.deptCode}]').attr("selected", true);
 					        })

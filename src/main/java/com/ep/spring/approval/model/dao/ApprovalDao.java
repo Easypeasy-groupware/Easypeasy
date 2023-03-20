@@ -169,6 +169,36 @@ public class ApprovalDao {
 	public int updateCount(SqlSessionTemplate sqlSession, Approval a) {
 		return sqlSession.update("approvalMapper.updateCount", a);
 	}
+	
+	public int insertApproval(SqlSessionTemplate sqlSession, Approval ap) {
+		System.out.println(ap.getWriterComment());
+		return sqlSession.insert("approvalMapper.insertApproval", ap);
+	}
+	
+	public int insertApprovalLine(SqlSessionTemplate sqlSession, ArrayList<ApprovalLine> al) {
+		int result = 0;
+		for(ApprovalLine a : al) {
+			result += sqlSession.insert("approvalMapper.insertApprovalLine", a);
+		}
+		return result;
+	}
+	
+	public int insertAttachment(SqlSessionTemplate sqlSession, ArrayList<Attachment> atList) {
+		
+		int result = 0;
+		for(Attachment a : atList) {
+			result += sqlSession.insert("approvalMapper.insertAttachment", a);
+		}
+		return result;
+	}
+	
+	public int insertVacationForm(SqlSessionTemplate sqlSession, VacationForm vf) {
+		return sqlSession.insert("approvalMapper.insertVacationForm", vf);
+	}
+	
+	public int insertOverTimeForm(SqlSessionTemplate sqlSession, OverTimeForm ot) {
+		return sqlSession.insert("approvalMapper.insertOverTimeForm", ot);
+	}
 
 	
 

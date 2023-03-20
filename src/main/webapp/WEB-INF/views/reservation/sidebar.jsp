@@ -32,7 +32,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"></script>
 <style>
 	*{padding:0; margin:0}
-	.menubar{width:200px; background:white; float:left; border-right: 2px solid rgb(185, 187, 221); height: 750px;}
+	.menubar{width:200px; background:white; float:left; border-right: 2px solid rgb(185, 187, 221); height: 900px;}
 	a{text-decoration:none; color:black;}
 	a:hover{font-weight:600; color:black;}
 	li{list-style:none;}
@@ -45,14 +45,14 @@
 	/*드롭다운이미지*/
 	.dropdown-key:hover{cursor:pointer;}
 	
-	/*주소록타입*/
+	/*타입*/
 	.add-type{width:98%; height:35px; margin:auto; text-align:center; padding:5px 0 5px 0;}
 	.add-type:hover{background-color: rgb(246, 246, 246); text-decoration:none;}
 	.menu-a{text-decoration:none; font-size:14px; color:black;}
 	.menu-a b{font-size:15px;}
 	.menu-a:hover{text-decoration:none; color:black;}
 	
-	/*주소록 제목 리스트*/
+	/*제목 리스트*/
 	.add-in, .add-ex{color:rgb(53, 62, 42);}
 	.add-in:hover, .add-ex:hover{text-decoration:none; color:black;}
 	.add-in b{font-size:15px;}
@@ -89,7 +89,7 @@
         </div>
         <ul class="submenu" id="inlist" style="display:none;">
         	<c:forEach var="rm" items="${ meList }">
-        		<li><a href="mettingRoomDetail.re?mno=${ rm.resourceNo }">- ${ rm.resourceName }</a></li>
+        		<li><a href="mettingRoomTimeGrid.re?mno=${ rm.resourceNo }">- ${ rm.resourceName }</a></li>
             </c:forEach>
         </ul>
 
@@ -99,7 +99,7 @@
         </div>
         <ul class="submenu" id="exlist" style="display:none;">
             <c:forEach var="rb" items="${ beList }">
-        		<li><a href="externalGroup.add?group=">- ${ rb.resourceName }</a></li>
+        		<li><a href="beamProjectorTimeGrid.re?bno=${ rb.resourceNo }">- ${ rb.resourceName }</a></li>
         	</c:forEach>
         </ul>
        

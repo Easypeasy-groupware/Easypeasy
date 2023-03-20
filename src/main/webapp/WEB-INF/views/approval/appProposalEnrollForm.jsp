@@ -17,7 +17,7 @@
         .form-outer>div{float:left;}
         .left-outer{width:100%;  padding:30px;} 
         .left-form3 table{float:left;}
-        .left-form1, .left-form2 ,.left-form3,.left-form4,.left-form5,.left-form6{width:100%;}
+        .left-form1, .left-form2 ,.left-form4,.left-form5,.left-form6{width:100%;}
         .speech-bubble {
             position: relative;
             background: #d1d2d2;
@@ -46,44 +46,23 @@
     <jsp:include page="appMenubar.jsp" />
     <div class="form-outer">
         <div class="left-outer">
+        	<form id="contentArea" action="insert.ap" method="POST" enctype="multipart/form-data">        
             <div class="left-form1">
-                <p><b style="font-size:30px;">일반품의서</b></p>
+                <p>
+                	<b style="font-size:30px;">일반품의서</b>
+	                <input type="hidden" name="formCode" value="2">
+	                <input type="hidden" name="formName" value="일반품의서"> 
+                </p>
+                <br>
             </div>
-            <div class="left-form2"><a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
-                                    <a href="" style="padding:20px; color:rgb(71, 71, 71);">임시저장</a>|
-                                    <a href="" style="padding:20px; color:rgb(71, 71, 71);">취소</a>|
-                                    <a href="" style="padding:20px; color:rgb(71, 71, 71);"  data-toggle="modal" data-target="#app-line">결재선지정</a>
-                                    <br><br></div>
-            <div class="left-form3">
+            <div class="left-form2">
+            	<a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
+                <a href="" style="padding:20px; color:rgb(71, 71, 71);">임시저장</a>|
+                <a href="" style="padding:20px; color:rgb(71, 71, 71);">취소</a>|
+                <a href="" style="padding:20px; color:rgb(71, 71, 71);"  data-toggle="modal" data-target="#app-line">결재선지정</a>
+                <br><br><br>
+            </div>
 
-                <table class="draft" style="width:100px; text-align:center; font-size:12px; margin-right:10px;" border="1">
-                    <tr>
-                        <td rowspan="4" style="background:rgb(223, 221, 221);">신<br>청</td>
-                        <td>직급</td>
-                    </tr>
-                    <tr>
-                        <td>도장 <br>이름</td>
-                    </tr>
-                    <tr>
-                        <td>날짜</td>
-                    </tr>
-                </table>
-                
-                <table class="draft" style="width:100px; text-align:center; font-size:12px;" border="1">
-                    <tr>
-                        <td rowspan="4" style="background:rgb(223, 221, 221);">승<br>인</td>
-                        <td>직급</td>
-                    </tr>
-                    <tr>
-                        <td>도장 <br>이름</td>
-                    </tr>
-                    <tr>
-                        <td>날짜</td>
-                    </tr>
-                </table>
-                <br><br><br><br>
-                
-            </div>
                 <div class="left-form4">
                     <table class="table-bordered">
                         <tr>
@@ -133,7 +112,7 @@
                                 <label for="title">제목</label>
                             </td>
                             <td>
-                                <input type="text" style="width:700px;">
+                                <input type="text" name="title" style="width:700px;">
                             </td>
                         </tr>
                         <tr>
@@ -141,7 +120,7 @@
                                 <label for="content">내용</label>
                             </td>
                             <td rowspan="5" height="150px;">
-                                <textarea class="summernote form-control" name="editordata" required name="" id="content" rows="10" style="resize:none;"></textarea>
+                                <textarea class="summernote form-control" name="content" required  id="content" rows="10" style="resize:none;"></textarea>
                             </td>
                         </tr>
                         <tr></tr>
@@ -153,7 +132,20 @@
                                 <label for="attachment">첨부파일</label>
                             </td>
                             <td>
-                                <input type="file">
+                                <button id="file_choose" type="button" class="btn btn-outline-secondary btn-sm">파일 선택</button>
+                                <button id="file_delete" type="button" class="btn btn-outline-secondary btn-sm">모두 삭제</button>
+                            </td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <td colspan="2" id="attach_area">
+                                <div id="no_attachment" >
+                                    <img id="attach" src="resources/common_images/attachment.png" width="30px;">
+                                    <div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
+                                </div>
+                                <div id="in_attachments">
+                                </div>
+                                <input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
                             </td>
                         </tr>
                     </table>
@@ -165,14 +157,16 @@
                </div>
               
                <div class="app-comment" style="font-size:15px;">
-                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
+                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${loginUser.empName} ${loginUser.jobName}
                    <br>
-                     회사명 | 부서명
+                     이지피지 | ${loginUser.deptName}
                    <br>
                     기안
-                   <br><br>
-
-                   <br>
+                   <br><br><br>
+				
+               </div>
+               
+               <div class="app-body">
                </div>
                <div class="app-comment" style="font-size:15px;">
                 <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
@@ -183,9 +177,33 @@
                 <br><br>
 
                 <br>
-            </div>
+            	</div>
+            
+                <div style=" padding:10px; font-size:20px;">
+                    <p><b> 참조자</b></p>
+               </div>
+             
+               <div class="app-comment" style="font-size:15px;">
+                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
+                   <br>
+                     회사명 | 부서명
+                   <br>
+                    참조
+                   <br><br>
+
+                   <br>
+               </div>
+               
+               <div class="rep-body">
+               </div>
+               
+               <div id="commentArea">
+               
+               </div>	            
+            
                 </div>
-            </div>
+            </form>
+            
         </div>
  
     </div>
@@ -193,24 +211,24 @@
 
     <script>
     
-    // 회원정보흘 가져오는 ajax
-    $(function(){
-    	
-    	$.ajax({
-    		url:"enrollinfo.ap",
-    		success:function(result){
-    				    			
-    			$("#writer").val(result.a.empName);
-    			$("#dept").val(result.a.deptName);
-    			$("#appChange").val(result.appChange);
-    			
-    		}, error:function(request, status, error){
-    			console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
-				console.log("직성용 정보 불러오기 ajax 통신실패");
-    		}
-    	});
-    	
-    })
+        // 회원정보흘 가져오는 ajax
+        $(function(){
+            
+            $.ajax({
+                url:"enrollinfo.ap",
+                success:function(result){
+                                        
+                    $("#writer").val(result.a.empName);
+                    $("#dept").val(result.a.deptName);
+                    $("#appChange").val(result.appChange);
+                    
+                }, error:function(request, status, error){
+                    console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+                    console.log("직성용 정보 불러오기 ajax 통신실패");
+                }
+            });
+            
+        })
 
 
         $('.summernote').summernote({
@@ -226,6 +244,120 @@
 			  ],
 			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']           });
-        </script>
+
+        // 첨부파일 업로드 하기
+        // 버튼 클릭해서 선택해오기
+        let fileNames = [];
+        let noAttach = document.getElementById("no_attachment");
+        let inAttachs = document.getElementById("in_attachments");
+        document.getElementById("file_choose").addEventListener('click', function(){
+            let attachFile = document.getElementById("attach_files");
+            attachFile.click();
+            attachFile.addEventListener('change', function(){
+                let vaildFile = attachFile.files.length >= 0;
+                if(vaildFile){
+                    inAttachs.innerText = ''
+                    noAttach.style.display = "none";
+                    for(let i=0; i<attachFile.files.length; i++){
+                        inAttachs.innerHTML += "첨부파일명 : " + attachFile.files[i].name + "&nbsp;&nbsp;&nbsp; <br>"
+                    };
+                    inAttachs.style.overflowY = 'auto';
+                    inAttachs.style.display = "block";
+                };
+            });  
+        });
+
+        let uploadBox = document.querySelector('#attach_area');
+
+        // 박스 안에 Drag를 하고 있을 때
+        uploadBox.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.backgroundColor = 'white';
+        });
+        
+        // 박스 밖으로 Drag가 나갈 때
+        uploadBox.addEventListener('dragleave', function(e) {
+            this.style.backgroundColor = 'whitesmoke';
+        });
+        // 박스 안에서 Drag를 Drop했을 때
+        uploadBox.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.style.backgroundColor = 'whitesmoke';
+            let attachFile = e.dataTransfer.files
+            let vaildFile = e.dataTransfer.types.indexOf('Files') >= 0;
+            if(vaildFile){
+                inAttachs.innerText = ''
+                noAttach.style.display = "none";
+                for(let i=0; i<attachFile.length; i++){
+                    inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile[i].name + "&nbsp;&nbsp;&nbsp;<br>"
+                };
+                inAttachs.style.overflowY = 'auto';
+                inAttachs.style.display = "block";
+            };
+        });        
+
+        // 첨부파일 전체 삭제
+        document.getElementById('file_delete').addEventListener('click', function(){
+            let attachFile = document.getElementById("attach_files");
+            attachFile.value = ''
+            inAttachs.innerText = ''
+            inAttachs.style.display = "none";
+            noAttach.style.display = "block";
+        });
+
+        // 유효한 기안의견 작성 시 insert 요청되게 하기
+        function insertApp(){
+        	
+        	if($("#writerComment").val().trim().length>0){
+        		
+        		if(!($("#content").val().trim().length>0)){
+        			swal("내용 작성 후 상신요청해주세요.");
+        		}
+        		
+        		
+        		if($(".app-body input").html() == null){
+        			swal("결재선 선택 후 상신요청해주세요.");
+        		}
+        		
+        		const appContent = $("#contentArea");
+        		
+        		// 결재 / 참조자 목록들 배열에 담기
+        		const recEmpNo = [];
+        		const refList = [];
+        		
+        		const appBody = $(".app-body input");
+        		const refBody = $(".rep-body input");
+        		
+        		
+        		for(let i = 0; i < appBody.length; i++){
+        			console.log(appBody[i]);
+        			appBody[i].setAttribute('name', 'alList['+ i +'].recEmpNo');
+        	
+        		}
+
+        		for(let j = 0; j < refBody.length; j++){
+        			refBody[j].setAttribute('name', 'refList[' + j + '].recEmpNo');
+        	
+        		}
+			
+				let value = "";
+				value += "<input type='hidden' name='writerComment' value='"+ $("#writerComment").val() +"'>";
+				$("#commentArea").html(value);
+				
+				$("input[type=radio][name=start-half]").attr('name', 'halfStatus');
+				$("input[type=radio][name=end-half]").attr('name','halfStatus');
+				
+				appContent.submit();
+
+        		
+        	}else{
+        		
+        		swal("의견 작성 후 상신요청해주세요.");
+        	}
+        	
+        }        
+
+    </script>
+
 </body>
 </html>

@@ -28,17 +28,24 @@
         float: left		!important;
     }
     .input-group{
-        margin-left: 722px;
+        margin-left: 750px;
         width: 250px	!important;
         height: 30px;
         padding-top: 10px;
         position: inherit;
     }
+    
+    button[type=submit]{
+    	border: none;
+    	background: rgb(214, 223, 204);
+    }
 
     #content>table{
-        width: 950px;
+    	margin-left: 20px;
+        width: 98%;
         text-align: center;
     }
+    
     
     /* 페이징바 */
     #paging {
@@ -96,7 +103,7 @@
 	        	<a class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white; margin-left: 920px; margin-bottom: -15px;" href="enrollForm.db">글쓰기</a>
 	        </c:if>
 	        <br><br>
-	        <table align="center" class="table table-hover table-sm" id="dbList">
+	        <table class="table table-hover table-sm" id="dbList">
 	            <thead>
 	                <tr>
 	                    <th>번호</th>

@@ -138,7 +138,7 @@
 	     	// 상세페이지로 이동하는 function
 	     	if(${not empty list2}){
 		        $("table tbody").on("click", "tr", function(){
-		            location.href = 'detailSPrg.ap?no=' + $(this).children().eq(0).text()+"&form="+ $(this).children().eq(2).text()+"&st='기안진행'"; 
+		            location.href = 'detailSPrg.ap?no=' + $(this).children().eq(0).text()+"&form="+ $(this).children().eq(2).text()+"&st=기안진행"; 
 		        }); 
 	        }
         </script>

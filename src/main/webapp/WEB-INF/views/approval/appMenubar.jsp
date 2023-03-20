@@ -95,6 +95,15 @@
         .moal{z-index:10000;
         	/* z-index: 2147483647; */
         }
+
+        /* 첨부파일 스타일 */
+        #attach_area{height: 100px; border: 1px solid gray; background: whitesmoke; vertical-align: middle;}
+        #no_attachment{width: 360px; margin: auto; display: block;}
+        #no_attachment img, #no_attachment div{float: left;}
+        #no_attachment div{margin-left: 10px; line-height: 26px; font-size: 15px; font-weight: 400; color: gray;}
+        #in_attachments{width: 100%; max-height: 100px; padding-left: 20px; display: none;}
+        #attach{width: 25px;}
+        .attach_delete_btn{border: none;}          
     </style>
     
     <!-- 부트스트랩 -->
@@ -475,7 +484,7 @@
         		val+= "<div>"
         			+ "<img src='<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />' width='30px;'>"
         			+ "<br><br>"
-        		  	+ arr1[i].value
+        		  	+ "<input type='hidden' name='recEmpNo' value='"+ arr1[i].value +"'>" + arr1[i].value
         		  	+ "<br> 결재 <br><br><br>";
         	}
         	$(".app-body").html(val);
@@ -492,7 +501,7 @@
         		val+= "<div>"
         			+ "<img src='<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />' width='30px;'>"
         			+ "<br><br>"
-        		  	+ arr2[i].value
+        			+ "<input type='hidden' name='recEmpNo' value='"+ arr2[i].value +"'>" + arr2[i].value
         		  	+ "<br> 결재 <br><br><br>";
         	}
         	$(".rep-body").html(val);
@@ -512,35 +521,36 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
     
+
+            <form action="" >
             <!-- Modal body -->
-            <div class="modal-body">
-                    <form action="">
-                        <table class="table-borderless" style="width:100%; height:150px;">
-                            
-                                <tr>
-                                    <td>결재문서명</td>
-                                    <td>결재문서제목</td>
-                                </tr>
-                                <tr>
-                                    <td>기안의견</td>
-                                    <td>
-                                        <textarea name="" id="" cols="30" rows="3" style="resize:none"></textarea>
-                                    </td>
-                                </tr>
-                            
-                        </table>
-                    </form>        
-            </div>
-    
-            <!-- Modal footer -->
-            <div class="modal-footer" style="margin:auto;">
-                <button type="submit" class="btn btn-light">결재요청</button>
-                <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
-            </div>
-    
+	            <div class="modal-body">
+                    <table class="table-borderless" style="width:100%; height:150px;">
+                        
+                            <tr>
+                                <td>결재문서명</td>
+                                <td>결재문서제목</td>
+                            </tr>
+                            <tr>
+                                <td>기안의견</td>
+                                <td>
+                                    <textarea name="writerComment" id="writerComment" cols="30" rows="3" style="resize:none"></textarea>
+                                </td>
+                            </tr>
+                    </table>
+	                           
+	            </div>
+	    
+	            <!-- Modal footer -->
+	            <div class="modal-footer" style="margin:auto;">
+	                <button type="button" id="insertBtn" onclick="insertApp();" class="btn btn-light">결재요청</button>
+	                <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
+	            </div>
+		   </form> 
         </div>
         </div>
     </div>
+
 
 </body>
 </html>

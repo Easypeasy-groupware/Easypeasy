@@ -40,10 +40,11 @@
 			 , MAIL_TITLE
 			 , MAIL_CONTENT
 			 , REC_CHECK
-			 , to_char(REC_DATE , 'YYYY-MM-DD HH24:MI') "REC_DATE"
+			 , REC_DATE
 			 , IMPOR_MAIL
 			 , JUNK_MAIL
 			 , RESER_MAIL
+			 , r.STATUS
 			 , REFERENCE
 			 , HIDDEN_REFERENCE
 	      from rec_mail r
@@ -124,7 +125,7 @@
 		  , #{ sendMailAdd }
 		  , #{ mailTitle }
 		  , #{ mailContent }
-		  , to_char(sysdate, 'YYYY-MM-DD HH24:MI')
+		  , to_char(sysdate, 'YYYY-MM-DD HH24:mi:SS')
 		  , #{ imporMail }
 		  , #{ reference }
 		  , #{ hiddenReference }
@@ -150,7 +151,7 @@
 		  , #{ originName }
 		  , #{ changeName }
 		  , #{ filePath }
-		  , to_char(sysdate, 'YYYY-MM-DD HH24:MI')
+		  , to_char(sysdate, 'YYYY-MM-DD HH24:mi:SS')
 		  , 'M'
 		  )
 	</insert>
@@ -162,6 +163,13 @@
 		   and recep_mail_address = #{ recMailAdd }
 	</update>
 	
+	<select id="unReadCount" resultType="_int">
+		select count(mail_no)
+		  from rec_mail
+		 where rec_check = 'N'
+		   and recep_mail_address = #{ recMailAdd }
+	</select>
+	
 	<select id="selectMail" resultMap="MailResult">
 		select
 			   RECEP_MAIL_NO
@@ -172,10 +180,12 @@
 			 , MAIL_TITLE
 			 , MAIL_CONTENT
 			 , REC_CHECK
-			 , to_char(REC_DATE , 'YYYY-MM-DD HH24:MI') "REC_DATE"
+			 , REC_DATE
 			 , IMPOR_MAIL
 			 , REFERENCE
 			 , HIDDEN_REFERENCE
+			 , junk_mail
+			 , r.status
 	      from rec_mail r
 	      join employee e on r.send_mail_address = e.email
 	     where 
@@ -196,5 +206,44 @@
 	     where 
 			   MAIL_NO = #{ mailNo }
 	</select>
-
+	
+	<update id="readUnreadMail">
+		update rec_mail
+		   set 
+  	   		   rec_check = #{ recCheck }
+		 where recep_mail_no = #{ recMailNo }
+	</update>
+	
+	<update id="deleteMail">
+		update rec_mail
+		   set 
+		       status = 'N'
+		 where recep_mail_no = #{ recMailNo }
+	</update>
+	
+	<delete id="completeDeleteMail">
+		delete 
+		  from rec_mail
+		 where 
+	 	   <if test='junkMail == "Y"'>
+	 	       junk_mail = #{ junkMail }		
+	 	   </if>
+	 	   <if test='status == "N"'>
+	 	   	   status = #{ status }
+	 	   </if>
+	</delete>
+	
+	<update id="spamEnroll">
+		update rec_mail
+		   set
+		       junk_mail = 'Y'
+		 where recep_mail_no = #{ recMailNo }
+	</update>
+	
+	<update id="spamClear">
+		update rec_mail
+		   set
+		       junk_mail = 'N'
+		 where recep_mail_no = #{ recMailNo }
+	</update>
 </mapper>

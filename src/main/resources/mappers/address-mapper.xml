@@ -84,6 +84,90 @@
          where add_type = 'S'
 	</select>
 	
+	<select id="selectPersonalFavAddList" resultMap="addressResult">
+		select
+		       a.ADD_NO
+		     , f.EMP_NO
+		     , a.ADD_TYPE
+		     , ADD_NAME
+		     , EMAIL
+		     , PHONE
+		     , ADD_EMP
+		     , ADD_DEPT
+		     , ADD_JOB
+		     , a.GROUP_NO
+		     , GROUP_NAME
+		     , EMP_PHONE
+		     , EMP_ADDRESS
+		     , MEMO
+		     , CREATE_DATE
+		     , MODIFY_DATE
+		     , DELETE_DATE
+		     , ADD_BIN
+		     , EDITABLE
+		 from address a
+         left join add_group g on (a.group_no = g.group_no)
+         right join add_fav f on (a.emp_no = f.emp_no)
+		 where f.emp_no = #{empNo}
+		   and a.add_type = 'P'
+           and f.add_no = a.add_no
+		   and add_bin = 'N'
+		 order
+             by f.enroll_date
+		      
+	</select>
+	
+	<select id="selectEmpFavAddList" resultMap="empResult">
+		select
+		       e.emp_no
+		     , emp_name
+		     , email 
+		     , address
+		     , phone
+		     , emp_profile
+		     , dept_name
+		     , job_name
+		  from employee e
+          left join department d on (e.dept_code = d.dept_code)
+          left join job j on (e.job_code = j.job_code)
+         right join add_fav f on (e.emp_no = f.add_emp_no)
+		 where ent_yn = 'N'
+           and f.emp_no = #{empNo}
+          order
+             by f.enroll_date
+	</select>
+	
+	<select id="selectExternalFavAddList" resultMap="addressResult">
+		select
+		       a.ADD_NO
+		     , f.EMP_NO
+		     , a.ADD_TYPE
+		     , ADD_NAME
+		     , EMAIL
+		     , PHONE
+		     , ADD_EMP
+		     , ADD_DEPT
+		     , ADD_JOB
+		     , a.GROUP_NO
+		     , GROUP_NAME
+		     , EMP_PHONE
+		     , EMP_ADDRESS
+		     , MEMO
+		     , CREATE_DATE
+		     , MODIFY_DATE
+		     , DELETE_DATE
+		     , ADD_BIN
+		     , EDITABLE
+		 from address a
+         left join add_group g on (a.group_no = g.group_no)
+         right join add_fav f on (a.emp_no = f.emp_no)
+		 where f.emp_no = #{empNo}
+		   and a.add_type = 'S'
+           and f.add_no = a.add_no
+		   and add_bin = 'N'
+		 order
+             by f.enroll_date desc
+	</select>
 	<insert id="insertPersonalAdd">
 		insert
 		  into address
@@ -123,7 +207,59 @@
 	</insert>
 	
 	<insert id="insertSharedAdd">
-		
+		insert
+		  into address
+		     ( 
+		       ADD_NO
+			 , EMP_NO
+			 , ADD_TYPE
+			 , ADD_NAME
+			 , EMAIL
+			 , PHONE
+			 , ADD_EMP
+			 , ADD_DEPT
+			 , ADD_JOB
+			 , GROUP_NO
+			 , EMP_PHONE
+			 , EMP_ADDRESS
+			 , MEMO
+			 , CREATE_DATE
+			 , EDITABLE
+		     )
+		values
+			 (
+			   seq_addno.nextval
+			 , #{empNo}
+			 , 'P'
+			 , #{addName}
+			 , #{email}
+			 , #{phone}
+			 , #{addEmp}
+			 , #{addDept}
+			 , #{addJob}
+			 , #{groupNo}
+			 , #{empPhone}
+			 , #{empAddress}
+			 , #{memo}
+			 , sysdate
+			 , #{editable}
+			 )
+	</insert>
+	
+	<insert id="insertEditableEmpList">
+	<foreach collection="eList" item="e">
+		insert
+		  into edd_edit
+		     (
+		       ADD_NO
+	         , EMP_NO
+		     )
+	    values
+	         (
+	           seq_addno.currval
+	         , #{e.empNo}
+	         )
+	</foreach>	  
 	</insert>
 	
 	
@@ -239,6 +375,8 @@
 		 where a.emp_no = #{empNo}
 		   and a.add_type = 'P'
 		   and add_bin = 'N'
+		 order
+		    by create_date
 	</select>
 	
 	<select id="selectPsFavList" resultMap="addFavoriteResult">
@@ -288,7 +426,7 @@
 		     , EDITABLE
 		  from address a
           left join add_group g on (a.group_no = g.group_no)
-		  where a.emp_no = #{empNo}
+		 where a.emp_no = #{empNo}
 		<choose>
 			<when test="groupNo != null">
 				and a.group_no = #{groupNo}
@@ -299,7 +437,8 @@
 		</choose>
 		    and a.add_type = 'P'
 		    and add_bin = 'N'
-		
+		  order
+		     by create_date
 	</select>
 	
 	<select id="selectAddGroup" resultMap="addGroupResult">
@@ -431,6 +570,54 @@
 			    by emp_name asc
 		</if>
 	</select>
+	
+	<delete id="deleteFavAdd">
+		delete
+		  from add_fav
+		 where emp_no = #{empNo}
+		   and add_no = #{addNo}
+	</delete>
+	
+	<delete id="deleteFavEmp">
+		delete
+		  from add_fav
+		 where emp_no = #{empNo}
+		   and add_emp_no = #{addEmpNo}
+	</delete>
+	
+	<insert id="insertFavAdd">
+		insert
+		  into add_fav
+		     (
+		       add_no
+		     , emp_no
+		     , enroll_date
+		     )
+		values
+		     (
+		       #{addNo}
+		     , #{empNo}
+		     , sysdate
+		     )
+	</insert>
+	
+	<insert id="insertFavEmp">
+		insert
+		  into add_fav
+		     (
+		       emp_no
+		     , add_emp_no
+		     , enroll_date
+		     )
+		values
+		     (
+		       #{empNo}
+		     , #{addEmpNo}
+		     , sysdate
+		     )
+	</insert>
+
+
 
 
 

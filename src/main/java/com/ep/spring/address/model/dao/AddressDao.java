@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.ep.spring.address.model.vo.AddDept;
+import com.ep.spring.address.model.vo.AddEdit;
 import com.ep.spring.address.model.vo.AddFavorite;
 import com.ep.spring.address.model.vo.AddGroup;
 import com.ep.spring.address.model.vo.Address;
@@ -24,12 +25,30 @@ public class AddressDao {
 		return (ArrayList)sqlSession.selectList("addressMapper.selectSharedAddGroup");
 	}
 	
+	public ArrayList<Address> selectPersonalFavAddList(SqlSessionTemplate sqlSession, int empNo) {
+		return (ArrayList)sqlSession.selectList("addressMapper.selectPersonalFavAddList", empNo);
+	}
+
+	public ArrayList<Employee> selectEmpFavAddList(SqlSessionTemplate sqlSession, int empNo) {
+		return (ArrayList)sqlSession.selectList("addressMapper.selectEmpFavAddList", empNo);
+	}
+
+	public ArrayList<Address> selectExternalFavAddList(SqlSessionTemplate sqlSession, int empNo) {
+		return (ArrayList)sqlSession.selectList("addressMapper.selectExternalFavAddList", empNo);
+	}
+
+	
 	public int insertPersonalAdd(SqlSessionTemplate sqlSession, Address a) {
 		return sqlSession.insert("addressMapper.insertPersonalAdd", a);
 	}
-
+	
+	/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!여기*/
 	public int insertSharedAdd(SqlSessionTemplate sqlSession, Address a) {
 		return sqlSession.insert("addressMapper.insertSharedAdd", a);
+	}
+	/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!여기*/
+	public int insertEditableEmpList(SqlSessionTemplate sqlSession, ArrayList<AddEdit> eList) {
+		return sqlSession.insert("addressMapper.insertEditableEmpList", eList);
 	}
 
 	public int selectEntEmpListCount(SqlSessionTemplate sqlSession, int no) {
@@ -127,6 +146,24 @@ public class AddressDao {
 	public ArrayList<Employee> selectEmployeeList(SqlSessionTemplate sqlSession, Employee e) {
 		return (ArrayList)sqlSession.selectList("addressMapper.selectEmployeeList", e);
 	}
+
+	public int deleteFavAdd(SqlSessionTemplate sqlSession, AddFavorite ag) {
+		return sqlSession.delete("addressMapper.deleteFavAdd", ag);
+	}
+
+	public int deleteFavEmp(SqlSessionTemplate sqlSession, AddFavorite ag) {
+		return sqlSession.delete("addressMapper.deleteFavEmp", ag);
+	}
+
+	public int insertFavAdd(SqlSessionTemplate sqlSession, AddFavorite af) {
+		return sqlSession.insert("addressMapper.insertFavAdd", af);
+	}
+
+	public int insertFavEmp(SqlSessionTemplate sqlSession, AddFavorite af) {
+		return sqlSession.insert("addressMapper.insertFavEmp", af);
+	}
+
+
 
 
 
