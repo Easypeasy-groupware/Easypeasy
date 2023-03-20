@@ -79,8 +79,8 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public int deleteMail(Mail m) {
-		return mDao.deleteMail(m, sqlSession);
+	public int deleteMail(Mail m, int[] mailNoList) {
+		return mDao.deleteMail(m, mailNoList, sqlSession);
 	}
 
 	@Override

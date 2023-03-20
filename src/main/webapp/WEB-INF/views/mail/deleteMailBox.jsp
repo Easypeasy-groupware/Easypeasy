@@ -85,6 +85,9 @@
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
+                        <c:if test="${ empty mailList }">
+                            0
+                        </c:if>
                         ${allMail}
                     </b>
                 </div>
@@ -106,7 +109,7 @@
                 <div style="width: 27px; float: left; padding-left: 5px; padding-top: 8px;"><input type="checkbox" name="" id="check_all"></div>
                 <div class="menu menu1" id="spam"><img src="">스팸 등록</div>
                 <div class="menu menu2" id="complete_delete"><img src="">영구 삭제</div>
-                <div class="menu menu2" id="shift"><img src="">이동</div>
+                <div class="menu menu2" id="restore"><img src="">이동</div>
                 <div style="float: right; width: 150px; font-size: 12px;">
                     정렬
                     <select name="" id="">
@@ -125,11 +128,9 @@
             </div>
             <div class="block_list shift_list">
                 <div class="block_one shift_one">
-                    <div class="shift_name">메일함 이름</div><br>
-                    <div class="shift_name">메일함 이름</div><br>
-                    <div class="shift_name">메일함 이름</div><br>
-                    <div class="shift_name">메일함 이름</div><br>
-                    <div class="shift_name">메일함 이름</div><br>
+                    <div class="shift_name">받은 메일함</div><br>
+                    <div class="shift_name">중요 메일함</div><br>
+                    <div class="shift_name">안읽은 메일함</div><br>
                 </div>
             </div>
         </div>
@@ -233,39 +234,32 @@
 
         // 스팸 등록
         let spamEnroll = document.getElementById("spam");
-        let mailNoList = document.getElementsByClassName("mailNo");
         spamEnroll.addEventListener('click', function(){
-        let checkedBoxSum = 0
-        let count = 0;
-        let arr = [];
-        let form = document.createElement("form");
-            mailCheckBox.forEach((i) => {
-                if(i.checked == true) {
-                    checkedBoxSum += 1;
-                    arr[count] = mailNoList[i.value].value;
-                    count += 1; 
-                }
-            })
-            console.log(arr);
+            let checkedBoxSum = 0
+            let arr = [];
+                mailCheckBox.forEach((i) => {
+                    if(i.checked == true) {
+                        let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
+                        arr.push(value);
+                        checkedBoxSum += 1;
+                    };
+                })
 
             if(checkedBoxSum != 0) {
-
-            // form.setAttribute("charset", "UTF-8");
-            // form.setAttribute("method", "POST");  
-            // form.setAttribute("action", "액션 주소");
-
-            // let hiddenInput = document.createElement("input");
-            // hiddenInput.setAttribute("type", "hidden");
-            // hiddenInput.setAttribute("name", "mailNoArr");
-            // hiddenInput.setAttribute("value", arr);
-            // form.appendChild(hiddenInput);
-
-            // document.body.appendChild(form);
-            // form.submit();
-
+                const form = document.createElement("form");
+                const input = document.createElement("input");
+                form.setAttribute("style", "display:none;");
+                input.setAttribute("name", "mailNoList");
+                input.setAttribute("multiple", "multiple");
+                input.setAttribute("value", arr);
+                form.append(input);
+                form.method = "POST";
+                form.action = "spamEnroll.ma";
+                document.body.append(form);
+                form.submit();
             }else {
                 alert('체크박스를 선택해주세요');
-            }
+            };
         });
 
         // 영구 삭제

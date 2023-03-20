@@ -80,6 +80,9 @@
                                 <c:set var="allMail" value="${allMail + 1}" />
                             </c:if>
                         </c:forEach>
+                        <c:if test="${ empty mailList }">
+                            0
+                        </c:if>
                         ${allMail}
                     </b>
                     <b>/ </b>
@@ -218,7 +221,7 @@
                                         ${ m.mailTitle }
                                     </div>
                                     <div class="mail_date">
-                                        ${ m.recDate }
+                                        ${ m.recDateDay } ${ m.recDateTime }
                                     </div>
                                 </div>
                             </form>
@@ -271,7 +274,6 @@
         let spamEnroll = document.getElementById("spam");
         spamEnroll.addEventListener('click', function(){
             let checkedBoxSum = 0
-            let count = 0;
             let arr = [];
                 mailCheckBox.forEach((i) => {
                     if(i.checked == true) {
@@ -284,13 +286,14 @@
             if(checkedBoxSum != 0) {
                 const form = document.createElement("form");
                 const input = document.createElement("input");
+                form.setAttribute("style", "display:none;");
                 input.setAttribute("name", "mailNoList");
-                input.setAttribute("multiple", "multiple")
-                input.setAttribute("value", arr)
-                form.append(input)
-                form.method = "POST"
-                form.action = "spamEnroll.ma"
-                document.body.append(form)
+                input.setAttribute("multiple", "multiple");
+                input.setAttribute("value", arr);
+                form.append(input);
+                form.method = "POST";
+                form.action = "spamEnroll.ma";
+                document.body.append(form);
                 form.submit();
             }else {
                 alert('체크박스를 선택해주세요');
@@ -301,43 +304,56 @@
         let reply = document.getElementById("reply");
         reply.addEventListener('click', function(){
             let checkedBoxSum = 0
-            let count = 0;
-            mailCheckBox.forEach((i) => {
+            let mailSelectArea = document.querySelectorAll(".mail_select_area");
+            mailCheckBox.forEach((i, index) => {
                 if(i.checked == true) {
-                    count = i.value
+                    console.log(i)
+                    mailSelectArea = mailSelectArea.item(index);
                     checkedBoxSum += 1;
                 }
             })
-            if(checkedBoxSum == 1 && checkedBoxSum > 0) {
-                mailSelectList[count].action = "www.naver.com";
-                mailSelectList[count].method = "POST";
-                mailSelectList[count].submit();
+            console.log(mailSelectArea)
+            if(checkedBoxSum == 1) {
+                const mail = mailSelectArea.cloneNode(true);
+                mail.setAttribute("style", "display:none;");
+                mail.method = "POST";
+                mail.action = "reply.ma";
+                document.body.append(mail);
+                mail.submit();
             }else{
                 alert('한 개의 체크박스를 선택해주세요!')
             }
         });
 
-        // 메일 삭제 - 스팸 등록과 동일
+        // 메일 삭제
         let deleteMail = document.getElementById("delete");
         deleteMail.addEventListener('click', function(){
             let checkedBoxSum = 0
-            let count = 0;
             let arr = [];
-            let form = document.createElement("form");
                 mailCheckBox.forEach((i) => {
                     if(i.checked == true) {
+                        let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
+                        arr.push(value);
                         checkedBoxSum += 1;
-                        arr[count] = mailNoList[i.value].value;
-                        count += 1; 
-                    }
+                    };
                 })
-                console.log(arr);
 
             if(checkedBoxSum != 0) {
-
-            }else{
+                const form = document.createElement("form");
+                const input = document.createElement("input");
+                form.setAttribute("style", "display:none;");
+                input.setAttribute("name", "mailNoList");
+                input.setAttribute("multiple", "multiple");
+                input.setAttribute("value", arr);
+                form.append(input);
+                console.log(form)
+                form.method = "POST";
+                form.action = "delete.ma";
+                document.body.append(form);
+                form.submit();
+            }else {
                 alert('체크박스를 선택해주세요');
-            }
+            };
         });
 
         // 태그

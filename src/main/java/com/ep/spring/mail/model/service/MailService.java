@@ -43,7 +43,7 @@ public interface MailService {
 
 	
 	/* 6. 휴지통 보내기 */
-	int deleteMail(Mail m);
+	int deleteMail(Mail m, int[] mailNoList);
 
 	
 	/* 7. 비우기 처리(영구 삭제) */

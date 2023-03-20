@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -163,7 +165,6 @@ public class MailController {
 		ArrayList<Mail> receiverList = mService.selectReceiverList(m);
 		ArrayList<Attachment> attachmentList = mService.selectAttachmentList(m);
 		ArrayList<Mail> mailList = mService.selectReceiveMailList(m.getRecMailAdd());
-		System.out.println(mail);
 		mv.addObject("mail", mail);
 		mv.addObject("receiverList", receiverList);
 		mv.addObject("attachmentList", attachmentList);
@@ -187,13 +188,16 @@ public class MailController {
 	}
 	
 	@RequestMapping("delete.ma")
-	public ModelAndView deleateMail(ModelAndView mv, Mail m, int empNo) {
-		int result = mService.deleteMail(m);
+	public ModelAndView deleateMail(ModelAndView mv, Mail m, int[] mailNoList, HttpSession session) {
+		int result = mService.deleteMail(m, mailNoList);
 		
 		AlertMsg msg = new AlertMsg();
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		ArrayList<Mail> mailList = mService.selectReceiveMailList(m.getRecMailAdd());
+		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
+		
 		if(result > 0) {
-			ArrayList<Mail> mailList = mService.selectReceiveMailList(m.getRecMailAdd());
-			ArrayList<MailTag> tagList = mService.selectTagList(empNo);
+			
 			
 			mv.addObject("mailList", mailList);
 			mv.addObject("tagList", tagList);
@@ -223,8 +227,10 @@ public class MailController {
 		return mv;
 	}
 	
+	/* 비우기 기능 */
 	@RequestMapping("completeDelete.ma")
-	public ModelAndView completeDeleteMail(Mail m, ModelAndView mv) {
+	public ModelAndView completeDeleteMail(Mail m) {
+		ModelAndView mv = new ModelAndView();
 		AlertMsg msg = new AlertMsg();
 		int result = mService.completeDeleteMail(m);
 		if(result > 0) {
@@ -233,7 +239,7 @@ public class MailController {
 			mv.addObject("successMsg", msg);
 		}else {
 			msg.setTitle("비우기");
-			msg.setContent("메일 삭제에 실패했습니다.");
+			msg.setContent("메일 삭제에 실패했습니다.\n삭제할 메일이 있는지 확인해주세요.");
 			mv.addObject("failMsg", msg);
 		}
 		mv.setViewName("mail/receiveMailBox");
@@ -246,7 +252,6 @@ public class MailController {
 		int result = mService.spamEnroll(m, mailNoList);
 		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
 		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
-		
 		if(result > 0) {
 			msg.setTitle("스팸 등록");
 			msg.setContent("메일을 스팸 처리했습니다.");
@@ -292,6 +297,18 @@ public class MailController {
 			mv.addObject("mailList", mailList);
 		}
 		mv.setViewName("mail/receiveMailBox");
+		
+		return mv;
+	}
+	
+	@RequestMapping("reply.ma")
+	public ModelAndView replyMail(Mail m, ModelAndView mv) {
+		Mail mail = mService.selectMail(m);
+		ArrayList<Mail> receiverList = mService.selectReceiverList(m);
+		System.out.println(receiverList);
+		mv.addObject("mail", mail);
+		mv.addObject("receiverList", receiverList);
+		mv.setViewName("mail/replyMail");
 		
 		return mv;
 	}

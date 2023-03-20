@@ -196,7 +196,6 @@
                     form.method = "POST";
                     form.append(input);
                     document.body.append(form);
-                    console.log(input)
                     form.submit();
                 }
             });
@@ -226,6 +225,7 @@
                     form.method = "POST";
                     form.append(input);
                     document.body.append(form);
+                    console.log(input)
                     form.submit();
                 }
             });

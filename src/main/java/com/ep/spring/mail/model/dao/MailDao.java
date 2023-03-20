@@ -68,8 +68,17 @@ public class MailDao {
 		return sqlSession.update("mailMapper.readUnreadMail", m);
 	}
 
-	public int deleteMail(Mail m, SqlSessionTemplate sqlSession) {
-		return sqlSession.update("mailMapper.deleteMail", m);
+	public int deleteMail(Mail m, int[] mailNoList, SqlSessionTemplate sqlSession) {
+		int result = 0;
+		if(mailNoList.length > 0) {
+			for(int mail : mailNoList) {
+				m.setRecMailNo(mail);
+				result += sqlSession.update("mailMapper.deleteMail", m);
+			}
+		}else {
+			result = sqlSession.update("mailMapper.deleteMail", m);
+		}
+		return result;
 	}
 
 	public int completeDeleteMail(Mail m, SqlSessionTemplate sqlSession) {

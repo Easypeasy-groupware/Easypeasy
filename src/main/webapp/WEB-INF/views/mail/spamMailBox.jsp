@@ -76,16 +76,15 @@
                     <img src="">
                     <b style="font-size: 20px;">스팸메일 </b>
                     <b style="color: cadetblue; font-size: 23px;">
+                        <c:set var="allMail" value="0" />
                         <c:forEach var="m" items="${ mailList }">
-                            <c:choose>  
-                                <c:when test="${ m.junkMail == 'Y' }">
-                                    <c:set var="allMail" value="${allMail + 1}" />
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="allMail" value="0" />
-                                </c:otherwise>
-                            </c:choose>
+                            <c:if test="${ m.junkMail == 'Y' }">
+                                <c:set var="allMail" value="${allMail + 1}" />
+                            </c:if>
                         </c:forEach>
+                        <c:if test="${ empty mailList }">
+                            0
+                        </c:if>
                         ${allMail}
                     </b>
                 </div>

@@ -21,6 +21,8 @@ public class Mail {
 	private String mailContent;
 	private String recCheck;
 	private String recDate;
+	private String recDateDay;
+	private String recDateTime;
 	private String imporMail;
 	private String junkMail;
 	private String reserMail;
