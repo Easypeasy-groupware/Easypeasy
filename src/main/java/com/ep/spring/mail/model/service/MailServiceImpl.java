@@ -79,8 +79,8 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public int deleteMail(Mail m, int[] mailNoList) {
-		return mDao.deleteMail(m, mailNoList, sqlSession);
+	public int deleteMail(Mail m, int[] recMailNoList) {
+		return mDao.deleteMail(m, recMailNoList, sqlSession);
 	}
 
 	@Override
@@ -89,13 +89,18 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public int spamEnroll(Mail m, int[] mailNoList) {
-		return mDao.spamEnroll(m, mailNoList, sqlSession);
+	public int spamEnroll(Mail m, int[] recMailNoList) {
+		return mDao.spamEnroll(m, recMailNoList, sqlSession);
 	}
 
 	@Override
-	public int spamClear(Mail m, int[] mailNoList) {
-		return mDao.spamClear(m, mailNoList, sqlSession);
+	public int spamClear(Mail m, int[] recMailNoList) {
+		return mDao.spamClear(m, recMailNoList, sqlSession);
+	}
+
+	@Override
+	public int tagMail(Mail m, int[] recMailNoList) {
+		return mDao.tagMail(m, recMailNoList, sqlSession);
 	}
 
 	

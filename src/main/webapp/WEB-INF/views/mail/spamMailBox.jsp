@@ -82,9 +82,6 @@
                                 <c:set var="allMail" value="${allMail + 1}" />
                             </c:if>
                         </c:forEach>
-                        <c:if test="${ empty mailList }">
-                            0
-                        </c:if>
                         ${allMail}
                     </b>
                 </div>
@@ -136,69 +133,61 @@
 
         <!-- 메일 리스트 -->
         <div id="mail_list">
-            <c:choose>
-                <c:when test="${ not empty mailList }">
-                    <c:forEach var="m" items="${ mailList }">
-                        <c:choose>
-                            <c:when test="${ m.junkMail == 'Y' }">
-                                <div class="mail_one" >
-                                    <div class="mail_check">
-                                        <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="">
+            <c:set var="mailCount" value="0" />
+            <c:if test="${ not empty mailList }">
+                <c:forEach var="m" items="${ mailList }">
+                    <c:if test="${ m.junkMail == 'Y' }">
+                        <c:set var="count" value="${count + 1}" />
+                        <div class="mail_one" >
+                            <div class="mail_check">
+                                <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="">
+                            </div>
+                            <div class="mail_imgList">
+                                <c:choose>
+                                    <c:when test="${ m.imporMail == 'Y' }">
+                                        <div class="mail_img"><img class="mail_favorite" src="resources/common_images/favorite.png"></div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="mail_img"><img class="mail_favorite" src="resources/common_images/unFavorite.png"></div>
+                                    </c:otherwise>
+                                </c:choose>
+                                <c:choose>
+                                    <c:when test="${ m.recCheck == 'Y' }" >
+                                        <div class="mail_img"><img class="read" src="resources/common_images/mail_read.png"></div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="mail_img"><img class="read" src="resources/common_images/mail_unRead.png"></div>
+                                    </c:otherwise>
+                                </c:choose>
+                                <c:if test="${ not empty attachmentList }">
+                                    <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
+                                </c:if>
+                            </div>
+                            <form class="mail_select_area">
+                                <input class="mailNo" type="hidden" name="mailNo" value="${ m.mailNo }">
+                                <input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
+                                <div id="selectMailLine">
+                                    <div class="mail_sender_name">
+                                        ${m.empName}
                                     </div>
-                                    <div class="mail_imgList">
-                                        <c:choose>
-                                            <c:when test="${ m.imporMail == 'Y' }">
-                                                <div class="mail_img"><img class="mail_favorite" src="resources/common_images/favorite.png"></div>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <div class="mail_img"><img class="mail_favorite" src="resources/common_images/unFavorite.png"></div>
-                                            </c:otherwise>
-                                        </c:choose>
-                                        <c:choose>
-                                            <c:when test="${ m.recCheck == 'Y' }" >
-                                                <div class="mail_img"><img class="read" src="resources/common_images/mail_read.png"></div>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <div class="mail_img"><img class="read" src="resources/common_images/mail_unRead.png"></div>
-                                            </c:otherwise>
-                                        </c:choose>
-                                        <c:if test="${ not empty attachmentList }">
-                                            <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
-                                        </c:if>
+                                    <div class="mail_sender">
+                                        ${ m.sendMailAdd }
                                     </div>
-                                    <form class="mail_select_area">
-                                        <input class="mailNo" type="hidden" name="mailNo" value="${ m.mailNo }">
-                                        <input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
-                                        <div id="selectMailLine">
-                                            <div class="mail_sender_name">
-                                                ${m.empName}
-                                            </div>
-                                            <div class="mail_sender">
-                                                ${ m.sendMailAdd }
-                                            </div>
-                                            <div class="mail_title">
-                                                ${ m.mailTitle }
-                                            </div>
-                                            <div class="mail_date">
-                                                ${ m.recDate }
-                                            </div>
-                                        </div>
-                                    </form>
+                                    <div class="mail_title">
+                                        ${ m.mailTitle }
+                                    </div>
+                                    <div class="mail_date">
+                                        ${ m.recDate }
+                                    </div>
                                 </div>
-                            </c:when>
-                            <c:otherwise>
-                                <c:set var="count" value="${count + 1}" />
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                    <c:if test="${count > 0}">
-                        <div class="empty">스팸 메일함이 비었습니다.</div>
+                            </form>
+                        </div>
                     </c:if>
-                </c:when>
-                <c:otherwise>
-                    <div class="empty">스팸 메일함이 비었습니다.</div>
-                </c:otherwise>
-            </c:choose>
+                </c:forEach>
+            </c:if>
+            <c:if test="${mailCount == 0}">
+                <div class="empty">스팸 메일함이 비었습니다.</div>
+            </c:if>
         </div>
         <div align="center">
             <ul id="paging">

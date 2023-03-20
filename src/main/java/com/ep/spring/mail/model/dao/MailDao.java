@@ -68,10 +68,10 @@ public class MailDao {
 		return sqlSession.update("mailMapper.readUnreadMail", m);
 	}
 
-	public int deleteMail(Mail m, int[] mailNoList, SqlSessionTemplate sqlSession) {
+	public int deleteMail(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
 		int result = 0;
-		if(mailNoList.length > 0) {
-			for(int mail : mailNoList) {
+		if(recMailNoList.length > 0) {
+			for(int mail : recMailNoList) {
 				m.setRecMailNo(mail);
 				result += sqlSession.update("mailMapper.deleteMail", m);
 			}
@@ -85,10 +85,10 @@ public class MailDao {
 		return sqlSession.delete("mailMapper.completeDeleteMail", m);
 	}
 
-	public int spamEnroll(Mail m, int[] mailNoList, SqlSessionTemplate sqlSession) {
+	public int spamEnroll(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
 		int result = 0;
-		if(mailNoList.length > 0) {
-			for(int mail : mailNoList) {
+		if(recMailNoList.length > 0) {
+			for(int mail : recMailNoList) {
 				m.setRecMailNo(mail);
 				result += sqlSession.update("mailMapper.spamEnroll", m);
 			}
@@ -98,15 +98,28 @@ public class MailDao {
 		return result;
 	}
 
-	public int spamClear(Mail m, int[] mailNoList, SqlSessionTemplate sqlSession) {
+	public int spamClear(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
 		int result = 0;
-		if(mailNoList.length > 0) {
-			for(int mail : mailNoList) {
+		if(recMailNoList.length > 0) {
+			for(int mail : recMailNoList) {
 				m.setRecMailNo(mail);
 				result += sqlSession.update("mailMapper.spamClear", m);
 			}
 		}else {
 			result = sqlSession.update("mailMapper.spamClear", m);
+		}
+		return result;
+	}
+
+	public int tagMail(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
+		int result = 0;
+		if(recMailNoList.length > 0) {
+			for(int mail : recMailNoList) {
+				m.setRecMailNo(mail);
+				result += sqlSession.update("mailMapper.tagMail", m);
+			}
+		}else {
+			result = sqlSession.update("mailMapper.tagMail", m);
 		}
 		return result;
 	}

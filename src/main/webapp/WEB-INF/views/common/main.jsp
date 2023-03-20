@@ -346,7 +346,7 @@
 											<div style="width: 360px; margin-right: 20px; overflow: hidden; text-overflow: ellipsis;">${ m.mailTitle }</div>
 										</td>
 										<td>
-											${ m.recDate }
+											${ m.recDateDay } ${m.recDateTime}
 											<input class="mailNo" type="hidden" name="mailNo" value="${ m.mailNo }">
 											<input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
 										</td>

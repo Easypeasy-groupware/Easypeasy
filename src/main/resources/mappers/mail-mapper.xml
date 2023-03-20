@@ -252,4 +252,11 @@
 		       junk_mail = 'N'
 		 where recep_mail_no = #{ recMailNo }
 	</update>
+	
+	<update id="tagMail">
+		update rec_mail
+		   set 
+		       tag_no = #{ tagNo }
+		 where recep_mail_no = #{ recMailNo }
+	</update>
 </mapper>
