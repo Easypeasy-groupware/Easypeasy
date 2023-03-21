@@ -33,13 +33,15 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public ArrayList<Attachment> selectAtList(Attachment a) {
-		return bDao.selectAtList(sqlSession, a);
-	}
-	
-	@Override
-	public int insertBoard(Board b) {
-		return bDao.insertBoard(sqlSession, b);
+	public int insertBoard(Board b, ArrayList<Attachment> atList) {
+		int result = bDao.insertBoard(sqlSession, b);
+		int attachResult = bDao.insertAttachment(sqlSession, atList);
+		
+		if(result> 0  && (atList.size() + attachResult > 0)) {
+			return 1;
+		}else {
+			return 0;
+		}
 	}
 	
 	@Override

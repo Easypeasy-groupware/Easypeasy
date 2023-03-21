@@ -66,7 +66,7 @@
 		    by board_no desc
 	</select>
 	
-	<select id="selectAtList" resultMap="attachmentResult">
+	<!-- <select id="selectAtList" resultMap="attachmentResult">
 		select
 			   attach_no
 			 , ref_no
@@ -76,7 +76,7 @@
 			 , upload_date
 			 , division
 	      from attachment 
-	</select>
+	</select> -->
 	
 	<insert id="insertBoard">
 		insert
@@ -97,6 +97,30 @@
 		  , #{boardWriter}
 		  , #{boardContent}
 		  , #{boardPin}
+		  )
+	</insert>
+	
+	<insert id="insertAttachment">
+		insert 
+		  into attachment
+		  (
+		    ATTACH_NO
+		  , REF_NO
+	  	  , ORIGIN_NAME
+		  , CHANGE_NAME
+		  , FILE_PATH
+		  , UPLOAD_DATE
+		  , DIVISION
+		  )
+		  values
+		  (
+		    seq_attno.nextval
+		  , seq_bno.currval
+		  , #{ originName }
+		  , #{ changeName }
+		  , #{ filePath }
+		  , to_char(sysdate, 'YYYY-MM-DD)
+		  , 'B'
 		  )
 	</insert>
 	

@@ -1,6 +1,7 @@
 package com.ep.spring.board.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,6 +20,7 @@ import com.ep.spring.board.model.vo.BoardCate;
 import com.ep.spring.board.model.vo.BoardReply;
 import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
+import com.ep.spring.common.template.FileUpload;
 import com.ep.spring.common.template.Pagination;
 import com.google.gson.Gson;
 
@@ -47,11 +49,28 @@ public class BoardController {
 	}
 	
 	@RequestMapping("insert.bo")
-	public String insertBoard(Board b, Attachment a, MultipartFile upfile, HttpSession session, Model model) {
+	public String insertBoard(@RequestParam List<MultipartFile> originNames, Board b, Attachment a, HttpSession session, Model model) {
 		
-		ArrayList<Attachment> list = bService.selectAtList(a);
+		// 첨부파일 처리
+		ArrayList<Attachment> atList = new ArrayList<>();
 		
-		int result = bService.insertBoard(b);
+		if(originNames.size() > 1) {
+			String path = "resources/board_attachFiles/";
+			
+			for (MultipartFile mf : originNames) {
+					Attachment attach = new Attachment();
+					String originFileName = mf.getOriginalFilename();
+					String saveFilePath = FileUpload.saveFile(mf, session, path);
+					String[] changeNameArr = saveFilePath.split("/");
+					String changeName = changeNameArr[2];
+					attach.setOriginName(originFileName);
+					attach.setChangeName(changeName);
+					attach.setFilePath(saveFilePath);
+					atList.add(attach);
+				}
+		}
+		
+		int result = bService.insertBoard(b, atList);
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "게시글 등록 성공");
@@ -66,6 +85,7 @@ public class BoardController {
 	public ModelAndView selectBoard(int no, ModelAndView mv) {
 		
 		int result = bService.increaseCount(no);
+		/* ArrayList<Attachment> attachmentList = bService.selectAttachmentList(); */
 		
 		if(result > 0) {
 			Board b = bService.selectBoard(no);
