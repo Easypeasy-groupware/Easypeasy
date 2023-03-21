@@ -192,8 +192,20 @@
             </div>
             <div id="mail_detail_content">
                 <div>
-                    <img id="favorite" style="width: 22px; margin-right: 20px; float: left;" src="resources/common_images/favorite.png">
-                    <div style="font-size: 17px; font-weight: 700;">메일제목 - ${ mail.mailTitle }</div><br>
+                    <img id="favorite" style="width: 18px; margin-right: 20px; float: left; padding-top: 6px;" src="resources/common_images/favorite.png">
+                    <div style="font-size: 22px; font-weight: 700;">
+                        ${ mail.mailTitle }
+                        <div class="mail_tag" style="line-height: 25px; margin-right: 5px;">
+                            <span class="tagBlock">
+                                <span class="tag_innerBlock1 tagColor" style="background-color: ${mail.tagColor}; border: 1px solid ${mail.tagColor};">
+                                    <span class="tag_innerBlock2" style="border-inline-color: inherit;">
+                                        <span style="border-inline-color: inherit;"></span>
+                                    </span>
+                                </span>
+                            </span>
+                        </div>
+                    </div> 
+                    <br>
                     <table>
                         <tr class="detail_info_tr">
                             <th class="detail_info_th">보낸 사람</th>

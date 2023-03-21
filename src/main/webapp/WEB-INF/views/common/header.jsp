@@ -90,6 +90,8 @@
 	body::-webkit-scrollbar{width:20px;}
 	body::-webkit-scrollbar-thumb{background-color:rgb(185, 187, 221); border-radius:10px;}
 	body::-webkit-scrollbar-track{background-color:white;}
+
+    
 </style>
 </head>
 <body>
@@ -134,14 +136,16 @@
                     </span>
                 </a>
 
-                <a class="position-relative" id="alarm-a">
+                <a class="position-relative alarm_toggle" id="alarm-a">
                     <img src="resources/common_images/bell.png" class="alarm-icon"> 
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger websk-num">
                         99+
                     </span>
                 </a>
             </div>
+
             
+
            	<div id="empName"><span id="user-name">${ loginUser.empName }</span> ${ loginUser.jobName }님</div>
 
             <div class="image-effect-slide-pop-up">
@@ -157,7 +161,6 @@
                     </a>
                 </div>
             </div>
-
         </div>
         
         <div id="header2">
@@ -182,10 +185,10 @@
     <br claer="both">
 
     <div class="outer">
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<!-- Latest compiled JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" ></script>
 </body>
 </html>
 	

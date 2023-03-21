@@ -25,13 +25,12 @@
     .menu:hover{font-size: 15px; cursor: pointer;}
 
     .block{width: 220px; min-height: 150px; max-height: 300px; background: white; border-radius: 10px; border: 1px solid rgb(185, 187, 221); 
-               position: absolute; left: 850px; text-align: center; display: none;}
+           position: absolute; left: 850px; text-align: center; display: none; z-index: 10;}
     .block_list{width: 205px; min-height: 115px; max-height: 230px; margin: auto; overflow-x: hidden; overflow-y: auto; 
                 margin-bottom: 10px; padding-top: 5px;}
     .block_one{width: 100%; height: 30px; font-size: 13px; float: left;}
     .block_one>div{float: left;}
-    .tagTriangleList{height: 0px; width: 10px; border-bottom: 8px solid transparent; margin: 6px 10px 0px 10px;
-                     border-top: 8px solid transparent;}
+    .tagTriangleList{width: 10px; margin-left: 18px; line-height: 15px; float: left;}
     .tag_name{width: 120px; overflow: hidden;}
     .x-btn{width: 30px; float: right; margin: 10px 10px 0px 10px;}
     .tag_btn.btn.btn-outline-primary.btn-sm{width: 35px; height: 25px; font-size: 10px; padding: 2px 4px 2px 4px;}
@@ -58,16 +57,7 @@
     #paging li.on {background:rgb(166, 184, 145);}
     #paging li.on a { color: white;}
 
-    #tagBlock{display: inline-block; position: relative;}
-    .tag_innerBlock1{display: inline-block; position: relative; width: 12px; height: 12px; margin: 0 8px 0 0; vertical-align: middle;}
-    .tagColor{background: #42d692; border: 1px solid #42d692;}
-    .tag_innerBlock1 span.tag_innerBlock2{border-bottom: 6px solid transparent; border-style: solid; border-top: 6px solid transparent; border-width: 6px 0 6px 6px; 
-                                          right: -7px; top: -1px;}
-    .tagColor .tag_innerBlock2{border-color: #42d692;}             
-    .tag_innerBlock1 span{position: absolute; width: 0; height: 0;}
-    .tag_innerBlock1 span.tag_innerBlock2 span{border-bottom: 5px solid transparent; border-style: solid; border-top: 5px solid transparent; border-width: 5px 0 5px 5px;
-                                               right: 2px; top: -5px;}
-    .tagColor .tag_innerBlock2 span {border-color: #42d692;}
+    
 </style>
 </head>
 <body>
@@ -153,7 +143,15 @@
                     <c:when test="${ not empty tagList }">
                         <c:forEach var="t" items="${ tagList }">
                             <div class="block_one tag_one">
-                                <div class="tagTriangleList" style="border-left: 15px solid ${t.tagColor};"></div>
+                                <div class="tagTriangleList">
+                                    <span class="tagBlock">
+                                        <span class="tag_innerBlock1 tagColor" style="background-color: ${t.tagColor}; border: 1px solid ${t.tagColor};">
+                                            <span class="tag_innerBlock2" style="border-inline-color: inherit;">
+                                                <span style="border-inline-color: inherit;"></span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </div>
                                 <div class="tag_name">${t.tagName}</div>
                                 <div>
                                     <button class="tag_btn btn btn-outline-primary btn-sm">적용</button>
@@ -228,6 +226,19 @@
                                         ${ m.sendMailAdd }
                                     </div>
                                     <div class="mail_title">
+                                        <c:forEach var="t" items="${tagList}">
+                                            <c:if test="${ m.tagNo == t.tagNo }">
+                                                <div class="mail_tag">
+                                                    <span class="tagBlock">
+                                                        <span class="tag_innerBlock1 tagColor" style="background-color: ${t.tagColor}; border: 1px solid ${t.tagColor};">
+                                                            <span class="tag_innerBlock2" style="border-inline-color: inherit;">
+                                                                <span style="border-inline-color: inherit;"></span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </c:if>
+                                        </c:forEach>
                                         ${ m.mailTitle }
                                     </div>
                                     <div class="mail_date">
@@ -239,14 +250,6 @@
                     </c:if>
                 </c:forEach>
             </c:if>
-            <div style="margin-left: 30px;">
-                <span id="tagBlock">
-                    <span class="tag_innerBlock1 tagColor">
-                        <span class="tag_innerBlock2">
-                            <span></span>
-                        </span>
-                    </span>
-                </span>
             </div>
         </div>
         <div align="center">

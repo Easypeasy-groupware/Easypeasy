@@ -6,6 +6,7 @@
 		<id column="recep_mail_no" property="recMailNo" />
 		<result column="mail_no" property="mailNo" />
 		<result column="tag_no" property="tagNo" />
+		<result column="tag_color" property="tagColor" />
 		<result column="recep_mail_address" property="recMailAdd" />
 		<result column="send_mail_address" property="sendMailAdd" />
 		<result column="emp_name" property="empName" />
@@ -178,7 +179,8 @@
 		select
 			   RECEP_MAIL_NO
 			 , MAIL_NO
-			 , TAG_NO
+			 , r.tag_no
+			 , tag_color
 			 , emp_name
 			 , SEND_MAIL_ADDRESS
 			 , MAIL_TITLE
@@ -194,9 +196,9 @@
 			 , r.status
 	      from rec_mail r
 	      join employee e on r.send_mail_address = e.email
+	 left join mail_tag t on r.tag_no = t.tag_no
 	     where 
-			   MAIL_NO = #{ mailNo }
-		   and RECEP_MAIL_NO = #{ recMailNo }
+			   RECEP_MAIL_NO = #{ recMailNo }
 	</select>
 	
 	<select id="selectReceiverList" resultMap="MailResult">

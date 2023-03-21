@@ -14,6 +14,7 @@ public class Mail {
 	private int recMailNo;
 	private int mailNo;
 	private int tagNo;
+	private String tagColor;
 	private String empName;
 	private String recMailAdd;
 	private String sendMailAdd;

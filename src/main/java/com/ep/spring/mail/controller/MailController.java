@@ -158,7 +158,6 @@ public class MailController {
 	public ModelAndView selectMail(HttpSession session, ModelAndView mv, Mail m) {
 		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
 		mService.readMail(m);
-		int unReadCount = mService.unReadCount(m);
 		Mail mail = mService.selectMail(m);
 		ArrayList<Mail> receiverList = mService.selectReceiverList(m);
 		ArrayList<Attachment> attachmentList = mService.selectAttachmentList(m);
