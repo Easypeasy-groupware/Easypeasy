@@ -65,17 +65,27 @@
 	/* 알람 */
     #hide_block{width: 350px; height: 900px; background: white; transform: translate(1200px, -50px);
                 position: relative; z-index: 100;}
-    #alarm_bar{width: 250px; height: 800px; background-color: white;
+    #alarm_bar{width: 250px; height: 700px; background-color: white;
                border-left: 1px solid rgb(185, 187, 221); 
                border-right: 1px solid rgb(185, 187, 221); 
                border-bottom: 1px solid rgb(185, 187, 221);
                transition: transform 600ms; transform: translate(1260px, 0px); 
-               position: absolute; left: 320; top: 130px; z-index: 10;}
+               position: absolute; left: 320; top: 117px; z-index: 10;}
     #alarm_header{height: 50px; color: white; background: rgb(185, 187, 221); padding: 10px;}
-    #alarm_content{float: left; padding-left: 10px; padding-right: 5px; height: 650px; overflow: hidden;}
-    .alarm_msg{min-height: 25px; max-height: 33px; 
-               margin-bottom: 3px; border-bottom: 2px solid gainsboro; 
-               font-size: 12px; color: black; overflow: hidden; padding-bottom: 5px;}
+    #alarm_content{float: left; padding-left: 10px; padding-right: 5px; height: 650px; margin-bottom: 15px;}
+	#alarm_btn{font-size: 8px; padding: 5px; border-radius: 0.2vw; border: 0}
+	#alarm_delete{font-size: 8px; padding: 5px; border-radius: 0.2vw; border: 0}
+    .alarm_msg{height: 50px; font-size: 12px; margin-top: 5px; border-bottom: 2px solid gainsboro;
+    		   color: black; padding-bottom: 5px;}
+	.alarm_category{font-size: 13px; font-weight: 600;}
+	.alarm_msg_content{width: 230px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+	#alarm_paging{margin-top: 20px;}
+
+	#paging{text-align: center; display: inline-block; padding-left :0;}
+    #paging li {text-align: center; float: left; list-style:none; border-radius:10px; margin:2px; background-color: rgb(234, 234, 234);}
+    #paging li a {display: block; font-size: 12px; color: black; padding: 5px 10px; box-sizing: border-box; text-decoration-line:none;}
+    #paging li.on {background:rgb(166, 184, 145);}
+    #paging li.on a { color: white;}
 </style>
 </head>
 <body>
@@ -85,62 +95,67 @@
 	<div id="hide_block"></div>
 	<div id="alarm_bar">
 		<div id="alarm_header">
-			<div style="width: 100px; height: 100%; float: left; line-height: 45px; font-size: 20px;">전체 알람</div>
-			<div style="width: 30px; height: 100%; float: right; line-height: 45px;">
-				<button class="alarm_toggle"; style="font-size: 8px; padding: 5px; border-radius: 0.2vw; border: 0";>닫기</button>
+			<div style="width: 100px; height: 100%; float: left; line-height: 30px; font-size: 20px;">전체 알람</div>
+			<div style="width: 30px; height: 100%; float: right; line-height: 30px;">
+				<button type="button" class="btn btn-light alarm_toggle" id="alarm_btn">닫기</button>
 			</div>
 		</div>
-
 		<div style="width: 60px; float: right; line-height: 40px; height: 30px;">
-			<button style="font-size: 8px; padding: 5px; border-radius: 0.2vw; border: 0">전체 삭제</button>
+			<button type="button" class="btn btn-light" id="alarm_delete">전체 삭제</button>
 		</div>
-		<br>
+
 		<div id="alarm_content">
 			<div class="alarm_msg">
-				<b style="text-align: left; font-size: 11px;">2023-02-19 17:15:32</b><br>
-				<b style="height: 10px;">[전자결재]</b> 기안번호 - 기안제목~~ ㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-			</div><br>
+				<span class="alarm_category">[전자결재]</span>&nbsp;&nbsp;&nbsp;<span>2023-02-19 17:15:32</span>
+				<div class="alarm_msg_content">기안번호 - 기안제목~~ ㅁㄴㅇㅁㄴㅇㅁㄴㅇ</div>
+			</div>
 			<div class="alarm_msg">
-				<b style="text-align: left; font-size: 11px;">2023-02-19 17:15:32</b><br>
-				<b style="height: 10px;">[채팅]</b> 이름 직책 - 메세지 내용 ㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-			</div><br>
+				<span class="alarm_category">[전자결재]</span>&nbsp;&nbsp;&nbsp;<span>2023-02-19 17:15:32</span>
+				<div class="alarm_msg_content">기안번호 - 기안제목~~ ㅁㄴㅇㅁㄴㅇㅁㄴㅇ</div>
+			</div>
 			<div class="alarm_msg">
-				<b style="text-align: left; font-size: 11px;">2023-02-19 17:15:32</b><br>
-				<b style="height: 10px;">[메일]</b> 발신자명 - 메일 제목 ㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-			</div><br>
+				<span class="alarm_category">[전자결재]</span>&nbsp;&nbsp;&nbsp;<span>2023-02-19 17:15:32</span>
+				<div class="alarm_msg_content">기안번호 - 기안제목~~ ㅁㄴㅇㅁㄴㅇㅁㄴㅇ</div>
+			</div>
 			<div class="alarm_msg">
-				<b style="text-align: left; font-size: 11px;">2023-02-19 17:15:32</b><br>
-				<b style="height: 10px;">[알림]</b> 공지사항 - 공지 제목 ~~ ㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-			</div><br>
+				<span class="alarm_category">[전자결재]</span>&nbsp;&nbsp;&nbsp;<span>2023-02-19 17:15:32</span>
+				<div class="alarm_msg_content">기안번호 - 기안제목~~ ㅁㄴㅇㅁㄴㅇㅁㄴㅇ</div>
+			</div>
 			<div class="alarm_msg">
-				<b style="text-align: left; font-size: 11px;">2023-02-19 17:15:32</b><br>
-				<b style="height: 10px;">[알림]</b> 예약 - 예약날짜 예약내용
-			</div><br>
+				<span class="alarm_category">[전자결재]</span>&nbsp;&nbsp;&nbsp;<span>2023-02-19 17:15:32</span>
+				<div class="alarm_msg_content">기안번호 - 기안제목~~ ㅁㄴㅇㅁㄴㅇㅁㄴㅇ</div>
+			</div>
 			<div class="alarm_msg">
-				<b style="text-align: left; font-size: 11px;">2023-02-19 17:15:32</b><br>
-				<b style="height: 10px;">[전자결재]</b> 기안번호 - 기안제목~~ ㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-			</div><br>
+				<span class="alarm_category">[전자결재]</span>&nbsp;&nbsp;&nbsp;<span>2023-02-19 17:15:32</span>
+				<div class="alarm_msg_content">기안번호 - 기안제목~~ ㅁㄴㅇㅁㄴㅇㅁㄴㅇ</div>
+			</div>
 			<div class="alarm_msg">
-				<b style="text-align: left; font-size: 11px;">2023-02-19 17:15:32</b><br>
-				<b style="height: 10px;">[전자결재]</b> 기안번호 - 기안제목~~ ㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-			</div><br>
+				<span class="alarm_category">[전자결재]</span>&nbsp;&nbsp;&nbsp;<span>2023-02-19 17:15:32</span>
+				<div class="alarm_msg_content">기안번호 - 기안제목~~ ㅁㄴㅇㅁㄴㅇㅁㄴㅇ</div>
+			</div>
 			<div class="alarm_msg">
-				<b style="text-align: left; font-size: 11px;">2023-02-19 17:15:32</b><br>
-				<b style="height: 10px;">[전자결재]</b> 기안번호 - 기안제목~~ ㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-			</div><br>
+				<span class="alarm_category">[전자결재]</span>&nbsp;&nbsp;&nbsp;<span>2023-02-19 17:15:32</span>
+				<div class="alarm_msg_content">기안번호 - 기안제목~~ ㅁㄴㅇㅁㄴㅇㅁㄴㅇ</div>
+			</div>
 			<div class="alarm_msg">
-				<b style="text-align: left; font-size: 11px;">2023-02-19 17:15:32</b><br>
-				<b style="height: 10px;">[전자결재]</b> 기안번호 - 기안제목~~ ㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-			</div><br>
+				<span class="alarm_category">[전자결재]</span>&nbsp;&nbsp;&nbsp;<span>2023-02-19 17:15:32</span>
+				<div class="alarm_msg_content">기안번호 - 기안제목~~ ㅁㄴㅇㅁㄴㅇㅁㄴㅇ</div>
+			</div>
 			<div class="alarm_msg">
-				<b style="text-align: left; font-size: 11px;">2023-02-19 17:15:32</b><br>
-				<b style="height: 10px;">[전자결재]</b> 기안번호 - 기안제목~~ ㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-			</div><br>
-		</div>
-		<div id="paging" style="text-align: center; line-height: 35px;">
-			<a href="">1</a>
-			<a href="">2</a>
-			<a href="">3</a>
+				<span class="alarm_category">[전자결재]</span>&nbsp;&nbsp;&nbsp;<span>2023-02-19 17:15:32</span>
+				<div class="alarm_msg_content">기안번호 - 기안제목~~ ㅁㄴㅇㅁㄴㅇㅁㄴㅇ</div>
+			</div>
+			<div id="alarm_paging" align="center">
+				<ul id="paging">
+					<li><a href=""> < </a></li>
+					<li class='on'><a href=""> 1 </a></li>
+					<li><a href=""> 2 </a></li>
+					<li><a href=""> 3 </a></li>
+					<li><a href=""> 4 </a></li>
+					<li><a href=""> 5 </a></li>
+					<li><a href=""> > </a></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 
