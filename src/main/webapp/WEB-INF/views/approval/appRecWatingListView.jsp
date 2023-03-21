@@ -70,7 +70,7 @@
 			                    <tr>
 			                        <td>
 			                             <input type="checkbox" name="chk" id="">
-			                              <input type="hidden" id="num" value="${a.appNo }">
+			                              <input type="hidden" id="num" value="${a.appNo}">
 			                        </td>
 			                        <td>${a.enrollDate}</td>
 			                        <td>${a.formName }</td>

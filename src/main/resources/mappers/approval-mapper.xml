@@ -162,7 +162,7 @@
                    left join attachment on (ref_no = app_no)
 				  where b.status = '1'
 				    and app_tstatus = '진행중'
-				    and app_no = (
+				    and app_no in (
                                    select app_no
                                      from app_line
                                     where ref_whether = 'N'
@@ -193,7 +193,7 @@
                    left join attachment on (ref_no = app_no)
 				  where b.status = '1'
 				    and app_tstatus = '진행중'
-				    and app_no = (
+				    and app_no in (
                                    select app_no
                                      from app_line
                                     where ref_whether = 'N'
@@ -210,7 +210,7 @@
 						count(*)
 				   from  approval
 				 where status = '1'
-				    and app_no = (
+				    and app_no in (
                                    select app_no
                                      from app_line
                                     where ref_whether = 'Y'
@@ -236,7 +236,7 @@
                       join  employee e on (b.emp_no = e.emp_no)
                       join attachment on (ref_no = app_no)
 				  where b.status = '1'
-				    and app_no = (
+				    and app_no in (
                                    select app_no
                                      from app_line
                                     where ref_whether = 'Y'
@@ -590,7 +590,7 @@
 				        , UPLOAD_DATE
 				        , DIVISION
 				   from attachment
-				  where ref_no = ''
+				  where ref_no = #{appNo}
 				    and division = 'A'
 	</select>
 	

@@ -128,6 +128,8 @@ public class ApprovalController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
+		System.out.println(list);
+		
 		return "approval/appRefWatingListView";
 	}
 	
@@ -233,9 +235,9 @@ public class ApprovalController {
 		model.addAttribute("list1", list1);
 		model.addAttribute("list3", list3);
 		
-		System.out.println(ap);
-		System.out.println(list1);
-		System.out.println(list3);
+		System.out.println("결재정보 : " + ap);
+		System.out.println("결재선 : " + list1);
+		System.out.println("첨부파일 : " + list3);
 
 		if(a.getFormName().equals("업무기안")) {
 			
@@ -360,6 +362,10 @@ public class ApprovalController {
 		model.addAttribute("list1", list1);
 		model.addAttribute("list3", list3);
 
+		System.out.println("결재정보 : " + ap);
+		System.out.println("결재선 : " + list1);
+		System.out.println("첨부파일 : " + list3);
+		
 		if(a.getFormName().equals("업무기안")) {
 			
 			return "approval/appDraftDetailView";
