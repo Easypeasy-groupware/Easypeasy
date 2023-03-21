@@ -60,8 +60,8 @@
             <button id="searchBtn">검색</button>
         </div>
 
-        <p id="address-group">공유주소록</p>
-        <p id="group-name">사내주소록(<span id="dName"></span>)</p>
+        <p id="address-group">사내주소록</p>
+        <p id="group-name"><span id="dName"></span></p>
  
 
         <br><br>

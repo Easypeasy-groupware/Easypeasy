@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="addressMapper">
 
-	<resultMap id="addGroupResult" type="addGroup">
+	<resultMap id="addGroupResult" type="AddGroup">
 		<id column="emp_no" property="empNo" />
 		<result column="group_no" property="groupNo" />
 		<result column="group_name" property="groupName" />
@@ -29,6 +29,7 @@
 		<result column="add_bin" property="addBin" />
 		<result column="editable" property="editable"/>
 		<association property="group" resultMap="addGroupResult"/>
+		<collection property="editList" resultMap="addEditResult"/>
 	</resultMap>
 	
 	
@@ -52,10 +53,15 @@
 		<result column="add_emp_no" property="addEmpNo"/>
 	</resultMap>
 	
-	<resultMap id="addFavoriteResult" type="addFavorite">
+	<resultMap id="addFavoriteResult" type="AddFavorite">
 		<id column="emp_no" property="empNo"/>
 		<result column="add_no" property="addNo" />
 		<result column="add_emp_no" property="addEmpNo" />	
+	</resultMap>
+	
+	<resultMap id="addEditResult" type="AddEdit">
+		<result column="add_no" property="addNo" />
+		<result column="emp_no" property="empNo" />
 	</resultMap>
 	
 	
@@ -160,7 +166,7 @@
 		     , EDITABLE
 		 from address a
          left join add_group g on (a.group_no = g.group_no)
-         right join add_fav f on (a.emp_no = f.emp_no)
+         right join add_fav f on (a.add_no = f.add_no)
 		 where f.emp_no = #{empNo}
 		   and a.add_type = 'S'
            and f.add_no = a.add_no
@@ -168,6 +174,7 @@
 		 order
              by f.enroll_date desc
 	</select>
+	
 	<insert id="insertPersonalAdd">
 		insert
 		  into address
@@ -230,7 +237,7 @@
 			 (
 			   seq_addno.nextval
 			 , #{empNo}
-			 , 'P'
+			 , 'S'
 			 , #{addName}
 			 , #{email}
 			 , #{phone}
@@ -246,21 +253,22 @@
 			 )
 	</insert>
 	
-	<insert id="insertEditableEmpList">
-	<foreach collection="eList" item="e">
-		insert
-		  into edd_edit
-		     (
-		       ADD_NO
-	         , EMP_NO
-		     )
-	    values
-	         (
-	           seq_addno.currval
-	         , #{e.empNo}
-	         )
-	</foreach>	  
-	</insert>
+	<update id="insertEditableEmpList">
+	<if test="editList.size != 0">
+	<foreach collection="editList" item="e" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
+			  into add_edit
+			     (
+			       ADD_NO
+		         , EMP_NO
+			     )
+		    values
+		         (
+		           seq_addno.currval
+		         , #{e.empNo}
+		         )
+		</foreach>	
+	</if>
+	</update>
 	
 	
 	<select id="selectEntEmpListCount" resultType="_int">
@@ -443,6 +451,7 @@
 	
 	<select id="selectAddGroup" resultMap="addGroupResult">
 		select group_name
+		     , group_no
 		  from add_group
 		 where group_no = #{group}
 	</select>
@@ -616,6 +625,181 @@
 		     , sysdate
 		     )
 	</insert>
+	
+	<select id="selectExternalAllListCount" resultType="_int">
+		select
+		       count(*)
+		  from address
+		 where add_type = 'S'
+		   and add_bin = 'N'
+	</select>
+
+	<select id="selectExternalAllList" resultMap="addressResult">
+		select
+		       ADD_NO
+		     , a.EMP_NO
+		     , a.ADD_TYPE
+		     , ADD_NAME
+		     , EMAIL
+		     , PHONE
+		     , ADD_EMP
+		     , ADD_DEPT
+		     , ADD_JOB
+		     , a.GROUP_NO
+		     , GROUP_NAME
+		     , EMP_PHONE
+		     , EMP_ADDRESS
+		     , MEMO
+		     , CREATE_DATE
+		     , MODIFY_DATE
+		     , DELETE_DATE
+		     , ADD_BIN
+		     , EDITABLE
+		 from address a
+         left join add_group g on (a.group_no = g.group_no)
+		 where a.add_type = 'S'
+		   and add_bin = 'N'
+		 order
+		    by create_date
+	</select>
+	
+	<select id="selectExternalGroupListCount"  resultType="_int">
+		select count(*)
+		  from address
+		 where add_type = 'S'
+		   and add_bin = 'N'
+		<choose>
+			<when test="group != null">
+				and group_no = #{group}
+			</when>
+			<otherwise>
+				and group_no is null	
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="selectExternalGroupList" resultMap="addressResult">
+		select
+		       ADD_NO
+		     , a.EMP_NO
+		     , a.ADD_TYPE
+		     , ADD_NAME
+		     , EMAIL
+		     , PHONE
+		     , ADD_EMP
+		     , ADD_DEPT
+		     , ADD_JOB
+		     , a.GROUP_NO
+		     , GROUP_NAME
+		     , EMP_PHONE
+		     , EMP_ADDRESS
+		     , MEMO
+		     , CREATE_DATE
+		     , MODIFY_DATE
+		     , DELETE_DATE
+		     , ADD_BIN
+		     , EDITABLE
+		  from address a
+          left join add_group g on (a.group_no = g.group_no)
+         where a.add_type = 'S'
+		<choose>
+			<when test="group != null">
+				and a.group_no = #{group}
+			</when>
+			<otherwise>
+				and a.group_no is null	
+			</otherwise>
+		</choose>
+		    and add_bin = 'N'
+		  order
+		     by create_date
+	</select>
+	
+	<select id="selectExternalAddDetail" resultMap="addressResult">
+		select
+		       ADD_NO
+		     , a.EMP_NO
+		     , a.ADD_TYPE
+		     , ADD_NAME
+		     , EMAIL
+		     , PHONE
+		     , ADD_EMP
+		     , ADD_DEPT
+		     , ADD_JOB
+		     , a.GROUP_NO
+		     , GROUP_NAME
+		     , EMP_PHONE
+		     , EMP_ADDRESS
+		     , MEMO
+		     , CREATE_DATE
+		     , MODIFY_DATE
+		     , DELETE_DATE
+		     , ADD_BIN
+		     , EDITABLE
+		 from address a
+         left join add_group g on (a.group_no = g.group_no)
+		 where ADD_NO = #{no}
+	</select>
+	
+	<select id="selectExternalAddRegListCount" resultType="_int">
+		select count(*)
+		  from address
+		 where add_type = 'S'
+		   and add_bin = 'N'
+		 <if test="groupNo != null">
+			 <choose>
+			 	<when test="groupNo == 0">
+			 		and group_no is null
+			 	</when>
+			 	<otherwise>
+			 		and group_no = #{groupNo}
+			 	</otherwise>
+			 </choose>
+		 </if>
+	</select>
+	
+	<select id="selectExternalRegList" resultMap="addressResult">
+		select
+		       ADD_NO
+		     , a.EMP_NO
+		     , a.ADD_TYPE
+		     , ADD_NAME
+		     , EMAIL
+		     , PHONE
+		     , ADD_EMP
+		     , ADD_DEPT
+		     , ADD_JOB
+		     , a.GROUP_NO
+	     <if test="groupNo != 0">
+	     	 , GROUP_NAME
+	     </if>
+		     , EMP_PHONE
+		     , EMP_ADDRESS
+		     , MEMO
+		     , CREATE_DATE
+		     , MODIFY_DATE
+		     , DELETE_DATE
+		     , ADD_BIN
+		     , EDITABLE
+		  from address a
+	    <if test="groupNo != 0">
+          left join add_group g on (a.group_no = g.group_no)
+        </if>
+         where a.add_type = 'S'
+         <if test="groupNo != null">
+			<choose>
+			 	<when test="groupNo == 0">
+			 		and a.group_no is null
+			 	</when>
+			 	<otherwise>
+			 		and a.group_no = #{groupNo}
+			 	</otherwise>
+			 </choose>
+		</if>
+		    and add_bin = 'N'
+		  order
+		     by create_date
+	</select>
 
 
 

@@ -1,5 +1,7 @@
 package com.ep.spring.address.model.vo;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +38,8 @@ public class Address {
 	private AddGroup group;
 	
 	private String editNo;
+	
+	private List<AddEdit> editList;
 	
 
 }

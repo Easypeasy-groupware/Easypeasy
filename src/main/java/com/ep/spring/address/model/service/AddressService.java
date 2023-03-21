@@ -30,7 +30,7 @@ public interface AddressService {
 	int insertPersonalAdd(Address a);
 	
 	// 3. 공유주소록 추가
-	int insertSharedAdd(Address a, ArrayList<AddEdit> eList);
+	int insertSharedAdd(Address a);
 	
 	// 4. 전체 사내주소록 조회
 	int selectEntEmpListCount(int no);
@@ -91,6 +91,21 @@ public interface AddressService {
 	
 	// 18. 사내주소록 즐겨찾기 리스트 저장(ajax)
 	int insertFavEmp(AddFavorite af);
+	
+	// 19. 외부 공유주소록 전체 리스트 조회
+	int selectExternalAllListCount();
+	ArrayList<Address> selectExternalAllList(PageInfo pi);
+	
+	// 20. 외부 공유주소록 그룹별 리스트 조회
+	int selectExternalGroupListCount(String group);
+	ArrayList<Address> selectExternalGroupList(String group, PageInfo pi);
+	
+	// 21. 외부 공유주소록 상세조회
+	Address selectExternalAddDetail(int no);
+	
+	// 22. 외부 공유주소록 내가 등록한 주소록 리스트 조회
+	int selectExternalAddRegListCount(AddGroup ag);
+	ArrayList<Address> selectExternalRegList(AddGroup ag, PageInfo pi);
 
 	
 	
