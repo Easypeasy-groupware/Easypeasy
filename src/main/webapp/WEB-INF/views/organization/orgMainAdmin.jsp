@@ -167,7 +167,7 @@
 				
 										<h5>Easy peasy조직도</h5>
 										<form action="adminList.org">
-											<input type="hidden" name="userNo" value="">
+											<input type="hidden" name="empNo" value="">
 											<ul id="browser" class="filetree treeview-famfamfam">
 												<li><span class="folder">이지피지</span>
 													<ul>

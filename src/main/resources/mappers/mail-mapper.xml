@@ -6,6 +6,7 @@
 		<id column="recep_mail_no" property="recMailNo" />
 		<result column="mail_no" property="mailNo" />
 		<result column="tag_no" property="tagNo" />
+		<result column="tag_color" property="tagColor" />
 		<result column="recep_mail_address" property="recMailAdd" />
 		<result column="send_mail_address" property="sendMailAdd" />
 		<result column="emp_name" property="empName" />
@@ -13,6 +14,8 @@
 		<result column="mail_content" property="mailContent" />
 		<result column="rec_check" property="recCheck" />
 		<result column="rec_date" property="recDate" />
+		<result column="rec_date_day" property="recDateDay" />
+		<result column="rec_date_time" property="recDateTime" />
 		<result column="impor_mail" property="imporMail" />
 		<result column="junk_mail" property="junkMail" />
 		<result column="reser_mail" property="reserMail" />
@@ -41,6 +44,8 @@
 			 , MAIL_CONTENT
 			 , REC_CHECK
 			 , REC_DATE
+			 , substr(rec_date, 0, 11) "rec_date_day"
+             , substr(rec_date, 14) "rec_date_time"
 			 , IMPOR_MAIL
 			 , JUNK_MAIL
 			 , RESER_MAIL
@@ -125,7 +130,7 @@
 		  , #{ sendMailAdd }
 		  , #{ mailTitle }
 		  , #{ mailContent }
-		  , to_char(sysdate, 'YYYY-MM-DD HH24:mi:SS')
+		  , to_char(sysdate, 'YYYY-MM-DD DY HH24:mi:SS')
 		  , #{ imporMail }
 		  , #{ reference }
 		  , #{ hiddenReference }
@@ -174,13 +179,16 @@
 		select
 			   RECEP_MAIL_NO
 			 , MAIL_NO
-			 , TAG_NO
+			 , r.tag_no
+			 , tag_color
 			 , emp_name
 			 , SEND_MAIL_ADDRESS
 			 , MAIL_TITLE
 			 , MAIL_CONTENT
 			 , REC_CHECK
 			 , REC_DATE
+			 , substr(rec_date, 0, 11) "rec_date_day"
+             , substr(rec_date, 14) "rec_date_time"
 			 , IMPOR_MAIL
 			 , REFERENCE
 			 , HIDDEN_REFERENCE
@@ -188,9 +196,9 @@
 			 , r.status
 	      from rec_mail r
 	      join employee e on r.send_mail_address = e.email
+	 left join mail_tag t on r.tag_no = t.tag_no
 	     where 
-			   MAIL_NO = #{ mailNo }
-		   and RECEP_MAIL_NO = #{ recMailNo }
+			   RECEP_MAIL_NO = #{ recMailNo }
 	</select>
 	
 	<select id="selectReceiverList" resultMap="MailResult">
@@ -244,6 +252,13 @@
 		update rec_mail
 		   set
 		       junk_mail = 'N'
+		 where recep_mail_no = #{ recMailNo }
+	</update>
+	
+	<update id="tagMail">
+		update rec_mail
+		   set 
+		       tag_no = #{ tagNo }
 		 where recep_mail_no = #{ recMailNo }
 	</update>
 </mapper>

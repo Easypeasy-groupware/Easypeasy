@@ -36,21 +36,21 @@
         	 <h1>전체 공지사항</h1><br><br>
     
 		    <div class="container" style="width:1000px">
-		        <form>
+		        <form action="detailForm.bo" id="detailBoard">
 		            <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enrollForm.bo';"> 새글쓰기</button>
-		            <c:if test="${ loginUser.userId eq b.boardWriter }">
+		            <c:if test="${ loginUser.empNo eq b.boardWriter }">
 			            <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
 		                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
-		                 
-		                 <form action="" method="post" id="postForm"> 
+		                
+		                <form action="" method="post" id="postForm"> 
 				         	<input type="hidden" name="no" value="${b.boardNo}">
-				         	<input type="hidden" name="filePath" value="${ b.changeName }">
-				         </form>
+				        </form>
+				        
 			            <script>
-				            function postFormSubmit(num){ 
+				            function postFormSubmit(num){
 				                if(num == 1){ 
 				                	$("#postForm").attr("action", "updateForm.bo").submit();
-				                }else{
+				                }else{ 
 				                	$("#postForm").attr("action", "delete.bo").submit();
 				                }
 				        	}
@@ -96,34 +96,87 @@
 		            <thead>
 		                <tr>
 		                    <td colspan="3">댓글 (<span id="rcount">3</span>) </td> 
-		                 </tr>
-		                <tr>
-		                    <th colspan="2">
-		                        <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%"></textarea>
-		                    </th>
-		                    <th style="vertical-align: middle"><button class="btn btn-secondary">등록하기</button></th>
 		                </tr>
+		                <c:choose>
+		                	<c:when test="${empty loginUser}">
+			                	 <tr>
+			                        <th colspan="2">
+			                            <textarea class="form-control"  cols="55" rows="2" style="resize:none; width:100%" readonly>로그인한 사용자만 이용가능한 서비스입니다. 로그인 후 이용바랍니다.</textarea>
+			                        </th>
+			                        <th style="vertical-align: middle"><button class="btn btn-secondary" disabled>등록하기</button></th>
+			                    </tr>
+	                    	</c:when>
+	                    <c:otherwise>
+			                <tr>
+			                    <th colspan="2">
+			                        <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%"></textarea>
+			                    </th>
+			                    <th style="vertical-align: middle"><button class="btn btn-secondary">등록하기</button></th>
+			                </tr>
+		                </c:otherwise>
+                    </c:choose>
 		                
 		            </thead>
 		            <tbody>
-		                <tr>
-		                    <th>user02</th>
-		                    <td>댓글입니다.1</td>
-		                    <td>2020-04-10</td>
-		                </tr>
-		                <tr>
-		                    <th>user01</th>
-		                    <td>댓글입니다.2</td>
-		                    <td>2020-04-08</td>
-		                </tr>
-		                <tr>
-		                    <th>admin</th>
-		                    <td>댓글입니다.3</td>
-		                    <td>2020-04-02</td>
-		                </tr>
+		                
 		            </tbody>
 		        </table>
 		    </div>
+        	
+        	<script>
+		    	$(function(){
+		    		selectReplyList();
+		    	})	
+		    	function addReply(){ 
+		    		if($("#content").val().trim().length > 0){ 
+		    			
+		    			$.ajax({
+		    				url:"rinsert.bo",
+		    				data:{
+		    					replyContent:$("#content").val(),  
+		    					replyWriter:'${loginUser.empName}',
+		    					boardNo:${b.boardNo}  
+		    				},success:function(result){
+		    					
+		    					if(result == "success"){
+		    						$("#content").val("");
+		    						selectReplyList();	
+		    				},error:function(){
+		    					console.log("댓글 작성용 ajax 통신 실패");
+		    				}
+		    			})
+		    		}else{
+		    			alertify.alert("댓글 작성 후 등록 요청해주세요"); 
+		    		}
+		    	}
+		    		
+		    	function selectReplyList(){
+		    		$.ajax({
+		    			url:"rlist.bo",
+		    			data:{no:${b.boardNo}}, 
+		    			success:function(list){
+		    				console.log(list);
+		    				
+		    				let value = "";
+		    				for(let i=0; i<list.length; i++){
+		    					value += "<tr>"
+		    							+	"<th>" + list[i].replyWriter + "</th>"
+		    							+	"<td>" + list[i].replyContent + "</td>"
+		    							+	"<td>" + list[i].createDate + "</td>"
+		    							+"</tr>";
+		    				}
+		    				
+		    				$("#replyArea tbody").html(value);
+		    				$("#rcount").text(list.length);
+		    				
+		    			},error:function(){
+		    				console.log("댓글리스트 조회용 ajax 통신 실패");
+		    			}
+		    		})
+		    	}
+		    </script>
+        
+        
         
         </div>
 	</div>

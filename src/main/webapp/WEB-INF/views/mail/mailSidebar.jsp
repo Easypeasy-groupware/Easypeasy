@@ -25,11 +25,19 @@
     .boxList>img{width: 15px; margin: 5px 0px 5px 0px; padding: 5px 0px 5px 0px;}
     #tagList{min-height: 0px; max-height: 200px; overflow-y: auto; overflow-x: hidden;}
     #tagList>div{float: left;}
+    .tagBoxList{width: 30px; float: left; float: left; line-height: 15px;}
+    .tagBlock{display: inline-block; position: relative;}
+    .tag_innerBlock1{display: inline-block; position: relative; width: 12px; height: 12px; margin: 0 8px 0 0; vertical-align: middle;}
+    .tag_innerBlock1 span.tag_innerBlock2{border-bottom: 6px solid transparent; border-style: solid; border-top: 6px solid transparent; border-width: 6px 0 6px 6px; 
+                                          right: -7px; top: -1px;}
+    .tagColor .tag_innerBlock2{border-color: #42d692;}             
+    .tag_innerBlock1 span{position: absolute; width: 0; height: 0;}
+    .tag_innerBlock1 span.tag_innerBlock2 span{border-bottom: 5px solid transparent; border-style: solid; border-top: 5px solid transparent; border-width: 5px 0 5px 5px;
+                                               right: 2px; top: -5px;}
     .tag{width: 200px; float: left; margin: 0px 0px 2px 10px;}
+    .mail_tag{width: 30px; line-height: 32px; float: left;}
+    .tagOne{float: left;}
     .tag>div{font-size: 14px;}
-    .tagTriangle{width: 10px; height: 0px; float: left; border-top: 8px solid transparent; 
-                 border-left: 15px solid pink; border-bottom: 8px solid transparent; margin-top: 6px; margin-right: 10px;}
-    .tagTriangle+div{width: 140px; height: 17px; margin: 3px 0px 3px 0px; overflow: hidden;}
     #add_tag{width: 100%; padding: 15px 0px 0px 20px; margin-bottom: 42px; font-size: 14px; font-weight: 600; color: gray;}
     #add_tag_view{width: 300px; height: 350px; padding-top: 15px;  position: absolute; top: 400px; left: 600px; border-radius: 10px;
                   border: 1px solid rgb(185, 187, 221); background: white; z-index: 10; display: none;}
@@ -71,7 +79,16 @@
                 <c:if test="${ not empty tagList }" >
                     <c:forEach var="t" items="${ tagList }" >
                         <div class="tag">
-                            <div class="tagTriangle" style="border-left: 15px solid ${t.tagColor};"></div><div class="tagOne">${ t.tagName }</div>
+                            <div class="tagBoxList">
+                                <span class="tagBlock">
+                                    <span class="tag_innerBlock1 tagColor" style="background-color: ${t.tagColor}; border: 1px solid ${t.tagColor};">
+                                        <span class="tag_innerBlock2" style="border-inline-color: inherit;">
+                                            <span style="border-inline-color: inherit;"></span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="tagOne">${ t.tagName }</div>
                         </div>
                     </c:forEach>
                 </c:if>
@@ -196,7 +213,6 @@
                     form.method = "POST";
                     form.append(input);
                     document.body.append(form);
-                    console.log(input)
                     form.submit();
                 }
             });
@@ -226,6 +242,7 @@
                     form.method = "POST";
                     form.append(input);
                     document.body.append(form);
+                    console.log(input)
                     form.submit();
                 }
             });

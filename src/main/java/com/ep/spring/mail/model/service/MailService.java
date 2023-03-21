@@ -43,7 +43,7 @@ public interface MailService {
 
 	
 	/* 6. 휴지통 보내기 */
-	int deleteMail(Mail m);
+	int deleteMail(Mail m, int[] recMailNoList);
 
 	
 	/* 7. 비우기 처리(영구 삭제) */
@@ -52,9 +52,12 @@ public interface MailService {
 	
 	/* 8. 스팸처리 */
 	// 스팸 등록
-	int spamEnroll(Mail m, int[] mailNoList);
+	int spamEnroll(Mail m, int[] recMailNoList);
 	// 스팸 해제
-	int spamClear(Mail m, int[] mailNoList);
+	int spamClear(Mail m, int[] recMailNoList);
+
+	/* 9. 메일 태그 등록 */
+	int tagMail(Mail m, int[] recMailNoList);
 
 
 	

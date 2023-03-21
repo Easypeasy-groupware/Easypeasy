@@ -58,8 +58,8 @@
 	.menu-a:hover{text-decoration:none; color:black;}
 	
 	#add_calendar{width:98%; height:35px; margin:auto; text-align:center; padding:5px 10px 3px 0;}
-	.checkbox-company{width:98%; height:35px; margin:auto; text-align:center; padding:5px 0 3px 5px;}
-	#calList-in{width:98%; height:35px; margin:auto; text-align:center; padding:5px 10px 3px 0;}
+	.checkbox-company{width:98%; height:35px; margin:auto; text-align:center; padding:5px 0 3px 30px;}
+	#calList-in{height:35px; text-align:center;}
 	
 	/*제목 리스트*/
 	.add-in, .add-ex{color:rgb(53, 62, 42);}
@@ -112,10 +112,23 @@
         </div>
 
         <div id="calList-in" style="display:none;">
-        	<div class="custom-control custom-checkbox" style="display: inline-block;">
-	            <input type="checkbox" class="custom-control-input" name="scCompany" id="myCal">
-	            <label class="custom-control-label" for="myCal">내캘린더들</label>
-        	</div>
+        	<c:forEach var="c" items="${ myCalList }">
+        		<c:choose>
+           			<c:when test="${ c.calDefault eq 'Y' }">
+           				<div class="custom-control custom-checkbox" style="display: inline-block; margin-left: 28px">
+				            <input type="checkbox" class="custom-control-input" name="scCompany" id="${ c.calNo }">
+				            <label class="custom-control-label" for="${ c.calNo }">(기본) ${ c.calTitle }</label>
+		        		</div>
+           			</c:when>
+           			<c:otherwise>
+           				<div class="custom-control custom-checkbox" style="display: inline-block;">
+				            <input type="checkbox" class="custom-control-input" name="scCompany" id="${ c.calNo }">
+				            <label class="custom-control-label" for="${ c.calNo }">${ c.calTitle }</label>
+		        		</div>
+           			</c:otherwise>
+           		</c:choose>
+        		
+        	</c:forEach>
         </div>
         <br>
         
@@ -160,7 +173,7 @@
 
         <br><br>
         <div class="menu-list">
-           <a href="#" class="menu-a">
+           <a href="setting.sc" class="menu-a">
                <img src="resources/common_images/admin-setting.png" style="width:15px; color:orange;"> <b>일정 관리</b>
            </a>
        	</div>

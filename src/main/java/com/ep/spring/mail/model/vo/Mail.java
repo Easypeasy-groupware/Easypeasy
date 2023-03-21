@@ -14,6 +14,7 @@ public class Mail {
 	private int recMailNo;
 	private int mailNo;
 	private int tagNo;
+	private String tagColor;
 	private String empName;
 	private String recMailAdd;
 	private String sendMailAdd;
@@ -21,6 +22,8 @@ public class Mail {
 	private String mailContent;
 	private String recCheck;
 	private String recDate;
+	private String recDateDay;
+	private String recDateTime;
 	private String imporMail;
 	private String junkMail;
 	private String reserMail;

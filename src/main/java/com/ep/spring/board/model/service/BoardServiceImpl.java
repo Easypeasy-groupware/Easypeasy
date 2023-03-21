@@ -41,7 +41,7 @@ public class BoardServiceImpl implements BoardService{
 	public int insertBoard(Board b) {
 		return bDao.insertBoard(sqlSession, b);
 	}
-	/*
+	
 	@Override
 	public int increaseCount(int boardNo) {
 		return bDao.increaseCount(sqlSession, boardNo);
@@ -51,25 +51,25 @@ public class BoardServiceImpl implements BoardService{
 	public Board selectBoard(int boardNo) {
 		return bDao.selectBoard(sqlSession, boardNo);
 	}
-*/
+
 	@Override
-	public int deleteBoard(int boardNo) {
-		return 0;
+	public int deleteBoard(int no) {
+		return bDao.deleteBoard(sqlSession, no);
 	}
 
 	@Override
 	public int updateBoard(Board b) {
-		return 0;
+		return bDao.updateBoard(sqlSession, b);
 	}
 
 	@Override
 	public ArrayList<BoardReply> selectReplyList(int boardNo) {
-		return null;
+		return bDao.selectReplyList(sqlSession, boardNo);
 	}
 
 	@Override
 	public int insertReply(BoardReply r) {
-		return 0;
+		return bDao.insertReply(sqlSession, r);
 	}
 
 	@Override
@@ -78,13 +78,13 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public ArrayList<BoardCate> selectBcList(BoardCate bc) {
-		return null;
+	public ArrayList<BoardCate> selectSettings(BoardCate bc) {
+		return bDao.selectSettings(sqlSession, bc);
 	}
 	
 	@Override
-	public int insertSettings(BoardCate bc) {
-		return 0;
+	public int insertCate(BoardCate bc) {
+		return bDao.insertCate(sqlSession, bc);
 	}
 
 	@Override
