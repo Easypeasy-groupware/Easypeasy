@@ -17,7 +17,7 @@
     /*---------------------------메인-------------------------------------*/
     .outer{width:1200px; padding-top:10px;}
 	#main_content{position: absolute; top: 170px;}
-    #left-col{width:69%; padding:0 10px 0 10px; margin-left:20px; float:left;}
+    #left-col{width:57%; padding:0 10px 0 10px; margin-left:20px; float:left;}
     #right-col{width:29%; padding:0 10px 0 10px; float:left;}
 
     /*카테고리별 공통 css*/
