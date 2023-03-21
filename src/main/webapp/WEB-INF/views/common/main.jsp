@@ -493,9 +493,9 @@
 	    </div>
 	    <div class="schedule">
 	        <div class="show-month">
-	            <span id="thisYear"><b>2023</b></span>
+	            <span id="thisYear"></span>
 	            <b> / </b>
-	            <span id="thisMonth"><b>3</b></span>
+	            <span id="thisMonth"></span>
 	        </div>
 	        <div id="calander" style="padding-top:10px;">
 	            <input class="dateSelector" style="display:none"/>
@@ -512,7 +512,15 @@
 	        </div>
 	
 	        <script>
-	            $(function(){
+	        	$(function(){ // 현재 월 표시
+	        		const date = new Date();
+	        		let year = "<b>" + date.getFullYear() + "</b>";
+	        		let month = "<b>" + (date.getMonth() + 1) + "</b>";
+	        		$("#thisYear").html(year);
+	        		$("#thisMonth").html(month);
+	        	})
+	        	
+	            $(function(){ // 달력
 	                var dateSelector = document.querySelector('.dateSelector');
 	                flatpickr.localize(flatpickr.l10ns.ko);
 	                flatpickr(dateSelector);
