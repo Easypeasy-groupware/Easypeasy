@@ -440,9 +440,9 @@
 		
 				<table>
 					<colgroup>
-						<col style="width:30%;">
-						<col sytle="width:45%;">
 						<col style="width:25%;">
+						<col sytle="width:45%;">
+						<col style="width:20%;">
 					</colgroup>
 					<thead>
 						<tr>
