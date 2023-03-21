@@ -117,7 +117,8 @@
         </ul>
 
         <br>
-		<form action="insertNewSh.add" method="post">
+		<form action="insertNewSh.add" method="post" id="frm">
+		<input type="hidden" name="empNo" value="${ loginUser.empNo }">
             <table class="input-table">
                 <colgroup>
                     <col style="width:150px;">
@@ -163,10 +164,10 @@
                 <tr>
                     <td>그룹</td>
                     <td>
-                        <select class="td-select" name="groupNo">
+                        <select class="td-select">
                             <option>선택안함</option>
                             <c:forEach var="s" items="${ sList }">
-				        		<option value="${ s.groupNo }"> ${ s.groupName } </option>
+				        		<option name="groupNo" value="${ s.groupNo }"> ${ s.groupName } </option>
 				        	</c:forEach>
                         </select>
                     </td>
@@ -177,13 +178,13 @@
                 <tr>
                     <td>회사전화</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input" id="empPhone">
+                        <input type="text" class="tb-input" id="empPhone" name="empPhone">
                     </td>
                 </tr>
                 <tr>
                     <td>회사주소</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input" id="empAddress">
+                        <input type="text" class="tb-input" id="empAddress" name="empAddress">
                     </td>
                 </tr>
                 <tr>
@@ -195,7 +196,7 @@
                 <tr>
                     <td>편집가능여부</td>
                     <td colspan="2">
-                        <input type="checkbox" class="editable-check" id="editable"> 
+                        <input type="checkbox" class="editable-check" id="editable" name="editable"> 
                     </td>
                 </tr>
                 <tr>
@@ -207,7 +208,7 @@
                                 <input type="text" id="search-emp">
                                 <br><br>
                                 <table class="list-show">	
-                                	<tbody id="tbd">
+                                	<tbody id="show-tbd">
                                 	</tbody>
                                 </table>
                             </div>
@@ -218,9 +219,10 @@
             </table>
             
             <br>
-			<input type="hidden" name="editNo">
+            <div class="edit-list"></div>
             <button type="reset" class="set-btn" id="reset-btn">초기화</button>
-            <button type="submit" class="set-btn" id="submit-btn">추가</button>
+            <button type="button" class="set-btn" id="submit-btn">추가</button>
+            
 		</form>
         
         <script>
@@ -228,10 +230,13 @@
             $(".editable-check").click(function(){ // 편집가능 체크박스
                 if($(this).is(":checked")){
                     $(".empBox").show();
+                    $(this).val("Y");
                 }else {
                     $(".empBox").hide();
                     $("#search-emp").val("");
+                    $(this).val("N");
                 }
+                console.log($(this).val());
             })
 
             $("#search-emp").keyup(function(){
@@ -243,7 +248,8 @@
                 	success:function(list){
                 		let value="";
                 		for(let i=0; i<list.length; i++){
-                			value += "<tr id='emp" + list[i].empNo + "'>";
+                			value += "<tr class='indiv-emp'><td style='display:none'>" + list[i].empNo + "</td>";
+                			
                 			if(list[i].deptName != null){
                 				value += "<td style='width:70px;'>" + list[i].deptName + "</td>";
                 			}else{
@@ -258,52 +264,32 @@
 							value += "<td class='edit-empName'>" + list[i].empName + "</td></tr>";
                 		}
 
-                		$("#tbd").html(value);
-                		/* console.log("tbd : " + $("#tbd").html());
-                		console.log("tr : " +$("#tbd>tr").html());
-                		console.log("td : " +$("#tbd>tr>td").html()); */
+                		$("#show-tbd").html(value);
+
                 	},error:function(){
                 		console.log("사원리스트 조회용 ajax 통신 실패");
                 	}
                 })
 
             })
-           
-           $(function(){
-        	   $("#tbd>tr").on("click", $("#tbd>tr"), function(){
-                   let val = $(this).html();
-                   console.log(val);
-               })
-           })
-           
-            
-            var editList = "";
             
           	$(".list-show").on("click", ".indiv-emp", function(){ // 사원 리스트에 추가
           		var empNo = $(this).children().eq(0).text();
           		var empDept = $(this).children().eq(1).text();
           		var empJob = $(this).children().eq(2).text();
           		var empName = $(this).children().eq(3).text();
-          		var emp = "<div name='empNo' value='"+ empNo +"'>" + empDept +"&nbsp; <b>" + empName + "</b>&nbsp;" + empJob + " <img src='resources/common_images/delete-img.png' class='emp-delete' style='width:8px;'></div>";
-               	$(".emp-mini2").append(emp);
-
-               	editList += empNo + ","; 
-               	
-               	editList = editList.substring(0, editList.length-1);
-               	
-               	$("input[name='editNo']").val(editList);
-               	
-               	console.log($("input[name='editNo']").val());
-               	
+      
+          		var emp = "<div><span style='display:hidden'>" + empNo + "</span>"; 
+          		if(empDept !=""){
+          			emp += empDept +"&nbsp;";
+          		}
+          		emp += "<b>" + empName + "</b>&nbsp;" + empJob + " <img src='resources/common_images/delete-img.png' class='emp-delete' style='width:8px;'></div>";
+          		$(".emp-mini2").append(emp);
             })
-
             
             $(".emp-mini2").on("click", ".emp-delete", function(){ // 사원 리스트에서 삭제
                 $(this).parent().remove();
             })
-            
-            
-            
         </script>
         
     </div>
@@ -396,6 +382,18 @@
     			}
     		});
     	}
+    
+    	$("#submit-btn").click(function(){ // form submit
+    		var count = 0;
+    		$(".emp-mini2 div").each(function(){
+    			let list = "<input type='hidden' name = editList[" + count + "].empNo value='" + $(this).children("span").text() + "'>";
+    			$(".edit-list").append(list);
+    			++count;
+    		})
+    		
+    		$("#frm").submit();
+    	})
+    	
     </script>
 </body>
 </html>

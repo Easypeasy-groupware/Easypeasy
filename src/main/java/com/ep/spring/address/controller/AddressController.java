@@ -71,35 +71,17 @@ public class AddressController {
 	}
 	
 	@RequestMapping("insertNewSh.add")
-	public String insertSharedAdd(Address a, AddEdit e, HttpSession session) {
+	public String insertSharedAdd(Address a, HttpSession session) { // 외부 공유주소록 등록
 		
-		if(a.getEditable() != null) {
-			a.setEditable("Y");
-		}else {
-			a.setEditable("N");
-		}
-		
-		
-		// 편집가능한사원리스트를 배열에 담기
-		String[] editArr = a.getEditNo().split(","); //문자열을 배열로 분리
-		ArrayList<AddEdit> eList = new ArrayList<>(); // 새로운 ArrayList 생성
-		
-		for(int i = 0; i<editArr.length; i++) { // 반복문 돌리면서 문자열배열을 ArrayList에 담기
-			AddEdit ed = new AddEdit();
-			ed.setEmpNo(Integer.parseInt(editArr[i]));
-			eList.add(ed);
-		}
-		
-		// 2. 새로운 주소록 + 편집가능한 사원리스트 insert
-		int result = aService.insertSharedAdd(a, eList);
+		int result = aService.insertSharedAdd(a);
 		
 		if(result> 0) {
 			AlertMsg msg = new AlertMsg("주소록 추가", "성공적으로 추가되었습니다");
 			session.setAttribute("successMsg", msg);
-			return "redirect:newShForm.add";
+			return "redirect:externalAll.add";
 			
 		}else {
-			AlertMsg msg = new AlertMsg("주소록 추가", "주소록추가 실패");
+			AlertMsg msg = new AlertMsg("주소록 추가", "주소록추가에 실패했습니다");
 			session.setAttribute("failMsg", msg);
 			return "redirect:newShForm.add";
 		}
@@ -346,7 +328,84 @@ public class AddressController {
 		return result > 0 ? "success" : "fail";
 	}
 	
+	@RequestMapping("externalAll.add") // 공유 외부주소록 전체 리스트 조회
+	public ModelAndView selectExternalAllList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, HttpSession session){
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
+		int listCount = aService.selectExternalAllListCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+		
+		ArrayList<Address> list = aService.selectExternalAllList(pi);
+		ArrayList<AddFavorite> fList = aService.selectPsFavList(empNo);
+		
+		mv.addObject("count", listCount)
+		  .addObject("pi", pi)
+		  .addObject("list", list)
+		  .addObject("fList", fList)
+		  .setViewName("address/sharedExtAllAddList");
+		return mv;
+	}
 	
+	@RequestMapping("externalGroup.add") // 공유 외부주소록 그룹별 리스트 조회
+	public ModelAndView selectExternalGroupList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, String group, HttpSession session) {
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
+		int listCount = aService.selectExternalGroupListCount(group);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<Address> list = aService.selectExternalGroupList(group, pi);
+		ArrayList<AddFavorite> fList = aService.selectPsFavList(empNo);
+		
+		AddGroup ag = aService.selectAddGroup(group);
+		
+		mv.addObject("count", listCount)
+		  .addObject("pi", pi)
+		  .addObject("list", list)
+		  .addObject("fList", fList)
+		  .addObject("ag", ag)
+		  .setViewName("address/sharedExtGroupAddList");
+		return mv;
+	}
+	
+	@RequestMapping("extAddInfo.add") // 공유 외부주소록 상세조회
+	public ModelAndView selectExternalAddDetail(int no, ModelAndView mv) {
+		Address a = aService.selectExternalAddDetail(no);
+		
+		mv.addObject("a", a)
+		  .setViewName("address/sharedExtAddDetailForm");
+		return mv;
+	}
+	
+	@RequestMapping("extReg.add") // 공유 외부주소록 내가 등록한 주소록 리스트
+	public ModelAndView selectExternalAddRegList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, String group, HttpSession session) {
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
+		AddGroup ag = new AddGroup();
+		ag.setEmpNo(empNo);
+		if(group != null) {
+			ag.setGroupNo(group);
+		}
+		System.out.println(ag);
+		
+		int listCount = aService.selectExternalAddRegListCount(ag);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		ArrayList<Address> list = aService.selectExternalRegList(ag, pi);
+		ArrayList<AddFavorite> fList = aService.selectPsFavList(empNo);
+		
+		if(group != null) {
+			AddGroup agroup = aService.selectAddGroup(group);
+			mv.addObject("ag", agroup);
+		}else {
+			mv.addObject("ag", "전체");
+		}
+		
+		mv.addObject("count", listCount)
+		  .addObject("pi", pi)
+		  .addObject("list", list)
+		  .addObject("fList", fList)
+		  .setViewName("address/sharedExtRegAddList");
+		return mv;
+	}
 	
 
 }

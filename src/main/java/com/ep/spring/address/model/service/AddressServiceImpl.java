@@ -55,14 +55,12 @@ public class AddressServiceImpl implements AddressService {
 		return aDao.insertPersonalAdd(sqlSession, a);
 	}
 	
-	@Override
-	public int insertSharedAdd(Address a, ArrayList<AddEdit> eList) {
+	@Override public int insertSharedAdd(Address a) {
 		int result1 = aDao.insertSharedAdd(sqlSession, a);
-		int result2 = aDao.insertEditableEmpList(sqlSession, eList);
-		
-		return result1*result2;
+		int result2 = aDao.insertEditableEmpList(sqlSession, a);
+		return result1*result2; 
 	}
-	
+
 	@Override
 	public int selectEntEmpListCount(int no) {
 		return aDao.selectEntEmpListCount(sqlSession, no);
@@ -182,6 +180,43 @@ public class AddressServiceImpl implements AddressService {
 	public int insertFavEmp(AddFavorite af) {
 		return aDao.insertFavEmp(sqlSession, af);
 	}
+	
+	@Override
+	public int selectExternalAllListCount() {
+		return aDao.selectExternalAllListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Address> selectExternalAllList(PageInfo pi) {
+		return aDao.selectExternalAllList(sqlSession, pi);
+	}
+
+	@Override
+	public int selectExternalGroupListCount(String group) {
+		return aDao.selectExternalGroupListCount(sqlSession, group);
+	}
+
+	@Override
+	public ArrayList<Address> selectExternalGroupList(String group, PageInfo pi) {
+		return aDao.selectExternalGroupList(sqlSession, group, pi);
+	}
+
+	@Override
+	public Address selectExternalAddDetail(int no) {
+		return aDao.selectExternalAddDetail(sqlSession, no);
+	}
+
+	@Override
+	public int selectExternalAddRegListCount(AddGroup ag) {
+		return aDao.selectExternalAddRegListCount(sqlSession, ag);
+	}
+
+	@Override
+	public ArrayList<Address> selectExternalRegList(AddGroup ag, PageInfo pi) {
+		return aDao.selectExternalRegList(sqlSession, ag, pi);
+	}
+
+
 
 
 

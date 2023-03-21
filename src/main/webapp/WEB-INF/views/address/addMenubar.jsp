@@ -10,9 +10,9 @@
 <style>
 	*{padding:0; margin:0}
 	.menubar{width:200px; height:1000px; background:white; float:left; border-right:1px solid rgb(185, 187, 221); margin-right:20px;}
-	a{text-decoration:none; font-size:14px; color:black;}
-	a:hover{font-weight:600; color:black;}
-	li{list-style:none;}
+	.menubar a{text-decoration:none; font-size:14px; color:black;}
+	.menubar a:hover{text-decoration:none; font-weight:600; color:black;}
+	.menubar li{list-style:none;}
 	
 	/*메뉴이름*/
 	.menu-title{margin:20px 0 20px 0; text-align:center;}
@@ -69,7 +69,7 @@
     <div class="menubar">
 
         <div class="menu-title">
-            <a href="favorite.add" id="title"><img src="resources/common_images/phone-book.png" style="width:20px;"> 주소록</a>
+            <a href="favorite.add" id="title" class="menu-a"><img src="resources/common_images/phone-book.png" style="width:20px;"> 주소록</a>
         </div>
 
         <div class="menu-btn">
@@ -96,14 +96,14 @@
         <br>
 
         <div class="add-type">
-            <a href="#" class="menu-a">
+            <a href="#" class="menu-a shared-add">
                 <img src="resources/common_images/add-ppl.png"> <b>공유주소록</b>
             </a>
             <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="shlist-key"></span>
         </div>
 
         <div class="add-type" id="add-in" style="display:none;">
-            <a href="internalEnt.add" class="add-in"><b>사내주소록</b></a>
+            <a href="internalEnt.add" class="add-in menu-a"><b>사내주소록</b></a>
             <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="inlist-key"></span>
         </div>
         <ul class="submenu" id="inlist" style="display:none;">
@@ -118,14 +118,14 @@
 
 
         <div class="add-type" id="add-ex"  style="display:none;">
-            <a href="externalEnt.add" class="add-ex"><b>외부주소록</b></a>
+            <a href="externalAll.add" class="add-ex menu-a"><b>외부주소록</b></a>
             <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="exlist-key"></span>
         </div>
         <ul class="submenu" id="exlist" style="display:none;">
             <c:forEach var="s" items="${ sList }">
-        		<li><a href="externalGroup.add?group=${ s.groupName }">- ${ s.groupName } </a></li>
+        		<li><a href="externalGroup.add?group=${ s.groupNo }">- ${ s.groupName } </a></li>
         	</c:forEach>
-        	<li><a href="externalGroup.add?group=etc">- 기타 </a></li>
+        	<li><a href="externalGroup.add">- 기타 </a></li>
         </ul>
        
         <br>
@@ -177,6 +177,21 @@
     				$("#exlist").hide();
     			}
     		})
+    		$(".shared-add").click(function(){
+    			if($("#shlist-key").attr("src") === "resources/common_images/list-down.png"){
+    				$("#shlist-key").attr("src", "resources/common_images/list-up.png");	
+    				$("#add-in").show();
+    				$("#add-ex").show();
+    			}else {
+    				$("#shlist-key").attr("src", "resources/common_images/list-down.png");
+    				$("#inlist-key").attr("src", "resources/common_images/list-down.png");
+    				$("#exlist-key").attr("src", "resources/common_images/list-down.png");
+    				$("#add-in").hide();
+    				$("#add-ex").hide();
+    				$("#inlist").hide();
+    				$("#exlist").hide();
+    			}
+    		})
     		
     		$('#inlist-key').on("click", $('#inlist-key'), function(){
     			
@@ -199,6 +214,7 @@
 	   				$("#exlist").hide();
 	   			}
     		}) 
+    		
     		
     		
 

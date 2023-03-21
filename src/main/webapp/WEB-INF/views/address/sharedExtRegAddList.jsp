@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!--flaticon-->
@@ -15,29 +14,21 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
 <style>
-    .content-outer{width:1000px; padding-left:10px; margin-left:200px; padding-top:20px;}
+    .content-outer{width:1000px; padding-left:10px; margin-left:200px;  padding-top:20px;}
     .content-outer *{box-sizing: border-box;}
     #address-group{font-size:20px; font-weight:600; display:inline-block;}
-    #group-name{color:rgb(96, 96, 96); font-size:18px; font-weight:600; margin-left:20px;}
+    #group-name{color:rgb(96, 96, 96); font-size:18px; font-weight:600;  margin-left:20px;}
     
     /*검색*/
-    #searchKey{width:200px; height:25px; border:1px solid gray; border-radius:5px;}
+    #searchKey{width:200px; height:25px; border:1px solid gray; border-radius:5px; }
     #searchBtn{width:50px; height:25px; border:0; border-radius:5px; background: rgb(166, 184, 145); color:white;}
 
-    /*연락처 추가*/
-    .newAdd{width:120px; height:25px; border:1px solid gray; border-radius:5px;}
-    .addBtn{width:80px; height:25px; border:0; border-radius:5px;}
-    #addBtn1{background: rgb(127, 127, 127); color:white;}
-    #addBtn2{background: rgb(166, 184, 145); color:white;}
-
+    
     /*주소록 리스트 헤더*/
-    .subheading{display:inline-block; margin-left:650px;}
     .btnGroup{width:80px; height:25px; border:0; border-radius:5px; margin-bottom:10px; color:white;}
-    .btnGroup:hover{cursor: pointer; font-weight:600;}
-    #delete{background: rgb(134, 134, 134); text-align:center;}
-    #change-group{background: rgb(166, 184, 145);}
-    #sendMail{background: rgb(77, 88, 64);}
-
+	.btnGroup:hover{cursor: pointer; font-weight:600;}
+	#sendMail{background: rgb(77, 88, 64);}
+	.subheading{display:inline-block; margin-left:820px;}
 
     /*주소록 리스트 테이블*/
     #addList{
@@ -82,42 +73,40 @@
 	<jsp:include page="addMenubar.jsp"/>
 	
     <div class="content-outer">
-    
-    	<div class="search" align="right" style="float:right">
+		<div class="search" align="right" style="float:right">
             <input type="text" id="searchKey" placeholder="이름, 회사, 전화번호">
             <button id="searchBtn">검색</button>
         </div>
-	
-        <p id="address-group">개인주소록</p>
-        <p id="group-name">
-		<c:choose>
-			<c:when test="${ not empty ag.groupName }">
-				${ ag.groupName }
-			</c:when>
-			<c:otherwise>
-				기타
-			</c:otherwise>
-		</c:choose>
-		</p>
+        
+        <p id="address-group">
+        공유주소록
+        <c:choose>
+        	<c:when test="${ ag eq '전체' }">
+        		전체
+        	</c:when>
+        	<c:otherwise>
+        		<c:choose>
+		        	<c:when test="${ empty ag.groupNo }">
+		        		(기타)
+		        	</c:when>
+		        	<c:otherwise>
+		        		(${ ag.groupName })
+		        	</c:otherwise>
+		        </c:choose>
+        	</c:otherwise>
+        </c:choose>
+        
+        </p>
+        <p id="group-name">📝 ${ loginUser.empName } ${ loginUser.jobName }님이 등록한 주소록</p>
 
- 		<br>
- 		
-        <div class="addNew">
-            <input type="text" class="newAdd" placeholder="이름">
-            <input type="text" class="newAdd" placeholder="이메일">
-            <input type="text" class="newAdd" placeholder="휴대폰">
-            <button class="addBtn" id="addBtn1">추가정보</button>
-            <button class="addBtn" id="addBtn2">추가</button>
-        </div>
+		<br>
 
         <br><br>
         
 
-        <button class="btnGroup" id="delete" data-bs-toggle="modal" data-bs-target="#deleteModal">삭제</button>
-        <button class="btnGroup" id="change-group" data-bs-toggle="modal" data-bs-target="#changeModal">그룹변경</button>
         <button class="btnGroup" id="sendMail">메일쓰기</button>
+
 		<p class="subheading" id="psSubheading"> 총 <b>${ count }</b> 명</p>
-        
         <br>
 
         <div id="psLike">
@@ -152,22 +141,10 @@
                 <tbody align="center" id="ps-tbody">
                 <c:choose>
                 	<c:when test="${ empty list }">
-                		<tr>
-                		<td colspan="11">
-	                		<c:choose>
-								<c:when test="${ not empty ag.groupName }">
-									<b>${ ag.groupName }</b>
-								</c:when>
-								<c:otherwise>
-									<b>기타</b>
-								</c:otherwise>
-							</c:choose>
-                		  그룹에 등록된 주소록이 없습니다 🤐
-                		 </td>
-                		</tr>
+                		<tr><td colspan="11"> ${ loginUser.empName }님이 등록한 공유주소록이 없습니다 😶‍🌫️</td></tr>
                 	</c:when>
                 	<c:otherwise>
-                		<c:forEach var="a" items="${ list }">
+	                	<c:forEach var="a" items="${ list }">
 		                    <tr>
 		                        <td style="display:none">${ a.addNo }</td>
 		                        <td><input type="checkbox" class="ps-checkbox"></input></td>
@@ -195,7 +172,7 @@
 		                    </tr>
 	                    </c:forEach>
                 	</c:otherwise>
-                </c:choose>               
+                </c:choose>  
                 </tbody>
             </table>
         </div>
@@ -271,114 +248,87 @@
         </script>
 
         <br><br>
-        <!-- 삭제 확인용 모달-->
-        <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <p class="modal-title" style="font-weight:600">연락처 삭제</p>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    
-                    <form>
-                        <div class="modal-body">
-                            선택한 연락처를 정말 삭제하시겠습니까?
-                            <br><br>
-                            <button type="button" class="btn-event-gray" data-bs-dismiss="modal" id="modal-close-btn">취소</button>
-                            <button type="submit" class="btn-event-green" id="modal-del-btn">삭제</button>
-                        </div>
-                        
-                    </form>
-
-                </div>
-            </div>
-        </div>
-        <script>
-
-            
-        </script>
-
-        <!-- 그룹 변경용 모달-->
-        <div class="modal fade" id="changeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <p class="modal-title" style="font-weight:600">그룹 변경</p>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    
-                    <form action="">
-                        <div class="modal-body">
-                            <select class="group-select">
-                            
-                                <option>선택안함</option>
-	                            <c:forEach var="p" items="${ pList }">
-					        		<option name="groupNo" value="${ p.groupNo }"> ${ p.groupName } </option>
-					        	</c:forEach>
-                                
-                            </select>
-                            <button type="button" id="add-new-group" data-bs-dismiss="modal" data-bs-target="#addNewGroupModal" data-bs-toggle="modal">+</button>
-                            <br><br>
-                            <button type="button" class="btn-event-gray" data-bs-dismiss="modal" id="modal-close-btn">닫기</button>
-                            <button type="submit" class="btn-event-green" id="modal-change-btn">변경하기</button>
-                        </div>
-                        
-                    </form>
-    
-                </div>
-              </div>
-        </div>
-
-        <!-- 그룹 추가용 모달 -->
-        <div class="modal fade" id="addNewGroupModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                    <p class="modal-title" style="font-weight:600">새 그룹 추가</p>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="">
-
-                    <div class="modal-body">
-                        <input type="text" id="modal-input" name="newGroup">
-                        <br><br>
-                        <button type="button" class="btn-event-gray" id="modal-close-btn" data-bs-dismiss="modal" data-bs-target="#changeModal" data-bs-toggle="modal">닫기</button>
-                        <button type="button" class="btn-event-green" id="modal-add-btn" data-bs-dismiss="modal" data-bs-target="#changeModal" data-bs-toggle="modal">추가</button>
-                    </div>
-                    
-                </form>
-              </div>
-            </div>
-        </div>
 
         <div align="center">
             <ul id="paging">
             <c:if test="${ not empty list }">
             
-                <c:if test="${ pi.currentPage ne 1 }">
-                   	<li><a href="internalEnt.add?cpage=${ pi.currentPage-1 }"> < </a></li>
-                </c:if>
-                   
-                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-            		<c:choose>
-            		<c:when test="${ pi.currentPage eq p }">
-	            		<li class="on"><a href="internalEnt.add?cpage=${ p }">${ p }</a></li>
-            		</c:when>
-            		<c:otherwise>
-            			<li><a href="internalEnt.add?cpage=${ p }">${ p }</a></li>
-            		</c:otherwise>
-            		</c:choose>
-                </c:forEach>
+            <c:choose>
+            
+            	<c:when test="${ ag eq '전체' }">
+            	
+	        		<c:if test="${ pi.currentPage ne 1 }">
+	                   	<li><a href="extReg.add?cpage=${ pi.currentPage-1 }"> < </a></li>
+	                </c:if>
+	                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	            		<c:choose>
+	            		<c:when test="${ pi.currentPage eq p }">
+		            		<li class="on"><a href="extReg.add?cpage=${ p }">${ p }</a></li>
+	            		</c:when>
+	            		<c:otherwise>
+	            			<li><a href="extReg.add?cpage=${ p }">${ p }</a></li>
+	            		</c:otherwise>
+	            		</c:choose>
+	                </c:forEach>
+	                <c:if test="${ pi.currentPage ne pi.maxPage }">
+	                   	<li><a href="extReg.add?cpage=${ pi.currentPage+1 }"> > </a></li>
+	               	</c:if>
+	               	
+	        	</c:when>
+	        	<c:otherwise>
+	        		<c:choose>
+			        	<c:when test="${ empty ag.groupNo }">
+			        	
+			        		<c:if test="${ pi.currentPage ne 1 }">
+			                   	<li><a href="extReg.add?cpage=${ pi.currentPage-1 }&group=0"> < </a></li>
+			                </c:if> 
+			                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+			            		<c:choose>
+			            		<c:when test="${ pi.currentPage eq p }">
+				            		<li class="on"><a href="extReg.add?cpage=${ p }&group=0">${ p }</a></li>
+			            		</c:when>
+			            		<c:otherwise>
+			            			<li><a href="extReg.add?cpage=${ p }&group=0">${ p }</a></li>
+			            		</c:otherwise>
+			            		</c:choose>
+			                </c:forEach>
+			                <c:if test="${ pi.currentPage ne pi.maxPage }">
+			                   	<li><a href="extReg.add?cpage=${ pi.currentPage+1 }&group=0"> > </a></li>
+			               	</c:if>
+	               	
+			        	</c:when>
+			        	<c:otherwise>
+			        		
+							<c:if test="${ pi.currentPage ne 1 }">
+			                   	<li><a href="extReg.add?cpage=${ pi.currentPage-1 }&group=${ag.groupNo}"> < </a></li>
+			                </c:if> 
+			                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+			            		<c:choose>
+			            		<c:when test="${ pi.currentPage eq p }">
+				            		<li class="on"><a href="extReg.add?cpage=${ p }&group=${ag.groupNo}">${ p }</a></li>
+			            		</c:when>
+			            		<c:otherwise>
+			            			<li><a href="extReg.add?cpage=${ p }&group=${ag.groupNo}">${ p }</a></li>
+			            		</c:otherwise>
+			            		</c:choose>
+			                </c:forEach>
+			                <c:if test="${ pi.currentPage ne pi.maxPage }">
+			                   	<li><a href="extReg.add?cpage=${ pi.currentPage+1 }&group=${ag.groupNo}"> > </a></li>
+			               	</c:if>
 
-                   
-                <c:if test="${ pi.currentPage ne pi.maxPage }">
-                   	<li><a href="internalEnt.add?cpage=${ pi.currentPage+1 }"> > </a></li>
-               	</c:if>
+			        	</c:otherwise>
+			        </c:choose>
+			        
+
+	        	</c:otherwise>
+            </c:choose>
+            
             </c:if>
             </ul>
         </div>
        
     
     </div>
+
 </body>
 </html>

@@ -10,7 +10,7 @@
 		<typeAlias type="com.ep.spring.address.model.vo.AddFavorite" alias="AddFavorite" />
 		<typeAlias type="com.ep.spring.address.model.vo.AddGroup" alias="AddGroup" />
 		<typeAlias type="com.ep.spring.address.model.vo.Address" alias="Address" />
-		<!-- <typeAlias type="com.ep.spring.address.model.vo.AddEdit" alias="AddEdit" />  -->
+		<typeAlias type="com.ep.spring.address.model.vo.AddEdit" alias="AddEdit" />
 		<typeAlias type="com.ep.spring.chat.model.vo.ChatMember" alias="ChatMember" />
 		<typeAlias type="com.ep.spring.chat.model.vo.ChatRecord" alias="ChatRecord" />
 		<typeAlias type="com.ep.spring.chat.model.vo.ChatRoom" alias="ChatRoom" />

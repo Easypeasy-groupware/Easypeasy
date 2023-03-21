@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,14 +21,12 @@
     /*검색*/
     #searchKey{width:200px; height:25px; border:1px solid gray; border-radius:5px;}
     #searchBtn{width:50px; height:25px; border:0; border-radius:5px; background: rgb(166, 184, 145); color:white;}
-
-
-	.subheading{display:inline-block; margin-left:820px;}
 	
 	/*주소록 리스트 헤더*/
-	.btnGroup{width:80px; height:25px; border:0; border-radius:5px; margin-bottom:10px; color:white; display:inline-block;}
+	.btnGroup{width:80px; height:25px; border:0; border-radius:5px; margin-bottom:10px; color:white;}
 	.btnGroup:hover{cursor: pointer; font-weight:600;}
 	#sendMail{background: rgb(77, 88, 64);}
+	#myAddr{width:120px; background: rgb(166, 184, 145); float:right;}
 
     /*주소록 리스트 테이블*/
     #addList{
@@ -61,15 +58,18 @@
             <button id="searchBtn">검색</button>
         </div>
         
-        <p id="address-group">사내주소록</p>
-        <p id="group-name" style="margin-left:20px;">🧑🏻‍💻전체</p>
+        <p id="address-group">외부주소록</p>
+        <p id="group-name">전체 총 ${ count }명</p>
 
 		<br><br>
 		
         <button class="btnGroup" id="sendMail">메일쓰기</button>
-        
-		<p class="subheading" id="psSubheading"> 총 <b>${ count }</b>명</p>
-		
+        <button class="btnGroup" id="myAddr">등록한 연락처</button>
+		<script>
+			$("#myAddr").click(function(){
+				location.href="extReg.add";
+			})
+		</script>
         <br>
 
         <div id="psLike">
@@ -98,35 +98,38 @@
                     </tr>
                 </thead>
                 <tbody align="center" id="ps-tbody">
-                	<c:forEach var="a" items="${ list }">
-	                    <tr>
-	                        <td style="display:none">${ a.empNo }</td>
-	                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-	                        <td class="like">
-	                        	<c:forEach var = "f" items="${ fList }">
-		                        
-		                        	<c:if test="${ a.empNo eq f.addEmpNo}">
-		                        		⭐
-		                        	</c:if>
-		                        	
-		                        </c:forEach>
-	
-	                        </td>
-	                        <td class="clck-detail">${ a.empName }</td>
-	                        <td class="clck-detail">${ a.jobName }</td>
-	                        <td class="clck-detail">${ a.deptName }</td>	                        
-	                        <td class="clck-detail">${ a.phone }</td>
-	                        <td class="clck-detail">${ a.email }</td>
-	                        <c:choose>
-		                        <c:when test= "${ empty a.deptName }" >
-		                        	<td>기타</td>
-		                        </c:when>
-		                        <c:otherwise>
-		                        	<td>${ a.deptName }</td>
-		                        </c:otherwise>
-		                    </c:choose>
-	                    </tr>
-                    </c:forEach>
+                <c:choose>
+                	<c:when test="${ empty list }">
+                		<tr>
+                			<td colspan="9">등록된 공유주소록이 없습니다😅</td>
+                		</tr>
+                	</c:when>
+                	<c:otherwise>
+	                	<c:forEach var="a" items="${ list }">
+		                    <tr>
+		                        <td style="display:none">${ a.addNo }</td>
+		                        <td><input type="checkbox" class="ps-checkbox"></input></td>
+		                        <td class="like">
+		                        	<c:forEach var = "f" items="${ fList }">
+			                        
+			                        	<c:if test="${ a.addNo eq f.addNo}">
+			                        		⭐
+			                        	</c:if>
+			                        	
+			                        </c:forEach>
+		
+		                        </td>
+		                        <td class="clck-detail">${ a.addName }</td>
+		                        <td class="clck-detail">${ a.addJob }</td>
+		                        <td class="clck-detail">${ a.addDept }</td>	                        
+		                        <td class="clck-detail">${ a.phone }</td>
+		                        <td class="clck-detail">${ a.email }</td>
+		                        <td>${ a.group.groupName }</td>
+			                        
+		                    </tr>
+	                    </c:forEach>
+                	</c:otherwise>
+                </c:choose>
                 </tbody>
             </table>
         </div>
@@ -162,10 +165,10 @@
             	if($(this).html()=="⭐"){
                     $(this).html('<img src="resources/common_images/star_vacant.png">');
                     $.ajax({
-                    	url:"deleteFavEmp.add",
+                    	url:"deleteFavAdd.add",
                     	data:{
                     		empNo:${loginUser.empNo},
-                    		addEmpNo:$(this).siblings().eq(0).text()
+                    		addNo:$(this).siblings().eq(0).text()
                     	},
                     	success:function(result){
                     		if(result == "fail"){
@@ -178,10 +181,10 @@
                 }else{
                     $(this).html("⭐");
                     $.ajax({
-                    	url:"insertFavEmp.add",
+                    	url:"insertFavAdd.add",
                     	data:{
                     		empNo:${loginUser.empNo},
-                    		addEmpNo:$(this).siblings().eq(0).text()
+                    		addNo:$(this).siblings().eq(0).text()
                     	},
                     	success:function(result){
                     		if(result == "fail"){
@@ -195,7 +198,7 @@
             })
             
             $(".clck-detail").click(function(){
-                location.href = 'empInfo.add?no=' + $(this).siblings().eq(0).text(); 
+                location.href = 'extAddInfo.add?no=' + $(this).siblings().eq(0).text(); 
             })
             
         </script>
@@ -206,28 +209,29 @@
             <ul id="paging">
             	
             	<c:if test="${ pi.currentPage ne 1 }">
-                   	<li><a href="internalEnt.add?cpage=${ pi.currentPage-1 }"> < </a></li>
+                   	<li><a href="externalAll.add?cpage=${ pi.currentPage-1 }"> < </a></li>
                 </c:if>
                    
                 <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
             		<c:choose>
             		<c:when test="${ pi.currentPage eq p }">
-	            		<li class="on"><a href="internalEnt.add?cpage=${ p }">${ p }</a></li>
+	            		<li class="on"><a href="externalAll.add?cpage=${ p }">${ p }</a></li>
             		</c:when>
             		<c:otherwise>
-            			<li><a href="internalEnt.add?cpage=${ p }">${ p }</a></li>
+            			<li><a href="externalAll.add?cpage=${ p }">${ p }</a></li>
             		</c:otherwise>
             		</c:choose>
                 </c:forEach>
 
                    
                 <c:if test="${ pi.currentPage ne pi.maxPage }">
-                   	<li><a href="internalEnt.add?cpage=${ pi.currentPage+1 }"> > </a></li>
+                   	<li><a href="externalAll.add?cpage=${ pi.currentPage+1 }"> > </a></li>
                	</c:if>
             </ul>
         </div>
 
     
     </div>    
+</body>
 </body>
 </html>

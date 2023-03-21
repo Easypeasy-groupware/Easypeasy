@@ -80,7 +80,7 @@
 <body>
 
 	<jsp:include page="addMenubar.jsp"/>
-	
+	<%-- 
 	<c:if test="${ not empty successMsg }">
 		<script>
 			swal({
@@ -103,7 +103,7 @@
 			});
 		</script>
 		<c:remove var="failMsg" scope="session"/>
-	</c:if>
+	</c:if> --%>
 	
     <div class="content-outer">
 		<div class="search" align="right" style="float:right">

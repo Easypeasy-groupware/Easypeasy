@@ -654,8 +654,150 @@
 			</div>
 	</div>
 	
-
-
+	        <table class="work-time">
+	            <tr>
+	                <td class="work-th" style="text-align:center;">정규근무</td>
+	                <td class="work-td2" style="text-align:right;"><span id="sum-time"></span>/40h</td>
+	            </tr>
+	            <tr>
+	                <td class="work-th" style="text-align:center;">추가근무</td>
+	                <td class="work-td2" style="text-align:right;">0h</td>
+	            </tr>
+	        </table>
+	
+	        <br><br>
+	
+	        <table class="commute-time" style="text-align:center;">
+	            <tr>
+	                <td class="commute-th">출근시각</td>
+	                <td class="commute-th">퇴근시각</td>
+	            </tr>
+	            <tr>
+	                <td id="in-time"></td>
+	                <td id="out-time"></td>
+	            </tr>
+	        </table>
+	        <br>
+	        <button class="commute-btn" id="in-btn" onclick="inTime();">출근하기</button>
+	        <button class="commute-btn" id="out-btn" onclick="outTime();">퇴근하기</button>
+	
+	        <script>
+	            let h = "";
+	            let m = "";
+	            let s = ""; 
+	
+	            $(function(){
+	                updateClock();
+	            })
+	
+	            function updateClock(){ /* 실시간 시계 */
+	                const ampmEl = document.getElementById("ampm");
+	                const hourEl = document.getElementById("hour");
+	                const minuteEl = document.getElementById("minutes");
+	                const secondEl = document.getElementById("seconds");
+	
+	                h = new Date().getHours();
+	                m = new Date().getMinutes();
+	                s = new Date().getSeconds();
+	
+	                h = h < 10 ? "0" + h : h;
+	                m = m < 10 ? "0" + m : m;
+	                s = s < 10 ? "0" + s : s;
+	
+	                hourEl.innerText = h;
+	                minuteEl.innerText = m;
+	                secondEl.innerText = s;
+	                
+	                setTimeout(()=>{
+	                    updateClock()
+	                }, 1000)
+	            }
+	            
+	            let strTime = "";
+	            let endTime = "";
+	
+	            function inTime(){/*출근하기 버튼 클릭시*/
+	
+	                strTime = new Date(); /*경과시간계산용*/
+	
+	                let inTime = h + ":" + m + ":" + s;
+	                $("#in-time").text(inTime);
+	                $("#in-btn").css("color", "gray").css("background-color", "rgb(93, 104, 83)").attr("disabled", true);
+	            }
+	            function outTime(){/*퇴근하기 버튼 클릭시*/
+	
+	                endTime = new Date();/*경과시간계산용*/
+	
+	                let outTime = h + ":" + m + ":" + s;
+	                $("#out-time").text(outTime);
+	                $("#out-btn").css("color", "gray").css("background-color","rgb(85, 85, 85)").attr("disabled", true);
+	
+	                /*경과시간 계산*/
+	                let diff = (endTime - strTime);
+	                var hh = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+	                var mm = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+	                var ss = Math.ceil((diff % (1000 * 60)) / 1000);
+	
+	                var diffResult = hh + "h " + mm + "m " + ss + "s ";
+	
+	                $("#sum-time").text(diffResult);
+	
+	
+	            }
+	            $(function(){
+	                
+	                
+	            })
+	        </script>
+	    </div>
+	    <div class="schedule">
+	        <div class="show-month">
+	            <span id="thisYear"></span>
+	            <b> / </b>
+	            <span id="thisMonth"></span>
+	        </div>
+	        <div id="calander" style="padding-top:10px;">
+	            <input class="dateSelector" style="display:none"/>
+	        </div>
+	        
+	        <br>
+	        <div>
+	            <span>Today's 일정</span>
+	            <ul>
+	                <li>어쩌구 저쩌구</li>
+	                <li>어쩌구 저쩌구</li>
+	                <li>어쩌구 저쩌구</li>
+	            </ul>
+	        </div>
+	
+	        <script>
+	        	$(function(){ // 현재 월 표시
+	        		const date = new Date();
+	        		let year = "<b>" + date.getFullYear() + "</b>";
+	        		let month = "<b>" + (date.getMonth() + 1) + "</b>";
+	        		$("#thisYear").html(year);
+	        		$("#thisMonth").html(month);
+	        	})
+	        	
+	            $(function(){ // 달력
+	                var dateSelector = document.querySelector('.dateSelector');
+	                flatpickr.localize(flatpickr.l10ns.ko);
+	                flatpickr(dateSelector);
+	                dateSelector.flatpickr({
+	                    local: 'ko',
+	                    inline: true,
+	                    disable: [
+	                    // 주말 제외 (토, 일)
+	                    function(date) {
+	                    //return (date.getDay() === 0 || date.getDay() === 6);
+	                    }
+	                    ],
+	                    dateFormat: "Y-m-d",
+	                });
+	
+	            })
+	        </script>
+	    </div>
 	</div>
 		
 
