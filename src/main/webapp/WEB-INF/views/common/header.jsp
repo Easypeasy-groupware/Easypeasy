@@ -91,6 +91,30 @@
 	body::-webkit-scrollbar-thumb{background-color:rgb(185, 187, 221); border-radius:10px;}
 	body::-webkit-scrollbar-track{background-color:white;}
 
+    /* 알람 */
+    #hide_block{width: 350px; height: 900px; background: white; transform: translate(1200px, -50px);
+                position: relative; z-index: 100;}
+    #alarm_bar{width: 250px; height: 700px; background-color: white;
+               border-left: 1px solid rgb(185, 187, 221); 
+               border-right: 1px solid rgb(185, 187, 221); 
+               border-bottom: 1px solid rgb(185, 187, 221);
+               transition: transform 600ms; transform: translate(1260px, 0px); 
+               position: absolute; left: 320; top: 117px; z-index: 10;}
+    #alarm_header{height: 50px; color: white; background: rgb(185, 187, 221); padding: 10px;}
+    #alarm_content{float: left; padding-left: 10px; padding-right: 5px; height: 550px; margin-bottom: 15px;}
+	#alarm_btn{font-size: 8px; padding: 5px; border-radius: 0.2vw; border: 0}
+	#alarm_delete{font-size: 8px; padding: 5px; border-radius: 0.2vw; border: 0}
+    .alarm_msg{height: 50px; font-size: 12px; margin-top: 5px; border-bottom: 2px solid gainsboro;
+    		   color: black; padding-bottom: 5px;}
+	.alarm_category{font-size: 13px; font-weight: 600;}
+	.alarm_msg_content{width: 230px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+	#alarm_paging{margin-top: 20px;}
+
+	#paging{text-align: center; display: inline-block; padding-left :0;}
+    #paging li {text-align: center; float: left; list-style:none; border-radius:10px; margin:2px; background-color: rgb(234, 234, 234);}
+    #paging li a {display: block; font-size: 12px; color: black; padding: 5px 10px; box-sizing: border-box; text-decoration-line:none;}
+    #paging li.on {background:rgb(166, 184, 145);}
+    #paging li.on a { color: white;}
     
 </style>
 </head>
@@ -185,6 +209,95 @@
     <br claer="both">
 
     <div class="outer">
+
+    <div id="hide_block"></div>
+	<div id="alarm_bar">
+		<div id="alarm_header">
+			<div style="width: 100px; height: 100%; float: left; line-height: 30px; font-size: 20px;">전체 알람</div>
+			<div style="width: 30px; height: 100%; float: right; line-height: 30px;">
+				<button type="button" class="btn btn-light alarm_toggle" id="alarm_btn">닫기</button>
+			</div>
+		</div>
+		<div style="width: 60px; float: right; line-height: 40px; height: 30px;">
+			<button type="button" class="btn btn-light" id="alarm_delete">전체 삭제</button>
+		</div>
+
+		<!-- <div id="alarm_content">
+			<c:forEach var="a" items="${ alarmList }" >
+				<div class="alarm_msg">
+					<span class="alarm_category">
+						<c:choose>
+							<c:when test="${ a.alarmSubject == 'MA' }">
+								[수신메일]
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>
+					</span>&nbsp;&nbsp;&nbsp;
+					<span>
+						${ a.alarmDate }
+					</span>
+					<div class="alarm_msg_content">
+						${a.alarmContent}
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+		<div id="alarm_paging" align="center">
+			<ul id="paging">
+				<li><a href=""> < </a></li>
+				<li class='on'><a href=""> 1 </a></li>
+				<li><a href=""> 2 </a></li>
+				<li><a href=""> 3 </a></li>
+				<li><a href=""> 4 </a></li>
+				<li><a href=""> 5 </a></li>
+				<li><a href=""> > </a></li>
+			</ul>
+		</div>
+	</div>
+
+	<script>
+		window.addEventListener('load', function(){
+			console.log('as')
+			const deleteAll = document.getElementById("alarm_delete");
+			const sock = new SockJS("${pageContext.request.contextPath}/alarm");
+			sock.onmessage = onMessage;
+
+			deleteAll.addEventListener('click', function(){
+
+			});
+
+			function onMessage(evt){
+				console.log(evt.data)
+			}
+		})
+	</script>
+
+	<script>
+		// 전체 알람창 열고 닫기 이벤트
+		let toggleList = document.querySelectorAll('.alarm_toggle');
+        toggleList.forEach(function(toggle){
+            toggle.addEventListener('click', function(){
+                let alarmBar = document.getElementById('alarm_bar');
+                let alarmToggle = document.getElementById('alarm_toggle');
+                const toggle = alarmBar.style.transform
+                console.log(toggle);
+                if(toggle == 'translate(950px, 0px)') {
+                    alarmBar.style['transform'] = "translate(1250px, 0px)";
+                }else{
+                    alarmBar.style['transform'] = "translate(950px, 0px)";
+                }
+            });
+        });
+		
+		// 알람 읽음 처리(색 변환) 이벤트
+		let selectList = document.querySelectorAll('.alarm_msg');
+		selectList.forEach(function(select){
+			select.addEventListener('click', function(){
+				this.style.color = 'gainsboro';
+			});
+		});
+	</script> -->
 </body>
 </html>
 	
