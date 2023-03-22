@@ -79,8 +79,9 @@ public class ApprovalController {
 	@RequestMapping("enrollForm.ap")
 	public String enrollForm(int formCode, Model model, HttpSession session) {
 		
-		int no = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		
+		int no = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		/*
 		ArrayList<Employee> list = oService.selectOrgList(no);
 		ArrayList<Department> deptList = oService.selectDept();
 		ArrayList<Job> jList = oService.selectJob();
@@ -91,7 +92,7 @@ public class ApprovalController {
 		
 		model.addAttribute("list", list);
 		model.addAttribute("deptList", deptList);
-		model.addAttribute("jList", jList);
+		model.addAttribute("jList", jList);*/
 		
 		if(formCode == 1) {
 			return "approval/appDraftEnrollForm";
@@ -518,6 +519,38 @@ public class ApprovalController {
 		
 	}
 	
+	@RequestMapping("updateForm.ap")
+	public String updateForm(int no, ArrayList<Attachment> filePath, Model model, HttpSession session) {
+		
+		System.out.println(no);
+		//System.out.println(atList);
+
+		Approval ap = aService.selectTempApproval(no);
+		
+		System.out.println(ap);
+		
+		
+		//model.addAttribute("list1", filePath);
+		
+		model.addAttribute("ap", ap);
+		
+		if(ap.getFormCode() == 1) {
+			return "approval/appDraftEnrollForm";
+		}else if(ap.getFormCode() == 2) {
+			return "approval/appProposalEnrollForm";
+		}else if(ap.getFormCode() == 3) {
+			VacationForm vf = aService.selectDetailSPrgVf(ap);
+			System.out.println(vf);
+			model.addAttribute(vf);
+			return "approval/appVacationEnrollForm";
+		}else {
+			OverTimeForm ot = aService.selectDetailSPrgOt(ap);
+			System.out.println(ot);
+
+			return "approval/appOvertimeEnrollForm";			
+		}	
+
+	}
 	
 	
 	/*

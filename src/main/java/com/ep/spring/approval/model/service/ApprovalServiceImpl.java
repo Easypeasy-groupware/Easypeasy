@@ -238,6 +238,11 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return result1 * result2;
 	}
 
+	@Override
+	public Approval selectTempApproval(int no) {
+		return aDao.selectTempApproval(sqlSession, no);
+	}
+
 
 
 

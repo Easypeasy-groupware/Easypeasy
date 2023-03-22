@@ -210,7 +210,10 @@ public class ApprovalDao {
 	public int updateAppLine(SqlSessionTemplate sqlSession, ApprovalLine al) {
 		return sqlSession.update("approvalMapper.updateAppLine", al);
 	}
-
+	
+	public Approval selectTempApproval(SqlSessionTemplate sqlSession, int appNo) {
+		return sqlSession.selectOne("approvalMapper.selectTempApproval", appNo);
+	}
 
 	
 }

@@ -84,7 +84,7 @@
 	                    		<c:when test="${c.recEmpNo eq loginUser.empNo && c.appStatus eq '미결재' }">
 			                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#approval">결재</a> |  
 			                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#companion">반려</a> |
-			                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서수정</a>              			
+			                        <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">문서수정</span>              			
 	                    		</c:when>
 	                    		<c:otherwise>
 	                    			<br>

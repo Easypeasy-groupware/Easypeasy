@@ -885,4 +885,30 @@
 			                          and ref_whether = 'N'
 			                        )       	
 	</update>
+	
+	<select id="selectTempApproval" resultMap="approvalResult">
+			select
+			        a.APP_NO
+			        ,a.ENROLL_DATE
+			        ,a.STATUS
+			        , APP_TSTATUS
+			        , WRITER_COMMENT
+			        , TITLE
+			        , CONTENT
+			        , a.EMP_NO
+			        , FORM_NAME
+			        , CONSER_PERIOD
+			        , SEC_GRADE
+			        , FORM_CODE
+			        , APP_AMOUNT
+			        , APP_SEQUENCE
+			        , APP_CHANGE
+			        , emp_name
+			        , dept_name
+			        , job_code
+			  from approval a
+			  join employee b on (a.emp_no = b.emp_no)
+			  join department c on (b.dept_code = c.dept_code)
+			  where app_no = #{appNo}	
+	</select>
 </mapper>

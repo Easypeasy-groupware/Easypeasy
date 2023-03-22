@@ -82,4 +82,8 @@ public interface ApprovalService {
 	// 16. 결재 / 또는 반려하기
 	int updateAppLine(ApprovalLine al);
 	
+	// 17. 수정하기 위해 문서 불러오기
+	Approval selectTempApproval(int no);
+	
+	
 }
