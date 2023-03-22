@@ -42,7 +42,7 @@
     }
 
     .sel{
-        height: 30px;
+        height: 28px;
         border: 1px solid lightgray;
         border-radius: 5px;
     }
@@ -301,7 +301,7 @@
                     <br>
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <a href="" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">일정상세 입력</a>&nbsp;
+                        <a href="enrollForm.sc" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">일정상세 입력</a>&nbsp;
                         <button type="submit" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">확인</button>&nbsp;
                         <button type="button" id="close" class="btn btn-sm btn-light" data-dismiss="modal">취소</button>
                     </div>
@@ -390,8 +390,8 @@
                 events: [
                     {
                         title: 'ㅎㅇㅎㅇ',
-                        start: '2023-03-05 14:20',
-                        end: '2023-03-05 15:20'
+                        start: '2023-03-05 00:00',
+                        end: '2023-03-05 23:30'
                     }
                 ]
             });
@@ -435,7 +435,7 @@
 
         })
 
-     // 종일 체크시 시간 선택 숨기기
+     	// 종일 체크시 시간 선택 숨기기
         function allDayShowHidden(){
             if($("input:checkbox[id='allDay']").is(":checked") == true) {
                 $(".sel").attr("hidden", true);

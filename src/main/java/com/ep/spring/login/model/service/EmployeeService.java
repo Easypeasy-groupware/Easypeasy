@@ -1,5 +1,8 @@
 package com.ep.spring.login.model.service;
 
+import java.util.ArrayList;
+
+import com.ep.spring.login.model.vo.Department;
 import com.ep.spring.login.model.vo.Employee;
 
 public interface EmployeeService {
@@ -25,5 +28,8 @@ public interface EmployeeService {
 	int updateProfile(Employee e);
 	
 	
+	
+	// [추가] 부서 전체 조회
+	ArrayList<Department> selectDeptList();
 
 }

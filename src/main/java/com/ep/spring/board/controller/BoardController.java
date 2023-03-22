@@ -49,11 +49,11 @@ public class BoardController {
 	}
 	
 	@RequestMapping("insert.bo")
-	public String insertBoard(@RequestParam List<MultipartFile> originNames, Board b, Attachment a, HttpSession session, Model model) {
+	public ModelAndView insertBoard(@RequestParam List<MultipartFile> originNames, Board b, Attachment a, HttpSession session, ModelAndView mv) {
 		
 		// 첨부파일 처리
 		ArrayList<Attachment> atList = new ArrayList<>();
-		
+		//System.out.println(atList);
 		if(originNames.size() > 1) {
 			String path = "resources/board_attachFiles/";
 			
@@ -72,32 +72,39 @@ public class BoardController {
 		
 		int result = bService.insertBoard(b, atList);
 		
+		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "게시글 등록 성공");
-			return "redirect:list.bo";	
+			mv.addObject("successMsg", "게시글 등록 성공");
 		}else {
-			model.addAttribute("errorMsg", "게시글 등록 실패");
-			return "common/errorPage";
+			mv.addObject("successMsg", "게시글 등록 실패");
 		}
+		mv.setViewName("redirect:list.bo");
+		return mv;
+		
 	}
 	
 	@RequestMapping("detailForm.bo")
-	public ModelAndView selectBoard(int no, ModelAndView mv, Board b) {
+	public ModelAndView selectBoard(ModelAndView mv, Board b) {
 		
-		int result = bService.increaseCount(no);
+		int result = bService.increaseCount(b);
+		
+		System.out.println(result);
+		
 		
 		if(result > 0) {
 			
-			Board bb = bService.selectBoard(no);
+			Board bd = bService.selectBoard(b);
 			
 			ArrayList<Attachment> attachmentList = bService.selectAttachmentList(b);
+			System.out.println(attachmentList);
 			
-			mv.addObject("b", bb).addObject("attachmentList", attachmentList).setViewName("board/boardDetailForm");
+			mv.addObject("bd", bd).addObject("attachmentList", attachmentList).setViewName("board/boardDetailForm");
 		}else {
 			mv.addObject("errorMsg", "조회수증가실패").setViewName("common/errorPage");
 		}
 		return mv;
 	}
+	
 	
 	@RequestMapping("delete.bo")
 	public String deleteBoard(int no, HttpSession session, Model model) {
@@ -115,13 +122,14 @@ public class BoardController {
 		
 	}
 	
-	@RequestMapping("updateForm.bo")
-	public String updateForm(int no, Model model) {
-		
-		model.addAttribute("b", bService.selectBoard(no));
-		
-		return "board/boardUpdateForm";
-	}
+	/*
+	 * @RequestMapping("updateForm.bo") public String updateForm(int no, Model
+	 * model) {
+	 * 
+	 * model.addAttribute("b", bService.selectBoard());
+	 * 
+	 * return "board/boardUpdateForm"; }
+	 */
 	
 	@RequestMapping("update.bo")
 	public String updateBoard(Board b, HttpSession session, Model model) {
@@ -130,7 +138,7 @@ public class BoardController {
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다."); 
-			return "redirect:detail.bo?no=" + b.getBoardNo();
+			return "redirect:boardUpdateForm";
 		}else {
 			model.addAttribute("errorMsg", "게시글 수정 실패");
 			return "common/errorPage";
@@ -164,7 +172,7 @@ public class BoardController {
 		
 		ArrayList<BoardCate> bcList = bService.selectSettings(bc);
 		
-		mv.addObject("bcList", bcList).setViewName("board/boardAdminSettings");
+		mv.addObject("bcList", bcList).setViewName("board/boardSettings");
 		
 		return mv;
 	}

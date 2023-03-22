@@ -40,12 +40,12 @@ public class BoardDao {
 		return result;
 	}
 	
-	public int increaseCount(SqlSessionTemplate sqlSession, int boardNo) {
-		return sqlSession.update("boardMapper.increaseCount", boardNo);
+	public int increaseCount(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.update("boardMapper.increaseCount", b);
 	}
 	
-	public Board selectBoard(SqlSessionTemplate sqlSession, int boardNo) {
-		return sqlSession.selectOne("boardMapper.selectBoard", boardNo);
+	public Board selectBoard(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.selectOne("boardMapper.selectBoard", b);
 	}
 	
 	public ArrayList<Attachment> selectAttachmentList(SqlSessionTemplate sqlSession,Board b){ 

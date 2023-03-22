@@ -28,7 +28,11 @@ import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.common.template.FileUpload;
 import com.ep.spring.common.template.Pagination;
+import com.ep.spring.login.model.service.EmployeeService;
+import com.ep.spring.login.model.vo.Department;
 import com.ep.spring.login.model.vo.Employee;
+import com.ep.spring.login.model.vo.Job;
+import com.ep.spring.organization.model.service.OrgService;
 import com.google.gson.Gson;
 
 @Controller
@@ -37,7 +41,11 @@ public class ApprovalController {
 	@Autowired
 	private ApprovalService aService;
 	
+	@Autowired
+	private OrgService oService;
 	
+	@Autowired
+	private EmployeeService eService;
 	
 	@RequestMapping("main.ap")
 	public String selectAppMain(HttpSession session, Model model) {
@@ -70,7 +78,21 @@ public class ApprovalController {
 	
 	@RequestMapping("enrollForm.ap")
 	public String enrollForm(int formCode, Model model, HttpSession session) {
-				
+		
+		int no = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
+		ArrayList<Employee> list = oService.selectOrgList(no);
+		ArrayList<Department> deptList = oService.selectDept();
+		ArrayList<Job> jList = oService.selectJob();
+		
+		System.out.println(list);
+		System.out.println(deptList);
+		System.out.println(jList);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("deptList", deptList);
+		model.addAttribute("jList", jList);
+		
 		if(formCode == 1) {
 			return "approval/appDraftEnrollForm";
 		}else if(formCode == 2) {
@@ -114,7 +136,6 @@ public class ApprovalController {
 		ArrayList<Approval> list = aService.selectWatingAList(pi, eNo);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
-		System.out.println(list);
 
 		return "approval/appRecWatingListView";
 	}
@@ -129,7 +150,6 @@ public class ApprovalController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
-		System.out.println(list);
 		
 		return "approval/appRefWatingListView";
 	}
@@ -224,7 +244,7 @@ public class ApprovalController {
 			a.setWriterNo(eNo);
 		}
 		
-		System.out.println(a);
+		//System.out.println(a);
 		Approval ap = aService.selectDetailSPrgAp(a);
 		
 		
@@ -235,10 +255,7 @@ public class ApprovalController {
 		model.addAttribute("ap", ap);
 		model.addAttribute("list1", list1);
 		model.addAttribute("list3", list3);
-		
-		System.out.println("결재정보 : " + ap);
-		System.out.println("결재선 : " + list1);
-		System.out.println("첨부파일 : " + list3);
+
 
 		if(a.getFormName().equals("업무기안")) {
 			
@@ -363,9 +380,6 @@ public class ApprovalController {
 		model.addAttribute("list1", list1);
 		model.addAttribute("list3", list3);
 
-		System.out.println("결재정보 : " + ap);
-		System.out.println("결재선 : " + list1);
-		System.out.println("첨부파일 : " + list3);
 		
 		if(a.getFormName().equals("업무기안")) {
 			
@@ -411,7 +425,7 @@ public class ApprovalController {
 			ap.setSecGrade("A");
 		}
 		
-		System.out.println(ap);
+		//System.out.println(ap);
 		
 		// 결재자 ApprovalLine에 담기
 		
@@ -435,7 +449,7 @@ public class ApprovalController {
 			num++;
 		}
 		
-		System.out.println(al);
+		//System.out.println(al);
 		
 		// 휴가작성폼 셋팅하기
 		if(vf.getHalfOption() != null){
@@ -495,11 +509,11 @@ public class ApprovalController {
 		if(result > 0) {
 			AlertMsg msg = new AlertMsg("의견등록성공", "의견등록에 성공했습니다!");
 			session.setAttribute("successMsg", msg);
-			return "redirect:";	
+			return "redirect:recWlist.ap";	
 		}else {
 			AlertMsg msg = new AlertMsg("의견등록실패", "의견등록에 실패했습니다.");
 			session.setAttribute("failMsg", msg);
-			return "redirect:";	
+			return "redirect:recWlist.ap";	
 		}
 		
 	}
