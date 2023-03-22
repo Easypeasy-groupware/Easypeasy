@@ -19,7 +19,7 @@
     .menu {margin-top: 20px;}
 	.menu ul {list-style: none; padding: 0; margin: 0;}
 	.menu li {margin-bottom: 5px; text-align: center;}
-	.menu a {display: block; padding: 10px; color: #333; text-decoration: none; transition: background-color 0.3s ease-in-out;}
+	.menu a {display: inline-block; padding: 10px; color: #333; text-decoration: none; transition: background-color 0.3s ease-in-out;}
 	.menu a:hover {background-color: #f2f2f2;}
 	.submenu ul {list-style: none; padding: 0; margin: 0; display: none;}
 	.submenu li {margin-bottom: 5px;}
@@ -41,7 +41,11 @@
             <%-- </c:if> --%>
             <div class="menu">
                 <ul>
-                    <li><a href="list.bo">전체 공지사항</a></li>
+                    <li><a href="list.bo">전체 공지사항</a>
+                    <%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> --%>
+                    		<a href="adminSettings.bo"><img src="resources/common_images/board_icon.png" style="width:20px; height:20px;"></a>
+                    <%-- </c:if> --%>
+                    </li>
                     <li><a href="food.bo?boardCno=2">식단표</a></li>
                         
                     <li><a href="free.bo?boardCno=3">자유게시판</a></li>

@@ -535,18 +535,19 @@
     
             <!-- Modal body -->
             <div class="modal-body">
-                    <form action="">
+                    <form id="app_Area1" action="updateco.ap" method="POST">
                         <table class="table-borderless" style="width:100%; height:150px;">
                             
                                 <tr>
                                     <td>결재문서명</td>
-                                    <td>연장근무신청서</td>
+                                    <td>결재문서제목</td>
                                 </tr>
                                 <tr>
                                     <td>결재의견</td>
                                     <td>
-                                        <textarea name="" id="" cols="30" rows="3" style="resize:none"></textarea>
-                                    </td>
+                                        <textarea name="appComment" id="appComment1" cols="30" rows="3" style="resize:none"></textarea>
+										<input type="hidden" name="appStatus" value="결재">
+                                        <input type="hidden" name="appNo" value="${ap.appNo }">
                                 </tr>
                             
                         </table>
@@ -555,8 +556,8 @@
     
             <!-- Modal footer -->
             <div class="modal-footer" style="margin:auto;">
-                <button type="submit" class="btn btn-light">승인</button>
-                <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-light" onclick="sendAppComment(1);">승인</button>
+                <button type="button" class="btn btn-light" onclick="delComment(1);" data-dismiss="modal">취소</button>
             </div>
     
         </div>
@@ -577,17 +578,19 @@
     
             <!-- Modal body -->
             <div class="modal-body">
-                    <form action="">
+                    <form id="app_Area2" action="updateco.ap" method="POST">
                         <table class="table-borderless" style="width:100%; height:150px;">
                             
                                 <tr>
                                     <td>결재문서명</td>
-                                    <td>연장근무신청서</td>
+                                    <td>결재문서제목</td>
                                 </tr>
                                 <tr>
                                     <td>반려의견</td>
                                     <td>
-                                        <textarea name="" id="" cols="30" rows="3" style="resize:none"></textarea>
+                                        <textarea name="appComment" id="appComment2" cols="30" rows="3" style="resize:none"></textarea>
+                                        <input type="hidden" name="appStatus" value="반려">
+                                        <input type="hidden" name="appNo" value="${ap.appNo }">
                                     </td>
                                 </tr>
                             
@@ -597,12 +600,49 @@
     
             <!-- Modal footer -->
             <div class="modal-footer" style="margin:auto;">
-                <button type="submit" class="btn btn-light">반려</button>
-                <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-light" onclick="sendAppComment(2);">반려</button>
+                <button type="button" class="btn btn-light" onclick="delComment(2);" data-dismiss="modal">취소</button>
             </div>
     
         </div>
         </div>
-    </div>    
+    </div>
+    
+    <script>
+    	function sendAppComment(n){
+    		
+    		if(n == 1){ // 결재일 때
+    			 
+    			if($("#appComment1").val().trim().length>0){
+    				$("#app_Area1").submit();
+    			}else{
+    				swal("내용 작성 후 결재해주세요.");
+    			}
+    		
+    			
+    		}else{ // 반려일 때
+    			
+    			if($("#appComment2").val().trim().length>0){
+    				$("#app_Area2").submit();
+    			}else{
+    				swal("내용 작성 후 반려해주세요.");
+    			}
+    			
+    		}
+    		
+    	}
+    	
+    	function delComment(m){
+    		
+    		if(m == 1){
+    			$("#appComment1").text("");
+    		}else{
+    			$("#appComment2").text("");
+    		}
+    		
+    	}
+    	
+    	
+    </script>
 </body>
 </html>

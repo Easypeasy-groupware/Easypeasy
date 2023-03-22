@@ -88,6 +88,7 @@
 		  )
 	</insert>
 	
+	
 	<insert id="insertAttachment">
 		insert 
 		  into attachment
@@ -107,7 +108,7 @@
 		  , #{ originName }
 		  , #{ changeName }
 		  , #{ filePath }
-		  , to_char(sysdate, 'YYYY-MM-DD)
+		  , to_char(sysdate, 'YYYY-MM-DD')
 		  , 'B'
 		  )
 	</insert>
@@ -115,7 +116,7 @@
 	<update id="increaseCount">
 		update
 		       board
-		   set board_count = board_count +1
+		   set board_count = board_count + 1
 		 where board_no = #{boardNo}
 		   and delete_status = 'N'
 	</update>
@@ -142,8 +143,8 @@
 			 , upload_date
 			 , division
 	      from attachment 
-	      where division = 'B'
-		   and ref_no = #{ boardNo }
+	     where division = 'B'
+		   and ref_no = #{boardNo}
 	</select>
 	
 	<update id="deleteBoard">

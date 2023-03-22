@@ -64,7 +64,7 @@
 							</tr>
 	                    </c:when>
 	                    <c:otherwise>
-	                    	<c:forEach var="a" items="list" >
+	                    	<c:forEach var="a" items="${list}" >
 			                    <tr>
 			                        <td>
 			                             <input type="checkbox" name="chk" id="">
@@ -81,7 +81,7 @@
 				                        </c:otherwise>
 			                        </c:choose>
 			                        <td>
-			                        	<c:if test="${not empty a.originName}">
+			                        	<c:if test="${a.attachCount > 0}">
 			                        		<span><img src="resources/common_images/attachment.png" width="10px;"></span>
 			                        	</c:if>
 			                        </td>

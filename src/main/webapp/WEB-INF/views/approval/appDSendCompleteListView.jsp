@@ -85,7 +85,7 @@
 			                        </c:choose>
 			                        <td>${a.empName }</td>
 			                        <td>
-			                        	<c:if test="${not empty a.originName}">
+			                        	<c:if test="${a.attachCount > 0}">
 			                        		<span><img src="resources/common_images/attachment.png" width="10px;"></span>
 			                        	</c:if>
 			                        </td>

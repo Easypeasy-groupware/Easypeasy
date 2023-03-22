@@ -171,7 +171,6 @@ public class ApprovalDao {
 	}
 	
 	public int insertApproval(SqlSessionTemplate sqlSession, Approval ap) {
-		System.out.println(ap.getWriterComment());
 		return sqlSession.insert("approvalMapper.insertApproval", ap);
 	}
 	

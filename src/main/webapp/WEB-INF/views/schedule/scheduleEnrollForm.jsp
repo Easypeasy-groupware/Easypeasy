@@ -268,7 +268,7 @@
                         </tr>
                         <tr style="height: 45px;">
                             <th>참석자</th>
-                            <td width="120">
+                            <td width="150">
                             	<span style="background: rgb(238, 238, 238); border-radius: 15px; padding: 2px 10px 2px 10px;">${ loginUser.empName } ${ loginUser.jobName }</span>
                             	<span class="app-body"></span>
                             </td>
@@ -487,34 +487,24 @@
         
 		function copyApp(){
         	
-			
-			let val = "";
-			
-			$(".appList").each(function(){
-				let input = $(this).children("input").html();
-				let name = $(this).children(".indiv-name").text();
-				let job = $(this).children(".indiv-job").text();
-				console.log(input);
-				console.log(name);
-				console.log(job);
-				val+= "<span style='background: rgb(238, 238, 238); border-radius: 15px; padding: 2px 10px 2px 10px;'>"
-        			+  input + job + "nbsp;" + name
-        			+ "</span>";
-				
-			})
-			
-			console.log(val);
-			
         	const arr1 = $(".appList .appEmp").children("input");
-        
+        	const arr2 = $(".appList .appEmp").children("span").text();
+        	
+        	console.log($(".appList .appEmp").children("input"));
+        	
+        	const arrSlice = arr2.slice();
+        	console.log(arrSlice);
+        	
+        	let val = "";
         	for(var i = 0; i < arr1.length; i++){
         		
-        		val+= "<span style='background: rgb(238, 238, 238); border-radius: 15px; padding: 2px 10px 2px 10px;'>"
-        			+ ""
+        		val+= "<span style='background: rgb(238, 238, 238); border-radius: 15px; padding: 2px 10px 2px 10px; margin-right: 10px;'>"
+        			+ 
         			+ "</span>";
         	}
         	$(".app-body").html(val);
-        	//console.log($(".appList .appEmp").children("span").text());
+        	
+        	console.log($(".appList .appEmp").children("span").text();
         }
     </script>
 
