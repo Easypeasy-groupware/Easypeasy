@@ -30,7 +30,7 @@
         box-sizing:border-box;
     }
     .wrap{width:1200px; margin:auto; box-sizing:border-box;}
-    .header{position:fixed; top:0; background:white;}
+    .header{position:fixed; top:0; background:white; z-index: 1;}
     #header1{width:1200px; height:60px; background-color: white;} 
     #header2{width:1200px; height:40px; background-color:rgb(185, 187, 221);}
 
