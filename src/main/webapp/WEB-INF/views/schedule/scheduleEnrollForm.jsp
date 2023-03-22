@@ -490,16 +490,20 @@
 			
 			let val = "";
 			
-			$(".appEmp").each(function(){
-				const arr = $(this).children("input")
-				
+			$(".appList").each(function(){
+				let input = $(this).children("input").html();
+				let name = $(this).children(".indiv-name").text();
+				let job = $(this).children(".indiv-job").text();
+				console.log(input);
+				console.log(name);
+				console.log(job);
 				val+= "<span style='background: rgb(238, 238, 238); border-radius: 15px; padding: 2px 10px 2px 10px;'>"
-        			+ arr
+        			+  input + job + "nbsp;" + name
         			+ "</span>";
 				
 			})
 			
-			console.log(name);
+			console.log(val);
 			
         	const arr1 = $(".appList .appEmp").children("input");
         

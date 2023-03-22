@@ -145,7 +145,7 @@
             </div>
 			<script>
 				function openWindowPop(url, name){
-					var options = 'top=10, left=10, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no scrollbars=yes';
+					var options = 'top=500, left=1000, width=500, height=600, status=no, menubar=no, toolbar=no, titlebar=no, resizable=no scrollbars=yes';
 					window.open(url, name, options);
 				}
 			</script>
