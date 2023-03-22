@@ -119,9 +119,6 @@
 						$("#add-num").text(num);
 						$("#deleteModal").modal("show");
 					}
-					
-					
-					
 				})
 			})
 		</script>

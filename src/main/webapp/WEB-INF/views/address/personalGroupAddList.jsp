@@ -58,17 +58,14 @@
     #modal-close-btn{width:130px; height:40px; border:0; border-radius:5px; color:white; background:rgb(158, 158, 158); display:inline-block;}
     #modal-del-btn{width:130px; height:40px; border:0; border-radius:5px; color:white; background:rgb(166, 184, 145); display:inline-block;}
     
-    /*그룹변경용 모달*/
-    #modal-close-btn{width:130px; height:40px; border:0; border-radius:5px; color:white; background:rgb(158, 158, 158); display:inline-block;}
-    #modal-change-btn{width:130px; height:40px; border:0; border-radius:5px; color:white; background:rgb(166, 184, 145); display:inline-block;}
+    /*그룹변경 & 추가용 모달*/
+    .modal-close-btn{width:130px; height:40px; border:0; border-radius:5px; color:white; background:rgb(158, 158, 158); display:inline-block;}
+    .modal-add-btn{width:130px; height:40px; border:0; border-radius:5px; color:white; background:rgb(166, 184, 145); display:inline-block;}
+    .modal-change-btn{width:130px; height:40px; border:0; border-radius:5px; color:white; background:rgb(166, 184, 145); display:inline-block;}
     .group-select{width:220px; height:40px; border:1px solid gray; border-radius:5px;}
     #add-new-group{width:40px; height:40px; border:0; border-radius:5px; color:white; background:rgb(122, 135, 106); text-align:center;}
-
-    /*그룹추가용 모달*/
     #modal-input{width:60%; height:40px; margin-top:10px; border:1px solid gray; border-radius:5px;}
-    #modal-close-btn{width:130px; height:40px; border:0; border-radius:5px; color:white; background:rgb(158, 158, 158); display:inline-block;}
-    #modal-add-btn{width:130px; height:40px; border:0; border-radius:5px; color:white; background:rgb(166, 184, 145); display:inline-block;}
-
+    
     /*페이징바*/
     #paging{text-align: center; display: inline-block; padding-left :0;}
     #paging li {text-align: center; float: left; list-style:none; border-radius:10px; margin:2px; background-color: rgb(234, 234, 234);}
@@ -113,9 +110,23 @@
         <br><br>
         
 
-        <button class="btnGroup" id="delete" data-bs-toggle="modal" data-bs-target="#deleteModal">삭제</button>
+        <button class="btnGroup" id="delete">삭제</button>
         <button class="btnGroup" id="change-group" data-bs-toggle="modal" data-bs-target="#changeModal">그룹변경</button>
         <button class="btnGroup" id="sendMail">메일쓰기</button>
+		<script>
+			$(function(){
+				$("#delete").click(function(){ // 삭제하기 버튼 클릭시
+					let num = $("input:checkbox[name=name-checkbox]:checked").length; // 선택한 체크박스의 개수
+					if(num == 0){
+						$("#deleteFailModal").modal("show");
+					}else{
+						$("#add-num").text(num);
+						$("#deleteModal").modal("show");
+					}
+				})
+			})
+		</script>
+		
 		<p class="subheading" id="psSubheading"> 총 <b>${ count }</b> 명</p>
         
         <br>
@@ -170,7 +181,7 @@
                 		<c:forEach var="a" items="${ list }">
 		                    <tr>
 		                        <td style="display:none">${ a.addNo }</td>
-		                        <td><input type="checkbox" class="ps-checkbox"></input></td>
+		                        <td><input type="checkbox" class="ps-checkbox" name="name-checkbox"></input></td>
 		                        <td class="like">
 									<c:forEach var = "f" items="${ fList }">
 			                        
@@ -271,30 +282,69 @@
         </script>
 
         <br><br>
+        <!-- 삭제 불가용 모달-->
+        <div class="modal fade" id="deleteFailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color:rgb(166, 184, 145);">
+                        <p class="modal-title" style="font-weight:600">연락처 삭제</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+						<br>
+                        ⛔ 연락처를 한 개 이상 선택해 주세요❗
+                        <br><br><br>
+                        <button type="button" class="btn-event-green" id="modal-del-btn" data-bs-dismiss="modal">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- 삭제 확인용 모달-->
         <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" style="background-color:rgb(166, 184, 145);">
                         <p class="modal-title" style="font-weight:600">연락처 삭제</p>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    
-                    <form>
-                        <div class="modal-body">
-                            선택한 연락처를 정말 삭제하시겠습니까?
-                            <br><br>
-                            <button type="button" class="btn-event-gray" data-bs-dismiss="modal" id="modal-close-btn">취소</button>
-                            <button type="submit" class="btn-event-green" id="modal-del-btn">삭제</button>
-                        </div>
-                        
-                    </form>
-
+                    <div class="modal-body">
+                        선택한 <span id="add-num" style="font-weight:600;"></span>개의 연락처를 정말 삭제하시겠습니까?
+                        <br><br>
+                        <button type="button" class="btn-event-gray" data-bs-dismiss="modal" id="modal-close-btn">취소</button>
+                        <button type="button" class="btn-event-green" id="modal-del-btn" onclick="deleteAddList();">삭제</button>
+                    </div>
                 </div>
             </div>
         </div>
         <script>
-
+			function deleteAddList(){ // 선택한 주소록 다중 삭제용 ajax
+				const aList = []; //빈 배열 생성
+				for(var i=0; i<$("#ps-tbody>tr").length; i++){
+					if($("#ps-tbody>tr").eq(i).children().find("input[type='checkbox']").is(":checked")){
+						
+						aList.push($("#ps-tbody>tr").eq(i).children().eq(0).text());
+					}
+				}
+				var objParams = {"addList" : aList}
+				
+				$.ajax({
+					url:"deleteAddList.add",
+					dataType : "json",
+					contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+					type:"post",
+					data : objParams,
+					success : function(result){
+						if(result > 0){
+							location.href= "psGroup.add?group={ag.groupNo}";
+						}
+					},
+					error : function(){
+						console.log("주소록 삭제용 ajax 통신 실패");
+					}
+				});
+			}
+			
             
         </script>
 
@@ -302,7 +352,7 @@
         <div class="modal fade" id="changeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" style="background-color:rgb(166, 184, 145);">
                         <p class="modal-title" style="font-weight:600">그룹 변경</p>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -310,17 +360,18 @@
                     <form action="">
                         <div class="modal-body">
                             <select class="group-select">
-                            
-                                <option>선택안함</option>
+	                            <option>선택안함</option>
 	                            <c:forEach var="p" items="${ pList }">
-					        		<option name="groupNo" value="${ p.groupNo }"> ${ p.groupName } </option>
-					        	</c:forEach>
-                                
+	                            	<c:if test="${p.groupNo eq ag.groupNo }">
+	                            	<option name="groupNo" value="${p.groupNo}" selected>${ p.groupName }</option>
+	                            	</c:if>
+	                                <option name="groupNo" value="${p.groupNo}">${ p.groupName }</option>
+	                            </c:forEach>                            	
                             </select>
-                            <button type="button" id="add-new-group" data-bs-dismiss="modal" data-bs-target="#addNewGroupModal" data-bs-toggle="modal">+</button>
+                            <button type="button" id="add-new-group" data-bs-dismiss="modal">+</button>
                             <br><br>
-                            <button type="button" class="btn-event-gray" data-bs-dismiss="modal" id="modal-close-btn">닫기</button>
-                            <button type="submit" class="btn-event-green" id="modal-change-btn">변경하기</button>
+                            <button type="button" class="btn-event-gray modal-close-btn" data-bs-dismiss="modal">닫기</button>
+                            <button type="submit" class="btn-event-green modal-change-btn">변경하기</button>
                         </div>
                         
                     </form>
@@ -328,28 +379,103 @@
                 </div>
               </div>
         </div>
-
-        <!-- 그룹 추가용 모달 -->
-        <div class="modal fade" id="addNewGroupModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                    <p class="modal-title" style="font-weight:600">새 그룹 추가</p>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="">
-
-                    <div class="modal-body">
-                        <input type="text" id="modal-input" name="newGroup">
-                        <br><br>
-                        <button type="button" class="btn-event-gray" id="modal-close-btn" data-bs-dismiss="modal" data-bs-target="#changeModal" data-bs-toggle="modal">닫기</button>
-                        <button type="button" class="btn-event-green" id="modal-add-btn" data-bs-dismiss="modal" data-bs-target="#changeModal" data-bs-toggle="modal">추가</button>
-                    </div>
-                    
-                </form>
-              </div>
-            </div>
-        </div>
+		<script>
+			$(function(){
+				$("#add-new-group").click(function(){
+					$("#insertModal").modal('show');
+				})
+			})
+		</script>
+        <!--새로운 그룹 추가용 모달-->
+	    <div class="modal fade" id="insertModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	        <div class="modal-dialog modal-dialog-centered">
+	            <div class="modal-content">
+	                <div class="modal-header" style="background-color:rgb(166, 184, 145);">
+	                    <p class="modal-title" style="font-weight:600">새 그룹 추가</p>
+	                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	                </div>
+	
+	                    <div class="modal-body">
+	                        <input type="text" id="modal-input" class="group-input" name="groupName">
+	                        <br><br>
+	                        <button type="button" class="btn-event-gray modal-close-btn" data-bs-dismiss="modal">닫기</button>
+	                        <button type="button" class="modal-add-btn" data-bs-dismiss="modal" onclick="addGroup();">추가</button>
+	                        
+	                    </div>
+	
+	
+	            </div>
+	          </div>
+	    </div>
+	    <script>    	
+	    	function addGroup(){ /* 그룹 추가용 ajax */
+	    		if($(".group-input").val().trim().length > 0) {
+	    			
+	    			$.ajax({
+	    				url:"insertPsGroup.add",
+	    				data:{
+	    					empNo:${loginUser.empNo},
+	    					groupName:$(".group-input").val()
+	    				},
+	    				success:function(result){
+	    					if(result == "success") {
+	    						
+	    						$(".group-input").val("");
+	    						swal({
+	            		            title: "그룹 추가", 
+	            		            text: "새로운 그룹이 추가되었습니다", 
+	            		            icon: "success",
+	            		            button: "확인",
+	            		         });
+	    						selectGroupList();
+	    					}else{
+	    						$(".group-input").val("");
+	        					
+	        					swal({
+	            		            title: "그룹 추가", 
+	            		            text: "이미 중복된 그룹명이 있습니다", 
+	            		            icon: "error",
+	            		            button: "확인",
+	            		         });
+	        					
+	    					}
+	    						
+	    				},error:function(){
+	    					console.log("개인주소록 그룹 추가용 ajax 통신 실패");
+	    				}
+	    				
+	    			});
+	    		}else {
+	    			 swal({
+	    		            title: "그룹 추가", 
+	    		            text: "그룹명을 입력 해주세요", 
+	    		            icon: "error",
+	    		            button: "확인",
+	    		         });
+	
+	    		}
+	    	}
+	    	
+	    	function selectGroupList(){
+	    		$.ajax({
+	    			url:"listPsGroup.add",
+	    			data:{empNo:${loginUser.empNo}},
+	    			success:function(list){
+	    				//console.log(list);
+	    				let value="<option>선택안함</option>";
+	    				for(let i=0; i<list.length; i++){
+	    					value += "<option name='groupNo' value='" + list[i].groupNo + "'>"
+	    					         	+ list[i].groupName
+	    					        + "</option>";
+	    				}
+	    				$(".group-select").html(value);
+	    				$("#changeModal").modal('show');
+	    			},error:function(){
+	    				console.log("개인주소록 그룹 조회용 ajax 통신 실패");	
+	    			}
+	    		});
+	    	}
+    	</script>
 
         <div align="center">
             <ul id="paging">
