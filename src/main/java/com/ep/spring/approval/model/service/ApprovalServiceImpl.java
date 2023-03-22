@@ -215,6 +215,29 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return a * b * c * d * e;
 	}
 
+	@Override
+	public int updateAppLine(ApprovalLine al) {
+		
+		Approval n = new Approval();
+		n.setAppNo(al.getAppNo());
+		n.setTstatus(al.getAppStatus());
+		// 현재 결재문서를 불러오는 구문
+		Approval ap = aDao.selectDetailRec(sqlSession, n);
+		
+		System.out.println(ap);
+		
+		int result1 = 0;
+		
+		if(ap.getAppAmount() == ap.getAppSequence()) {
+			result1 = aDao.updateAppStatus(sqlSession, al);
+		}else {
+			result1 = aDao.updateAppSequence(sqlSession, al);
+		}
+		int result2 = aDao.updateAppLine(sqlSession, al);		
+		
+		return result1 * result2;
+	}
+
 
 
 
