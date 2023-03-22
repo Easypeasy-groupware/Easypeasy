@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ep.spring.alarm.model.service.AlarmService;
 import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.mail.model.dao.MailDao;
 import com.ep.spring.mail.model.vo.Mail;
@@ -19,6 +20,9 @@ public class MailServiceImpl implements MailService {
 	
 	@Autowired
 	private MailDao mDao;
+	
+	@Autowired
+	private AlarmService aService;
 	
 	@Override
 	public ArrayList<Mail> selectReceiveMailList(String email) {
@@ -40,8 +44,9 @@ public class MailServiceImpl implements MailService {
 		int sendResult = mDao.insertSendMail(m, sqlSession);
 		int receiveResult = mDao.insertReceiveMail(mList, sqlSession);
 		int attachResult = mDao.insertAttachment(atList, sqlSession);
-		
-		if(sendResult > 0 && receiveResult > 0 && (atList.size() + attachResult > 0)) {
+		if((sendResult > 0 && receiveResult > 0) || (atList.size() + attachResult > 0)) {
+			int mailNo = mDao.selectRecSendMailNo(sqlSession);
+			aService.receiveMailAlarm(mList, mailNo);
 			return 1;
 		}else {
 			return 0;

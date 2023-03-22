@@ -33,8 +33,20 @@
 	    <beans:property name="defaultEncoding" value="UTF-8" />
 	</beans:bean>
 	
-		<!-- 스케줄링 관련 구문 추가 -->
+	<!-- 스케줄링 관련 구문 추가 -->
 	<task:scheduler id="myScheduler" pool-size="10"/>
 	<task:annotation-driven scheduler="myScheduler"/>
+	
+	<!-- 웹소켓 빈 등록 -->
+	<!-- websocket 관련 구문 추가 -->
+	<beans:bean id="alarmEchoHandler" class="com.ep.spring.alarm.controller.AlarmEchoHandler"/>
+	<websocket:handlers>
+		<websocket:mapping handler="alarmEchoHandler" path="/alarm" /> <!-- /spring/chat url요청시 -->
+		<!-- HttpSession 데이터를 사용할 수 있도록 설정 -->
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>
+		<websocket:sockjs/>
+	</websocket:handlers>
 	
 </beans:beans>

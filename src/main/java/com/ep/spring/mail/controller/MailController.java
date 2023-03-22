@@ -156,6 +156,7 @@ public class MailController {
 	// 메일 상세 조회
 	@RequestMapping("select.ma")
 	public ModelAndView selectMail(HttpSession session, ModelAndView mv, Mail m) {
+		System.out.println(m);
 		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
 		mService.readMail(m);
 		Mail mail = mService.selectMail(m);

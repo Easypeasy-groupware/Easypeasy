@@ -1,6 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="alarmMapper">
+
+	<resultMap id="AlarmResult" type="Alarm">
+		<id column="alarm_no" property="alarmNo" />
+		<result column="receiver_no" property="receiverNo" />
+		<result column="sender_no" property="senderNo" />
+		<result column="alarm_subject" property="alarmSubject" />
+		<result column="alarm_content" property="alarmContent" />
+		<result column="alarm_date" property="alarmDate" />
+		<result column="alarm_check" property="alarmCheck" />
+		<result column="alarm_link" property="alarmLink" />
+		<result column="alarm_ref_no" property="alarmRefNo" />
+	</resultMap>
+	
+	<insert id="insertReceiveMailAlarm">
+		insert
+		  into alarm
+		  (
+		    ALARM_NO
+		  , RECEIVER_NO
+		  , SENDER_NO
+		  , ALARM_SUBJECT
+		  , ALARM_CONTENT
+		  , ALARM_DATE
+		  , ALARM_LINK
+		  , ALARM_REF_NO
+		  )
+		  values
+		  (
+		    seq_almno.nextval
+		  , (select 
+		   		    emp_no
+		   	   from employee
+		   	  where email = #{recMailAdd}) 
+		  , (select 
+		   		    emp_no
+		   	   from employee
+		   	  where email = #{sendMailAdd}) 
+		  , 'MA'
+		  , #{mailTitle}
+		  , to_char(sysdate, 'YYYY-MM-DD DY HH24:mi:SS')
+		  , (select 
+				    concat('http://localhost:8306/EP/select.ma?', recep_mail_no)
+		       from
+		            rec_mail
+		      where recep_mail_address = #{recMailAdd}
+		        and send_mail_address = #{sendMailAdd}
+		        and mail_no = #{mailNo})
+		  , #{mailNo}
+		  )
+	</insert>  
   
+  	<select id="selectReceiveMailAlarm" resultMap="AlarmResult">
+  		select 
+  			   ALARM_NO
+			 , RECEIVER_NO
+			 , SENDER_NO
+			 , ALARM_SUBJECT
+			 , ALARM_CONTENT
+			 , ALARM_DATE
+			 , ALARM_CHECK
+			 , ALARM_LINK
+			 , ALARM_REF_NO
+		  from 
+		       alarm
+		 where 
+		 	   RECEIVER_NO = (select 
+					   		     emp_no
+					    	    from employee
+					    	   where email = #{recMailAdd})
+	       and ALARM_REF_NO = #{mailNo}
+  	</select>
+  	
+  	<select id="selectAlarmList" resultMap="AlarmResult">
+  		select 
+  			   ALARM_NO
+			 , RECEIVER_NO
+			 , SENDER_NO
+			 , ALARM_SUBJECT
+			 , ALARM_CONTENT
+			 , ALARM_DATE
+			 , ALARM_CHECK
+			 , ALARM_LINK
+			 , ALARM_REF_NO
+		  from 
+		       alarm
+		 where 
+		 	   RECEIVER_NO = #{empNo}
+  	</select>
   
 </mapper>

@@ -64,255 +64,258 @@
 	<!-- 헤더 영역 -->
 	<jsp:include page="../common/header.jsp" />
 
-	<!-- 메일 사이드바 -->
-	<jsp:include page="mailSidebar.jsp" />
+    <div style="position: absolute; top: 120px;">
+        <!-- 메일 사이드바 -->
+        <jsp:include page="mailSidebar.jsp" />
 
-    <!-- 메일 컨텐트-->
-    <div id="mail_content">
-        <div id="mail_header">
-            <div id="mail_header1" style="width:100%; float:left">
-                <div id="mail_header_info">
-                    <b>스팸 메일함</b>
-                    <img src="">
-                    <b style="font-size: 20px;">스팸메일 </b>
-                    <b style="color: cadetblue; font-size: 23px;">
-                        <c:set var="allMail" value="0" />
-                        <c:forEach var="m" items="${ mailList }">
-                            <c:if test="${ m.junkMail == 'Y' }">
-                                <c:set var="allMail" value="${allMail + 1}" />
-                            </c:if>
-                        </c:forEach>
-                        ${allMail}
-                    </b>
-                </div>
-                
-                <div id="search_bar">
-                    <form action="">
-                        <select name="search" id="">
-                            <option value="searchAll">전체</option>
-                            <option value="searchAddress">메일 주소</option>
-                            <option value="searchTitle">메일 제목</option>
-                            <option value="searchContent">메일 내용</option>
-                        </select>
-                        <input type="text">
-                        <button>검색</button>
-                    </form>
-                </div>
-            </div><br>
-            <div id="mail_header2">
-                <div style="width: 27px; float: left; padding-left: 5px; padding-top: 8px;"><input type="checkbox" name="" id="check_all"></div>
-                <div class="menu menu1" id="spam_clear"><img src="">스팸 해제</div>
-                <div class="menu menu2" id="complete_delete"><img src="">영구 삭제</div>
-                <div class="menu menu2" id="shift"><img src="">이동</div>
-                <div style="float: right; width: 150px; font-size: 12px;">
-                    정렬
-                    <select name="" id="">
-                        <option value="">최근 메일</option>
-                        <option value="">오래된 메일</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <!-- 이동 블록 -->
-        <div class="block shift_block">
-            <b style="line-height: 30px;">메일함</b>
-            <div class="x-btn">
-                <button class="x">X</button>
-            </div>
-            <div class="block_list shift_list">
-                <div class="block_one shift_one">
-                    <div class="shift_name">메일함 이름</div><br>
-                    <div class="shift_name">메일함 이름</div><br>
-                    <div class="shift_name">메일함 이름</div><br>
-                    <div class="shift_name">메일함 이름</div><br>
-                    <div class="shift_name">메일함 이름</div><br>
-                </div>
-            </div>
-        </div>
-
-        <!-- 메일 리스트 -->
-        <div id="mail_list">
-            <c:set var="mailCount" value="0" />
-            <c:if test="${ not empty mailList }">
-                <c:forEach var="m" items="${ mailList }">
-                    <c:if test="${ m.junkMail == 'Y' }">
-                        <c:set var="count" value="${count + 1}" />
-                        <div class="mail_one" >
-                            <div class="mail_check">
-                                <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="">
-                            </div>
-                            <div class="mail_imgList">
-                                <c:choose>
-                                    <c:when test="${ m.imporMail == 'Y' }">
-                                        <div class="mail_img"><img class="mail_favorite" src="resources/common_images/favorite.png"></div>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div class="mail_img"><img class="mail_favorite" src="resources/common_images/unFavorite.png"></div>
-                                    </c:otherwise>
-                                </c:choose>
-                                <c:choose>
-                                    <c:when test="${ m.recCheck == 'Y' }" >
-                                        <div class="mail_img"><img class="read" src="resources/common_images/mail_read.png"></div>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div class="mail_img"><img class="read" src="resources/common_images/mail_unRead.png"></div>
-                                    </c:otherwise>
-                                </c:choose>
-                                <c:if test="${ not empty attachmentList }">
-                                    <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
+        <!-- 메일 컨텐트-->
+        <div id="mail_content">
+            <div id="mail_header">
+                <div id="mail_header1" style="width:100%; float:left">
+                    <div id="mail_header_info">
+                        <b>스팸 메일함</b>
+                        <img src="">
+                        <b style="font-size: 20px;">스팸메일 </b>
+                        <b style="color: cadetblue; font-size: 23px;">
+                            <c:set var="allMail" value="0" />
+                            <c:forEach var="m" items="${ mailList }">
+                                <c:if test="${ m.junkMail == 'Y' }">
+                                    <c:set var="allMail" value="${allMail + 1}" />
                                 </c:if>
-                            </div>
-                            <form class="mail_select_area">
-                                <input class="mailNo" type="hidden" name="mailNo" value="${ m.mailNo }">
-                                <input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
-                                <div id="selectMailLine">
-                                    <div class="mail_sender_name">
-                                        ${m.empName}
-                                    </div>
-                                    <div class="mail_sender">
-                                        ${ m.sendMailAdd }
-                                    </div>
-                                    <div class="mail_title">
-                                        ${ m.mailTitle }
-                                    </div>
-                                    <div class="mail_date">
-                                        ${ m.recDate }
-                                    </div>
+                            </c:forEach>
+                            ${allMail}
+                        </b>
+                    </div>
+                    
+                    <div id="search_bar">
+                        <form action="">
+                            <select name="search" id="">
+                                <option value="searchAll">전체</option>
+                                <option value="searchAddress">메일 주소</option>
+                                <option value="searchTitle">메일 제목</option>
+                                <option value="searchContent">메일 내용</option>
+                            </select>
+                            <input type="text">
+                            <button>검색</button>
+                        </form>
+                    </div>
+                </div><br>
+                <div id="mail_header2">
+                    <div style="width: 27px; float: left; padding-left: 5px; padding-top: 8px;"><input type="checkbox" name="" id="check_all"></div>
+                    <div class="menu menu1" id="spam_clear"><img src="">스팸 해제</div>
+                    <div class="menu menu2" id="complete_delete"><img src="">영구 삭제</div>
+                    <div class="menu menu2" id="shift"><img src="">이동</div>
+                    <div style="float: right; width: 150px; font-size: 12px;">
+                        정렬
+                        <select name="" id="">
+                            <option value="">최근 메일</option>
+                            <option value="">오래된 메일</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 이동 블록 -->
+            <div class="block shift_block">
+                <b style="line-height: 30px;">메일함</b>
+                <div class="x-btn">
+                    <button class="x">X</button>
+                </div>
+                <div class="block_list shift_list">
+                    <div class="block_one shift_one">
+                        <div class="shift_name">메일함 이름</div><br>
+                        <div class="shift_name">메일함 이름</div><br>
+                        <div class="shift_name">메일함 이름</div><br>
+                        <div class="shift_name">메일함 이름</div><br>
+                        <div class="shift_name">메일함 이름</div><br>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 메일 리스트 -->
+            <div id="mail_list">
+                <c:set var="mailCount" value="0" />
+                <c:if test="${ not empty mailList }">
+                    <c:forEach var="m" items="${ mailList }">
+                        <c:if test="${ m.junkMail == 'Y' }">
+                            <c:set var="count" value="${count + 1}" />
+                            <div class="mail_one" >
+                                <div class="mail_check">
+                                    <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="">
                                 </div>
-                            </form>
-                        </div>
-                    </c:if>
-                </c:forEach>
-            </c:if>
-            <c:if test="${mailCount == 0}">
-                <div class="empty">스팸 메일함이 비었습니다.</div>
-            </c:if>
+                                <div class="mail_imgList">
+                                    <c:choose>
+                                        <c:when test="${ m.imporMail == 'Y' }">
+                                            <div class="mail_img"><img class="mail_favorite" src="resources/common_images/favorite.png"></div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div class="mail_img"><img class="mail_favorite" src="resources/common_images/unFavorite.png"></div>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:choose>
+                                        <c:when test="${ m.recCheck == 'Y' }" >
+                                            <div class="mail_img"><img class="read" src="resources/common_images/mail_read.png"></div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div class="mail_img"><img class="read" src="resources/common_images/mail_unRead.png"></div>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:if test="${ not empty attachmentList }">
+                                        <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
+                                    </c:if>
+                                </div>
+                                <form class="mail_select_area">
+                                    <input class="mailNo" type="hidden" name="mailNo" value="${ m.mailNo }">
+                                    <input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
+                                    <div id="selectMailLine">
+                                        <div class="mail_sender_name">
+                                            ${m.empName}
+                                        </div>
+                                        <div class="mail_sender">
+                                            ${ m.sendMailAdd }
+                                        </div>
+                                        <div class="mail_title">
+                                            ${ m.mailTitle }
+                                        </div>
+                                        <div class="mail_date">
+                                            ${ m.recDate }
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </c:if>
+                <c:if test="${mailCount == 0}">
+                    <div class="empty">스팸 메일함이 비었습니다.</div>
+                </c:if>
+            </div>
+            <div align="center">
+                <ul id="paging">
+                    <li><a href=""> < </a></li>
+                    <li class='on'><a href=""> 1 </a></li>
+                    <li><a href=""> 2 </a></li>
+                    <li><a href=""> 3 </a></li>
+                    <li><a href=""> 4 </a></li>
+                    <li><a href=""> 5 </a></li>
+                    <li><a href=""> > </a></li>
+                </ul>
+            </div>
         </div>
-        <div align="center">
-            <ul id="paging">
-                <li><a href=""> < </a></li>
-                <li class='on'><a href=""> 1 </a></li>
-                <li><a href=""> 2 </a></li>
-                <li><a href=""> 3 </a></li>
-                <li><a href=""> 4 </a></li>
-                <li><a href=""> 5 </a></li>
-                <li><a href=""> > </a></li>
-            </ul>
-        </div>
-    </div>
 
-    <script>
-        // 메일 상세조회
-        let mailSelectList = document.querySelectorAll('.mail_select_area');
-        mailSelectList.forEach(function(select){
-            select.addEventListener('click', function(){
-                this.action = "select.ma";
-                this.method = "POST";
-                this.submit();
+        <script>
+            // 메일 상세조회
+            let mailSelectList = document.querySelectorAll('.mail_select_area');
+            mailSelectList.forEach(function(select){
+                select.addEventListener('click', function(){
+                    this.action = "select.ma";
+                    this.method = "POST";
+                    this.submit();
+                });
             });
-        });
 
-        // 페이징
-        $(function(){
-                 $("#ps-tbody").on("click", "tr", function(){
-                     location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
-                 })
-            })
+            // 페이징
+            $(function(){
+                    $("#ps-tbody").on("click", "tr", function(){
+                        location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
+                    })
+                })
 
-        // 전체 체크박스 선택 취소
-        let checkAll = document.getElementById("check_all");
-        let mailCheckBox = document.querySelectorAll('.mail_checkbox');
-        checkAll.addEventListener('change', function(event){
-            mailCheckBox.forEach((checkbox) => {
-                checkbox.checked = checkAll.checked;
-            })
-        });
+            // 전체 체크박스 선택 취소
+            let checkAll = document.getElementById("check_all");
+            let mailCheckBox = document.querySelectorAll('.mail_checkbox');
+            checkAll.addEventListener('change', function(event){
+                mailCheckBox.forEach((checkbox) => {
+                    checkbox.checked = checkAll.checked;
+                })
+            });
 
-        // 스팸 해제
-        let spamClear = document.getElementById("spam_clear");
-        spamClear.addEventListener('click', function(){
-        let checkedBoxSum = 0
-        let count = 0;
-        let arr = [];
-            mailCheckBox.forEach((i) => {
-                if(i.checked == true) {
-                    checkedBoxSum += 1;
-                    let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
-                    arr.push(value);
-                }
-            })
-
-            if(checkedBoxSum != 0) {
-                const form = document.createElement("form");
-                const input = document.createElement("input");
-                input.setAttribute("name", "mailNoList");
-                input.setAttribute("multiple", "multiple")
-                input.setAttribute("value", arr)
-                form.append(input)
-                form.method = "POST"
-                form.action = "spamClear.ma"
-                document.body.append(form)
-                form.submit();
-            }else {
-                alert('체크박스를 선택해주세요');
-            }
-        });
-
-        // 영구 삭제
-        let deleteMail = document.getElementById("complete_delete");
-        deleteMail.addEventListener('click', function(){
+            // 스팸 해제
+            let spamClear = document.getElementById("spam_clear");
+            spamClear.addEventListener('click', function(){
             let checkedBoxSum = 0
             let count = 0;
             let arr = [];
-            let form = document.createElement("form");
                 mailCheckBox.forEach((i) => {
                     if(i.checked == true) {
                         checkedBoxSum += 1;
-                        arr[count] = mailNoList[i.value].value;
+                        let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
+                        arr.push(value);
+                    }
+                })
+
+                if(checkedBoxSum != 0) {
+                    const form = document.createElement("form");
+                    const input = document.createElement("input");
+                    input.setAttribute("name", "mailNoList");
+                    input.setAttribute("multiple", "multiple")
+                    input.setAttribute("value", arr)
+                    form.append(input)
+                    form.method = "POST"
+                    form.action = "spamClear.ma"
+                    document.body.append(form)
+                    form.submit();
+                }else {
+                    alert('체크박스를 선택해주세요');
+                }
+            });
+
+            // 영구 삭제
+            let deleteMail = document.getElementById("complete_delete");
+            deleteMail.addEventListener('click', function(){
+                let checkedBoxSum = 0
+                let count = 0;
+                let arr = [];
+                let form = document.createElement("form");
+                    mailCheckBox.forEach((i) => {
+                        if(i.checked == true) {
+                            checkedBoxSum += 1;
+                            arr[count] = mailNoList[i.value].value;
+                            count += 1; 
+                        }
+                    })
+                    console.log(arr);
+
+                if(checkedBoxSum != 0) {
+
+                }else{
+                    alert('체크박스를 선택해주세요');
+                }
+            });
+
+            // 이동
+            let shift = document.getElementById("shift");
+            let shiftBlock = document.querySelector(".shift_block")
+            shift.addEventListener('click', function(){
+                let checkedBoxSum = 0
+                let count = 0;
+                let arr = [];
+                let form = document.createElement("form");
+                mailCheckBox.forEach((i) => {
+                    if(i.checked == true) {
+                        checkedBoxSum += 1;
+                        arr[count] = mailNoList[i.value];
                         count += 1; 
                     }
                 })
-                console.log(arr);
-
-            if(checkedBoxSum != 0) {
-
-            }else{
-                alert('체크박스를 선택해주세요');
-            }
-        });
-
-        // 이동
-        let shift = document.getElementById("shift");
-        let shiftBlock = document.querySelector(".shift_block")
-        shift.addEventListener('click', function(){
-            let checkedBoxSum = 0
-            let count = 0;
-            let arr = [];
-            let form = document.createElement("form");
-            mailCheckBox.forEach((i) => {
-                if(i.checked == true) {
-                    checkedBoxSum += 1;
-                    arr[count] = mailNoList[i.value];
-                    count += 1; 
+                if(checkedBoxSum > 0) {
+                    console.log(checkedBoxSum);
+                    shiftBlock.style.display = 'block';
+                }else{
+                    alert('체크박스를 선택해주세요');
                 }
-            })
-            if(checkedBoxSum > 0) {
-                console.log(checkedBoxSum);
-                shiftBlock.style.display = 'block';
-            }else{
-                alert('체크박스를 선택해주세요');
-            }
-        });
+            });
 
-        // x button 닫기 효과
-        let x_blocks = document.querySelectorAll('.x');
-        x_blocks.forEach(function(x){
-            x.addEventListener('click', function(){
-                this.parentNode.parentNode.style.display = 'none';
-            })
-        });
-    </script>
+            // x button 닫기 효과
+            let x_blocks = document.querySelectorAll('.x');
+            x_blocks.forEach(function(x){
+                x.addEventListener('click', function(){
+                    this.parentNode.parentNode.style.display = 'none';
+                })
+            });
+        </script>
+    </div>
+	
 
 </body>
 </html>

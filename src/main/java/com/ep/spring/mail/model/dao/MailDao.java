@@ -44,6 +44,10 @@ public class MailDao {
 		return result;
 	}
 	
+	public int selectRecSendMailNo(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("mailMapper.selectRecSendMailNo");
+	}
+	
 	public void readMail(Mail m, SqlSessionTemplate sqlSession) {
 		sqlSession.update("mailMapper.readMail", m);
 	}
@@ -123,6 +127,8 @@ public class MailDao {
 		}
 		return result;
 	}
+
+	
 
 	
 

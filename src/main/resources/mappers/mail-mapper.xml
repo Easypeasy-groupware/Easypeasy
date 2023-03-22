@@ -161,6 +161,13 @@
 		  )
 	</insert>
 	
+	<select id="selectRecSendMailNo" resultType="_int">
+		select 
+		   	   seq_mano.currval "mail_no"		   	   
+		  from 
+		       dual
+	</select>
+	
 	<update id="readMail">
 		update rec_mail 
 		   set rec_check = 'Y'
