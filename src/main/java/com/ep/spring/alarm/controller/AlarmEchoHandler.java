@@ -2,9 +2,10 @@ package com.ep.spring.alarm.controller;
 
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpSession;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -14,6 +15,7 @@ import com.ep.spring.alarm.model.service.AlarmService;
 
 public class AlarmEchoHandler extends TextWebSocketHandler {
 
+	private static final Logger logger = LoggerFactory.getLogger(WebSocketHandler.class);
 	private ArrayList<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 	private AlarmService aService; 
 	
