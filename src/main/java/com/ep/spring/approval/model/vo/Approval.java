@@ -36,6 +36,7 @@ public class Approval {
 	private String jobCode;
 	private int receiverNo;
 	private String st;
+	private int attachCount;
 	
 	private ArrayList<ApprovalLine> alList;
 	private ArrayList<ApprovalLine> refList;
