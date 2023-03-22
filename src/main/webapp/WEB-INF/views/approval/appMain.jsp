@@ -19,7 +19,7 @@
         .app-wait{width:800px; height:300px;}
         .wapp{
             float:left;
-            width:200px; 
+            width:180px; 
             border:1px solid gray; 
             border-radius: 30px; 
             padding:15px;

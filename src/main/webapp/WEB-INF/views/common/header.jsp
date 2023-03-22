@@ -30,7 +30,7 @@
         box-sizing:border-box;
     }
     .wrap{width:1200px; margin:auto; box-sizing:border-box;}
-    .header{position:fixed; top:0; background:white;}
+    .header{position:fixed; top:0; background:white; z-index: 1;}
     #header1{width:1200px; height:60px; background-color: white;} 
     #header2{width:1200px; height:40px; background-color:rgb(185, 187, 221);}
 
@@ -129,7 +129,7 @@
 		   
             
             <div class="icons">
-                <a href="" title="" class="position-relative" id="chat-a">
+                <a href="javascript:openWindowPop('viewChatSample.ch', 'popup');" class="position-relative" id="chat-a">
                     <img src="resources/common_images/comments.png" class="chat-icon"> 
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger websk-num">
                         99+
@@ -143,7 +143,12 @@
                     </span>
                 </a>
             </div>
-
+			<script>
+				function openWindowPop(url, name){
+					var options = 'top=500, left=1000, width=500, height=600, status=no, menubar=no, toolbar=no, titlebar=no, resizable=no scrollbars=yes';
+					window.open(url, name, options);
+				}
+			</script>
             
 
            	<div id="empName"><span id="user-name">${ loginUser.empName }</span> ${ loginUser.jobName }님</div>

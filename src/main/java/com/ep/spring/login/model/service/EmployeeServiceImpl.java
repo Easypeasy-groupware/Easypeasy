@@ -1,10 +1,13 @@
 package com.ep.spring.login.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ep.spring.login.model.dao.EmployeeDao;
+import com.ep.spring.login.model.vo.Department;
 import com.ep.spring.login.model.vo.Employee;
 
 @Service
@@ -43,6 +46,15 @@ public class EmployeeServiceImpl implements EmployeeService{
 	public int updateProfile(Employee e) {
 		
 		return eDao.updateProfile(sqlSession, e);
+	}
+
+	
+	
+	// [추가]
+	// 부서 전체 조회
+	@Override
+	public ArrayList<Department> selectDeptList() {
+		return eDao.selectDeptList(sqlSession);
 	}
 
 	

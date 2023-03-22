@@ -55,7 +55,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
                 	<c:choose>
                 		<c:when test="${empty list}">
 							<tr>
@@ -65,13 +64,13 @@
 							</tr>
 	                    </c:when>
 	                    <c:otherwise>
-	                    	<c:forEach var="a" items="list" >
+	                    	<c:forEach var="a" items="${list}" >
 			                    <tr>
 			                        <td>
 			                             <input type="checkbox" name="chk" id="">
 			                              <input type="hidden" id="num" value="${a.appNo}">
 			                        </td>
-			                        <td>${a.enrollDate}'</td>
+			                        <td>${a.enrollDate}</td>
 			                        <td>${a.formName}</td>
 			                        <c:choose>
 				                        <c:when test="${a.formCode == 3 || a.formCode == 4 }">
@@ -82,7 +81,7 @@
 				                        </c:otherwise>
 			                        </c:choose>
 			                        <td>
-			                        	<c:if test="${not empty a.originName}">
+			                        	<c:if test="${a.attachCount > 0}">
 			                        		<span><img src="resources/common_images/attachment.png" width="10px;"></span>
 			                        	</c:if>
 			                        </td>
@@ -90,7 +89,8 @@
 			                    </tr>
 		                    </c:forEach>
 	                    </c:otherwise>
-                    </c:choose>
+                    </c:choose>                    
+
                 </tbody>
             </table>
             <br><br>

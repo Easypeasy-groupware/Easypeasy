@@ -412,7 +412,7 @@ public class AddressController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="deleteAddList.add") // 개인주소록 선택한 여러주소록 삭제
+	@RequestMapping(value="deleteAddList.add") // ajax 개인주소록 선택한 여러주소록 삭제
 	public int ajaxDeleteAddList(@RequestParam(value="addList[]") List<String> addList) {
 		
 		ArrayList<Address> list = new ArrayList<>();
@@ -428,8 +428,44 @@ public class AddressController {
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="changeAddList.add") // ajax 개인주소록 선택한 여러주소록 그룹 변경
+	public int ajaxChangeGroupAddList (
+			@RequestParam(value="addList[]") List<String> addList,
+			@RequestParam(value="groupNo") String groupNo
+			) {
+		System.out.println(groupNo);
+		ArrayList<Address> list = new ArrayList<>();
+		
+		for(String addNo : addList) {
+			Address a = new Address();
+			a.setAddNo(Integer.parseInt(addNo));
+			if(groupNo.equals("선택안함")) {
+				a.setGroup(null);
+			}else {
+				a.setGroupNo(groupNo);
+			}
+			list.add(a);
+		}
+		System.out.println(list);
+		int result = aService.changeGroupAddList(list);
+		
+		return result;
+	}
 	
-	
+	@RequestMapping("sendSimple.add")
+	public ModelAndView sendSimpleAdd(ModelAndView mv, String addName, String email, String phone, String groupNo) {
+		
+		Address a = new Address();
+		a.setAddName(addName);
+		a.setEmail(email);
+		a.setPhone(phone);
+		a.setGroupNo(groupNo);
+		
+		mv.addObject("simple", a)
+		  .setViewName("address/newPersonalAddressForm");
+		return mv;
+	}
 	
 	
 	

@@ -108,8 +108,11 @@ public interface AddressService {
 	int selectExternalAddRegListCount(AddGroup ag);
 	ArrayList<Address> selectExternalRegList(AddGroup ag, PageInfo pi);
 	
-	// 23. 개인주소록 다중삭제
+	// 23. 개인주소록 다중삭제(ajax)
 	int deleteAddList(ArrayList<Address> list);
+	
+	// 24. 개인주소록 다중 그룹변경(ajax)
+	int changeGroupAddList(ArrayList<Address> list);
 
 	
 

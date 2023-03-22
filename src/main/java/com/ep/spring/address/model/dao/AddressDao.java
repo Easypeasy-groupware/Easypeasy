@@ -214,6 +214,14 @@ public class AddressDao {
 		return result;
 	}
 
+	public int changeGroupAddList(SqlSessionTemplate sqlSession, ArrayList<Address> list) {
+		int result = 0;
+		for(Address a: list) {
+			result += sqlSession.update("addressMapper.changeGroupAddList", a);
+		}
+		return result;
+	}
+
 
 
 

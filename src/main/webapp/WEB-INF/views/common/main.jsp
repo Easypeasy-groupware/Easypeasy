@@ -21,12 +21,12 @@
     /*---------------------------메인-------------------------------------*/
     .outer{width:1200px; padding-top:10px;}
 	#main_content{position: absolute; top: 170px;}
-    #left-col{width:57%; padding:0 10px 0 10px; margin-left:20px; float:left;}
-    #right-col{width:29%; padding:0 10px 0 10px; float:left;}
+    #left-col{width:800px; padding:0 10px 0 10px; margin-left:20px; float:left;}
+    #right-col{width:400px; padding:0 10px 0 10px; float:left;}
 
     /*카테고리별 공통 css*/
     .subtitle{float:left; border-bottom:2px solid lightgray; text-align:center; width:24%; height:28px; padding-bottom:4px;}
-    table{width:96%; border-collapse: collapse;}
+    table{width:97%; border-collapse: collapse;}
     tbody tr:hover:not(.work-time tr, .commute-time tr){cursor:pointer; font-weight:600; background:rgb(241, 241, 241);}
     b{font-size:large; font-weight:700; color:rgb(65, 64, 64);}
 
@@ -162,6 +162,23 @@
 			</div>
 		</div>
 	</div>
+
+	<script>
+		window.addEventListener('load', function(){
+			console.log('as')
+			const deleteAll = document.getElementById("alarm_delete");
+			const sock = new SockJS("${pageContext.request.contextPath}/alarm");
+			sock.onmessage = onMessage;
+
+			deleteAll.addEventListener('click', function(){
+
+			});
+
+			function onMessage(evt){
+				console.log(evt.data)
+			}
+		})
+	</script>
 
 	<script>
 		// 전체 알람창 열고 닫기 이벤트
@@ -446,9 +463,9 @@
 		
 				<table>
 					<colgroup>
-						<col style="width:25%;">
-						<col sytle="width:45%;">
-						<col style="width:20%;">
+						<col style="width:35%;">
+						<col sytle="width:50%;">
+						<col style="width:15%;">
 					</colgroup>
 					<thead>
 						<tr>
@@ -464,16 +481,20 @@
 									<c:if test="${ m.status == 'Y' }">
 										<tr class="mailOne">
 											<td>
-												<div style="width: 230px; height: 25px;">
-													<div style="float: left;">${ m.empName }&nbsp;</div>
-													<div div style="width: 160px; float: left; overflow: hidden; text-overflow: ellipsis;">${ m.sendMailAdd }</div>
+												<div style="width: 25%; float: left;">
+													${ m.empName }&nbsp;
+												</div>
+												<div style="width: 70%; float: left; overflow: hidden; text-overflow: ellipsis;">
+													${ m.sendMailAdd }
 												</div>
 											</td>
 											<td>
-												<div style="width: 360px; margin-right: 20px; overflow: hidden; text-overflow: ellipsis;">${ m.mailTitle }</div>
+												<div style="width: 92%; float: left; overflow: hidden; text-overflow: ellipsis;">
+													${ m.mailTitle }
+												</div>
 											</td>
 											<td>
-												${ m.recDateDay } ${m.recDateTime}
+												${ m.recDateDay }
 												<input class="mailNo" type="hidden" name="mailNo" value="${ m.mailNo }">
 												<input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
 											</td>

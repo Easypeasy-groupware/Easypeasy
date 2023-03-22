@@ -25,7 +25,7 @@
     #searchBtn{width:50px; height:25px; border:0; border-radius:5px; background: rgb(166, 184, 145); color:white;}
 
     /*연락처 추가*/
-    .newAdd{width:120px; height:25px; border:1px solid gray; border-radius:5px;}
+    .newAdd{width:120px; height:25px; border:1px solid gray; border-radius:5px; padding-left:5px;}
     .addBtn{width:80px; height:25px; border:0; border-radius:5px;}
     #addBtn1{background: rgb(127, 127, 127); color:white;}
     #addBtn2{background: rgb(166, 184, 145); color:white;}
@@ -100,12 +100,49 @@
  		<br>
  		
         <div class="addNew">
-            <input type="text" class="newAdd" placeholder="이름">
-            <input type="text" class="newAdd" placeholder="이메일">
-            <input type="text" class="newAdd" placeholder="휴대폰">
-            <button class="addBtn" id="addBtn1">추가정보</button>
-            <button class="addBtn" id="addBtn2">추가</button>
+        	<form action="insertNewPs.add" method="post">
+        	<input type="hidden" name="empNo" value="${ loginUser.empNo }">
+        	<input type="hidden" name="groupNo" value="${ ag.groupNo }">
+	            <input type="text" class="newAdd" placeholder="이름" name="addName">
+	            <input type="text" class="newAdd" placeholder="이메일" name="email">
+	            <input type="text" class="newAdd" placeholder="휴대폰" name="phone">
+	            <button type="button" class="addBtn" id="addBtn1" onclick="sendSimpleAdd();">추가정보</button>
+	            <button type="button" class="addBtn" id="addBtn2" onclick="insertSimpleAdd();">추가</button>
+            </form>
         </div>
+		<script>
+			function sendSimpleAdd(){
+				let addName = $("input[name=addName]").val();
+				let email = $("input[name=email]").val();
+				let phone = $("input[name=phone]").val();
+				if(!addName && !email && !phone){
+					swal({
+    		            title: "간편주소록 정보추가", 
+    		            text: "입력된 내용이 없습니다!", 
+    		            icon: "error",
+    		            button: "확인",
+    		         });
+				}else{
+					location.href = "sendSimple.add?addName=" + addName + "&email=" + email + "&phone=" + phone + "&groupNo=${ag.groupNo}";
+				}
+			}
+			
+			function insertSimpleAdd(){ // 간편주소록 insert
+				let addName = $("input[name=addName]").val();
+				let email = $("input[name=email]").val();
+				let phone = $("input[name=phone]").val();
+				if(!addName && !email && !phone){
+					swal({
+    		            title: "간편 주소록 추가", 
+    		            text: "입력된 내용이 아무것도 없습니다!", 
+    		            icon: "error",
+    		            button: "확인",
+    		         });
+				}else{
+					$("#simpleAddForm").submit();
+				}
+			}
+		</script>
 
         <br><br>
         
@@ -372,10 +409,9 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     
-                    <form action="">
                         <div class="modal-body">
 
-							<p>🪄 선택한 <span id="change-add-num" style="font-weight:600;"></span>개의 연락처 그룹 변경</p>
+							<p>📂 선택한 <span id="change-add-num" style="font-weight:600;"></span>개의 연락처 그룹 변경</p>
 
                             <select class="group-select">
 	                            <option>선택안함</option>
@@ -389,11 +425,8 @@
                             <button type="button" id="add-new-group" data-bs-dismiss="modal">+</button>
                             <br><br>
                             <button type="button" class="btn-event-gray modal-close-btn" data-bs-dismiss="modal">닫기</button>
-                            <button type="submit" class="btn-event-green modal-change-btn">변경하기</button>
+                            <button type="button" class="btn-event-green modal-change-btn" onclick="changeAddList($('.group-select option:selected').val());">변경하기</button>
                         </div>
-                        
-                    </form>
-    
                 </div>
               </div>
         </div>
@@ -403,6 +436,36 @@
 					$("#insertModal").modal('show');
 				})
 			})
+			
+			function changeAddList(val){// 선택한 주소록 다중 그룹변경용 ajax
+				const aList = []; //빈 배열 생성
+				for(var i=0; i<$("#ps-tbody>tr").length; i++){
+					if($("#ps-tbody>tr").eq(i).children().find("input[type='checkbox']").is(":checked")){
+						aList.push($("#ps-tbody>tr").eq(i).children().eq(0).text());
+					}
+				}
+				var objParams = {
+						"addList" : aList, // 그룹을 업데이트할 주소록 번호배열 저장
+						"groupNo" : val // 변경할 주소록그룹 번호 저장
+						}
+				
+				$.ajax({
+					url:"changeAddList.add",
+					dataType : "json",
+					contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+					type:"post",
+					data : objParams,
+					success : function(result){
+						if(result > 0){
+							location.href= "psGroup.add?group=${ag.groupNo}";
+						}
+					},
+					error : function(){
+						console.log("주소록 그룹변경용 ajax 통신 실패");
+					}
+				});
+				
+			}
 		</script>
         <!--새로운 그룹 추가용 모달-->
 	    <div class="modal fade" id="insertModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -425,7 +488,7 @@
 	            </div>
 	          </div>
 	    </div>
-	    <script>    	
+	    <script>   
 	    	function addGroup(){ /* 그룹 추가용 ajax */
 	    		if($(".group-input").val().trim().length > 0) {
 	    			

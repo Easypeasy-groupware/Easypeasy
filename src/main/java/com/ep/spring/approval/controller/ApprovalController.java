@@ -114,7 +114,7 @@ public class ApprovalController {
 		ArrayList<Approval> list = aService.selectWatingAList(pi, eNo);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
-		
+
 		return "approval/appRecWatingListView";
 	}
 	
@@ -128,7 +128,6 @@ public class ApprovalController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
-		System.out.println(list);
 		
 		return "approval/appRefWatingListView";
 	}
@@ -223,7 +222,7 @@ public class ApprovalController {
 			a.setWriterNo(eNo);
 		}
 		
-		System.out.println(a);
+		//System.out.println(a);
 		Approval ap = aService.selectDetailSPrgAp(a);
 		
 		
@@ -234,10 +233,7 @@ public class ApprovalController {
 		model.addAttribute("ap", ap);
 		model.addAttribute("list1", list1);
 		model.addAttribute("list3", list3);
-		
-		System.out.println("결재정보 : " + ap);
-		System.out.println("결재선 : " + list1);
-		System.out.println("첨부파일 : " + list3);
+
 
 		if(a.getFormName().equals("업무기안")) {
 			
@@ -362,9 +358,6 @@ public class ApprovalController {
 		model.addAttribute("list1", list1);
 		model.addAttribute("list3", list3);
 
-		System.out.println("결재정보 : " + ap);
-		System.out.println("결재선 : " + list1);
-		System.out.println("첨부파일 : " + list3);
 		
 		if(a.getFormName().equals("업무기안")) {
 			
@@ -410,7 +403,7 @@ public class ApprovalController {
 			ap.setSecGrade("A");
 		}
 		
-		System.out.println(ap);
+		//System.out.println(ap);
 		
 		// 결재자 ApprovalLine에 담기
 		
@@ -434,7 +427,7 @@ public class ApprovalController {
 			num++;
 		}
 		
-		System.out.println(al);
+		//System.out.println(al);
 		
 		// 휴가작성폼 셋팅하기
 		if(vf.getHalfOption() != null){
@@ -478,6 +471,27 @@ public class ApprovalController {
 			AlertMsg msg = new AlertMsg("상신실패", "문서 상신에 실패했습니다.");
 			session.setAttribute("failMsg", msg);
 			return "redirect:main.ap";
+		}
+		
+	}
+	
+	@RequestMapping("updateco.ap")
+	public String updateAppLine(HttpSession session, ApprovalLine al) {
+		
+		//System.out.println(al);
+		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		al.setRecEmpNo(eNo);
+		
+		int result = aService.updateAppLine(al);
+		
+		if(result > 0) {
+			AlertMsg msg = new AlertMsg("의견등록성공", "의견등록에 성공했습니다!");
+			session.setAttribute("successMsg", msg);
+			return "redirect:recWlist.ap";	
+		}else {
+			AlertMsg msg = new AlertMsg("의견등록실패", "의견등록에 실패했습니다.");
+			session.setAttribute("failMsg", msg);
+			return "redirect:recWlist.ap";	
 		}
 		
 	}

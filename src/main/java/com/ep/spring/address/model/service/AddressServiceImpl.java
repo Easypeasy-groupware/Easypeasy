@@ -227,6 +227,11 @@ public class AddressServiceImpl implements AddressService {
 		return aDao.deleteAddList(sqlSession, list);
 	}
 
+	@Override
+	public int changeGroupAddList(ArrayList<Address> list) {
+		return aDao.changeGroupAddList(sqlSession, list);
+	}
+
 
 
 

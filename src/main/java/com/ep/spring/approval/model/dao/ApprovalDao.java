@@ -171,7 +171,6 @@ public class ApprovalDao {
 	}
 	
 	public int insertApproval(SqlSessionTemplate sqlSession, Approval ap) {
-		System.out.println(ap.getWriterComment());
 		return sqlSession.insert("approvalMapper.insertApproval", ap);
 	}
 	
@@ -200,7 +199,17 @@ public class ApprovalDao {
 		return sqlSession.insert("approvalMapper.insertOverTimeForm", ot);
 	}
 
+	public int updateAppStatus(SqlSessionTemplate sqlSession, ApprovalLine al) {
+		return sqlSession.update("approvalMapper.updateAppStatus", al);
+	}
 	
+	public int updateAppSequence(SqlSessionTemplate sqlSession, ApprovalLine al) {
+		return sqlSession.update("approvalMapper.updateAppSequence", al);
+	}
+	
+	public int updateAppLine(SqlSessionTemplate sqlSession, ApprovalLine al) {
+		return sqlSession.update("approvalMapper.updateAppLine", al);
+	}
 
 
 	

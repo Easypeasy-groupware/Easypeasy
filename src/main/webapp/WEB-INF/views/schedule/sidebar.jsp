@@ -101,7 +101,7 @@
         </div>
         
         <div class="menu-btn">
-            <a href="insert.sc" id="menu-add-btn">일정 등록</a>
+            <a href="enrollForm.sc" id="menu-add-btn">일정 등록</a>
         </div>
         
         <div class="add-type">

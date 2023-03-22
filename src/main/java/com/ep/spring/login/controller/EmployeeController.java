@@ -17,9 +17,12 @@ import com.ep.spring.address.model.vo.AddGroup;
 import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.common.template.FileUpload;
 import com.ep.spring.login.model.service.EmployeeService;
+import com.ep.spring.login.model.vo.Department;
 import com.ep.spring.login.model.vo.Employee;
+import com.ep.spring.login.model.vo.Job;
 import com.ep.spring.mail.model.service.MailService;
 import com.ep.spring.mail.model.vo.Mail;
+import com.ep.spring.organization.model.service.OrgService;
 
 @Controller
 public class EmployeeController {
@@ -31,6 +34,9 @@ public class EmployeeController {
 	
 	@Autowired
 	private AddressService aService;
+	
+	@Autowired
+	private OrgService oService;
 	
 	@Autowired
 	private MailService mService;
@@ -69,13 +75,26 @@ public class EmployeeController {
 			return "common/main";
 		}
 		*/
-			
+		
+		
+		//int no = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
+		int no = loginUser.getEmpNo();
+		
+		ArrayList<Employee> list = oService.selectOrgList(no);
+		ArrayList<Department> deptList = oService.selectDept();
+		ArrayList<Job> jList = oService.selectJob();
+		
 		
 		if(loginUser != null && bcryptPasswordEncoder.matches(e.getEmpPwd(), loginUser.getEmpPwd())) { // 성공
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("pList", userGroup); //로그인한 사원의 주소록 그룹리스트 세션에 저장
 			session.setAttribute("sList", sharedGroup); //외부 공유주소록 그룹리스트 세션에 저장
 			session.setAttribute("recMailList", recMailList);
+			  
+			session.setAttribute("list", list);
+			session.setAttribute("deptList", deptList);
+			session.setAttribute("jList", jList);
 			return "common/main";
 		}else { // 실패
 			session.setAttribute("alertMsg", "로그인에 실패했습니다. 다시 시도 해주세요.");

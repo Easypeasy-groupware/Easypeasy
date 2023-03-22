@@ -43,9 +43,15 @@ public class ScheduleController {
 	}
 	
 	@RequestMapping("setting.sc")
-	public String mainSchedule() {
+	public String settingSchedule() {
 		
 		return "schedule/scheduleSetting";
+	}
+	
+	@RequestMapping("enrollForm.sc")
+	public String scheduleEnrollForm() {
+		
+		return "schedule/scheduleEnrollForm";
 	}
 	
 	
