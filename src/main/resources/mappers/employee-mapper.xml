@@ -22,6 +22,11 @@
 		<result column="ent_date" property="entDate" />
 		<result column="status" property="status" />
 	</resultMap>
+	
+	<resultMap type="Department" id="departmentResult">
+		<id column="dept_code" property="deptCode" />
+		<result column="dept_name" property="deptName" />
+	</resultMap>
 
 	<select id="loginEmployee" resultMap="employeeResult">
 		select
@@ -85,6 +90,15 @@
 			  from employee e
 			  left join department d on (d.dept_code = e.dept_code)
 			  where emp_no = #{eNo}			
+	</select>
+	
+	
+	
+	<select id="selectDeptList" resultMap="departmentResult">
+			select 
+			       dept_code
+			     , dept_name
+			  from department
 	</select>
 
 </mapper>

@@ -1,8 +1,11 @@
 package com.ep.spring.login.model.dao;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.ep.spring.login.model.vo.Department;
 import com.ep.spring.login.model.vo.Employee;
 
 @Repository
@@ -31,5 +34,12 @@ public class EmployeeDao {
 	//프로필 사진변경
 	public int updateProfile(SqlSessionTemplate sqlSession, Employee e) {
 		return sqlSession.update("employeeMapper.updateProfile", e);
+	}
+	
+	
+	
+	// [추가] 부서 전체 조회
+	public ArrayList<Department> selectDeptList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("employeeMapper.selectDeptList");
 	}
 }
