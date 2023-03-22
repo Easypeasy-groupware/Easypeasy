@@ -236,7 +236,7 @@
                     $("#search-emp").val("");
                     $(this).val("N");
                 }
-                console.log($(this).val());
+               
             })
 
             $("#search-emp").keyup(function(){
