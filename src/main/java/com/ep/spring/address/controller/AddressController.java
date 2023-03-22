@@ -1,6 +1,7 @@
 package com.ep.spring.address.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -275,7 +276,7 @@ public class AddressController {
 	
 	@ResponseBody
 	@RequestMapping(value="listShGroup.add", produces="application/json; charset=utf-8")
-	public String ajaxSelectSharedGroupList(HttpSession session) { // ajax 개인주소록 그룹 조회
+	public String ajaxSelectSharedGroupList(HttpSession session) { // ajax 공유주소록 그룹 조회
 		
 		ArrayList<AddGroup> list = aService.selectSharedAddGroup();
 
@@ -314,7 +315,7 @@ public class AddressController {
 	
 	@ResponseBody
 	@RequestMapping(value="insertFavAdd.add")
-	public String ajaxInsertFavAdd(AddFavorite af) {
+	public String ajaxInsertFavAdd(AddFavorite af) { // ajax 개인주소록 & 외부주소록 즐겨찾기 추가
 		int result = aService.insertFavAdd(af);
 		
 		return result > 0 ? "success" : "fail";
@@ -322,7 +323,7 @@ public class AddressController {
 	
 	@ResponseBody
 	@RequestMapping(value="insertFavEmp.add")
-	public String ajaxInsertFavEmp(AddFavorite af) {
+	public String ajaxInsertFavEmp(AddFavorite af) {// ajax  사내주소록 즐겨찾기 추가
 		int result = aService.insertFavEmp(af);
 		
 		return result > 0 ? "success" : "fail";
@@ -370,7 +371,10 @@ public class AddressController {
 	public ModelAndView selectExternalAddDetail(int no, ModelAndView mv) {
 		Address a = aService.selectExternalAddDetail(no);
 		
+		ArrayList<AddEdit> list = aService.selectExternalAddEditList(no);
+		
 		mv.addObject("a", a)
+		  .addObject("list", list)
 		  .setViewName("address/sharedExtAddDetailForm");
 		return mv;
 	}
@@ -406,6 +410,35 @@ public class AddressController {
 		  .setViewName("address/sharedExtRegAddList");
 		return mv;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="deleteAddList.add") // 개인주소록 선택한 여러주소록 삭제
+	public int ajaxDeleteAddList(@RequestParam(value="addList[]") List<String> addList) {
+		
+		ArrayList<Address> list = new ArrayList<>();
+		
+		for(String addNo : addList) {
+			Address a = new Address();
+			a.setAddNo(Integer.parseInt(addNo));
+			list.add(a);
+		}
+		int result = aService.deleteAddList(list);
+		
+		return result;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 }

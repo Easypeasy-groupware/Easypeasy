@@ -197,7 +197,7 @@
                 }
             })
             
-            $(".clck-detail").click(function(){
+            $(".clck-detail").click(function(){ // 상세페이지
                 location.href = 'extAddInfo.add?no=' + $(this).siblings().eq(0).text(); 
             })
             
