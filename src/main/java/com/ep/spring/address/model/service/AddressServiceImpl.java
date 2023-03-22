@@ -205,6 +205,12 @@ public class AddressServiceImpl implements AddressService {
 	public Address selectExternalAddDetail(int no) {
 		return aDao.selectExternalAddDetail(sqlSession, no);
 	}
+	
+	@Override
+	public ArrayList<AddEdit> selectExternalAddEditList(int no) {
+		return aDao.selectExternalAddEditList(sqlSession, no);
+	}
+
 
 	@Override
 	public int selectExternalAddRegListCount(AddGroup ag) {
@@ -214,6 +220,11 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	public ArrayList<Address> selectExternalRegList(AddGroup ag, PageInfo pi) {
 		return aDao.selectExternalRegList(sqlSession, ag, pi);
+	}
+
+	@Override
+	public int deleteAddList(ArrayList<Address> list) {
+		return aDao.deleteAddList(sqlSession, list);
 	}
 
 

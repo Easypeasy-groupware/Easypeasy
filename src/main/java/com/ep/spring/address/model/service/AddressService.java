@@ -102,10 +102,16 @@ public interface AddressService {
 	
 	// 21. 외부 공유주소록 상세조회
 	Address selectExternalAddDetail(int no);
+	ArrayList<AddEdit> selectExternalAddEditList(int no);
 	
 	// 22. 외부 공유주소록 내가 등록한 주소록 리스트 조회
 	int selectExternalAddRegListCount(AddGroup ag);
 	ArrayList<Address> selectExternalRegList(AddGroup ag, PageInfo pi);
+	
+	// 23. 개인주소록 다중삭제
+	int deleteAddList(ArrayList<Address> list);
+
+	
 
 	
 	

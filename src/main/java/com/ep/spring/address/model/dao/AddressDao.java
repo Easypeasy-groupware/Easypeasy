@@ -190,6 +190,10 @@ public class AddressDao {
 		return sqlSession.selectOne("addressMapper.selectExternalAddDetail", no);
 	}
 
+	public ArrayList<AddEdit> selectExternalAddEditList(SqlSessionTemplate sqlSession, int no) {
+		return (ArrayList)sqlSession.selectList("addressMapper.selectExternalAddEditList", no);
+	}
+	
 	public int selectExternalAddRegListCount(SqlSessionTemplate sqlSession, AddGroup ag) {
 		return sqlSession.selectOne("addressMapper.selectExternalAddRegListCount", ag);
 	}
@@ -201,6 +205,16 @@ public class AddressDao {
 		
 		return (ArrayList)sqlSession.selectList("addressMapper.selectExternalRegList", ag, rowBounds);
 	}
+
+	public int deleteAddList(SqlSessionTemplate sqlSession, ArrayList<Address> list) {
+		int result = 0;
+		for(Address a: list) {
+			result += sqlSession.update("addressMapper.deleteAddList", a);
+		}
+		return result;
+	}
+
+
 
 
 	

@@ -741,6 +741,14 @@
 		 where ADD_NO = #{no}
 	</select>
 	
+	<select id="selectExternalAddEditList" resultMap="addEditResult">
+		select
+		       add_no
+		     , emp_no
+		  from add_edit
+		 where add_no = #{no}
+	</select>
+	
 	<select id="selectExternalAddRegListCount" resultType="_int">
 		select count(*)
 		  from address
@@ -801,7 +809,11 @@
 		     by create_date
 	</select>
 
-
+	<update id="deleteAddList">
+	    update address  
+		   set add_bin = 'Y'
+		 where add_no = #{addNo} 
+	</update>
 
 
 
