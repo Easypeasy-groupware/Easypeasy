@@ -82,15 +82,17 @@ public class BoardController {
 	}
 	
 	@RequestMapping("detailForm.bo")
-	public ModelAndView selectBoard(int no, ModelAndView mv) {
+	public ModelAndView selectBoard(int no, ModelAndView mv, Board b) {
 		
 		int result = bService.increaseCount(no);
-		/* ArrayList<Attachment> attachmentList = bService.selectAttachmentList(); */
 		
 		if(result > 0) {
-			Board b = bService.selectBoard(no);
 			
-			mv.addObject("b", b).setViewName("board/boardDetailForm");
+			Board bb = bService.selectBoard(no);
+			
+			ArrayList<Attachment> attachmentList = bService.selectAttachmentList(b);
+			
+			mv.addObject("b", bb).addObject("attachmentList", attachmentList).setViewName("board/boardDetailForm");
 		}else {
 			mv.addObject("errorMsg", "조회수증가실패").setViewName("common/errorPage");
 		}

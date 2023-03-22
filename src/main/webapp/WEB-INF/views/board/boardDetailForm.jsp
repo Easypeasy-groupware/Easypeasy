@@ -8,19 +8,19 @@
 <title>Insert title here</title>
 <style>
 	/* 전체 wrapper */
-    .wrapper { width: 1200px; margin: 0 auto;} /* 중앙 정렬을 위한 margin: 0 auto; */
+    .wrapper { width: 1200px; margin: 0 auto;}
     body {font-family: Arial, sans-serif; margin: 0; padding: 0;}
 
     /* 게시판 스타일 */
     .board {width: 1000px;float: right;}
     .container {margin: 20px auto; width: 900px; padding: 20px;}
+    .replyContent{margin: 20px auto; width: 900px; padding: 10px;}
 	h2 {padding:1% 1%;}
 	table {border-collapse: collapse; width: 100%;}
 	tr {text-align: center;}
 	th, td {text-align: center; padding: 8px; border-bottom: 1px solid #ccc;}
 	th {background-color: #ddd;}
 	.views {text-align: center;}
-   
 </style>
 </head>
 <body>
@@ -38,12 +38,13 @@
 		    <div class="container" style="width:1000px">
 		        <form action="detailForm.bo" id="detailBoard">
 		            <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enrollForm.bo';"> 새글쓰기</button>
+		            
 		            <c:if test="${ loginUser.empNo eq b.boardWriter }">
 			            <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
 		                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
 		                
 		                <form action="" method="post" id="postForm"> 
-				         	<input type="hidden" name="no" value="${b.boardNo}">
+				         	<input type="hidden" name="boardNo" value="${b.boardNo}">
 				        </form>
 				        
 			            <script>
@@ -58,7 +59,7 @@
 		            </c:if>
 		            
 		              <button type="button" class="btn btn-outline-secondary btn-sm" style="float:right" onclick="location.href='list.bo';">목록으로</button> 
-		             <br><hr><br>
+		             <br><br>
 		             
 		            <table id="contentArea" align="center" class="table" border="1px, solid">
 		                <tr>
@@ -66,7 +67,7 @@
 		                </tr>
 		                <tr>
 		                    <td>
-		                        이미지
+		                        작성자 프로필이미지
 		                    </td>
 		                    <td>
 		                        ${b.boardWriter}
@@ -77,7 +78,14 @@
 		                </tr>
 		                <tr>
 		                    <td colspan="3">
-		                        <input type="file">파일
+		                       <%-- <c:choose>
+			                    <c:when test="${ not empty b.originName }">
+			                        <a href="${ b.changeName }" download="${ b.originName }">${ b.originName }</a>
+			                    </c:when>
+			                    <c:otherwise>
+			                        	첨부파일이 없습니다.
+			                    </c:otherwise>
+		                     </c:choose> --%>
 		                    </td>
 		                </tr>
 		                <tr>
@@ -91,8 +99,8 @@
 		        </form>
 		    </div>
 		
-		    <div class="replyContent" >
-		        <table id="replyArea" class="table" align="center" border="1px, solid" style="width:1000px">
+		    <div class="replyContent" style="width:1000px" >
+		        <table id="replyArea" class="table" align="center" border="1px, solid">
 		            <thead>
 		                <tr>
 		                    <td colspan="3">댓글 (<span id="rcount">3</span>) </td> 

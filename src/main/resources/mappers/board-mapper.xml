@@ -66,18 +66,6 @@
 		    by board_no desc
 	</select>
 	
-	<!-- <select id="selectAtList" resultMap="attachmentResult">
-		select
-			   attach_no
-			 , ref_no
-			 , origin_name
-			 , change_name
-			 , file_path
-			 , upload_date
-			 , division
-	      from attachment 
-	</select> -->
-	
 	<insert id="insertBoard">
 		insert
 		  into board
@@ -144,6 +132,19 @@
 		 where board_no = #{boardNo}
 	</select>
 	
+	<select id="selectAttachmentList" resultMap="attachmentResult">
+		select
+			   attach_no
+			 , ref_no
+			 , origin_name
+			 , change_name
+			 , file_path
+			 , upload_date
+			 , division
+	      from attachment 
+	      where division = 'B'
+		   and ref_no = #{ boardNo }
+	</select>
 	
 	<update id="deleteBoard">
 		update

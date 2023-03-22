@@ -107,7 +107,7 @@
 		  )
 		  values
 		  (
-		    seq_bno.nextval
+		    seq_empNo.nextval
 		  , #{empId}
 		  , #{empPwd}
 		  , #{empName}

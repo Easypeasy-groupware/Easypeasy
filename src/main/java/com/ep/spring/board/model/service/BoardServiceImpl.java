@@ -53,6 +53,11 @@ public class BoardServiceImpl implements BoardService{
 	public Board selectBoard(int boardNo) {
 		return bDao.selectBoard(sqlSession, boardNo);
 	}
+	
+	@Override
+	public ArrayList<Attachment> selectAttachmentList(Board b) {
+		return bDao.selectAttachmentList(sqlSession, b);
+	}
 
 	@Override
 	public int deleteBoard(int no) {
@@ -93,6 +98,8 @@ public class BoardServiceImpl implements BoardService{
 	public int updateSettings(BoardCate bc) {
 		return 0;
 	}
+
+	
 
 	
 

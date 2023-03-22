@@ -28,12 +28,6 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectList", null, rowBounds); 	
 	}
 	
-	/*
-	 * public ArrayList<Attachment> selectAtList(SqlSessionTemplate sqlSession,
-	 * Attachment a){ return
-	 * (ArrayList)sqlSession.selectList("boardMapper.selectAtList", a); }
-	 */
-	
 	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.insert("boardMapper.insertBoard", b);
 	}
@@ -52,6 +46,10 @@ public class BoardDao {
 	
 	public Board selectBoard(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.selectOne("boardMapper.selectBoard", boardNo);
+	}
+	
+	public ArrayList<Attachment> selectAttachmentList(SqlSessionTemplate sqlSession,Board b){ 
+		return (ArrayList)sqlSession.selectList("boardMapper.selectAttachmentList", b); 
 	}
 	
 	public int deleteBoard(SqlSessionTemplate sqlSession, int no) {

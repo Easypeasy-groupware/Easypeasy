@@ -7,6 +7,7 @@ import com.ep.spring.board.model.vo.BoardCate;
 import com.ep.spring.board.model.vo.BoardReply;
 import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
+import com.ep.spring.mail.model.vo.Mail;
 
 public interface BoardService {
 
@@ -20,6 +21,7 @@ public interface BoardService {
 	// 3. 게시글 상세조회용 서비스
 	int increaseCount(int boardNo);
 	Board selectBoard(int boardNo);
+	ArrayList<Attachment> selectAttachmentList(Board b);
 		
 	// 4. 게시글 삭제용 서비스
 	int deleteBoard(int boardNo);
