@@ -206,24 +206,35 @@
 	</select>
 	
 	<select id="selectWaitingRListCount" resultType="_int">
-					select
+				 select
 						count(*)
-				   from  approval
-				 where status = '1'
+				   from  approval b
+                      join  employee e on (b.emp_no = e.emp_no)
+                      join attachment on (ref_no = app_no)
+				  where b.status = '1'
 				    and app_no in (
                                    select app_no
                                      from app_line
                                     where ref_whether = 'Y'
-                                      and emp_no = #{empNo}
+                                      and emp_no = 1
                                       and count = 0
                                        )
-		            order 
-		               by enroll_date  
+                                       
+                    and origin_name = (
+                                        select 
+                                                origin_name
+                                           from attachment
+                                          where ref_no = b.app_no
+                                            and rownum = 1
+                                          group by  origin_name                    
+                                        )                   
+                   order 
+		               by b.enroll_date     
 	</select>
 	
 	<select id="selectWaitingRList" resultMap="approvalResult">
 					select
-                            app_no
+                            b.app_no
 						  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
 						  , app_tstatus
 						  , b.emp_no
@@ -240,12 +251,20 @@
                                    select app_no
                                      from app_line
                                     where ref_whether = 'Y'
-                                      and emp_no = #{empNo}
+                                      and emp_no = 1
                                       and count = 0
                                        )
                                        
-		            order 
-		               by b.enroll_date        		
+                    and origin_name = (
+                                        select 
+                                                origin_name
+                                           from attachment
+                                          where ref_no = b.app_no
+                                            and rownum = 1
+                                          group by  origin_name                    
+                                        )                   
+                   order 
+		               by b.enroll_date          		
 	</select>
 	
 	<select id="selectSendListCount" resultType="_int">
@@ -830,5 +849,32 @@
 			     )  	
 	</insert>
 	
+	<update id="updateAppStatus">
+		update 
+		        approval
+		   set app_tstatus = #{appStatus}
+		 where app_amount = app_sequence
+		   and app_no = #{appNo}
+	</update>
 	
+	<update id="updateAppSequence">
+		update approval
+		   set app_sequence= approval.app_sequence + 1
+		 where app_no = #{appNo}  
+		   and app_amount != app_sequence		
+	</update>
+	
+	<update id="updateAppLine">
+			update app_line
+			   set app_status = #{appStatus}
+			      , update_date = sysdate
+			      , app_comment = #{appComment}
+			  where app_line_no = (
+			                        select app_line_no
+			                           from app_line
+			                        where emp_no = #{recEmpNo}
+			                          and app_no = #{appNo}
+			                          and ref_whether = 'N'
+			                        )       	
+	</update>
 </mapper>

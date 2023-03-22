@@ -79,4 +79,7 @@ public interface ApprovalService {
 	// 15. 결재문서 상신을 위한 서비스
 	int insertApproval(Approval ap, ArrayList<ApprovalLine> al, VacationForm vf, OverTimeForm ot, ArrayList<Attachment> atList);
 
+	// 16. 결재 / 또는 반려하기
+	int updateAppLine(ApprovalLine al);
+	
 }

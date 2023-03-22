@@ -55,7 +55,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
                 	<c:choose>
                 		<c:when test="${empty list}">
 							<tr>
@@ -71,7 +70,7 @@
 			                             <input type="checkbox" name="chk" id="">
 			                              <input type="hidden" id="num" value="${a.appNo}">
 			                        </td>
-			                        <td>${a.enrollDate}'</td>
+			                        <td>${a.enrollDate}</td>
 			                        <td>${a.formName}</td>
 			                        <c:choose>
 				                        <c:when test="${a.formCode == 3 || a.formCode == 4 }">
@@ -90,7 +89,8 @@
 			                    </tr>
 		                    </c:forEach>
 	                    </c:otherwise>
-                    </c:choose>
+                    </c:choose>                    
+
                 </tbody>
             </table>
             <br><br>

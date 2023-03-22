@@ -114,7 +114,8 @@ public class ApprovalController {
 		ArrayList<Approval> list = aService.selectWatingAList(pi, eNo);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
-		
+		System.out.println(list);
+
 		return "approval/appRecWatingListView";
 	}
 	
@@ -478,6 +479,27 @@ public class ApprovalController {
 			AlertMsg msg = new AlertMsg("상신실패", "문서 상신에 실패했습니다.");
 			session.setAttribute("failMsg", msg);
 			return "redirect:main.ap";
+		}
+		
+	}
+	
+	@RequestMapping("updateco.ap")
+	public String updateAppLine(HttpSession session, ApprovalLine al) {
+		
+		//System.out.println(al);
+		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		al.setRecEmpNo(eNo);
+		
+		int result = aService.updateAppLine(al);
+		
+		if(result > 0) {
+			AlertMsg msg = new AlertMsg("의견등록성공", "의견등록에 성공했습니다!");
+			session.setAttribute("successMsg", msg);
+			return "redirect:";	
+		}else {
+			AlertMsg msg = new AlertMsg("의견등록실패", "의견등록에 실패했습니다.");
+			session.setAttribute("failMsg", msg);
+			return "redirect:";	
 		}
 		
 	}
