@@ -25,7 +25,7 @@
     #searchBtn{width:50px; height:25px; border:0; border-radius:5px; background: rgb(166, 184, 145); color:white;}
 
     /*연락처 추가*/
-    .newAdd{width:120px; height:25px; border:1px solid gray; border-radius:5px;}
+    .newAdd{width:120px; height:25px; border:1px solid gray; border-radius:5px; padding-left:5px;}
     .addBtn{width:80px; height:25px; border:0; border-radius:5px;}
     #addBtn1{background: rgb(127, 127, 127); color:white;}
     #addBtn2{background: rgb(166, 184, 145); color:white;}
@@ -93,13 +93,48 @@
 
 
         <div class="addNew">
-            <input type="text" class="newAdd" placeholder="이름">
-            <input type="text" class="newAdd" placeholder="이메일">
-            <input type="text" class="newAdd" placeholder="휴대폰">
-            <button class="addBtn" id="addBtn1">추가정보</button>
-            <button class="addBtn" id="addBtn2">추가</button>
+        	<form action="insertNewPs.add" method="post" id="simpleAddForm">
+        	<input type="hidden" name="empNo" value="${ loginUser.empNo }">
+	            <input type="text" class="newAdd" placeholder="이름" name="addName">
+	            <input type="text" class="newAdd" placeholder="이메일" name="email">
+	            <input type="text" class="newAdd" placeholder="휴대폰" name="phone">
+	            <button type="button" class="addBtn" id="addBtn1" onclick="sendSimpleAdd();">추가정보</button>
+	            <button type="button" class="addBtn" id="addBtn2" onclick="insertSimpleAdd();">추가</button>
+            </form>
         </div>
-
+		<script>
+			function sendSimpleAdd(){ // 간편주소록 상세정보 추가하기
+				let addName = $("input[name=addName]").val();
+				let email = $("input[name=email]").val();
+				let phone = $("input[name=phone]").val();
+				if(!addName && !email && !phone){
+					swal({
+    		            title: "간편주소록 정보추가", 
+    		            text: "입력된 내용이 없습니다!", 
+    		            icon: "error",
+    		            button: "확인",
+    		         });
+				}else{
+					location.href = "sendSimple.add?addName=" + addName + "&email=" + email + "&phone=" + phone ;
+				}
+			}
+			
+			function insertSimpleAdd(){ // 간편주소록 insert
+				let addName = $("input[name=addName]").val();
+				let email = $("input[name=email]").val();
+				let phone = $("input[name=phone]").val();
+				if(!addName && !email && !phone){
+					swal({
+    		            title: "간편 주소록 추가", 
+    		            text: "입력된 내용이 아무것도 없습니다!", 
+    		            icon: "error",
+    		            button: "확인",
+    		         });
+				}else{
+					$("#simpleAddForm").submit();
+				}
+			}
+		</script>
         <br><br>
         
 

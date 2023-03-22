@@ -453,7 +453,19 @@ public class AddressController {
 		return result;
 	}
 	
-	
+	@RequestMapping("sendSimple.add")
+	public ModelAndView sendSimpleAdd(ModelAndView mv, String addName, String email, String phone, String groupNo) {
+		
+		Address a = new Address();
+		a.setAddName(addName);
+		a.setEmail(email);
+		a.setPhone(phone);
+		a.setGroupNo(groupNo);
+		
+		mv.addObject("simple", a)
+		  .setViewName("address/newPersonalAddressForm");
+		return mv;
+	}
 	
 	
 	

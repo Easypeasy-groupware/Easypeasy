@@ -28,7 +28,7 @@
     .input-table td{height:30px;}
     .tb-input{
         width:100%; height:100%;
-        border:1px solid gray; border-radius:5px;
+        border:1px solid gray; border-radius:5px; padding-left : 5px;
     }
 
     .td-select{
@@ -41,7 +41,7 @@
         color:white; background:rgb(166, 184, 145);
     }
     #add-btn:hover{background:rgb(73, 84, 60);}
-    .td-textarea{border:1px solid gray; border-radius:5px;}
+    .td-textarea{border:1px solid gray; border-radius:5px; padding-left : 5px;}
 
     /*버튼*/
     .set-btn{border:0; border-radius: 5px; width:90px; height:30px; color:white;}
@@ -86,7 +86,7 @@
                 <tr>
                     <td>이름</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input" name="addName" required>
+                        <input type="text" class="tb-input" name="addName" value="${simple.addName}">
                     </td>
                 </tr>
                 <tr>
@@ -110,13 +110,13 @@
                 <tr>
                     <td>이메일</td>
                     <td colspan="2">
-                        <input type="email" class="tb-input" name="email">
+                        <input type="email" class="tb-input" name="email" value="${simple.email}">
                     </td>
                 </tr>
                 <tr>
                     <td>휴대폰</td>
                     <td colspan="2">
-                        <input type="text" class="tb-input" name="phone">
+                        <input type="text" class="tb-input" name="phone" value="${simple.phone}">
                     </td>
                 </tr>
                 <tr>
@@ -126,7 +126,10 @@
                             <option>선택안함</option>
 
                             <c:forEach var="p" items="${ pList }">
-				        		<option value="${ p.groupNo }"> ${ p.groupName } </option>
+                            	<c:if test="${simple.groupNo eq p.groupNo}">
+				        			<option value="${ p.groupNo }" selected> ${ p.groupName } </option>
+				        		</c:if>
+				        			<option value="${ p.groupNo }"> ${ p.groupName } </option>
 				        	</c:forEach>
 			        	
                         </select>
@@ -162,6 +165,9 @@
 
         </form>
     </div>
+    <script>
+    
+    </script>
 
     <!--새로운 그룹 추가용 모달-->
     <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
