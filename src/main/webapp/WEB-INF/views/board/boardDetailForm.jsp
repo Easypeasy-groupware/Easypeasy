@@ -40,11 +40,11 @@
 		            <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enrollForm.bo';"> 새글쓰기</button>
 		            
 		            <c:if test="${ loginUser.empNo eq b.boardWriter }">
-			            <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
-		                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
+			            <a class="btn btn-primary btn-sm" onclick="postFormSubmit(1);">수정하기</a>
+		                <a class="btn btn-danger btn-sm" onclick="postFormSubmit(2);">삭제하기</a>
 		                
 		                <form action="" method="post" id="postForm"> 
-				         	<input type="hidden" name="boardNo" value="${b.boardNo}">
+				         	<input type="hidden" id="boardNo" name="boardNo" value="${b.boardNo}">
 				        </form>
 				        
 			            <script>
@@ -58,8 +58,8 @@
 				        </script>
 		            </c:if>
 		            
-		              <button type="button" class="btn btn-outline-secondary btn-sm" style="float:right" onclick="location.href='list.bo';">목록으로</button> 
-		             <br><br>
+		            <button type="button" class="btn btn-outline-secondary btn-sm" style="float:right" onclick="location.href='list.bo';">목록으로</button> 
+		            <br><br>
 		             
 		            <table id="contentArea" align="center" class="table" border="1px, solid">
 		                <tr>
@@ -67,7 +67,7 @@
 		                </tr>
 		                <tr>
 		                    <td>
-		                        작성자 프로필이미지
+		                        작성자 프로필이미지(-)
 		                    </td>
 		                    <td>
 		                        ${b.boardWriter}
@@ -77,21 +77,23 @@
 		                    </td>
 		                </tr>
 		                <tr>
-		                    <td colspan="3">
-		                       <%-- <c:choose>
-			                    <c:when test="${ not empty b.originName }">
-			                        <a href="${ b.changeName }" download="${ b.originName }">${ b.originName }</a>
-			                    </c:when>
-			                    <c:otherwise>
-			                        	첨부파일이 없습니다.
-			                    </c:otherwise>
-		                     </c:choose> --%>
-		                    </td>
+		                  <%--   <td colspan="3">
+		                     <c:choose>
+                                  <c:when test="${ empty attachmentList }">
+                                          <div>첨부파일이 없습니다.</div>
+                                  </c:when>
+                                  <c:otherwise>
+                                      <c:forEach var="a" items="${ attachmentList }">
+                                           <a href="${ a.changeName }" download="">${ a.originName }</a><br>
+                                       </c:forEach>
+                                   </c:otherwise>
+                             </c:choose>
+		                    </td> --%>
 		                </tr>
 		                <tr>
 		                    <td colspan="4">
 		                        <p style="height:150px">
-		                        	${b.boardContent}
+		                        	${bd.boardContent}
 		                        </p>
 		                    </td>
 		                </tr>
@@ -142,7 +144,7 @@
 		    				url:"rinsert.bo",
 		    				data:{
 		    					replyContent:$("#content").val(),  
-		    					replyWriter:'${loginUser.empName}',
+		    					replyWriter:'${loginUser.empNo}',
 		    					boardNo:${b.boardNo}  
 		    				},success:function(result){
 		    					
