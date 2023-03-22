@@ -487,7 +487,6 @@
         
 		function copyApp(){
         	
-
         	const arr1 = $(".appList .appEmp").children("input");
         	const arr2 = $(".appList .appEmp").children("span").text();
         	
