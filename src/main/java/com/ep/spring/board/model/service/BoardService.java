@@ -15,8 +15,7 @@ public interface BoardService {
 	ArrayList<Board> selectList(PageInfo pi);
 		
 	// 2. 게시글 작성하기 서비스
-	int insertBoard(Board b);
-	ArrayList<Attachment> selectAtList(Attachment a);
+	int insertBoard(Board b, ArrayList<Attachment> atList);
 	
 	// 3. 게시글 상세조회용 서비스
 	int increaseCount(int boardNo);

@@ -28,12 +28,22 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectList", null, rowBounds); 	
 	}
 	
-	public ArrayList<Attachment> selectAtList(SqlSessionTemplate sqlSession, Attachment a){
-		return (ArrayList)sqlSession.selectList("boardMapper.selectAtList", a);
-	}
+	/*
+	 * public ArrayList<Attachment> selectAtList(SqlSessionTemplate sqlSession,
+	 * Attachment a){ return
+	 * (ArrayList)sqlSession.selectList("boardMapper.selectAtList", a); }
+	 */
 	
 	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.insert("boardMapper.insertBoard", b);
+	}
+	
+	public int insertAttachment(SqlSessionTemplate sqlSession, ArrayList<Attachment> atList) {
+		int result = 0;
+		for(Attachment at : atList) {
+			result += sqlSession.insert("boardMapper.insertAttachment", at);
+		}
+		return result;
 	}
 	
 	public int increaseCount(SqlSessionTemplate sqlSession, int boardNo) {

@@ -8,6 +8,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<!-- 웹소켓 -->
+<script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+
 <!--flatPicker-->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

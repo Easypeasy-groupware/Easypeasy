@@ -277,7 +277,7 @@
                     document.getElementById("overUseTime").value = "";
                     document.getElementById("overUseTime").innerHTML = "";
                 }else{
-                	$("#diff").text("");
+                	$("#diff").text("");g
                     document.getElementById("overUseTime").value = diff;
                     document.getElementById("overUseTime").innerHTML = "총 " + diff + "시간";
                 }

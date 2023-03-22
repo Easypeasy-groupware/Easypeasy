@@ -69,16 +69,16 @@
 			                    <tr>
 			                        <td>
 			                             <input type="checkbox" name="chk" id="">
-			                             <input type="hidden" id="num" value="${a.appNo }">
+			                              <input type="hidden" id="num" value="${a.appNo}">
 			                        </td>
-			                        <td>${a.enrollDate}</td>
-			                        <td>${a.formName }</td>
+			                        <td>${a.enrollDate}'</td>
+			                        <td>${a.formName}</td>
 			                        <c:choose>
 				                        <c:when test="${a.formCode == 3 || a.formCode == 4 }">
-				                        	<td>${a.formName }</td>
+				                        	<td>${a.formName}</td>
 				                        </c:when>
 				                        <c:otherwise>
-				                        	<td>${a.title }</td>
+				                        	<td>${a.title}</td>
 				                        </c:otherwise>
 			                        </c:choose>
 			                        <td>
@@ -86,7 +86,7 @@
 			                        		<span><img src="resources/common_images/attachment.png" width="10px;"></span>
 			                        	</c:if>
 			                        </td>
-			                        <td>${s.empName }</td>
+			                        <td>${a.empName}</td>
 			                    </tr>
 		                    </c:forEach>
 	                    </c:otherwise>
