@@ -111,17 +111,32 @@
         
 
         <button class="btnGroup" id="delete">삭제</button>
-        <button class="btnGroup" id="change-group" data-bs-toggle="modal" data-bs-target="#changeModal">그룹변경</button>
+        <button class="btnGroup" id="change-group">그룹변경</button>
         <button class="btnGroup" id="sendMail">메일쓰기</button>
 		<script>
 			$(function(){
+				
 				$("#delete").click(function(){ // 삭제하기 버튼 클릭시
 					let num = $("input:checkbox[name=name-checkbox]:checked").length; // 선택한 체크박스의 개수
 					if(num == 0){
-						$("#deleteFailModal").modal("show");
+						$(".warning-title").text("⛔ 연락처 삭제");
+						$(".warning-content").text("🗑️ 연락처를 한 개 이상 선택해 주세요❗");
+						$("#failModal").modal("show");
 					}else{
-						$("#add-num").text(num);
+						$("#delete-add-num").text(num);
 						$("#deleteModal").modal("show");
+					}
+				})
+				
+				$("#change-group").click(function(){ // 그룹변경 버튼 클릭시
+					let num = $("input:checkbox[name=name-checkbox]:checked").length; // 선택한 체크박스의 개수
+					if(num == 0){
+						$(".warning-title").text("⛔ 그룹 변경");
+						$(".warning-content").text("📂 연락처를 한 개 이상 선택해 주세요❗");
+						$("#failModal").modal("show");
+					}else{
+						$("#change-add-num").text(num);
+						$("#changeModal").modal("show");
 					}
 				})
 			})
@@ -282,18 +297,18 @@
         </script>
 
         <br><br>
-        <!-- 삭제 불가용 모달-->
-        <div class="modal fade" id="deleteFailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <!-- 선택실패용 모달-->
+        <div class="modal fade" id="failModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color:rgb(166, 184, 145);">
-                        <p class="modal-title" style="font-weight:600">연락처 삭제</p>
+                        <p class="modal-title warning-title" style="font-weight:600"></p>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
 						<br>
-                        ⛔ 연락처를 한 개 이상 선택해 주세요❗
-                        <br><br><br>
+                        <p class="warning-content"></p>
+                        <br>
                         <button type="button" class="btn-event-green" id="modal-del-btn" data-bs-dismiss="modal">확인</button>
                     </div>
                 </div>
@@ -309,7 +324,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        선택한 <span id="add-num" style="font-weight:600;"></span>개의 연락처를 정말 삭제하시겠습니까?
+                        선택한 <span id="delete-add-num" style="font-weight:600;"></span>개의 연락처를 정말 삭제하시겠습니까?
                         <br><br>
                         <button type="button" class="btn-event-gray" data-bs-dismiss="modal" id="modal-close-btn">취소</button>
                         <button type="button" class="btn-event-green" id="modal-del-btn" onclick="deleteAddList();">삭제</button>
@@ -359,6 +374,9 @@
                     
                     <form action="">
                         <div class="modal-body">
+
+							<p>🪄 선택한 <span id="change-add-num" style="font-weight:600;"></span>개의 연락처 그룹 변경</p>
+
                             <select class="group-select">
 	                            <option>선택안함</option>
 	                            <c:forEach var="p" items="${ pList }">
