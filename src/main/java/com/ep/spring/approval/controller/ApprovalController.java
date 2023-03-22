@@ -535,19 +535,19 @@ public class ApprovalController {
 		model.addAttribute("ap", ap);
 		
 		if(ap.getFormCode() == 1) {
-			return "approval/appDraftEnrollForm";
+			return "approval/appDraftUpdateForm";
 		}else if(ap.getFormCode() == 2) {
-			return "approval/appProposalEnrollForm";
+			return "approval/appProposalUpdateForm";
 		}else if(ap.getFormCode() == 3) {
 			VacationForm vf = aService.selectDetailSPrgVf(ap);
 			System.out.println(vf);
 			model.addAttribute(vf);
-			return "approval/appVacationEnrollForm";
+			return "approval/appVacationUpdateForm";
 		}else {
 			OverTimeForm ot = aService.selectDetailSPrgOt(ap);
 			System.out.println(ot);
 
-			return "approval/appOvertimeEnrollForm";			
+			return "approval/appOvertimeUpdateForm";			
 		}	
 
 	}
