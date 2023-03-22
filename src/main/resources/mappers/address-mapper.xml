@@ -814,6 +814,19 @@
 		   set add_bin = 'Y'
 		 where add_no = #{addNo} 
 	</update>
+	
+	<update id="changeGroupAddList">
+	    update address  
+    <choose>
+    	<when test="groupNo == null">
+    		set group_no = ''
+    	</when>
+    	<otherwise>
+    		set group_no = #{groupNo}
+    	</otherwise>
+    </choose>
+		 where add_no = #{addNo} 
+	</update>
 
 
 

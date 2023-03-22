@@ -372,10 +372,9 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     
-                    <form action="">
                         <div class="modal-body">
 
-							<p>🪄 선택한 <span id="change-add-num" style="font-weight:600;"></span>개의 연락처 그룹 변경</p>
+							<p>📂 선택한 <span id="change-add-num" style="font-weight:600;"></span>개의 연락처 그룹 변경</p>
 
                             <select class="group-select">
 	                            <option>선택안함</option>
@@ -389,11 +388,8 @@
                             <button type="button" id="add-new-group" data-bs-dismiss="modal">+</button>
                             <br><br>
                             <button type="button" class="btn-event-gray modal-close-btn" data-bs-dismiss="modal">닫기</button>
-                            <button type="submit" class="btn-event-green modal-change-btn">변경하기</button>
+                            <button type="button" class="btn-event-green modal-change-btn" onclick="changeAddList($('.group-select option:selected').val());">변경하기</button>
                         </div>
-                        
-                    </form>
-    
                 </div>
               </div>
         </div>
@@ -403,6 +399,36 @@
 					$("#insertModal").modal('show');
 				})
 			})
+			
+			function changeAddList(val){// 선택한 주소록 다중 그룹변경용 ajax
+				const aList = []; //빈 배열 생성
+				for(var i=0; i<$("#ps-tbody>tr").length; i++){
+					if($("#ps-tbody>tr").eq(i).children().find("input[type='checkbox']").is(":checked")){
+						aList.push($("#ps-tbody>tr").eq(i).children().eq(0).text());
+					}
+				}
+				var objParams = {
+						"addList" : aList, // 그룹을 업데이트할 주소록 번호배열 저장
+						"groupNo" : val // 변경할 주소록그룹 번호 저장
+						}
+				
+				$.ajax({
+					url:"changeAddList.add",
+					dataType : "json",
+					contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+					type:"post",
+					data : objParams,
+					success : function(result){
+						if(result > 0){
+							location.href= "psGroup.add?group=${ag.groupNo}";
+						}
+					},
+					error : function(){
+						console.log("주소록 그룹변경용 ajax 통신 실패");
+					}
+				});
+				
+			}
 		</script>
         <!--새로운 그룹 추가용 모달-->
 	    <div class="modal fade" id="insertModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -425,7 +451,7 @@
 	            </div>
 	          </div>
 	    </div>
-	    <script>    	
+	    <script>   
 	    	function addGroup(){ /* 그룹 추가용 ajax */
 	    		if($(".group-input").val().trim().length > 0) {
 	    			
