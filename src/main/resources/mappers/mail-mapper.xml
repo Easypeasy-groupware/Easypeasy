@@ -60,6 +60,33 @@
 	        by recep_mail_no desc
 	</select>
 	
+	<select id="selectList" resultMap="MailResult">
+	select 
+		       RECEP_MAIL_NO
+			 , MAIL_NO
+			 , TAG_NO
+			 , emp_name
+			 , SEND_MAIL_ADDRESS
+			 , MAIL_TITLE
+			 , MAIL_CONTENT
+			 , REC_CHECK
+			 , REC_DATE
+			 , substr(rec_date, 0, 11) "rec_date_day"
+             , substr(rec_date, 14) "rec_date_time"
+			 , IMPOR_MAIL
+			 , JUNK_MAIL
+			 , RESER_MAIL
+			 , r.STATUS
+			 , REFERENCE
+			 , HIDDEN_REFERENCE
+	      from rec_mail r
+	      join employee e on r.send_mail_address = e.email
+	     where 
+			   recep_mail_address = #{email}
+	     order
+	        by recep_mail_no desc
+	</select>
+	
 	<select id="selectTagList" resultMap="TagResult">
 		select
 		       TAG_NO

@@ -13,11 +13,4 @@ public class AlarmController {
 	
 	private HttpSession session;
 	
-	// 웹소켓 클래스로 이동 - 메일
-	public String mailAlram(ArrayList<Alarm> alList) {
-		System.out.println(alList);
-		session.setAttribute("alarmList", alList);
-		return "forward:/alarm";
-	}
-	
 }

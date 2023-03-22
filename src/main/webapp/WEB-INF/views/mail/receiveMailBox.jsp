@@ -39,7 +39,7 @@
     .mail_favorite, .read, .attachment{width: 18px;}
 
     #mail_list{height: 850px;}
-    .mail_one{height: 40px; line-height: 35px; margin: 5px 10px 5px 15px; border-bottom: 1px solid rgb(185, 187, 221);}
+    .mail_one{height: 40px; line-height: 35px; margin: 3px 10px 3px 15px; border-bottom: 1px solid rgb(185, 187, 221);}
     .mail_one div{float: left; height: 40px;}
     .mail_select_area{color: black;}
     .mail_check{width: 30px; padding-top: 2px;}
@@ -51,7 +51,7 @@
     .mail_title{width: 380px; margin-right: 15px; overflow: hidden;}
     .mail_date{width: 160px; text-align: right;}
 
-    #paging{text-align: center; display: inline-block; padding-left :0;}
+    #paging{text-align: center; display: inline-block; padding-left :0; margin-top: 20px;}
     #paging li {text-align: center; float: left; list-style:none; border-radius:10px; margin:2px; background-color: rgb(234, 234, 234);}
     #paging li a {display: block; font-size: 12px; color: black; padding: 5px 10px; box-sizing: border-box; text-decoration-line:none;}
     #paging li.on {background:rgb(166, 184, 145);}
@@ -188,8 +188,8 @@
 
             <!-- 메일 리스트 -->
             <div id="mail_list">
-                <c:if test="${ not empty mailList }">
-                    <c:forEach var="m" items="${ mailList }">
+                <c:if test="${ not empty pgMailList }">
+                    <c:forEach var="m" items="${ pgMailList }">
                         <c:if test="${ m.status == 'Y' and m.junkMail == 'N' }">
                             <div class="mail_one" >
                                 <div class="mail_check">
@@ -255,13 +255,25 @@
             </div>
             <div align="center">
                 <ul id="paging">
-                    <li><a href=""> < </a></li>
-                    <li class='on'><a href=""> 1 </a></li>
-                    <li><a href=""> 2 </a></li>
-                    <li><a href=""> 3 </a></li>
-                    <li><a href=""> 4 </a></li>
-                    <li><a href=""> 5 </a></li>
-                    <li><a href=""> > </a></li>
+                    <c:choose>
+                        <c:when test="${ mailPi.currentPage == 1 }">
+                            <li><a href=""> < </a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="on"><a href="list.ma?cpage=${ mailPi.currentPage-1 }"> < </a></li>
+                        </c:otherwise>
+                    </c:choose>
+                    <c:forEach var="p" begin="${ mailPi.startPage }" end="${ mailPi.endPage }">
+                        <li class='on'><a href="list.ma?cpage=${ p }"> ${ p } </a></li>
+                    </c:forEach>
+                    <c:choose>
+                        <c:when test="${ mailPi.currentPage == mailPi.maxPage }">
+                            <li><a href=""> > </a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="on"><a href="list.ma?cpage=${ mailPi.currentPage+1 }"> > </a></li>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </div>
         </div>

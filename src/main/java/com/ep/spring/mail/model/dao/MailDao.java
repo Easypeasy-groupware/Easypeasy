@@ -2,10 +2,12 @@ package com.ep.spring.mail.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.ep.spring.common.model.vo.Attachment;
+import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.mail.model.vo.Mail;
 import com.ep.spring.mail.model.vo.MailTag;
 
@@ -14,6 +16,14 @@ public class MailDao {
 
 	public ArrayList<Mail> selectReceiveMailList(String email, SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiceMailList", email);
+	}
+	
+	public ArrayList<Mail> selectList(PageInfo pi, String email, SqlSessionTemplate sqlSession) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectList", email, rowBounds);
 	}
 
 	public ArrayList<MailTag> selectTagList(int empNo, SqlSessionTemplate sqlSession) {
@@ -127,6 +137,8 @@ public class MailDao {
 		}
 		return result;
 	}
+
+	
 
 	
 

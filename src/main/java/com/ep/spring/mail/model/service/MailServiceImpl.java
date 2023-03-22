@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ep.spring.alarm.model.service.AlarmService;
 import com.ep.spring.common.model.vo.Attachment;
+import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.mail.model.dao.MailDao;
 import com.ep.spring.mail.model.vo.Mail;
 import com.ep.spring.mail.model.vo.MailTag;
@@ -27,6 +28,11 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public ArrayList<Mail> selectReceiveMailList(String email) {
 		return mDao.selectReceiveMailList(email, sqlSession);
+	}
+	
+	@Override
+	public ArrayList<Mail> selectList(PageInfo pi, String email) {
+		return mDao.selectList(pi, email, sqlSession);
 	}
 
 	@Override
@@ -107,6 +113,8 @@ public class MailServiceImpl implements MailService {
 	public int tagMail(Mail m, int[] recMailNoList) {
 		return mDao.tagMail(m, recMailNoList, sqlSession);
 	}
+
+	
 
 	
 

@@ -3,6 +3,7 @@ package com.ep.spring.mail.model.service;
 import java.util.ArrayList;
 
 import com.ep.spring.common.model.vo.Attachment;
+import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.mail.model.vo.Mail;
 import com.ep.spring.mail.model.vo.MailTag;
 
@@ -11,6 +12,8 @@ public interface MailService {
 	/* 1. 메일 메인 페이지 조회 */
 	// - 수신메일 리스트 조회
 	ArrayList<Mail> selectReceiveMailList(String email);
+	// - 리스트 페이징
+	ArrayList<Mail> selectList(PageInfo pi, String email);
 	// - 즐겨찾기 리스트 조회
 	
 	// - 태그 리스트 조회
@@ -58,6 +61,10 @@ public interface MailService {
 
 	/* 9. 메일 태그 등록 */
 	int tagMail(Mail m, int[] recMailNoList);
+
+	
+
+	
 
 
 	

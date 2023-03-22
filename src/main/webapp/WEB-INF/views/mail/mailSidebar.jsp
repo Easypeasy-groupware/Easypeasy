@@ -17,7 +17,7 @@
 	.menu-btn:hover{background-color: rgb(93, 105, 81);}
     .mailbox:hover{font-weight: 600; cursor: pointer;}
     .tagOne:hover{font-weight: 600; cursor: pointer;}
-    #mail_side_bar{width: 200px; height: 1000px; float: left; border-right: 2px solid rgb(185, 187, 221); padding: 10px;}
+    #mail_side_bar{width: 200px; height: 1010px; float: left; border-right: 2px solid rgb(185, 187, 221); padding: 10px;}
     .mailbox_subject{width: 157px; float: left; font-size: 18px; font-weight: 700; color: darkslategrey;}
     .settings{width: 13px; padding-top: 5px;}
     .boxList{width: 170px;}

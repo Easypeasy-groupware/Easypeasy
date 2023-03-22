@@ -31,10 +31,6 @@ public class AlarmServiceImpl implements AlarmService {
 			m.setMailNo(mailNo);
 			result += aDao.insertReceiveMailAlarm(m, sqlSession);
 			al = aDao.selectReceiveMailAlarm(m, sqlSession);
-			alList.add(al);
-		}
-		if(result > 0) {
-			aController.mailAlram(alList);
 		}
 		
 	}
