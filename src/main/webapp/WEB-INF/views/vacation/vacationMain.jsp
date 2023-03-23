@@ -79,8 +79,9 @@
         font-weight: bold;
     }
     .smallTitle{
+        padding-left: 40px;
         float: left;
-        margin-right: 750px;
+        margin-right: 680px;
         font-size: 20px;
     }
     th, td {
@@ -122,8 +123,7 @@
                 <tr>
                     <th>이름</th>
                     <th>소속</th>
-                    <th>발생연차</th>
-                    <th>발생월차</th>
+                    <th>일반휴가</th>
                     <th>특별휴가</th>
                     <th>사용</th>
                     <th>잔여</th>
@@ -153,7 +153,6 @@
                 	</c:choose>
                     <td>16</td>
                     <td>2</td>
-                    <td>0</td>
                     <td>3</td>
                     <td>15</td>
                 </tr>

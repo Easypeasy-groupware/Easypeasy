@@ -36,5 +36,13 @@ public interface CommuteService {
 	
 	// 근무현황 및 계획(일반)
 	ArrayList<Commute> monthlyWorkingStatus(int empNo);
+	
+	// 근무시간 확인 및 수정=>클릭된 사원의 정보
+	Employee selectEmployeeInformation(int empNo);
+	
+	// 근무시간 수정(인사계정)
+	int updateTimeHR(Commute c);
+	
+
 
 }

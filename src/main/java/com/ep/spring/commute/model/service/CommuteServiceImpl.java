@@ -90,6 +90,22 @@ public class CommuteServiceImpl implements CommuteService{
 		
 		return cDao.monthlyWorkingStatus(sqlSession, empNo);
 	}
+
+	// 근무시간 확인 및 수정=>클릭된 사원의 정보
+	@Override
+	public Employee selectEmployeeInformation(int empNo) {
+		
+		return cDao.selectEmployeeInformation(sqlSession, empNo);
+	}
+
+	// 근무시간 수정(인사계정)
+	@Override
+	public int updateTimeHR(Commute c) {
+		
+		return cDao.updateTimeHR(sqlSession, c);
+	}
+
+
 	
 	
 

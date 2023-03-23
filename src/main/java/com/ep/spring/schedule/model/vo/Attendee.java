@@ -1,5 +1,6 @@
 package com.ep.spring.schedule.model.vo;
 
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

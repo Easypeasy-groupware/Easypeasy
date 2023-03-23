@@ -53,6 +53,25 @@
         text-align: center;
     }
 
+
+
+	#update_calendar_view {
+	    width: 300px;
+	    height: 280px;
+	    padding-top: 15px;
+	    position: absolute;
+	    top: 450px;
+	    left: 950px;
+	    border-radius: 10px;
+	    border: 1px solid rgb(185, 187, 221);
+	    background: white;
+	    z-index: 10;
+	    display: none;
+	}
+	
+	.upDel_calendar{
+		cursor: pointer;
+	}
 </style>
 </head>
 <body>
@@ -66,32 +85,17 @@
             <span>
                 <h5>내 캘린더 관리</h5>
             </span>
+            <br>
             <div id="add">
-                <span>
-                    캘린더 이름
-                </span>
                 <div>
-                    <input type="text" name="" id="" size="25" placeholder=" 추가할 이름을 입력해주세요" required>
-                    <button class="btn btn-sm btn-light">추가</button>
+                    <a href="add.cal" class="btn btn-sm btn-light" style="margin: 0 -20px -5px -10px; background: rgb(214, 223, 204); color: white;">캘린더 추가</a>
                 </div>
             </div>
         </div>
         <br>
-        <div id="del">
-            <button type="button" class="btn" onclick="">
-                <i class="fas fa-trash-alt"></i>
-                삭제
-            </button>
-        </div>
-        <table class="table table-hover table-sm">
+        <table class="table table-hover table-sm setting-list">
             <thead>
                 <tr>
-                    <th>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" name="allCheck" class="custom-control-input allCheck" id="allCheck" onclick="allChecked(this)">
-                            <label class="custom-control-label" for="allCheck"></label>
-                        </div>
-                    </th>
                     <th>캘린더</th>
                     <th>기본 캘린더</th>
                 </tr>
@@ -101,13 +105,11 @@
             		<c:choose>
                			<c:when test="${ c.calDefault eq 'Y' }">
                				<tr>
-			                    <td>
-			                        
-			                    </td>
-			                    <td>(기본) ${ c.calTitle }</td>
+			                    <td class="upDel_calendar">(기본) ${ c.calTitle }</td>
+			                    <input type="hidden" id="defaultNo" value="${ c.calNo }">
 			                    <td>
 			                        <div class="custom-control custom-radio">
-		                                <input type="radio" class="custom-control-input" id="Y" name="default" value="">
+		                                <input type="radio" class="custom-control-input radioDefault" id="Y" name="default">
 		                                <label class="custom-control-label" for="Y"></label>
 		                            </div>
 			                    </td>
@@ -115,16 +117,11 @@
                			</c:when>
                			<c:otherwise>
                				<tr>
-			                    <td>
-			                        <div class="custom-control custom-checkbox">
-	                                <input type="checkbox" name="check" class="custom-control-input check" id="check${ c.calNo  }" value="" onclick="checkClicked()">
-	                                <label class="custom-control-label" for="check${ c.calNo }"></label>
-	                            </div>
-			                    </td>
-			                    <td>${ c.calTitle }</td>
+			                    <td class="upDel_calendar">${ c.calTitle }</td>
+			                    <input type="hidden" value="${ c.calNo }">
 			                    <td>
 			                        <div class="custom-control custom-radio">
-		                                <input type="radio" class="custom-control-input" id="customRadio${ c.calNo }" name="default" value="">
+		                                <input type="radio" class="custom-control-input radioDefault" id="customRadio${ c.calNo }" name="default">
 		                                <label class="custom-control-label" for="customRadio${ c.calNo }"></label>
 		                            </div>
 			                    </td>
@@ -135,10 +132,22 @@
             </tbody>
         </table>
     </div>
-
+    
+    
+    
     <script>
-
-
+    	
+    	$("#Y").prop("checked", true);
+    
+    
+    	$(document).on("click", ".setting-list>tbody>tr>.upDel_calendar", function(){
+				
+			location.href = 'settingUpdel.cal?no=' + $(this).next().val();
+			
+		})
+		
+    
+		/*
         // 체크 박스
         function allChecked(target){
     		if($(target).is(":checked")){
@@ -163,8 +172,44 @@
     		}
     		
     	}
+    	*/
+    
     	
-    	$("#Y").prop("checked", true);
+    	// 기본 캘린더 변경 ajax
+    	$(document).on("change", ".radioDefault", function(){
+			
+    		const no = $(this).parent().parent().prev().val();
+    		const dno = $("#defaultNo").val();
+    		
+    		console.log(no);
+    		console.log(dno);
+    		
+    		$.ajax({
+    			url:"defaultUpdate.cal",
+    			type:"post",
+    			data:{
+    				no:no,
+    				dno:dno
+    			},
+    			success:function(result){
+    				
+    				if(result > 0){
+    					
+    					location.reload();
+    					$("#Y").prop("checked", true);
+    					
+    				}else{
+    					
+    				}
+    				
+    			},error:function(){
+    				console.log("기본캘린더 변경 ajax 통신 실패");
+    			}
+    		})
+			
+		})
+    	
+    	
     </script>
 
 </body>

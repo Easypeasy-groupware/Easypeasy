@@ -153,5 +153,84 @@ public class CommuteController {
 			
 			
 		}
+		//근무시간 확인 및 수정=>클릭된 사원의 정보
+		@RequestMapping("workingEmp.HR")
+		public String selectEmpWorkingStatus(int no, HttpSession session) {
+			int empNo = no;
+			
+			ArrayList<Commute> list = cService.monthlyWorkingStatus(empNo);
+			Employee e = cService.selectEmployeeInformation(empNo);
+			
+			session.setAttribute("clickEmp", e);
+			session.setAttribute("list", list);
+			
+			return "commute/selectEmpWorkingStatus";
+			
+		}
+		
+		//근무시간 수정(인사계정)
+		@RequestMapping("updateTime.HR")
+		public String updateTimeHR(Commute c, HttpSession session) {
+			//System.out.println(c);
+			int result = cService.updateTimeHR(c);
+			int empNo = c.getEmpNo();
+			
+			if(result>0) {
+				AlertMsg msg = new AlertMsg("근무시간 수정", "근무시간 수정이 성공적으로 완료되었습니다.");
+				session.setAttribute("successMsg", msg);
+				
+				return "redirect:workingEmp.HR?no="+empNo;
+			}else {
+			
+				AlertMsg msg = new AlertMsg("근무시간 수정", "근무시간 수정에 실패하였습니다.");
+				session.setAttribute("failMsg", msg);
+				
+				return "redirect:workingEmp.HR?no="+empNo;
+			}
+		}
+		
+		//휴가관리(인사게정)
+		@RequestMapping("vacList.HR")
+		public ModelAndView selectVacList(ModelAndView mv, HttpSession session, @RequestParam(value="cpage", defaultValue="1")int currentPage) {
+			
+			int listCount = cService.selectListCount();
+			
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+			ArrayList<Employee> list = cService.selectEmpList(pi);
+			
+			if(list != null) {
+				mv.addObject("pi", pi).addObject("list", list).setViewName("vacation/vacationEmpList");
+				
+				return mv;
+			}else {
+				AlertMsg msg = new AlertMsg("휴가관리", "사원 휴가 조회에 실패하였습니다.");
+				mv.addObject("failMsg", msg)
+				  .setViewName("commute/HRworkingStatus");
+				return mv;
+			}
+			
+			
+		}
+		
+		//휴가관리 수정 및 상세페이지
+		@RequestMapping("updateVac.HR")
+		public String updateVac(int no, HttpSession session) {
+			int empNo = no;
+			
+			ArrayList<VacationRecode> list1 = cService.selectVacMain(empNo);
+			ArrayList<VacationForm> list2 = cService.selectVacForm(empNo);
+			Employee e = cService.selectEmployeeInformation(empNo);
+			
+			session.setAttribute("clickEmp", e);
+			session.setAttribute("list1", list1);
+			session.setAttribute("list2", list2);
+			
+			System.out.println(list1);
+			System.out.println(list2);
+			
+			return "vacation/vacationUpdate";
+			
+		}
+		
 
 }

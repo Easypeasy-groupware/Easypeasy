@@ -20,5 +20,8 @@ public class VacationRecode {
 	private String vacReason;
 	private String vacDivide;
 	private String vacCategory;
+	private int vacRemaining;
+	
+
 
 }

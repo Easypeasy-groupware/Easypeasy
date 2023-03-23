@@ -131,7 +131,8 @@
                     <h4 class="modal-title">일정 등록</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button> 
                 </div>
-                <form action="일정등록" method="post">
+                <form action="insert.sc" method="post">
+                <input type="hidden" name="scWriter" value="${ loginUser.empNo }">
                     <!-- Modal Body -->
                     <div style="margin: 20px;">
                         <table id="modal">
@@ -139,16 +140,15 @@
                                 <tr height="55">
                                     <th width="85">일정명</th>
                                     <td colspan="2">
-                                        <input type="text" name="" size="80" placeholder=" 추가할 일정을 입력하세요" required>
+                                        <input type="text" name="scTitle" size="80" placeholder=" 추가할 일정을 입력하세요" required>
                                     </td>
                                 </tr>
                                 <tr height="55">
                                     <th>일시</th>
                                     <td colspan="2">
-                                        <input type="text" id="sDate" size="10" name="" value="">
+                                        <input type="text" id="sDate" size="10" name="startDate">
                                         <span>
-                                            <select class="sel" name="" id="sel1">
-                                                <option value="00:00">00:00</option>
+                                            <select class="sel" name="startTime" id="sel1">
                                                 <option value="00:30">00:30</option>
                                                 <option value="01:00">01:00</option>
                                                 <option value="01:30">01:30</option>
@@ -199,10 +199,9 @@
                                             </select>
                                         </span>
                                         <span>~</span>
-                                        <input type="text" id="eDate" size="11" name="" value="">
+                                        <input type="text" id="eDate" size="11" name="endDate">
                                         <span>
-                                            <select class="sel" name="" id="sel2">
-                                                <option value="00:00">00:00</option>
+                                            <select class="sel" name="endTime" id="sel2">
                                                 <option value="00:30">00:30</option>
                                                 <option value="01:00">01:00</option>
                                                 <option value="01:30">01:30</option>
@@ -263,7 +262,7 @@
                                     <th>전사일정</th>
                                     <td colspan="2">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="company" id="company" onclick="showHidden();">
+                                            <input type="checkbox" class="custom-control-input" name="scCompany" value="N" id="company" onclick="showHidden();">
                                             <label class="custom-control-label" for="company">전사일정</label>
                                         </div>
                                     </td>
@@ -277,10 +276,10 @@
                                         	<c:forEach var="c" items="${ myCalList }">
                                         		<c:choose>
                                         			<c:when test="${ c.calDefault eq 'Y' }">
-                                        				<option value="${ c.calTitle }">(기본) ${ c.calTitle }</option>
+                                        				<option value="${ c.calNo }">(기본) ${ c.calTitle }</option>
                                         			</c:when>
                                         			<c:otherwise>
-                                        				<option value="${ c.calTitle }">${ c.calTitle }</option>
+                                        				<option value="${ c.calNo }">${ c.calTitle }</option>
                                         			</c:otherwise>
                                         		</c:choose>
                                        		</c:forEach>
@@ -292,7 +291,7 @@
                                 <tr height="55">
                                     <th>장소</th>
                                     <td colspan="2">
-                                        <input type="text" name="" size="80" placeholder=" 장소를 입력하세요" required>
+                                        <input type="text" name="scPlace" size="80" placeholder=" 장소를 입력하세요" required>
                                     </td>
                                 </tr>
                             </tfoot>
@@ -390,8 +389,8 @@
                 events: [
                     {
                         title: 'ㅎㅇㅎㅇ',
-                        start: '2023-03-05 00:00',
-                        end: '2023-03-05 23:30'
+                        start: '2023-03-05',
+                        end: '2023-03-05'
                     }
                 ]
             });
@@ -439,8 +438,8 @@
         function allDayShowHidden(){
             if($("input:checkbox[id='allDay']").is(":checked") == true) {
                 $(".sel").attr("hidden", true);
-                $("#sel1").val("00:00"); // 시간 값 00:00시부터
-                $("#sel2").val("23:30"); // 23:30시까지
+                $("#sel1").val(""); // 시간 값 00:00시부터
+                $("#sel2").val(""); // 23:30시까지
                 $("input[name=allDay]").val("Y");
             } else {
             	//console.log($("input:checkbox[id='allDay']").prop("checked", false));
@@ -448,10 +447,11 @@
             } 
         }
 
-        // 전사일정 체크 확인
+     	// 전사일정 체크 확인
         function showHidden(){
             if($("input:checkbox[id='company']").is(":checked") == true) {
-                $(".body").attr("hidden", true);    
+                $(".body").attr("hidden", true);
+                $("#company").val("Y");
             } else {
                 $(".body").attr("hidden", false);
             }

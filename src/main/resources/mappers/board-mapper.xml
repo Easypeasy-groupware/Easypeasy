@@ -133,6 +133,7 @@
 		 where board_no = #{boardNo}
 	</select>
 	
+
 	<select id="selectAttachmentList" resultMap="attachmentResult">
 		select
 			   attach_no
@@ -170,9 +171,9 @@
 			 , reply_writer
 			 , reply_content
 			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
-		  from board_reply
+		  from board_reply 
 		 where status = 'N'
-		   and board_no = #{boardNo}		
+		   and reply_no = #{boardNo}		
 		 order
 		    by reply_no desc  
 	</select>
@@ -204,6 +205,7 @@
 			 , anonym_status
 			 , dept_code
 	      from board_cate
+	     where board_cno = #{boardCno}
 	</select>
 
 	<insert id="insertCate">

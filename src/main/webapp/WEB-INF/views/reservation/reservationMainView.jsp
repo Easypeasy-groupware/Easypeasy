@@ -345,6 +345,7 @@
                     var eMonth = ('0' + (endDay.getMonth() + 1)).slice(-2);
                     var eDay = ('0' + endDay.getDate()).slice(-2);
                     var eHour = ('0' + endDay.getHours()).slice(-2);
+                    
                     var eMinites = ('0' + endDay.getMinutes()).slice(-2);
 
                     // 두번째 선택된 날짜 문자열 반환

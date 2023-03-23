@@ -80,11 +80,6 @@ public class EmployeeController {
 		
 		//int no = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		
-		int no = loginUser.getEmpNo();
-		
-		ArrayList<Employee> list = oService.selectOrgList(no);
-		ArrayList<Department> deptList = oService.selectDept();
-		ArrayList<Job> jList = oService.selectJob();
 		
 		
 		if(loginUser != null && bcryptPasswordEncoder.matches(e.getEmpPwd(), loginUser.getEmpPwd())) { // 성공
@@ -114,7 +109,18 @@ public class EmployeeController {
 	
 	// 메인페이지 이동
 	@RequestMapping("main.ep")
-	public String mainPage() {
+	public String mainPage(HttpSession session) {
+		
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
+		ArrayList<Employee> list = oService.selectOrgList(empNo);
+		ArrayList<Department> deptList = oService.selectDept();
+		ArrayList<Job> jList = oService.selectJob();
+		
+		session.setAttribute("list", list);
+		session.setAttribute("deptList", deptList);
+		session.setAttribute("jList", jList);
+		
 		return "common/main";
 	}
 	
