@@ -173,7 +173,8 @@
 	
 	<select id="monthlyWorkingStatus" resultMap="commuteResult">
 			select
-			        emp_no
+					com_code
+			      , emp_no
 			      , replace(enroll_date, '/', '-') as "enroll_date"
 			      , start_time
 			      , end_time
@@ -182,6 +183,36 @@
 		       from commute
 		      where emp_no = #{empNo}
 	</select>
+	
+	<select id="selectEmployeeInformation" resultMap="employeeResult">
+		select
+			    emp_no
+			  , emp_name
+			  , emp_id
+			  , emp_pwd
+			  , email
+			  , address
+			  , phone
+			  , emp_profile
+			  , dept_code
+			  , job_code
+			  , to_char(hire_date, 'YYYY"년"MM"월"DD"일"') as "hire_date"
+			  , ent_yn
+			  , ent_date
+			  , status
+		  from employee e
+		 where emp_No = #{empNo}
+		   and ent_yn = 'N'
+	</select>
+	
+	<update id="updateTimeHR">
+		update 
+			   commute
+		   set start_time = #{startTime},
+		       end_time = #{endTime}
+		 where emp_no = #{empNo}
+		   and com_code = #{comCode}
+	</update>
 	
 
 </mapper>

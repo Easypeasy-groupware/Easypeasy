@@ -154,7 +154,7 @@
 		   
             
             <div class="icons">
-                <a href="javascript:openWindowPop('viewChatSample.ch', 'popup');" class="position-relative" id="chat-a">
+                <a href="javascript:openWindowPop('chatList.ch', 'popup');" class="position-relative" id="chat-a">
                     <img src="resources/common_images/comments.png" class="chat-icon"> 
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger websk-num">
                         99+
@@ -170,7 +170,7 @@
             </div>
 			<script>
 				function openWindowPop(url, name){
-					var options = 'top=500, left=1400, width=500, height=600, status=no, menubar=no, toolbar=no, titlebar=no, resizable=no scrollbars=yes';
+					var options = 'top=500, left=1400, width=400, height=600, status=no, menubar=no, toolbar=no, titlebar=no, resizable=no, scrollbars=yes';
 					window.open(url, name, options);
 				}
 			</script>

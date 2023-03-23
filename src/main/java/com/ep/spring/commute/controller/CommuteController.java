@@ -153,5 +153,47 @@ public class CommuteController {
 			
 			
 		}
+		//근무시간 확인 및 수정=>클릭된 사원의 정보
+		@RequestMapping("workingEmp.HR")
+		public String selectEmpWorkingStatus(int no, HttpSession session) {
+			int empNo = no;
+			
+			ArrayList<Commute> list = cService.monthlyWorkingStatus(empNo);
+			Employee e = cService.selectEmployeeInformation(empNo);
+			
+			session.setAttribute("clickEmp", e);
+			session.setAttribute("list", list);
+			
+			return "commute/selectEmpWorkingStatus";
+			
+		}
+		
+		//근무시간 수정(인사계정)
+		@RequestMapping("updateTime.HR")
+		public String updateTimeHR(Commute c, HttpSession session) {
+			//System.out.println(c);
+			int result = cService.updateTimeHR(c);
+			int empNo = c.getEmpNo();
+			
+			if(result>0) {
+				AlertMsg msg = new AlertMsg("근무시간 수정", "근무시간 수정이 성공적으로 완료되었습니다.");
+				session.setAttribute("successMsg", msg);
+				
+				return "redirect:workingEmp.HR?no="+empNo;
+			}else {
+			
+				AlertMsg msg = new AlertMsg("근무시간 수정", "근무시간 수정에 실패하였습니다.");
+				session.setAttribute("failMsg", msg);
+				
+				return "redirect:workingEmp.HR?no="+empNo;
+			}
+		}
+		
+		//휴가관리(인사게정)
+		@RequestMapping("vacList.HR")
+		public String selectVacList() {
+			return "vacation/vacationEmpList";
+		}
+		
 
 }

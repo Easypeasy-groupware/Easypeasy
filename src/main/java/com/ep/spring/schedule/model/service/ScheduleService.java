@@ -2,7 +2,9 @@ package com.ep.spring.schedule.model.service;
 
 import java.util.ArrayList;
 
+import com.ep.spring.schedule.model.vo.Attendee;
 import com.ep.spring.schedule.model.vo.Calendar;
+import com.ep.spring.schedule.model.vo.Schedule;
 
 public interface ScheduleService {
 
@@ -14,5 +16,17 @@ public interface ScheduleService {
 	
 	// 내캘린더 추가
 	int insertCalendar(Calendar c);
+	
+	// 일정추가
+	int insertSchedule(Schedule s);
+	
+	// 참석자 추가
+	int insertAttendee(ArrayList<Attendee> atList);
+	
+	// 선택한 캘린더 조회
+	Calendar selectCalendar(int calNo);
+	
+	// 내캘린더 수정
+	int updateCalendar(Calendar c);
 	
 }
