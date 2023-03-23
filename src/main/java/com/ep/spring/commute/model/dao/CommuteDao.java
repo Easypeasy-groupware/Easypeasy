@@ -45,7 +45,7 @@ public class CommuteDao {
 	}
 	
 	//휴가내역 기록 조회
-	public ArrayList<VacationRecode> selectVacMain(SqlSessionTemplate sqlSession, int empNo){
+	public ArrayList<VacationRecode> selectVacMain(SqlSessionTemplate sqlSession, int empNo){		
 		return (ArrayList)sqlSession.selectList("commuteMapper.selectVacMain", empNo);
 	}
 	

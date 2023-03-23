@@ -23,7 +23,6 @@
 		<result column="vac_divide" property="vacDivide" />
 		<result column="vac_category" property="vacCategory" />
 		<result column="vac_remaining" property="vacRemaining" />
-		<result column="emp_name" property="empName" />
 	</resultMap>
 	
 	<resultMap id="vacFormResult" type="VacationForm">

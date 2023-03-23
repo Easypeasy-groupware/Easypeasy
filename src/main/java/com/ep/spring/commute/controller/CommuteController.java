@@ -225,8 +225,8 @@ public class CommuteController {
 			session.setAttribute("list1", list1);
 			session.setAttribute("list2", list2);
 			
-			//System.out.println(list1);
-			//System.out.println(list2);
+			System.out.println(list1);
+			System.out.println(list2);
 			
 			return "vacation/vacationUpdate";
 			

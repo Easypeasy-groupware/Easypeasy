@@ -22,6 +22,6 @@ public class VacationRecode {
 	private String vacCategory;
 	private int vacRemaining;
 	
-	private String empName;
+
 
 }
