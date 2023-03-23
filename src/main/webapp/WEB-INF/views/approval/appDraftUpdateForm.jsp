@@ -61,6 +61,7 @@
                	<b style="font-size:30px;"> 업무기안</b>
                 <input type="hidden" name="formCode" value="1">
                 <input type="hidden" name="formName" value="업무기안"> 
+                <input type="hidden" name="appNo" value = "${ap.appNo}">
             </div>
             <div class="left-form2"><a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
                                     <a href="" style="padding:20px; color:rgb(71, 71, 71);">임시저장</a>|

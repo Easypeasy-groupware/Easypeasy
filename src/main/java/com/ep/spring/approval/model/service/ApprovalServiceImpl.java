@@ -265,8 +265,8 @@ public class ApprovalServiceImpl implements ApprovalService{
 		  c = aDao.updateAttachment(sqlSession, atList);
 		}
 		
-		System.out.println(vf);
-		System.out.println(ot);
+		//System.out.println(vf);
+		//System.out.println(ot);
 		
 		if(vf.getVacStart() != null) {
 			d = aDao.updateVacationForm(sqlSession, vf);
