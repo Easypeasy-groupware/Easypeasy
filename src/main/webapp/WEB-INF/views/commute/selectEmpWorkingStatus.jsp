@@ -35,6 +35,19 @@
         width: 900px;
         
     }
+    .img{
+        width: 100px;
+        height: 100px;
+        margin: 40px;
+        border: 1px solid gray;
+        float: left;
+        border-radius: 150px;
+    }
+    .name{
+        margin-top: 80px;
+        float: left;
+        font-weight: bold;
+    }
 </style>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -61,11 +74,18 @@
 	    
 
 
-        <div class="side"><jsp:include page="../commute/commuteSidebar.jsp"/></div>
+        <div class="side"><jsp:include page="../commute/HRsidebar.jsp"/></div>
 
         <div class="allContent">
 
-            <div class="title"><b>근무현황 및 계획</b><hr></div>
+            <div class="title"><b>근무시간 확인/수정</b><hr></div>
+            
+            <div class="profile">
+                <img  class="img" id="profileImg" src="<c:out value='${ loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" >
+               
+                
+            </div>
+            <div class="name">${ loginUser.empName }님</div>
 
             <div id='calendar'></div>
 
@@ -118,10 +138,7 @@
 
         </div>
 
-
-
-
-    
+	
 
 </body>
 </html>

@@ -153,5 +153,17 @@ public class CommuteController {
 			
 			
 		}
+		
+		@RequestMapping("workingEmp.HR")
+		public String selectEmpWorkingStatus(int no, HttpSession session) {
+			int empNo = no;
+			
+			ArrayList<Commute> list = cService.monthlyWorkingStatus(empNo);
+			session.setAttribute("list", list);
+			
+			return "commute/selectEmpWorkingStatus";
+			
+		}
+		
 
 }

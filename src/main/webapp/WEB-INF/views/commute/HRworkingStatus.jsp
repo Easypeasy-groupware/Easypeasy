@@ -207,7 +207,7 @@
 	                	</c:otherwise>
 	               	 	</c:choose>
 	                    <td>
-	                        <button class="view">근무시간</button>
+	                        <a href="workingEmp.HR?no=${list.empNo}"><button class="view">근무시간</button></a>
 	                    </td>
 	                </tr>
             	</c:forEach>
