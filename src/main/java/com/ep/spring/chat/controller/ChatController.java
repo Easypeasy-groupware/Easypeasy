@@ -14,10 +14,10 @@ public class ChatController {
 	 @Autowired private ChatService cService;
 	 
 	
-	@RequestMapping("viewChatSample.ch")
+	@RequestMapping("chatList.ch")
 	public String viewChatSample(Model model) {
 		
-		return "chat/chatSample";
+		return "chat/chatRoomDetail";
 	}
 
 }
