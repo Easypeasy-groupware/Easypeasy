@@ -11,6 +11,8 @@
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css'>
 
+
+
 <!-- Alertify JavaScript -->
 <!-- <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script> -->
 
@@ -119,7 +121,6 @@
 </style>
 </head>
 <body>
-
 	
 	<c:if test="${ not empty successMsg }">
 		<script>
@@ -215,7 +216,7 @@
 
     <div class="outer">
 
-    <div id="hide_block"></div>
+    <!-- <div id="hide_block"></div>
 	<div id="alarm_bar">
 		<div id="alarm_header">
 			<div style="width: 100px; height: 100%; float: left; line-height: 30px; font-size: 20px;">전체 알람</div>
@@ -227,8 +228,8 @@
 			<button type="button" class="btn btn-light" id="alarm_delete">전체 삭제</button>
 		</div>
 
-		<!-- <div id="alarm_content">
-			<c:forEach var="a" items="${ alarmList }" >
+		<div id="alarm_content">
+			<c:forEach var="a" begin="0" end="9" items="${ pgAlarmList }" >
 				<div class="alarm_msg">
 					<span class="alarm_category">
 						<c:choose>
@@ -259,23 +260,39 @@
 				<li><a href=""> > </a></li>
 			</ul>
 		</div>
-	</div>
+	</div> -->
 
+    <!-- 웹소켓 -->
+    <!-- <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 	<script>
-		window.addEventListener('load', function(){
-			console.log('as')
-			const deleteAll = document.getElementById("alarm_delete");
-			const sock = new SockJS("${pageContext.request.contextPath}/alarm");
-			sock.onmessage = onMessage;
+        // 웹소켓 접속
+        let sock = null
 
-			deleteAll.addEventListener('click', function(){
+        $(document).ready(function (){
+            connectWs();
+        })
+        function connectWs(){
+            sock = new SockJS("${pageContext.request.contextPath}/alarm");
+            sock.onopen = function() {
+                sock.send("${loginUser.empNo}");
+            }
 
-			});
+            sock.onmessage = onMessage;
+            sock.onclose = onClose;
 
-			function onMessage(evt){
-				console.log(evt.data)
-			}
-		})
+            function sendMessage(){
+                
+            };
+
+            function onMessage(evt){
+                console.log(evt.data)
+            };
+
+            function onClose(){ // 퇴장하기 클릭시 실행되는 함수
+                // location.href = "${pageContext.request.contextPath}";
+                // * 웹소켓과의 통신도 끊기게됨 => ChatEchoHandler클래스의 afterConnectionClosed메소드 실행됨
+            }
+        }
 	</script>
 
 	<script>
@@ -286,11 +303,36 @@
                 let alarmBar = document.getElementById('alarm_bar');
                 let alarmToggle = document.getElementById('alarm_toggle');
                 const toggle = alarmBar.style.transform
-                console.log(toggle);
+                
                 if(toggle == 'translate(950px, 0px)') {
                     alarmBar.style['transform'] = "translate(1250px, 0px)";
                 }else{
                     alarmBar.style['transform'] = "translate(950px, 0px)";
+                }
+                
+            });
+        });
+
+        document.getElementById("alarm-a").addEventListener('click', function(){
+            $.ajax({
+                url:"alarm.al",
+                type:"POST",
+                data:{
+                    empNo: ${loginUser.empNo}
+                },
+                success: function(result){
+                    console.log('as');
+                    console.log(result);
+                    console.log(${pgAlarmList});
+                    if(result == "Y"){
+                        // let value = 
+                                    
+                                    
+                        // console.log(value)
+                        // $("#alarm_content").html(value)
+                    }
+                }, error: function(){
+
                 }
             });
         });
@@ -302,6 +344,11 @@
 				this.style.color = 'gainsboro';
 			});
 		});
+
+        // 알람창 메세지 전체 삭제 이벤트
+        const deleteAll = document.getElementById("alarm_delete");
+            deleteAll.addEventListener('click', function(){
+        });
 	</script> -->
 </body>
 </html>
