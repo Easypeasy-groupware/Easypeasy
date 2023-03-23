@@ -15,9 +15,21 @@ public class ChatController {
 	 
 	
 	@RequestMapping("chatList.ch")
-	public String viewChatSample(Model model) {
+	public String viewChatList(Model model) {
+		
+		return "chat/chatRoomList";
+	}
+	
+	@RequestMapping("chatRoom.ch")
+	public String viewChatRoomDetail() {
 		
 		return "chat/chatRoomDetail";
+	}
+	
+	@RequestMapping("empList.ch")
+	public String viewChatEmpList() {
+		
+		return "chat/chatEmpList";
 	}
 
 }
