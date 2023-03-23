@@ -41,47 +41,37 @@
 	<div id="content">
         <div id="con-title">
             <span>
-                <h5>캘린더 수정/삭제</h5>
+                <h5>캘린더 추가</h5>
             </span>
         </div>
         <br>
-        <form action="update.cal" method="post">
-        <input type="hidden" name="calNo" value="${ c.calNo }">
+        <form action="insertBtn.cal" method="post">
+        <input type="hidden" name="empNo" value="${loginUser.empNo}">
             <div id="content-1">
                 <table>
                     <tr height="50px">
                         <td width="100">캘린더명</td>
                         <td>
-                            <input type="text" name="calTitle" value="${ c.calTitle }" size="100">
+                            <input type="text" name="calTitle" size="100" required>
                         </td>
                     </tr>
                     <tr height="50px">
                     	<td>캘린더 색상</td>
                     	<td>
-                    		<input type="color" name="calColor" value="${ c.calColor }">
+                    		<input type="color" name="calColor" required>
                     	</td>
                     </tr>
                 </table>
                 <br>
                 <div align="center">
                     <a href="setting.sc" class="btn btn-sm" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">목록으로 돌아가기</a>&nbsp;&nbsp;
-                    <button class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">캘린더 수정하기</button>&nbsp;&nbsp;
-                    <a href="delete.cal?no=${ c.calNo }" class="btn btn-sm" id="deleteBtn" style="border: 1px solid lightgray; background: white;">캘린더 삭제하기</a>
+                    <button class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">캘린더 추가하기</button>
                 </div>
             </div>
         </form>
     </div>
     
-    <script>
-	    var calDefault = "<c:out value='${ c.calDefault }'/>";
-		
-		if(calDefault == "Y"){
-			$("#deleteBtn").css("pointer-events", "none");
-			$("#deleteBtn").css("cursor", "default");
-			$("#deleteBtn").css("background", "rgb(235, 235, 235)");
-			$("#deleteBtn").css("color", "white");
-		}
-    </script>
+    
 
 </body>
 </html>

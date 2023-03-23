@@ -34,7 +34,7 @@ public class ScheduleController {
 	}
 	
 	@RequestMapping("insert.cal")
-	public String insertCalendar(Calendar c, Model model) {
+	public String insertCalendar(Calendar c, Model model, HttpSession session) {
 		
 		int result = scService.insertCalendar(c);
 		
@@ -166,6 +166,29 @@ public class ScheduleController {
 			
 		}else {
 			AlertMsg msg = new AlertMsg("캘린더 삭제", "캘린더 삭제 실패");
+			session.setAttribute("failMsg", msg);
+			return "redirect:setting.sc";
+		}
+		
+	}
+	
+	@RequestMapping("add.cal")
+	public String settingScheduleAdd() {
+		
+		return "schedule/scheduleSettingCalendarAdd";
+	}
+	
+	@RequestMapping("insertBtn.cal")
+	public String insertCalendar(Calendar c, HttpSession session) {
+		
+		int result = scService.insertCalendar(c);
+		
+		if(result > 0) {
+			AlertMsg msg = new AlertMsg("캘린더 추가", "성공적으로 등록되었습니다");
+			session.setAttribute("successMsg", msg);
+			return "redirect:setting.sc";
+		}else {
+			AlertMsg msg = new AlertMsg("캘린더 추가", "캘린더 추가 실패");
 			session.setAttribute("failMsg", msg);
 			return "redirect:setting.sc";
 		}

@@ -114,10 +114,10 @@
             <a href="#" class="menu-a">
                 <b>내 캘린더</b>
             </a>
-            <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="calList-key"></span>
+            <span><img src="resources/common_images/list-up.png" style="width:15px;" class="dropdown-key" id="calList-key"></span>
         </div>
 
-        <div id="calList-in" style="display:none;">
+        <div id="calList-in">
         	<c:forEach var="c" items="${ myCalList }">
         		<c:choose>
            			<c:when test="${ c.calDefault eq 'Y' }">
@@ -136,7 +136,7 @@
         		
         	</c:forEach>
         </div>
-        <br>
+        <br><br>
         
         <div id="add_calendar"> + 내 캘린더 추가</div>
 
@@ -191,14 +191,12 @@
     		
     		
     		$("#calList-key").click(function(){
-    			if($(this).attr("src") === "resources/common_images/list-down.png"){
-    				$(this).attr("src", "resources/common_images/list-up.png");	
-    				$("#calList-in").show();
-    				$("#calList-in").show();
+    			if($(this).attr("src") === "resources/common_images/list-up.png"){
+    				$(this).attr("src", "resources/common_images/list-down.png");	
+    				$("#calList-in").hide();
     			}else {
-    				$(this).attr("src", "resources/common_images/list-down.png");
-    				$("#calList-in").hide();
-    				$("#calList-in").hide();
+    				$(this).attr("src", "resources/common_images/list-up.png");
+    				$("#calList-in").show();
     			}
     		})
     		
