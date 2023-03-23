@@ -41,7 +41,6 @@ public class ScheduleDao {
 		
 	}
 	
-	
 	public Calendar selectCalendar(SqlSessionTemplate sqlSession, int calNo) {
 		return sqlSession.selectOne("scheduleMapper.selectCalendar", calNo);
 	}
@@ -56,5 +55,14 @@ public class ScheduleDao {
 	
 	public int deleteCalendar(SqlSessionTemplate sqlSession, int calNo) {
 		return sqlSession.delete("scheduleMapper.deleteCalendar", calNo);
+	}
+	
+
+	public int defaultCalUpdate(SqlSessionTemplate sqlSession, int calNo) {
+		return sqlSession.update("scheduleMapper.defaultCalUpdate", calNo);
+	}
+	
+	public int defaultUpdate(SqlSessionTemplate sqlSession, int calNo) {
+		return sqlSession.update("scheduleMapper.defaultUpdate", calNo);
 	}
 }

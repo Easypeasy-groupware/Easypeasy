@@ -82,11 +82,6 @@ public class EmployeeController {
 		
 		//int no = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		
-		int no = loginUser.getEmpNo();
-		
-		ArrayList<Employee> list = oService.selectOrgList(no);
-		ArrayList<Department> deptList = oService.selectDept();
-		ArrayList<Job> jList = oService.selectJob();
 		
 		
 		if(loginUser != null && bcryptPasswordEncoder.matches(e.getEmpPwd(), loginUser.getEmpPwd())) { // 성공
@@ -95,9 +90,6 @@ public class EmployeeController {
 			session.setAttribute("sList", sharedGroup); //외부 공유주소록 그룹리스트 세션에 저장
 			session.setAttribute("recMailList", recMailList);
 			session.setAttribute("alarmList", alarmList);
-			session.setAttribute("list", list);
-			session.setAttribute("deptList", deptList);
-			session.setAttribute("jList", jList);
 			return "common/main";
 		}else { // 실패
 			session.setAttribute("alertMsg", "로그인에 실패했습니다. 다시 시도 해주세요.");
@@ -117,7 +109,18 @@ public class EmployeeController {
 	
 	// 메인페이지 이동
 	@RequestMapping("main.ep")
-	public String mainPage() {
+	public String mainPage(HttpSession session) {
+		
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
+		ArrayList<Employee> list = oService.selectOrgList(empNo);
+		ArrayList<Department> deptList = oService.selectDept();
+		ArrayList<Job> jList = oService.selectJob();
+		
+		session.setAttribute("list", list);
+		session.setAttribute("deptList", deptList);
+		session.setAttribute("jList", jList);
+		
 		return "common/main";
 	}
 	

@@ -8,19 +8,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ep.spring.common.model.vo.AlertMsg;
+import com.ep.spring.login.model.vo.Department;
 import com.ep.spring.login.model.vo.Employee;
+import com.ep.spring.login.model.vo.Job;
 import com.ep.spring.schedule.model.service.ScheduleService;
 import com.ep.spring.schedule.model.vo.Attendee;
 import com.ep.spring.schedule.model.vo.Calendar;
 import com.ep.spring.schedule.model.vo.Schedule;
+import com.google.gson.Gson;
 
 @Controller
 public class ScheduleController {
 
 	@Autowired
 	private ScheduleService scService;
+	
+	@Autowired
+	private ScheduleService oService;
 	
 	@RequestMapping("main.sc")
 	public String mainSchedule(HttpSession session) {
@@ -59,6 +66,7 @@ public class ScheduleController {
 	@RequestMapping("enrollForm.sc")
 	public String scheduleEnrollForm() {
 		
+	
 		return "schedule/scheduleEnrollForm";
 	}
 	
@@ -155,10 +163,9 @@ public class ScheduleController {
 	public String settingScheduleDelete(int no, HttpSession session) {
 		
 		int result1 = scService.deleteSchedule(no);
+		int result2 = scService.deleteCalendar(no);
 		
-		if(result1 > 0) {
-			
-			int result2 = scService.deleteCalendar(no);
+		if(result1 > 0 && result2 > 0) {
 			
 			AlertMsg msg = new AlertMsg("캘린더 삭제", "성공적으로 삭제되었습니다");
 			session.setAttribute("successMsg", msg);
@@ -192,6 +199,22 @@ public class ScheduleController {
 			session.setAttribute("failMsg", msg);
 			return "redirect:setting.sc";
 		}
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="defaultUpdate.cal")
+	public int defaultCalUpdate(int no, int dno, HttpSession session) {
+		
+		//System.out.println(no);
+		//System.out.println(dno);
+		
+		int result1 = scService.defaultCalUpdate(no);
+		int result2 = scService.defaultUpdate(dno);
+		
+		int result = result1*result2;
+		
+		return result;
 		
 	}
 	

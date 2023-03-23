@@ -106,10 +106,10 @@
                			<c:when test="${ c.calDefault eq 'Y' }">
                				<tr>
 			                    <td class="upDel_calendar">(기본) ${ c.calTitle }</td>
-			                    <input type="hidden" value="${ c.calNo }">
+			                    <input type="hidden" id="defaultNo" value="${ c.calNo }">
 			                    <td>
 			                        <div class="custom-control custom-radio">
-		                                <input type="radio" class="custom-control-input" id="Y" name="default" value="">
+		                                <input type="radio" class="custom-control-input radioDefault" id="Y" name="default">
 		                                <label class="custom-control-label" for="Y"></label>
 		                            </div>
 			                    </td>
@@ -121,7 +121,7 @@
 			                    <input type="hidden" value="${ c.calNo }">
 			                    <td>
 			                        <div class="custom-control custom-radio">
-		                                <input type="radio" class="custom-control-input" id="customRadio${ c.calNo }" name="default" value="">
+		                                <input type="radio" class="custom-control-input radioDefault" id="customRadio${ c.calNo }" name="default">
 		                                <label class="custom-control-label" for="customRadio${ c.calNo }"></label>
 		                            </div>
 			                    </td>
@@ -136,14 +136,18 @@
     
     
     <script>
+    	
+    	$("#Y").prop("checked", true);
+    
     
     	$(document).on("click", ".setting-list>tbody>tr>.upDel_calendar", function(){
 				
 			location.href = 'settingUpdel.cal?no=' + $(this).next().val();
 			
 		})
+		
     
-
+		/*
         // 체크 박스
         function allChecked(target){
     		if($(target).is(":checked")){
@@ -153,8 +157,6 @@
     		}
     	}
     	
-    	
-    	/*
     	function checkClicked(){
     		//체크박스 전체개수
     		var allCount = $("input:checkbox[name=check]").length;
@@ -171,8 +173,43 @@
     		
     	}
     	*/
+    
     	
-    	$("#Y").prop("checked", true);
+    	// 기본 캘린더 변경 ajax
+    	$(document).on("change", ".radioDefault", function(){
+			
+    		const no = $(this).parent().parent().prev().val();
+    		const dno = $("#defaultNo").val();
+    		
+    		console.log(no);
+    		console.log(dno);
+    		
+    		$.ajax({
+    			url:"defaultUpdate.cal",
+    			type:"post",
+    			data:{
+    				no:no,
+    				dno:dno
+    			},
+    			success:function(result){
+    				
+    				if(result > 0){
+    					
+    					location.reload();
+    					$("#Y").prop("checked", true);
+    					
+    				}else{
+    					
+    				}
+    				
+    			},error:function(){
+    				console.log("기본캘린더 변경 ajax 통신 실패");
+    			}
+    		})
+			
+		})
+    	
+    	
     </script>
 
 </body>

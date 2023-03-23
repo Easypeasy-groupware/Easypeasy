@@ -400,9 +400,9 @@
 	                <c:forEach var="d" items="${deptList}" begin="0" end="5" varStatus="dept">
 	                	<div>
                             <b class="${ d.deptCode }">${ d.deptName }</b>
-                            <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key exlist-key${ dept.index }"></span>
+                            <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="cList-key${ dept.index }"></span>
                         </div>
-	                    <ul class="empList"> <!-- 사원리스트 -->
+	                    <ul class="empList" id="cList-in${ dept.index }" style="display: none;"> <!-- 사원리스트 -->
 	                    	<c:forEach var="e" items="${list}">
 	                    		<c:if test="${ e.deptName eq d.deptName }">
 			                       <li id="appEmp${ e.empNo }" class="appEmp">
@@ -437,6 +437,8 @@
 	        </div>
         </div>
     </div>
+
+    
 	<script>
 		let val = "";
 		let eee;
@@ -506,6 +508,78 @@
 		})
 		
 	</script>
+	
+	
+	<script>
+    	$(function(){
+    		
+    		$("#cList-key0").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#cList-in0").show();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#cList-in0").hide();
+    			}
+    		})
+    		$("#cList-key1").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#cList-in1").show();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#cList-in1").hide();
+    			}
+    		})
+    		$("#cList-key2").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");
+    				$("#cList-in2").show();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#cList-in2").hide();
+    			}
+    		})
+    		$("#cList-key3").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#cList-in3").show();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#cList-in3").hide();
+    			}
+    		})
+    		$("#cList-key4").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#cList-in4").show();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#cList-in4").hide();
+    			}
+    		})
+    		$("#cList-key5").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#cList-in5").show();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#cList-in5").hide();
+    			}
+    		})
+    		$("#cList-key6").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#cList-in6").show();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#cList-in6").hide();
+    			}
+    		})
+    		
+    		
+    	})
+    </script>
 	
 	
 

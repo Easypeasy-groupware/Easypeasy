@@ -138,4 +138,18 @@
 		 where cal_no = #{calNo}
 	</delete>
 	
+	<update id="defaultCalUpdate">
+		update
+			   my_calendar
+		   set cal_default = 'Y'
+		 where cal_no = #{calNo}
+	</update>
+	
+	<update id="defaultUpdate">
+		update
+			   my_calendar
+		   set cal_default = 'N'
+		 where cal_no = #{calNo}
+	</update>
+	
 </mapper>

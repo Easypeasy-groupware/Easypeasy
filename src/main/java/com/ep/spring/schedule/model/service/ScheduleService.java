@@ -32,4 +32,8 @@ public interface ScheduleService {
 	// 캘린더 삭제
 	int deleteSchedule(int calNo);
 	int deleteCalendar(int calNo);
+
+	// 기본 캘린더 설정
+	int defaultCalUpdate(int calNo);
+	int defaultUpdate(int calNo);
 }

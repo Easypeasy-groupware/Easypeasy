@@ -64,4 +64,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public int deleteCalendar(int calNo) {
 		return scDao.deleteCalendar(sqlSession, calNo);
 	}
+
+	@Override
+	public int defaultCalUpdate(int calNo) {
+		return scDao.defaultCalUpdate(sqlSession, calNo);
+	}
+
+	@Override
+	public int defaultUpdate(int calNo) {
+		return scDao.defaultUpdate(sqlSession, calNo);
+	}
 }
