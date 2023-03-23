@@ -7,10 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    .outer{
-        width: 1200px;
-        margin: auto;
-    }
+
     .side{
         width: 200px;
         height: 900px;
@@ -89,6 +86,49 @@
             <div class="name">${ clickEmp.empName }님</div>
 
             <div id='calendar'></div>
+            
+            <!-- 근무시간 수정 모달 -->
+            <div class="modal fade" id="updateTimeForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+       			 aria-hidden="true">
+        	<div class="modal-dialog modal-lg" role="document">
+            
+            <div class="modal-dialog">
+              <div class="modal-content">
+          
+                <div class="modal-header">
+                  <h4 class="modal-title">근무시간 수정</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                
+                <div class="modal-body" align="center">
+                  <form action="updateTime.HR" method="post">
+                  
+                  	<input type="hidden" name="comCode">
+                     <input type="hidden" name="empNo" value="${ clickEmp.empNo }">
+                     
+                     <table>
+                        <tr>
+                           <td>출근시간 : </td>
+                           
+                           <td><input type="text" name="startTime" required></td>
+                        </tr>
+                        <tr>
+                           <td>퇴근시간 : </td>
+                           <td><input type="text" name="endTime" required></td>
+                        </tr>
+                     </table>
+                     <br>
+                     <button type="submit" class="btn btn-sm btn-secondary" >수정</button>
+                     <button type="reset" class="btn btn-sm btn-secondary">취소</button>
+                  </form>
+
+                </div>
+          
+              </div>
+            </div>
+         
+          </div>
+          </div>
 
             <script>
                 
@@ -116,6 +156,7 @@
 
                             <c:forEach var="c" items="${ list }">
                                	{ 
+                                  id: '${ c.comCode }',
                                	  start: '${ c.enrollDate }', 
                                	  end: '${ c.enrollDate }', 
                                	  title: ' 퇴근: ${ c.endTime }',
@@ -124,17 +165,36 @@
                                </c:forEach>
                                	<c:forEach var="c" items="${ list }">
                             	{ 
+                            	  id: '${ c.comCode }',
                             	  start: '${ c.enrollDate }', 
                             	  end: '${ c.enrollDate }', 
                             	  title: '출근: ${ c.startTime }',
                             	  
                             	   },
                             </c:forEach>
-                        ]
+                        ],
+                    eventClick: function(info){
+                        
+                    	$("input[name=comCode]").val(info.event.id);
+                    	//console.log($("input[name=enrollDate]").val());
+                    	//$("input[name=startTime]").val(info.event.title);
+                    	//$("input[name=endTime]").val(info.event.title);
+                    	$("#updateTimeForm").modal("show");
+                    },
+	
+                    
                 });
                 calendar.render();
             });
+            
+            
+            $(".close").click(function(){
+        		$("#updateTimeForm").modal("hide");
+        	})
+      
         </script>
+        
+        
 
 
         </div>

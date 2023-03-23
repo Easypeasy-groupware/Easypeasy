@@ -39,5 +39,8 @@ public interface CommuteService {
 	
 	// 근무시간 확인 및 수정=>클릭된 사원의 정보
 	Employee selectEmployeeInformation(int empNo);
+	
+	// 근무시간 수정(인사계정)
+	int updateTimeHR(Commute c);
 
 }

@@ -173,7 +173,8 @@
 	
 	<select id="monthlyWorkingStatus" resultMap="commuteResult">
 			select
-			        emp_no
+					com_code
+			      , emp_no
 			      , replace(enroll_date, '/', '-') as "enroll_date"
 			      , start_time
 			      , end_time
@@ -203,6 +204,15 @@
 		 where emp_No = #{empNo}
 		   and ent_yn = 'N'
 	</select>
+	
+	<update id="updateTimeHR">
+		update 
+			   commute
+		   set start_time = #{startTime},
+		       end_time = #{endTime}
+		 where emp_no = #{empNo}
+		   and com_code = #{comCode}
+	</update>
 	
 
 </mapper>
