@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ep.spring.alarm.controller.AlarmController;
 import com.ep.spring.alarm.model.dao.AlarmDao;
 import com.ep.spring.alarm.model.vo.Alarm;
+import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.mail.model.vo.Mail;
 
 @Service
@@ -22,7 +23,6 @@ public class AlarmServiceImpl implements AlarmService {
 	@Autowired
 	private AlarmDao aDao;
 
-	@Override
 	public void receiveMailAlarm(ArrayList<Mail> mList, int mailNo) {
 		ArrayList<Alarm> alList = new ArrayList<Alarm>();
 		int result = 0;
@@ -30,15 +30,24 @@ public class AlarmServiceImpl implements AlarmService {
 			Alarm al = new Alarm();
 			m.setMailNo(mailNo);
 			result += aDao.insertReceiveMailAlarm(m, sqlSession);
-			al = aDao.selectReceiveMailAlarm(m, sqlSession);
 		}
 		
 	}
+	
+	@Override
+	public int selectAlarmListCount(int empNo) {
+		int a = aDao.selectAlarmListCount(empNo, sqlSession);
+		System.out.println(a);
+		return a;
+	}
 
 	@Override
-	public ArrayList<Alarm> selectAlarmList(int empNo) {
-		return aDao.selectAlarmList(empNo, sqlSession);
+	public ArrayList<Alarm> selectPagingAlarmList(PageInfo alarmPi, int empNo) {
+		return aDao.selectPagingAlarmList(alarmPi, empNo, sqlSession);
 	}
+
+
+	
 
 
 }

@@ -50,28 +50,14 @@
 		        and mail_no = #{mailNo})
 		  , #{mailNo}
 		  )
-	</insert>  
-  
-  	<select id="selectReceiveMailAlarm" resultMap="AlarmResult">
-  		select 
-  			   ALARM_NO
-			 , RECEIVER_NO
-			 , SENDER_NO
-			 , ALARM_SUBJECT
-			 , ALARM_CONTENT
-			 , ALARM_DATE
-			 , ALARM_CHECK
-			 , ALARM_LINK
-			 , ALARM_REF_NO
-		  from 
+	</insert>
+	
+	<select id="selectAlarmListCount" resultType="_int">
+		select count(alarm_no)
+		  from
 		       alarm
-		 where 
-		 	   RECEIVER_NO = (select 
-					   		     emp_no
-					    	    from employee
-					    	   where email = #{recMailAdd})
-	       and ALARM_REF_NO = #{mailNo}
-  	</select>
+		 where receiver_no = #{empNo}
+	</select>
   	
   	<select id="selectAlarmList" resultMap="AlarmResult">
   		select 
@@ -88,6 +74,28 @@
 		       alarm
 		 where 
 		 	   RECEIVER_NO = #{empNo}
+		 order
+		    by alarm_no desc
+  	</select>
+  	
+  	  
+  	<select id="selectPagingAlarmList" resultMap="AlarmResult">
+  		select 
+  			   ALARM_NO
+			 , RECEIVER_NO
+			 , SENDER_NO
+			 , ALARM_SUBJECT
+			 , ALARM_CONTENT
+			 , ALARM_DATE
+			 , ALARM_CHECK
+			 , ALARM_LINK
+			 , ALARM_REF_NO
+		  from 
+		       alarm
+		 where 
+		 	   RECEIVER_NO = #{empNo}
+	     order
+	        by alarm_no desc
   	</select>
   
 </mapper>

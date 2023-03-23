@@ -414,7 +414,7 @@
 
                     formData.append('key', new Blob([JSON.stringify(data)], {type : "application/json"}));
                     $.ajax({
-                        url:"send.ma",
+                        url:"/send.ma",
                         method:"POST",
                         enctype:"multipart/form-data",
                         data:formData,
@@ -423,7 +423,10 @@
                         success: function(result){
                             if(result == 1){
                                 if(sock){
-                                    let msg = "${mList}"
+                                    var msg = null;
+                                    <c:forEach var="m" items="${ mList }" >
+                                        // msg = ${m.}
+                                    </c:forEach>
                                     sock.send(msg);
                                 }
                             }

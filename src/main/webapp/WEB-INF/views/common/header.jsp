@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -229,36 +231,30 @@
 		</div>
 
 		<div id="alarm_content">
-			<c:forEach var="a" begin="0" end="9" items="${ pgAlarmList }" >
-				<div class="alarm_msg">
-					<span class="alarm_category">
-						<c:choose>
-							<c:when test="${ a.alarmSubject == 'MA' }">
-								[수신메일]
-							</c:when>
-							<c:otherwise>
-							</c:otherwise>
-						</c:choose>
-					</span>&nbsp;&nbsp;&nbsp;
-					<span>
-						${ a.alarmDate }
-					</span>
-					<div class="alarm_msg_content">
-						${a.alarmContent}
-					</div>
-				</div>
-			</c:forEach>
+			
 		</div>
 		<div id="alarm_paging" align="center">
 			<ul id="paging">
-				<li><a href=""> < </a></li>
-				<li class='on'><a href=""> 1 </a></li>
-				<li><a href=""> 2 </a></li>
-				<li><a href=""> 3 </a></li>
-				<li><a href=""> 4 </a></li>
-				<li><a href=""> 5 </a></li>
-				<li><a href=""> > </a></li>
-			</ul>
+                ${alarmPi}
+                <c:choose>
+                    <c:when test="${ alarmPi.currentPage == 1 }">
+                        <li><a href=""> &lt; </a></li>
+                    </c:when>
+                <c:otherwise>
+                    <li class="on"><a href="alarm.al?cpage='${ alarmPi.currentPage-1 }'"> &lt; </a></li></c:otherwise>
+                </c:choose> 
+                <c:forEach var="p" begin="${ alarmPi.startPage }" end="${ alarmPi.endPage }">
+                        <li class='on'><a href="alarm.al?cpage=${ p }"> ${ p } </a></li>
+                    </c:forEach>
+                <c:choose>
+                <c:when test="${ alarmPi.currentPage == alarmPi.maxPage }">
+                    <li><a href=""> &gt; </a></li>
+                </c:when>
+                <c:otherwise>
+                    <li class="on"><a href="alarm.al?cpage='${ alarmPi.currentPage+1 }'"> &gt; </a></li>
+                </c:otherwise>
+                </c:choose> 
+            </ul>
 		</div>
 	</div> -->
 
@@ -317,19 +313,24 @@
             $.ajax({
                 url:"alarm.al",
                 type:"POST",
-                data:{
-                    empNo: ${loginUser.empNo}
-                },
                 success: function(result){
-                    console.log('as');
-                    console.log(result);
-                    console.log(${pgAlarmList});
-                    if(result == "Y"){
-                        // let value = 
-                                    
-                                    
-                        // console.log(value)
-                        // $("#alarm_content").html(value)
+                    let alarmList = '';
+                    $("alarm_content").html("")
+                    if(result != null){
+                        <c:forEach var="a" begin="0" end="9" items="${ pgAlarmList }" >
+                            alarmList = '<div class="alarm_msg"><span class="alarm_category">' 
+                                            <c:choose>
+                                                <c:when test= "${ a.alarmSubject == 'MA'}">
+                                                + '[수신메일]' +
+                                                </c:when>
+                                                <c:otherwise>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        '</span> <span>'+'${ a.alarmDate }'+'</span><div class="alarm_msg_content">'+'${a.alarmContent}'+'</div></div>'
+                                        $("#alarm_content").append(alarmList);
+                        </c:forEach> + "";
+
+                        <c:if test=""></c:if>
                     }
                 }, error: function(){
 

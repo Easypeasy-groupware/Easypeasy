@@ -56,8 +56,6 @@ public class EmployeeController {
 		ArrayList<AddGroup> sharedGroup = aService.selectSharedAddGroup();
 		// 받은 메일 조회
 		ArrayList<Mail> recMailList = mService.selectReceiveMailList(loginUser.getEmail());
-		// 알람 조회
-		ArrayList<Alarm> alarmList = alService.selectAlarmList(loginUser.getEmpNo());
 		
 		/*
 		if(loginUser == null) {//로그인실패
@@ -94,7 +92,6 @@ public class EmployeeController {
 			session.setAttribute("pList", userGroup); //로그인한 사원의 주소록 그룹리스트 세션에 저장
 			session.setAttribute("sList", sharedGroup); //외부 공유주소록 그룹리스트 세션에 저장
 			session.setAttribute("recMailList", recMailList);
-			session.setAttribute("alarmList", alarmList);
 			session.setAttribute("list", list);
 			session.setAttribute("deptList", deptList);
 			session.setAttribute("jList", jList);

@@ -82,8 +82,8 @@ public class MailController {
 	@ResponseBody
 	@RequestMapping(value = "send.ma", method=RequestMethod.POST)
 	public Object sendMail(@RequestPart(value = "key") Map<String, Object> param, 
-								 @RequestPart(value = "originNames", required = false) List<MultipartFile> originNames, 
-								 ModelAndView mv, HttpSession session) {
+						   @RequestPart(value = "originNames", required = false) List<MultipartFile> originNames, 
+						   ModelAndView mv, HttpSession session) {
 		ArrayList<Mail> mList = new ArrayList<>();
 		ArrayList<Attachment> atList = new ArrayList<>();
 		AlertMsg msg = new AlertMsg();
