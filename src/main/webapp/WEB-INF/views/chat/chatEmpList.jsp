@@ -6,113 +6,192 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- jQuery 라이브러리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
-    * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-a {
-    text-decoration: none;
-}
-
-.chat-area {
-    padding: 40px 0;
-    background-color: #A8C0D6;
-}
-
-.chat-area .chat {
-    display: flex;
-    align-items: flex-start;
-    padding: 20px;
-}
-
-.chat-area .chat .icon {
-    position: relative;
-    overflow: hidden;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #eee;
-}
-
-.chat-area .chat .icon i {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    font-size: 2.5rem;
-    color: #aaa;
-    transform: translateX(-50%);
-}
-
-.chat-area .chat .textbox {
-    position: relative;
-    display: inline-block;
-    max-width: calc(100% - 70px);
-    padding: 10px;
-    margin-top: 7px;
-    font-size: 13px;
-    border-radius: 10px;
-}
-
-.chat-area .chat .textbox::before {
-    position: absolute;
-    display: block;
-    top: 0;
-    font-size: 1.5rem;
-}
-
-.chat-area .ch1 .textbox {
-    margin-left: 20px;
-    background-color: #ddd;
-}
-
-.chat-area .ch1 .textbox::before {
-    left: -15px;
-    content: "◀";
-    color: #ddd;
-}
-
-.chat-area .ch2 {
-    flex-direction: row-reverse;
-}
-
-.chat-area .ch2 .textbox {
-    margin-right: 20px;
-    background-color: #F9EB54;
-}
-
-.chat-area .ch2 .textbox::before {
-    right: -15px;
-    content: "▶";
-    color: #F9EB54;
-}
- </style>
+    * {padding: 0; margin: 0; box-sizing: border-box;}
+	a {text-decoration: none;}
+	
+	/*채팅방 헤더*/
+	.chat-header{margin:10px; height:50px;}
+	.chat-title{float:left; height:50px; line-height:50px; padding-left:10px; font-weight:600; width:90%;}
+	.room-manage{float:left; height:50px; line-height:50px;}
+	.room-manage span:hover{cursor:pointer; font-size:18px;}
+	
+	/*채팅방 리스트*/
+	.list-area{height:480px; overflow-y:auto;}
+	.list-area::-webkit-scrollbar{width:5px;}
+	.list-area::-webkit-scrollbar-thumb{background-color:rgb(92, 95, 197); border-radius:10px;}
+	.list-area::-webkit-scrollbar-track{background-color:white;}
+	
+	.indiv-list{
+		height:70px; 
+		padding:10px;
+		padding-left:20px;
+		border-top:1px solid lightgray;
+	}
+	.indiv-list:hover{background-color:lightgray;}
+	
+	.indiv-list div{float:left;}
+	.img-area{height:100%; width:70px;}
+	.img-area img{height:100%; border-radius:50%;}
+	.room-info{height:100%; line-height:55px;}
+	.room-info span{display:inline-block;}
+	.emp-name{font-weight:600;}
+	
+	/*검색*/
+	.search-area{line-height:40px; background-color:white; text-align:center; display:none;}
+	#searchEmp{border:0; padding:10px; border-bottom:1px solid black; width:80%; height:40px; margin-left:5px;}
+	.search-area img:hover{cursor:pointer;}
+	.search-area img{width:20px;}
+</style>
 </head>
 <body>
-
-    <div class="chat-area">
-        <div class="chat ch1">
-            <div class="icon"><i class="fa-solid fa-user"></i></div>
-            <div class="textbox">안녕하세요. 반갑습니다.</div>
+    <div class="chat">
+        <div class="chat-header">
+        	<div class="chat-title">
+        		EASY PEASY
+        	</div>
+        	<div class="room-manage">
+        		<span id="room-search">🔍</span>
+        	</div>
+        	
+        	<div class="search-area">
+        	<form action="" method="post">
+        		<input type="text" id="searchEmp" name="empNo">
+        		<a href="#"><img src="resources/common_images/search-icon.png"></a>
+        	</form>
+        	</div>
         </div>
-        <div class="chat ch2">
-            <div class="icon"><i class="fa-solid fa-user"></i></div>
-            <div class="textbox">안녕하세요. 친절한효자손입니다. 그동안 잘 지내셨어요?</div>
-        </div>
-        <div class="chat ch1">
-            <div class="icon"><i class="fa-solid fa-user"></i></div>
-            <div class="textbox">아유~ 너무요너무요! 요즘 어떻게 지내세요?</div>
-        </div>
-        <div class="chat ch2">
-            <div class="icon"><i class="fa-solid fa-user"></i></div>
-            <div class="textbox">뭐~ 늘 똑같은 하루 하루를 보내는 중이에요. 코로나가 다시 극성이어서 모이지도 못하구 있군요 ㅠㅠ 얼른 좀 잠잠해졌으면 좋겠습니다요!</div>
-        </div>
+        <script> 		
+         	$("#room-search").click(function(){
+         		if($(".search-area").css("display")=="none"){
+         			$(".chat-header").css("height", "90px");
+         			$(".list-area").css("height", "430px");
+             		$(".search-area").show();	
+         		}else {
+         			$(".chat-header").css("height", "50px");
+         			$(".list-area").css("height", "480px");
+             		$(".search-area").hide();
+         		}
+        	})
+        </script>
+        
+		<div class="list-area">
+		
+			<div class="indiv-list">
+				<div class="img-area">
+					<img src="resources/chat-images/rockstar.png">
+				</div>
+				<div class="room-info">
+					<span class="dept-name">영엽1팀</span>
+					<span class="emp-name">홍길동</span>
+					<span class="job-name">사원</span>
+				</div>
+			</div>
+			<div class="indiv-list">
+				<div class="img-area">
+					<img src="resources/chat-images/rockstar.png">
+				</div>
+				<div class="room-info">
+					<span class="dept-name">영엽1팀</span>
+					<span class="emp-name">홍길동</span>
+					<span class="job-name">사원</span>
+				</div>
+			</div>
+			<div class="indiv-list">
+				<div class="img-area">
+					<img src="resources/chat-images/rockstar.png">
+				</div>
+				<div class="room-info">
+					<span class="dept-name">영엽1팀</span>
+					<span class="emp-name">홍길동</span>
+					<span class="job-name">사원</span>
+				</div>
+			</div>
+			<div class="indiv-list">
+				<div class="img-area">
+					<img src="resources/chat-images/rockstar.png">
+				</div>
+				<div class="room-info">
+					<span class="dept-name">영엽1팀</span>
+					<span class="emp-name">홍길동</span>
+					<span class="job-name">사원</span>
+				</div>
+			</div>
+			<div class="indiv-list">
+				<div class="img-area">
+					<img src="resources/chat-images/rockstar.png">
+				</div>
+				<div class="room-info">
+					<span class="dept-name">영엽1팀</span>
+					<span class="emp-name">홍길동</span>
+					<span class="job-name">사원</span>
+				</div>
+			</div>
+			<div class="indiv-list">
+				<div class="img-area">
+					<img src="resources/chat-images/rockstar.png">
+				</div>
+				<div class="room-info">
+					<span class="dept-name">영엽1팀</span>
+					<span class="emp-name">홍길동</span>
+					<span class="job-name">사원</span>
+				</div>
+			</div>
+			<div class="indiv-list">
+				<div class="img-area">
+					<img src="resources/chat-images/rockstar.png">
+				</div>
+				<div class="room-info">
+					<span class="dept-name">영엽1팀</span>
+					<span class="emp-name">홍길동</span>
+					<span class="job-name">사원</span>
+				</div>
+			</div>
+			<div class="indiv-list">
+				<div class="img-area">
+					<img src="resources/chat-images/rockstar.png">
+				</div>
+				<div class="room-info">
+					<span class="dept-name">영엽1팀</span>
+					<span class="emp-name">홍길동</span>
+					<span class="job-name">사원</span>
+				</div>
+			</div>
+			<div class="indiv-list">
+				<div class="img-area">
+					<img src="resources/chat-images/rockstar.png">
+				</div>
+				<div class="room-info">
+					<span class="dept-name">영엽1팀</span>
+					<span class="emp-name">홍길동</span>
+					<span class="job-name">사원</span>
+				</div>
+			</div>
+			
+			
+			
+			
+		</div><!-- list-area끝 -->
+		<script>
+			$(function(){
+				$(".room-name").each(function(){
+					if($(this).text().length > 15){
+						$(this).text(($(this).text().substring(0,15)).concat("..."));
+					}
+				})
+				
+				$(".indiv-list").click(function(){
+					var wName = "room1"; // 새창의이름
+					var options = 'top=500, left=1400, width=400, height=600, status=no, menubar=no, toolbar=no, titlebar=no, resizable=no, location=no, scrollbars=no';
+					window.open("chatRoom.ch", wName, options);
+				})
+				
+			})
+		</script>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>  
-
-
+    <jsp:include page="chatFooter.jsp"/>
+    
 </body>
 </html>

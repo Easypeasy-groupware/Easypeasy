@@ -21,8 +21,8 @@
 	.room-header{margin:10px; height:50px; border: 1px solid gray; border-radius:10px;}
 	.room-header>*{float:left;}
 	.room-header span:hover{cursor:pointer; font-size:18px;}
-	.room-info{line-height:50px; width:74%;}
-	#room-name {padding:0 5px 0 30px;}
+	.room-info{line-height:50px; width:65%;}
+	#room-name {padding:0 5px 0 15px;}
 	.room-manage{line-height:50px;}
 	#member-count2{color:gray; margin-right:10px;}
 	
@@ -35,7 +35,7 @@
 	.chat-area::-webkit-scrollbar-track{background-color:white;}
 
 	/* 채팅 출력창 */
-	.chat-area{height:400px; overflow-y:auto;}
+	.chat-area{height:390px; overflow-y:auto;}
 	
 	.chat-user { /*입퇴장*/
 	      text-align:center; 
@@ -45,6 +45,7 @@
 	      margin: 20px 10px;
 	      color: black;
 	      line-height: 30px;
+	      font-size: 13px;
 	}
 	
 	.chat-message {display: flex; align-items: flex-start; padding: 10px 20px 10px 20px;}
@@ -73,7 +74,7 @@
 	/*채팅 입력창*/
 	.input-area{text-align:center;}
 	#message {margin:10px 10px 0 10px; width:95%; padding:10px; border: 1px solid gray; border-radius:10px;}
-	#message-input{margin:5px 10px; width:95%; border:0; height:30px; border-radius:10px; background-color: rgb(205, 206, 227);}
+	#message-input{margin:5px; width:95%; border:0; height:30px; border-radius:10px; background-color: rgb(205, 206, 227);}
 	#message-input:hover{background-color: rgb(119, 120, 146); color:white;}
 </style>
 </head>
@@ -93,8 +94,8 @@
 		</div>
 		<script>
 			$(function(){ // 채팅방이름이 15자를 초과할경우 이름조정
-				if($("#room-name").text().length > 15){
-					$("#room-name").text(($("#room-name").text().substring(0,15)).concat("..."));
+				if($("#room-name").text().length > 7){
+					$("#room-name").text(($("#room-name").text().substring(0,7)).concat("..."));
 				}
 			})
 		</script>
@@ -145,10 +146,6 @@
             <textarea class="form-control" rows="4" id="message" style="resize:none"></textarea>
 	        <button id="message-input">전송하기</button>
 	    </div>
-	    
-	    
-	    
-	    
     </div>
 
     <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>  
