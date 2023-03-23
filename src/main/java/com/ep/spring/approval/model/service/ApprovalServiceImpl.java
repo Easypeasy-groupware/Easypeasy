@@ -137,7 +137,10 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return aDao.selectDetailSPrgAl(sqlSession, a);
 	}
 
-
+	@Override
+	public ArrayList<ApprovalLine> selectDetailSPrgRl(Approval a) {
+		return aDao.selectDetailSPrgRl(sqlSession, a);
+	}
 
 	@Override
 	public OverTimeForm selectDetailSPrgOt(Approval a) {
@@ -242,6 +245,40 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public Approval selectTempApproval(int no) {
 		return aDao.selectTempApproval(sqlSession, no);
 	}
+
+	@Override
+	public int updateApproval(Approval ap, ArrayList<ApprovalLine> al, VacationForm vf, OverTimeForm ot,
+			ArrayList<Attachment> atList) {
+		
+		int a = aDao.updateApproval(sqlSession, ap);
+		
+		int b = 1;
+		int c = 1;
+		int d = 1;
+		int e = 1;
+		
+		if(al.size() != 0) {
+			b = aDao.updateApprovalLine(sqlSession, al);
+		}
+		
+		if(atList.size() != 0) {
+		  c = aDao.updateAttachment(sqlSession, atList);
+		}
+		
+		System.out.println(vf);
+		System.out.println(ot);
+		
+		if(vf.getVacStart() != null) {
+			d = aDao.updateVacationForm(sqlSession, vf);
+			
+		}else if(ot.getOtDate() != null) {
+			e = aDao.updateOverTimeForm(sqlSession, ot);
+		}
+		
+		return a * b * c * d * e;
+	}
+
+
 
 
 
