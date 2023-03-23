@@ -88,7 +88,7 @@
             <br>
             <div id="add">
                 <div>
-                    <button class="btn btn-sm btn-light" style="margin: 0 -20px -5px -10px;">캘린더 추가</button>
+                    <button class="btn btn-sm btn-light" style="margin: 0 -20px -5px -10px; background: rgb(142, 161, 122);">캘린더 추가</button>
                 </div>
             </div>
         </div>

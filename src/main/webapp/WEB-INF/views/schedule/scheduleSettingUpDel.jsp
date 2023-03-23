@@ -66,7 +66,7 @@
                 <div align="center">
                     <a href="setting.sc" class="btn btn-sm" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">목록으로 돌아가기</a>&nbsp;&nbsp;
                     <button class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">캘린더 수정하기</button>&nbsp;&nbsp;
-                    <a href="calendarDelete.cal?cno=${ c.calNo }" class="btn btn-sm" id="deleteBtn" style="border: 1px solid lightgray; background: white;">캘린더 삭제하기</a>
+                    <a href="delete.cal?no=${ c.calNo }" class="btn btn-sm" id="deleteBtn" style="border: 1px solid lightgray; background: white;">캘린더 삭제하기</a>
                 </div>
             </div>
         </form>
