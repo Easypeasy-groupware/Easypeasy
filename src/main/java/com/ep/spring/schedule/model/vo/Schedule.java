@@ -1,5 +1,7 @@
 package com.ep.spring.schedule.model.vo;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,5 +26,7 @@ public class Schedule {
 	private String endTime;
 	private String allDay;
 	private String status;
+	
+	private List<Attendee> attendeeList;
 	
 }

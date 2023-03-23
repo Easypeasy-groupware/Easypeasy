@@ -59,5 +59,71 @@
 		  , #{calColor}
 		  )
 	</insert>
-
+	
+	<insert id="insertSchedule">
+		insert
+		  into schedule
+		  (
+		  	sc_no
+		  , sc_writer
+		  , cal_no
+		  , sc_title
+		  , sc_place
+		  , sc_content
+		  , start_date
+		  , end_date
+		  , start_time
+		  , end_time
+		  , sc_allday
+		  )
+		  values
+		  (
+		  	seq_scno.nextval
+		  , #{scWriter}
+		  , #{calNo}
+		  , #{scTitle}
+		  , #{scPlace}
+		  , #{scContent}
+		  , #{startDate}
+		  , #{endDate}
+		  , #{startTime}
+		  , #{endTime}
+		  , #{allDay}
+		  )
+	</insert>
+	
+	<insert id="insertAttendee">
+		insert
+		  into sc_attendee
+		  (
+		  	sc_no
+		  , emp_no
+		  )
+		  values
+		  (
+		  	seq_scno.currval
+		  , #{empNo}
+		  )
+	</insert>
+	
+	<select id="selectCalendar" resultMap="calendarResult">
+		select
+			    cal_no
+			  , emp_no
+			  , cal_title
+			  , cal_default
+			  , create_date
+			  , cal_color
+		   from my_calendar
+		  where cal_no = #{calNo}
+	</select>
+	
+	<update id="updateCalendar">
+		update
+			   my_calendar
+		   set cal_title = #{calTitle}
+		     , cal_color = #{calColor}
+		 where cal_no = #{calNo}
+	</update>
+	
 </mapper>
