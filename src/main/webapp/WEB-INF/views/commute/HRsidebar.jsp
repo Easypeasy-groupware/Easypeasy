@@ -61,7 +61,7 @@
         <br>
         
         <div class="menu-type menu-list">
-        	<a href="" class="menu-a"><img src="resources/common_images/vacation.png" style="width:15px;"> <b> 휴가 관리 </b></a>
+        	<a href="vacList.HR" class="menu-a"><img src="resources/common_images/vacation.png" style="width:15px;"> <b> 휴가 관리 </b></a>
         </div>
         
         

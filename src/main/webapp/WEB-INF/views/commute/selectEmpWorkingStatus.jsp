@@ -7,10 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    .outer{
-        width: 1200px;
-        margin: auto;
-    }
+
     .side{
         width: 200px;
         height: 900px;
@@ -102,12 +99,17 @@
                   <h4 class="modal-title">근무시간 수정</h4>
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
+                
                 <div class="modal-body" align="center">
                   <form action="updateTime.HR" method="post">
+                  
+                  	<input type="hidden" name="comCode">
                      <input type="hidden" name="empNo" value="${ clickEmp.empNo }">
+                     
                      <table>
                         <tr>
                            <td>출근시간 : </td>
+                           
                            <td><input type="text" name="startTime" required></td>
                         </tr>
                         <tr>
@@ -154,6 +156,7 @@
 
                             <c:forEach var="c" items="${ list }">
                                	{ 
+                                  id: '${ c.comCode }',
                                	  start: '${ c.enrollDate }', 
                                	  end: '${ c.enrollDate }', 
                                	  title: ' 퇴근: ${ c.endTime }',
@@ -162,6 +165,7 @@
                                </c:forEach>
                                	<c:forEach var="c" items="${ list }">
                             	{ 
+                            	  id: '${ c.comCode }',
                             	  start: '${ c.enrollDate }', 
                             	  end: '${ c.enrollDate }', 
                             	  title: '출근: ${ c.startTime }',
@@ -170,25 +174,23 @@
                             </c:forEach>
                         ],
                     eventClick: function(info){
+                        
+                    	$("input[name=comCode]").val(info.event.id);
+                    	//console.log($("input[name=enrollDate]").val());
+                    	//$("input[name=startTime]").val(info.event.title);
+                    	//$("input[name=endTime]").val(info.event.title);
                     	$("#updateTimeForm").modal("show");
                     },
-                    
-                    select: function(info){
-                        // 클릭한 날짜
-                        const start = info.startStr;
-                        const end = info.endStr;
-
-                        var startDay = new Date(start); // 문자열로 변환하기 위한 작업
-                        var sYear = startDay.getFullYear();
-                        var sMonth = ('0' + (startDay.getMonth() + 1)).slice(-2);
-                        var sDay = ('0' + startDay.getDate()).slice(-2);
-                        console.log("오늘 날짜" + startDay);
-                    }
+	
                     
                 });
                 calendar.render();
             });
             
+            
+            $(".close").click(function(){
+        		$("#updateTimeForm").modal("hide");
+        	})
       
         </script>
         
