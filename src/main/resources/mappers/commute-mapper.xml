@@ -183,5 +183,26 @@
 		      where emp_no = #{empNo}
 	</select>
 	
+	<select id="selectEmployeeInformation" resultMap="employeeResult">
+		select
+			    emp_no
+			  , emp_name
+			  , emp_id
+			  , emp_pwd
+			  , email
+			  , address
+			  , phone
+			  , emp_profile
+			  , dept_code
+			  , job_code
+			  , to_char(hire_date, 'YYYY"년"MM"월"DD"일"') as "hire_date"
+			  , ent_yn
+			  , ent_date
+			  , status
+		  from employee e
+		 where emp_No = #{empNo}
+		   and ent_yn = 'N'
+	</select>
+	
 
 </mapper>

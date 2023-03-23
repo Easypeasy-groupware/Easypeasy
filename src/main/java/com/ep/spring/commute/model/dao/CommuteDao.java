@@ -72,5 +72,10 @@ public class CommuteDao {
 	public ArrayList<Commute> monthlyWorkingStatus(SqlSessionTemplate sqlSession, int empNo){
 		return (ArrayList)sqlSession.selectList("commuteMapper.monthlyWorkingStatus", empNo);
 	}
+	
+	// 근무시간 확인 및 수정=>클릭된 사원의 정보
+	public Employee selectEmployeeInformation(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("commuteMapper.selectEmployeeInformation", empNo);
+	}
 
 }

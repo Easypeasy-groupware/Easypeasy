@@ -159,6 +159,9 @@ public class CommuteController {
 			int empNo = no;
 			
 			ArrayList<Commute> list = cService.monthlyWorkingStatus(empNo);
+			Employee e = cService.selectEmployeeInformation(empNo);
+			
+			session.setAttribute("clickEmp", e);
 			session.setAttribute("list", list);
 			
 			return "commute/selectEmpWorkingStatus";

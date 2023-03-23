@@ -48,14 +48,14 @@
 	    <div class="menubar">
 
         <div class="menu-title">
-            <a href="" id="title"><img src="resources/common_images/commute.png" style="width:20px;"> 인사 계정 </a>
+            <a href="working.HR" id="title"><img src="resources/common_images/commute.png" style="width:20px;"> 인사 계정 </a>
         </div>
 
        
         <br>
 
         <div class="menu-type menu-list">
-            <a href="" class="menu-a"><img src="resources/common_images/work-plan.png" style="width:15px;"> <b>근무시간 확인/수정</b></a>
+            <a href="working.HR" class="menu-a"><img src="resources/common_images/work-plan.png" style="width:15px;"> <b>근무시간 확인/수정</b></a>
         </div>
         
         <br>

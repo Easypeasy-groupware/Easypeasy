@@ -38,6 +38,7 @@
     .img{
         width: 100px;
         height: 100px;
+        
         margin: 40px;
         border: 1px solid gray;
         float: left;
@@ -81,11 +82,11 @@
             <div class="title"><b>근무시간 확인/수정</b><hr></div>
             
             <div class="profile">
-                <img  class="img" id="profileImg" src="<c:out value='${ loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" >
+                <img  class="img" id="profileImg" src="<c:out value='${ clickEmp.empProfile }' default='resources/profile_images/default_profile.png' />" >
                
                 
             </div>
-            <div class="name">${ loginUser.empName }님</div>
+            <div class="name">${ clickEmp.empName }님</div>
 
             <div id='calendar'></div>
 
