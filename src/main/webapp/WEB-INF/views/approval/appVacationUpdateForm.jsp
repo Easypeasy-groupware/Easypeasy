@@ -88,7 +88,7 @@
     <jsp:include page="appMenubar.jsp" />
     <div class="form-outer">
         <div class="left-outer">
-	        <form id="contentArea" action="insert.ap" method="POST" enctype="multipart/form-data">
+        	<form id="contentArea" action="update.ap" method="POST" enctype="multipart/form-data">
             <div class="left-form1">
                 <p>
 	                <b style="font-size:30px;">휴가신청서</b>
@@ -135,7 +135,7 @@
 	                                <label for="appNo">문서번호</label>
 	                            </td>
 	                            <td>
-	                                <input type="text" val="" id="appChange" name="appChange" readonly>
+	                                <input type="text" value="${ap.appChange}" id="appChange" name="appChange" readonly>
 	                            </td>
 	                        </tr>
 	                    </table>
@@ -149,7 +149,7 @@
 	                                <label for="title">휴가종류</label>
 	                            </td>
 	                            <td style="width:600px;">
-	                                <select name="vacKind" id="">
+	                                <select name="vacKind" id="vacSelect">
 	                                    <option value="일반휴가">일반휴가</option>
 	                                    <option value="특별휴가">특별휴가</option>
 	                                    <option value="병가">병가</option>
@@ -163,8 +163,8 @@
 	                                <label for="content">기간 및 일시</label>
 	                            </td>    
 	                            <td>
-	                                <input type="text" class="dateSelect-start" name="vacStart" onchange="diffDate();" > ~ 
-	                                <input type="text" class="dateSelect-end" id="vac-end" name="vacEnd"  onchange="diffDate();">
+	                                <input type="text" class="dateSelect-start" name="vacStart" onchange="diffDate();"  value="${vf.vacStart }"> ~ 
+	                                <input type="text" class="dateSelect-end" id="vac-end" name="vacEnd"  onchange="diffDate();" value="${vf.vacEnd }">
 	                                <span id="useHalf" style="cursor:pointer">반차사용</span>
 	                                <p class="arrow_box">클릭 시 반차 선택가능합니다.</p>
 	                            </td>                        
@@ -192,7 +192,7 @@
 	                            </td>
 	                            <td>
 	                                잔여연차 : <input type="text" style="width:50px;" readonly> 
-	                                신청연차 : <input type="number" id="vacUse" name="vacUse" style="width:50px;" readonly>
+	                                신청연차 : <input type="number" id="vacUse" name="vacUse" style="width:50px;" value="${vf.vacUse }" readonly>
 	                            </td>
 	                        </tr>
 	
@@ -203,7 +203,7 @@
 	                                <label for="content">휴가사유</label>
 	                            </td>
 	                            <td rowspan="5" height="150px;">
-	                                <textarea class="form-control" name="content" id="content" rows="10" style="resize:none;"></textarea>
+	                                <textarea class="form-control" name="content" id="content" rows="10" style="resize:none;">${ap.content }</textarea>
 	                            </td>
 	                        </tr>
 	                        <tr></tr>
@@ -235,6 +235,12 @@
 	                                    <div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
 	                                </div>
 	                                <div id="in_attachments">
+	                                
+											<c:if test="${not empty list3}">
+												<c:forEach var="a" items="${list3 }">
+													<div> 첨부파일명 :  ${a.originName}  &nbsp;&nbsp;&nbsp; <br></div>
+												</c:forEach>
+											</c:if>	                                
 	                                </div>
 	                                <input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
 	                            </td>
@@ -259,18 +265,33 @@
 			               </div>
 			               
 			               <div class="app-body">
-			               </div>
+				               	<c:choose>
+					               	<c:when test="${empty list1}">
+					               		결재선이 비었습니다.
+					               	</c:when>
+					               	<c:otherwise>
+					               		<c:forEach var="e" items="${list1}">
+							               <div class="app-comment" style="font-size:15px;">
+							                   <img src="<c:out value='${e.empProfile}' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${e.empName} ${e.jobCode == 'J1'?'사원':
+																																										                             e.jobCode == 'J2'?'대리':
+																																										                             e.jobCode == 'J3'?'과장':
+																																										                             e.jobCode == 'J4'?'부장':
+																																										                             e.jobCode == 'J5'?'상무':
+																																										                             e.jobCode == 'J6'?'대표':''}
+											   <input type="hidden" name="recEmpNo" value="${e.recEmpNo }">																														                             
+							                   <br>
+							                     이지피지 | ${e.deptName}
+							                   <br>
+							                    결재
+							                   <br><br><br>
+											
+							               </div>	               			
+					               		</c:forEach>
+				               		</c:otherwise>
+				               </c:choose>
 			               
-			               <div class="app-comment" style="font-size:15px;">
-			                <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
-			                <br>
-			                    회사명 | 부서명
-			                <br>
-			                    결재
-			                <br><br>
-			
-			                <br>
-			              </div>
+			               </div>
+			              
 			              
 			                <div style=" padding:10px; font-size:20px;">
 			                    <p><b> 참조자</b></p>
@@ -288,6 +309,30 @@
 			               </div>
 			               
 			               <div class="rep-body">
+				               	<c:choose>
+					               	<c:when test="${empty list2}">
+					               		참조선이 비었습니다.
+					               	</c:when>
+					               	<c:otherwise>
+					               		<c:forEach var="r" items="${list2}">
+							               <div class="app-comment" style="font-size:15px;">
+							                   <img src="<c:out value='${r.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${r.empName} ${r.jobCode == 'J1'?'사원':
+																																										                       r.jobCode == 'J2'?'대리':
+																																										                       r.jobCode == 'J3'?'과장':
+																																										                       r.jobCode == 'J4'?'부장':
+																																										                       r.jobCode == 'J5'?'상무':
+																																										                       r.jobCode == 'J6'?'대표':''}
+							                   <input type="hidden" name="recEmpNo" value="${r.recEmpNo }">	
+							                   <br>
+							                     이지피지 | ${r.deptName}
+							                   <br>
+							                    참조
+							                   <br><br><br>
+											
+							               </div>	               			
+					               		</c:forEach>
+				               		</c:otherwise>
+				               </c:choose>              			               
 			               </div>
 			               
 			               <div id="commentArea">
@@ -311,14 +356,40 @@
                                     
                 $("#writer").val(result.a.empName);
                 $("#dept").val(result.a.deptName);
-                $("#appChange").val(result.appChange);
                 
             }, error:function(request, status, error){
                 console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
                 console.log("직성용 정보 불러오기 ajax 통신실패");
             }
+        
+        
         });
         
+        // 옵션값 selected 속성 부여하기
+        $("#vacSelect").val('${vf.vacKind}').prop("selected", true); 
+        
+        // 반차 설정값 select 속성주기        
+        if(${vf.halfDay == vf.vacStart}){
+        	$("#vac-startHalf").prop("checked", true);
+        	
+       		$("#start-half1").val('${vf.halfStatus}').prop("checked", true);
+       		$("#start-half2").val('${vf.halfStatus}').prop("checked", true);
+        	
+        	
+        }else if(${vf.halfDay == vf.vacEnd}){
+        	$("#vac-endHalf").prop("checked", true);
+        	
+        	if($("#end-half1").val('${vf.halfStatus}')){
+        		
+        		$("#end-half1").prop("checked", true);
+        		
+        	}else{
+        		$("#end-half2").prop("checked", true);
+        	}
+        	
+       		//$("#end-half1").val('${vf.halfStatus}').prop("checked", true);
+       		//$("#end-half2").val('${vf.halfStatus}').prop("checked", true);
+        }
         
 
         $("#useHalf").click(function(){
@@ -366,7 +437,6 @@
             ],
             dateFormat: "Y-m-d",
             minDate: "today",
-            defaultDate :"today",
             maxDate:new Date().fp_incr(30)                             
             });
 
@@ -509,7 +579,7 @@
         }
                             
 
-
+	    
         // 첨부파일 업로드 하기
         // 버튼 클릭해서 선택해오기
         let fileNames = [];
@@ -521,11 +591,16 @@
             attachFile.addEventListener('change', function(){
                 let vaildFile = attachFile.files.length >= 0;
                 if(vaildFile){
-                    inAttachs.innerText = ''
+                    //inAttachs.innerText = ''
                     noAttach.style.display = "none";
+                    let attach = "";
                     for(let i=0; i<attachFile.files.length; i++){
-                        inAttachs.innerHTML += "첨부파일명 : " + attachFile.files[i].name + "&nbsp;&nbsp;&nbsp; <br>"
+                    	
+                    	inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile[i].name + "&nbsp;&nbsp;&nbsp;<br></div>";
+                        
                     };
+                    inAttachs.append(attach);
+                    
                     inAttachs.style.overflowY = 'auto';
                     inAttachs.style.display = "block";
                 };
@@ -551,16 +626,16 @@
             let attachFile = e.dataTransfer.files
             let vaildFile = e.dataTransfer.types.indexOf('Files') >= 0;
             if(vaildFile){
-                inAttachs.innerText = ''
+                //inAttachs.innerText = ''
                 noAttach.style.display = "none";
                 for(let i=0; i<attachFile.length; i++){
-                    inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile[i].name + "&nbsp;&nbsp;&nbsp;<br>"
+                    inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile[i].name + "&nbsp;&nbsp;&nbsp;<br></div>";
                 };
                 inAttachs.style.overflowY = 'auto';
                 inAttachs.style.display = "block";
             };
-        });        
-
+        });
+        
         // 첨부파일 전체 삭제
         document.getElementById('file_delete').addEventListener('click', function(){
             let attachFile = document.getElementById("attach_files");

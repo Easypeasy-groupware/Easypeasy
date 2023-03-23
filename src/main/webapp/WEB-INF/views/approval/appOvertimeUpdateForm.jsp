@@ -54,11 +54,12 @@
     <jsp:include page="appMenubar.jsp" />
     <div class="form-outer">
         <div class="left-outer">
-        	<form id="contentArea" action="insert.ap" method="POST" enctype="multipart/form-data">        
+        	<form id="contentArea" action="update.ap" method="POST" enctype="multipart/form-data">
 	            <div class="left-form1">
 	               	<b style="font-size:30px;">연장근무신청서</b>
 	                <input type="hidden" name="formCode" value="4">
-	                <input type="hidden" name="formName" value="연장근무신청서">            
+	                <input type="hidden" name="formName" value="연장근무신청서">
+	                <input type="hidden" name="appNo" value = "${ap.appNo}">
 				 </div>
 		        <div class="left-form2">
 	            	<a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
@@ -99,7 +100,7 @@
 		                                <label for="appNo">문서번호</label>
 		                            </td>
 		                            <td>
-		                                <input type="text" val="" id="appChange" name="appChange" readonly>
+		                                <input type="text" value="${ap.appChange}" id="appChange" name="appChange" readonly>
 		                            </td>
 		                        </tr>
 		                    </table>
@@ -132,9 +133,9 @@
 		                            </td>
 		                            <td>
 		                                &nbsp;&nbsp;
-		                                <input  class="dateSelect"  name="otDate" id="" required >
-		                                <input type="number"  class="dateSelect-start"  name="otStart" id="overStartHour" required style="width:80px;" min="0" max="24"> ~ 
-		                                <input type="number" class="dateSelect-end" name="otEnd" id="overEndHour" required style="width:80px;" min="0" max="24" onchange="diffTime();">
+		                                <input  class="dateSelect"  name="otDate" id="" required value="${ot.otDate }">
+		                                <input type="number"  class="dateSelect-start"  name="otStart" id="overStartHour" required style="width:80px;" min="0" max="24" value="${otStart }"> ~ 
+		                                <input type="number" class="dateSelect-end" name="otEnd" id="overEndHour" required style="width:80px;" min="0" max="24" onchange="diffTime();" value="${ot.otEnd }">
 		                                <span id="diff"></span>
 		                                <!-- <button onclick="diffTime();">계산</button> -->
 		                            </td>
@@ -257,7 +258,6 @@
                                         
                     $("#writer").val(result.a.empName);
                     $("#dept").val(result.a.deptName);
-                    $("#appChange").val(result.appChange);
                     
                 }, error:function(request, status, error){
                     console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
@@ -266,6 +266,8 @@
             });
             
         })
+        
+        $("input[name=otKind]").val('${ot.otKind}').prop("checked", true);
             
 
             function diffTime(){
@@ -304,61 +306,66 @@
                     ],
                 dateFormat: "Y-m-d",
                 minDate: "today",
-                defaultDate :"today",
                 maxDate:new Date().fp_incr(30)
         });
 
-        // 첨부파일 업로드 하기
-        // 버튼 클릭해서 선택해오기
-        let fileNames = [];
-        let noAttach = document.getElementById("no_attachment");
-        let inAttachs = document.getElementById("in_attachments");  
-        document.getElementById("file_choose").addEventListener('click', function(){
-            let attachFile = document.getElementById("attach_files");
-            attachFile.click();
-            attachFile.addEventListener('change', function(){
-                let vaildFile = attachFile.files.length >= 0;
+    	    
+            // 첨부파일 업로드 하기
+            // 버튼 클릭해서 선택해오기
+            let fileNames = [];
+            let noAttach = document.getElementById("no_attachment");
+            let inAttachs = document.getElementById("in_attachments");
+            document.getElementById("file_choose").addEventListener('click', function(){
+                let attachFile = document.getElementById("attach_files");
+                attachFile.click();
+                attachFile.addEventListener('change', function(){
+                    let vaildFile = attachFile.files.length >= 0;
+                    if(vaildFile){
+                        //inAttachs.innerText = ''
+                        noAttach.style.display = "none";
+                        let attach = "";
+                        for(let i=0; i<attachFile.files.length; i++){
+                        	
+                        	inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile[i].name + "&nbsp;&nbsp;&nbsp;<br></div>";
+                            
+                        };
+                        inAttachs.append(attach);
+                        
+                        inAttachs.style.overflowY = 'auto';
+                        inAttachs.style.display = "block";
+                    };
+                });  
+            });
+
+            let uploadBox = document.querySelector('#attach_area');
+
+            // 박스 안에 Drag를 하고 있을 때
+            uploadBox.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.style.backgroundColor = 'white';
+            });
+            
+            // 박스 밖으로 Drag가 나갈 때
+            uploadBox.addEventListener('dragleave', function(e) {
+                this.style.backgroundColor = 'whitesmoke';
+            });
+            // 박스 안에서 Drag를 Drop했을 때
+            uploadBox.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.style.backgroundColor = 'whitesmoke';
+                let attachFile = e.dataTransfer.files
+                let vaildFile = e.dataTransfer.types.indexOf('Files') >= 0;
                 if(vaildFile){
-                    inAttachs.innerText = ''
+                    //inAttachs.innerText = ''
                     noAttach.style.display = "none";
-                    for(let i=0; i<attachFile.files.length; i++){
-                        inAttachs.innerHTML += "첨부파일명 : " + attachFile.files[i].name + "&nbsp;&nbsp;&nbsp; <br>"
+                    for(let i=0; i<attachFile.length; i++){
+                        inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile[i].name + "&nbsp;&nbsp;&nbsp;<br></div>";
                     };
                     inAttachs.style.overflowY = 'auto';
                     inAttachs.style.display = "block";
                 };
-            });  
-        });
-
-        let uploadBox = document.querySelector('#attach_area');
-
-        // 박스 안에 Drag를 하고 있을 때
-        uploadBox.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            this.style.backgroundColor = 'white';
-        });
-
-        // 박스 밖으로 Drag가 나갈 때
-        uploadBox.addEventListener('dragleave', function(e) {
-            this.style.backgroundColor = 'whitesmoke';
-        });
-        // 박스 안에서 Drag를 Drop했을 때
-        uploadBox.addEventListener('drop', function(e) {
-            e.preventDefault();
-            this.style.backgroundColor = 'whitesmoke';
-            let attachFile = e.dataTransfer.files
-            let vaildFile = e.dataTransfer.types.indexOf('Files') >= 0;
-            if(vaildFile){
-                inAttachs.innerText = ''
-                noAttach.style.display = "none";
-                for(let i=0; i<attachFile.length; i++){
-                    inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile[i].name + "&nbsp;&nbsp;&nbsp;<br>"
-                };
-                inAttachs.style.overflowY = 'auto';
-                inAttachs.style.display = "block";
-            };
-        });        
-
+            });
+            
         // 첨부파일 전체 삭제
         document.getElementById('file_delete').addEventListener('click', function(){
             let attachFile = document.getElementById("attach_files");

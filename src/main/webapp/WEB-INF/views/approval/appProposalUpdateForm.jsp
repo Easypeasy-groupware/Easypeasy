@@ -55,7 +55,7 @@
     <jsp:include page="appMenubar.jsp" />
     <div class="form-outer">
         <div class="left-outer">
-        	<form id="contentArea" action="insert.ap" method="POST" enctype="multipart/form-data">        
+        	<form id="contentArea" action="update.ap" method="POST" enctype="multipart/form-data">
             <div class="left-form1">
                 <p>
                 	<b style="font-size:30px;">일반품의서</b>
@@ -102,7 +102,7 @@
                                 <label for="appNo">문서번호</label>
                             </td>
                             <td>
-                                <input type="text" val="" id="appChange" name="appChange" readonly>
+                                <input type="text" value="${ap.appChange}" id="appChange" name="appChange" readonly>
                             </td>
                         </tr>
                     </table>
@@ -119,7 +119,7 @@
                                 <label for="title">제목</label>
                             </td>
                             <td>
-                                <input type="text" name="title" style="width:700px;">
+                                <input type="text" name="title" style="width:700px;"  value="${ap.title }">
                             </td>
                         </tr>
                         <tr>
@@ -127,7 +127,7 @@
                                 <label for="content">내용</label>
                             </td>
                             <td rowspan="5" height="150px;">
-                                <textarea class="summernote form-control" name="content" required  id="content" rows="10" style="resize:none;"></textarea>
+                                <textarea class="summernote form-control" name="content" required  id="content" rows="10" style="resize:none;">${ap.content }</textarea>
                             </td>
                         </tr>
                         <tr></tr>
@@ -151,6 +151,11 @@
                                     <div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
                                 </div>
                                 <div id="in_attachments">
+									<c:if test="${not empty list3}">
+										<c:forEach var="a" items="${list3 }">
+											<div> 첨부파일명 :  ${a.originName}  &nbsp;&nbsp;&nbsp; <br></div>
+										</c:forEach>
+									</c:if>                                
                                 </div>
                                 <input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
                             </td>
@@ -174,17 +179,32 @@
                </div>
                
                <div class="app-body">
+	               	<c:choose>
+		               	<c:when test="${empty list1}">
+		               		결재선이 비었습니다.
+		               	</c:when>
+		               	<c:otherwise>
+		               		<c:forEach var="e" items="${list1}">
+				               <div class="app-comment" style="font-size:15px;">
+				                   <img src="<c:out value='${e.empProfile}' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${e.empName} ${e.jobCode == 'J1'?'사원':
+																																							                             e.jobCode == 'J2'?'대리':
+																																							                             e.jobCode == 'J3'?'과장':
+																																							                             e.jobCode == 'J4'?'부장':
+																																							                             e.jobCode == 'J5'?'상무':
+																																							                             e.jobCode == 'J6'?'대표':''}
+								   <input type="hidden" name="recEmpNo" value="${e.recEmpNo }">																														                             
+				                   <br>
+				                     이지피지 | ${e.deptName}
+				                   <br>
+				                    결재
+				                   <br><br><br>
+								
+				               </div>	               			
+		               		</c:forEach>
+	               		</c:otherwise>
+	               </c:choose>               
                </div>
-               <div class="app-comment" style="font-size:15px;">
-                <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
-                <br>
-                    회사명 | 부서명
-                <br>
-                    결재
-                <br><br>
 
-                <br>
-            	</div>
             
                 <div style=" padding:10px; font-size:20px;">
                     <p><b> 참조자</b></p>
@@ -202,6 +222,30 @@
                </div>
                
                <div class="rep-body">
+	               	<c:choose>
+		               	<c:when test="${empty list2}">
+		               		참조선이 비었습니다.
+		               	</c:when>
+		               	<c:otherwise>
+		               		<c:forEach var="r" items="${list2}">
+				               <div class="app-comment" style="font-size:15px;">
+				                   <img src="<c:out value='${r.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${r.empName} ${r.jobCode == 'J1'?'사원':
+																																							                       r.jobCode == 'J2'?'대리':
+																																							                       r.jobCode == 'J3'?'과장':
+																																							                       r.jobCode == 'J4'?'부장':
+																																							                       r.jobCode == 'J5'?'상무':
+																																							                       r.jobCode == 'J6'?'대표':''}
+				                   <input type="hidden" name="recEmpNo" value="${r.recEmpNo }">	
+				                   <br>
+				                     이지피지 | ${r.deptName}
+				                   <br>
+				                    참조
+				                   <br><br><br>
+								
+				               </div>	               			
+		               		</c:forEach>
+	               		</c:otherwise>
+	               </c:choose>               
                </div>
                
                <div id="commentArea">
@@ -218,26 +262,37 @@
 
     <script>
     
-        // 회원정보흘 가져오는 ajax
-        $(function(){
-            
-            $.ajax({
-                url:"enrollinfo.ap",
-                success:function(result){
-                                        
-                    $("#writer").val(result.a.empName);
-                    $("#dept").val(result.a.deptName);
-                    $("#appChange").val(result.appChange);
-                    
-                }, error:function(request, status, error){
-                    console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
-                    console.log("직성용 정보 불러오기 ajax 통신실패");
-                }
-            });
-            
-        })
+	    // 회원정보흘 가져오는 ajax
+	    $(function(){
+	    	
+	    	$.ajax({
+	    		url:"enrollinfo.ap",
+	    		success:function(result){
+	    				    			
+	    			$("#writer").val(result.a.empName);
+	    			$("#dept").val(result.a.deptName);
+	    			
+	    		}, error:function(request, status, error){
+	    			console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+					console.log("직성용 정보 불러오기 ajax 통신실패");
+	    		}
+	    	});
+	    	
+	    	// 첨부파일 있을때와 없을 때
+	    	if(${not empty list3}){
+	    		$("#in_attachments").css('display', 'block');
+	    		$("#no_attachment").css('display', 'none');
 
-
+	    	}else{
+	    		$("#in_attachments").css('display', 'none');
+	    		$("#no_attachment").css('display', 'block');	    		
+	    	}
+	    });
+    
+    
+    
+    
+    
         $('.summernote').summernote({
             toolbar: [
 			    // [groupName, [list of button]]
@@ -252,6 +307,10 @@
 			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']           });
 
+
+	   
+	    
+	    
         // 첨부파일 업로드 하기
         // 버튼 클릭해서 선택해오기
         let fileNames = [];
@@ -263,11 +322,16 @@
             attachFile.addEventListener('change', function(){
                 let vaildFile = attachFile.files.length >= 0;
                 if(vaildFile){
-                    inAttachs.innerText = ''
+                    //inAttachs.innerText = ''
                     noAttach.style.display = "none";
+                    let attach = "";
                     for(let i=0; i<attachFile.files.length; i++){
-                        inAttachs.innerHTML += "첨부파일명 : " + attachFile.files[i].name + "&nbsp;&nbsp;&nbsp; <br>"
+                    	
+                    	inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile[i].name + "&nbsp;&nbsp;&nbsp;<br></div>";
+                        
                     };
+                    inAttachs.append(attach);
+                    
                     inAttachs.style.overflowY = 'auto';
                     inAttachs.style.display = "block";
                 };
@@ -293,16 +357,16 @@
             let attachFile = e.dataTransfer.files
             let vaildFile = e.dataTransfer.types.indexOf('Files') >= 0;
             if(vaildFile){
-                inAttachs.innerText = ''
+                //inAttachs.innerText = ''
                 noAttach.style.display = "none";
                 for(let i=0; i<attachFile.length; i++){
-                    inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile[i].name + "&nbsp;&nbsp;&nbsp;<br>"
+                    inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile[i].name + "&nbsp;&nbsp;&nbsp;<br></div>";
                 };
                 inAttachs.style.overflowY = 'auto';
                 inAttachs.style.display = "block";
             };
-        });        
-
+        });
+        
         // 첨부파일 전체 삭제
         document.getElementById('file_delete').addEventListener('click', function(){
             let attachFile = document.getElementById("attach_files");
@@ -311,8 +375,8 @@
             inAttachs.style.display = "none";
             noAttach.style.display = "block";
         });
-
-        // 유효한 기안의견 작성 시 insert 요청되게 하기
+        
+        // 유효한 기안의견 작성 시 update 요청되게 하기
         function insertApp(){
         	
         	if($("#writerComment").val().trim().length>0){
@@ -355,6 +419,7 @@
 				$("input[type=radio][name=end-half]").attr('name','halfStatus');
 				
 				appContent.submit();
+				
 
         		
         	}else{
@@ -362,7 +427,8 @@
         		swal("의견 작성 후 상신요청해주세요.");
         	}
         	
-        }        
+        }
+        
 
     </script>
 

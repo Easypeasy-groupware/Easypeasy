@@ -525,12 +525,13 @@ public class ApprovalController {
 	public String updateForm(int no, ArrayList<Attachment> filePath, Model model, HttpSession session) {
 
 		Approval ap = aService.selectTempApproval(no);
+		model.addAttribute("ap", ap);	
 		
 		ArrayList<ApprovalLine> list1 = aService.selectDetailSPrgAl(ap);
 		model.addAttribute("list1", list1);	
 		
 		ArrayList<ApprovalLine> list2 = aService.selectDetailSPrgRl(ap);
-		model.addAttribute("ap", ap);	
+		model.addAttribute("list2", list2);
 		
 		ArrayList<Attachment> list3 = aService.selectDetailSPrgAt(ap);
 		model.addAttribute("list3", list3);
@@ -546,12 +547,12 @@ public class ApprovalController {
 		}else if(ap.getFormCode() == 3) {
 			
 			VacationForm vf = aService.selectDetailSPrgVf(ap);
-			model.addAttribute(vf);
+			model.addAttribute("vf", vf);
 			return "approval/appVacationUpdateForm";
 			
 		}else {
 			OverTimeForm ot = aService.selectDetailSPrgOt(ap);
-			model.addAttribute(ot);
+			model.addAttribute("ot", ot);
 			return "approval/appOvertimeUpdateForm";			
 		}	
 
@@ -563,7 +564,7 @@ public class ApprovalController {
 		//System.out.println(ap);
 		//System.out.println(originNames);
 		
-		ap.setStatus(1);
+		ap.setStatus("1");
 		/*
 		 * 
 		 * 

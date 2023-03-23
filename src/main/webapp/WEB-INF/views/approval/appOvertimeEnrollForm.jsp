@@ -146,7 +146,7 @@
 		                                <label for="content">근무시간</label>
 		                            </td>
 		                            <td id="overUseTime" name="otUseTime">
-		                                &nbsp;&nbsp;
+		                                &nbsp;&nbsp; 총 + ${ot.otUseTime } + 시간
 		                            </td>
 		                        </tr>
 		                        <tr>
@@ -165,7 +165,7 @@
 		                                <label for="content">신청사유</label>
 		                            </td>
 		                            <td rowspan="5" height="150px;">
-		                                <textarea class="form-control" name="content" id="content" rows="10" style="resize:none;"></textarea>
+		                                <textarea class="form-control" name="content" id="content" rows="10" style="resize:none;">${ap.content }</textarea>
 		                            </td>
 		                        </tr>
 		                        <tr></tr>
@@ -263,7 +263,6 @@
                                         
                     $("#writer").val(result.a.empName);
                     $("#dept").val(result.a.deptName);
-                    $("#appChange").val(result.appChange);
                     
                 }, error:function(request, status, error){
                     console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
