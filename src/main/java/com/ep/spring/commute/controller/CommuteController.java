@@ -191,8 +191,45 @@ public class CommuteController {
 		
 		//휴가관리(인사게정)
 		@RequestMapping("vacList.HR")
-		public String selectVacList() {
-			return "vacation/vacationEmpList";
+		public ModelAndView selectVacList(ModelAndView mv, HttpSession session, @RequestParam(value="cpage", defaultValue="1")int currentPage) {
+			
+			int listCount = cService.selectListCount();
+			
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+			ArrayList<Employee> list = cService.selectEmpList(pi);
+			
+			if(list != null) {
+				mv.addObject("pi", pi).addObject("list", list).setViewName("vacation/vacationEmpList");
+				
+				return mv;
+			}else {
+				AlertMsg msg = new AlertMsg("휴가관리", "사원 휴가 조회에 실패하였습니다.");
+				mv.addObject("failMsg", msg)
+				  .setViewName("commute/HRworkingStatus");
+				return mv;
+			}
+			
+			
+		}
+		
+		//휴가관리 수정 및 상세페이지
+		@RequestMapping("updateVac.HR")
+		public String updateVac(int no, HttpSession session) {
+			int empNo = no;
+			
+			ArrayList<VacationRecode> list1 = cService.selectVacMain(empNo);
+			ArrayList<VacationForm> list2 = cService.selectVacForm(empNo);
+			Employee e = cService.selectEmployeeInformation(empNo);
+			
+			session.setAttribute("clickEmp", e);
+			session.setAttribute("list1", list1);
+			session.setAttribute("list2", list2);
+			
+			//System.out.println(list1);
+			//System.out.println(list2);
+			
+			return "vacation/vacationUpdate";
+			
 		}
 		
 

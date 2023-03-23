@@ -82,5 +82,7 @@ public class CommuteDao {
 	public int updateTimeHR(SqlSessionTemplate sqlSession, Commute c) {
 		return sqlSession.update("commuteMapper.updateTimeHR", c);
 	}
+	
+
 
 }

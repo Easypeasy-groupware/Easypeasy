@@ -104,6 +104,8 @@ public class CommuteServiceImpl implements CommuteService{
 		
 		return cDao.updateTimeHR(sqlSession, c);
 	}
+
+
 	
 	
 

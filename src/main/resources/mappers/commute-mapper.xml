@@ -22,6 +22,8 @@
 		<result column="vac_reason" property="vacReason" />
 		<result column="vac_divide" property="vacDivide" />
 		<result column="vac_category" property="vacCategory" />
+		<result column="vac_remaining" property="vacRemaining" />
+		<result column="emp_name" property="empName" />
 	</resultMap>
 	
 	<resultMap id="vacFormResult" type="VacationForm">
@@ -121,6 +123,7 @@
 			  , vac_reason
 			  , vac_divide
 			  , vac_category
+			  , vac_remaining
 		   from vac_recode
 		  where emp_no = #{empNo}
 	</select>
@@ -213,6 +216,8 @@
 		 where emp_no = #{empNo}
 		   and com_code = #{comCode}
 	</update>
+	
+
 	
 
 </mapper>
