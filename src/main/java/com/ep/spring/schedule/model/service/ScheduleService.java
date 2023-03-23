@@ -26,7 +26,10 @@ public interface ScheduleService {
 	// 선택한 캘린더 조회
 	Calendar selectCalendar(int calNo);
 	
-	// 내캘린더 수정
+	// 캘린더 수정
 	int updateCalendar(Calendar c);
 	
+	// 캘린더 삭제
+	int deleteSchedule(int calNo);
+	int deleteCalendar(int calNo);
 }

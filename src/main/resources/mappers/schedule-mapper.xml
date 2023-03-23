@@ -126,4 +126,16 @@
 		 where cal_no = #{calNo}
 	</update>
 	
+	<delete id="deleteSchedule">
+		delete
+		  from schedule
+		 where cal_no = #{calNo}
+	</delete>
+	
+	<delete id="deleteCalendar">
+		delete
+		  from my_calendar
+		 where cal_no = #{calNo}
+	</delete>
+	
 </mapper>

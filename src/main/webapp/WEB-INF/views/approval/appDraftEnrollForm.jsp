@@ -38,7 +38,16 @@
             border-left: 0;
             margin-left: -10px;
             margin-top: -20px;
-        } 
+        }
+        
+        /* 첨부파일 스타일 */
+        #attach_area{height: 100px; border: 1px solid gray; background: whitesmoke; vertical-align: middle;}
+        #no_attachment{width: 360px; margin: auto; display: block;}
+        #no_attachment img, #no_attachment div{float: left;}
+        #no_attachment div{margin-left: 10px; line-height: 26px; font-size: 15px; font-weight: 400; color: gray;}
+        #in_attachments{width: 100%; max-height: 100px; padding-left: 20px; display: none;}
+        #attach{width: 25px;}
+        .attach_delete_btn{border: none;}             
 
     </style>    
 </head>
@@ -121,7 +130,7 @@
 	                                <label for="content">내용</label>
 	                            </td>
 	                            <td rowspan="5" height="150px;">
-	                                <textarea class="summernote form-control" name="content" required id="content" rows="10" style="resize:none;"></textarea>
+	                                <textarea class="form-control" required id="summernote" rows="10" name="content" style="resize:none;"></textarea>
 	                            </td>
 	                        </tr>
 	                        <tr></tr>
@@ -222,8 +231,7 @@
     
     
     
-    
-        $('.summernote').summernote({
+        $('#summernote').summernote({
             toolbar: [
 			    // [groupName, [list of button]]
 			    ['fontname', ['fontname']],
@@ -303,7 +311,7 @@
         	
         	if($("#writerComment").val().trim().length>0){
         		
-        		if(!($("#content").val().trim().length>0)){
+        		if(!($("#summernote").val().trim().length>0)){
         			swal("내용 작성 후 상신요청해주세요.");
         		}
         		
@@ -339,11 +347,9 @@
 				
 				$("input[type=radio][name=start-half]").attr('name', 'halfStatus');
 				$("input[type=radio][name=end-half]").attr('name','halfStatus');
-				
+
 				appContent.submit();
 				
-
-        		
         	}else{
         		
         		swal("의견 작성 후 상신요청해주세요.");

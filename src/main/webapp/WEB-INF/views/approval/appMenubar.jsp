@@ -96,14 +96,7 @@
         	/* z-index: 2147483647; */
         }
 
-        /* 첨부파일 스타일 */
-        #attach_area{height: 100px; border: 1px solid gray; background: whitesmoke; vertical-align: middle;}
-        #no_attachment{width: 360px; margin: auto; display: block;}
-        #no_attachment img, #no_attachment div{float: left;}
-        #no_attachment div{margin-left: 10px; line-height: 26px; font-size: 15px; font-weight: 400; color: gray;}
-        #in_attachments{width: 100%; max-height: 100px; padding-left: 20px; display: none;}
-        #attach{width: 25px;}
-        .attach_delete_btn{border: none;}          
+      
     </style>
     
     <!-- 부트스트랩 -->

@@ -49,4 +49,12 @@ public class ScheduleDao {
 	public int updateCalendar(SqlSessionTemplate sqlSession, Calendar c) {
 		return sqlSession.update("scheduleMapper.updateCalendar", c);
 	}
+	
+	public int deleteSchedule(SqlSessionTemplate sqlSession, int calNo) {
+		return sqlSession.delete("scheduleMapper.deleteSchedule", calNo);
+	}
+	
+	public int deleteCalendar(SqlSessionTemplate sqlSession, int calNo) {
+		return sqlSession.delete("scheduleMapper.deleteCalendar", calNo);
+	}
 }
