@@ -20,7 +20,6 @@
 	th, td {text-align: center; padding: 8px; border-bottom: 1px solid #ccc;}
 	th {background-color: #ddd;}
 	tr:hover {background-color: #f5f5f5;}
-	td {cursor: pointer;}
 	.views {text-align: center;}
     .search-container {display: flex; justify-content: flex-end; margin-bottom: 10px;}
 	.search-container input[type=text] {padding: 6px; margin-right: 10px; border: none; border-radius: 3px; width: 200px;}
@@ -101,9 +100,9 @@
                 </tbody>
             </table>
             	<script>
-            		// 태이블 클릭
+            		// 테이블 클릭
 			        $(function(){
-		                 $("#boardList>tbody>tr>td.notice").click(function(){
+		                 $("#boardList>tbody>tr").click(function(){
 		            			location.href='detailForm.bo?no=' + $(this).children(".bno").text();
 		            	})
 		            })

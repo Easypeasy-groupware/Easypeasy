@@ -83,24 +83,26 @@ public class BoardController {
 		
 	}
 	
+		
 	@RequestMapping("detailForm.bo")
-	public ModelAndView selectBoard(ModelAndView mv, Board b) {
+	public ModelAndView selectBoard(int no, HttpSession session, ModelAndView mv, Board b) {
 		
-		int result = bService.increaseCount(b);
+		//System.out.println(no);
 		
-		System.out.println(result);
+		int result = bService.increaseCount(no);
 		
+		//System.out.println(result);
 		
 		if(result > 0) {
-			
-			Board bd = bService.selectBoard(b);
-			
+			Board bb = bService.selectBoard(no);
 			ArrayList<Attachment> attachmentList = bService.selectAttachmentList(b);
-			System.out.println(attachmentList);
 			
-			mv.addObject("bd", bd).addObject("attachmentList", attachmentList).setViewName("board/boardDetailForm");
+			//System.out.println(attachmentList);
+			
+			mv.addObject("b", bb).addObject("attachmentList", attachmentList).setViewName("board/boardDetailForm");
+			
 		}else {
-			mv.addObject("errorMsg", "조회수증가실패").setViewName("common/errorPage");
+			mv.setViewName("redirect:list.bo");
 		}
 		return mv;
 	}
@@ -122,14 +124,11 @@ public class BoardController {
 		
 	}
 	
-	/*
-	 * @RequestMapping("updateForm.bo") public String updateForm(int no, Model
-	 * model) {
-	 * 
-	 * model.addAttribute("b", bService.selectBoard());
-	 * 
-	 * return "board/boardUpdateForm"; }
-	 */
+	@RequestMapping("updateForm.bo")
+	 public String updateForm(int no, Model model) {
+	   return "board/boardUpdateForm"; 
+	 }
+	 
 	
 	@RequestMapping("update.bo")
 	public String updateBoard(Board b, HttpSession session, Model model) {
@@ -149,7 +148,7 @@ public class BoardController {
 	// 댓글 ajax
 	@ResponseBody
 	@RequestMapping(value="rlist.bo", produces="application/json; charset=UTF-8")
-	public String ajaxSelectReplyList(int no) { // 게시글번호 전달, 똑같은 이름의 매개변수 작성
+	public String ajaxSelectReplyList(int no) {
 			
 		ArrayList<BoardReply> list = bService.selectReplyList(no);
 		
@@ -167,14 +166,22 @@ public class BoardController {
 	}
 	
 	
+	// Settings
 	@RequestMapping("adminSettings.bo")
-	public ModelAndView selectSettings(BoardCate bc, ModelAndView mv) {
+	public String selectSettings(BoardCate bc, HttpSession session, Model model) {
 		
-		ArrayList<BoardCate> bcList = bService.selectSettings(bc);
+		int result = bService.selectSettings(bc);
 		
-		mv.addObject("bcList", bcList).setViewName("board/boardSettings");
-		
-		return mv;
+		if(result > 0) {
+			return "board/boardSettings";
+		}else {
+			return "common/errorPage";
+		}
+	}
+	
+	@RequestMapping("enrollSetting.bo")
+	public String enrollBoardCate() {
+		return "board/boardEnrollSettings";
 	}
 	
 	
@@ -183,9 +190,12 @@ public class BoardController {
 		
 		int result = bService.insertCate(bc);
 		
+		System.out.println(result);
+		
+		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "성공적으로 등록되었습니다.");
-			return "redirect:adminSettings.bo";
+			return "redirect:boardUpdateSettings";
 		}else {
 			model.addAttribute("errorMsg", "게시판등록실패");
 			return "common/errorPage";
