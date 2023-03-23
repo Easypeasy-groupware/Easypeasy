@@ -153,7 +153,7 @@ public class CommuteController {
 			
 			
 		}
-		
+		//근무시간 확인 및 수정=>클릭된 사원의 정보
 		@RequestMapping("workingEmp.HR")
 		public String selectEmpWorkingStatus(int no, HttpSession session) {
 			int empNo = no;
@@ -166,6 +166,12 @@ public class CommuteController {
 			
 			return "commute/selectEmpWorkingStatus";
 			
+		}
+		
+		//근무시간 수정(인사계정)
+		@RequestMapping("updateTime.HR")
+		public void updateTimeHR(Commute c, HttpSession session) {
+			int result = cService.updateTimeHR(c);
 		}
 		
 

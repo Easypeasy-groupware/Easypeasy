@@ -89,6 +89,44 @@
             <div class="name">${ clickEmp.empName }님</div>
 
             <div id='calendar'></div>
+            
+            <!-- 근무시간 수정 모달 -->
+            <div class="modal fade" id="updateTimeForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+       			 aria-hidden="true">
+        	<div class="modal-dialog modal-lg" role="document">
+            
+            <div class="modal-dialog">
+              <div class="modal-content">
+          
+                <div class="modal-header">
+                  <h4 class="modal-title">근무시간 수정</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body" align="center">
+                  <form action="updateTime.HR" method="post">
+                     <input type="hidden" name="empNo" value="${ clickEmp.empNo }">
+                     <table>
+                        <tr>
+                           <td>출근시간 : </td>
+                           <td><input type="text" name="startTime" required></td>
+                        </tr>
+                        <tr>
+                           <td>퇴근시간 : </td>
+                           <td><input type="text" name="endTime" required></td>
+                        </tr>
+                     </table>
+                     <br>
+                     <button type="submit" class="btn btn-sm btn-secondary" >수정</button>
+                     <button type="reset" class="btn btn-sm btn-secondary">취소</button>
+                  </form>
+
+                </div>
+          
+              </div>
+            </div>
+         
+          </div>
+          </div>
 
             <script>
                 
@@ -130,11 +168,31 @@
                             	  
                             	   },
                             </c:forEach>
-                        ]
+                        ],
+                    eventClick: function(info){
+                    	$("#updateTimeForm").modal("show");
+                    },
+                    
+                    select: function(info){
+                        // 클릭한 날짜
+                        const start = info.startStr;
+                        const end = info.endStr;
+
+                        var startDay = new Date(start); // 문자열로 변환하기 위한 작업
+                        var sYear = startDay.getFullYear();
+                        var sMonth = ('0' + (startDay.getMonth() + 1)).slice(-2);
+                        var sDay = ('0' + startDay.getDate()).slice(-2);
+                        console.log("오늘 날짜" + startDay);
+                    }
+                    
                 });
                 calendar.render();
             });
+            
+      
         </script>
+        
+        
 
 
         </div>

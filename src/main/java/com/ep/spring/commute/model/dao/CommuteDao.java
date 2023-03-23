@@ -77,5 +77,10 @@ public class CommuteDao {
 	public Employee selectEmployeeInformation(SqlSessionTemplate sqlSession, int empNo) {
 		return sqlSession.selectOne("commuteMapper.selectEmployeeInformation", empNo);
 	}
+	
+	// 근무시간 수정(인사계정)
+	public int updateTimeHR(SqlSessionTemplate sqlSession, Commute c) {
+		return sqlSession.update("commuteMapper.updateTimeHR", c);
+	}
 
 }
