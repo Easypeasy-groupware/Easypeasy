@@ -227,6 +227,7 @@ public class ApprovalDao {
 		int result2 = 0;
 		
 		int num = al.get(0).getAppNo();
+		System.out.println(num);
 		
 		result1 = sqlSession.delete("approvalMapper.deleteApprovalLine", num);
 		
@@ -239,17 +240,12 @@ public class ApprovalDao {
 	
 	public int updateAttachment(SqlSessionTemplate sqlSession, ArrayList<Attachment> atList) {
 		
-		int result1 = 0;
-		int result2 = 0;
-		
-		String num = atList.get(0).getRefNo();
-		
-		result1 = sqlSession.delete("approvalMapper.deleteAttachment", num);
+		int result = 0;
 		
 		for(Attachment a : atList) {
-			result2 += sqlSession.insert("approvalMapper.updateAttachement", atList);
+			result += sqlSession.insert("approvalMapper.insertAttachment", a);
 		}
-		return result1 * result2;
+		return result;
 	}
 	
 	public int updateVacationForm(SqlSessionTemplate sqlSession, VacationForm vf) {

@@ -951,10 +951,34 @@
             where  app_no = #{appNo}	
 	</update>
 	
-	<delete id="updateApprovalLine">
+	<delete id="deleteApprovalLine">
 			delete app_line
-             where  app_no = #{appNo}	
+             where app_no = #{appNo}	
 	</delete>
-	
+
+	<update id="updateVacationForm">
+			update 
+			       vac_form
+			   set   
+			        VAC_KIND = #{vacKind}
+			        , VAC_START = #{vacStart}
+			        , VAC_END = #{vacEnd}
+			        , HALF_STATUS = #{halfStatus}
+			        , VAC_USE = #{vacUse} 
+			        , HALF_DAY = #{halfDay}
+			  where app_no = #{appNo} 	
+	</update>
+
+	<update id="updateOverTimeForm">
+			update 
+			        ot_form
+			   set   
+			        OVERTIME_KIND = #{otKind}
+			        , OVER_DATE = #{otDate}
+			        , OVER_START_HOUR = #{otStart}
+			        , OVER_END_HOUR = #{otEnd}
+			        , OVER_USE_TIME = #{otUseTime}
+			  where app_no = #{appNo}      	
+	</update>
 	
 </mapper>
