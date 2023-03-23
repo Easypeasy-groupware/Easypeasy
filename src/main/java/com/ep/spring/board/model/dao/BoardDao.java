@@ -40,15 +40,16 @@ public class BoardDao {
 		return result;
 	}
 	
-	public int increaseCount(SqlSessionTemplate sqlSession, Board b) {
-		return sqlSession.update("boardMapper.increaseCount", b);
+	public int increaseCount(SqlSessionTemplate sqlSession, int no) {
+		return sqlSession.update("boardMapper.increaseCount", no);
 	}
 	
-	public Board selectBoard(SqlSessionTemplate sqlSession, Board b) {
-		return sqlSession.selectOne("boardMapper.selectBoard", b);
+	public Board selectBoard(SqlSessionTemplate sqlSession, int no) {
+		return sqlSession.selectOne("boardMapper.selectBoard", no);
 	}
 	
-	public ArrayList<Attachment> selectAttachmentList(SqlSessionTemplate sqlSession,Board b){ 
+	
+	public ArrayList<Attachment> selectAttachmentList(SqlSessionTemplate sqlSession, Board b){ 
 		return (ArrayList)sqlSession.selectList("boardMapper.selectAttachmentList", b); 
 	}
 	
@@ -68,8 +69,8 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.inserReply", r);
 	}
 	
-	public ArrayList<BoardCate> selectSettings(SqlSessionTemplate sqlSession, BoardCate bc){
-		return (ArrayList)sqlSession.selectList("boardMapper.selectSettings", bc);
+	public int selectSettings(SqlSessionTemplate sqlSession, BoardCate bc){
+		return sqlSession.selectOne("boardMapper.selectSettings", bc);
 	}
 	
 	public int insertCate(SqlSessionTemplate sqlSession, BoardCate bc) {

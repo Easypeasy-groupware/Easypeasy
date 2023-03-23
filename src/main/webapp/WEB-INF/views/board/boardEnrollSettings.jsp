@@ -21,8 +21,7 @@
 </style>
 </head>
 <body>
-
-	<jsp:include page="../common/header.jsp" />
+<jsp:include page="../common/header.jsp" />
 	
 	<div class="wrapper">
 	
@@ -30,20 +29,18 @@
        
         <div class="board">
         
-        	<form action="adminSettings.bo" method="POST">
-                <h2>게시판 설정</h2>
+        	<form action="insertSettings.bo" method="POST">
+                <h2>게시판 추가</h2>
                 <br><br>
                     
                     <label for="title">게시판 제목:</label>
-                        <input type="text" id="title" name="boardCname" value="${bc.boardCname}" required /><br>
-                        <input type="hidden" id="boardCno" name="boardCno" value="${bc.boardCno}">
+                        <input type="text" id="title" name="boardCname" required /><br>
+                        <input type="hidden" id="boardCno" name="boardCno" >
                         
                     <hr>
         
                     <label>전체공개 설정</label><br>
                      	<select name="deptCode" id="displayRange" >
-                     		<option value="${bc.displayRange}" name="displayRange" id="dr">${bc.displayRange}</option>
-                     		<option>-----</option>
                     	 	<option value="1" name="displayRange" id="1">전체부서 공개</option>
 			                <option value="2" name="displayRange" id="2">인사관리부</option>
 			                <option value="3" name="displayRange" id="3">경영관리부</option>
@@ -52,24 +49,12 @@
 			                <option value="6" name="displayRange" id="6">영업3팀</option>
 			                <option value="7" name="displayRange" id="7">마케팅부</option>
 			            </select> 
-			            <script>
-					        $(function(){
-					        	$('select[name=displayRange] value=[${bc.displayRange}]').attr("selected", true);
-					        })
-				        </script>
                         
                         <!-- <button type="button" class="btn btn-outline-primary">+ 부서 추가</button> --><br><br>
                     
                     <label>비공개 설정</label><br>
                         <input type="radio" id="private" name="privateStatus" value="N"  checked/>사용하지 않음  &nbsp;&nbsp;
                         <input type="radio" id="private" name="privateStatus" value="Y"  />사용함<br><br>
-                    
-                    <script>
-                    	$(function(){
-                    		$("input[value=${privateStatus}]").attr("checked", true);
-                    	})
-                    </script>
-                    
                     
                     <label>익명 설정</label><br>
                         <input type="radio" id="anonym" name="anonymStatus" value="N"  checked/>사용하지 않음  &nbsp;&nbsp;
@@ -84,12 +69,6 @@
                         <input type="radio" name="deptCode" value="D5"  />영업3팀  &nbsp;&nbsp; 
                         <input type="radio" name="deptCode" value="D6"  />마케팅부서  &nbsp;&nbsp; <br><br>
                     
-                    <script>
-					        $(function(){
-					        	$('select[name=deptCode] value=[${bc.deptCode}]').attr("selected", true);
-					        })
-				    </script>
-                    
                     <!-- <label>댓글 작성</label><br>
                         <input type="radio" id="reply" name="reply" value="Y"  checked/>허용  &nbsp;&nbsp;
                         <input type="radio" id="reply" name="reply" value="N"  />허용하지 않음<br> -->
@@ -97,8 +76,7 @@
                     <br><br><br>
 					<div align="center">
 						<button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1);">이전으로</button>
-						<button type="submit" class="btn btn-success">수정하기</button>
-						<button type="button" class="btn btn-danger" onclick="">삭제하기</button>
+						<button type="submit" class="btn btn-success">등록하기</button>
 					</div>
             </form>   
         

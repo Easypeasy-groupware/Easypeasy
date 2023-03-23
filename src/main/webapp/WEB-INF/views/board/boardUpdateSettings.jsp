@@ -15,55 +15,61 @@
     .container {margin: 20px auto; width: 900px; padding: 20px;}
     form {max-width: 1000px; margin: 0 auto; padding: 20px; border-radius: 5px; box-sizing: border-box;}
     label {display: inline-block; margin-bottom: 5px; font-weight: bold;}
-	input[type="text"],textarea,
+	input[type="text"],input[type="file"],textarea,
 	select {width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 3px; box-sizing: border-box; margin-bottom: 20px; font-size: 16px; font-family: inherit;}
 	select {height: 40px;}
 </style>
 </head>
 <body>
-<jsp:include page="../common/header.jsp" />
+	<jsp:include page="../common/header.jsp" />
 	
 	<div class="wrapper">
 	
 		<jsp:include page="../board/boardSidebar.jsp" />
        
         <div class="board">
-        
-        	<form action="insertSettings.bo" method="POST">
-                <h2>게시판 추가</h2>
-                <br><br>
-                    
-                    <label for="title">게시판 제목:</label>
-                        <input type="text" id="title" name="boardCname" required /><br>
-                        
-                    <hr>
-        
-                    <label>전체공개 설정</label><br>
-                        <input type="radio" id="dept" name="displayRange" value="1" checked/>전체 부서 공개  &nbsp;&nbsp;
-                        <input type="radio" id="dept" name="displayRange" value="2"  />해당 부서 공개 
-                        <button type="button" class="btn btn-outline-primary">+ 부서 추가</button><br><br>
-                    
-                    <label>비공개 설정</label><br>
-                        <input type="radio" id="private" name="privateStatus" value="N"  checked/>사용하지 않음  &nbsp;&nbsp;
-                        <input type="radio" id="private" name="privateStatus" value="Y"  />사용함<br><br>
-                    
-                    <label>익명 설정</label><br>
-                        <input type="radio" id="anonym" name="anonymStatus" value="N"  checked/>사용하지 않음  &nbsp;&nbsp;
-                        <input type="radio" id="anonym" name="anonymStatus" value="Y"  />사용함<br><br>
-                    
-                    <label>댓글 작성</label><br>
-                        <input type="radio" id="reply" name="reply" value="Y"  checked/>허용  &nbsp;&nbsp;
-                        <input type="radio" id="reply" name="reply" value="N"  />허용하지 않음<br>
-                    
-                    <br><br><br>
-					<div align="center">
-						<button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1);">이전으로</button>
-						<button type="submit" class="btn btn-success">등록하기</button>
-					</div>
-            </form>   
-        
+        	<form action="update.bo" method="post">
+          <h3>게시글 수정/삭제</h3>
+          <br><br>
+              <label>게시판그룹</label>
+                  <select name="boardCno">
+                  	  <option value="${b.boardCno}" name="boardCno" id="b">${b.boardCno}</option>
+			          <option>-----수정----</option>
+                      <option value="1" name="boardCno" id="1">전체 공지사항</option>
+                      <option value="2" name="boardCno" id="2">식단표</option>
+                      <option value="3" name="boardCno" id="3">자유게시판</option>
+                      <option value="4" name="boardCno" id="4">커뮤니티</option>
+                      <option value="5" name="boardCno" id="5">부서 공지사항</option>
+                      <option value="6" name="boardCno" id="6">부서 자유게시판</option>
+                  </select><br>
+                  <script>
+					$(function(){
+						$('select[name=boardCno] value=[${b.boardCno}]').attr("selected", true);
+					})
+				  </script>
+              <label for="title">게시글 제목</label>
+                  <input type="text" id="boardTitle" name="boardTitle" value="${b.boardTitle}" required /><br>
+              <input type="hidden" name="boardWriter" value="${loginUser.empNo}">
+              <label for="file">파일첨부</label>
+                  <input type="file" id="file" name="file" /><br>
+              <label for="content">내용</label>
+                  <textarea name="boardContent" id="boardContent" value="${b.boardContent}" cols="30" rows="10" required placeholder="내용을 입력하세요"></textarea><br>
+              <label for="boardPin">공지등록</label>
+                  <input type="checkbox" id="N" name="boardPin" value="${b.boardPin}" /><br>
+                  
+              <script>
+              	$(function(){
+					$("input[value=${b.boardPin}]").attr("checked", true);
+                })
+              </script>
+               
+                    <br><br>
+              <div align="center">
+                <button type="button" class="btn btn-dark" onclick="javascript:history.go(-1);">이전으로</button>
+                <button type="submit" class="btn btn-success">수정하기</button>
+                <button type="button" class="btn btn-danger" onclick="location.href='deleteBoard.bo';">삭제하기</button>
+              </div>
         </div>
-        
 	</div>
 </body>
 </html>

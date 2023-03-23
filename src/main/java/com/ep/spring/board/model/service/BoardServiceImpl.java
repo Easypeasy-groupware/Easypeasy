@@ -45,13 +45,13 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public int increaseCount(Board b) {
-		return bDao.increaseCount(sqlSession, b);
+	public int increaseCount(int no) {
+		return bDao.increaseCount(sqlSession, no);
 	}
 
 	@Override
-	public Board selectBoard(Board b) {
-		return bDao.selectBoard(sqlSession, b);
+	public Board selectBoard(int no) {
+		return bDao.selectBoard(sqlSession, no);
 	}
 	
 	@Override
@@ -85,7 +85,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public ArrayList<BoardCate> selectSettings(BoardCate bc) {
+	public int selectSettings(BoardCate bc) {
 		return bDao.selectSettings(sqlSession, bc);
 	}
 	
@@ -98,6 +98,8 @@ public class BoardServiceImpl implements BoardService{
 	public int updateSettings(BoardCate bc) {
 		return 0;
 	}
+
+	
 
 	
 

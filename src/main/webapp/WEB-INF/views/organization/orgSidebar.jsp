@@ -22,13 +22,7 @@
 	.menu li {margin-bottom: 5px; text-align: center; }
 	.menu a {display: block; padding: 10px; color: #333; text-decoration: none; transition: background-color 0.3s ease-in-out;}
 	.menu a:hover {background-color: #f2f2f2;}
-	.submenu ul {list-style: none; padding: 0; margin: 0;	display: none;}
-	.submenu li {margin-bottom: 5px;}
-	.submenu a {display: block;padding: 10px;color: #333;text-decoration: none;transition: background-color 0.3s ease-in-out;}
-	.submenu a:hover {background-color: #f2f2f2;}
 	.active {background-color: #f2f2f2;}
-	.collapse-indicator:after {content: " ∨";}
-	.submenu.active > .collapse-indicator:after {content: " ∧";}
 </style>
 </head>
 <body>
@@ -45,25 +39,13 @@
 	        <ul>
 	          <li><a href="list.org">인사관리부</a></li>
 	          <li><a href="list_d2.org">경영지원부</a></li>
-	          <li class="submenu">
-	          	 <a href="#" class="dep1">영업부<span class="collapse-indicator"></span></a>
-	                 <ul>
-	                      <li><a href="list_d3.org">- 영업 1팀</a></li>
-	                      <li><a href="list_d4.org">- 영업 2팀</a></li>
-	              		  <li><a href="list_d5.org">- 영업 3팀</a></li>
-	                 </ul>
-	          </li>   
+	          <li><a href="list_d3.org">영업 1팀</a></li>
+	          <li><a href="list_d4.org">영업 2팀</a></li>
+	          <li><a href="list_d5.org">영업 3팀</a></li>
 	          <li><a href="list_d6.org">마케팅부</a></li>
 	        </ul>
 	      </div>
 	  </div>
   
-	    <script>
-            $(document).ready(function(){
-                $('.dep1').click(function(){
-                    $(this).next().toggle();
-                });
-            });
-        </script>
 </body>
 </html>

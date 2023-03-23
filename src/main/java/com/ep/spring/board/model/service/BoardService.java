@@ -19,8 +19,8 @@ public interface BoardService {
 	int insertBoard(Board b, ArrayList<Attachment> atList);
 	
 	// 3. 게시글 상세조회용 서비스
-	int increaseCount(Board b);
-	Board selectBoard(Board b);
+	int increaseCount(int no);
+	Board selectBoard(int no);
 	ArrayList<Attachment> selectAttachmentList(Board b);
 		
 	// 4. 게시글 삭제용 서비스
@@ -39,7 +39,7 @@ public interface BoardService {
 	ArrayList<Board> selectTopList();	
 	
 	// 9. 게시판 설정 서비스
-	ArrayList<BoardCate> selectSettings(BoardCate bc);
+	int selectSettings(BoardCate bc);
 	int insertCate(BoardCate bc);
 	
 	// 10. 게시판 설정 수정 서비스
