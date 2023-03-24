@@ -16,7 +16,7 @@ import com.ep.spring.address.model.service.AddressService;
 import com.ep.spring.address.model.vo.AddGroup;
 import com.ep.spring.alarm.model.service.AlarmService;
 import com.ep.spring.alarm.model.vo.Alarm;
-import com.ep.spring.chat.model.vo.ChatSession;
+//import com.ep.spring.chat.model.vo.ChatSession;
 import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.common.template.FileUpload;
 import com.ep.spring.login.model.service.EmployeeService;
@@ -45,8 +45,8 @@ public class EmployeeController {
 	private AlarmService alService;
 	
 	/* 채팅 */
-    @Autowired
-    private ChatSession cSession;
+	//@Autowired
+	//private ChatSession cSession;
 	
 	//로그인
 	@RequestMapping("login.ep")
@@ -64,7 +64,7 @@ public class EmployeeController {
 		
 		/* 채팅 */
         // 현재 로그인 한 User 채팅 Session ArrayList에 추가.
-		cSession.addLoginChatUser(loginUser.getEmpNo());
+		//cSession.addLoginChatUser(loginUser.getEmpNo());
 		
 		/*
 		if(loginUser == null) {//로그인실패
@@ -96,10 +96,7 @@ public class EmployeeController {
 			session.setAttribute("pList", userGroup); //로그인한 사원의 주소록 그룹리스트 세션에 저장
 			session.setAttribute("sList", sharedGroup); //외부 공유주소록 그룹리스트 세션에 저장
 			session.setAttribute("recMailList", recMailList);
-			session.setAttribute("alarmList", alarmList);
-			session.setAttribute("list", list);
-			session.setAttribute("deptList", deptList);
-			session.setAttribute("jList", jList);
+			//session.setAttribute("alarmList", alarmList);
 			
 			return "common/main";
 		}else { // 실패
