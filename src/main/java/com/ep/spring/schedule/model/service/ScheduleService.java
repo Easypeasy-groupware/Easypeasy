@@ -2,6 +2,7 @@ package com.ep.spring.schedule.model.service;
 
 import java.util.ArrayList;
 
+import com.ep.spring.login.model.vo.Employee;
 import com.ep.spring.schedule.model.vo.Attendee;
 import com.ep.spring.schedule.model.vo.Calendar;
 import com.ep.spring.schedule.model.vo.Schedule;
@@ -39,4 +40,5 @@ public interface ScheduleService {
 	
 	// 일정 조회
 	ArrayList<Calendar> scheduleList(int empNo);
+
 }

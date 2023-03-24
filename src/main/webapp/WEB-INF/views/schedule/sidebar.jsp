@@ -93,9 +93,25 @@
 	    z-index: 10;
 	    display: none;
 	}
-	
-	
-
+:root{
+    --form-color: #a00; /* CSS 변수로 색상 지정 */
+}
+fieldset{
+    margin: 20px;
+    border: 1px solid #e0e0e0;
+}
+fieldset legend{
+    padding: 5px;
+    background-color: #555;
+    color: #fff;
+}
+input{
+    accent-color: var(--form-color); /* 폼 요소에 변수 색상 지정 */
+}
+input[type=checkbox], input[type=radio]{
+    width: 1.25em;
+    height: 1.25em;
+}
 </style>
 </head>
 <body>
@@ -174,13 +190,15 @@
             })
         </script>
         
+        <!-- 
         <div class="custom-control custom-checkbox checkbox-company" style="display: inline-block; margin-left: -23px;">
             <input type="checkbox" class="custom-control-input inputCheck" name="scCompany" id="side-company">
             <label class="custom-control-label" for="side-company">전사 일정</label>
             <input type="hidden" class="calNo" value="0">
         </div>
+        -->
 
-        <br><br>
+        <br>
         <div class="menu-list">
            <a href="setting.sc" class="menu-a">
                <img src="resources/common_images/admin-setting.png" style="width:15px; color:orange;"> <b>일정 관리</b>
@@ -192,6 +210,9 @@
     <script>
     
     	$("#defaultY").prop("checked", true);
+    	
+    	
+    	
     
     	$(function(){
     		

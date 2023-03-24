@@ -319,6 +319,10 @@
     
     <script>
     
+    	// 메인뷰 들어오자마자 실행
+    	selectScheduleList();
+    
+    
     	$(".close").click(function(){
     		$("#myModal").modal("hide");
     	})
@@ -326,21 +330,130 @@
     		$("#myModal").modal("hide");
     	})
     	
-    	/*
-    	$(document).on("click", ".inputCheck", function(){
-	    	$(".inputCheck").each(function() {
-		    	if($(this).is(":checked") == true){
-					var check = $(this).next().next().val();
-					console.log(check);
-			    }
-	    	})
-    	});
-		*/
     	
-    	
-    	
+    	// 체크되어있는 캘린더번호
+		var check = [];
+		$(".inputCheck").each(function() {
+	    	if($(this).is(":checked") == true){
+	    		$(this).next().next().val();
+	    		check.push($(this).next().next().val())
+	    	}
+    	})
+		console.log(check)
+		
+		// 체크 이벤트 발생시 캘린더 번호 arr로
+		$(document).on("click", ".inputCheck", function(){
+       		check = []
+   	    	$(".inputCheck").each(function() {
+   		    	if($(this).is(":checked") == true){
+   					check.push($(this).next().next().val());
+   			    }
+   	    	})
+   	    	console.log(check);
+       		
+       		
+       		let eventArr = [];
+       		
+       		for(let i=0; i<check.length; i++){
+       			//check[i] => calNo
+       			for(let j=0; j<schedules.length; j++){
+           			//schedules[j].calNo => calNo
+           			if(check[i] == schedules[j].calNo){
+           				// schedules[j].scheduleList => 
+           				for(let z=0; z<schedules[j].scheduleList.length; z++){
+           					
+           					let scheduleList = schedules[j].scheduleList;
+           					
+           					let eventObj = {title:scheduleList[z].scTitle,
+           									color:schedules[j].calColor};
+           					
+           					if(scheduleList[z].allDay == 'N'){
+           						eventObj.start = scheduleList[z].startDate + " " + scheduleList[z].startTime;
+           						eventObj.end = scheduleList[z].endDate + " " + scheduleList[z].endTime;
+           					}else{
+           						eventObj.start = scheduleList[z].startDate;
+           						eventObj.end = scheduleList[z].endDate;
+           					}
+           					
+           					eventArr.push(eventObj);
+           				}
+           			}
+       			}
+       		}
+       		
+			calendarRendering(eventArr);
+       		
+       		
+       	})
+       	
+       	let schedules;
+       	function selectScheduleList(){
+			$.ajax({
+	 			url:"selectSchedule.sc",
+	 			type:"post",
+	 			data:{
+	 				empNo:${ loginUser.empNo }
+	 			},
+	 			success:function(scList){
+	 				console.log(scList); // [{calNo: }, {calNo:, ..}]
+	 				
+	 				schedules = scList;
+	 				let eventArr = [];
+	 				for(let c=0; c<check.length; c++){
+	 					//check[c] => calNo
+	 					for(let j=0; j<scList.length; j++){
+	 						//scList[j].calNo => calNo
+	 						if(check[c] == scList[j].calNo){
+	 							for(let i=0; i<scList[j].scheduleList.length; i++){
+				 					
+				 					let eventObj = {title:scList[j].scheduleList[i].scTitle,
+				 									color:scList[j].calColor};
+				 					
+				 					if(scList[j].scheduleList[i].allDay == 'N'){
+				 						eventObj.start = scList[j].scheduleList[i].startDate + " " + scList[j].scheduleList[i].startTime;
+				 						eventObj.end = scList[j].scheduleList[i].endDate + " " + scList[j].scheduleList[i].endTime;
+				 					}else{
+				 						eventObj.start = scList[j].scheduleList[i].startDate;
+				 						eventObj.end = scList[j].scheduleList[i].endDate;
+				 					}
+				 					
+				 					eventArr.push(eventObj);
+				 				}
+	 						}
+	 					}
+	 				}
+	 				
+	 				/*
+	 				schedules = scList;
+	 				
+	 				let eventArr = [];
+	 				for(let i=0; i<scList[2].scheduleList.length; i++){
+	 					
+	 					let eventObj = {title:scList[2].scheduleList[i].scTitle,
+	 									color:scList[2].calColor};
+	 					
+	 					if(scList[2].scheduleList[i].allDay == 'N'){
+	 						eventObj.start = scList[2].scheduleList[i].startDate + " " + scList[2].scheduleList[i].startTime;
+	 						eventObj.end = scList[2].scheduleList[i].endDate + " " + scList[2].scheduleList[i].endTime;
+	 					}else{
+	 						eventObj.start = scList[2].scheduleList[i].startDate;
+	 						eventObj.end = scList[2].scheduleList[i].endDate;
+	 					}
+	 					
+	 					eventArr.push(eventObj);
+	 				}
+	 				*/
+	 				calendarRendering(eventArr);
+	 				
+	 				
+	 			},error:function(){
+	 				console.log("캘린더 조회 ajax 통신 실패");
+	 			}
+	 		})
+		}
+		
         // FullCalendar
-        document.addEventListener('DOMContentLoaded', function() {
+        function calendarRendering(eventArr) {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView : 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
@@ -362,6 +475,7 @@
                     /*alert('selected ' + info.startStr + ' to ' + info.endStr);*/
                     const start = info.startStr;
                     const end = info.endStr;
+                    
                     // 끝나는 날짜가 +1로 나와서 -1해줘야함
                     // 그래서 String타입을 Date타입으로 변경해서 -1 해줌
                     // -1 해주니까 한 자리수 날짜일 경우 01이 아닌 1이라고 떠서 삼항연산자로 한 자리수 일때만 "0" 붙임
@@ -406,42 +520,10 @@
                 nowIndicator: true, // 현재 시간 마크
                 eventLimit: true, // 달력상에 셀 크기보다 많은 이벤트가 등록되어 있는 경우 'more' 표기
                 locale: 'ko', // 한국어 설정
-                events: [
-                	
-                	$(document).on("click", ".inputCheck", function(){
-
-                		var checkArr = [];
-                    	$(".inputCheck").each(function() {
-                			if($(this).is(":checked") == true){
-                				var check = $(this).next().next().val();
-                				
-                				checkArr.push(check);
-                				console.log(checkArr);
-                		    }
-                			
-                		});
-                	
-                		
-            		})
-                	
-                	/*
-                	<c:forEach var="c" items="${ scList }">
-	                	<c:forEach var="s" items="${ c.scheduleList }">
-	                		<c:choose>
-	                			<c:when test="${ s.startTime == null }">
-	                				{ start: '${ s.startDate }', end: '${ s.endDate }', title: '${ s.scTitle }', color: '${ c.calColor }' },
-	                			</c:when>
-	                			<c:otherwise>
-	                				{ start: '${ s.startDate } ${ s.startTime }', end: '${ s.endDate } ${ s.endTime }', title: '${ s.scTitle }', color: '${ c.calColor }' },
-	                			</c:otherwise>
-	                		</c:choose>
-	    				</c:forEach>
-               		</c:forEach>
-               		*/
-                ]
+                events: eventArr
             });
             calendar.render();
-        });
+        }
 
       
         // datepicker
