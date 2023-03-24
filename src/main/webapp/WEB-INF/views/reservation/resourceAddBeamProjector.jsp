@@ -7,12 +7,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    #main{  
-        position: absolute; top: 120px;
-    }
-
 	div{
         box-sizing: border-box;
+    }
+
+    #main{  
+        position: absolute; top: 120px;
     }
 
 	#content{

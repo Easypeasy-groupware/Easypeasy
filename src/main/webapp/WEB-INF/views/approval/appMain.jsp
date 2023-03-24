@@ -8,7 +8,8 @@
 <title>Insert title here</title>
     <style>
          /* div{border:1px solid red;}  */
-        
+		#main{position: absolute; top: 120px;}
+
         .outer1{
             width:1000px; 
             padding:50px;
