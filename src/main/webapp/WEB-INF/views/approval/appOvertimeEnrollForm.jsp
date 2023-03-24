@@ -139,18 +139,41 @@
 										<td>
 											&nbsp;&nbsp;
 											<input  class="dateSelect"  name="otDate" id="" required >
-											<input type="number"  class="dateSelect-start"  name="otStart" id="overStartHour" required style="width:80px;" min="1" max="24"> ~ 
-											<input type="number" class="dateSelect-end" name="otEnd" id="overEndHour" required style="width:80px;" min="1" max="24" onchange="diffTime();">
+											<select class="dateSelect-start"  name="otStart" id="overStartHour" required style="width:80px;">
+												
+												<script>
+													for(var i =1; i<=24; i++){
+														
+														document.write("<option value= " + [i] + ">" + [i] + "</option>");
+														
+													}
+													
+												</script>
+											
+											</select> 
+											~ 
+											<select class="dateSelect-end" name="otEnd" id="overEndHour" required style="width:80px;" onchange="diffTime();">
+											
+												<script>
+													for(var i =1; i<=24; i++){
+														
+														document.write("<option value= " + [i] + ">" + [i] + "</option>");
+														
+													}
+													
+												</script>											
+											
+											</select>
 											<span id="diff"></span>
-											<!-- <button onclick="diffTime();">계산</button> -->
+											
 										</td>
 									</tr>
 									<tr>
 										<td style="text-align:center"> 
 											<label for="content">근무시간</label>
 										</td>
-										<td id="overUseTime" name="otUseTime">
-											&nbsp;&nbsp;
+										<td>
+											<span id="overUseTime"></span><input type="hidden" name="otUseTime" id="cal">
 										</td>
 									</tr>
 									<tr>
@@ -292,8 +315,8 @@
                     document.getElementById("overUseTime").innerHTML = "";
                 }else{
                 	$("#diff").text("");
-                    document.getElementById("overUseTime").value = diff;
                     document.getElementById("overUseTime").innerHTML = "총 " + diff + "시간";
+                    $("#cal").val(diff);
                 }
 
             }

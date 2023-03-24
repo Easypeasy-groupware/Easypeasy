@@ -92,7 +92,7 @@
     <jsp:include page="appMenubar.jsp" />
     <div class="form-outer">
         <div class="left-outer">
-        	<form id="contentArea" action="update.ap" method="POST" enctype="multipart/form-data">
+        	<form id="contentArea" method="POST" enctype="multipart/form-data">
             <div class="left-form1">
                 <p>
 	                <b style="font-size:30px;">휴가신청서</b>
@@ -655,6 +655,22 @@
         // 유효한 기안의견 작성 시 insert 요청되게 하기
         function insertApp(){
         	
+            $.ajax({
+                url:"enrollinfo.ap",
+                success:function(result){
+                                        
+                    $("#appChange").val(result.appChange);
+                    
+                }, error:function(request, status, error){
+                    console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+                    console.log("직성용 정보 불러오기 ajax 통신실패");
+                }
+            });
+            
+       
+    	
+    	$("#contentArea").attr("action","insert.ap");        	
+        	
         	if($("#writerComment").val().trim().length>0){
         		
         		if(!($("#content").val().trim().length>0)){
@@ -706,6 +722,9 @@
         }
         
         function tempSave(){
+        	
+        	$("#contentArea").attr("action","update.ap");
+        	
         	
 			let value = "";
 			value += "<input type='hidden' name='status' value='"+ 2 +"'>";

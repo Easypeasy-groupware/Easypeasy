@@ -59,7 +59,7 @@
     <jsp:include page="appMenubar.jsp" />
     <div class="form-outer">
         <div class="left-outer">
-        	<form id="contentArea" action="update.ap" method="POST" enctype="multipart/form-data">
+        	<form id="contentArea" method="POST" enctype="multipart/form-data">
 	            <div class="left-form1">
 	               	<b style="font-size:30px;">연장근무신청서</b>
 	                <input type="hidden" name="formCode" value="4">
@@ -139,8 +139,31 @@
 										<td>
 											&nbsp;&nbsp;
 											<input  class="dateSelect"  name="otDate" id="" required value="${ot.otDate }">
-											<input type="number"  class="dateSelect-start"  name="otStart" id="overStartHour" required style="width:80px;" min="0" max="24" value="${otStart }"> ~ 
-											<input type="number" class="dateSelect-end" name="otEnd" id="overEndHour" required style="width:80px;" min="0" max="24" onchange="diffTime();" value="${ot.otEnd }">
+											<select class="dateSelect-start"  name="otStart" id="overStartHour" required style="width:80px;" min="1" max="24">
+												
+												<script>
+													for(var i =1; i<=24; i++){
+														
+														document.write("<option value= " + [i] + ">" + [i] + "</option>");
+														
+													}
+													
+												</script>
+											
+											</select> 
+											~ 
+											<select type="number" class="dateSelect-end" name="otEnd" id="overEndHour" required style="width:80px;" min="1" max="24" onchange="diffTime();">
+											
+												<script>
+													for(var i =1; i<=24; i++){
+														
+														document.write("<option value= " + [i] + ">" + [i] + "</option>");
+														
+													}
+													
+												</script>											
+											
+											</select>
 											<span id="diff"></span>
 											<!-- <button onclick="diffTime();">계산</button> -->
 										</td>
@@ -149,8 +172,8 @@
 										<td style="text-align:center"> 
 											<label for="content">근무시간</label>
 										</td>
-										<td id="overUseTime" name="otUseTime">
-											&nbsp;&nbsp; 총  ${ot.otUseTime }  시간
+										<td>
+											<span id="overUseTime"></span><input type="hidden" name="otUseTime" id="cal">
 										</td>
 									</tr>
 									<tr>
@@ -332,24 +355,24 @@
         $("input[name=otKind]").val('${ot.otKind}').prop("checked", true);
             
 
-            function diffTime(){
-                const startTime = document.getElementById('overStartHour');
-                const endTime = document.getElementById('overEndHour');
-                const diff = endTime.value - startTime.value;
+        function diffTime(){
+            const startTime = document.getElementById('overStartHour');
+            const endTime = document.getElementById('overEndHour');
+            const diff = endTime.value - startTime.value;
 
-                if(startTime.value > endTime.value || startTime.value == endTime.value){
-                    $("#diff").text("시작시간과 종료시간을 다시 확인해주세요.");
-                    startTime.value = "";
-                    endTime.value = "";
-                    document.getElementById("overUseTime").value = "";
-                    document.getElementById("overUseTime").innerHTML = "";
-                }else{
-                	$("#diff").text("");g
-                    document.getElementById("overUseTime").value = diff;
-                    document.getElementById("overUseTime").innerHTML = "총 " + diff + "시간";
-                }
-
+            if(startTime.value > endTime.value || startTime.value == endTime.value){
+                $("#diff").text("시작시간과 종료시간을 다시 확인해주세요.");
+                startTime.value = "";
+                endTime.value = "";
+                document.getElementById("overUseTime").value = "";
+                document.getElementById("overUseTime").innerHTML = "";
+            }else{
+            	$("#diff").text("");
+                document.getElementById("overUseTime").innerHTML = "총 " + diff + "시간";
+                $("#cal").val(diff);
             }
+
+        }
             
 
             document.getElementById("enrollDate").value = new Date().toISOString().substring(0, 10);
@@ -440,6 +463,23 @@
         // 유효한 기안의견 작성 시 insert 요청되게 하기
         function insertApp(){
         	
+                $.ajax({
+                    url:"enrollinfo.ap",
+                    success:function(result){
+                                            
+                        $("#appChange").val(result.appChange);
+                        
+                    }, error:function(request, status, error){
+                        console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+                        console.log("직성용 정보 불러오기 ajax 통신실패");
+                    }
+                });
+                
+           
+        	
+        	$("#contentArea").attr("action","insert.ap");
+        	
+        	
         	if($("#writerComment").val().trim().length>0){
         		
         		if(!($("#content").val().trim().length>0)){
@@ -473,7 +513,8 @@
         		}
 			
 				let value = "";
-				value += "<input type='hidden' name='writerComment' value='"+ $("#writerComment").val() +"'>";
+				value += "<input type='hidden' name='writerComment' value='"+ $("#writerComment").val() +"'>"
+				 		+ "<input type='hidden' name='status' value='"+ 1 +"'>";
 				$("#commentArea").html(value);
 				
 				$("input[type=radio][name=start-half]").attr('name', 'halfStatus');
@@ -488,6 +529,38 @@
         	}
         	
         }
+        
+        function tempSave(){
+        	
+        	$("#contentArea").attr("action","update.ap");
+        	
+			let value = "";
+			value += "<input type='hidden' name='status' value='"+ 2 +"'>";
+			$("#commentArea").html(value);
+			
+    		// 결재 / 참조자 목록들 배열에 담기
+    		const recEmpNo = [];
+    		const refList = [];
+    		
+    		const appBody = $(".app-body input");
+    		const refBody = $(".rep-body input");
+    		
+    		
+    		for(let i = 0; i < appBody.length; i++){
+    			console.log(appBody[i]);
+    			appBody[i].setAttribute('name', 'alList['+ i +'].recEmpNo');
+    	
+    		}
+
+    		for(let j = 0; j < refBody.length; j++){
+    			refBody[j].setAttribute('name', 'refList[' + j + '].recEmpNo');
+    	
+    		}
+
+			
+			
+			$("#contentArea").submit();
+        }    
 
     </script>           
 
