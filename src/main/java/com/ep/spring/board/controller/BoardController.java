@@ -132,22 +132,31 @@ public class BoardController {
 	   return "board/boardUpdateForm"; 
 	 }
 	 
-	
 	@RequestMapping("update.bo")
-	public String updateBoard(Board b, HttpSession session, Model model, List<MultipartFile> originNames) {
-		
+	public String updateBoard(@RequestParam("no") int no, Board b, HttpSession session, Model model, @RequestParam(value="originNames", required=false) List<MultipartFile> originNames) {
+
+		// 게시물 번호 설정
+		b.setBoardNo(no);
+
 		// 첨부파일
 		ArrayList<Attachment> atList = new ArrayList<>();
-		//System.out.println(atList);
-		if(originNames.size() > 1) {
-			
-			// 기존의 첨부파일이 있었을 경우 => 기존의 파일 지우기 
+		if(originNames != null) {
+
+			// 기존의 첨부파일이 있었을 경우 => 기존의 파일 지우기
 			ArrayList<Attachment> aList = bService.selectAttList(b);
-			
-			if(originNames.size() > 1) {
+			if(aList != null) {
+				for(Attachment att : aList) {
+					String filePath = att.getFilePath();
+					File deleteFile = new File(session.getServletContext().getRealPath(filePath));
+					deleteFile.delete();
+				}
+				bService.deleteAttachment(b);
+			}
+
+			if(originNames.size() > 0) {
 				String path = "resources/board_attachFiles/";
-				
 				for (MultipartFile mf : originNames) {
+					if(!mf.isEmpty()) {
 						Attachment attach = new Attachment();
 						String originFileName = mf.getOriginalFilename();
 						String saveFilePath = FileUpload.saveFile(mf, session, path);
@@ -158,21 +167,19 @@ public class BoardController {
 						attach.setFilePath(saveFilePath);
 						atList.add(attach);
 					}
+				}
 			}
-			
+
 		}
-		
+
 		int result = bService.updateBoard(b, atList);
-		System.out.println(result);
-		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다."); 
-			return "redirect:list.bo";
-		}else {
+			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
+			return "redirect:detailForm.bo?no=" + no;
+		} else {
 			model.addAttribute("errorMsg", "게시글 수정 실패");
 			return "common/errorPage";
 		}
-		
 	}
 	
 	// 댓글 ajax
@@ -197,11 +204,22 @@ public class BoardController {
 	
 	@ResponseBody
 	@RequestMapping("rdelete.bo")
-	public String deleteReply() {
-		int result = bService.deleteReply();
+	public String deleteReply(int replyNo) {
+		int result = bService.deleteReply(replyNo);
 		
 		return result > 0 ? "success" : "fail";
 	}
+	
+	@ResponseBody
+	@RequestMapping("rupdate.bo")
+	public String updateReply(BoardReply r) {
+			
+		int result = bService.updateReply(r);
+			
+		return result > 0 ? "success" : "fail";
+			
+	}
+	
 	
 	// Settings
 	@RequestMapping("adminSettings.bo")

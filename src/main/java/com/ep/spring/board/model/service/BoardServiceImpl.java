@@ -80,6 +80,12 @@ public class BoardServiceImpl implements BoardService{
 			return 0;
 		}
 	}
+	
+	@Override
+	public int deleteAttachment(Board b) {
+		return bDao.deleteAttachment(sqlSession, b);
+	}
+
 
 	@Override
 	public ArrayList<BoardReply> selectReplyList(int boardNo) {
@@ -92,10 +98,14 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int deleteReply() {
-		return bDao.deleteReply(sqlSession);
+	public int deleteReply(int replyNo) {
+		return bDao.deleteReply(sqlSession, replyNo);
 	}
 	
+	@Override
+	public int updateReply(BoardReply r) {
+		return bDao.updateReply(sqlSession, r);
+	}
 	
 	@Override
 	public ArrayList<Board> selectTopList() {
@@ -127,6 +137,9 @@ public class BoardServiceImpl implements BoardService{
 		return 0;
 	}
 
+	
+
+	
 	
 
 	

@@ -29,6 +29,7 @@ public interface BoardService {
 	// 5. 게시글 수정용 서비스
 	int updateBoard(Board b, ArrayList<Attachment> atList);
 	ArrayList<Attachment> selectAttList(Board b);
+	int deleteAttachment(Board b);
 		
 	// 6. 댓글 리스트 조회용 서비스 (ajax)
 	ArrayList<BoardReply> selectReplyList(int boardNo);
@@ -37,7 +38,8 @@ public interface BoardService {
 	int insertReply(BoardReply r);
 	
 	// 8. 댓글 수정&삭제 서비스 
-	int deleteReply();
+	int deleteReply(int replyNo);
+	int updateReply(BoardReply r);
 	
 		
 	// 9. 게시글 top5 조회용 서비스 (ajax)

@@ -109,7 +109,7 @@
 			      
 			          <c:forEach var="e" items="${list}">
 			          	<c:if test="${e.deptCode eq d.deptCode}">
-				           <div class="card" data-toggle="modal" data-target="#myModal">
+				           <div class="card" data-toggle="modal" data-target="#myModal${e.empNo}">
 				            <table>
 				            	<tr>
 				            		<td><img src="${e.empProfile}"  style="width:80px;"></td>
@@ -129,7 +129,7 @@
 	</div>
 	
 	   <!-- 모달 -->
-	 <div id="myModal" class="modal">
+	 <div id="#myModal${e.empNo}" class="modal">
 	    <div class="modal-content">
 	      <span class="close">&times;</span>
 	      <div class="modal-body">
@@ -147,32 +147,18 @@
 	  </div>
 	
 	  <script>
-	  $(document).ready(function(){
-		  $(".card").on("click", function() {
-			  var empProfile = $(this).find("img").attr("src");
-			  var empName = $(this).find("h4").text().split(" | ")[1];
-			  var jobName = $(this).find("h4").text().split(" | ")[0];
-			  var deptName = $(this).closest("h4").text();
-			  var email = $(this).data("email");
-
-			  $("#myModal").find("img").attr("src", empProfile);
-			  $("#myModal").find("h3").text(empName);
-			  $("#myModal").find("p:eq(0)").text(jobName);
-			  $("#myModal").find("p:eq(1)").text(deptName);
-			  $("#myModal").find("p:eq(2)").text(email);
-			  $("#myModal").modal("show");
+		  $(document).ready(function() {
+			    $('.card').on('click', function() {
+			        var targetModal = $(this).data('target');
+			        $(targetModal).show();
+			    });
+	
+			    $('.close').on('click', function() {
+			        $(this).closest('.modal').hide();
+			    });
 			});
-
-			$(".close").on("click", function() {
-			  $("#myModal").modal("hide");
-			});
-		  
-			$(".card").click(function(){
-			  $("#myModal").show();
-			});
-		});
 	  </script>
-	    
+
 	    
 	    
 	  <!-- 검색/조직도 트리 -->

@@ -83,7 +83,7 @@
                                   </c:when>
                                   <c:otherwise>
                                       <c:forEach var="a" items="${ attachmentList }">
-                                           <a href="${a.changeName}" download="${a.originName}">${a.originName}</a><br>
+                                             <a href="${a.changeName}" download="${a.originName}">${a.originName}</a><br>
                                        </c:forEach>
                                    </c:otherwise>
                              </c:choose>
@@ -104,10 +104,10 @@
 		        <table id="replyArea" class="table" align="center" border="1px, solid">
 		            <thead>
 		                <tr>
-		                    <td colspan="3">댓글 (<span id="rcount">3</span>) </td> 
+		                    <td colspan="4">댓글 (<span id="rcount">3</span>) </td> 
 		                </tr>
 			            <tr>
-			                <th colspan="2">
+			                <th colspan="3">
 			                     <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%"></textarea>
 			                 </th>
 			                  <th style="vertical-align: middle"><button class="btn btn-secondary"  onclick="addReply();">등록하기</button></th>
@@ -124,25 +124,35 @@
         		selectReplyList();
         	})
         	
-        	/*  
-        	function deleteReply(){ // 댓글 삭제용 ajax
-        		$.ajax({
-        			uri:"rdelete.bo",
-        			data:{no:${b.boardNo}},
-        			success:function(result){
-        				
-        				$("#content").val("");
-        				deleteReply();
-        				
-        			}, error:function(){
-    					console.log("댓글 삭제 ajax 통신 실패");
-    				}
-        			
-        				
-        		})
-        		
-        	}
-        	*/
+        	function updateReply(replyNo, replyContent) { // 댓글 수정용 ajax
+			    $.ajax({
+			        url: "rupdate.bo",
+			        data: { replyNo: replyNo, replyContent: replyContent },
+			        success: function(result) {
+			            if (result == "success") {
+			                selectReplyList();
+			            }
+			        },
+			        error: function() {
+			            console.log("댓글 수정용 ajax 통신 실패");
+			        }
+			    });
+			} 
+        	
+        	function deleteReply(replyNo) { // 댓글 삭제용 ajax
+			    $.ajax({
+			        url: "rdelete.bo",
+			        data: { replyNo: replyNo },
+			        success: function(result) {
+			            if (result == "success") {
+			                selectReplyList();
+			            }
+			        },
+			        error: function() {
+			            console.log("댓글 삭제용 ajax 통신 실패");
+			        }
+			    });
+			}
         	
         	function addReply(){ // 댓글 작성용 ajax
         		
@@ -184,7 +194,9 @@
         							+	"<td>" + list[i].replyWriter + "</td>"
         							+	"<td>" + list[i].replyContent + "</td>"
         							+	"<td>" + list[i].createDate + "</td>"
-        							+   "<td>" + "<button>"+ "삭제" + "</button>"+"</td>"
+        							+  "<td>" + "<button onclick='deleteReply(" + list[i].replyNo + ")'>" + "삭제" + "</button>" 
+        							+  "|" + "<button onclick='updateReply(" + list[i].replyNo + ",$(\"#content\" + list[i].replyNo).val()'>" +"수정"+"</button>"
+        							+ "</td>"
         							+"</tr>";
         				}
         				

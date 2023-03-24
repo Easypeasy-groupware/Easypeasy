@@ -73,6 +73,10 @@ public class BoardDao {
 		return result;
 	}
 	
+	public int deleteAttachment(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.delete("boardMapper.deleteAttachment", b);
+	}
+	
 	public ArrayList<BoardReply> selectReplyList(SqlSessionTemplate sqlSession, int boardNo){
 		return (ArrayList)sqlSession.selectList("boardMapper.selectReplyList", boardNo);	
 	}
@@ -81,9 +85,14 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.insertReply", r);
 	}
 	
-	public int deleteReply(SqlSessionTemplate sqlSession) {
-		return sqlSession.delete("boardMapper.deleteReply");
+	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
+		return sqlSession.delete("boardMapper.deleteReply", replyNo);
 	}
+	
+	public int updateReply(SqlSessionTemplate sqlSession, BoardReply r){
+		return sqlSession.update("boardMapper.updateReply", r);
+	}
+	
 	
 	public int selectSettings(SqlSessionTemplate sqlSession, BoardCate bc){
 		return sqlSession.selectOne("boardMapper.selectSettings", bc);

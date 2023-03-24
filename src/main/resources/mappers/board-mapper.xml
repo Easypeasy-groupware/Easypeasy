@@ -204,6 +204,11 @@
 		  )
 	</insert>
 	
+	<delete id="deleteAttachment">
+	    delete from attachment
+	    where ref_no = #{boardNo}
+	</delete>
+	
 	<select id="selectReplyList" resultMap="boardreplyResult">
 		select
 			   reply_no 						
@@ -238,8 +243,17 @@
 	<delete id="deleteReply">
 		delete
 		  from board_reply
-		 where status = 'Y'
 	</delete>
+	
+	<update id="updateReply">
+		update
+		 	   board_reply 
+		   set reply_no = #{replyNo}						
+			 , reply_writer = #{replyWriter}
+			 , reply_content = #{replyContent}
+		where status = 'N'
+		   and board_no = #{boardNo}	
+	</update>
 	
 	<select id="selectSettings" resultMap="boardcateResult">
 		select
