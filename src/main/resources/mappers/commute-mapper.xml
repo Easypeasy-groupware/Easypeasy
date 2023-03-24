@@ -216,6 +216,14 @@
 		   and com_code = #{comCode}
 	</update>
 	
+	<update id="updateComStatus">
+		update 
+			   commute
+		   set com_status = #{comStatus}
+		 where emp_no = #{empNo}
+		   and enroll_date = #{enrollDate}
+	</update>
+	
 
 	
 

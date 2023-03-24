@@ -69,8 +69,8 @@ public class CommuteController {
 		public String inTime(Commute c) throws ParseException {			
 			
 			int result1 = cService.inTime(c);
-			//System.out.println(c.getStartTime());
 			
+			// startTime을 Date타입으로 변경 => 시분초만 뽑아낸후 대소비교
 			String startTime = c.getStartTime();
 	        // 문자열
 	        String dateStr = startTime;
@@ -80,10 +80,21 @@ public class CommuteController {
 	 
 	        // 문자열 -> Date
 	        Date date = formatter.parse(dateStr);
-	 
-	        System.out.println(date);
-			
-			return result1 > 0 ? "success" : "fail";
+	        //System.out.println(date);
+	        int H = date.getHours();
+	        int M = date.getMinutes();
+	        //System.out.println(H);
+	        
+	        //09시01분 전에는 정상근무(comStatus = "WO")
+	        //이후에는 지각(comStatus = "TR")
+	        if(H<9 && M<1) {
+	        	c.setComStatus("WO");
+	        }else {
+	        	c.setComStatus("TR");
+	        }
+	        int result2 = cService.updateComStatus(c);
+
+			return (result1*result2) > 0 ? "success" : "fail";
 			
 		}
 		
