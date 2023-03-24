@@ -166,7 +166,7 @@
 
             <h3 class="smallTitle">휴가신청내역</h3><br>
 
-            <button class="button">휴가신청</button><br><br>
+            <a href="enrollForm.ap?formCode=3"><button class="button">휴가신청</button></a><br><br>
 
             <table class="table2">
                 <tr>

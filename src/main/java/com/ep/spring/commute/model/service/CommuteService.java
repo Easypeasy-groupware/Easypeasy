@@ -45,6 +45,16 @@ public interface CommuteService {
 	
 	//출근 등록시 지각,정상근무 변경
 	int updateComStatus(Commute c);
+	
+	//퇴근 등록 시 조퇴상태 변경
+	int updateLeStatus(Commute c);
+	
+	//지각, 조기퇴근, 결근, 퇴근 미체크 카운트
+	int countTr(int empNo);
+	int countLe(int empNo);
+	int countAb(int empNo);
+	int countEnd(int empNo);
+	
 
 
 }
