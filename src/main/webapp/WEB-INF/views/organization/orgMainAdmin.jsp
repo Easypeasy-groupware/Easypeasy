@@ -13,7 +13,7 @@
 	
 <style>
   /* 전체 wrapper */
-  .wrapper {width: 1200px;margin: 0 auto;}
+  .wrapper {width: 1200px;margin: 0 auto; width: 1200px;margin: 0 auto; position: absolute; top: 120px;}
   body {font-family: Arial, sans-serif;	margin: 0; padding: 0;}
 
   /* content */

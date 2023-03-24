@@ -105,6 +105,13 @@ public class CommuteServiceImpl implements CommuteService{
 		return cDao.updateTimeHR(sqlSession, c);
 	}
 
+	//출근 등록시 지각,정상근무 변경
+	@Override
+	public int updateComStatus(Commute c) {
+		
+		return cDao.updateComStatus(sqlSession, c);
+	}
+
 
 	
 	

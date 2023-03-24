@@ -111,8 +111,6 @@
 
     <jsp:include page="sidebar.jsp"/>
     
-        <jsp:include page="sidebar.jsp"/>
-        
         <div id="content">
             <div id="con-title">
                 <span>

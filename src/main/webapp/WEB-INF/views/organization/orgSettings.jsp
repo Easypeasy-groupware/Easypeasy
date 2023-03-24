@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 /* 전체 wrapper */
-  .wrapper {width: 1200px;margin: 0 auto;}
+  .wrapper {width: 1200px;margin: 0 auto; width: 1200px;margin: 0 auto; position: absolute; top: 120px;}
   body {font-family: Arial, sans-serif;	margin: 0; padding: 0;}
 
  /* 게시판 스타일 */

@@ -43,6 +43,8 @@ public interface CommuteService {
 	// 근무시간 수정(인사계정)
 	int updateTimeHR(Commute c);
 	
+	//출근 등록시 지각,정상근무 변경
+	int updateComStatus(Commute c);
 
 
 }

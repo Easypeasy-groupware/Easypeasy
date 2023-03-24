@@ -22,8 +22,6 @@ public class AlarmEchoHandler extends TextWebSocketHandler {
 		sessionList.add(session);
 		int empNo = ((Employee)session.getAttributes().get("loginUser")).getEmpNo();
 //		ArrayList<Alarm> alList = aService.selectAlarmList(empNo);
-		System.out.println(session);
-		System.out.println(empNo);
 		
 		for(WebSocketSession wss : sessionList) {
 

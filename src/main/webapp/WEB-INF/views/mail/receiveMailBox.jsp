@@ -63,7 +63,7 @@
 <body>
 	<!-- 헤더 영역 -->
 	<jsp:include page="../common/header.jsp" />
-    <div id="main"></div>
+    <div id="main">
     <div style="position: absolute; top: 120px;">
         <!-- 메일 사이드바 -->
         <jsp:include page="mailSidebar.jsp" />

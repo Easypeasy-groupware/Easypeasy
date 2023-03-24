@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <style>
+	    #main{position: absolute; top: 120px;}
+
         .form-outer{ 
             width:1000px;
             margin:auto;
@@ -86,224 +88,227 @@
 </head>
 <body>
     <jsp:include page="../common/header.jsp"/>
-    <jsp:include page="appMenubar.jsp" />
-    <div class="form-outer">
-        <div class="left-outer">
-	        <form id="contentArea" action="insert.ap" method="POST" enctype="multipart/form-data">
-	            <div class="left-form1">
-	                <p>
-		                <b style="font-size:30px;">휴가신청서</b>
-		                <input type="hidden" name="formCode" value="3">
-		                <input type="hidden" name="formName" value="휴가신청서">
-	                </p>
-	                <br>
-	            </div>
-	            <div class="left-form2">
-	                <a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
-		            <span style="padding:20px; color:rgb(71, 71, 71);" onclick="tempSave();">임시저장</span>|
-	                <a href="" style="padding:20px; color:rgb(71, 71, 71);">취소</a>|
-	                <a href="" style="padding:20px; color:rgb(71, 71, 71);"  data-toggle="modal" data-target="#app-line">결재선지정</a>
-	                <br><br><br>
-	            </div>
-	
-	                <div class="left-form4">
-	                    <table class="table-bordered">
-	                        <tr>
-	                            <td width="100px;" style="text-align:center">
-	                                <label for="writer">기안자</label>
-	                            </td>
-	                            <td width="200px;">
-	                                <input type="text" id="writer" value="" readonly> 
-	                            </td>
-	                        </tr>
-	                        <tr>
-	                            <td style="text-align:center">
-	                                <label for="dept">소속</label>
-	                            </td>
-	                            <td>
-	                                <input type="text" value="" id="dept" readonly> 
-	                            </td>
-	                        </tr>
-	                        <tr>
-	                            <td style="text-align:center">
-	                                <label for="enrollDate">기안일</label>
-	                            </td>
-	                            <td style="text-align:center">
-	                                <input id="enrollDate" name="enrollDate" type="date" style="width:94%;" readonly>
-	                            </td>
-	                        </tr>
-	                        <tr>
-	                            <td style="text-align:center">
-	                                <label for="appNo">문서번호</label>
-	                            </td>
-	                            <td>
-	                                <input type="text" val="" id="appChange" name="appChange" readonly>
-	                            </td>
-	                        </tr>
-	                    </table>
-	                    <br>
-	                </div>
-	                <div class="left-form5">
-	                    <table class="table-bordered" >
-	
-	                        <tr>
-	                            <td style="text-align:center; width:100px;">
-	                                <label for="title">휴가종류</label>
-	                            </td>
-	                            <td style="width:600px;">
-	                                <select name="vacKind" id="">
-	                                    <option value="일반휴가">일반휴가</option>
-	                                    <option value="특별휴가">특별휴가</option>
-	                                    <option value="병가">병가</option>
-	                                    <option value="경조사">경조사</option>
-	                                    <option value="공가">공가</option>
-	                                </select>
-	                            </td>
-	                        </tr>
-	                        <tr>
-	                            <td style="text-align:center">
-	                                <label for="content">기간 및 일시</label>
-	                            </td>    
-	                            <td>
-	                                <input type="text" class="dateSelect-start" name="vacStart" onchange="diffDate();" > ~ 
-	                                <input type="text" class="dateSelect-end" id="vac-end" name="vacEnd"  onchange="diffDate();">
-	                                <span id="useHalf" style="cursor:pointer">반차사용</span>
-	                                <p class="arrow_box">클릭 시 반차 선택가능합니다.</p>
-	                            </td>                        
-	                        </tr>
-	
-	                        <tr style=" display:none;" id="half-area">
-	                            <td style="text-align:center">
-	                                <label for="content">반차여부</label>
-	                            </td>
-	                            <td>
-	                                &nbsp;&nbsp;<input type="checkbox" name="halfOption" id="vac-startHalf" value="start" onclick="halfCheck();"> 
-	                                <label for="vac-startHalf">시작일</label> 
-	                                ( <input type="radio" name="start-half" id="start-half1" value="AM" >  &nbsp; <label for="start-half1">오전</label>  &nbsp;
-	                                <input type="radio" name="start-half" id="start-half2" value="PM">  &nbsp; <label for="start-half2">오후</label> )
-	                                &nbsp;&nbsp;<input type="checkbox" id="vac-endHalf" name="halfOption" value="end" onclick="halfCheck();">
-	                                <label for="vac-endHalf">종료일</label> 
-	                                ( <input type="radio" name="end-half" id="end-half1" value="AM">  &nbsp; <label for="end-half1">오전</label> &nbsp;
-	                                <input type="radio" name="end-half" id="end-half2" value="PM">  &nbsp; <label for="end-half2">오후</label> )
-									
-	                            </td>
-	                        </tr>
-	                        <tr>
-	                            <td style="text-align:center">
-	                                연차일수 
-	                            </td>
-	                            <td>
-	                                잔여연차 : <input type="text" style="width:50px;" readonly> 
-	                                신청연차 : <input type="number" id="vacUse" name="vacUse" style="width:50px;" readonly>
-	                            </td>
-	                        </tr>
-	
-	                              
-	 
-	                        <tr>
-	                            <td rowspan="5" style="text-align:center">
-	                                <label for="content">휴가사유</label>
-	                            </td>
-	                            <td rowspan="5" height="150px;">
-	                                <textarea class="form-control" name="content" id="content" rows="10" style="resize:none;"></textarea>
-	                            </td>
-	                        </tr>
-	                        <tr></tr>
-	                        <tr></tr>
-	                        <tr></tr>
-	                        <tr></tr>
-	                        <tr>
-	                            <td colspan="2" style="font-size:14px;">
-	                                1. 연차의 사용은 근로기준법에 따라 전년도에 발생한 개인별 잔여 연차에 한하여 사용함을 원칙으로 한다. <br>
-	                                &nbsp;&nbsp;&nbsp;&nbsp;단, 최초 입사시에는 근로 기준법에 따라 발생 예정된 연차를 차용하여 월 1회 사용 할 수 있다. <br>
-	                                2. 경조사 휴가는 행사일을 증명할 수 있는 가족 관계 증명서 또는 등본, 청첩장 등 제출 <br>
-	                                3. 공가(예비군/민방위)는 사전에 통지서를, 사후에 참석증을 반드시 제출
-	                            </td>
-	                        </tr>
-	                        <tr>
-	                            <td style="text-align:center">
-	                                <label for="attachment">첨부파일</label>
-	                            </td>
-	                            <td>
-	                                <button id="file_choose" type="button" class="btn btn-outline-secondary btn-sm">파일 선택</button>
-	                                <button id="file_delete" type="button" class="btn btn-outline-secondary btn-sm">모두 삭제</button>
-	                            </td>
-	                        </tr>
-	                        <tr></tr>
-	                        <tr>
-	                            <td colspan="2" id="attach_area">
-	                                <div id="no_attachment" >
-	                                    <img id="attach" src="resources/common_images/attachment.png" width="30px;">
-	                                    <div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
-	                                </div>
-	                                <div id="in_attachments">
-	                                </div>
-	                                <input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
-	                            </td>
-	                        </tr>
-	                    </table>
-	                </div>
-	                <br>
-					
-	           		 <div class="left-form6">
-			               <div style=" padding:10px; font-size:20px;">
-			                    <p><b> 결재선</b></p>
-			               </div>
-			               
-		              
-			               <div class="app-comment" style="font-size:15px;">
-			                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${loginUser.empName} ${loginUser.jobName}
-			                   <br>
-			                     이지피지 | ${loginUser.deptName}
-			                   <br>
-			                    기안
-			                   <br><br><br>
-							
-			               </div>
-			               
-			               <div class="app-body">
-			               </div>
-			               
-			               <div class="app-comment" style="font-size:15px;">
-			                <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
-			                <br>
-			                    회사명 | 부서명
-			                <br>
-			                    결재
-			                <br><br>
-			
-			                <br>
-			              </div>
-			              
-			                <div style=" padding:10px; font-size:20px;">
-			                    <p><b> 참조자</b></p>
-			               </div>
-		              
-			               <div class="app-comment" style="font-size:15px;">
-			                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
-			                   <br>
-			                     회사명 | 부서명
-			                   <br>
-			                    참조
-			                   <br><br>
-			
-			                   <br>
-			               </div>
-			               
-			               <div class="rep-body">
-			               </div>
-			               
-			               <div id="commentArea">
-			               
-			               </div>		              
-	               </div>
-	               
-	               
-	               
-	            
-	        </form>
+
+	<div id="main">
+
+        <jsp:include page="appMenubar.jsp" />
+        <div class="form-outer">
+            <div class="left-outer">
+                <form id="contentArea" action="insert.ap" method="POST" enctype="multipart/form-data">
+                    <div class="left-form1">
+                        <p>
+                            <b style="font-size:30px;">휴가신청서</b>
+                            <input type="hidden" name="formCode" value="3">
+                            <input type="hidden" name="formName" value="휴가신청서">
+                        </p>
+                        <br>
+                    </div>
+                    <div class="left-form2">
+                        <a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
+                        <span style="padding:20px; color:rgb(71, 71, 71);" onclick="tempSave();">임시저장</span>|
+                        <a href="" style="padding:20px; color:rgb(71, 71, 71);">취소</a>|
+                        <a href="" style="padding:20px; color:rgb(71, 71, 71);"  data-toggle="modal" data-target="#app-line">결재선지정</a>
+                        <br><br><br>
+                    </div>
+        
+                        <div class="left-form4">
+                            <table class="table-bordered">
+                                <tr>
+                                    <td width="100px;" style="text-align:center">
+                                        <label for="writer">기안자</label>
+                                    </td>
+                                    <td width="200px;">
+                                        <input type="text" id="writer" value="" readonly> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">
+                                        <label for="dept">소속</label>
+                                    </td>
+                                    <td>
+                                        <input type="text" value="" id="dept" readonly> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">
+                                        <label for="enrollDate">기안일</label>
+                                    </td>
+                                    <td style="text-align:center">
+                                        <input id="enrollDate" name="enrollDate" type="date" style="width:94%;" readonly>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">
+                                        <label for="appNo">문서번호</label>
+                                    </td>
+                                    <td>
+                                        <input type="text" val="" id="appChange" name="appChange" readonly>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br>
+                        </div>
+                        <div class="left-form5">
+                            <table class="table-bordered" >
+        
+                                <tr>
+                                    <td style="text-align:center; width:100px;">
+                                        <label for="title">휴가종류</label>
+                                    </td>
+                                    <td style="width:600px;">
+                                        <select name="vacKind" id="">
+                                            <option value="일반휴가">일반휴가</option>
+                                            <option value="특별휴가">특별휴가</option>
+                                            <option value="병가">병가</option>
+                                            <option value="경조사">경조사</option>
+                                            <option value="공가">공가</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">
+                                        <label for="content">기간 및 일시</label>
+                                    </td>    
+                                    <td>
+                                        <input type="text" class="dateSelect-start" name="vacStart" onchange="diffDate();" > ~ 
+                                        <input type="text" class="dateSelect-end" id="vac-end" name="vacEnd"  onchange="diffDate();">
+                                        <span id="useHalf" style="cursor:pointer">반차사용</span>
+                                        <p class="arrow_box">클릭 시 반차 선택가능합니다.</p>
+                                    </td>                        
+                                </tr>
+        
+                                <tr style=" display:none;" id="half-area">
+                                    <td style="text-align:center">
+                                        <label for="content">반차여부</label>
+                                    </td>
+                                    <td>
+                                        &nbsp;&nbsp;<input type="checkbox" name="halfOption" id="vac-startHalf" value="start" onclick="halfCheck();"> 
+                                        <label for="vac-startHalf">시작일</label> 
+                                        ( <input type="radio" name="start-half" id="start-half1" value="AM" >  &nbsp; <label for="start-half1">오전</label>  &nbsp;
+                                        <input type="radio" name="start-half" id="start-half2" value="PM">  &nbsp; <label for="start-half2">오후</label> )
+                                        &nbsp;&nbsp;<input type="checkbox" id="vac-endHalf" name="halfOption" value="end" onclick="halfCheck();">
+                                        <label for="vac-endHalf">종료일</label> 
+                                        ( <input type="radio" name="end-half" id="end-half1" value="AM">  &nbsp; <label for="end-half1">오전</label> &nbsp;
+                                        <input type="radio" name="end-half" id="end-half2" value="PM">  &nbsp; <label for="end-half2">오후</label> )
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">
+                                        연차일수 
+                                    </td>
+                                    <td>
+                                        잔여연차 : <input type="text" style="width:50px;" readonly> 
+                                        신청연차 : <input type="number" id="vacUse" name="vacUse" style="width:50px;" readonly>
+                                    </td>
+                                </tr>
+        
+                                    
+        
+                                <tr>
+                                    <td rowspan="5" style="text-align:center">
+                                        <label for="content">휴가사유</label>
+                                    </td>
+                                    <td rowspan="5" height="150px;">
+                                        <textarea class="form-control" name="content" id="content" rows="10" style="resize:none;"></textarea>
+                                    </td>
+                                </tr>
+                                <tr></tr>
+                                <tr></tr>
+                                <tr></tr>
+                                <tr></tr>
+                                <tr>
+                                    <td colspan="2" style="font-size:14px;">
+                                        1. 연차의 사용은 근로기준법에 따라 전년도에 발생한 개인별 잔여 연차에 한하여 사용함을 원칙으로 한다. <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;단, 최초 입사시에는 근로 기준법에 따라 발생 예정된 연차를 차용하여 월 1회 사용 할 수 있다. <br>
+                                        2. 경조사 휴가는 행사일을 증명할 수 있는 가족 관계 증명서 또는 등본, 청첩장 등 제출 <br>
+                                        3. 공가(예비군/민방위)는 사전에 통지서를, 사후에 참석증을 반드시 제출
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">
+                                        <label for="attachment">첨부파일</label>
+                                    </td>
+                                    <td>
+                                        <button id="file_choose" type="button" class="btn btn-outline-secondary btn-sm">파일 선택</button>
+                                        <button id="file_delete" type="button" class="btn btn-outline-secondary btn-sm">모두 삭제</button>
+                                    </td>
+                                </tr>
+                                <tr></tr>
+                                <tr>
+                                    <td colspan="2" id="attach_area">
+                                        <div id="no_attachment" >
+                                            <img id="attach" src="resources/common_images/attachment.png" width="30px;">
+                                            <div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
+                                        </div>
+                                        <div id="in_attachments">
+                                        </div>
+                                        <input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br>
+                        
+                        <div class="left-form6">
+                            <div style=" padding:10px; font-size:20px;">
+                                    <p><b> 결재선</b></p>
+                            </div>
+                            
+                        
+                            <div class="app-comment" style="font-size:15px;">
+                                <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${loginUser.empName} ${loginUser.jobName}
+                                <br>
+                                    이지피지 | ${loginUser.deptName}
+                                <br>
+                                    기안
+                                <br><br><br>
+                                
+                            </div>
+                            
+                            <div class="app-body">
+                            </div>
+                            
+                            <div class="app-comment" style="font-size:15px;">
+                                <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
+                                <br>
+                                    회사명 | 부서명
+                                <br>
+                                    결재
+                                <br><br>
+                
+                                <br>
+                            </div>
+                            
+                                <div style=" padding:10px; font-size:20px;">
+                                    <p><b> 참조자</b></p>
+                            </div>
+                        
+                            <div class="app-comment" style="font-size:15px;">
+                                <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
+                                <br>
+                                    회사명 | 부서명
+                                <br>
+                                    참조
+                                <br><br>
+                
+                                <br>
+                            </div>
+                            
+                            <div class="rep-body">
+                            </div>
+                            
+                            <div id="commentArea">
+                            
+                            </div>		              
+                    </div>
+                    
+                    
+                    
+                    
+                </form>
+            </div>
         </div>
- 
     </div>                        
     <script>
     
