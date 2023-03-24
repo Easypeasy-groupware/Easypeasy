@@ -35,16 +35,20 @@ public interface BoardService {
 		
 	// 7. 댓글 작성용 서비스 (ajax)
 	int insertReply(BoardReply r);
+	
+	// 8. 댓글 수정&삭제 서비스 
+	int deleteReply();
+	
 		
-	// 8. 게시글 top5 조회용 서비스 (ajax)
+	// 9. 게시글 top5 조회용 서비스 (ajax)
 	ArrayList<Board> selectTopList();	
 	
-	// 9. 게시판 설정 서비스
+	// 10. 게시판 설정 서비스
 	int selectSettings(BoardCate bc);
 	int insertCate(BoardCate bc);
 	int updateCate(BoardCate bc);
 	int deleteSettings(BoardCate bc);
 	
-	//10. 메뉴바
+	//11. 메뉴바
 	ArrayList<BoardCate> selectDetailSettings(BoardCate bc);
 }
