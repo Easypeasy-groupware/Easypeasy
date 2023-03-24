@@ -21,7 +21,6 @@
     .menu{float: left; text-align: center; font-weight: 600; font-size: 13px; height: 40px; line-height: 40px;}
     .menu1{width: 100px;}
     .menu2{width: 80px;}
-    .menu3{width: 120px;}
     .menu:hover{font-size: 15px; cursor: pointer;}
 
     .block{width: 220px; min-height: 150px; max-height: 300px; background: white; border-radius: 10px; border: 1px solid rgb(185, 187, 221); 
@@ -34,9 +33,9 @@
     .tag_name{width: 120px; overflow: hidden;}
     .x-btn{width: 30px; float: right; margin: 10px 10px 0px 10px;}
     .tag_btn.btn.btn-outline-primary.btn-sm{width: 35px; height: 25px; font-size: 10px; padding: 2px 4px 2px 4px;}
-    .shift_name{width: 100%; margin: auto; font-size: 15px;}
+    .shift_name{width: 145px; margin-left: 10px; text-align: left; font-size: 15px;}
     .x.btn.btn-outline-secondary.btn-sm{padding: 0px 5px 0px 5px; width: 20px; height: 20px; line-height: 0px;  margin-bottom: 20px;}
-    .mail_favorite, .read, .attachment{width: 18px;}
+    .mail_impor, .mail_read, .attachment{width: 18px;}
 
     #mail_list{height: 850px;}
     .mail_one{height: 40px; line-height: 35px; margin: 3px 10px 3px 15px; border-bottom: 1px solid rgb(185, 187, 221);}
@@ -120,8 +119,8 @@
                     <div class="menu menu2" id="delete">삭제</div>
                     <div class="menu menu2" id="tag">태그</div>
                     <div class="menu menu2" id="forward">전달</div>
-                    <div class="menu menu2" id="shift">이동</div>
-                    <div class="menu menu3" id="read_unread">읽음/안읽음</div>
+                    <div class="menu menu2 read">읽음</div>
+                    <div class="menu menu2 unread">안읽음</div>
                     <div class="menu menu1" id="refresh">새로고침</div>
                     <div style="float: right; width: 150px; font-size: 12px;">
                         정렬
@@ -171,18 +170,35 @@
 
             <!-- 이동 블록 -->
             <div class="block shift_block">
-                <b style="line-height: 30px;">메일함</b>
+                <b style="line-height: 40px;">메일함</b>
                 <div class="x-btn">
-                    <button class="x">X</button>
+                    <button class="x btn btn-outline-secondary btn-sm">X</button>
                 </div>
                 <div class="block_list shift_list">
                     <div class="block_one shift_one">
-                        <div class="shift_name">메일함 이름</div><br>
-                        <div class="shift_name">메일함 이름</div><br>
-                        <div class="shift_name">메일함 이름</div><br>
-                        <div class="shift_name">메일함 이름</div><br>
-                        <div class="shift_name">메일함 이름</div><br>
+                        <div class="shift_name">받은 메일함</div>
+                        <div>
+                            <button class="tag_btn btn btn-outline-primary btn-sm">적용</button>
+                            <input type="hidden" class="tagNo" name="tagNo" value="">
+                        </div>
                     </div>
+                    <br>
+                    <div class="block_one shift_one">
+                        <div class="shift_name">중요 메일함</div>
+                        <div>
+                            <button class="tag_btn btn btn-outline-primary btn-sm">적용</button>
+                            <input type="hidden" class="tagNo" name="tagNo" value="">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="block_one shift_one">
+                        <div class="shift_name">메일함 이름</div>
+                        <div>
+                            <button class="tag_btn btn btn-outline-primary btn-sm">적용</button>
+                            <input type="hidden" class="tagNo" name="tagNo" value="">
+                        </div>
+                    </div>
+                    <br>
                 </div>
             </div>
 
@@ -198,18 +214,18 @@
                                 <div class="mail_imgList">
                                     <c:choose>
                                         <c:when test="${ m.imporMail == 'Y' }">
-                                            <div class="mail_img"><img class="mail_favorite" src="resources/common_images/favorite.png"></div>
+                                            <div class="mail_img read"><img class="mail_impor" src="resources/common_images/favorite.png"></div>
                                         </c:when>
                                         <c:otherwise>
-                                            <div class="mail_img"><img class="mail_favorite" src="resources/common_images/unFavorite.png"></div>
+                                            <div class="mail_img unread"><img class="mail_impor" src="resources/common_images/unFavorite.png"></div>
                                         </c:otherwise>
                                     </c:choose>
                                     <c:choose>
                                         <c:when test="${ m.recCheck == 'Y' }" >
-                                            <div class="mail_img"><img class="read" src="resources/common_images/mail_read.png"></div>
+                                            <div class="mail_img read"><img class="mail_read" src="resources/common_images/mail_read.png"></div>
                                         </c:when>
                                         <c:otherwise>
-                                            <div class="mail_img"><img class="read" src="resources/common_images/mail_unRead.png"></div>
+                                            <div class="mail_img unread"><img class="mail_read" src="resources/common_images/mail_unRead.png"></div>
                                         </c:otherwise>
                                     </c:choose>
                                     <c:if test="${ not empty attachmentList }">
@@ -279,6 +295,11 @@
         </div>
 
         <script>
+            // 전역 번수 선언부
+            let checkedBoxSum = 0
+            let mailSelectArea = document.querySelectorAll(".mail_select_area");
+            let index = 0;
+
             // 메일 상세조회
             let mailSelectList = document.querySelectorAll('.mail_select_area');
             mailSelectList.forEach(function(select){
@@ -305,10 +326,11 @@
                 })
             });
 
+            
             // 스팸 등록
             let spamEnroll = document.getElementById("spam");
             spamEnroll.addEventListener('click', function(){
-                let checkedBoxSum = 0
+                checkedBoxSum = 0
                 let arr = [];
                     mailCheckBox.forEach((i) => {
                         if(i.checked == true) {
@@ -338,21 +360,56 @@
             // 답장
             let reply = document.getElementById("reply");
             reply.addEventListener('click', function(){
-                let checkedBoxSum = 0
-                let mailSelectArea = document.querySelectorAll(".mail_select_area");
-                mailCheckBox.forEach((i, index) => {
+                checkedBoxSum = 0
+                index = 0;
+                mailCheckBox.forEach((i, number) => {
                     if(i.checked == true) {
-                        mailSelectArea = mailSelectArea.item(index);
+                        index = number
                         checkedBoxSum += 1;
                     }
                 })
                 if(checkedBoxSum == 1) {
+                    mailSelectArea = mailSelectArea.item(index)
                     const mail = mailSelectArea.cloneNode(true);
+                    const input = document.createElement("input");
                     mail.setAttribute("style", "display:none;");
                     mail.method = "POST";
                     mail.action = "reply.ma";
+                    input.name = "replyForwadDiv"
+                    // 1 = 답장 / 2 = 전달
+                    input.value = 1
+                    mail.append(input)
                     document.body.append(mail);
-                    // mail.submit();
+                    mail.submit();
+                }else{
+                    alert('한 개의 체크박스를 선택해주세요!')
+                }
+            });
+
+            // 전달
+            let forward = document.getElementById("forward");
+            forward.addEventListener('click', function(){
+                checkedBoxSum = 0
+                index = 0;
+                mailCheckBox.forEach((i, number) => {
+                    if(i.checked == true) {
+                        index = number;
+                        checkedBoxSum += 1;
+                    }
+                })
+                if(checkedBoxSum == 1) {
+                    mailSelectArea = mailSelectArea.item(index)
+                    const mail = mailSelectArea.cloneNode(true);
+                    const input = document.createElement("input");
+                    mail.setAttribute("style", "display:none;");
+                    mail.method = "POST";
+                    mail.action = "reply.ma";
+                    input.name = "replyForwadDiv"
+                    // 1 = 답장 / 2 = 전달
+                    input.value = 2
+                    mail.append(input)
+                    document.body.append(mail);
+                    mail.submit();
                 }else{
                     alert('한 개의 체크박스를 선택해주세요!')
                 }
@@ -361,7 +418,7 @@
             // 메일 삭제
             let deleteMail = document.getElementById("delete");
             deleteMail.addEventListener('click', function(){
-                let checkedBoxSum = 0
+                checkedBoxSum = 0
                 let arr = [];
                     mailCheckBox.forEach((i) => {
                         if(i.checked == true) {
@@ -376,7 +433,6 @@
                     const input = document.createElement("input");
                     form.setAttribute("style", "display:none;");
                     input.setAttribute("name", "recMailNoList");
-                    input.setAttribute("multiple", "multiple");
                     input.setAttribute("value", arr);
                     form.append(input);
                     console.log(form)
@@ -394,7 +450,7 @@
             let tagBlock = document.querySelector(".tag_block");
             let tagBtnList = document.querySelectorAll(".tag_btn");
             tag.addEventListener('click', function(){
-                let checkedBoxSum = 0
+                checkedBoxSum = 0
                 let arr = [];
                 mailCheckBox.forEach((i, index) => {
                     if(i.checked == true) {
@@ -432,13 +488,6 @@
                 }
             });
 
-            // 메일 이동 - 태그와 동일
-            let shift = document.getElementById("shift");
-            let shiftBlock = document.querySelector(".shift_block")
-            shift.addEventListener('click', function(){
-                shiftBlock.style.display = 'block';
-            });
-
             // x button 닫기 효과
             let x_blocks = document.querySelectorAll('.x');
             x_blocks.forEach(function(x){
@@ -447,42 +496,41 @@
                 })
             });
 
-            // 전달 - 답장과 동일
-            let forward = document.getElementById("forward");
-            forward.addEventListener('click', function(){
-                let checkedBoxSum = 0
-                let count = 0;
-                mailCheckBox.forEach((i) => {
-                    if(i.checked == true) {
-                        count = i.value
-                        checkedBoxSum += 1;
-                    }
-                })
-                if(checkedBoxSum == 1 && checkedBoxSum > 0) {
-                    mailSelectList[count].action = "www.naver.com";
-                    mailSelectList[count].method = "POST";
-                    mailSelectList[count].submit();
-                }else{
-                    alert('한 개의 체크박스를 선택해주세요!')
-                }
-            });
-
-            // 읽음 처리 - 스팸 처리와 동일
-            let readAndUnread = document.getElementById("read_unread");
-            readAndUnread.addEventListener('click', function(){
-                let checkedBoxSum = 0
-                let count = 0;
+            // 읽음 처리
+            let read = document.querySelector(".read");
+            read.addEventListener('click', function(){
+                checkedBoxSum = 0
                 let arr = [];
                 let form = document.createElement("form");
-                    mailCheckBox.forEach((i) => {
+                    mailCheckBox.forEach((i, index) => {
                         if(i.checked == true) {
+                            let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
+                            arr.push(value);
                             checkedBoxSum += 1;
-                            arr[count] = mailNoList[i.value].value;
-                            count += 1; 
-                        }
+                        };
                     })
-                if(checkedBoxSum != 0) {
+                if(checkedBoxSum == 1) {
 
+                }else{
+                    alert('체크박스를 선택해주세요');
+                }
+            }); 
+
+            // 안읽음 처리
+            let unread = document.querySelector(".unread");
+            read.addEventListener('click', function(){
+                checkedBoxSum = 0
+                let arr = [];
+                let form = document.createElement("form");
+                    mailCheckBox.forEach((i, index) => {
+                        if(i.checked == true) {
+                            let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
+                            arr.push(value);
+                            checkedBoxSum += 1;
+                        };
+                    })
+                if(checkedBoxSum == 1) {
+                    
                 }else{
                     alert('체크박스를 선택해주세요');
                 }
@@ -495,21 +543,12 @@
             });
 
             // 즐겨찾기
-            let favoriteList = document.querySelectorAll('.favorite');
+            let imporList = document.querySelectorAll('.mail_impor');
             favoriteList.forEach(function(favorite){
                 favorite.addEventListener('click', function(){
                     console.log("즐겨찾기");
                 });
             });
-
-            // 아이콘 읽기 처리
-            let readList = document.querySelectorAll('.read');
-            readList.forEach(function(read){
-                read.addEventListener('click', function(){
-                    console.log("읽기");
-                });
-            });
-
         </script>
     </div>
 </body>

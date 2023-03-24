@@ -93,7 +93,7 @@
                             &nbsp;&nbsp;&nbsp;<button type="button" id="add_receiver" class="btn btn-secondary">추가</button></td>
                         <td><button type="button" class="btn btn-secondary">주소록</button></td>
                     </tr>
-                    <tr class="detail_info_tr">
+                    <!-- <tr class="detail_info_tr">
                         <td colspan="2">
                             <div style="width: 150px; margin-left: 30px;">
                                 <b>수신자 목록 첨부<br>(excel 파일만 가능)</b>
@@ -101,7 +101,7 @@
                         </td>
                         <td><input class="mail_input" type="text"></td>
                         <td><button type="button" class="btn btn-secondary">주소록</button></td>
-                    </tr>
+                    </tr> -->
                     <tr class="detail_info_tr">
                         <th>참 조</th>
                         <td><button type="button" id="open_btn_hidden_reference" class="btn btn-outline-secondary">+</button></td>
@@ -414,7 +414,7 @@
 
                     formData.append('key', new Blob([JSON.stringify(data)], {type : "application/json"}));
                     $.ajax({
-                        url:"/send.ma",
+                        url:"send.ma",
                         method:"POST",
                         enctype:"multipart/form-data",
                         data:formData,

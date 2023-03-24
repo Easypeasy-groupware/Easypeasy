@@ -33,8 +33,6 @@ public class AlarmEchoHandler extends TextWebSocketHandler {
 		
 		for(WebSocketSession wss : sessionList) {
 			String msg = (String) message.getPayload();
-			System.out.println(message);
-			System.out.println(msg);
 		}
 		
 	}
