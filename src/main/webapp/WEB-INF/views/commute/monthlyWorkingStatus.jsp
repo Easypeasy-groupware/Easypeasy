@@ -103,6 +103,7 @@
                                	  title: ' 퇴근: ${ c.endTime }',
                                	  
                                	   },
+                               	   
                                </c:forEach>
                                	<c:forEach var="c" items="${ list }">
                             	{ 

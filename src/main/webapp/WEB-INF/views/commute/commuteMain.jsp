@@ -501,7 +501,7 @@
             </div>
             <div class="content4">
                 <div class="name" style="float: left; width: 330px;">휴가현황</div><br>
-                <button class="button" style="float: left; background-color: rgb(214, 223, 204); ">휴가신청</button><br><br><br>
+                <a href="enrollForm.ap?formCode=3"><button class="button" style="float: left; background-color: rgb(214, 223, 204); ">휴가신청</button></a><br><br><br>
                 <table class="vac">
                     <tr>
                         <td>잔여휴가</td>

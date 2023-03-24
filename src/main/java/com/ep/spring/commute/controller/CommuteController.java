@@ -1,5 +1,7 @@
 package com.ep.spring.commute.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -64,11 +66,22 @@ public class CommuteController {
 		//출근시간 등록
 		@ResponseBody
 		@RequestMapping("inTime.co")
-		public String inTime(Commute c) {			
+		public String inTime(Commute c) throws ParseException {			
 			
 			int result1 = cService.inTime(c);
+			//System.out.println(c.getStartTime());
 			
-			//int result2 = cService.updateStatus(c);
+			String startTime = c.getStartTime();
+	        // 문자열
+	        String dateStr = startTime;
+	 
+	        // 포맷터
+	        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+	 
+	        // 문자열 -> Date
+	        Date date = formatter.parse(dateStr);
+	 
+	        System.out.println(date);
 			
 			return result1 > 0 ? "success" : "fail";
 			
