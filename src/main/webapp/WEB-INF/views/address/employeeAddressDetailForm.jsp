@@ -10,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
 <style>
+	#main{position: absolute; top: 120px; left: 330px;}
 	.content-outer{width:1000px; margin-left:200px; padding-left:10px;}
 	.content-outer *{box-sizing: border-box;}
 	
@@ -35,65 +36,64 @@
 </style>
 </head>
 <body>
-	<jsp:include page="addMenubar.jsp" />
-	
-    <div class="content-outer">
+    <jsp:include page="../common/header.jsp"/>
 
-        <p id="address-group">사원연락처</p>
+    <div id="main">
 
-        <br>
-
-        <div class="div-divide div-left">
-            <img src="<c:out value='${ e.empProfile }' default='resources/common_images/default_profile.png' />" >
-        </div>
-        <div class="div-divide div-right">
-            <table class="info-table">
-                <colgroup>
-                    <col style="width:150px;">
-                    <col style="width:500px;">
-                </colgroup>
-                <tr>
-                    <td>이름</td>
-                    <td>
-                        <b>${ e.empName }</b>
-                    </td>
-                </tr>
-                <tr>
-                    <td>부서</td>
-                    <td>
-                        <b>${ e.deptName }</b>
-                    </td>
-                </tr>
-                <tr>
-                    <td>직위</td>
-                    <td>
-                       <b>${ e.jobName }</b>
-                    </td>
-                </tr>
-                <tr>
-                    <td>이메일</td>
-                    <td>
-                        <b>${ e.email }</b>
-                    </td>
-                </tr>
-                <tr>
-                    <td>휴대폰</td>
-                    <td>
-                        <b>${ e.phone }</b>
-                    </td>
-                </tr>
-            </table>
-
-            <button type="button" class="set-btn" id="send-btn">메일쓰기</button>
-            <button type="button" class="set-btn" id="copy-btn">연락처 복사</button>
-			<button type="button" class="set-btn" id="chat-btn">1:1 채팅</button>
-        </div>
-
-    
-
+        <jsp:include page="addMenubar.jsp" />
         
+        <div class="content-outer">
 
-        
+            <p id="address-group">사원연락처</p>
+
+            <br>
+
+            <div class="div-divide div-left">
+                <img src="<c:out value='${ e.empProfile }' default='resources/common_images/default_profile.png' />" >
+            </div>
+            <div class="div-divide div-right">
+                <table class="info-table">
+                    <colgroup>
+                        <col style="width:150px;">
+                        <col style="width:500px;">
+                    </colgroup>
+                    <tr>
+                        <td>이름</td>
+                        <td>
+                            <b>${ e.empName }</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>부서</td>
+                        <td>
+                            <b>${ e.deptName }</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>직위</td>
+                        <td>
+                        <b>${ e.jobName }</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>이메일</td>
+                        <td>
+                            <b>${ e.email }</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>휴대폰</td>
+                        <td>
+                            <b>${ e.phone }</b>
+                        </td>
+                    </tr>
+                </table>
+
+                <button type="button" class="set-btn" id="send-btn">메일쓰기</button>
+                <button type="button" class="set-btn" id="copy-btn">연락처 복사</button>
+                <button type="button" class="set-btn" id="chat-btn">1:1 채팅</button>
+            </div>
+        </div>
     </div>    
 </body>
 </html>

@@ -576,7 +576,7 @@ public class ApprovalController {
 		//System.out.println(ap);
 		//System.out.println(originNames);
 		
-		ap.setStatus("1");
+		
 		/*
 		 * 
 		 * 
@@ -643,12 +643,12 @@ public class ApprovalController {
 		// 결재자 ApprovalLine에 담기
 		
 		
-		
-		ap.setAppSequence(1);
-		ap.setAppAmount(ap.getAlList().size());
-		
 		ArrayList<ApprovalLine> al = new ArrayList<>();
 		if(ap.getAlList() != null) {
+
+			ap.setAppSequence(1);
+			ap.setAppAmount(ap.getAlList().size());
+			
 			for(int i = 0; i< ap.getAlList().size(); i++) {
 				ap.getAlList();
 				al.add(i, ap.getAlList().get(i));
@@ -674,8 +674,10 @@ public class ApprovalController {
 		if(vf.getHalfOption() != null){
 			if(vf.getHalfOption().equals("start")) {
 				vf.setHalfDay(vf.getVacStart());
+				vf.setAppNo(ap.getAppNo());
 			}else {
 				vf.setHalfDay(vf.getVacEnd());
+				vf.setAppNo(ap.getAppNo());
 			}
 		}
 		

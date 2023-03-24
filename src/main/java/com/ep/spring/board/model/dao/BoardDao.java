@@ -44,8 +44,8 @@ public class BoardDao {
 		return sqlSession.update("boardMapper.increaseCount", no);
 	}
 	
-	public Board selectBoard(SqlSessionTemplate sqlSession, int no) {
-		return sqlSession.selectOne("boardMapper.selectBoard", no);
+	public Board selectBoard(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.selectOne("boardMapper.selectBoard", b);
 	}
 	
 	

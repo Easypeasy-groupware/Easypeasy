@@ -10,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
 <style>
+    #main{position: absolute; top: 120px; left: 330px;}
     .content-outer{width:1000px; padding-left:10px;  padding-top:20px;}
     .content-outer *{box-sizing: border-box;}
     #page-title{color:rgb(96, 96, 96); font-size:18px; font-weight:600; text-align:center; margin:30px 0 0 0;}
@@ -52,126 +53,130 @@
 </style>
 </head>
 <body>
+    <jsp:include page="../common/header.jsp"/>
+
+    <div id="main">
 	
-	<jsp:include page="addMenubar.jsp"/>
-	
-    <div class="content-outer">
+        <jsp:include page="addMenubar.jsp"/>
+        
+        <div class="content-outer">
 
-        <div id="page-title"><span class="address-name">${ a.addName }</span>님의 연락처 정보</div>
+            <div id="page-title"><span class="address-name">${ a.addName }</span>님의 연락처 정보</div>
 
-        <br><br>
+            <br><br>
 
-        <form action="updatePsAdd.ad" method="post">
-        	<input type="hidden" name="empNo" value="${ loginUser.empNo }">
-        	<input type="hidden" name="addNo" value="${ a.addNo }">
-            <table class="input-table">
-                <colgroup>
-                    <col style="width:100px;">
-                    <col style="width:300px;">
-                    <col style="width:100px;">
-                </colgroup>
-                <tr>
-                    <td>이름</td>
-                    <td colspan="2">
-                        <input type="text" class="tb-input" value="${ a.addName }" name="addName" required>
-                    </td>
-                </tr>
-                <tr>
-                    <td>회사</td>
-                    <td colspan="2">
-                        <input type="text" class="tb-input" value="${ a.addEmp }"  name="addEmp">
-                    </td>
-                </tr>
-                <tr>
-                    <td>부서</td>
-                    <td colspan="2">
-                        <input type="text" class="tb-input" value="${ a.addDept }" name="addDept">
-                    </td>
-                </tr>
-                <tr>
-                    <td>직위</td>
-                    <td colspan="2">
-                        <input type="text" class="tb-input" value="${ a.addJob }" name="addJob">
-                    </td>
-                </tr>
-                <tr>
-                    <td>이메일</td>
-                    <td colspan="2">
-                        <input type="email" class="tb-input" value="${ a.email }" name="email">
-                    </td>
-                </tr>
-                <tr>
-                    <td>휴대폰</td>
-                    <td colspan="2">
-                        <input type="text" class="tb-input" value="${ a.phone }" name="phone">
-                    </td>
-                </tr>
-                <tr>
-                    <td>그룹</td>
-                    <td>
-                        <select class="td-select" name="groupNo" >
-                        	<option>선택안함</option>
-                        	<c:forEach var="p" items="${ pList }">
-			        			<option value="${ p.groupNo }"> ${ p.groupName } </option>
-				        	</c:forEach>
-                        </select>
-                    </td>
-                    <script>
-                    	$(function(){
-                    		$(".td-select").val("${a.groupNo}").prop("selected", true);
-                    	})
-                    </script>
-                    <td>
-                        <button type="button" id="add-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">새그룹</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>회사전화</td>
-                    <td colspan="2">
-                        <input type="text" class="tb-input" name="empPhone" value="${ a.phone }" >
-                    </td>
-                </tr>
-                <tr>
-                    <td>회사주소</td>
-                    <td colspan="2">
-                        <input type="text" class="tb-input" name="empAddress" value="${ a.empAddress }" >
-                    </td>
-                </tr>
-                <tr>
-                    <td>메모</td>
-                    <td colspan="2">
-                        <textarea class="td-textarea" rows="4" style="resize:none; width:100%" name="memo">${ a.memo }</textarea>
-                    </td>
-                </tr>
-            </table>
+            <form action="updatePsAdd.ad" method="post">
+                <input type="hidden" name="empNo" value="${ loginUser.empNo }">
+                <input type="hidden" name="addNo" value="${ a.addNo }">
+                <table class="input-table">
+                    <colgroup>
+                        <col style="width:100px;">
+                        <col style="width:300px;">
+                        <col style="width:100px;">
+                    </colgroup>
+                    <tr>
+                        <td>이름</td>
+                        <td colspan="2">
+                            <input type="text" class="tb-input" value="${ a.addName }" name="addName" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>회사</td>
+                        <td colspan="2">
+                            <input type="text" class="tb-input" value="${ a.addEmp }"  name="addEmp">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>부서</td>
+                        <td colspan="2">
+                            <input type="text" class="tb-input" value="${ a.addDept }" name="addDept">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>직위</td>
+                        <td colspan="2">
+                            <input type="text" class="tb-input" value="${ a.addJob }" name="addJob">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>이메일</td>
+                        <td colspan="2">
+                            <input type="email" class="tb-input" value="${ a.email }" name="email">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>휴대폰</td>
+                        <td colspan="2">
+                            <input type="text" class="tb-input" value="${ a.phone }" name="phone">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>그룹</td>
+                        <td>
+                            <select class="td-select" name="groupNo" >
+                                <option>선택안함</option>
+                                <c:forEach var="p" items="${ pList }">
+                                    <option value="${ p.groupNo }"> ${ p.groupName } </option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                        <script>
+                            $(function(){
+                                $(".td-select").val("${a.groupNo}").prop("selected", true);
+                            })
+                        </script>
+                        <td>
+                            <button type="button" id="add-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">새그룹</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>회사전화</td>
+                        <td colspan="2">
+                            <input type="text" class="tb-input" name="empPhone" value="${ a.phone }" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>회사주소</td>
+                        <td colspan="2">
+                            <input type="text" class="tb-input" name="empAddress" value="${ a.empAddress }" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>메모</td>
+                        <td colspan="2">
+                            <textarea class="td-textarea" rows="4" style="resize:none; width:100%" name="memo">${ a.memo }</textarea>
+                        </td>
+                    </tr>
+                </table>
 
-            <br>
+                <br>
 
-            <button type="button" class="set-btn" id="reset-btn">삭제</button>
-            <button type="submit" class="set-btn" id="submit-btn">수정하기</button>
+                <button type="button" class="set-btn" id="reset-btn">삭제</button>
+                <button type="submit" class="set-btn" id="submit-btn">수정하기</button>
 
-        </form>
-    </div>
+            </form>
+        </div>
 
-    <!--새로운 그룹 추가용 모달-->
-    <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <p class="modal-title" style="font-weight:600">새 그룹 추가</p>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                
-                    <div class="modal-body">
-                        <input type="text" id="modal-input" class="group-input" name="groupName">
-                        <br><br>
-                        <button type="button" data-bs-dismiss="modal" id="modal-close-btn">닫기</button>
-                        <button type="button" id="modal-add-btn" onclick="addGroup();">추가</button>
+        <!--새로운 그룹 추가용 모달-->
+        <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title" style="font-weight:600">새 그룹 추가</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    
+                        <div class="modal-body">
+                            <input type="text" id="modal-input" class="group-input" name="groupName">
+                            <br><br>
+                            <button type="button" data-bs-dismiss="modal" id="modal-close-btn">닫기</button>
+                            <button type="button" id="modal-add-btn" onclick="addGroup();">추가</button>
+                        </div>
 
 
+                </div>
             </div>
-          </div>
+        </div>
     </div>
     <script>    	
     	function addGroup(){ /* 그룹 추가용 ajax */

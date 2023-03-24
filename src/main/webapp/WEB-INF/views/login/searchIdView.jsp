@@ -6,7 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
+    <style>
+        #main{  
+            position: absolute; top: 120px;
+        }
         .outer{
             width: 1200px;
             height: 100vh;
@@ -50,27 +53,28 @@
 </head>
 <body>
 
+    <div id="main">
 
-	<div class="outer" align="center">
+        <div class="outer" align="center">
 
-        <div class="title">
-            <b style="font-size: 80px;">EASY PEASY</b>
-        </div>
+            <div class="title">
+                <b style="font-size: 80px;">EASY PEASY</b>
+            </div>
 
-        <div class="idForm" align="center">
-            <div class="idTitle"><b>아이디찾기</b></div><br>
-           
+            <div class="idForm" align="center">
+                <div class="idTitle"><b>아이디찾기</b></div><br>
+            
+                    
+                <div class="text">회원님의 아이디는 <b>"user01"</b>입니다.</div>
+                <br><br><br>
+                    
+                <button type="button"><b>로그인하러가기</b></button>
+                    
                 
-            <div class="text">회원님의 아이디는 <b>"user01"</b>입니다.</div>
-            <br><br><br>
-                
-            <button type="button"><b>로그인하러가기</b></button>
-                
+            </div>
             
         </div>
-        
-     </div>
-
+    </div>
 
 </body>
 </html>
