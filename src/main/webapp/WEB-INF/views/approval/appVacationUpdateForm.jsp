@@ -301,17 +301,7 @@
 								<div style=" padding:10px; font-size:20px;">
 									<p><b> 참조자</b></p>
 							</div>
-						
-							<div class="app-comment" style="font-size:15px;">
-								<img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
-								<br>
-									회사명 | 부서명
-								<br>
-									참조
-								<br><br>
-				
-								<br>
-							</div>
+
 							
 							<div class="rep-body">
 									<c:choose>

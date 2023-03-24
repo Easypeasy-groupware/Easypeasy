@@ -75,10 +75,10 @@
                         <b>받은 메일함</b>
                         <img src="">
                         <b style="font-size: 20px;">전체메일 </b>
-                        <b style="color: dodgerblue; font-size: 23px;">
+                        <b id="all_mail_no" style="color: dodgerblue; font-size: 23px;">
                             <c:set var="allMail" value="0" />
                             <c:forEach var="m" items="${ mailList }">
-                                <c:if test="${ m.status == 'Y' }">
+                                <c:if test="${ m.status == 'Y' and m.junkMail == 'N' }">
                                     <c:set var="allMail" value="${allMail + 1}" />
                                 </c:if>
                             </c:forEach>
@@ -86,10 +86,10 @@
                         </b>
                         <b>/ </b>
                         <b style="font-size: 20px;">안읽은 메일 </b>
-                        <b style="color: crimson; font-size: 23px;">
+                        <b id="unread_mail_no" style="color: crimson; font-size: 23px;">
                             <c:set var="readMail" value="0" />
                             <c:forEach var="m" items="${ mailList }">
-                                <c:if test="${ m.status == 'Y' }">
+                                <c:if test="${ m.status == 'Y' and m.junkMail == 'N' }">
                                     <c:if test="${ m.recCheck == 'Y' }">
                                         <c:set var="readMail" value="${readMail + 1}" />
                                     </c:if>
@@ -510,9 +510,6 @@
                         checkedBoxSum += 1;
                     };
                 })
-                console.log(arr)
-                console.log(typeof(checkedBoxSum))
-                console.log(checkedBoxSum > 0)
                 let recCheck = 'Y'
                 for(let i=0; i<arr.length; i++){
                     recMailMoList += (arr[i] + ",");
@@ -522,10 +519,30 @@
                         url:"updateReadUnread.ma",
                         type:"POST",
                         data:{
-                            recMailNoListData: recMailMoList
+                            recMailNoListData: recMailMoList,
+                            recCheck: recCheck
                         },
-                        success: function(){
-
+                        success: function(result){
+                            let mailCount = 0
+                            let unreadCount = 0;
+                            result.mailList.forEach(function(i, index){
+                                if(i.status == 'Y' && i.junkMail == 'N'){
+                                    mailCount += 1;
+                                }
+                                if(i.recCheck == 'Y' && i.status == 'Y' && i.junkMail == 'N'){
+                                    $(".mail_read").each(function(){
+                                        if($(this).closest($(".mail_one")).find($(".recMailNo")).val() == i.recMailNo){
+                                            $(this).attr("src", "resources/common_images/mail_read.png");
+                                        };
+                                    });
+                                    unreadCount += 1;
+                                };
+                            });
+                            $("input:checkbox").each(function(){
+                                $(this).prop("checked", false);
+                            })
+                            $("#all_mail_no").text(mailCount);
+                            $("#unread_mail_no").text(mailCount-unreadCount);
                         }, error: function(){
 
                         }
@@ -540,7 +557,8 @@
             let unread = document.querySelector(".unread");
             unread.addEventListener('click', function(){
                 checkedBoxSum = 0
-                let arr = [];
+                arr = [];
+                let recMailMoList = ""
                 mailCheckBox.forEach((i, index) => {
                     if(i.checked == true) {
                         let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
@@ -548,8 +566,43 @@
                         checkedBoxSum += 1;
                     };
                 })
-                if(checkedBoxSum > 1) {
-                    
+                let recCheck = 'N'
+                for(let i=0; i<arr.length; i++){
+                    recMailMoList += (arr[i] + ",");
+                }
+                if(checkedBoxSum > 0) {
+                    $.ajax({
+                        url:"updateReadUnread.ma",
+                        type:"POST",
+                        data:{
+                            recMailNoListData: recMailMoList,
+                            recCheck: recCheck
+                        },
+                        success: function(result){
+                            let mailCount = 0
+                            let readCount = 0;
+                            result.mailList.forEach(function(i, index){
+                                if(i.status == 'Y' && i.junkMail == 'N'){
+                                    mailCount += 1;
+                                }
+                                if(i.recCheck == 'N' && i.status == 'Y' && i.junkMail == 'N'){
+                                    $(".mail_read").each(function(){
+                                        if($(this).closest($(".mail_one")).find($(".recMailNo")).val() == i.recMailNo){
+                                            $(this).attr("src", "resources/common_images/mail_unRead.png");
+                                        };
+                                    });
+                                    readCount += 1;
+                                };
+                            });
+                            $("#all_mail_no").text(mailCount);
+                            $("#unread_mail_no").text(readCount);
+                            $("input:checkbox").each(function(){
+                                $(this).prop("checked", false);
+                            })
+                        }, error: function(){
+
+                        }
+                    });
                 }else{
                     alert('체크박스를 선택해주세요');
                 }

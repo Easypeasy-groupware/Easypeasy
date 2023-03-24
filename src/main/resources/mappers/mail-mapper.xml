@@ -83,6 +83,8 @@
 	      join employee e on r.send_mail_address = e.email
 	     where 
 			   recep_mail_address = #{email}
+		   and r.STATUS = 'Y'
+		   and junk_mail = 'N'
 	     order
 	        by recep_mail_no desc
 	</select>
