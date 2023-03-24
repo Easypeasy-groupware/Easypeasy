@@ -29,7 +29,9 @@ import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.common.template.FileUpload;
 import com.ep.spring.common.template.Pagination;
 import com.ep.spring.login.model.service.EmployeeService;
+import com.ep.spring.login.model.vo.Department;
 import com.ep.spring.login.model.vo.Employee;
+import com.ep.spring.login.model.vo.Job;
 import com.ep.spring.organization.model.service.OrgService;
 import com.google.gson.Gson;
 
@@ -55,6 +57,14 @@ public class ApprovalController {
 		
 		model.addAttribute("list1", list1);
 		model.addAttribute("list2", list2);
+				
+		ArrayList<Employee> list = oService.selectOrgList(eNo);
+		ArrayList<Department> deptList = oService.selectDept();
+		ArrayList<Job> jList = oService.selectJob();
+		
+		session.setAttribute("list", list);
+		session.setAttribute("deptList", deptList);
+		session.setAttribute("jList", jList);
 		
 		return "approval/appMain";
 	}
@@ -639,7 +649,7 @@ public class ApprovalController {
 			ap.setSecGrade("A");
 		}
 		
-		System.out.println(ap);
+		//System.out.println(ap);
 		
 		// 결재자 ApprovalLine에 담기
 		
@@ -669,7 +679,7 @@ public class ApprovalController {
 			}
 		}
 		
-		System.out.println(al);
+		//System.out.println(al);
 		
 		// 휴가작성폼 셋팅하기
 		if(vf.getHalfOption() != null){
@@ -682,7 +692,7 @@ public class ApprovalController {
 			}
 		}
 		
-		System.out.println(vf);
+		//System.out.println(vf);
 		
 				
 		int result = aService.updateApproval(ap, al, vf, ot, atList);
@@ -699,6 +709,7 @@ public class ApprovalController {
 		
 	}
 	
+
 	
 	
 	/*

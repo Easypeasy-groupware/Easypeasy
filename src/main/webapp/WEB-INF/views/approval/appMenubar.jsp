@@ -95,6 +95,28 @@
         .moal{z-index:10000;
         	/* z-index: 2147483647; */
         }
+        .appLine1, .appLine2{
+        	padding-top: 30px;
+        	margin: 10px;
+        	width: 350px;
+        	height: 600px;
+        	overflow: auto;
+        	padding-left:30px;
+        	border: 1px solid gray;
+        	border-radius: 10px;
+        }
+        
+        .appLine1 span, .appLine2 span{
+        	font-size:14px;
+        }
+        
+        .appLine1::-webkit-scrollbar, , .appLine2::-webkit-scrollbar{
+        width: 20px; 
+        /*display: none;*/
+    	}
+    	.modal-body appLine{padding:20px;}
+         	
+        
 
       
     </style>
@@ -224,64 +246,65 @@
     <!-- 결재선 선택하는 모달 -->
     <!-- The Modal -->
     <div class="modal" id="app-line">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
         <div class="modal-content">
     
             <!-- Modal Header -->
             <div class="modal-header">
-            <h4 class="modal-title">결재선 지정</h4>
+            <h4 class="modal-title"></h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
     
             <!-- Modal body -->
             <div class="modal-body appLine">
-                <div class="appLine1">
-                    <b style="color:black">결재선</b>  | <b style="color:gray;">참조자</b> <br><br>
+            
+            		<h3>결재선 지정</h3><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <b style="color:black; font-size:20px;">결재선</b>  | <b style="color:gray; font-size:20px;">참조자</b> <br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     조직도 <br>
-                    <input type="search" style="width:120px"><button class="btn btn-outline-secondary">검색</button> <br>
+                                
+                <div class="appLine1">
 
-                    <ul class="empList">
-                       <li id="appEmp1" class="appEmp">
-                            <span>결재</span> 
-                            <span>ddd1</span> 
-                            <span>ddd1</span>
-                            <input type="hidden" class="empNo" name="empNo" value="1">
-                            <button class="btn btn-outline-secondary addbtn">+</button>
-                       </li> 
-                       <li id="appEmp2" class="appEmp"> 
-                            <span>결재</span> 
-                            <span>ddd2</span>
-                            <span>ddd2</span>
-                            <input type="hidden" class="empNo" name="empNo" value="2">
-                            <button class="btn btn-outline-secondary addbtn">+</button>
-                        </li> 
-                        <li id="appEmp3" class="appEmp"> 
-                            <span>결재</span> 
-                            <span>ddd3</span>
-                            <span>ddd3</span>
-                            <input type="hidden" class="empNo" name="empNo" value="3">
-                            <button class="btn btn-outline-secondary addbtn">+</button>
-                        </li> 
-                    </ul>
+
+					<c:forEach var="d" items="${deptList}" begin="0" end="6" varStatus="dept">
+						<div>
+							<b class="${ d.deptCode }">${ d.deptName }</b>
+							<span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="cList-key${ dept.index }"></span>
+						</div>
+						<ul class="empList" id="cList-in${ dept.index }" style="display: none;"> <!-- 사원리스트 -->
+							<c:forEach var="e" items="${list}">
+								<c:if test="${ e.deptName eq d.deptName }">
+								<li id="appEmp${ e.empNo }" class="appEmp">
+										<span class="indiv-profile">
+											<img src="<c:out value='${e.empProfile }' default='resources/profile_images/default_profile.png' />" width="20px;" alt="">
+										</span>
+										<span class="indiv-name">${ e.empName }</span>
+										<span class="indiv-job">${e.jobName}</span> 
+										<span class="indiv-dept">${e.deptName }</span>
+										<input type="hidden" name="empNo" value="${e.empNo}">
+										<button class="btn btn-outline-light text-dark addbtn">+</button>
+								</li>
+								</c:if>
+							</c:forEach>
+						</ul>
+						<br>
+					</c:forEach>
 
                 </div>
                 <div class="appLine2">
-                    <form action="">
-                        <h5>결재자 지정</h5>
+                    
                         <div class="appArea">
-                            <ul>
-                                <li>
-                                    <span>기안</span>
-                                    <span>정형돈</span>
-                                    <span>부서명</span>
-                                </li>                 
-                            </ul>
+
                             <ul class="appList">
 
                             </ul>
+                            
                         </div>
-                    </form>                    
+                
                 </div>
+                
+                
             </div>
     
             <!-- Modal footer -->
@@ -341,69 +364,135 @@
             }
 
         }
+        
+    	$(function(){
+    		
+    		$("#cList-key0").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#cList-in0").slideDown();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#cList-in0").slideUp();
+    			}
+    		})
+    		$("#cList-key1").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#cList-in1").slideDown();
+    				
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#cList-in1").slideUp();
+    			}
+    		})
+    		$("#cList-key2").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");
+    				$("#cList-in2").slideDown();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#cList-in2").slideUp();
+    			}
+    		})
+    		$("#cList-key3").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#cList-in3").slideDown();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#cList-in3").slideUp();
+    			}
+    		})
+    		$("#cList-key4").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#cList-in4").slideDown();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#cList-in4").slideUp();
+    			}
+    		})
+    		$("#cList-key5").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#cList-in5").slideDown();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#cList-in5").slideUp();
+    			}
+    		})
+    		$("#cList-key6").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");
+    				$("#cList-in6").slideDown();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#cList-in6").slideUp();
+    			}
+    		})
+    		
+    		
+    	})
     </script>
 
 
     <!-- 참조 선택하는 모달 -->
     <!-- The Modal -->
     <div class="modal" id="ref-line">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
         <div class="modal-content">
     
             <!-- Modal Header -->
             <div class="modal-header">
-            <h4 class="modal-title">참조자 지정</h4>
+            <h4 class="modal-title"></h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
     
             <!-- Modal body -->
             <div class="modal-body appLine">
-                <div class="appLine1">
-                    <b style="color:gray">결재선</b>  | <b style="color:black;">참조자</b> <br><br>
+            		<h3>결재선 지정</h3><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <b style="color:gray; font-size:20px;">결재선</b>  | <b style="color:black; font-size:20px;">참조자</b> <br><br>                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     조직도 <br>
-                    <input type="search" style="width:120px"><button class="btn btn-outline-secondary">검색</button> <br>
+                <div class="appLine1">
 
-                    <ul class="empList2">
-                        <li id="repEmp1" class="repEmp">
-                             <span>참조</span> 
-                             <span>ddd1</span> 
-                             <span>ddd1</span>
-                             <input type="hidden" class="empNo" name="empNo" value="1">
-                             <button class="btn btn-outline-secondary addbtn">+</button>
-                        </li> 
-                        <li id="repEmp2" class="repEmp"> 
-                             <span>참조</span> 
-                             <span>ddd2</span>
-                             <span>ddd2</span>
-                             <input type="hidden" class="empNo" name="empNo" value="2">
-                             <button class="btn btn-outline-secondary addbtn">+</button>
-                         </li> 
-                         <li id="repEmp3" class="repEmp"> 
-                             <span>참조</span> 
-                             <span>ddd3</span>
-                             <span>ddd3</span>
-                             <input type="hidden" class="empNo"  name="empNo" value="3">
-                             <button class="btn btn-outline-secondary addbtn">+</button>
-                         </li> 
-                     </ul>
+
+					<c:forEach var="b" items="${deptList}" begin="0" end="6" varStatus="dept">
+						<div>
+							<b class="${ b.deptCode }">${ b.deptName }</b>
+							<span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="rList-key${ dept.index }"></span>
+						</div>
+						<ul class="empList2" id="rList-in${ dept.index }" style="display: none;"> <!-- 사원리스트 -->
+							<c:forEach var="f" items="${list}">
+								<c:if test="${ b.deptName eq f.deptName }">
+								<li id="refEmp${ f.empNo }" class="refEmp">
+								
+										<span class="indiv-profile">
+											<img src="<c:out value='${f.empProfile }' default='resources/profile_images/default_profile.png' />" width="20px;" alt="">
+										</span>
+										<span class="indiv-name">${ f.empName }</span>
+										<span class="indiv-job">${f.jobName}</span> 
+										<span class="indiv-dept">${f.deptName}</span> 
+										<input type="hidden" name="empNo" value="${f.empNo}">
+										<button class="btn btn-outline-light text-dark addbtn">+</button>
+								</li>
+								</c:if>
+							</c:forEach>
+						</ul>
+						<br>
+					</c:forEach>
 
                 </div>
                 <div class="appLine2">
-                    <form action="">
-                        <h5>참조자 지정</h5>
+                   
                         <div class="repArea">
-                            <ul>
-                                <li>
-                                    <span>기안</span>
-                                    <span>정형돈</span>
-                                    <span>부서명</span>
-                                </li>                 
-                            </ul>
+
                             <ul class="repList">
 
                             </ul>
                         </div>
-                    </form>                   
+                                      
                 </div>
 
             </div>
@@ -486,7 +575,7 @@
         
         function copyRef(){
         	
-        	const arr2 = $(".repList .repEmp").children("input");
+        	const arr2 = $(".repList .refEmp").children("input");
         	let val = "";
         	
         	for(var i = 0; i < arr2.length; i++){
@@ -499,6 +588,76 @@
         	}
         	$(".rep-body").html(val);
         }
+        
+    	$(function(){
+    		
+    		$("#rList-key0").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#rList-in0").slideDown();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#rList-in0").slideUp();
+    			}
+    		})
+    		$("#rList-key1").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#rList-in1").slideDown();
+    				
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#rList-in1").slideUp();
+    			}
+    		})
+    		$("#rList-key2").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");
+    				$("#rList-in2").slideDown();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#rList-in2").slideUp();
+    			}
+    		})
+    		$("#rList-key3").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#rList-in3").slideDown();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#rList-in3").slideUp();
+    			}
+    		})
+    		$("#rList-key4").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#rList-in4").slideDown();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#rList-in4").slideUp();
+    			}
+    		})
+    		$("#rList-key5").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#rList-in5").slideDown();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#rList-in5").slideUp();
+    			}
+    		})
+    		$("#rList-key6").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");
+    				$("#rList-in6").slideDown();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#rList-in6").slideUp();
+    			}
+    		})
+    		
+    		
+    	})
         
     </script>
 
