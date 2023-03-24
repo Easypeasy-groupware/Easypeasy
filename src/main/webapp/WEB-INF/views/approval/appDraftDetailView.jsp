@@ -59,43 +59,44 @@
                     <p><b style="font-size:30px;"> 업무기안</b></p>
                 </div>
                 <div class="left-form2">
+                <br><br>
                     <c:choose>
                         <c:when test="${loginUser.empNo eq ap.writerNo && ap.tstatus eq '진행중' }" >
                             <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서삭제</span> |
                             <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">기안수정</span>
-                            <br><br>
+                            
                         </c:when> 
                         <c:when test="${loginUser.empNo eq ap.writerNo &&  ap.tstatus != '진행중' }" >
                             <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서삭제</span> |
                             <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">재기안</span>
-                            <br><br>
+                            
                         </c:when>                       
                         <c:when test="${ap.st eq '참조대기' || ap.st eq '참조전체'}" >
                         
                         </c:when>  
                         <c:when test="${loginUser.empNo != ap.writerNo &&  ap.tstatus != '진행중' }" >
 
-                            <br>
+                            
                         </c:when>
                         <c:when test="${loginUser.empNo != ap.writerNo && ap.tstatus eq '진행중'}">
                             <c:forEach var="c" items="${list1}">
                                 <c:choose>
                                     <c:when test="${c.recEmpNo eq loginUser.empNo && c.appStatus != '미결재' }">
-                                        <br>
+                                        
                                     </c:when>
                                     <c:when test="${c.recEmpNo eq loginUser.empNo && c.appStatus eq '미결재' }">
                                         <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#approval">결재</a> |  
-                                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#companion">반려</a> |
+                                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#companion">반려</a> 
                                     </c:when>
                                     <c:otherwise>
-                                        <br>
+                                        
                                     </c:otherwise>
                                 </c:choose>
                             </c:forEach>                    	
                         </c:when>                               
                         <c:otherwise>
 
-                            <br><br>
+                           
                         </c:otherwise>    
                             
                     </c:choose>
@@ -448,7 +449,7 @@
                             }else{
                                 for(let i =0; i<list.length; i++){
                                     value += "<tr style='height:150px;'>"
-                                            + "<td colspan='3'>" + list[i].writerName +
+                                            + "<td colspan='3'>" + list[i].writerName + " " + 
                                                 (
                                                         list[i].jobCode == 'J1'?'사원':
                                                         list[i].jobCode == 'J2'?'대리':
@@ -457,7 +458,7 @@
                                                         list[i].jobCode == 'J5'?'상무':
                                                         list[i].jobCode == 'J6'?'대표':'' 
                                                 ) 
-                                            + "|" +  list[i].deptName + "|" + list[i].enrollDate    
+                                            + " | " +  list[i].deptName + " | " + list[i].enrollDate    
                                             + "<br><br>"
                                             + list[i].content;
                                                 if(${loginUser.empNo} == list[i].writerNo){

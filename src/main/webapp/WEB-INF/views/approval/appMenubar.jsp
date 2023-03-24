@@ -270,14 +270,14 @@
 					<c:forEach var="d" items="${deptList}" begin="0" end="6" varStatus="dept">
 						<div>
 							<b class="${ d.deptCode }">${ d.deptName }</b>
-							<span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="cList-key${ dept.index }"></span>
+							<span><img src="resources/common_images/list-down.png" style="width:20px;" class="dropdown-key" id="cList-key${ dept.index }"></span>
 						</div>
 						<ul class="empList" id="cList-in${ dept.index }" style="display: none;"> <!-- 사원리스트 -->
 							<c:forEach var="e" items="${list}">
 								<c:if test="${ e.deptName eq d.deptName }">
 								<li id="appEmp${ e.empNo }" class="appEmp">
 										<span class="indiv-profile">
-											<img src="<c:out value='${e.empProfile }' default='resources/profile_images/default_profile.png' />" width="20px;" alt="">
+											<img src="<c:out value='${e.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt="">
 										</span>
 										<span class="indiv-name">${ e.empName }</span>
 										<span class="indiv-job">${e.jobName}</span> 
@@ -461,7 +461,7 @@
 					<c:forEach var="b" items="${deptList}" begin="0" end="6" varStatus="dept">
 						<div>
 							<b class="${ b.deptCode }">${ b.deptName }</b>
-							<span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="rList-key${ dept.index }"></span>
+							<span><img src="resources/common_images/list-down.png" style="width:20px;" class="dropdown-key" id="rList-key${ dept.index }"></span>
 						</div>
 						<ul class="empList2" id="rList-in${ dept.index }" style="display: none;"> <!-- 사원리스트 -->
 							<c:forEach var="f" items="${list}">
@@ -469,7 +469,7 @@
 								<li id="refEmp${ f.empNo }" class="refEmp">
 								
 										<span class="indiv-profile">
-											<img src="<c:out value='${f.empProfile }' default='resources/profile_images/default_profile.png' />" width="20px;" alt="">
+											<img src="<c:out value='${f.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt="">
 										</span>
 										<span class="indiv-name">${ f.empName }</span>
 										<span class="indiv-job">${f.jobName}</span> 
@@ -559,32 +559,47 @@
         function copyApp(){
         	
         	const arr1 = $(".appList .appEmp").children("input");
+        	const arr3 = $(".appList .appEmp").children(".indiv-profile");
+        	const arr4 = $(".appList .appEmp").children(".indiv-name");
+        	const arr5 = $(".appList .appEmp").children(".indiv-job");
+        	const arr6 = $(".appList .appEmp").children(".indiv-dept");
+
         	let val = "";
-        	
+
         	for(var i = 0; i < arr1.length; i++){
         		
         		val+= "<div>"
-        			+ "<img src='<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />' width='30px;'>"
-        			+ "<br><br>"
-        		  	+ "<input type='hidden' name='recEmpNo' value='"+ arr1[i].value +"'>" + arr1[i].value
-        		  	+ "<br> 결재 <br><br><br>";
+        			+ arr3[i].innerHTML + "&nbsp;" + arr4[i].innerHTML + " " + arr5[i].innerHTML
+        			+ "<br>"
+        			+ "이지피지 | " + arr6[i].innerHTML
+        			+ "<br>"
+        		  	+ "<input type='hidden' name='recEmpNo' value='"+ arr1[i].value +"'>"
+        		  	+ " 결재 <br><br><br></div>";
+
         	}
+        	
         	$(".app-body").html(val);
-        	//console.log($(".appList .appEmp").children("span").text());
         }
         
         function copyRef(){
         	
         	const arr2 = $(".repList .refEmp").children("input");
+        	const arr7 = $(".repList .refEmp").children(".indiv-profile");
+        	const arr8 = $(".repList .refEmp").children(".indiv-name");
+        	const arr9 = $(".repList .refEmp").children(".indiv-job");
+        	const arr10 = $(".repList .refEmp").children(".indiv-dept");
+
         	let val = "";
         	
         	for(var i = 0; i < arr2.length; i++){
         		
         		val+= "<div>"
-        			+ "<img src='<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />' width='30px;'>"
-        			+ "<br><br>"
-        			+ "<input type='hidden' name='recEmpNo' value='"+ arr2[i].value +"'>" + arr2[i].value
-        		  	+ "<br> 결재 <br><br><br>";
+        			+ arr7[i].innerHTML + "&nbsp;" + arr8[i].innerHTML + " " + arr9[i].innerHTML
+        			+ "<br>"
+        			+ "이지피지 | " + arr10[i].innerHTML
+        			+ "<br>"
+        		  	+ "<input type='hidden' name='recEmpNo' value='"+ arr2[i].value +"'>"
+        		  	+ " 참조 <br><br><br></div>";
         	}
         	$(".rep-body").html(val);
         }
