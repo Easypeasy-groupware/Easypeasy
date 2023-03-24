@@ -14,6 +14,7 @@ import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.login.model.vo.Department;
 import com.ep.spring.login.model.vo.Employee;
 import com.ep.spring.login.model.vo.Job;
+import com.ep.spring.organization.model.service.OrgService;
 import com.ep.spring.schedule.model.service.ScheduleService;
 import com.ep.spring.schedule.model.vo.Attendee;
 import com.ep.spring.schedule.model.vo.Calendar;
@@ -27,22 +28,23 @@ public class ScheduleController {
 	private ScheduleService scService;
 	
 	@Autowired
-	private ScheduleService oService;
+	private OrgService oService;
 	
 	@RequestMapping("main.sc")
 	public String mainSchedule(HttpSession session) {
 		
 		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
-		ArrayList<Calendar> myCalList = scService.selectMyCalendar(empNo); 
+		ArrayList<Calendar> myCalList = scService.selectMyCalendar(empNo);
 		
+		ArrayList<Employee> list = oService.selectOrgList(empNo);
+		ArrayList<Department> deptList = oService.selectDept();
+		ArrayList<Job> jList = oService.selectJob();
 		
-		//ArrayList<Calendar> scList = scService.scheduleList();
-		
+		session.setAttribute("jList", jList);
+		session.setAttribute("deptList", deptList);
+		session.setAttribute("list", list);
 		
 		session.setAttribute("myCalList", myCalList);
-		//session.setAttribute("scList", scList);
-		
-		//System.out.println(scList);
 		
 		return "schedule/scheduleMainView";
 	}
@@ -88,15 +90,6 @@ public class ScheduleController {
 			s.setAllDay("Y");
 		}
 		
-		if(s.getScCompany() == null) {
-			s.setScCompany("N");
-		}else {
-			s.setScCompany("Y");
-		}
-		
-		if(s.getScCompany().equals("Y")) {
-			s.setCalNo(0);
-		}
 		
 		//System.out.println(s);
 		//System.out.println(empNo);
@@ -223,6 +216,20 @@ public class ScheduleController {
 		int result = result1*result2;
 		
 		return result;
+		
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="selectSchedule.sc", produces="application/json; charset=utf-8")
+	public String selectSchedule(int empNo, HttpSession session) {
+		
+		ArrayList<Calendar> scList = scService.scheduleList(empNo);
+		
+		session.setAttribute("scList", scList);
+		//System.out.println(scList);
+		
+		return new Gson().toJson(scList);
 		
 	}
 	

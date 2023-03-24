@@ -236,15 +236,6 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr style="height: 45px;">
-                            <th>전사일정</th>
-                            <td colspan="2">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" name="scCompany" value="N" id="company" onclick="showHidden();">
-                                    <label class="custom-control-label" for="company">전사일정</label>
-                                </div>
-                            </td>
-                        </tr>
                     </thead>
                     <tbody class="body">
                         <tr style="height: 45px;">
@@ -397,7 +388,7 @@
 	            <!-- Modal body -->
 	            <div class="modal-body appLine">
 	                <div class="appLine1">
-	                <c:forEach var="d" items="${deptList}" begin="0" end="5" varStatus="dept">
+	                <c:forEach var="d" items="${deptList}" begin="0" end="8" varStatus="dept">
 	                	<div>
                             <b class="${ d.deptCode }">${ d.deptName }</b>
                             <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="cList-key${ dept.index }"></span>
