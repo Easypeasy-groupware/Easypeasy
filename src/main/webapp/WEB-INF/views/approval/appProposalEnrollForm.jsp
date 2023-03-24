@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <style>
+	    #main{position: absolute; top: 120px; left: 330px;}
 
         .form-outer{ 
             width:1000px;
@@ -51,169 +52,172 @@
 </head>
 <body>
     <jsp:include page="../common/header.jsp"/>
-    <jsp:include page="appMenubar.jsp" />
-    <div class="form-outer">
-        <div class="left-outer">
-        	<form id="contentArea" action="insert.ap" method="POST" enctype="multipart/form-data">        
-            <div class="left-form1">
-                <p>
-                	<b style="font-size:30px;">일반품의서</b>
-	                <input type="hidden" name="formCode" value="2">
-	                <input type="hidden" name="formName" value="일반품의서"> 
-                </p>
-                <br>
-            </div>
-            <div class="left-form2">
-            	<a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
-		            <span style="padding:20px; color:rgb(71, 71, 71);" onclick="tempSave();">임시저장</span>|
-                <a href="" style="padding:20px; color:rgb(71, 71, 71);">취소</a>|
-                <a href="" style="padding:20px; color:rgb(71, 71, 71);"  data-toggle="modal" data-target="#app-line">결재선지정</a>
-                <br><br><br>
-            </div>
 
-                <div class="left-form4">
-                    <table class="table-bordered">
-                        <tr>
-                            <td width="100px;" style="text-align:center">
-                                <label for="writer">기안자</label>
-                            </td>
-                            <td width="200px;">
-                                <input type="text" value="" id="writer" readonly> 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align:center">
-                                <label for="dept">소속</label>
-                            </td>
-                            <td>
-                                <input type="text" value="" id="dept" readonly> 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align:center">
-                                <label for="enrollDate">기안일</label>
-                            </td>
-                            <td style="text-align:center">
-                                <input id="enrollDate" name="enrollDate" type="date" style="width:94%;" readonly>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align:center">
-                                <label for="appNo">문서번호</label>
-                            </td>
-                            <td>
-                                <input type="text" val="" id="appChange" name="appChange" readonly>
-                            </td>
-                        </tr>
-                    </table>
+	<div id="main">
+
+        <jsp:include page="appMenubar.jsp" />
+        <div class="form-outer">
+            <div class="left-outer">
+                <form id="contentArea" action="insert.ap" method="POST" enctype="multipart/form-data">        
+                <div class="left-form1">
+                    <p>
+                        <b style="font-size:30px;">일반품의서</b>
+                        <input type="hidden" name="formCode" value="2">
+                        <input type="hidden" name="formName" value="일반품의서"> 
+                    </p>
                     <br>
                 </div>
-                <script>
-                    document.getElementById("enrollDate").value = new Date().toISOString().substring(0, 10);
-
-                </script>
-                <div class="left-form5">
-                    <table class="table-bordered" >
-
-                        <tr>
-                            <td style="text-align:center; width:100px;">
-                                <label for="title">제목</label>
-                            </td>
-                            <td>
-                                <input type="text" name="title" style="width:700px;">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td rowspan="5" style="text-align:center" >
-                                <label for="content">내용</label>
-                            </td>
-                            <td rowspan="5" height="150px;">
-                                <textarea class="form-control" required  id="summernote" name="content" rows="10" style="resize:none;"></textarea>
-                            </td>
-                        </tr>
-                        <tr></tr>
-                        <tr></tr>
-                        <tr></tr>
-                        <tr></tr>
-                        <tr>
-                            <td style="text-align:center">
-                                <label for="attachment">첨부파일</label>
-                            </td>
-                            <td>
-                                <button id="file_choose" type="button" class="btn btn-outline-secondary btn-sm">파일 선택</button>
-                                <button id="file_delete" type="button" class="btn btn-outline-secondary btn-sm">모두 삭제</button>
-                            </td>
-                        </tr>
-                        <tr></tr>
-                        <tr>
-                            <td colspan="2" id="attach_area">
-                                <div id="no_attachment" >
-                                    <img id="attach" src="resources/common_images/attachment.png" width="30px;">
-                                    <div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
-                                </div>
-                                <div id="in_attachments">
-                                </div>
-                                <input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
-                            </td>
-                        </tr>
-                    </table>
+                <div class="left-form2">
+                    <a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
+                        <span style="padding:20px; color:rgb(71, 71, 71);" onclick="tempSave();">임시저장</span>|
+                    <a href="" style="padding:20px; color:rgb(71, 71, 71);">취소</a>|
+                    <a href="" style="padding:20px; color:rgb(71, 71, 71);"  data-toggle="modal" data-target="#app-line">결재선지정</a>
+                    <br><br><br>
                 </div>
-                <br>
-            <div class="left-form6">
-                <div style=" padding:10px; font-size:20px;">
-                    <p><b> 결재선</b></p>
-               </div>
-              
-               <div class="app-comment" style="font-size:15px;">
-                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${loginUser.empName} ${loginUser.jobName}
-                   <br>
-                     이지피지 | ${loginUser.deptName}
-                   <br>
-                    기안
-                   <br><br><br>
-				
-               </div>
-               
-               <div class="app-body">
-               </div>
-               <div class="app-comment" style="font-size:15px;">
-                <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
-                <br>
-                    회사명 | 부서명
-                <br>
-                    결재
-                <br><br>
 
-                <br>
-            	</div>
-            
-                <div style=" padding:10px; font-size:20px;">
-                    <p><b> 참조자</b></p>
-               </div>
-             
-               <div class="app-comment" style="font-size:15px;">
-                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
-                   <br>
-                     회사명 | 부서명
-                   <br>
-                    참조
-                   <br><br>
+                    <div class="left-form4">
+                        <table class="table-bordered">
+                            <tr>
+                                <td width="100px;" style="text-align:center">
+                                    <label for="writer">기안자</label>
+                                </td>
+                                <td width="200px;">
+                                    <input type="text" value="" id="writer" readonly> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center">
+                                    <label for="dept">소속</label>
+                                </td>
+                                <td>
+                                    <input type="text" value="" id="dept" readonly> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center">
+                                    <label for="enrollDate">기안일</label>
+                                </td>
+                                <td style="text-align:center">
+                                    <input id="enrollDate" name="enrollDate" type="date" style="width:94%;" readonly>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center">
+                                    <label for="appNo">문서번호</label>
+                                </td>
+                                <td>
+                                    <input type="text" val="" id="appChange" name="appChange" readonly>
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
+                    </div>
+                    <script>
+                        document.getElementById("enrollDate").value = new Date().toISOString().substring(0, 10);
 
-                   <br>
-               </div>
-               
-               <div class="rep-body">
-               </div>
-               
-               <div id="commentArea">
-               
-               </div>	            
-            
+                    </script>
+                    <div class="left-form5">
+                        <table class="table-bordered" >
+
+                            <tr>
+                                <td style="text-align:center; width:100px;">
+                                    <label for="title">제목</label>
+                                </td>
+                                <td>
+                                    <input type="text" name="title" style="width:700px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="5" style="text-align:center" >
+                                    <label for="content">내용</label>
+                                </td>
+                                <td rowspan="5" height="150px;">
+                                    <textarea class="form-control" required  id="summernote" name="content" rows="10" style="resize:none;"></textarea>
+                                </td>
+                            </tr>
+                            <tr></tr>
+                            <tr></tr>
+                            <tr></tr>
+                            <tr></tr>
+                            <tr>
+                                <td style="text-align:center">
+                                    <label for="attachment">첨부파일</label>
+                                </td>
+                                <td>
+                                    <button id="file_choose" type="button" class="btn btn-outline-secondary btn-sm">파일 선택</button>
+                                    <button id="file_delete" type="button" class="btn btn-outline-secondary btn-sm">모두 삭제</button>
+                                </td>
+                            </tr>
+                            <tr></tr>
+                            <tr>
+                                <td colspan="2" id="attach_area">
+                                    <div id="no_attachment" >
+                                        <img id="attach" src="resources/common_images/attachment.png" width="30px;">
+                                        <div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
+                                    </div>
+                                    <div id="in_attachments">
+                                    </div>
+                                    <input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br>
+                <div class="left-form6">
+                    <div style=" padding:10px; font-size:20px;">
+                        <p><b> 결재선</b></p>
                 </div>
-            </form>
-            
+                
+                <div class="app-comment" style="font-size:15px;">
+                    <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${loginUser.empName} ${loginUser.jobName}
+                    <br>
+                        이지피지 | ${loginUser.deptName}
+                    <br>
+                        기안
+                    <br><br><br>
+                    
+                </div>
+                
+                <div class="app-body">
+                </div>
+                <div class="app-comment" style="font-size:15px;">
+                    <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
+                    <br>
+                        회사명 | 부서명
+                    <br>
+                        결재
+                    <br><br>
+
+                    <br>
+                    </div>
+                
+                    <div style=" padding:10px; font-size:20px;">
+                        <p><b> 참조자</b></p>
+                </div>
+                
+                <div class="app-comment" style="font-size:15px;">
+                    <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
+                    <br>
+                        회사명 | 부서명
+                    <br>
+                        참조
+                    <br><br>
+
+                    <br>
+                </div>
+                
+                <div class="rep-body">
+                </div>
+                
+                <div id="commentArea">
+                
+                </div>	            
+                
+                    </div>
+                </form>
+                
+            </div>
         </div>
- 
     </div>
 
 

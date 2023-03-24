@@ -13,7 +13,7 @@
 	
 <style>
   /* 전체 wrapper */
-  .wrapper {width: 1200px;margin: 0 auto;}
+  .wrapper {width: 1200px;margin: 0 auto; width: 1200px;margin: 0 auto; position: absolute; top: 120px;}
   body {font-family: Arial, sans-serif;	margin: 0; padding: 0;}
 
   /* content */
@@ -73,9 +73,11 @@
             </cheader>
             <div class="container">
                 <form>
+                <!-- 
                     <div class="search-container">
                             <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#tree-modal" >사원 검색</button>
                     </div>
+                  -->   
                 </form>
                 <button type="button" class="btn btn-outline-success btn-sm" onclick="minsert();">등록</button>
                 <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='settings.org';">설정</button>
@@ -149,8 +151,8 @@
 			        </script>
                 </tfoot>
                 
-                 <!-- 검색/조직도 트리 -->
-					<!-- 모달 -->
+                 <!-- 검색/조직도 트리 모달 
+					
 					<div class="modal fade" id="tree-modal" tabindex="-1" role="dialog" aria-labelledby="tree-modal-label" aria-hidden="true">
 						<div class="modal-dialog modal-dialog-centered" role="document">
 							<div class="modal-content">
@@ -161,7 +163,6 @@
 									</button>
 								</div>
 								<div class="modal-body">
-									<!-- 조직도 트리 -->
 									
 									<div id="main">
 				
@@ -238,6 +239,7 @@
 				            </div>
 				        </div>
 					</div>
+					
 					  <script src="resources/org/demo/jquery.cookie.js" type="text/javascript"></script>
 					  <script src="resources/org/jquery.treeview.js" type="text/javascript"></script>
 					  <script type="text/javascript">
@@ -258,7 +260,7 @@
 								});
 							});
 					  </script>
-                
+                	-->
             </div>
         </div>
     </div>

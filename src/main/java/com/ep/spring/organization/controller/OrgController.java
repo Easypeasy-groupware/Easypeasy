@@ -83,7 +83,7 @@ public class OrgController {
 		if(result > 0) {
 			int calResult = scService.insertDefaultCalendar();
 			session.setAttribute("alertMsg", "성공적으로 등록되었습니다.");
-			return "redirect:/";
+			return "redirect:/orgMainAdmin";
 		}else {
 			model.addAttribute("errorMsg", "실패");
 			return "common/errorPage";
@@ -119,7 +119,7 @@ public class OrgController {
 		
 		if(result>0) {
 			session.setAttribute("alertMsg", "성공적으로 사원정보가 수정되었습니다.");
-			return "redirect:/";
+			return "redirect:/orgMainAdmin";
 		}else {
 			model.addAttribute("errorMsg", "사원정보 수정 실패");
 			return "common/errorPage";	

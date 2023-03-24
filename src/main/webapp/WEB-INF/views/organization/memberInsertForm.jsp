@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	.wrapper {width: 1200px;margin: 0 auto;}
+	.wrapper {width: 1200px;margin: 0 auto; position: absolute; top: 120px;}
 	 body {font-family: Arial, sans-serif;	margin: 0; padding: 0;}
 	/* 사이드바 */
 	.sidebar {top: 0; left: 0; width: 200px; height: 100%; float: left;}

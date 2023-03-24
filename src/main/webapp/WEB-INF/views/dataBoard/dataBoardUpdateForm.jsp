@@ -11,6 +11,10 @@
     div{
         box-sizing: border-box;
     }
+
+    #main{  
+        position: absolute; top: 120px;
+    }
     
     #content{
         border-left: 1px solid lightgray;
@@ -105,54 +109,57 @@
 
 	<jsp:include page="../common/header.jsp"/>
 	
-	<jsp:include page="sidebar.jsp"/>
-	
-    <div id="content">
-        <div id="title">
-            <span>
-                <h5>자료실 수정</h5>
-            </span>
-        </div>
-        <br>
-        <br><br>
-        <form action="update.db" method="post" enctype="multipart/form-data">
-        	<input type="hidden" name="dbNo" value="${ db.dbNo }">
-            <div id="content-1">
-                <table id="enroll" align="center">
-                    <tr height="70">
-                        <th width="80">제목</th>
-                        <td>
-                            <input type="text" name="dbTitle" size="100" name="dbTitle" value="${ db.dbTitle }" required>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>내용</th>
-                        <td>
-                            <textarea name="dbContent" cols="99" rows="8" style="resize: none;">${ db.dbContent }</textarea>
-                        </td>
-                    </tr>
-                    <tr height="60">
-                        <th>첨부파일</th>
-                        <td>
-                            <div class="filebox">
-                                <input class="upload-name" name="reupfile" value="${ db.originName }" disabled="disabled">
-                            
-                                <label for="ex_filename">업로드</label> 
-                                <input type="file" name="reupfile" id="ex_filename" class="upload-hidden">
-                            	
-                            	<input type="hidden" name="originName" value="${ db.originName }">
-                  				<input type="hidden" name="changeName" value="${ db.changeName }">
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-                <br><br>
-                <div id="submit">
-                    <button class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">수정</button>&nbsp;&nbsp;
-                    <button type="reset" class="btn btn-sm btn-light">취소</button>
-                </div>
+    <div id="main">
+
+        <jsp:include page="sidebar.jsp"/>
+        
+        <div id="content">
+            <div id="title">
+                <span>
+                    <h5>자료실 수정</h5>
+                </span>
             </div>
-        </form>
+            <br>
+            <br><br>
+            <form action="update.db" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="dbNo" value="${ db.dbNo }">
+                <div id="content-1">
+                    <table id="enroll" align="center">
+                        <tr height="70">
+                            <th width="80">제목</th>
+                            <td>
+                                <input type="text" name="dbTitle" size="100" name="dbTitle" value="${ db.dbTitle }" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>내용</th>
+                            <td>
+                                <textarea name="dbContent" cols="99" rows="8" style="resize: none;">${ db.dbContent }</textarea>
+                            </td>
+                        </tr>
+                        <tr height="60">
+                            <th>첨부파일</th>
+                            <td>
+                                <div class="filebox">
+                                    <input class="upload-name" name="reupfile" value="${ db.originName }" disabled="disabled">
+                                
+                                    <label for="ex_filename">업로드</label> 
+                                    <input type="file" name="reupfile" id="ex_filename" class="upload-hidden">
+                                    
+                                    <input type="hidden" name="originName" value="${ db.originName }">
+                                    <input type="hidden" name="changeName" value="${ db.changeName }">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <br><br>
+                    <div id="submit">
+                        <button class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">수정</button>&nbsp;&nbsp;
+                        <button type="reset" class="btn btn-sm btn-light">취소</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
     <br>
 

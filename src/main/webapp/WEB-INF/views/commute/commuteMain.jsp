@@ -7,7 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-
+    #main{  
+        position: absolute; top: 120px;
+    }
     .side{
         width: 200px;
         height: 900px;
@@ -28,6 +30,7 @@
         box-sizing: none;
         float: left;
         margin-left:10px;
+        
     }
     .content1{
         width: 490px;
@@ -104,13 +107,13 @@
         float: left;
         margin: 20px;
         margin-left: 30px;
-        font-size: 18px;
+        font-size: 15px;
         text-align: center;
     }
     .end{
         float: left;
         margin: 20px;
-        font-size: 18px;
+        font-size: 15px;
         text-align: center;
     }
     .bbb{
@@ -128,6 +131,14 @@
         font-weight: bold;
         margin-left: 300px;
 
+    }
+    .inTime{
+    	height: 20px;
+    	font-size: 15px;
+    }
+    .outTime{
+    	height: 20px;
+    	font-size: 15px;
     }
     .tg  {border-collapse:collapse;border-color:#ccc;border-spacing:0;width: 400px; height: 150px; margin: 0 auto;}
     .tg td{background-color:#fff;border-color:#ccc;border-style:solid;border-width:0px;color:#333;
@@ -152,7 +163,8 @@
 	<jsp:include page="../common/header.jsp"/>
 	
 
-	    
+    <div id="main">
+
 
         <div class="side"><jsp:include page="../commute/commuteSidebar.jsp"/></div>
         <div class="allContent">
@@ -164,7 +176,7 @@
                 <div class="name" style="float: left;">근무체크</div><br><br>
 			
 			<c:choose>
-				<c:when test="${ not empty loginUser.status && empty c.endTime }">
+				<c:when test="${ not empty loginUser.status && empty c.endTime && not empty c.startTime }">
 	                <div class="status">
 	                
 	                	<c:choose>
@@ -182,7 +194,9 @@
                 <h1 id="clock" style="color:black;">clock</h1>
 
                 <div class="start">출근시각 <br>
+                <img src="resources/common_images/startTime.png" style="width:80px;">
                     <div class="inTime">
+                     
                     <c:if test="${ not empty c.startTime }">
                     	${ c.startTime }
                     </c:if>
@@ -205,6 +219,7 @@
                 </script>
 
                 <div class="end">퇴근시각 <br>
+                <img src="resources/common_images/endTime.png" style="width:80px;">
                     <div class="outTime">
                     <c:if test="${ not empty c.endTime }">
                     	${ c.endTime }
@@ -522,7 +537,7 @@
             </div>
         </div>
     
-
+    </div>
 
 </body>
 </html>
