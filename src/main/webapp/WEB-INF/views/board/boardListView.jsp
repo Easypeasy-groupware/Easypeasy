@@ -51,12 +51,14 @@
         <div class="container">
             <form>
                 <div class="search-container">
+                <!-- 
                     <select>
                         <option value="all">전체</option>
                         <option value="1">1일</option>
                         <option value="7">1주일</option>
                         <option value="30">1개월</option>
                     </select>
+                  -->   
                     <select>
                         <option value="title">제목</option>
                         <option value="author">작성자</option>
@@ -67,16 +69,16 @@
                 </div>
             </form>
             <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enrollForm.bo';">새글쓰기</button>
-            <%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> --%>
+            <%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> 
             	<button type="button" class="btn btn-outline-danger btn-sm" onclick="location.href='delete.bo';"> 삭제</button>
-            <%-- </c:if> --%>
+           </c:if> --%>
             <br><br>
             <table id="boardList">
                 <thead>
                     <tr>
-                    	<%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> --%>
+                    	<%-- <c:if test="${ loginUser.deptCode eq 'D1' }">
                     		<th style="width: 10px;"><input type="checkbox" name="ckbAll" id="ckbAll"></th>
-                    	<%-- </c:if> --%>
+                    	 </c:if> --%>
                         <th>글번호</th>
                         <th>제목</th>
                         <th>작성자</th>
@@ -87,9 +89,9 @@
                 <tbody>
                 	<c:forEach var="b" items="${list}">
 	                    <tr>
-	                    	<%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> --%>
+	                    	<%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> 
 	                    		<td><input type="checkbox" name="ckb"></td>
-	                    	<%-- </c:if> --%>
+	                    	 </c:if> --%>
 	                        <td class="bno">${b.boardNo}</td>
 	                        <td class="notice">${b.boardTitle}</td>
 	                        <td>${b.boardWriter}</td>
