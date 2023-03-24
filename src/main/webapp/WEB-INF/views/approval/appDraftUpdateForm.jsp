@@ -111,6 +111,7 @@
 							</table>
 							<br>
 						</div>
+					</div>
 					<script>
 					
 						document.getElementById("enrollDate").value = new Date().toISOString().substring(0, 10);
@@ -264,7 +265,6 @@
 					</form>
 				</div>
 			</div>
-	
 		</div>
     </body>
     <script>
