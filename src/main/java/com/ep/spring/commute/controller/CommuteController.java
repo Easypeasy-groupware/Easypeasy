@@ -1,5 +1,7 @@
 package com.ep.spring.commute.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -42,9 +44,23 @@ public class CommuteController {
 			
 			Commute c = cService.commuteMainPage(empNo);
 			//System.out.println(c);
-			 
+			
+			// 지각, 조기퇴근, 결근, 퇴근 미체크 횟수 카운트
+			int tr = 0;
+			int countLe = 0;
+			int ab = 0;
+			int end = 0;
 			if(c != null) {
+				tr = cService.countTr(empNo);
+				countLe = cService.countLe(empNo);
+				ab = cService.countAb(empNo);
+				end = cService.countEnd(empNo);
+				
 				mv.addObject("c", c)
+				  .addObject("tr", tr)
+				  .addObject("countLe", countLe)
+				  .addObject("ab", ab)
+				  .addObject("end", end)
 				  .setViewName("commute/commuteMain");
 				return mv;
 			}else {
@@ -64,13 +80,35 @@ public class CommuteController {
 		//출근시간 등록
 		@ResponseBody
 		@RequestMapping("inTime.co")
-		public String inTime(Commute c) {			
+		public String inTime(Commute c) throws ParseException {			
 			
 			int result1 = cService.inTime(c);
 			
-			//int result2 = cService.updateStatus(c);
-			
-			return result1 > 0 ? "success" : "fail";
+			// startTime을 Date타입으로 변경 => 시분초만 뽑아낸후 대소비교
+			String startTime = c.getStartTime();
+	        // 문자열
+	        String dateStr = startTime;
+	 
+	        // 포맷터
+	        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+	 
+	        // 문자열 -> Date
+	        Date date = formatter.parse(dateStr);
+	        //System.out.println(date);
+	        int H = date.getHours();
+	        int M = date.getMinutes();
+	        //System.out.println(H);
+	        
+	        //09시01분 전에는 정상근무(comStatus = "WO")
+	        //이후에는 지각(comStatus = "TR")
+	        if(H<9 && M<1) {
+	        	c.setComStatus("WO");
+	        }else {
+	        	c.setComStatus("TR");
+	        }
+	        int result2 = cService.updateComStatus(c);
+
+			return (result1*result2) > 0 ? "success" : "fail";
 			
 		}
 		
@@ -78,11 +116,34 @@ public class CommuteController {
 		@ResponseBody
 		@RequestMapping("outTime.co")
 		
-		public String outTime(Commute c) {			
+		public String outTime(Commute c) throws ParseException {			
 					
-			int result = cService.outTime(c);
+			int result1 = cService.outTime(c);
+			
+			// startTime을 Date타입으로 변경 => 시분초만 뽑아낸후 대소비교
+			String endTime = c.getEndTime();
+			// 문자열
+			String dateStr = endTime;
+				 
+			// 포맷터
+			SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+				 
+	        // 문자열 -> Date
+	        Date date = formatter.parse(dateStr);
+	        //System.out.println(date);
+	        int H = date.getHours();
+	        int M = date.getMinutes();
+	        //System.out.println(H);
+	        
+	        //18시00분 전에는 조퇴(comStatus = "LE")
+	        if(H<18) {
+	        	c.setLeStatus("Y");
+	        }else {
+	        	c.setLeStatus("N");
+	        }
+	        int result2 = cService.updateLeStatus(c);
 					
-			return result > 0 ? "success" : "fail";
+			return (result1*result2) > 0 ? "success" : "fail";
 					
 		}
 		

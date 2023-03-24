@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+    #main{  
+        position: absolute; top: 120px;
+    }
     .outer{
         width: 1200px;
         margin: auto;
@@ -58,7 +61,7 @@
 
 	<jsp:include page="../common/header.jsp"/>
 
-	    
+    <div id="main">
 
 
         <div class="side"><jsp:include page="../commute/commuteSidebar.jsp"/></div>
@@ -100,6 +103,7 @@
                                	  title: ' 퇴근: ${ c.endTime }',
                                	  
                                	   },
+                               	   
                                </c:forEach>
                                	<c:forEach var="c" items="${ list }">
                             	{ 
@@ -118,7 +122,7 @@
 
         </div>
 
-
+    </div>
 
 
     

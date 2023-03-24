@@ -11,6 +11,10 @@
         box-sizing: border-box;
     }
 
+    #main{  
+        position: absolute; top: 120px;
+    }
+
 	#content{
         width: 1000px;
         float: left;
@@ -44,9 +48,11 @@
 
 	<jsp:include page="../common/header.jsp"/>
 
-    <jsp:include page="sidebar.jsp"/>
+    <div id="main">
 
-	<div id="content">
+        <jsp:include page="sidebar.jsp"/>
+
+        <div id="content">
             <div id="con-title">
                 <span>
                     <h5>자산 추가</h5>
@@ -73,6 +79,7 @@
                 </div>
             </form>
         </div>
+    </div>
 
 </body>
 </html>

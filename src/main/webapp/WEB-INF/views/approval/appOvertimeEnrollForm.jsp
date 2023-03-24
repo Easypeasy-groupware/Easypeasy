@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <style>
+        #main{position: absolute; top: 120px;}
 
         .form-outer{ 
             width:1000px;
@@ -51,203 +52,230 @@
 </head>
 <body>
     <jsp:include page="../common/header.jsp"/>
-    <jsp:include page="appMenubar.jsp" />
-    <div class="form-outer">
-        <div class="left-outer">
-        	<form id="contentArea" action="insert.ap" method="POST" enctype="multipart/form-data">
-		            <div class="left-form1">
-		                <p>
-		                	<b style="font-size:30px;">연장근무신청서</b>
-			                <input type="hidden" name="formCode" value="4">
-			                <input type="hidden" name="formName" value="연장근무신청서">                
-		                </p>
-		                <br>
-		            </div>
-		            <div class="left-form2">
-		            	<a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
-		                <a href="" style="padding:20px; color:rgb(71, 71, 71);">임시저장</a>|
-		                <a href="" style="padding:20px; color:rgb(71, 71, 71);">취소</a>|
-		                <a href="" style="padding:20px; color:rgb(71, 71, 71);"  data-toggle="modal" data-target="#app-line">결재선지정</a>
-		                <br><br><br>
-		            </div>
-		                <div class="left-form4">
-		                    <table class="table-bordered">
-		                        <tr>
-		                            <td width="100px;" style="text-align:center">
-		                                <label for="writer">기안자</label>
-		                            </td>
-		                            <td width="200px;">
-		                                <input type="text" value="" id="writer" readonly> 
-		                            </td>
-		                        </tr>
-		                        <tr>
-		                            <td style="text-align:center">
-		                                <label for="dept">소속</label>
-		                            </td>
-		                            <td>
-		                                <input type="text" value="" id="dept" readonly> 
-		                            </td>
-		                        </tr>
-		                        <tr>
-		                            <td style="text-align:center">
-		                                <label for="enrollDate">기안일</label>
-		                            </td>
-		                            <td style="text-align:center">
-		                                <input id="enrollDate" name="enrollDate" type="date" style="width:94%;" readonly>
-		                            </td>
-		                        </tr>
-		                        <tr>
-		                            <td style="text-align:center">
-		                                <label for="appNo">문서번호</label>
-		                            </td>
-		                            <td>
-		                                <input type="text" val="" id="appChange" name="appChange" readonly>
-		                            </td>
-		                        </tr>
-		                    </table>
-		                    <br>
-		                </div>
-		                <div class="left-form5">
-		                    <table class="table-bordered" >
-		
-		                        <tr>
-		                            <td style="text-align:center; width:100px;">
-		                                <label for="title">신청현황</label>
-		                            </td>
-		                            <td style="width:700px;">
-		                                * * 자정 이후 근무시작인 경우 날짜를 다음날로 지정해주세요.
-		                            </td>
-		                        </tr>
-		                        <tr>
-		                            <td style="text-align:center">
-		                                <label for="content">근무구분</label>
-		                            </td>    
-		                            <td>
-		                                &nbsp;&nbsp;<input type="radio" id="extension" name="otKind" value="연장" checked>  <label for="extension" >연장</label>
-		                                &nbsp;&nbsp;<input type="radio" id="night" name="otKind" value="야간">  <label for="night" >야간</label>     
-		                                &nbsp;&nbsp;<input type="radio" id="holiday" name="otKind" value="휴일">  <label for="holiday">휴일</label>
-		                            </td>                        
-		                        </tr>
-		                        <tr>
-		                            <td style="text-align:center">
-		                                <label for="content">근무일시</label>
-		                            </td>
-		                            <td>
-		                                &nbsp;&nbsp;
-		                                <input  class="dateSelect"  name="otDate" id="" required >
-		                                <input type="number"  class="dateSelect-start"  name="otStart" id="overStartHour" required style="width:80px;" min="0" max="24"> ~ 
-		                                <input type="number" class="dateSelect-end" name="otEnd" id="overEndHour" required style="width:80px;" min="0" max="24" onchange="diffTime();">
-		                                <span id="diff"></span>
-		                                <!-- <button onclick="diffTime();">계산</button> -->
-		                            </td>
-		                        </tr>
-		                        <tr>
-		                            <td style="text-align:center"> 
-		                                <label for="content">근무시간</label>
-		                            </td>
-		                            <td id="overUseTime" name="otUseTime">
-		                                &nbsp;&nbsp; 총 + ${ot.otUseTime } + 시간
-		                            </td>
-		                        </tr>
-		                        <tr>
-		                            <td colspan="2"  style="text-align:center">
-		                                * 주간 근무시간 - 근무일이 포함된 한 주 <br>
-		
-		                                정상근무시간 + 연장근무 승인 요청에 대한 결재가 완료된 총 시간입니다. <br>
-		                                
-		                                근태관리에서 시간 수정이 가능하므로
-		                                
-		                                주간 근무시간은 상이해질 수 있습니다. <br>
-		                               </td>
-		                        </tr>
-		                        <tr>
-		                            <td rowspan="5" style="text-align:center">
-		                                <label for="content">신청사유</label>
-		                            </td>
-		                            <td rowspan="5" height="150px;">
-		                                <textarea class="form-control" name="content" id="content" rows="10" style="resize:none;">${ap.content }</textarea>
-		                            </td>
-		                        </tr>
-		                        <tr></tr>
-		                        <tr></tr>
-		                        <tr></tr>
-		                        <tr></tr>
-		
-		                        <tr>
-		                            <td style="text-align:center">
-		                                <label for="attachment">첨부파일</label>
-		                            </td>
-		                            <td>
-		                                <button id="file_choose" type="button" class="btn btn-outline-secondary btn-sm">파일 선택</button>
-		                                <button id="file_delete" type="button" class="btn btn-outline-secondary btn-sm">모두 삭제</button>
-		                            </td>
-		                        </tr>
-		                        <tr></tr>
-		                        <tr>
-		                            <td colspan="2" id="attach_area">
-		                                <div id="no_attachment" >
-		                                    <img id="attach" src="resources/common_images/attachment.png" width="30px;">
-		                                    <div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
-		                                </div>
-		                                <div id="in_attachments">
-		                                </div>
-		                                <input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
-		                            </td>
-		                        </tr>
-		                    </table>
-		                </div>
-		                <br>
-		                <div class="left-form6">
-		                    <div style=" padding:10px; font-size:20px;">
-		                        <p><b> 결재선</b></p>
-		                   </div>
-		                  
-			               <div class="app-comment" style="font-size:15px;">
-			                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${loginUser.empName} ${loginUser.jobName}
-			                   <br>
-			                     이지피지 | ${loginUser.deptName}
-			                   <br>
-			                    기안
-			                   <br><br><br>
-							
-			               </div>
-			               
-			               <div class="app-body">
-			               </div>
-			               		                   
-		                   <div class="app-comment" style="font-size:15px;">
-		                    <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
-		                    <br>
-		                        회사명 | 부서명
-		                    <br>
-		                        결재
-		                    <br><br><br>
-		                	</div>
+	
+	<div id="main">
 
-			                <div style=" padding:10px; font-size:20px;">
-			                    <p><b> 참조자</b></p>
-			               </div>
-			               		                	
-			               <div class="app-comment" style="font-size:15px;">
-			                   <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
-			                   <br>
-			                     회사명 | 부서명
-			                   <br>
-			                    참조
-			                   <br><br><br>
-			               </div>
-			               
-			               <div class="rep-body">
-			               </div>
-			               
-			               <div id="commentArea">
-			               
-			               </div>		                	
-	                    </div>
-                    
-                    </form>
-                    
-                </div>
+		<jsp:include page="appMenubar.jsp" />
+		<div class="form-outer">
+			<div class="left-outer">
+				<form id="contentArea" action="insert.ap" method="POST" enctype="multipart/form-data">
+						<div class="left-form1">
+							<p>
+								<b style="font-size:30px;">연장근무신청서</b>
+								<input type="hidden" name="formCode" value="4">
+								<input type="hidden" name="formName" value="연장근무신청서">                
+							</p>
+							<br>
+						</div>
+						<div class="left-form2">
+							<a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
+						<span style="padding:20px; color:rgb(71, 71, 71);" onclick="tempSave();">임시저장</span>|
+							<a href="" style="padding:20px; color:rgb(71, 71, 71);">취소</a>|
+							<a href="" style="padding:20px; color:rgb(71, 71, 71);"  data-toggle="modal" data-target="#app-line">결재선지정</a>
+							<br><br><br>
+						</div>
+							<div class="left-form4">
+								<table class="table-bordered">
+									<tr>
+										<td width="100px;" style="text-align:center">
+											<label for="writer">기안자</label>
+										</td>
+										<td width="200px;">
+											<input type="text" value="" id="writer" readonly> 
+										</td>
+									</tr>
+									<tr>
+										<td style="text-align:center">
+											<label for="dept">소속</label>
+										</td>
+										<td>
+											<input type="text" value="" id="dept" readonly> 
+										</td>
+									</tr>
+									<tr>
+										<td style="text-align:center">
+											<label for="enrollDate">기안일</label>
+										</td>
+										<td style="text-align:center">
+											<input id="enrollDate" name="enrollDate" type="date" style="width:94%;" readonly>
+										</td>
+									</tr>
+									<tr>
+										<td style="text-align:center">
+											<label for="appNo">문서번호</label>
+										</td>
+										<td>
+											<input type="text" val="" id="appChange" name="appChange" readonly>
+										</td>
+									</tr>
+								</table>
+								<br>
+							</div>
+							<div class="left-form5">
+								<table class="table-bordered" >
+			
+									<tr>
+										<td style="text-align:center; width:100px;">
+											<label for="title">신청현황</label>
+										</td>
+										<td style="width:700px;">
+											* * 자정 이후 근무시작인 경우 날짜를 다음날로 지정해주세요.
+										</td>
+									</tr>
+									<tr>
+										<td style="text-align:center">
+											<label for="content">근무구분</label>
+										</td>    
+										<td>
+											&nbsp;&nbsp;<input type="radio" id="extension" name="otKind" value="연장" checked>  <label for="extension" >연장</label>
+											&nbsp;&nbsp;<input type="radio" id="night" name="otKind" value="야간">  <label for="night" >야간</label>     
+											&nbsp;&nbsp;<input type="radio" id="holiday" name="otKind" value="휴일">  <label for="holiday">휴일</label>
+										</td>                        
+									</tr>
+									<tr>
+										<td style="text-align:center">
+											<label for="content">근무일시</label>
+										</td>
+										<td>
+											&nbsp;&nbsp;
+											<input  class="dateSelect"  name="otDate" id="" required >
+											<select class="dateSelect-start"  name="otStart" id="overStartHour" required style="width:80px;">
+												
+												<script>
+													for(var i =1; i<=24; i++){
+														
+														document.write("<option value= " + [i] + ">" + [i] + "</option>");
+														
+													}
+													
+												</script>
+											
+											</select> 
+											~ 
+											<select class="dateSelect-end" name="otEnd" id="overEndHour" required style="width:80px;" onchange="diffTime();">
+											
+												<script>
+													for(var i =1; i<=24; i++){
+														
+														document.write("<option value= " + [i] + ">" + [i] + "</option>");
+														
+													}
+													
+												</script>											
+											
+											</select>
+											<span id="diff"></span>
+											
+										</td>
+									</tr>
+									<tr>
+										<td style="text-align:center"> 
+											<label for="content">근무시간</label>
+										</td>
+										<td>
+											<span id="overUseTime"></span><input type="hidden" name="otUseTime" id="cal">
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2"  style="text-align:center">
+											* 주간 근무시간 - 근무일이 포함된 한 주 <br>
+			
+											정상근무시간 + 연장근무 승인 요청에 대한 결재가 완료된 총 시간입니다. <br>
+											
+											근태관리에서 시간 수정이 가능하므로
+											
+											주간 근무시간은 상이해질 수 있습니다. <br>
+										</td>
+									</tr>
+									<tr>
+										<td rowspan="5" style="text-align:center">
+											<label for="content">신청사유</label>
+										</td>
+										<td rowspan="5" height="150px;">
+											<textarea class="form-control" name="content" id="content" rows="10" style="resize:none;"></textarea>
+										</td>
+									</tr>
+									<tr></tr>
+									<tr></tr>
+									<tr></tr>
+									<tr></tr>
+			
+									<tr>
+										<td style="text-align:center">
+											<label for="attachment">첨부파일</label>
+										</td>
+										<td>
+											<button id="file_choose" type="button" class="btn btn-outline-secondary btn-sm">파일 선택</button>
+											<button id="file_delete" type="button" class="btn btn-outline-secondary btn-sm">모두 삭제</button>
+										</td>
+									</tr>
+									<tr></tr>
+									<tr>
+										<td colspan="2" id="attach_area">
+											<div id="no_attachment" >
+												<img id="attach" src="resources/common_images/attachment.png" width="30px;">
+												<div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
+											</div>
+											<div id="in_attachments">
+											</div>
+											<input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
+										</td>
+									</tr>
+								</table>
+							</div>
+							<br>
+							<div class="left-form6">
+								<div style=" padding:10px; font-size:20px;">
+									<p><b> 결재선</b></p>
+							</div>
+							
+							<div class="app-comment" style="font-size:15px;">
+								<img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${loginUser.empName} ${loginUser.jobName}
+								<br>
+									이지피지 | ${loginUser.deptName}
+								<br>
+									기안
+								<br><br><br>
+								
+							</div>
+							
+							<div class="app-body">
+							</div>
+													
+							<div class="app-comment" style="font-size:15px;">
+								<img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
+								<br>
+									회사명 | 부서명
+								<br>
+									결재
+								<br><br><br>
+								</div>
+
+								<div style=" padding:10px; font-size:20px;">
+									<p><b> 참조자</b></p>
+							</div>
+														
+							<div class="app-comment" style="font-size:15px;">
+								<img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;정형돈 과장
+								<br>
+									회사명 | 부서명
+								<br>
+									참조
+								<br><br><br>
+							</div>
+							
+							<div class="rep-body">
+							</div>
+							
+							<div id="commentArea">
+							
+							</div>		                	
+							</div>
+						
+						</form>
+						
+					</div>
+				</div>
             </div>
      
        
@@ -263,6 +291,7 @@
                                         
                     $("#writer").val(result.a.empName);
                     $("#dept").val(result.a.deptName);
+                    $("#appChange").val(result.appChange);
                     
                 }, error:function(request, status, error){
                     console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
@@ -285,9 +314,9 @@
                     document.getElementById("overUseTime").value = "";
                     document.getElementById("overUseTime").innerHTML = "";
                 }else{
-                	$("#diff").text("");g
-                    document.getElementById("overUseTime").value = diff;
+                	$("#diff").text("");
                     document.getElementById("overUseTime").innerHTML = "총 " + diff + "시간";
+                    $("#cal").val(diff);
                 }
 
             }
@@ -409,7 +438,8 @@
         		}
 			
 				let value = "";
-				value += "<input type='hidden' name='writerComment' value='"+ $("#writerComment").val() +"'>";
+				value += "<input type='hidden' name='writerComment' value='"+ $("#writerComment").val() +"'><br>"
+				  + "<input type='hidden' name='status' value='"+ 1 +"'>";
 				$("#commentArea").html(value);
 				
 				$("input[type=radio][name=start-half]").attr('name', 'halfStatus');
@@ -424,7 +454,14 @@
         	}
         	
         }
-
+        
+        function tempSave(){
+        	
+			let value = "";
+			value += "<input type='hidden' name='status' value='"+ 2 +"'>";
+			$("#commentArea").html(value);
+			$("#contentArea").submit();
+        }
     </script>
 
 

@@ -24,7 +24,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <style>
   /* 전체 wrapper */
-  .wrapper {width: 1200px;margin: 0 auto;}
+  .wrapper {width: 1200px;margin: 0 auto; position: absolute; top: 120px;}
   body {font-family: Arial, sans-serif;	margin: 0; padding: 0;}
   
   /* content */
@@ -94,13 +94,12 @@
 	   
 	   <jsp:include page="../organization/orgSidebar.jsp" />
 	  
-	  
 	    <div class="board">
 	    	<h2>조직도</h2>
 			<div class="container">
 	          <form>
 	              <div class="search-container">
-	                  <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#tree-modal">사원 검색</button>
+	                  <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#tree-modal">조직도</button>
 	              </div>
 	          </form>
 	          
@@ -185,9 +184,9 @@
 						<h5 class="modal-title" id="tree-modal-label">
 						
 							<form action="searchForm.org" method="Get" id="searchForm">
-							<input type="hidden" name="cpage" value="1">
-								<input type="text" name="keyword" value="${keyword}" id="search" placeholder="사원 검색"></h5>
-								<button type="submit" class="btn btn-success" >검색</button>
+								<input type="hidden" name="cpage" value="1">
+									<%-- <input type="text" name="keyword" value="${keyword}" id="search" placeholder="사원 검색"></h5>
+									<button type="submit" class="btn btn-success" >검색</button> --%>
 							</form>
 							
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -206,15 +205,7 @@
 								<ul id="browser" class="filetree treeview-famfamfam">
 									<li><span class="folder">이지피지</span>
 										<ul class="empList">
-											<li><span class="file"><div id="result">결과</div></span></li>
-											
-											<c:forEach var="e" items="${list}">
-												<c:if test="${ e.jobCode eq 'J6' }">
-													<li><span class="file">${e.jobName} ${ e.empName }</span></li>
-												</c:if>
-											</c:forEach>
-											<li><span class="file">상무</span></li>
-											
+										
 											<c:forEach var="d" items="${deptList}">
 												<li class="closed">
 													<span class="folder">${d.deptName}</span>
@@ -225,7 +216,7 @@
 																	<span class="file">
 																		${e.jobName} ${ e.empName }
 																		<input type="hidden" name="empNo" value="${e.empNo}">
-																		<button class="btn btn-outline-secondary btn-sm addbtn">+</button>
+																		<!-- <button class="btn btn-outline-secondary btn-sm addbtn">+</button> -->
 																	</span>
 																</li>
 															</c:if>
@@ -239,7 +230,7 @@
 								</ul>
 							</form>
 							
-							<div class="chart2">
+							<!-- <div class="chart2">
 								<form action="">
 									<h5>사원 검색</h5>
 									<div class="searchArea">
@@ -253,11 +244,11 @@
 										</ul>
 									</div>
 								</form>                   
-							</div>
+							</div> -->
 							
 						</div>
 	                    <div class="modal-footer">
-	                    	<button type="button" onclick="copyApp();" class="btn btn-light" data-dismiss="modal">상세조회</button>
+	                    	<!-- <button type="button" onclick="copyApp();" class="btn btn-light" data-dismiss="modal">상세조회</button> -->
 	                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	                    </div>
 	                </div>
@@ -284,7 +275,7 @@
 				});
 			});
 		</script>
-			
+			<!--  
 		<script>
 				// 조직도에서 결재선 직원 요소 추가하는 구문
 				var appE = document.querySelectorAll(".empList .addbtn");
@@ -332,6 +323,7 @@
 		
 				}
 		</script>
+		
 		<script>
 			// 모달 -> 메인
 			function copyApp(){
@@ -357,8 +349,8 @@
         	
         	}
 		</script>	
-			
-		<!-- 사원 검색 -->
+			-->
+		<!-- 사원 검색 
 		<script>
 			$(function(){
 				
@@ -389,7 +381,7 @@
 				
 			})
 		</script> 
-		
+		-->
 		
 </body>
 </html>

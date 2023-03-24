@@ -36,4 +36,7 @@ public interface ScheduleService {
 	// 기본 캘린더 설정
 	int defaultCalUpdate(int calNo);
 	int defaultUpdate(int calNo);
+	
+	// 일정 조회
+	ArrayList<Calendar> scheduleList(int empNo);
 }

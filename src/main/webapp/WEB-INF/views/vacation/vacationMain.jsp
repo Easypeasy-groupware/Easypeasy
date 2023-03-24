@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+	#main{
+        position: absolute; top: 120px;
+    }
     
     .side{
         width: 200px;
@@ -107,7 +110,8 @@
 
 	<jsp:include page="../common/header.jsp"/>
 
-	 
+	<div id="main">
+	
         <div class="side"><jsp:include page="../commute/commuteSidebar.jsp"/></div>
         <div class="allContent">
             <div class="title"><b>휴가내역</b><hr></div>
@@ -162,7 +166,7 @@
 
             <h3 class="smallTitle">휴가신청내역</h3><br>
 
-            <button class="button">휴가신청</button><br><br>
+            <a href="enrollForm.ap?formCode=3"><button class="button">휴가신청</button></a><br><br>
 
             <table class="table2">
                 <tr>
@@ -212,7 +216,7 @@
 
         </div>
    
-
+    </div>
 
 </body>
 </html>

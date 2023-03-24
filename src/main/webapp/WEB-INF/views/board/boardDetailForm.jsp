@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <style>
 	/* 전체 wrapper */
-    .wrapper { width: 1200px; margin: 0 auto;}
+    .wrapper { width: 1200px; margin: 0 auto; position: absolute; top: 120px}
     body {font-family: Arial, sans-serif; margin: 0; padding: 0;}
 
     /* 게시판 스타일 */
@@ -24,7 +24,6 @@
 </style>
 </head>
 <body>
-	
 	<jsp:include page="../common/header.jsp" />
 	
 	<div class="wrapper">
@@ -84,7 +83,7 @@
                                   </c:when>
                                   <c:otherwise>
                                       <c:forEach var="a" items="${ attachmentList }">
-                                           <a href="${ a.changeName }" download="${ a.originName }">${ a.originName }</a><br>
+                                           <a href="${a.changeName}" download="${a.originName}">${a.originName}</a><br>
                                        </c:forEach>
                                    </c:otherwise>
                              </c:choose>
@@ -125,6 +124,26 @@
         		selectReplyList();
         	})
         	
+        	/*  
+        	function deleteReply(){ // 댓글 삭제용 ajax
+        		$.ajax({
+        			uri:"rdelete.bo",
+        			data:{no:${b.boardNo}},
+        			success:function(result){
+        				
+        				$("#content").val("");
+        				deleteReply();
+        				
+        			}, error:function(){
+    					console.log("댓글 삭제 ajax 통신 실패");
+    				}
+        			
+        				
+        		})
+        		
+        	}
+        	*/
+        	
         	function addReply(){ // 댓글 작성용 ajax
         		
         		if($("#content").val().trim().length > 0){ 
@@ -134,7 +153,7 @@
         				data:{
         					replyContent:$("#content").val(),
         					replyWriter:'${loginUser.empNo}',
-        					refBoardNo:${b.boardNo}
+        					boardNo:'${b.boardNo}'
         				},success:function(result){
         					if(result == "success"){
         						$("#content").val("");
@@ -165,6 +184,7 @@
         							+	"<td>" + list[i].replyWriter + "</td>"
         							+	"<td>" + list[i].replyContent + "</td>"
         							+	"<td>" + list[i].createDate + "</td>"
+        							+   "<td>" + "<button>"+ "삭제" + "</button>"+"</td>"
         							+"</tr>";
         				}
         				
@@ -180,6 +200,7 @@
         </div>
 	</div>
 	
+		
 	
 </body>
 </html>

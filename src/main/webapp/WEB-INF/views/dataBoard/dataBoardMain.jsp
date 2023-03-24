@@ -11,6 +11,10 @@
     div{
         box-sizing: border-box;
     }
+
+	#main{  
+        position: absolute; top: 120px;
+    }
     
     #content{
         width: 1000px;
@@ -80,96 +84,98 @@
 
 	<jsp:include page="../common/header.jsp"/>
 
-    <jsp:include page="sidebar.jsp"/>
-    
-        <div id="content">
-            <div id="title">
-                <span>
-                    <h5>전사 자료실</h5>
-                </span>
-                <form action="search.db" method="Get">
-                <input type="hidden" name="cpage" value="1">
-                    <div style="position: inherit;" class="input-group mb-3 ">
-                        <input type="text" name="keyword" value="${ keyword }" style="position: inherit;" class="form-control" placeholder="검색어를 입력해주세요" required>
-                        <div class="input-group-append">
-                            <button type="submit" style="position: inherit; z-index: -1;" class="btn btn-secondary">검색</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <br>
-            <!-- 경영지원팀만 글작성 할 수 있도록 -->
-	        <c:if test="${ loginUser.deptCode eq 'D2' }">
-	        	<a class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white; margin-left: 920px; margin-bottom: -15px;" href="enrollForm.db">글쓰기</a>
-	        </c:if>
-	        <br><br>
-	        <table class="table table-hover table-sm" id="dbList">
-	            <thead>
-	                <tr>
-	                    <th>번호</th>
-	                    <th>제목</th>
-	                    <th>등록일</th>
-	                    <th>조회수</th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	            	<c:forEach var="db" items="${ list }">
-		                 <tr>
-		                     <td class="dbno">${ db.dbNo }</td>
-		                     <td>${ db.dbTitle }</td>
-		                     <td>${ db.createDate }</td>
-		                     <td>${ db.count }</td>
-		                 </tr>
-	             	</c:forEach>
-	            </tbody>
-	        </table>
-            <br>
-            
-            <script>
-			$(function(){
-				$("#dbList>tbody>tr").click(function(){
-					
-					location.href = 'detail.db?no=' + $(this).children(".dbno").text();
+    <div id="main">
+
+		<jsp:include page="sidebar.jsp"/>
+		
+			<div id="content">
+				<div id="title">
+					<span>
+						<h5>전사 자료실</h5>
+					</span>
+					<form action="search.db" method="Get">
+					<input type="hidden" name="cpage" value="1">
+						<div style="position: inherit;" class="input-group mb-3 ">
+							<input type="text" name="keyword" value="${ keyword }" style="position: inherit;" class="form-control" placeholder="검색어를 입력해주세요" required>
+							<div class="input-group-append">
+								<button type="submit" style="position: inherit; z-index: -1;" class="btn btn-secondary">검색</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<br>
+				<!-- 경영지원팀만 글작성 할 수 있도록 -->
+				<c:if test="${ loginUser.deptCode eq 'D2' }">
+					<a class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white; margin-left: 920px; margin-bottom: -15px;" href="enrollForm.db">글쓰기</a>
+				</c:if>
+				<br><br>
+				<table class="table table-hover table-sm" id="dbList">
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>제목</th>
+							<th>등록일</th>
+							<th>조회수</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="db" items="${ list }">
+							<tr>
+								<td class="dbno">${ db.dbNo }</td>
+								<td>${ db.dbTitle }</td>
+								<td>${ db.createDate }</td>
+								<td>${ db.count }</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				<br>
+				
+				<script>
+				$(function(){
+					$("#dbList>tbody>tr").click(function(){
+						
+						location.href = 'detail.db?no=' + $(this).children(".dbno").text();
+					})
 				})
-			})
-			</script>
-         
-         
-         
-            <!-- 페이징 처리 -->
-             <div id="pagingArea" align="center">
-                <ul id="paging">
-                    <c:choose>
-	                    <c:when test="${ empty keyword }">
-	                    	<li><a href="list.db?cpage=${ pi.currentPage-1 }">&lt;</a></li>
-	                  	</c:when>
-	                  	<c:otherwise>
-	                    	<li><a href="search.db?cpage=${ pi.currentPage-1 }&keyword="${ keyword }">&lt;</a></li>
-	                  	</c:otherwise>
-                  	</c:choose>
-                        
-                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                        <c:choose>
-                        	<c:when test="${ empty keyword }">
-                        		<li><a href="list.db?cpage=${ p }">${ p }</a></li>
-                        	</c:when>
-                        	<c:otherwise>
-	                    		<li><a href="search.db?cpage=${ p }&keyword="${ keyword }">${ p }</a></li>
-	                  		</c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                        
-                    <c:choose>
-	                    <c:when test="${ empty keyword }">
-	                    	<li><a href="list.db?cpage=${ pi.currentPage+1 }">&gt;</a></li>
-	                  	</c:when>
-	                  	<c:otherwise>
-	                    	<li><a href="search.db?cpage=${ pi.currentPage+1 }&keyword="${ keyword }">&gt;</a></li>
-	                  	</c:otherwise>
-                  	</c:choose>
-                </ul>
-             </div>
-           
-        </div>
+				</script>
+			
+			
+			
+				<!-- 페이징 처리 -->
+				<div id="pagingArea" align="center">
+					<ul id="paging">
+						<c:choose>
+							<c:when test="${ empty keyword }">
+								<li><a href="list.db?cpage=${ pi.currentPage-1 }">&lt;</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="search.db?cpage=${ pi.currentPage-1 }&keyword="${ keyword }">&lt;</a></li>
+							</c:otherwise>
+						</c:choose>
+							
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+							<c:choose>
+								<c:when test="${ empty keyword }">
+									<li><a href="list.db?cpage=${ p }">${ p }</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="search.db?cpage=${ p }&keyword="${ keyword }">${ p }</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+							
+						<c:choose>
+							<c:when test="${ empty keyword }">
+								<li><a href="list.db?cpage=${ pi.currentPage+1 }">&gt;</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="search.db?cpage=${ pi.currentPage+1 }&keyword="${ keyword }">&gt;</a></li>
+							</c:otherwise>
+						</c:choose>
+					</ul>
+				</div>
+			</div>
+		</div>
 </body>
 </html>

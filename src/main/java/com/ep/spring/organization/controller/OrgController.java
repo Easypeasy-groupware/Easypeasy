@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.common.template.Pagination;
 import com.ep.spring.login.model.vo.Department;
@@ -82,8 +83,9 @@ public class OrgController {
 		
 		if(result > 0) {
 			int calResult = scService.insertDefaultCalendar();
-			session.setAttribute("alertMsg", "성공적으로 등록되었습니다.");
-			return "redirect:/";
+			AlertMsg msg = new AlertMsg("사원 등록", "성공적으로 사원정보가 등록되었습니다.");
+			session.setAttribute("successMsg", msg);
+			return "organization/orgMainAdmin";
 		}else {
 			model.addAttribute("errorMsg", "실패");
 			return "common/errorPage";
@@ -116,10 +118,11 @@ public class OrgController {
 	public String updateMember(Employee e, HttpSession session, Model model) {
 		
 		int result = oService.updateMember(e);
-		
+		//System.out.println(result);
 		if(result>0) {
-			session.setAttribute("alertMsg", "성공적으로 사원정보가 수정되었습니다.");
-			return "redirect:/";
+			AlertMsg msg = new AlertMsg("사원 수정", "성공적으로 사원정보가 수정되었습니다.");
+			session.setAttribute("successMsg", msg);
+			return "organization/orgMainAdmin";
 		}else {
 			model.addAttribute("errorMsg", "사원정보 수정 실패");
 			return "common/errorPage";	
@@ -131,8 +134,9 @@ public class OrgController {
 		int result = oService.deleteMember();
 		
 		if(result>0) {
-			session.setAttribute("alertMsg", "성공적으로 사원정보가 삭제되었습니다.");
-			return "redirect:/";
+			AlertMsg msg = new AlertMsg("사원 삭제", "성공적으로 사원정보가 삭제되었습니다.");
+			session.setAttribute("successMsg", msg);
+			return "organization/orgMainAdmin";
 		}else {
 			model.addAttribute("errorMsg", "사원정보 삭제 실패");
 			return "common/errorPage";	
@@ -173,7 +177,8 @@ public class OrgController {
 		int result = oService.insertDept(d);
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "성공적으로 등록되었습니다.");
+			AlertMsg msg = new AlertMsg("부서 등록", "성공적으로 부서 등록되었습니다.");
+			session.setAttribute("successMsg", msg);
 			return "redirect:settings.org";
 		}else {
 			model.addAttribute("errorMsg", "실패");
@@ -187,7 +192,8 @@ public class OrgController {
 		int result = oService.updateDept(d);
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "성공적으로 수정되었습니다.");
+			AlertMsg msg = new AlertMsg("부서 수정", "성공적으로 부서정보가 수정되었습니다.");
+			session.setAttribute("successMsg", msg);
 			return "organization/orgSettings";
 		}else {
 			model.addAttribute("errorMsg", "실패");
@@ -201,10 +207,11 @@ public class OrgController {
 		
 		int result = oService.deleteDept(d);
 		
-		System.out.println(result);
+		//System.out.println(result);
 		
 		if(result>0) {
-			session.setAttribute("alertMsg", "성공적으로 부서정보가 삭제되었습니다.");
+			AlertMsg msg = new AlertMsg("부서 삭제", "성공적으로 부서정보가 삭제되었습니다.");
+			session.setAttribute("successMsg", msg);
 			return "redirect:/";
 		}else {
 			model.addAttribute("errorMsg", "부서정보 삭제 실패");
@@ -219,7 +226,8 @@ public class OrgController {
 		int result = oService.insertJob(j);
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "성공적으로 직위등록되었습니다.");
+			AlertMsg msg = new AlertMsg("직위 등록", "성공적으로 직위정보가 등록되었습니다.");
+			session.setAttribute("successMsg", msg);
 			return "redirect:settings.org";
 		}else {
 			model.addAttribute("errorMsg", "실패");
@@ -233,7 +241,8 @@ public class OrgController {
 		int result = oService.updateJob(j);
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "성공적으로 직위수정되었습니다.");
+			AlertMsg msg = new AlertMsg("직위 수정", "성공적으로 직위정보가 수정되었습니다.");
+			session.setAttribute("successMsg", msg);
 			return "redirect:settings.org";
 		}else {
 			model.addAttribute("errorMsg", "실패");
@@ -247,7 +256,8 @@ public class OrgController {
 		int result = oService.deleteJob(j);
 		
 		if(result>0) {
-			session.setAttribute("alertMsg", "성공적으로 직위정보가 삭제되었습니다.");
+			AlertMsg msg = new AlertMsg("직위 삭제", "성공적으로 직위정보가 삭제되었습니다.");
+			session.setAttribute("successMsg", msg);
 			return "redirect:/";
 		}else {
 			model.addAttribute("errorMsg", "직위정보 삭제 실패");

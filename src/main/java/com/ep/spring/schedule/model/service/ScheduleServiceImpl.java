@@ -74,4 +74,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public int defaultUpdate(int calNo) {
 		return scDao.defaultUpdate(sqlSession, calNo);
 	}
+
+	@Override
+	public ArrayList<Calendar> scheduleList(int empNo) {
+		return scDao.scheduleList(sqlSession, empNo);
+	}
 }

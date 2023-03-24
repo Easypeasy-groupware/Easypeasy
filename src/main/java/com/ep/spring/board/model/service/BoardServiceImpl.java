@@ -50,8 +50,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public Board selectBoard(int no) {
-		return bDao.selectBoard(sqlSession, no);
+	public Board selectBoard(Board b) {
+		return bDao.selectBoard(sqlSession, b);
 	}
 	
 	@Override
@@ -92,6 +92,12 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+	public int deleteReply() {
+		return bDao.deleteReply(sqlSession);
+	}
+	
+	
+	@Override
 	public ArrayList<Board> selectTopList() {
 		return null;
 	}
@@ -122,6 +128,10 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	
+
+	
+	
+
 	
 
 	
