@@ -1,5 +1,6 @@
 package com.ep.spring.board.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,12 +110,17 @@ public class BoardController {
 	
 	
 	@RequestMapping("delete.bo")
-	public String deleteBoard(int no, HttpSession session, Model model) {
+	public String deleteBoard(@RequestParam(value="no")int boardNo, HttpSession session, Model model, ArrayList<String> filePath) {
 		
-		int result = bService.deleteBoard(no);
+		int result = bService.deleteBoard(boardNo);
 		
 		if(result > 0) {
 			
+				for(int i= 0; i < filePath.size(); i++) {
+					if(!filePath.get(i).equals("")) {
+					new File(session.getServletContext().getRealPath(filePath.get(i))).delete();
+					}
+				}
 			session.setAttribute("alertMsg", "성공적으로 게시글이 삭제되었습니다."); 
 			return "redirect:list.bo";
 		}else {
@@ -125,19 +131,48 @@ public class BoardController {
 	}
 	
 	@RequestMapping("updateForm.bo")
-	 public String updateForm(int no, Model model) {
+	 public String updateForm() {
 	   return "board/boardUpdateForm"; 
 	 }
 	 
 	
 	@RequestMapping("update.bo")
-	public String updateBoard(Board b, HttpSession session, Model model) {
+	public String updateBoard(Board b, HttpSession session, Model model, List<MultipartFile> originNames) {
 		
-		int result = bService.updateBoard(b);
+		// 첨부파일
+		ArrayList<Attachment> atList = new ArrayList<>();
+		//System.out.println(atList);
+		if(originNames.size() > 1) {
+			
+			// 기존의 첨부파일이 있었을 경우 => 기존의 파일 지우기 
+			ArrayList<Attachment> aList = bService.selectAttList(b);
+			
+			if(aList.size() > 0) {
+				for(Attachment t : aList){
+					new File(session.getServletContext().getRealPath(t.getFilePath())).delete();
+				}
+			}
+			
+			String path = "resources/board_attachFiles/";
+					
+			for (MultipartFile mf : originNames) {
+					Attachment attach = new Attachment();
+					String originFileName = mf.getOriginalFilename();
+					String saveFilePath = FileUpload.saveFile(mf, session, path);
+					String[] changeNameArr = saveFilePath.split("/");
+					String changeName = changeNameArr[2];
+					attach.setOriginName(originFileName);
+					attach.setChangeName(changeName);
+					attach.setFilePath(saveFilePath);
+					atList.add(attach);
+				}
+		}
+		
+		int result = bService.updateBoard(b, atList);
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다."); 
-			return "redirect:boardUpdateForm";
+			return "redirect:list.bo";
 		}else {
 			model.addAttribute("errorMsg", "게시글 수정 실패");
 			return "common/errorPage";
@@ -194,7 +229,7 @@ public class BoardController {
 		
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "성공적으로 등록되었습니다.");
+			session.setAttribute("alertMsg", "성공적으로 게시판이 등록되었습니다.");
 			return "redirect:boardUpdateSettings";
 		}else {
 			model.addAttribute("errorMsg", "게시판등록실패");
@@ -202,6 +237,24 @@ public class BoardController {
 		}
 		
 	}
+	
+	@RequestMapping("updateSettingForm.bo")
+	public String updateSettings() {
+		return "board/boardUpdateSettings";
+	}
+	
+	@RequestMapping("updateSettings.bo")
+	public String updateCate(BoardCate bc, HttpSession session, Model model) {
+		int result = bService.updateCate(bc);
+		
+		if(result > 0) {
+			return "board/boardUpdateSettings";
+		}else {
+			return "common/errorPage";
+		}
+		
+	}
+	
 	
 	
 }

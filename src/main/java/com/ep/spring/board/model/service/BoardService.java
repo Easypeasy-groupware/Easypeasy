@@ -27,7 +27,8 @@ public interface BoardService {
 	int deleteBoard(int boardNo);
 		
 	// 5. 게시글 수정용 서비스
-	int updateBoard(Board b);
+	int updateBoard(Board b, ArrayList<Attachment> atList);
+	ArrayList<Attachment> selectAttList(Board b);
 		
 	// 6. 댓글 리스트 조회용 서비스 (ajax)
 	ArrayList<BoardReply> selectReplyList(int boardNo);
@@ -41,9 +42,9 @@ public interface BoardService {
 	// 9. 게시판 설정 서비스
 	int selectSettings(BoardCate bc);
 	int insertCate(BoardCate bc);
+	int updateCate(BoardCate bc);
+	int deleteSettings(BoardCate bc);
 	
-	// 10. 게시판 설정 수정 서비스
-	int updateSettings(BoardCate bc);
-	
-	
+	//10. 메뉴바
+	ArrayList<BoardCate> selectDetailSettings(BoardCate bc);
 }
