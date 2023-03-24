@@ -216,23 +216,19 @@ public class MailController {
 	// 메일 읽음/안읽음 처리
 	@ResponseBody
 	@RequestMapping(value="updateReadUnread.ma")
-	public void updateReadMail(@RequestParam String recMailNoListData, HttpSession session) throws IOException {
+	public Object updateReadMail(@RequestParam String recMailNoListData, String recCheck, HttpSession session) throws IOException {
 		String[] recMailNoList = recMailNoListData.split(",");
-//		for(int i=0; i<recMailNoList.length; i++) {
-//			System.out.println(recMailNoList[i]);
-//		}
-		String recCheck = "Y";
 		int result = mService.updateReadUnreadMail(recMailNoList, recCheck);
 		
 		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
 		ArrayList<Mail> selectMailList = mService.selectReceiveMailList(email);
-//		if(result > 0) {
-//			Map<String, Object> mailList = new HashMap<String, Object>();
-//			mailList.put("mailList", selectMailList);
-//			return mailList;
-//		}else {
-//			return null;
-//		}
+		if(result > 0) {
+			Map<String, Object> mailList = new HashMap<String, Object>();
+			mailList.put("mailList", selectMailList);
+			return mailList;
+		}else {
+			return null;
+		}
 	}
 	
 	@RequestMapping("delete.ma")
