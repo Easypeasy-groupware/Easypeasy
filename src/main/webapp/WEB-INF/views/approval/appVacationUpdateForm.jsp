@@ -86,6 +86,26 @@
 </head>
 <body>
     <jsp:include page="../common/header.jsp"/>
+    <jsp:include page="appMenubar.jsp" />
+    <div class="form-outer">
+        <div class="left-outer">
+        	<form id="contentArea" action="update.ap" method="POST" enctype="multipart/form-data">
+            <div class="left-form1">
+                <p>
+	                <b style="font-size:30px;">휴가신청서</b>
+	                <input type="hidden" name="formCode" value="3">
+	                <input type="hidden" name="formName" value="휴가신청서">
+	                <input type="hidden" name="appNo" value = "${ap.appNo}">
+	                	                
+                </p>
+            </div>
+	            <div class="left-form2">
+	                <a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
+		            <span style="padding:20px; color:rgb(71, 71, 71);" onclick="tempSave();">임시저장</span>|
+	                <a href="" style="padding:20px; color:rgb(71, 71, 71);">취소</a>|
+	                <a href="" style="padding:20px; color:rgb(71, 71, 71);"  data-toggle="modal" data-target="#app-line">결재선지정</a>
+	                <br><br><br>
+	            </div>
 
 	<div id="main">
 
@@ -687,7 +707,8 @@
         		}
 			
 				let value = "";
-				value += "<input type='hidden' name='writerComment' value='"+ $("#writerComment").val() +"'>";
+				value += "<input type='hidden' name='writerComment' value='"+ $("#writerComment").val() +"'><br>"
+				  + "<input type='hidden' name='status' value='"+ 1 +"'>";
 				$("#commentArea").html(value);
 				
 				$("input[type=radio][name=start-half]").attr('name', 'halfStatus');
@@ -702,6 +723,36 @@
         	}
         	
         }
+        
+        function tempSave(){
+        	
+			let value = "";
+			value += "<input type='hidden' name='status' value='"+ 2 +"'>";
+			$("#commentArea").html(value);
+			
+    		// 결재 / 참조자 목록들 배열에 담기
+    		const recEmpNo = [];
+    		const refList = [];
+    		
+    		const appBody = $(".app-body input");
+    		const refBody = $(".rep-body input");
+    		
+    		
+    		for(let i = 0; i < appBody.length; i++){
+    			console.log(appBody[i]);
+    			appBody[i].setAttribute('name', 'alList['+ i +'].recEmpNo');
+    	
+    		}
+
+    		for(let j = 0; j < refBody.length; j++){
+    			refBody[j].setAttribute('name', 'refList[' + j + '].recEmpNo');
+    	
+    		}
+
+			
+			
+			$("#contentArea").submit();
+        }        
        
                 
     </script>         
