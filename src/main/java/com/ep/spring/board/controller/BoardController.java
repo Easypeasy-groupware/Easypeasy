@@ -73,7 +73,6 @@ public class BoardController {
 		
 		int result = bService.insertBoard(b, atList);
 		
-		
 		if(result > 0) {
 			mv.addObject("successMsg", "게시글 등록 성공");
 		}else {
@@ -90,13 +89,13 @@ public class BoardController {
 		
 		int result = bService.increaseCount(no);
 		b.setBoardNo(no);
-		System.out.println(result);
+		//System.out.println(result);
 		
 		if(result > 0) {
 			Board bb = bService.selectBoard(b);
 			ArrayList<Attachment> attachmentList = bService.selectAttachmentList(b);
 			
-			System.out.println(attachmentList);
+			//System.out.println(attachmentList);
 			
 			mv.addObject("b", bb).addObject("attachmentList", attachmentList).setViewName("board/boardDetailForm");
 			
@@ -116,7 +115,7 @@ public class BoardController {
 			
 				for(int i= 0; i < filePath.size(); i++) {
 					if(!filePath.get(i).equals("")) {
-					new File(session.getServletContext().getRealPath(filePath.get(i))).delete();
+						new File(session.getServletContext().getRealPath(filePath.get(i))).delete();
 					}
 				}
 			session.setAttribute("alertMsg", "성공적으로 게시글이 삭제되었습니다."); 
@@ -145,28 +144,26 @@ public class BoardController {
 			// 기존의 첨부파일이 있었을 경우 => 기존의 파일 지우기 
 			ArrayList<Attachment> aList = bService.selectAttList(b);
 			
-			if(aList.size() > 0) {
-				for(Attachment t : aList){
-					new File(session.getServletContext().getRealPath(t.getFilePath())).delete();
-				}
+			if(originNames.size() > 1) {
+				String path = "resources/board_attachFiles/";
+				
+				for (MultipartFile mf : originNames) {
+						Attachment attach = new Attachment();
+						String originFileName = mf.getOriginalFilename();
+						String saveFilePath = FileUpload.saveFile(mf, session, path);
+						String[] changeNameArr = saveFilePath.split("/");
+						String changeName = changeNameArr[2];
+						attach.setOriginName(originFileName);
+						attach.setChangeName(changeName);
+						attach.setFilePath(saveFilePath);
+						atList.add(attach);
+					}
 			}
 			
-			String path = "resources/board_attachFiles/";
-					
-			for (MultipartFile mf : originNames) {
-					Attachment attach = new Attachment();
-					String originFileName = mf.getOriginalFilename();
-					String saveFilePath = FileUpload.saveFile(mf, session, path);
-					String[] changeNameArr = saveFilePath.split("/");
-					String changeName = changeNameArr[2];
-					attach.setOriginName(originFileName);
-					attach.setChangeName(changeName);
-					attach.setFilePath(saveFilePath);
-					atList.add(attach);
-				}
 		}
 		
 		int result = bService.updateBoard(b, atList);
+		System.out.println(result);
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다."); 
@@ -198,6 +195,13 @@ public class BoardController {
 			
 	}
 	
+	@ResponseBody
+	@RequestMapping("rdelete.bo")
+	public String deleteReply() {
+		int result = bService.deleteReply();
+		
+		return result > 0 ? "success" : "fail";
+	}
 	
 	// Settings
 	@RequestMapping("adminSettings.bo")

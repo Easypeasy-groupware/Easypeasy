@@ -74,12 +74,12 @@
 		            </tr>
 	                  <td colspan="2" id="attach_area">
 	                         <c:choose>
-                                  <c:when test="${ empty attachmentList }">
+                                  <c:when test="${ empty atList }">
                                           <div>첨부파일이 없습니다.</div>
                                   </c:when>
                                   <c:otherwise>
-                                      <c:forEach var="a" items="${ attachmentList }">
-                                           <a href="${ a.changeName }" download="${ a.originName }">${ a.originName }</a><br>
+                                      <c:forEach var="a" items="${ atList }">
+                                           <a href="${ a.changeName }" download="">${ a.originName }</a><br>
                                        </c:forEach>
                                    </c:otherwise>
                              </c:choose>
@@ -90,7 +90,7 @@
               <label for="content">내용</label>
                   <textarea name="boardContent" id="boardContent" cols="30" rows="10" value="${b.boardContent}" required></textarea><br>
               <label for="boardPin">공지등록</label>
-                  <input type="checkbox" id="N" name="boardPin" /><br>
+                  <input type="checkbox" value="N" name="boardPin" /><br>
                
                     <br><br>
               <div align="center">

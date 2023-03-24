@@ -92,6 +92,12 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+	public int deleteReply() {
+		return bDao.deleteReply(sqlSession);
+	}
+	
+	
+	@Override
 	public ArrayList<Board> selectTopList() {
 		return null;
 	}
@@ -120,6 +126,8 @@ public class BoardServiceImpl implements BoardService{
 	public int deleteSettings(BoardCate bc) {
 		return 0;
 	}
+
+	
 
 	
 	

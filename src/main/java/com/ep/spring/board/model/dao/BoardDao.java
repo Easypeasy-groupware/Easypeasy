@@ -81,6 +81,10 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.insertReply", r);
 	}
 	
+	public int deleteReply(SqlSessionTemplate sqlSession) {
+		return sqlSession.delete("boardMapper.deleteReply");
+	}
+	
 	public int selectSettings(SqlSessionTemplate sqlSession, BoardCate bc){
 		return sqlSession.selectOne("boardMapper.selectSettings", bc);
 	}

@@ -94,7 +94,6 @@
 	   
 	   <jsp:include page="../organization/orgSidebar.jsp" />
 	  
-	  
 	    <div class="board">
 	    	<h2>조직도</h2>
 			<div class="container">
@@ -184,11 +183,11 @@
 					<div class="modal-header">
 						<h5 class="modal-title" id="tree-modal-label">
 						
-							<%-- <form action="searchForm.org" method="Get" id="searchForm">
+							<form action="searchForm.org" method="Get" id="searchForm">
 								<input type="hidden" name="cpage" value="1">
-									<input type="text" name="keyword" value="${keyword}" id="search" placeholder="사원 검색"></h5>
-									<button type="submit" class="btn btn-success" >검색</button>
-							</form> --%>
+									<%-- <input type="text" name="keyword" value="${keyword}" id="search" placeholder="사원 검색"></h5>
+									<button type="submit" class="btn btn-success" >검색</button> --%>
+							</form>
 							
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -276,7 +275,7 @@
 				});
 			});
 		</script>
-			
+			<!--  
 		<script>
 				// 조직도에서 결재선 직원 요소 추가하는 구문
 				var appE = document.querySelectorAll(".empList .addbtn");
@@ -324,6 +323,7 @@
 		
 				}
 		</script>
+		
 		<script>
 			// 모달 -> 메인
 			function copyApp(){
@@ -349,8 +349,8 @@
         	
         	}
 		</script>	
-			
-		<!-- 사원 검색 -->
+			-->
+		<!-- 사원 검색 
 		<script>
 			$(function(){
 				
@@ -381,7 +381,7 @@
 				
 			})
 		</script> 
-		
+		-->
 		
 </body>
 </html>

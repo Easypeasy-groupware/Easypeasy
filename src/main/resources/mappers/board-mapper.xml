@@ -235,6 +235,12 @@
 		  )
 	</insert>
 	
+	<delete id="deleteReply">
+		delete
+		  from board_reply
+		 where status = 'Y'
+	</delete>
+	
 	<select id="selectSettings" resultMap="boardcateResult">
 		select
 			   board_cno
