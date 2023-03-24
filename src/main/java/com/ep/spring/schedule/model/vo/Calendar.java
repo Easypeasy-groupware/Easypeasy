@@ -1,5 +1,7 @@
 package com.ep.spring.schedule.model.vo;
 
+import java.util.ArrayList;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,4 +20,5 @@ public class Calendar {
 	private String createDate;
 	private String calColor;
 	
+	private ArrayList<Schedule> scheduleList;
 }

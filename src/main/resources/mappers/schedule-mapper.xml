@@ -10,6 +10,33 @@
 		<result column="create_date" property="createDate" />
 		<result column="cal_color" property="calColor" />
 	</resultMap>
+	
+	<resultMap id="calendarListResult" type="Calendar">
+		<id column="cal_no" property="calNo" />
+		<result column="emp_no" property="empNo" />
+		<result column="cal_title" property="calTitle" />
+		<result column="cal_default" property="calDefault" />
+		<result column="create_date" property="createDate" />
+		<result column="cal_color" property="calColor" />
+		<collection property="scheduleList" resultMap="scheduleResult" />
+	</resultMap>
+	
+	<resultMap type="scheduleResult" id="Schedule">
+		<id column="sc_no" property="scNo" />
+		<result column="sc_writer" property="scWriter" />
+		<result column="cal_no" property="calNo" />
+		<result column="sc_title" property="scTitle" />
+		<result column="sc_place" property="scPlace" />
+		<result column="sc_content" property="scContent" />
+		<result column="sc_company" property="scCompany" />
+		<result column="start_date" property="startDate" />
+		<result column="end_date" property="endDate" />
+		<result column="start_time" property="startTime" />
+		<result column="end_time" property="endTime" />
+		<result column="sc_allday" property="allDay" />
+		<result column="sc_status" property="status" />
+	</resultMap>
+	
 
 	<insert id="insertDefaultCalendar">
 		insert

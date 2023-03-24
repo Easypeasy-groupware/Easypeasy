@@ -202,6 +202,16 @@ public class ScheduleController {
 		
 	}
 	
+	@RequestMapping("selectSchedule.sc")
+	public String selectSchedule(int no) {
+		
+		System.out.println(no);
+		
+		//ArrayList<Schedule> scList = scService.selectSchedule();
+
+		return "";
+	}
+	
 	@ResponseBody
 	@RequestMapping(value="defaultUpdate.cal")
 	public int defaultCalUpdate(int no, int dno, HttpSession session) {
@@ -217,5 +227,5 @@ public class ScheduleController {
 		return result;
 		
 	}
-	
+
 }

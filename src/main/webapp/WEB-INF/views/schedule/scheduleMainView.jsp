@@ -311,13 +311,49 @@
 
     
     <script>
-    	
+    
     	$(".close").click(function(){
     		$("#myModal").modal("hide");
     	})
     	$("#close").click(function(){
     		$("#myModal").modal("hide");
     	})
+    	
+    	
+		/*
+    	$(document).on("click", ".inputCheck", function(){
+
+    		var checkArr = [];
+        	$(".inputCheck").each(function() {
+    			if($(this).is(":checked") == true){
+    				var check = $(this).next().next().val();
+    				checkArr.push(check);
+    		    }
+    		});
+    	
+			$.ajax({
+    			url:"selectSchedule.sc",
+    			type:"post",
+    			data:{
+    				checkArr:checkArr
+    			},
+    			success:function(result){
+    				
+    				if(result > 0){
+    					
+    					location.reload();
+    					
+    				}else{
+    					
+    				}
+    				
+    			},error:function(){
+    				console.log("기본캘린더 변경 ajax 통신 실패");
+    			}
+    		})
+    		
+		});
+    	*/
     	
         // FullCalendar
         document.addEventListener('DOMContentLoaded', function() {

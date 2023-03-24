@@ -122,14 +122,16 @@
         		<c:choose>
            			<c:when test="${ c.calDefault eq 'Y' }">
            				<div class="custom-control custom-checkbox" style="display: inline-block; width: 130px; text-align: left;">
-				            <input type="checkbox" class="custom-control-input" name="scCompany" id="${ c.calNo }">
-				            <label class="custom-control-label" for="${ c.calNo }">(기본) ${ c.calTitle }</label>
+				            <input type="checkbox" class="custom-control-input inputCheck" name="scCompany" id="defaultY">
+				            <label class="custom-control-label" for="defaultY">(기본) ${ c.calTitle }</label>
+		        			<input type="hidden" id="defaultCheckNo" value="${ c.calNo }">
 		        		</div>
            			</c:when>
            			<c:otherwise>
            				<div class="custom-control custom-checkbox" style="display: inline-block; width: 130px; text-align: left;">
-				            <input type="checkbox" class="custom-control-input" name="scCompany" id="${ c.calNo }">
+				            <input type="checkbox" class="custom-control-input inputCheck" name="scCompany" id="${ c.calNo }">
 				            <label class="custom-control-label" for="${ c.calNo }">${ c.calTitle }</label>
+				            <input type="hidden" class="calNo" value="${ c.calNo }">
 		        		</div>
            			</c:otherwise>
            		</c:choose>
@@ -173,8 +175,9 @@
         </script>
         
         <div class="custom-control custom-checkbox checkbox-company" style="display: inline-block; margin-left: -23px;">
-            <input type="checkbox" class="custom-control-input" name="scCompany" id="side-company">
+            <input type="checkbox" class="custom-control-input inputCheck" name="scCompany" id="side-company">
             <label class="custom-control-label" for="side-company">전사 일정</label>
+            <input type="hidden" class="calNo" value="0">
         </div>
 
         <br><br>
@@ -187,6 +190,9 @@
     </div>
     
     <script>
+    
+    	$("#defaultY").prop("checked", true);
+    
     	$(function(){
     		
     		

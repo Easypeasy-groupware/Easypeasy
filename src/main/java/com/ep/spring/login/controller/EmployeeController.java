@@ -87,9 +87,6 @@ public class EmployeeController {
 			session.setAttribute("pList", userGroup); //로그인한 사원의 주소록 그룹리스트 세션에 저장
 			session.setAttribute("sList", sharedGroup); //외부 공유주소록 그룹리스트 세션에 저장
 			session.setAttribute("recMailList", recMailList);
-			session.setAttribute("list", list);
-			session.setAttribute("deptList", deptList);
-			session.setAttribute("jList", jList);
 			return "common/main";
 		}else { // 실패
 			session.setAttribute("alertMsg", "로그인에 실패했습니다. 다시 시도 해주세요.");
