@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <style>
-	    #main{position: absolute; top: 120px; left: 330px;}
+        #main{position: absolute; top: 120px;}
 
         .form-outer{ 
             width:1000px;

@@ -9,7 +9,6 @@
     <style>
         #main{position: absolute; top: 120px;}
 
-
         .form-outer{ 
             width:1000px;
             margin:auto;
