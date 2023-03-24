@@ -7,7 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-
+    #main{  
+        position: absolute; top: 120px;
+    }
     .side{
         width: 200px;
         height: 900px;
@@ -28,6 +30,7 @@
         box-sizing: none;
         float: left;
         margin-left:10px;
+        
     }
     .content1{
         width: 490px;
@@ -160,7 +163,8 @@
 	<jsp:include page="../common/header.jsp"/>
 	
 
-	    
+    <div id="main">
+
 
         <div class="side"><jsp:include page="../commute/commuteSidebar.jsp"/></div>
         <div class="allContent">
@@ -479,25 +483,25 @@
                 <table  id="commute">
                     <tr>
                         <td>지각</td>
-                        <td>2회</td>
+                        <td>${ tr }회</td>
                     </tr>
                     <tr>
                         <td>조기퇴근</td>
-                        <td>0회</td>
+                        <td>${ countLe }회</td>
                     </tr>
                     <tr>
                         <td>결근</td>
-                        <td>0회</td>
+                        <td>${ ab }회</td>
                     </tr>
                     <tr>
                         <td>퇴근미체크</td>
-                        <td>3회</td>
+                        <td>${ end }회</td>
                     </tr>
                 </table>
             </div>
             <div class="content4">
                 <div class="name" style="float: left; width: 330px;">휴가현황</div><br>
-                <button class="button" style="float: left; background-color: rgb(214, 223, 204); ">휴가신청</button><br><br><br>
+                <a href="enrollForm.ap?formCode=3"><button class="button" style="float: left; background-color: rgb(214, 223, 204); ">휴가신청</button></a><br><br><br>
                 <table class="vac">
                     <tr>
                         <td>잔여휴가</td>
@@ -533,7 +537,7 @@
             </div>
         </div>
     
-
+    </div>
 
 </body>
 </html>

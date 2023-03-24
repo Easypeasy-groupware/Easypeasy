@@ -232,10 +232,10 @@ public class ApprovalDao {
 		result1 = sqlSession.delete("approvalMapper.deleteApprovalLine", num);
 		
 		for(ApprovalLine a : al) {
-			result2 += sqlSession.insert("approvalMapper.insertApprovalLine", a);
+			result2 += sqlSession.insert("approvalMapper.updateApprovalLine", a);
 		}
 		
-		return result1 * result2;
+		return result1 + result2;
  	}
 	
 	public int updateAttachment(SqlSessionTemplate sqlSession, ArrayList<Attachment> atList) {

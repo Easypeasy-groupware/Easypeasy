@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+	#main{position: absolute; top: 120px; left: 330px;}
     .content-outer{width:1000px; margin-left:200px; padding-top:20px;}
     .content-outer *{box-sizing: border-box;}
     #address-group{font-size:20px; font-weight:600; color:rgb(93, 109, 75);}
@@ -57,266 +58,271 @@
 </head>
 <body>
 	
-	<jsp:include page="addMenubar.jsp"/>
-	
-    <div class="content-outer">
+	<jsp:include page="../common/header.jsp"/>
 
-        <p id="address-group">즐겨찾기</p>
+    <div id="main">
 
-        <div class="search" align="right">
-            <input type="text" id="searchKey" placeholder="이름, 회사, 전화번호">
-            <button id="searchBtn">검색</button>
-        </div>
+		<jsp:include page="addMenubar.jsp"/>
+		
+		<div class="content-outer">
 
-        <div class="addNew">
-        	<form action="insertNewPs.add" method="post" id="simpleAddForm">
-        	<input type="hidden" name="empNo" value="${ loginUser.empNo }">
-	            <input type="text" class="newAdd" placeholder="이름" name="addName">
-	            <input type="text" class="newAdd" placeholder="이메일" name="email">
-	            <input type="text" class="newAdd" placeholder="휴대폰" name="phone">
-	            <button type="button" class="addBtn" id="addBtn1" onclick="sendSimpleAdd();">추가정보</button>
-	            <button type="button" class="addBtn" id="addBtn2" onclick="insertSimpleAdd();">추가</button>
-            </form>
-        </div>
-		<script>
-			function sendSimpleAdd(){ // 간편주소록 상세정보 추가하기
-				let addName = $("input[name=addName]").val();
-				let email = $("input[name=email]").val();
-				let phone = $("input[name=phone]").val();
-				if(!addName && !email && !phone){
-					swal({
-    		            title: "간편주소록 정보추가", 
-    		            text: "입력된 내용이 없습니다!", 
-    		            icon: "error",
-    		            button: "확인",
-    		         });
-				}else{
-					location.href = "sendSimple.add?addName=" + addName + "&email=" + email + "&phone=" + phone ;
+			<p id="address-group">즐겨찾기</p>
+
+			<div class="search" align="right">
+				<input type="text" id="searchKey" placeholder="이름, 회사, 전화번호">
+				<button id="searchBtn">검색</button>
+			</div>
+
+			<div class="addNew">
+				<form action="insertNewPs.add" method="post" id="simpleAddForm">
+				<input type="hidden" name="empNo" value="${ loginUser.empNo }">
+					<input type="text" class="newAdd" placeholder="이름" name="addName">
+					<input type="text" class="newAdd" placeholder="이메일" name="email">
+					<input type="text" class="newAdd" placeholder="휴대폰" name="phone">
+					<button type="button" class="addBtn" id="addBtn1" onclick="sendSimpleAdd();">추가정보</button>
+					<button type="button" class="addBtn" id="addBtn2" onclick="insertSimpleAdd();">추가</button>
+				</form>
+			</div>
+			<script>
+				function sendSimpleAdd(){ // 간편주소록 상세정보 추가하기
+					let addName = $("input[name=addName]").val();
+					let email = $("input[name=email]").val();
+					let phone = $("input[name=phone]").val();
+					if(!addName && !email && !phone){
+						swal({
+							title: "간편주소록 정보추가", 
+							text: "입력된 내용이 없습니다!", 
+							icon: "error",
+							button: "확인",
+						});
+					}else{
+						location.href = "sendSimple.add?addName=" + addName + "&email=" + email + "&phone=" + phone ;
+					}
 				}
-			}
-			
-			function insertSimpleAdd(){ // 간편주소록 insert
-				let addName = $("input[name=addName]").val();
-				let email = $("input[name=email]").val();
-				let phone = $("input[name=phone]").val();
-				if(!addName && !email && !phone){
-					swal({
-    		            title: "간편 주소록 추가", 
-    		            text: "입력된 내용이 아무것도 없습니다!", 
-    		            icon: "error",
-    		            button: "확인",
-    		         });
-				}else{
-					$("#simpleAddForm").submit();
+				
+				function insertSimpleAdd(){ // 간편주소록 insert
+					let addName = $("input[name=addName]").val();
+					let email = $("input[name=email]").val();
+					let phone = $("input[name=phone]").val();
+					if(!addName && !email && !phone){
+						swal({
+							title: "간편 주소록 추가", 
+							text: "입력된 내용이 아무것도 없습니다!", 
+							icon: "error",
+							button: "확인",
+						});
+					}else{
+						$("#simpleAddForm").submit();
+					}
 				}
-			}
-		</script>
+			</script>
 
-        <br><br>
+			<br><br>
 
-        <button id="sendMail">메일쓰기</button>
-        <span class="subheading" id="psSubheading"><b>개인주소록 (${fn:length(p)}개)</b></span>
+			<button id="sendMail">메일쓰기</button>
+			<span class="subheading" id="psSubheading"><b>개인주소록 (${fn:length(p)}개)</b></span>
 
-        <br>
+			<br>
 
-        <div id="psLike">
-            <table class="like-tb psLike-tb">
-                <colgroup>
-                    <col style="width:50px;">
-                    <col style="width:50px;">
-                    <col style="width:150px;"><!--이름-->
-                    <col style="width:150px;"><!--휴대폰-->
-                    <col style="width:150px;"><!--이메일-->
-                    <col style="width:300px;"><!--메모-->
-                    <col style="width:150px;"><!--그룹-->
-                </colgroup>
-                <thead align="center">
-                    <tr>
-                        <th><input type="checkbox" id="psCheck"></input></th>
-                        <th></th>
-                        <th>이름</th>
-                        <th>휴대폰</th>
-                        <th>이메일</th>
-                        <th>메모</th>
-                        <th>그룹</th>
-                    </tr>
-                </thead>
-                <tbody align="center" id="ps-tbody">
-                <c:choose>
-                	<c:when test="${ empty p }">
-                		<tr>
-                			<td colspan="7" style="text-align:center;">😓 즐겨찾는 개인주소록이 없습니다</td>
-                		</tr>
-                	</c:when>
-                	<c:otherwise>
-	                	<c:forEach var="p" items="${ p }">
-		                    <tr>
-		                        <td style="display:none" class="addNo-td">${ p.addNo }</td>
-		                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-		                        <td class="addLike starLike">⭐</td>
-		                        <td class="clck-detail">${ p.addName }</td>
-		                        <td class="clck-detail">${ p.phone }</td>
-		                        <td class="clck-detail">${ p.email }</td>
-		                        <td>${ p.memo }</td>
-		                        <td>${ p.group.groupName }</td>
-		                    </tr>
-	                	</c:forEach>
-                	</c:otherwise>
-                </c:choose>
-                </tbody>
-            </table>
-        </div>
+			<div id="psLike">
+				<table class="like-tb psLike-tb">
+					<colgroup>
+						<col style="width:50px;">
+						<col style="width:50px;">
+						<col style="width:150px;"><!--이름-->
+						<col style="width:150px;"><!--휴대폰-->
+						<col style="width:150px;"><!--이메일-->
+						<col style="width:300px;"><!--메모-->
+						<col style="width:150px;"><!--그룹-->
+					</colgroup>
+					<thead align="center">
+						<tr>
+							<th><input type="checkbox" id="psCheck"></input></th>
+							<th></th>
+							<th>이름</th>
+							<th>휴대폰</th>
+							<th>이메일</th>
+							<th>메모</th>
+							<th>그룹</th>
+						</tr>
+					</thead>
+					<tbody align="center" id="ps-tbody">
+					<c:choose>
+						<c:when test="${ empty p }">
+							<tr>
+								<td colspan="7" style="text-align:center;">😓 즐겨찾는 개인주소록이 없습니다</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="p" items="${ p }">
+								<tr>
+									<td style="display:none" class="addNo-td">${ p.addNo }</td>
+									<td><input type="checkbox" class="ps-checkbox"></input></td>
+									<td class="addLike starLike">⭐</td>
+									<td class="clck-detail">${ p.addName }</td>
+									<td class="clck-detail">${ p.phone }</td>
+									<td class="clck-detail">${ p.email }</td>
+									<td>${ p.memo }</td>
+									<td>${ p.group.groupName }</td>
+								</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+					</tbody>
+				</table>
+			</div>
 
-        <script>
-            $("#psCheck").click(function(){
-                if($(this).prop("checked")){
-                    $(".ps-checkbox").prop("checked", true);
-                   
-                }else {
-                    $(".ps-checkbox").prop("checked", false);
-                }
-            })
-            
-        </script>
+			<script>
+				$("#psCheck").click(function(){
+					if($(this).prop("checked")){
+						$(".ps-checkbox").prop("checked", true);
+					
+					}else {
+						$(".ps-checkbox").prop("checked", false);
+					}
+				})
+				
+			</script>
 
-        <br><br>
+			<br><br>
 
-		<span class="subheading" id="pbSubheading"><b>공유주소록 (${fn:length(e) + fn:length(s)}개)</b></span>
-        <div id="pbLike">
-            <table class="like-tb pbLike-tb">
-                <colgroup>
-                    <col style="width:50px;">
-                    <col style="width:50px;">
-                    <col style="width:150px;"><!--이름-->
-                    <col style="width:150px;"><!--휴대폰-->
-                    <col style="width:150px;"><!--이메일-->
-                    <col style="width:300px;"><!--메모-->
-                    <col style="width:150px;"><!--그룹-->
-                </colgroup>
-                <thead align="center">
-                    <tr>
-                        <th><input type="checkbox" id="psCheck"></input></th>
-                        <th></th>
-                        <th>이름</th>
-                        <th>휴대폰</th>
-                        <th>이메일</th>
-                        <th>메모</th>
-                        <th>그룹</th>
-                    </tr>
-                </thead>
-                <tbody align="center" id="ps-tbody">
-                    <c:choose>
-                	<c:when test="${ empty e and empty s }">
-                		<tr>
-                			<td colspan="7" style="text-align:center;">😓 즐겨찾는 공유주소록이 없습니다</td>
-                		</tr>
-                	</c:when>
-                	<c:otherwise>
-	                	<c:forEach var="e" items="${ e }">
-		                    <tr>
-		                        <td style="display:none" class="empNo-td">${ e.empNo }</td>
-		                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-		                        <td class="empLike starLike">⭐</td>
-		                        <td class="clck-detail">${ e.empName }</td>
-		                        <td class="clck-detail">${ e.phone }</td>
-		                        <td class="clck-detail">${ e.email }</td>
-		                        <td></td>
-		                        <td>${ e.deptName }</td>
-		                    </tr>
-	                	</c:forEach>
-	                	<c:forEach var="s" items="${ s }">
-		                    <tr>
-		                        <td style="display:none" class="addNo-td">${ s.addNo }</td>
-		                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-		                        <td class="addLike starLike">⭐</td>
-		                        <td class="clck-detail">${ s.addName }</td>
-		                        <td class="clck-detail">${ s.phone }</td>
-		                        <td class="clck-detail">${ s.email }</td>
-		                        <td>${ s.memo }</td>
-		                        <td>${ s.group.groupName }</td>
-		                    </tr>
-	                	</c:forEach>
-                	</c:otherwise>
-                </c:choose>
-                </tbody>
-            </table>
-        </div>
+			<span class="subheading" id="pbSubheading"><b>공유주소록 (${fn:length(e) + fn:length(s)}개)</b></span>
+			<div id="pbLike">
+				<table class="like-tb pbLike-tb">
+					<colgroup>
+						<col style="width:50px;">
+						<col style="width:50px;">
+						<col style="width:150px;"><!--이름-->
+						<col style="width:150px;"><!--휴대폰-->
+						<col style="width:150px;"><!--이메일-->
+						<col style="width:300px;"><!--메모-->
+						<col style="width:150px;"><!--그룹-->
+					</colgroup>
+					<thead align="center">
+						<tr>
+							<th><input type="checkbox" id="psCheck"></input></th>
+							<th></th>
+							<th>이름</th>
+							<th>휴대폰</th>
+							<th>이메일</th>
+							<th>메모</th>
+							<th>그룹</th>
+						</tr>
+					</thead>
+					<tbody align="center" id="ps-tbody">
+						<c:choose>
+						<c:when test="${ empty e and empty s }">
+							<tr>
+								<td colspan="7" style="text-align:center;">😓 즐겨찾는 공유주소록이 없습니다</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="e" items="${ e }">
+								<tr>
+									<td style="display:none" class="empNo-td">${ e.empNo }</td>
+									<td><input type="checkbox" class="ps-checkbox"></input></td>
+									<td class="empLike starLike">⭐</td>
+									<td class="clck-detail">${ e.empName }</td>
+									<td class="clck-detail">${ e.phone }</td>
+									<td class="clck-detail">${ e.email }</td>
+									<td></td>
+									<td>${ e.deptName }</td>
+								</tr>
+							</c:forEach>
+							<c:forEach var="s" items="${ s }">
+								<tr>
+									<td style="display:none" class="addNo-td">${ s.addNo }</td>
+									<td><input type="checkbox" class="ps-checkbox"></input></td>
+									<td class="addLike starLike">⭐</td>
+									<td class="clck-detail">${ s.addName }</td>
+									<td class="clck-detail">${ s.phone }</td>
+									<td class="clck-detail">${ s.email }</td>
+									<td>${ s.memo }</td>
+									<td>${ s.group.groupName }</td>
+								</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+					</tbody>
+				</table>
+			</div>
 
-        <script>
-	        $("#psCheck").click(function(){ /*체크박스*/
-	            if($(this).prop("checked")){
-	                $(".ps-checkbox").prop("checked", true);
-	               
-	            }else {
-	                $(".ps-checkbox").prop("checked", false);
-	            }
-	        })
-	        $(".ps-checkbox").click(function(){
-	        	if($(this).prop("checked")){
-	        		 
-	        	}else{
-	        		$("#psCheck").prop("checked", false);
-	        	}
-	        })
+			<script>
+				$("#psCheck").click(function(){ /*체크박스*/
+					if($(this).prop("checked")){
+						$(".ps-checkbox").prop("checked", true);
+					
+					}else {
+						$(".ps-checkbox").prop("checked", false);
+					}
+				})
+				$(".ps-checkbox").click(function(){
+					if($(this).prop("checked")){
+						
+					}else{
+						$("#psCheck").prop("checked", false);
+					}
+				})
 
-            $(".addLike").click(function(){ /*개인주소록 & 외부주소록 별 누르면 실행할 내용*/
-            	$(this).parent().remove();
-                $.ajax({
-                	url:"deleteFavAdd.add",
-                	data:{
-                		empNo:${loginUser.empNo},
-                		addNo:$(this).siblings().eq(0).text()
-                	},
-                	success:function(result){
-                		if(result == "fail"){
-                			console.log("즐겨찾기 삭제용 ajax 통신 실패");
-                		}
-                	},error:function(){
-                		console.log("즐겨찾기 삭제용 ajax 통신 실패");
-                	}
-                })
-                
-            })
-            
-            $(".empLike").click(function(){ /*별 누르면 실행할 내용*/
-            	$(this).parent().remove();
-                $.ajax({
-                	url:"deleteFavEmp.add",
-                	data:{
-                		empNo:${loginUser.empNo},
-                		addEmpNo:$(this).siblings().eq(0).text()
-                	},
-                	success:function(result){
-                		if(result == "fail"){
-                			console.log("즐겨찾기 삭제용 ajax 통신 실패");
-                			$(this).parent().remove();
-                		}
-                	},error:function(){
-                		console.log("즐겨찾기 삭제용 ajax 통신 실패");
-                	}
-                })
-                
-            })
+				$(".addLike").click(function(){ /*개인주소록 & 외부주소록 별 누르면 실행할 내용*/
+					$(this).parent().remove();
+					$.ajax({
+						url:"deleteFavAdd.add",
+						data:{
+							empNo:${loginUser.empNo},
+							addNo:$(this).siblings().eq(0).text()
+						},
+						success:function(result){
+							if(result == "fail"){
+								console.log("즐겨찾기 삭제용 ajax 통신 실패");
+							}
+						},error:function(){
+							console.log("즐겨찾기 삭제용 ajax 통신 실패");
+						}
+					})
+					
+				})
+				
+				$(".empLike").click(function(){ /*별 누르면 실행할 내용*/
+					$(this).parent().remove();
+					$.ajax({
+						url:"deleteFavEmp.add",
+						data:{
+							empNo:${loginUser.empNo},
+							addEmpNo:$(this).siblings().eq(0).text()
+						},
+						success:function(result){
+							if(result == "fail"){
+								console.log("즐겨찾기 삭제용 ajax 통신 실패");
+								$(this).parent().remove();
+							}
+						},error:function(){
+							console.log("즐겨찾기 삭제용 ajax 통신 실패");
+						}
+					})
+					
+				})
 
-            $(function(){
-                $("#sendMail").click(function(){ /*메일쓰기 누르면 실행할 내용*/
-                    
-                })
-            })
+				$(function(){
+					$("#sendMail").click(function(){ /*메일쓰기 누르면 실행할 내용*/
+						
+					})
+				})
 
-            
-        </script>
+				
+			</script>
 
-        <script>
-            $(function(){
-                $('.clck-detail').on("click", $('.clck-detail'), function(){
-                    location.href = 'detail.ad?no=' + $(this).siblings().eq(0).text(); 
-                })
-            })
-        </script>
+			<script>
+				$(function(){
+					$('.clck-detail').on("click", $('.clck-detail'), function(){
+						location.href = 'detail.ad?no=' + $(this).siblings().eq(0).text(); 
+					})
+				})
+			</script>
 
 
-    </div>
+		</div>
+	</div>
 
 </body>
 </html>

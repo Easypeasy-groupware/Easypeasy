@@ -83,6 +83,31 @@ public class CommuteDao {
 		return sqlSession.update("commuteMapper.updateTimeHR", c);
 	}
 	
+	//출근 등록시 지각,정상근무 변경
+	public int updateComStatus(SqlSessionTemplate sqlSession, Commute c) {
+		return sqlSession.update("commuteMapper.updateComStatus", c);
+	}
+	
+	//퇴근 등록시 조퇴 상태 변경
+	public int updateLeStatus(SqlSessionTemplate sqlSession, Commute c) {
+		return sqlSession.update("commuteMapper.updateLeStatus", c);
+	}
+	
+	public int countTr(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("commuteMapper.countTr", empNo);
+	}
+	
+	public int countLe(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("commuteMapper.countLe", empNo);
+	}
+	
+	public int countAb(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("commuteMapper.countAb", empNo);
+	}
+	
+	public int countEnd(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("commuteMapper.countEnd", empNo);
+	}
 
 
 }

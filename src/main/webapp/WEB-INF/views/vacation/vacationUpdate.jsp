@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+    #main{
+        position: absolute; top: 120px;
+    }
     
     .side{
         width: 200px;
@@ -117,6 +120,7 @@
 
 	<jsp:include page="../common/header.jsp"/>
 
+	<div id="main">
 	 
         <div class="side"><jsp:include page="../commute/HRsidebar.jsp"/></div>
         <div class="allContent">
@@ -253,7 +257,7 @@
 
         </div>
    
-
+    </div>
 
 </body>
 </html>

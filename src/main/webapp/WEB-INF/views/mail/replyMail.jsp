@@ -51,6 +51,8 @@
     #attach{width: 25px;}
     .attach_delete_btn{border: none;}
     
+    #reply_content{margin: 5px; padding: 5px;}
+    
     /* 부트스트랩 버튼 css */
     .btn-secondary{height: 36px; min-width: 40px; max-width: 100px;}
 </style>
@@ -121,7 +123,11 @@
                         <td></td>
                         <td colspan="2" id="receiver_area">
                             <div id="in_receiver_list">
-                                <div class="receiver_one to_me"><b>${ mail.sendMailAdd }</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">x</button></div>
+                                <c:if test="${mailDiv == 1}">
+                                    <div class="receiver_one">
+                                        <b>${ mail.sendMailAdd }</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">x</button>
+                                    </div>
+                                </c:if>
                             </div>
                             <input id="input_receiver_list" name="recMailAdd" type="eamil" multiple style="display: none;">
                             <input id="input_ref_list" name="refList" type="email" multiple style="display: none;">
@@ -133,7 +139,14 @@
                         <th>제 목</th>
                         <td><input type="checkbox" name="imporMail"> 중요</td>
                         <td colspan="2">
-                                <input type="text" id="mail_title" class="mail_input" style="width: 760px; margin-right: 0;" name="mailTitle" value="[RE] ${mail.mailTitle}">
+                            <c:choose>
+                                <c:when test="${mailDiv == 1}" >
+                                    <input type="text" id="mail_title" class="mail_input" style="width: 760px; margin-right: 0;" name="mailTitle" value="[RE] ${mail.mailTitle}">
+                                </c:when>
+                                <c:otherwise>
+                                    <input type="text" id="mail_title" class="mail_input" style="width: 760px; margin-right: 0;" name="mailTitle" value="[Fwd] ${mail.mailTitle}">
+                                </c:otherwise>
+                            </c:choose>
                         </td>
                     </tr>
                     <tr class="detail_info_tr">
@@ -164,20 +177,21 @@
                         <td></td>
                         <td colspan="2">
                             <textarea name="mailContent" id="summernote" value="">
-                                &nbsp;&nbsp;&nbsp;&nbsp;-----Original Message-----<br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;From: "${mail.empName}" &lt; ${mail.sendMailAdd} &gt;<br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;To: "${loginUser.empName}" &lt; ${loginUser.email} &gt;<br>
-                                &nbsp;&nbsp;&nbsp;
-                                Cc: <c:if test="${ not empty receiverList}">
-                                        <c:forEach var="r" items="${receiverList}">
-                                            <c:if test="${r.reference == 'Y'}" >
-                                                "${r.empName}" &lt; ${r.recMailAdd} &gt;
-                                            </c:if>
-                                        </c:forEach>
-                                </c:if><br> 
-                                &nbsp;&nbsp;&nbsp;&nbsp;Sent: ${mail.recDate}<br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;Subject: ${mail.mailTitle}<br><br>
-                                ${mail.mailContent}
+                                <div id="reply_content">
+                                    ----- Original Message -----<br>
+                                    From: "${mail.empName}" &lt; ${mail.sendMailAdd} &gt;<br>
+                                    To: "${loginUser.empName}" &lt; ${loginUser.email} &gt;<br>
+                                    Cc: <c:if test="${ not empty receiverList}">
+                                            <c:forEach var="r" items="${receiverList}">
+                                                <c:if test="${r.reference == 'Y'}" >
+                                                    "${r.empName}" &lt; ${r.recMailAdd} &gt;
+                                                </c:if>
+                                            </c:forEach>
+                                    </c:if><br> 
+                                    Sent: ${mail.recDate}<br>
+                                    Subject: ${mail.mailTitle}<br><br>
+                                    ${mail.mailContent}
+                                </div>
                             </textarea>
                         </td>
                     </tr>
@@ -388,21 +402,8 @@
                 noAttach.style.display = "block";
             });
 
-
-
-
-
-
             // 메일 보내기
             document.getElementById("send").addEventListener('click', function(){
-                const sendContent = document.getElementById("mail_content_text");
-                // const form = document.createElement("form");
-                // form.setAttribute("charset", "UTF-8");
-                // form.setAttribute("method", "POST");  
-                // form.setAttribute("action", "send.ma");
-                // form.appendChild(sendContent);
-                // document.body.appendChild(form);
-
                 const receiverList = document.querySelectorAll("#in_receiver_list b");
                 const recAddList = document.getElementById("input_receiver_list");
                 const referAddList = document.getElementById("input_ref_list");
@@ -410,11 +411,12 @@
                 const receiver = document.getElementsByClassName("receiver_one");
                 const mailTitle = document.getElementById("mail_title");
                 const mailContent = document.getElementById("summernote");
-                
+
                 recAddList.value = "";
                 referAddList.value = "";
                 hidRefAddList.value = "";
 
+                console.log(receiver)
                 for(let i=0; i<receiverList.length; i++) {
                     if(receiverList[i].innerHTML.includes('숨은 참조')){
                         hidRefAddList.value += receiverList[i].innerHTML
@@ -432,7 +434,43 @@
                 }else if(mailContent.value == ""){
                     alert("내용을 입력해주세요.")
                 }else{
-                    sendContent.submit();
+                    let formData = new FormData();
+
+                    for(let i=0; i<$("#attach_files")[0].files.length; i++) {
+                        console.log($("#attach_files")[0].files[i]);
+                        formData.append("originNames", $("#attach_files")[0].files[i]);
+                    }
+
+                    let data = {
+                        recAddList: $("#input_receiver_list").val(),
+                        refList: $("#input_ref_list").val(),
+                        hRefList: $("#input_hid_ref_list").val(),
+                        mailTitle: $("#mail_title").val(),
+                        mailContent: $("#summernote").val(),
+                        imporMail: $("input:checkbox[name='imporMail']:checked").val()
+                    }
+
+                    formData.append('key', new Blob([JSON.stringify(data)], {type : "application/json"}));
+                    $.ajax({
+                        url:"send.ma",
+                        method:"POST",
+                        enctype:"multipart/form-data",
+                        data:formData,
+                        processData:false,
+                        contentType:false,
+                        success: function(result){
+                            if(result == 1){
+                                if(sock){
+                                    var msg = null;
+                                    <c:forEach var="m" items="${ mList }" >
+                                    </c:forEach>
+                                    sock.send(msg);
+                                }
+                            }
+                        }, error:function(){
+
+                        }
+                    });
                 }
             })
         </script>

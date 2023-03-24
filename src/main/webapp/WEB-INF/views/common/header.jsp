@@ -218,7 +218,7 @@
 
     <div class="outer">
 
-    <!-- <div id="hide_block"></div>
+    <div id="hide_block"></div>
 	<div id="alarm_bar">
 		<div id="alarm_header">
 			<div style="width: 100px; height: 100%; float: left; line-height: 30px; font-size: 20px;">전체 알람</div>
@@ -256,10 +256,10 @@
                 </c:choose> 
             </ul>
 		</div>
-	</div> -->
+	</div>
 
     <!-- 웹소켓 -->
-    <!-- <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 	<script>
         // 웹소켓 접속
         let sock = null
@@ -350,7 +350,9 @@
         const deleteAll = document.getElementById("alarm_delete");
             deleteAll.addEventListener('click', function(){
         });
-	</script> -->
+	</script>
+
+    </script>
 	
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">

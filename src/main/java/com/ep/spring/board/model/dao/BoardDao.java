@@ -44,8 +44,8 @@ public class BoardDao {
 		return sqlSession.update("boardMapper.increaseCount", no);
 	}
 	
-	public Board selectBoard(SqlSessionTemplate sqlSession, int no) {
-		return sqlSession.selectOne("boardMapper.selectBoard", no);
+	public Board selectBoard(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.selectOne("boardMapper.selectBoard", b);
 	}
 	
 	
@@ -79,6 +79,10 @@ public class BoardDao {
 	
 	public int insertReply(SqlSessionTemplate sqlSession, BoardReply r) {
 		return sqlSession.insert("boardMapper.insertReply", r);
+	}
+	
+	public int deleteReply(SqlSessionTemplate sqlSession) {
+		return sqlSession.delete("boardMapper.deleteReply");
 	}
 	
 	public int selectSettings(SqlSessionTemplate sqlSession, BoardCate bc){

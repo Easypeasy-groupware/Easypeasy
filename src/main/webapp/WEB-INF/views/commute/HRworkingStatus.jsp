@@ -11,8 +11,10 @@
             width: 1200px;
             margin: auto;
         }
-        
-        
+
+        #main{  
+            position: absolute; top: 120px;
+        }
         .side{
             width: 200px;
             height: 900px;
@@ -126,129 +128,126 @@
 
 <jsp:include page="../common/header.jsp"/>
 
-	    
+    <div id="main">
 
+        <div class="side"><jsp:include page="../commute/HRsidebar.jsp"/></div>
 
-    <div class="side"><jsp:include page="../commute/HRsidebar.jsp"/></div>
+        <div class="allContent">
 
-    <div class="allContent">
+            <div class="title"><b>근무시간 확인 및 수정</b><hr></div>
+            <br><br><br><br>
 
-        <div class="title"><b>근무시간 확인 및 수정</b><hr></div>
-        <br><br><br><br>
+            <div class="search-area">
+                <select name="" id="deptList">
+                    <option value="">전체</option>
+                    <option value="">인사관리팀</option>
+                    <option value="">경영지원팀</option>
+                    <option value="">영업1팀</option>
+                    <option value="">영업2팀</option>
+                    <option value="">영업3팀</option>
+                    <option value="">마케팅팀</option>
+                </select>
+                <input type="text" placeholder="사원 이름">
+                            <button type="button" id="search-btn" onclick="">검색</button>
+            </div><br><br>
 
-        <div class="search-area">
-            <select name="" id="deptList">
-                <option value="">전체</option>
-                <option value="">인사관리팀</option>
-                <option value="">경영지원팀</option>
-                <option value="">영업1팀</option>
-                <option value="">영업2팀</option>
-                <option value="">영업3팀</option>
-                <option value="">마케팅팀</option>
-            </select>
-            <input type="text" placeholder="사원 이름">
-                        <button type="button" id="search-btn" onclick="">검색</button>
-        </div><br><br>
-
-        <table>
-            
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>이름</th>
-                    <th>부서</th>
-                    <th>직위</th>
-                    <th>근무시간 확인</th>
-                </tr>
-            </thead>
-            <tbody>
-            	<c:forEach var="list" items="${ list }">
-	            	<tr>
-	                    <td><img  class="img" id="profileImg" src="<c:out value='${ list.empProfile }' default='resources/profile_images/default_profile.png' />" ></td>
-	                    <c:choose>
-	                	<c:when test="${ list.deptCode eq 'D1' }">
-	                		<td>인사관리팀</td>
-	                	</c:when>
-	                	<c:when test="${ list.deptCode eq 'D2' }">
-	                		<td>경영지원팀</td>
-	                	</c:when>
-	                	<c:when test="${ list.deptCode eq 'D3' }">
-	                		<td>영업1팀</td>
-	                	</c:when>
-	                	<c:when test="${ list.deptCode eq 'D4' }">
-	                		<td>영업2팀</td>
-	                	</c:when>
-	                	<c:when test="${ list.deptCode eq 'D5' }">
-	                		<td>영업3팀</td>
-	                	</c:when>
-	                	<c:otherwise>
-	                		<td>마케팅팀</td>
-	                	</c:otherwise>
-	                	</c:choose>
-	                    <td>${ list.empName }</td>
-	                    <c:choose>
-	                	<c:when test="${ list.jobCode eq 'J1' }">
-	                		<td>사원</td>
-	                	</c:when>
-	                	<c:when test="${ list.jobCode eq 'J2' }">
-	                		<td>대리</td>
-	                	</c:when>
-	                	<c:when test="${ list.jobCode eq 'J3' }">
-	                		<td>과장</td>
-	                	</c:when>
-	                	<c:when test="${ list.jobCode eq 'J4' }">
-	                		<td>부장</td>
-	                	</c:when>
-	                	<c:when test="${ list.jobCode eq 'J5' }">
-	                		<td>상무</td>
-	                	</c:when>
-	                	<c:otherwise>
-	                		<td>대표</td>
-	                	</c:otherwise>
-	               	 	</c:choose>
-	                    <td>
-	                        <a href="workingEmp.HR?no=${list.empNo}"><button class="view">근무시간</button></a>
-	                    </td>
-	                </tr>
-            	</c:forEach>
-            
-    
+            <table>
                 
-            </tbody>
-            
-        </table>
-		<br><br>
-        
-		<div align="center">
-            <ul id="paging">
-
-                <c:choose>
-                	<c:when test="${ pi.currentPage eq 1 }">
-						<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
-					</c:when>
-					<c:otherwise>
-						<li class="page-item"><a class="page-link" href="working.HR?cpage=${pi.currentPage-1 }">&lt;</a></li>
-					</c:otherwise>
-	            </c:choose>
-	            
-               		<c:forEach var="p" begin="${ pi.startPage }" end="${pi.endPage }">
-                    <li class="page-item"><a class="page-link" href="working.HR?cpage=${p }">${p }</a></li>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>이름</th>
+                        <th>부서</th>
+                        <th>직위</th>
+                        <th>근무시간 확인</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="list" items="${ list }">
+                        <tr>
+                            <td><img  class="img" id="profileImg" src="<c:out value='${ list.empProfile }' default='resources/profile_images/default_profile.png' />" ></td>
+                            <c:choose>
+                            <c:when test="${ list.deptCode eq 'D1' }">
+                                <td>인사관리팀</td>
+                            </c:when>
+                            <c:when test="${ list.deptCode eq 'D2' }">
+                                <td>경영지원팀</td>
+                            </c:when>
+                            <c:when test="${ list.deptCode eq 'D3' }">
+                                <td>영업1팀</td>
+                            </c:when>
+                            <c:when test="${ list.deptCode eq 'D4' }">
+                                <td>영업2팀</td>
+                            </c:when>
+                            <c:when test="${ list.deptCode eq 'D5' }">
+                                <td>영업3팀</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>마케팅팀</td>
+                            </c:otherwise>
+                            </c:choose>
+                            <td>${ list.empName }</td>
+                            <c:choose>
+                            <c:when test="${ list.jobCode eq 'J1' }">
+                                <td>사원</td>
+                            </c:when>
+                            <c:when test="${ list.jobCode eq 'J2' }">
+                                <td>대리</td>
+                            </c:when>
+                            <c:when test="${ list.jobCode eq 'J3' }">
+                                <td>과장</td>
+                            </c:when>
+                            <c:when test="${ list.jobCode eq 'J4' }">
+                                <td>부장</td>
+                            </c:when>
+                            <c:when test="${ list.jobCode eq 'J5' }">
+                                <td>상무</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>대표</td>
+                            </c:otherwise>
+                            </c:choose>
+                            <td>
+                                <a href="workingEmp.HR?no=${list.empNo}"><button class="view">근무시간</button></a>
+                            </td>
+                        </tr>
                     </c:forEach>
-                    
-                    <c:choose>
-                	<c:when test="${ pi.currentPage eq pi.maxPage }">
-						<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
-					</c:when>
-					<c:otherwise>
-						<li class="page-item"><a class="page-link" href="working.HR?cpage=${pi.currentPage+1 }">&gt;</a></li>
-					</c:otherwise>
-	            </c:choose>
-            </ul>
-        </div>
+                
         
- 
+                    
+                </tbody>
+                
+            </table>
+            <br><br>
+            
+            <div align="center">
+                <ul id="paging">
 
-
+                    <c:choose>
+                        <c:when test="${ pi.currentPage eq 1 }">
+                            <li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item"><a class="page-link" href="working.HR?cpage=${pi.currentPage-1 }">&lt;</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                    
+                        <c:forEach var="p" begin="${ pi.startPage }" end="${pi.endPage }">
+                        <li class="page-item"><a class="page-link" href="working.HR?cpage=${p }">${p }</a></li>
+                        </c:forEach>
+                        
+                        <c:choose>
+                        <c:when test="${ pi.currentPage eq pi.maxPage }">
+                            <li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item"><a class="page-link" href="working.HR?cpage=${pi.currentPage+1 }">&gt;</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </ul>
+            </div>
+            
+        </div>
     </div>
 
 </body>

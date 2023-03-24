@@ -14,6 +14,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
 <style>
+	#main{position: absolute; top: 120px; left: 330px;}
     .content-outer{width:1000px; padding-left:10px; margin-left:200px;  padding-top:20px;}
     .content-outer *{box-sizing: border-box;}
     #address-group{font-size:20px; font-weight:600; display:inline-block;}
@@ -69,264 +70,267 @@
 </style>
 </head>
 <body>
+	<jsp:include page="../common/header.jsp"/>
 
-	<jsp:include page="addMenubar.jsp"/>
-	
-    <div class="content-outer">
-		<div class="search" align="right" style="float:right">
-            <input type="text" id="searchKey" placeholder="이름, 회사, 전화번호">
-            <button id="searchBtn">검색</button>
-        </div>
-        
-        <p id="address-group">
-        공유주소록
-        <c:choose>
-        	<c:when test="${ ag eq '전체' }">
-        		전체
-        	</c:when>
-        	<c:otherwise>
-        		<c:choose>
-		        	<c:when test="${ empty ag.groupNo }">
-		        		(기타)
-		        	</c:when>
-		        	<c:otherwise>
-		        		(${ ag.groupName })
-		        	</c:otherwise>
-		        </c:choose>
-        	</c:otherwise>
-        </c:choose>
-        
-        </p>
-        <p id="group-name">📝 ${ loginUser.empName } ${ loginUser.jobName }님이 등록한 주소록</p>
+    <div id="main">
 
-		<br>
-
-        <br><br>
-        
-
-        <button class="btnGroup" id="sendMail">메일쓰기</button>
-
-		<p class="subheading" id="psSubheading"> 총 <b>${ count }</b> 명</p>
-        <br>
-
-        <div id="psLike">
-            <table id="addList">
-                <colgroup>
-                    <col style="width:50px;">
-                    <col style="width:50px;">
-                    <col style="width:100px;"><!--이름-->
-                    <col style="width:100px;"><!--직위-->
-                    <col style="width:150px;"><!--휴대폰-->
-                    <col style="width:150px;"><!--이메일-->
-                    <col style="width:100px;"><!--부서-->
-                    <col style="width:120px;"><!--회사-->
-                    <col style="width:100px;"><!--메모-->
-                    <col style="width:100px;"><!--그룹-->
-                </colgroup>
-                <thead align="center">
-                    <tr>
-                        <th style="display:none">no</th>
-                        <th><input type="checkbox" id="psCheck"></input></th>
-                        <th></th>
-                        <th>이름</th>
-                        <th>직위</th>
-                        <th>휴대폰</th>
-                        <th>이메일</th>
-                        <th>부서</th>
-                        <th>회사</th>
-                        <th>메모</th>
-                        <th>그룹</th>
-                    </tr>
-                </thead>
-                <tbody align="center" id="ps-tbody">
-                <c:choose>
-                	<c:when test="${ empty list }">
-                		<tr><td colspan="11"> ${ loginUser.empName }님이 등록한 공유주소록이 없습니다 😶‍🌫️</td></tr>
-                	</c:when>
-                	<c:otherwise>
-	                	<c:forEach var="a" items="${ list }">
-		                    <tr>
-		                        <td style="display:none">${ a.addNo }</td>
-		                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-		                        <td class="like">
-									<c:forEach var = "f" items="${ fList }">
-			                        
-			                        	<c:if test="${ a.addNo eq f.addNo}">
-			                        		⭐
-			                        	</c:if>
-			                        	
-			                        </c:forEach>
-								</td>
-		                        <td class="clck-detail">${ a.addName }</td>
-		                        <td class="clck-detail">${ a.addJob }</td>
-		                        <td class="clck-detail">${ a.phone }</td>
-		                        <td class="clck-detail">${ a.email }</td>
-		                        <td class="clck-detail">${ a.addDept }</td>
-		                        <td class="clck-detail">${ a.addEmp }</td>
-		                        <td>
-		                        <c:if test="${ not empty a.memo }">
-		                        	<img src="resources/common_images/memo-img.png">
-		                        </c:if>
-		                        </td>
-		                        <td>${ a.group.groupName }</td>
-		                    </tr>
-	                    </c:forEach>
-                	</c:otherwise>
-                </c:choose>  
-                </tbody>
-            </table>
-        </div>
+		<jsp:include page="addMenubar.jsp"/>
 		
-        <script>
-	        $("#psCheck").click(function(){ /*체크박스*/
-	            if($(this).prop("checked")){
-	                $(".ps-checkbox").prop("checked", true);
-	               
-	            }else {
-	                $(".ps-checkbox").prop("checked", false);
-	            }
-	        })
-	        $(".ps-checkbox").click(function(){
-	        	if($(this).prop("checked")){
-	        		 
-	        	}else{
-	        		$("#psCheck").prop("checked", false);
-	        	}
-	        })
+		<div class="content-outer">
+			<div class="search" align="right" style="float:right">
+				<input type="text" id="searchKey" placeholder="이름, 회사, 전화번호">
+				<button id="searchBtn">검색</button>
+			</div>
+			
+			<p id="address-group">
+			공유주소록
+			<c:choose>
+				<c:when test="${ ag eq '전체' }">
+					전체
+				</c:when>
+				<c:otherwise>
+					<c:choose>
+						<c:when test="${ empty ag.groupNo }">
+							(기타)
+						</c:when>
+						<c:otherwise>
+							(${ ag.groupName })
+						</c:otherwise>
+					</c:choose>
+				</c:otherwise>
+			</c:choose>
+			
+			</p>
+			<p id="group-name">📝 ${ loginUser.empName } ${ loginUser.jobName }님이 등록한 주소록</p>
 
-	        $(function(){ //즐겨찾기 리스트 출력
-            	$(".like").each(function(i, e){
-            		if($(this).html().trim().length == 0){
-                		$(this).html('<img src="resources/common_images/star_vacant.png">');
-                	}
-            		
-            	})
-            	
-            })
-            
-            $(".like").click(function(){ //즐겨찾기
-                if($(this).html()=="⭐"){
-                    $(this).html('<img src="resources/common_images/star_vacant.png">');
-                    $.ajax({
-                    	url:"deleteFavAdd.add",
-                    	data:{
-                    		empNo:${loginUser.empNo},
-                    		addNo:$(this).siblings().eq(0).text()
-                    	},
-                    	success:function(result){
-                    		if(result == "fail"){
-                    			console.log("즐겨찾기 삭제용 ajax 통신 실패");
-                    		}
-                    	},error:function(){
-                    		console.log("즐겨찾기 삭제용 ajax 통신 실패");
-                    	}
-                    })
-                }else{
-                    $(this).html("⭐");
-                    $.ajax({
-                    	url:"insertFavAdd.add",
-                    	data:{
-                    		empNo:${loginUser.empNo},
-                    		addNo:$(this).siblings().eq(0).text()
-                    	},
-                    	success:function(result){
-                    		if(result == "fail"){
-                    			console.log("즐겨찾기 삭제용 ajax 통신 실패");
-                    		}
-                    	},error:function(){
-                    		console.log("즐겨찾기 삭제용 ajax 통신 실패");
-                    	}
-                    })
-                }
-            })
+			<br>
 
-			$(".clck-detail").click(function(){ // 상세페이지
-                location.href = 'extAddInfo.add?no=' + $(this).siblings().eq(0).text(); 
-            })
-        </script>
+			<br><br>
+			
 
-        <br><br>
+			<button class="btnGroup" id="sendMail">메일쓰기</button>
 
-        <div align="center">
-            <ul id="paging">
-            <c:if test="${ not empty list }">
-            
-            <c:choose>
-            
-            	<c:when test="${ ag eq '전체' }">
-            	
-	        		<c:if test="${ pi.currentPage ne 1 }">
-	                   	<li><a href="extReg.add?cpage=${ pi.currentPage-1 }"> < </a></li>
-	                </c:if>
-	                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-	            		<c:choose>
-	            		<c:when test="${ pi.currentPage eq p }">
-		            		<li class="on"><a href="extReg.add?cpage=${ p }">${ p }</a></li>
-	            		</c:when>
-	            		<c:otherwise>
-	            			<li><a href="extReg.add?cpage=${ p }">${ p }</a></li>
-	            		</c:otherwise>
-	            		</c:choose>
-	                </c:forEach>
-	                <c:if test="${ pi.currentPage ne pi.maxPage }">
-	                   	<li><a href="extReg.add?cpage=${ pi.currentPage+1 }"> > </a></li>
-	               	</c:if>
-	               	
-	        	</c:when>
-	        	<c:otherwise>
-	        		<c:choose>
-			        	<c:when test="${ empty ag.groupNo }">
-			        	
-			        		<c:if test="${ pi.currentPage ne 1 }">
-			                   	<li><a href="extReg.add?cpage=${ pi.currentPage-1 }&group=0"> < </a></li>
-			                </c:if> 
-			                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-			            		<c:choose>
-			            		<c:when test="${ pi.currentPage eq p }">
-				            		<li class="on"><a href="extReg.add?cpage=${ p }&group=0">${ p }</a></li>
-			            		</c:when>
-			            		<c:otherwise>
-			            			<li><a href="extReg.add?cpage=${ p }&group=0">${ p }</a></li>
-			            		</c:otherwise>
-			            		</c:choose>
-			                </c:forEach>
-			                <c:if test="${ pi.currentPage ne pi.maxPage }">
-			                   	<li><a href="extReg.add?cpage=${ pi.currentPage+1 }&group=0"> > </a></li>
-			               	</c:if>
-	               	
-			        	</c:when>
-			        	<c:otherwise>
-			        		
-							<c:if test="${ pi.currentPage ne 1 }">
-			                   	<li><a href="extReg.add?cpage=${ pi.currentPage-1 }&group=${ag.groupNo}"> < </a></li>
-			                </c:if> 
-			                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-			            		<c:choose>
-			            		<c:when test="${ pi.currentPage eq p }">
-				            		<li class="on"><a href="extReg.add?cpage=${ p }&group=${ag.groupNo}">${ p }</a></li>
-			            		</c:when>
-			            		<c:otherwise>
-			            			<li><a href="extReg.add?cpage=${ p }&group=${ag.groupNo}">${ p }</a></li>
-			            		</c:otherwise>
-			            		</c:choose>
-			                </c:forEach>
-			                <c:if test="${ pi.currentPage ne pi.maxPage }">
-			                   	<li><a href="extReg.add?cpage=${ pi.currentPage+1 }&group=${ag.groupNo}"> > </a></li>
-			               	</c:if>
+			<p class="subheading" id="psSubheading"> 총 <b>${ count }</b> 명</p>
+			<br>
 
-			        	</c:otherwise>
-			        </c:choose>
-			        
+			<div id="psLike">
+				<table id="addList">
+					<colgroup>
+						<col style="width:50px;">
+						<col style="width:50px;">
+						<col style="width:100px;"><!--이름-->
+						<col style="width:100px;"><!--직위-->
+						<col style="width:150px;"><!--휴대폰-->
+						<col style="width:150px;"><!--이메일-->
+						<col style="width:100px;"><!--부서-->
+						<col style="width:120px;"><!--회사-->
+						<col style="width:100px;"><!--메모-->
+						<col style="width:100px;"><!--그룹-->
+					</colgroup>
+					<thead align="center">
+						<tr>
+							<th style="display:none">no</th>
+							<th><input type="checkbox" id="psCheck"></input></th>
+							<th></th>
+							<th>이름</th>
+							<th>직위</th>
+							<th>휴대폰</th>
+							<th>이메일</th>
+							<th>부서</th>
+							<th>회사</th>
+							<th>메모</th>
+							<th>그룹</th>
+						</tr>
+					</thead>
+					<tbody align="center" id="ps-tbody">
+					<c:choose>
+						<c:when test="${ empty list }">
+							<tr><td colspan="11"> ${ loginUser.empName }님이 등록한 공유주소록이 없습니다 😶‍🌫️</td></tr>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="a" items="${ list }">
+								<tr>
+									<td style="display:none">${ a.addNo }</td>
+									<td><input type="checkbox" class="ps-checkbox"></input></td>
+									<td class="like">
+										<c:forEach var = "f" items="${ fList }">
+										
+											<c:if test="${ a.addNo eq f.addNo}">
+												⭐
+											</c:if>
+											
+										</c:forEach>
+									</td>
+									<td class="clck-detail">${ a.addName }</td>
+									<td class="clck-detail">${ a.addJob }</td>
+									<td class="clck-detail">${ a.phone }</td>
+									<td class="clck-detail">${ a.email }</td>
+									<td class="clck-detail">${ a.addDept }</td>
+									<td class="clck-detail">${ a.addEmp }</td>
+									<td>
+									<c:if test="${ not empty a.memo }">
+										<img src="resources/common_images/memo-img.png">
+									</c:if>
+									</td>
+									<td>${ a.group.groupName }</td>
+								</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>  
+					</tbody>
+				</table>
+			</div>
+			
+			<script>
+				$("#psCheck").click(function(){ /*체크박스*/
+					if($(this).prop("checked")){
+						$(".ps-checkbox").prop("checked", true);
+					
+					}else {
+						$(".ps-checkbox").prop("checked", false);
+					}
+				})
+				$(".ps-checkbox").click(function(){
+					if($(this).prop("checked")){
+						
+					}else{
+						$("#psCheck").prop("checked", false);
+					}
+				})
 
-	        	</c:otherwise>
-            </c:choose>
-            
-            </c:if>
-            </ul>
-        </div>
-       
-    
-    </div>
+				$(function(){ //즐겨찾기 리스트 출력
+					$(".like").each(function(i, e){
+						if($(this).html().trim().length == 0){
+							$(this).html('<img src="resources/common_images/star_vacant.png">');
+						}
+						
+					})
+					
+				})
+				
+				$(".like").click(function(){ //즐겨찾기
+					if($(this).html()=="⭐"){
+						$(this).html('<img src="resources/common_images/star_vacant.png">');
+						$.ajax({
+							url:"deleteFavAdd.add",
+							data:{
+								empNo:${loginUser.empNo},
+								addNo:$(this).siblings().eq(0).text()
+							},
+							success:function(result){
+								if(result == "fail"){
+									console.log("즐겨찾기 삭제용 ajax 통신 실패");
+								}
+							},error:function(){
+								console.log("즐겨찾기 삭제용 ajax 통신 실패");
+							}
+						})
+					}else{
+						$(this).html("⭐");
+						$.ajax({
+							url:"insertFavAdd.add",
+							data:{
+								empNo:${loginUser.empNo},
+								addNo:$(this).siblings().eq(0).text()
+							},
+							success:function(result){
+								if(result == "fail"){
+									console.log("즐겨찾기 삭제용 ajax 통신 실패");
+								}
+							},error:function(){
+								console.log("즐겨찾기 삭제용 ajax 통신 실패");
+							}
+						})
+					}
+				})
 
+				$(".clck-detail").click(function(){ // 상세페이지
+					location.href = 'extAddInfo.add?no=' + $(this).siblings().eq(0).text(); 
+				})
+			</script>
+
+			<br><br>
+
+			<div align="center">
+				<ul id="paging">
+				<c:if test="${ not empty list }">
+				
+				<c:choose>
+				
+					<c:when test="${ ag eq '전체' }">
+					
+						<c:if test="${ pi.currentPage ne 1 }">
+							<li><a href="extReg.add?cpage=${ pi.currentPage-1 }"> < </a></li>
+						</c:if>
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+							<c:choose>
+							<c:when test="${ pi.currentPage eq p }">
+								<li class="on"><a href="extReg.add?cpage=${ p }">${ p }</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="extReg.add?cpage=${ p }">${ p }</a></li>
+							</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${ pi.currentPage ne pi.maxPage }">
+							<li><a href="extReg.add?cpage=${ pi.currentPage+1 }"> > </a></li>
+						</c:if>
+						
+					</c:when>
+					<c:otherwise>
+						<c:choose>
+							<c:when test="${ empty ag.groupNo }">
+							
+								<c:if test="${ pi.currentPage ne 1 }">
+									<li><a href="extReg.add?cpage=${ pi.currentPage-1 }&group=0"> < </a></li>
+								</c:if> 
+								<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+									<c:choose>
+									<c:when test="${ pi.currentPage eq p }">
+										<li class="on"><a href="extReg.add?cpage=${ p }&group=0">${ p }</a></li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="extReg.add?cpage=${ p }&group=0">${ p }</a></li>
+									</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								<c:if test="${ pi.currentPage ne pi.maxPage }">
+									<li><a href="extReg.add?cpage=${ pi.currentPage+1 }&group=0"> > </a></li>
+								</c:if>
+						
+							</c:when>
+							<c:otherwise>
+								
+								<c:if test="${ pi.currentPage ne 1 }">
+									<li><a href="extReg.add?cpage=${ pi.currentPage-1 }&group=${ag.groupNo}"> < </a></li>
+								</c:if> 
+								<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+									<c:choose>
+									<c:when test="${ pi.currentPage eq p }">
+										<li class="on"><a href="extReg.add?cpage=${ p }&group=${ag.groupNo}">${ p }</a></li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="extReg.add?cpage=${ p }&group=${ag.groupNo}">${ p }</a></li>
+									</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								<c:if test="${ pi.currentPage ne pi.maxPage }">
+									<li><a href="extReg.add?cpage=${ pi.currentPage+1 }&group=${ag.groupNo}"> > </a></li>
+								</c:if>
+
+							</c:otherwise>
+						</c:choose>
+						
+
+					</c:otherwise>
+				</c:choose>
+				
+				</c:if>
+				</ul>
+			</div>
+		
+		
+		</div>
+	</div>
 </body>
 </html>
