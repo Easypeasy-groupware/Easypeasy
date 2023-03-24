@@ -425,7 +425,6 @@
                                 if(sock){
                                     var msg = null;
                                     <c:forEach var="m" items="${ mList }" >
-                                        // msg = ${m.}
                                     </c:forEach>
                                     sock.send(msg);
                                 }

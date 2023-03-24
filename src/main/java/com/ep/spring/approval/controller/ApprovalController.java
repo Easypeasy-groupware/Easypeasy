@@ -681,7 +681,7 @@ public class ApprovalController {
 			}
 		}
 		
-		//System.out.println(vf);
+		System.out.println(vf);
 		
 				
 		int result = aService.updateApproval(ap, al, vf, ot, atList);

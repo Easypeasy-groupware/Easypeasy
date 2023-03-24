@@ -8,7 +8,7 @@
 <title>Insert title here</title>
     <style>
         /* div{border :1px solid red;} */
-	    #main{position: absolute; top: 120px; left: 330px;}
+	    #main{position: absolute; top: 120px;}
 
         .form-outer{ 
             width:1000px;
