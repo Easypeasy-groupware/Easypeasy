@@ -16,6 +16,7 @@ import com.ep.spring.address.model.service.AddressService;
 import com.ep.spring.address.model.vo.AddGroup;
 import com.ep.spring.alarm.model.service.AlarmService;
 import com.ep.spring.alarm.model.vo.Alarm;
+import com.ep.spring.chat.model.vo.ChatSession;
 import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.common.template.FileUpload;
 import com.ep.spring.login.model.service.EmployeeService;
@@ -43,6 +44,10 @@ public class EmployeeController {
 	@Autowired
 	private AlarmService alService;
 	
+	/* 채팅 */
+    @Autowired
+    private ChatSession cSession;
+	
 	//로그인
 	@RequestMapping("login.ep")
 	public String loginEmployee(Employee e, HttpSession session) {
@@ -58,6 +63,10 @@ public class EmployeeController {
 		ArrayList<Mail> recMailList = mService.selectReceiveMailList(loginUser.getEmail());
 		// 알람 조회
 		ArrayList<Alarm> alarmList = alService.selectAlarmList(loginUser.getEmpNo());
+		
+		/* 채팅 */
+        // 현재 로그인 한 User 채팅 Session ArrayList에 추가.
+		cSession.addLoginChatUser(loginUser.getEmpNo());
 		
 		/*
 		if(loginUser == null) {//로그인실패
@@ -98,6 +107,7 @@ public class EmployeeController {
 			session.setAttribute("list", list);
 			session.setAttribute("deptList", deptList);
 			session.setAttribute("jList", jList);
+			
 			return "common/main";
 		}else { // 실패
 			session.setAttribute("alertMsg", "로그인에 실패했습니다. 다시 시도 해주세요.");
@@ -110,6 +120,12 @@ public class EmployeeController {
 	//로그아웃
 	@RequestMapping("logout.ep")
 	public String logoutMember(HttpSession session) {
+		
+		/* 채팅 */
+        // 로그아웃한 사원을 채팅 Session ArrayList에서 삭제
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+        cSession.removeLoginChatUser(empNo);
+        
 		//세션무효화
 		session.invalidate();
 		return "redirect:/";
