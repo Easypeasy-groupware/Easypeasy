@@ -87,17 +87,15 @@ public class BoardController {
 	@RequestMapping("detailForm.bo")
 	public ModelAndView selectBoard(int no, HttpSession session, ModelAndView mv, Board b) {
 		
-		//System.out.println(no);
-		
 		int result = bService.increaseCount(no);
-		
-		//System.out.println(result);
+		b.setBoardNo(no);
+		System.out.println(result);
 		
 		if(result > 0) {
-			Board bb = bService.selectBoard(no);
+			Board bb = bService.selectBoard(b);
 			ArrayList<Attachment> attachmentList = bService.selectAttachmentList(b);
 			
-			//System.out.println(attachmentList);
+			System.out.println(attachmentList);
 			
 			mv.addObject("b", bb).addObject("attachmentList", attachmentList).setViewName("board/boardDetailForm");
 			

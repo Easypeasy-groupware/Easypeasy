@@ -20,7 +20,7 @@ public interface BoardService {
 	
 	// 3. 게시글 상세조회용 서비스
 	int increaseCount(int no);
-	Board selectBoard(int no);
+	Board selectBoard(Board b);
 	ArrayList<Attachment> selectAttachmentList(Board b);
 		
 	// 4. 게시글 삭제용 서비스
