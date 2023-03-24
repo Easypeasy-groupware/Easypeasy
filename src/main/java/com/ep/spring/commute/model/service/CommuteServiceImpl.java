@@ -112,6 +112,41 @@ public class CommuteServiceImpl implements CommuteService{
 		return cDao.updateComStatus(sqlSession, c);
 	}
 
+	//퇴근 등록시 조퇴상태 변경
+	@Override
+	public int updateLeStatus(Commute c) {
+		
+		return cDao.updateLeStatus(sqlSession, c);
+	}
+
+	//지각 횟수
+	@Override
+	public int countTr(int empNo) {
+		
+		return cDao.countTr(sqlSession, empNo);
+	}
+
+	//조퇴 횟수
+	@Override
+	public int countLe(int empNo) {
+		
+		return cDao.countLe(sqlSession, empNo);
+	}
+
+	// 결근 횟수
+	@Override
+	public int countAb(int empNo) {
+		
+		return cDao.countAb(sqlSession, empNo);
+	}
+
+	//퇴근 미체크 횟수
+	@Override
+	public int countEnd(int empNo) {
+		
+		return cDao.countEnd(sqlSession, empNo);
+	}
+
 
 	
 	

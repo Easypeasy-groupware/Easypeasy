@@ -483,19 +483,19 @@
                 <table  id="commute">
                     <tr>
                         <td>지각</td>
-                        <td>2회</td>
+                        <td>${ tr }회</td>
                     </tr>
                     <tr>
                         <td>조기퇴근</td>
-                        <td>0회</td>
+                        <td>${ countLe }회</td>
                     </tr>
                     <tr>
                         <td>결근</td>
-                        <td>0회</td>
+                        <td>${ ab }회</td>
                     </tr>
                     <tr>
                         <td>퇴근미체크</td>
-                        <td>3회</td>
+                        <td>${ end }회</td>
                     </tr>
                 </table>
             </div>
