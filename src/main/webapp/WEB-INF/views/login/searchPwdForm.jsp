@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <style>
+        #main{  
+            position: absolute; top: 120px;
+        }
         .outer{
             width: 1200px;
             height: 100vh;
@@ -65,56 +68,56 @@
 </head>
 <body style="background-color:rgb(214, 223, 204)">
 
+    <div id="main">
 
-<div class="outer" align="center">
+        <div class="outer" align="center">
 
-        <div class="title">
-            <b style="font-size: 80px;">EASY PEASY</b>
+            <div class="title">
+                <b style="font-size: 80px;">EASY PEASY</b>
+            </div>
+
+            <div class="login-area">
+                
+
+                <form action="" method="post" class="loginForm" >
+                    <div class="idTitle"><b>비밀번호 찾기</b></div>
+                    <table class="tb">
+                    <tr>
+                        <td>이름</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="input" type="text" name="userName" required placeholder="이름">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>아이디</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="input" type="text" name="userId" required placeholder="아이디">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>휴대폰 번호</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="input" type="text" name="phone" required placeholder="휴대폰 번호(-제외)">
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                
+                <button class="button" type="submit"><b>인증번호받기</b></button>
+                </form>
+
+
+                
+            </div>
+
         </div>
-
-        <div class="login-area">
-            
-
-            <form action="" method="post" class="loginForm" >
-                <div class="idTitle"><b>비밀번호 찾기</b></div>
-                <table class="tb">
-                <tr>
-                    <td>이름</td>
-                </tr>
-                <tr>
-                    <td>
-                        <input class="input" type="text" name="userName" required placeholder="이름">
-                    </td>
-                </tr>
-                <tr>
-                    <td>아이디</td>
-                </tr>
-                <tr>
-                    <td>
-                        <input class="input" type="text" name="userId" required placeholder="아이디">
-                    </td>
-                </tr>
-                <tr>
-                    <td>휴대폰 번호</td>
-                </tr>
-                <tr>
-                    <td>
-                        <input class="input" type="text" name="phone" required placeholder="휴대폰 번호(-제외)">
-                    </td>
-                </tr>
-            </table>
-            <br>
-            
-            <button class="button" type="submit"><b>인증번호받기</b></button>
-            </form>
-
-
-            
-        </div>
-
     </div>
-    
-
 
 </body>
 </html>

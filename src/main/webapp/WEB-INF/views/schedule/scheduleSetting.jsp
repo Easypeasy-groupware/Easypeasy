@@ -11,6 +11,10 @@
         box-sizing: border-box;
     }
     
+	#main{  
+        position: absolute; top: 120px;
+    }
+	
     #content{
         border-left: 1px solid lightgray;
         width: 1000px;
@@ -78,60 +82,63 @@
 
 	<jsp:include page="../common/header.jsp"/>
 
-    <jsp:include page="sidebar.jsp"/>
+    <div id="main">
 
-	<div id="content">
-        <div id="con-title">
-            <span>
-                <h5>내 캘린더 관리</h5>
-            </span>
-            <br>
-            <div id="add">
-                <div>
-                    <a href="add.cal" class="btn btn-sm btn-light" style="margin: 0 -20px -5px -10px; background: rgb(214, 223, 204); color: white;">캘린더 추가</a>
-                </div>
-            </div>
-        </div>
-        <br>
-        <table class="table table-hover table-sm setting-list">
-            <thead>
-                <tr>
-                    <th>캘린더</th>
-                    <th>기본 캘린더</th>
-                </tr>
-            </thead>
-            <tbody>
-            	<c:forEach var="c" items="${ myCalList }">
-            		<c:choose>
-               			<c:when test="${ c.calDefault eq 'Y' }">
-               				<tr>
-			                    <td class="upDel_calendar">(기본) ${ c.calTitle }</td>
-			                    <input type="hidden" id="defaultNo" value="${ c.calNo }">
-			                    <td>
-			                        <div class="custom-control custom-radio">
-		                                <input type="radio" class="custom-control-input radioDefault" id="Y" name="default">
-		                                <label class="custom-control-label" for="Y"></label>
-		                            </div>
-			                    </td>
-			                </tr>
-               			</c:when>
-               			<c:otherwise>
-               				<tr>
-			                    <td class="upDel_calendar">${ c.calTitle }</td>
-			                    <input type="hidden" value="${ c.calNo }">
-			                    <td>
-			                        <div class="custom-control custom-radio">
-		                                <input type="radio" class="custom-control-input radioDefault" id="customRadio${ c.calNo }" name="default">
-		                                <label class="custom-control-label" for="customRadio${ c.calNo }"></label>
-		                            </div>
-			                    </td>
-			                </tr>
-               			</c:otherwise>
-               		</c:choose>
-            	</c:forEach>
-            </tbody>
-        </table>
-    </div>
+		<jsp:include page="sidebar.jsp"/>
+
+		<div id="content">
+			<div id="con-title">
+				<span>
+					<h5>내 캘린더 관리</h5>
+				</span>
+				<br>
+				<div id="add">
+					<div>
+						<a href="add.cal" class="btn btn-sm btn-light" style="margin: 0 -20px -5px -10px; background: rgb(214, 223, 204); color: white;">캘린더 추가</a>
+					</div>
+				</div>
+			</div>
+			<br>
+			<table class="table table-hover table-sm setting-list">
+				<thead>
+					<tr>
+						<th>캘린더</th>
+						<th>기본 캘린더</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="c" items="${ myCalList }">
+						<c:choose>
+							<c:when test="${ c.calDefault eq 'Y' }">
+								<tr>
+									<td class="upDel_calendar">(기본) ${ c.calTitle }</td>
+									<input type="hidden" id="defaultNo" value="${ c.calNo }">
+									<td>
+										<div class="custom-control custom-radio">
+											<input type="radio" class="custom-control-input radioDefault" id="Y" name="default">
+											<label class="custom-control-label" for="Y"></label>
+										</div>
+									</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<tr>
+									<td class="upDel_calendar">${ c.calTitle }</td>
+									<input type="hidden" value="${ c.calNo }">
+									<td>
+										<div class="custom-control custom-radio">
+											<input type="radio" class="custom-control-input radioDefault" id="customRadio${ c.calNo }" name="default">
+											<label class="custom-control-label" for="customRadio${ c.calNo }"></label>
+										</div>
+									</td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+	</div>
     
     
     

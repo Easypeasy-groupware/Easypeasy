@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <style>
     /* 전체 wrapper */
-    .wrapper { width: 1200px; margin: 0 auto;} /* 중앙 정렬을 위한 margin: 0 auto; */
+    .wrapper { width: 1200px; margin: 0 auto; position: absolute; top: 120px} /* 중앙 정렬을 위한 margin: 0 auto; */
     body {font-family: Arial, sans-serif; margin: 0; padding: 0;}
 
     /* 게시판 스타일 */

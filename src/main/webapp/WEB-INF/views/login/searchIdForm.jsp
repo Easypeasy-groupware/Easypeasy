@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <style>
+        #main{  
+            position: absolute; top: 120px;
+        }
         .outer{
             width: 1200px;
             height: 100vh;
@@ -81,44 +84,48 @@
 		<c:remove var="alertMsg" scope="session"/>
 	</c:if> 
 
-    <div class="outer" align="center">
+    <div id="main">
 
-        <div class="title">
-            <b style="font-size: 80px;">EASY PEASY</b>
-        </div>
+        <div class="outer" align="center">
 
-        <div class="login-area">
-            
-			<div class="loginForm">
-				<div class="idTitle"><b>아이디 찾기</b></div>
-				
-				<div class="tb">
-                이름<br>
-                <input type="text" class="ip" id="empName" required placeholder="이름"> <br><br>
+            <div class="title">
+                <b style="font-size: 80px;">EASY PEASY</b>
+            </div>
+
+            <div class="login-area">
                 
-                휴대폰 번호<br>
-                <input type="text" class="ip" id="phone" required placeholder="휴대폰 번호(-제외)">
+                <div class="loginForm">
+                    <div class="idTitle"><b>아이디 찾기</b></div>
+                    
+                    <div class="tb">
+                    이름<br>
+                    <input type="text" class="ip" id="empName" required placeholder="이름"> <br><br>
+                    
+                    휴대폰 번호<br>
+                    <input type="text" class="ip" id="phone" required placeholder="휴대폰 번호(-제외)">
+                    
+                    <br><br>
+                    <button type="button" class="button" id="sendSms" onclick="sms();">인증번호 받기</button> <br><br>
+
                 
-                <br><br>
-                <button type="button" class="button" id="sendSms" onclick="sms();">인증번호 받기</button> <br><br>
+                    <div class="inputCodeForm">
+                        <input type="text" class="cCode cInput" placeholder="6자리 입력" required>
+                        <button class="sendAgain cButton" onclick="sms();">재발송</button>
 
-              
-                <div class="inputCodeForm">
-                    <input type="text" class="cCode cInput" placeholder="6자리 입력" required>
-                    <button class="sendAgain cButton" onclick="sms();">재발송</button>
+                        <button class="submitCode cButton">확인</button>
+                    </div>
 
-                    <button class="submitCode cButton">확인</button>
+                            
+
+                    </div>
                 </div>
+                
+                
 
-                           
+                
+                
+            </div>
 
-            	</div>
-			</div>
-			
-            
-
-			
-            
         </div>
 
     </div>
