@@ -99,7 +99,7 @@
 			<div class="container">
 	          <form>
 	              <div class="search-container">
-	                  <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#tree-modal">사원 검색</button>
+	                  <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#tree-modal">조직도</button>
 	              </div>
 	          </form>
 	          
