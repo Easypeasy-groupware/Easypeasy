@@ -12,6 +12,7 @@
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 
 <style>
+    #main{position: absolute; top: 120px; left: 330px;}
     .content-outer{width:1000px; padding-left:10px; margin-left:200px; padding-top:20px;}
     .content-outer *{box-sizing: border-box;}
     
@@ -48,190 +49,194 @@
 </style>
 </head>
 <body>
+    <jsp:include page="../common/header.jsp"/>
 
-	<jsp:include page="addMenubar.jsp" />
-	
-    <div class="content-outer">
-    
-		<div class="search" align="right" style="float:right">
-            <input type="text" id="searchKey" placeholder="이름, 회사, 전화번호">
-            <button id="searchBtn">검색</button>
-        </div>
+    <div id="main">
+
+        <jsp:include page="addMenubar.jsp" />
         
-        <p id="address-group">외부주소록</p>
-        <p id="group-name">전체 총 ${ count }명</p>
-
-		<br><br>
-		
-        <button class="btnGroup" id="sendMail">메일쓰기</button>
-        <button class="btnGroup" id="myAddr">등록한 연락처</button>
-		<script>
-			$("#myAddr").click(function(){
-				location.href="extReg.add";
-			})
-		</script>
-        <br>
-
-        <div id="psLike">
-            <table id="addList">
-                <colgroup>
-                    <col style="width:50px;"><!-- 체크박스 -->
-                    <col style="width:50px;"><!-- 별 -->
-                    <col style="width:100px;"><!--이름-->
-                    <col style="width:100px;"><!--직위-->
-                    <col style="width:150px;"><!--부서-->
-                    <col style="width:200px;"><!--휴대폰-->
-                    <col style="width:250px;"><!--이메일-->
-                    <col style="width:150px;"><!--그룹-->
-                </colgroup>
-                <thead align="center">
-                    <tr>
-                        <th style="display:none">no</th>
-                        <th><input type="checkbox" id="psCheck"></input></th>
-                        <th></th>
-                        <th>이름</th>
-                        <th>직위</th>
-                        <th>부서</th>                        
-                        <th>휴대폰</th>
-                        <th>이메일</th>
-                        <th>그룹</th>
-                    </tr>
-                </thead>
-                <tbody align="center" id="ps-tbody">
-                <c:choose>
-                	<c:when test="${ empty list }">
-                		<tr>
-                			<td colspan="9">등록된 공유주소록이 없습니다😅</td>
-                		</tr>
-                	</c:when>
-                	<c:otherwise>
-	                	<c:forEach var="a" items="${ list }">
-		                    <tr>
-		                        <td style="display:none">${ a.addNo }</td>
-		                        <td><input type="checkbox" class="ps-checkbox"></input></td>
-		                        <td class="like">
-		                        	<c:forEach var = "f" items="${ fList }">
-			                        
-			                        	<c:if test="${ a.addNo eq f.addNo}">
-			                        		⭐
-			                        	</c:if>
-			                        	
-			                        </c:forEach>
-		
-		                        </td>
-		                        <td class="clck-detail">${ a.addName }</td>
-		                        <td class="clck-detail">${ a.addJob }</td>
-		                        <td class="clck-detail">${ a.addDept }</td>	                        
-		                        <td class="clck-detail">${ a.phone }</td>
-		                        <td class="clck-detail">${ a.email }</td>
-		                        <td>${ a.group.groupName }</td>
-			                        
-		                    </tr>
-	                    </c:forEach>
-                	</c:otherwise>
-                </c:choose>
-                </tbody>
-            </table>
-        </div>
-
-        <script>
-            $("#psCheck").click(function(){ /*체크박스*/
-                if($(this).prop("checked")){
-                    $(".ps-checkbox").prop("checked", true);
-                   
-                }else {
-                    $(".ps-checkbox").prop("checked", false);
-                }
-            })
-            $(".ps-checkbox").click(function(){
-            	if($(this).prop("checked")){
-            		 
-            	}else{
-            		$("#psCheck").prop("checked", false);
-            	}
-            })
-
-            $(function(){ //즐겨찾기 리스트 출력
-            	$(".like").each(function(i, e){
-            		if($(this).html().trim().length == 0){
-                		$(this).html('<img src="resources/common_images/star_vacant.png">');
-                	}
-            		
-            	})
-            	
-            })
+        <div class="content-outer">
+        
+            <div class="search" align="right" style="float:right">
+                <input type="text" id="searchKey" placeholder="이름, 회사, 전화번호">
+                <button id="searchBtn">검색</button>
+            </div>
             
-            $(".like").click(function(){//즐겨찾기
-            	if($(this).html()=="⭐"){
-                    $(this).html('<img src="resources/common_images/star_vacant.png">');
-                    $.ajax({
-                    	url:"deleteFavAdd.add",
-                    	data:{
-                    		empNo:${loginUser.empNo},
-                    		addNo:$(this).siblings().eq(0).text()
-                    	},
-                    	success:function(result){
-                    		if(result == "fail"){
-                    			console.log("즐겨찾기 삭제용 ajax 통신 실패");
-                    		}
-                    	},error:function(){
-                    		console.log("즐겨찾기 삭제용 ajax 통신 실패");
-                    	}
+            <p id="address-group">외부주소록</p>
+            <p id="group-name">전체 총 ${ count }명</p>
+
+            <br><br>
+            
+            <button class="btnGroup" id="sendMail">메일쓰기</button>
+            <button class="btnGroup" id="myAddr">등록한 연락처</button>
+            <script>
+                $("#myAddr").click(function(){
+                    location.href="extReg.add";
+                })
+            </script>
+            <br>
+
+            <div id="psLike">
+                <table id="addList">
+                    <colgroup>
+                        <col style="width:50px;"><!-- 체크박스 -->
+                        <col style="width:50px;"><!-- 별 -->
+                        <col style="width:100px;"><!--이름-->
+                        <col style="width:100px;"><!--직위-->
+                        <col style="width:150px;"><!--부서-->
+                        <col style="width:200px;"><!--휴대폰-->
+                        <col style="width:250px;"><!--이메일-->
+                        <col style="width:150px;"><!--그룹-->
+                    </colgroup>
+                    <thead align="center">
+                        <tr>
+                            <th style="display:none">no</th>
+                            <th><input type="checkbox" id="psCheck"></input></th>
+                            <th></th>
+                            <th>이름</th>
+                            <th>직위</th>
+                            <th>부서</th>                        
+                            <th>휴대폰</th>
+                            <th>이메일</th>
+                            <th>그룹</th>
+                        </tr>
+                    </thead>
+                    <tbody align="center" id="ps-tbody">
+                    <c:choose>
+                        <c:when test="${ empty list }">
+                            <tr>
+                                <td colspan="9">등록된 공유주소록이 없습니다😅</td>
+                            </tr>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach var="a" items="${ list }">
+                                <tr>
+                                    <td style="display:none">${ a.addNo }</td>
+                                    <td><input type="checkbox" class="ps-checkbox"></input></td>
+                                    <td class="like">
+                                        <c:forEach var = "f" items="${ fList }">
+                                        
+                                            <c:if test="${ a.addNo eq f.addNo}">
+                                                ⭐
+                                            </c:if>
+                                            
+                                        </c:forEach>
+            
+                                    </td>
+                                    <td class="clck-detail">${ a.addName }</td>
+                                    <td class="clck-detail">${ a.addJob }</td>
+                                    <td class="clck-detail">${ a.addDept }</td>	                        
+                                    <td class="clck-detail">${ a.phone }</td>
+                                    <td class="clck-detail">${ a.email }</td>
+                                    <td>${ a.group.groupName }</td>
+                                        
+                                </tr>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
+                    </tbody>
+                </table>
+            </div>
+
+            <script>
+                $("#psCheck").click(function(){ /*체크박스*/
+                    if($(this).prop("checked")){
+                        $(".ps-checkbox").prop("checked", true);
+                    
+                    }else {
+                        $(".ps-checkbox").prop("checked", false);
+                    }
+                })
+                $(".ps-checkbox").click(function(){
+                    if($(this).prop("checked")){
+                        
+                    }else{
+                        $("#psCheck").prop("checked", false);
+                    }
+                })
+
+                $(function(){ //즐겨찾기 리스트 출력
+                    $(".like").each(function(i, e){
+                        if($(this).html().trim().length == 0){
+                            $(this).html('<img src="resources/common_images/star_vacant.png">');
+                        }
+                        
                     })
-                }else{
-                    $(this).html("⭐");
-                    $.ajax({
-                    	url:"insertFavAdd.add",
-                    	data:{
-                    		empNo:${loginUser.empNo},
-                    		addNo:$(this).siblings().eq(0).text()
-                    	},
-                    	success:function(result){
-                    		if(result == "fail"){
-                    			console.log("즐겨찾기 삭제용 ajax 통신 실패");
-                    		}
-                    	},error:function(){
-                    		console.log("즐겨찾기 삭제용 ajax 통신 실패");
-                    	}
-                    })
-                }
-            })
-            
-            $(".clck-detail").click(function(){ // 상세페이지
-                location.href = 'extAddInfo.add?no=' + $(this).siblings().eq(0).text(); 
-            })
-            
-        </script>
+                    
+                })
+                
+                $(".like").click(function(){//즐겨찾기
+                    if($(this).html()=="⭐"){
+                        $(this).html('<img src="resources/common_images/star_vacant.png">');
+                        $.ajax({
+                            url:"deleteFavAdd.add",
+                            data:{
+                                empNo:${loginUser.empNo},
+                                addNo:$(this).siblings().eq(0).text()
+                            },
+                            success:function(result){
+                                if(result == "fail"){
+                                    console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                                }
+                            },error:function(){
+                                console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                            }
+                        })
+                    }else{
+                        $(this).html("⭐");
+                        $.ajax({
+                            url:"insertFavAdd.add",
+                            data:{
+                                empNo:${loginUser.empNo},
+                                addNo:$(this).siblings().eq(0).text()
+                            },
+                            success:function(result){
+                                if(result == "fail"){
+                                    console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                                }
+                            },error:function(){
+                                console.log("즐겨찾기 삭제용 ajax 통신 실패");
+                            }
+                        })
+                    }
+                })
+                
+                $(".clck-detail").click(function(){ // 상세페이지
+                    location.href = 'extAddInfo.add?no=' + $(this).siblings().eq(0).text(); 
+                })
+                
+            </script>
 
-        <br><br>
+            <br><br>
 
-        <div align="center">
-            <ul id="paging">
-            	
-            	<c:if test="${ pi.currentPage ne 1 }">
-                   	<li><a href="externalAll.add?cpage=${ pi.currentPage-1 }"> < </a></li>
-                </c:if>
-                   
-                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-            		<c:choose>
-            		<c:when test="${ pi.currentPage eq p }">
-	            		<li class="on"><a href="externalAll.add?cpage=${ p }">${ p }</a></li>
-            		</c:when>
-            		<c:otherwise>
-            			<li><a href="externalAll.add?cpage=${ p }">${ p }</a></li>
-            		</c:otherwise>
-            		</c:choose>
-                </c:forEach>
+            <div align="center">
+                <ul id="paging">
+                    
+                    <c:if test="${ pi.currentPage ne 1 }">
+                        <li><a href="externalAll.add?cpage=${ pi.currentPage-1 }"> < </a></li>
+                    </c:if>
+                    
+                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                        <c:choose>
+                        <c:when test="${ pi.currentPage eq p }">
+                            <li class="on"><a href="externalAll.add?cpage=${ p }">${ p }</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li><a href="externalAll.add?cpage=${ p }">${ p }</a></li>
+                        </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
 
-                   
-                <c:if test="${ pi.currentPage ne pi.maxPage }">
-                   	<li><a href="externalAll.add?cpage=${ pi.currentPage+1 }"> > </a></li>
-               	</c:if>
-            </ul>
-        </div>
+                    
+                    <c:if test="${ pi.currentPage ne pi.maxPage }">
+                        <li><a href="externalAll.add?cpage=${ pi.currentPage+1 }"> > </a></li>
+                    </c:if>
+                </ul>
+            </div>
 
-    
-    </div>    
+        
+        </div>    
+    </div>
 </body>
 </body>
 </html>

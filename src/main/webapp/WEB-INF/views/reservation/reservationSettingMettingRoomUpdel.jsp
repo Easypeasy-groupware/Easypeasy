@@ -7,6 +7,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+    #main{  
+        position: absolute; top: 120px;
+    }
+    
 	#content{
         border-left: 1px solid lightgray;
         width: 1000px;
@@ -36,34 +40,37 @@
 	
 	<jsp:include page="../common/header.jsp"/>
 
-    <jsp:include page="sidebar.jsp"/>
+    <div id="main">
 
-	<div id="content">
-        <div id="con-title">
-            <span>
-                <h5>자산 수정/삭제</h5>
-            </span>
-        </div>
-        <br>
-        <form action="mettingRoomUp.re" method="post">
-        <input type="hidden" name="resourceNo" value=${ mno }>
-            <div id="content-1">
-                <table>
-                    <tr>
-                        <td width="70">자산명</td>
-                        <td>
-                            <input type="text" name="resourceName" value="${ mname }" size="100" required>
-                        </td>
-                    </tr>
-                </table>
-                <br>
-                <div align="center">
-                    <button class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">확인</button>&nbsp;&nbsp;
-                    <input type="reset" class="btn btn-sm btn-light" style="background: white;" value="취소">&nbsp;&nbsp;
-                    <a href="mettingRoomDel.re?mno=${ mno }" class="btn btn-sm" style="border: 1px solid lightgray; background: white;">삭제</a>
-                </div>
+        <jsp:include page="sidebar.jsp"/>
+
+        <div id="content">
+            <div id="con-title">
+                <span>
+                    <h5>자산 수정/삭제</h5>
+                </span>
             </div>
-        </form>
+            <br>
+            <form action="mettingRoomUp.re" method="post">
+            <input type="hidden" name="resourceNo" value=${ mno }>
+                <div id="content-1">
+                    <table>
+                        <tr>
+                            <td width="70">자산명</td>
+                            <td>
+                                <input type="text" name="resourceName" value="${ mname }" size="100" required>
+                            </td>
+                        </tr>
+                    </table>
+                    <br>
+                    <div align="center">
+                        <button class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">확인</button>&nbsp;&nbsp;
+                        <input type="reset" class="btn btn-sm btn-light" style="background: white;" value="취소">&nbsp;&nbsp;
+                        <a href="mettingRoomDel.re?mno=${ mno }" class="btn btn-sm" style="border: 1px solid lightgray; background: white;">삭제</a>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
 </body>

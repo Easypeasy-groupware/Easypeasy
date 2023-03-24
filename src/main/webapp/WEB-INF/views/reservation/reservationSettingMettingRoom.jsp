@@ -10,6 +10,10 @@
 	div{
         box-sizing: border-box;
     }
+
+    #main{  
+        position: absolute; top: 120px;
+    }
     
     #content{
         width: 1000px;
@@ -57,47 +61,49 @@
 
 	<jsp:include page="../common/header.jsp"/>
 
-    <jsp:include page="sidebar.jsp"/>
+    <div id="main">
 
-    <div id="content">
-        <div id="con-title">
-            <span>
-                <h5>자산 관리</h5>
-            </span>
-            <div class="dropdown">
-			  	<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
-			    	회의실/빔프로젝터
-			  	</button>
-			  	<div class="dropdown-menu">
-				    <a class="dropdown-item" href="settingMettingRoomView.re">회의실</a>
-				    <a class="dropdown-item" href="settingBeamProjectorView.re">빔프로젝터</a>
-			  	</div>
-			</div>
-        </div>
-        <br>
-        <div id="content-1">
-            <a id="add" href="resourceAddMettingRoomView.re" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">자산 추가</a>
-            <table align="center" class="table table-hover table-sm">
-                <thead>
-                    <tr>
-                        <th>항목</th>
-                        <th>관리</th>
-                    </tr>
-                </thead>
-                <tbody>
-                	<c:forEach var="rm" items="${ meList }">
-	                    <tr>
-	                        <td>${ rm.resourceName }</td>
-	                        <td>
-	                            <button onclick="location.href='upDelMettingRoom.re?mno=${ rm.resourceNo }&mname=${ rm.resourceName }'" style="border: none; background: none;"><i class="fas fa-cog"></i></button>
-	                        </td>
-	                    </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
+        <jsp:include page="sidebar.jsp"/>
+
+        <div id="content">
+            <div id="con-title">
+                <span>
+                    <h5>자산 관리</h5>
+                </span>
+                <div class="dropdown">
+                    <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                        회의실/빔프로젝터
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="settingMettingRoomView.re">회의실</a>
+                        <a class="dropdown-item" href="settingBeamProjectorView.re">빔프로젝터</a>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div id="content-1">
+                <a id="add" href="resourceAddMettingRoomView.re" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">자산 추가</a>
+                <table align="center" class="table table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th>항목</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="rm" items="${ meList }">
+                            <tr>
+                                <td>${ rm.resourceName }</td>
+                                <td>
+                                    <button onclick="location.href='upDelMettingRoom.re?mno=${ rm.resourceNo }&mname=${ rm.resourceName }'" style="border: none; background: none;"><i class="fas fa-cog"></i></button>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
- 
 
 </body>
 </html>

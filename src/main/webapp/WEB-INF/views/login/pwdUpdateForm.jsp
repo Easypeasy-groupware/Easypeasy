@@ -6,7 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
+    <style>
+        #main{  
+            position: absolute; top: 120px;
+        }
         .outer{
             width: 1200px;
             height: 100vh;
@@ -56,45 +59,47 @@
 </head>
 <body>
 
+    <div id="main">
 
-	<div class="outer" align="center">
+        <div class="outer" align="center">
 
-        <div class="title">
-            <b style="font-size: 80px;">EASY PEASY</b>
+            <div class="title">
+                <b style="font-size: 80px;">EASY PEASY</b>
+            </div>
+
+            <div class="login-area">
+                
+
+                <form action="" method="post" class="loginForm" >
+                    <div class="idTitle"><b>비밀번호 변경</b></div>
+                    <table>
+                    <tr>
+                        <td>새로운 비밀번호</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="password" name="userPwd" required placeholder="변경할 비밀번호를 입력하세요.">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>비밀번호 확인</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" name="pwdCheck" required placeholder="비밀번호를 다시 한번 입력해주세요.">
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                
+                <button type="submit"><b>변경하기</b></button>
+                </form>
+
+
+                
+            </div>
+
         </div>
-
-        <div class="login-area">
-            
-
-            <form action="" method="post" class="loginForm" >
-                <div class="idTitle"><b>비밀번호 변경</b></div>
-                <table>
-                <tr>
-                    <td>새로운 비밀번호</td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="password" name="userPwd" required placeholder="변경할 비밀번호를 입력하세요.">
-                    </td>
-                </tr>
-                <tr>
-                    <td>비밀번호 확인</td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="text" name="pwdCheck" required placeholder="비밀번호를 다시 한번 입력해주세요.">
-                    </td>
-                </tr>
-            </table>
-            <br>
-            
-            <button type="submit"><b>변경하기</b></button>
-            </form>
-
-
-            
-        </div>
-
     </div>
 
 
