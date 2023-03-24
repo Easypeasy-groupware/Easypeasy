@@ -538,7 +538,7 @@
 				        , APP_SEQUENCE
 				        , APP_CHANGE
 				        , emp_name
-				        , dept_name
+				        , NVL(dept_name, '이피그룹') as "dept_name"
 				        , job_code
 				  from approval a
 				  join employee b on (a.emp_no = b.emp_no)
@@ -581,6 +581,30 @@
 				     by app_seq_no
 	</select>
 	
+	<select id="selectDetailSPrgRl" resultMap="approvalLineResult">
+				 select  
+				        APP_LINE_NO
+				        , REF_WHETHER
+				        , APP_SEQ_NO
+				        , APP_STATUS
+				        , to_char(UPDATE_DATE, 'YYYY-MM-dd') as "update_date"
+				        , a.EMP_NO
+				        , APP_NO
+				        , APP_COMMENT
+				        , ENROLL_DATE
+				        , COUNT
+				        , emp_name
+				        , dept_name
+				        , job_code
+				        , emp_profile
+				   from app_line a
+				   left join employee b on (a.emp_no = b.emp_no)
+				   left join department c on (b.dept_code = c.dept_code)
+				  where app_no = #{appNo}	
+				  	and ref_whether = 'Y' 
+				  order 
+				     by app_seq_no	
+	</select>
 
 	<select id="selectDetailSPrgVf" resultMap="vacationFormResult">
 				SELECT 
@@ -630,7 +654,7 @@
 			            , APP_NO
 			            , a.EMP_NO
 			            , emp_name
-			            , dept_name
+			            , NVL(dept_name, '이피그룹') as "dept_name"
 			            , job_code
 			     from  app_reply a
 			     join  employee b on (a.emp_no = b.emp_no)
@@ -731,6 +755,7 @@
 			   , app_amount
 			   , app_sequence
 			   , app_change
+			   , status
 			  )
 			    values
 			  (
@@ -747,6 +772,7 @@
 			   , #{appAmount}
 			   , #{appSequence}
 			   , #{appChange}
+			   , #{status}
 			  )  	
 	</insert>
 	
@@ -911,4 +937,74 @@
 			  join department c on (b.dept_code = c.dept_code)
 			  where app_no = #{appNo}	
 	</select>
+	
+	<update id="updateApproval">
+		   update
+                   approval
+              set
+                     enroll_date = #{enrollDate}
+                   , writer_comment = #{writerComment}
+                   , title = #{title}
+                   , content = #{content}
+                   , app_amount = #{appAmount}
+                   , app_sequence = #{appSequence}
+                   , app_change = #{appChange}
+                   , status = #{status}     
+            where  app_no = #{appNo}	
+	</update>
+	
+	<delete id="deleteApprovalLine">
+			delete app_line
+             where app_no = #{appNo}	
+	</delete>
+
+	<update id="updateVacationForm">
+			update 
+			       vac_form
+			   set   
+			        VAC_KIND = #{vacKind}
+			        , VAC_START = #{vacStart}
+			        , VAC_END = #{vacEnd}
+			        , HALF_STATUS = #{halfStatus}
+			        , VAC_USE = #{vacUse} 
+			        , HALF_DAY = #{halfDay}
+			  where app_no = #{appNo} 	
+	</update>
+
+	<update id="updateOverTimeForm">
+			update 
+			        ot_form
+			   set   
+			        OVERTIME_KIND = #{otKind}
+			        , OVER_DATE = #{otDate}
+			        , OVER_START_HOUR = #{otStart}
+			        , OVER_END_HOUR = #{otEnd}
+			        , OVER_USE_TIME = #{otUseTime}
+			  where app_no = #{appNo}      	
+	</update>
+	
+	<insert id="updateApprovalLine">
+			 insert
+			   into app_line
+			      (
+			        app_line_no
+			      , ref_whether
+			      , app_seq_no
+			      , emp_no
+			      , app_no
+			      )  
+			        values
+			      (
+			        seq_alno.nextval
+			      , #{refWhether}
+			      , (
+			           SELECT count(*)+ 1 
+			             FROM  app_line
+			            where  app_no = #{appNo}
+			         )
+			      , #{recEmpNo} 
+			      , #{appNo}	
+			      )
+	</insert>
+	
 </mapper>

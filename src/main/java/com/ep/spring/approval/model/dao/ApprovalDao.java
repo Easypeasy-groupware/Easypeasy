@@ -132,7 +132,9 @@ public class ApprovalDao {
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectDetailSPrgAl", a);
 	}
 	
-
+	public ArrayList<ApprovalLine> selectDetailSPrgRl(SqlSessionTemplate sqlSession, Approval a){
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectDetailSPrgRl", a);
+	}
 	
 	public VacationForm selectDetailSPrgVf(SqlSessionTemplate sqlSession, Approval a) {
 		return sqlSession.selectOne("approvalMapper.selectDetailSPrgVf", a);
@@ -214,6 +216,45 @@ public class ApprovalDao {
 	public Approval selectTempApproval(SqlSessionTemplate sqlSession, int appNo) {
 		return sqlSession.selectOne("approvalMapper.selectTempApproval", appNo);
 	}
-
+	
+	public int updateApproval(SqlSessionTemplate sqlSession, Approval ap) {
+		return sqlSession.update("approvalMapper.updateApproval", ap);
+	}
+	
+	public int updateApprovalLine(SqlSessionTemplate sqlSession, ArrayList<ApprovalLine>al) {
+		
+		int result1 = 0;
+		int result2 = 0;
+		
+		int num = al.get(0).getAppNo();
+		System.out.println(num);
+		
+		result1 = sqlSession.delete("approvalMapper.deleteApprovalLine", num);
+		
+		for(ApprovalLine a : al) {
+			result2 += sqlSession.insert("approvalMapper.updateApprovalLine", a);
+		}
+		
+		return result1 + result2;
+ 	}
+	
+	public int updateAttachment(SqlSessionTemplate sqlSession, ArrayList<Attachment> atList) {
+		
+		int result = 0;
+		
+		for(Attachment a : atList) {
+			result += sqlSession.insert("approvalMapper.insertAttachment", a);
+		}
+		return result;
+	}
+	
+	public int updateVacationForm(SqlSessionTemplate sqlSession, VacationForm vf) {
+		return sqlSession.update("approvalMapper.updateVacationForm", vf);
+		
+	}
+	
+	public int updateOverTimeForm(SqlSessionTemplate sqlSession, OverTimeForm ot) {
+		return sqlSession.update("approvalMapper.updateOverTimeForm", ot);
+	}
 	
 }

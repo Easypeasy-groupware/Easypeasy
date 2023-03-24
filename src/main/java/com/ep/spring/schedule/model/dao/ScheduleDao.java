@@ -41,12 +41,33 @@ public class ScheduleDao {
 		
 	}
 	
-	
 	public Calendar selectCalendar(SqlSessionTemplate sqlSession, int calNo) {
 		return sqlSession.selectOne("scheduleMapper.selectCalendar", calNo);
 	}
 	
 	public int updateCalendar(SqlSessionTemplate sqlSession, Calendar c) {
 		return sqlSession.update("scheduleMapper.updateCalendar", c);
+	}
+	
+	public int deleteSchedule(SqlSessionTemplate sqlSession, int calNo) {
+		return sqlSession.delete("scheduleMapper.deleteSchedule", calNo);
+	}
+	
+	public int deleteCalendar(SqlSessionTemplate sqlSession, int calNo) {
+		return sqlSession.delete("scheduleMapper.deleteCalendar", calNo);
+	}
+	
+
+	public int defaultCalUpdate(SqlSessionTemplate sqlSession, int calNo) {
+		return sqlSession.update("scheduleMapper.defaultCalUpdate", calNo);
+	}
+	
+	public int defaultUpdate(SqlSessionTemplate sqlSession, int calNo) {
+		return sqlSession.update("scheduleMapper.defaultUpdate", calNo);
+	}
+	
+	
+	public ArrayList<Calendar> scheduleList(SqlSessionTemplate sqlSession, int empNo){
+		return (ArrayList)sqlSession.selectList("scheduleMapper.scheduleList", empNo);
 	}
 }

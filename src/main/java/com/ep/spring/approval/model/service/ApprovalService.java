@@ -58,6 +58,7 @@ public interface ApprovalService {
 	// 10. 기안진행/ 기안문서 상세페이지 조회용 서비스
 	Approval selectDetailSPrgAp(Approval a);
 	ArrayList<ApprovalLine> selectDetailSPrgAl(Approval a);
+	ArrayList<ApprovalLine> selectDetailSPrgRl(Approval a);
 	ArrayList<Attachment> selectDetailSPrgAt(Approval a);
 	OverTimeForm selectDetailSPrgOt(Approval a);
 	VacationForm selectDetailSPrgVf(Approval a);
@@ -85,5 +86,7 @@ public interface ApprovalService {
 	// 17. 수정하기 위해 문서 불러오기
 	Approval selectTempApproval(int no);
 	
+	// 18. 문서수정용 서비스
+	int updateApproval(Approval ap, ArrayList<ApprovalLine> al, VacationForm vf, OverTimeForm ot, ArrayList<Attachment> atList);
 	
 }

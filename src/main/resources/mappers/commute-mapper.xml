@@ -12,6 +12,7 @@
 		<result column="end_time" property="endTime" />
 		<result column="work_time" property="workTime" />
 		<result column="com_status" property="comStatus" />
+		<result column="le_status" property="leStatus" />
 	</resultMap>
 	
 	<resultMap type="VacationRecode" id="vacResult">
@@ -23,7 +24,6 @@
 		<result column="vac_divide" property="vacDivide" />
 		<result column="vac_category" property="vacCategory" />
 		<result column="vac_remaining" property="vacRemaining" />
-		<result column="emp_name" property="empName" />
 	</resultMap>
 	
 	<resultMap id="vacFormResult" type="VacationForm">
@@ -102,13 +102,15 @@
 	                   , ENROLL_DATE
 	                   , START_TIME
 	                   , END_TIME
-	                   , COM_STATUS) 
+	                   , COM_STATUS
+	                   , LE_STATUS) 
 	        values (SEQ_COMNO.nextval
 	              , emp_no
 	              , to_char(sysdate, 'YYYY/MM/DD')
 	              , null
 	              , null
-	              , 'AB')
+	              , 'AB'
+	              , 'N')
 		select emp_no
 		  from employee
 		 where employee.ent_yn = 'N'
@@ -183,6 +185,7 @@
 			      , end_time
 			      , work_time
 			      , com_status
+			      , le_status
 		       from commute
 		      where emp_no = #{empNo}
 	</select>
@@ -217,7 +220,54 @@
 		   and com_code = #{comCode}
 	</update>
 	
+	<update id="updateComStatus">
+		update 
+			   commute
+		   set com_status = #{comStatus}
+		 where emp_no = #{empNo}
+		   and enroll_date = #{enrollDate}
+	</update>
+	
 
+	<update id="updateLeStatus">
+		update 
+			   commute
+		   set le_status = #{leStatus}
+		 where emp_no = #{empNo}
+		   and enroll_date = #{enrollDate}
+	</update>
+	
+	<select id="countTr" resultType="_int">
+		  select
+				 count(*)
+			from commute
+		   where com_status = 'TR'	
+             and emp_no = #{empNo}
+	</select>
+	
+	<select id="countLe" resultType="_int">
+		  select
+				 count(*)
+			from commute
+		   where le_status = 'Y'
+             and emp_no = #{empNo}
+	</select>
+	
+	<select id="countAb" resultType="_int">
+		  select
+				 count(*)
+			from commute
+		   where com_status = 'AB'	
+             and emp_no = #{empNo}
+	</select>
+	
+	<select id="countEnd" resultType="_int">
+		  select
+				 count(*)
+			from commute
+		   where end_time is null
+             and emp_no = #{empNo}
+	</select>
 	
 
 </mapper>

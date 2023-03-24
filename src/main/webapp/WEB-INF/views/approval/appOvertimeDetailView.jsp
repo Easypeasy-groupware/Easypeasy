@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <style>
+        #main{position: absolute; top: 120px;}
 
         .form-outer{ 
             width:1000px;
@@ -49,349 +50,361 @@
 </head>
 <body>
     <jsp:include page="../common/header.jsp"/>
-    <jsp:include page="appMenubar.jsp" />
-    <div class="form-outer">
-        <div class="left-outer" style=" border-right:1px solid gray;">
-            <div class="left-form1">
-                <p><b style="font-size:30px;">연장근무 신청서</b></p>
-            </div>
-            <div class="left-form2">
-                <c:choose>
-                    <c:when test="${loginUser.empNo eq ap.writerNo && ap.tstatus eq '진행중' }" >
-                        <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서삭제</span> |
-                        <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">기안수정</span>
-                        <br><br>
-                    </c:when> 
-                    <c:when test="${loginUser.empNo eq ap.writerNo &&  ap.tstatus != '진행중' }" >
-                        <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서삭제</span> |
-                        <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">재기안</span>
-                        <br><br>
-                    </c:when>                       
-                    <c:when test="${ap.st eq '참조대기' || ap.st eq '참조전체'}" >
-                       
-                    </c:when>  
-                    <c:when test="${loginUser.empNo != ap.writerNo &&  ap.tstatus != '진행중' }" >
 
-                        <br>
-                    </c:when>
-                    <c:when test="${loginUser.empNo != ap.writerNo && ap.tstatus eq '진행중'}">
-                    	<c:forEach var="c" items="${list1}">
-                    		<c:choose>
-	                    		<c:when test="${c.recEmpNo eq loginUser.empNo && c.appStatus != '미결재' }">
-	                    			<br>
-	                    		</c:when>
-	                    		<c:when test="${c.recEmpNo eq loginUser.empNo && c.appStatus eq '미결재' }">
-			                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#approval">결재</a> |  
-			                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#companion">반려</a> |
-			                        <span href="" style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">문서수정</span>              			
-	                    		</c:when>
-	                    		<c:otherwise>
-	                    			<br>
-	                    		</c:otherwise>
-                    		</c:choose>
-                    	</c:forEach>                    	
-                    </c:when>                               
-                    <c:otherwise>
+	<div id="main">
 
-                        <br><br>
-                    </c:otherwise>    
+        <jsp:include page="appMenubar.jsp" />
+        <div class="form-outer">
+            <div class="left-outer" style=" border-right:1px solid gray;">
+                <div class="left-form1">
+                    <p><b style="font-size:30px;">연장근무 신청서</b></p>
+                </div>
+                <div class="left-form2">
+                    <c:choose>
+                        <c:when test="${loginUser.empNo eq ap.writerNo && ap.tstatus eq '진행중' }" >
+                            <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서삭제</span> |
+                            <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">기안수정</span>
+                            <br><br>
+                        </c:when> 
+                        <c:when test="${loginUser.empNo eq ap.writerNo &&  ap.tstatus != '진행중' }" >
+                            <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서삭제</span> |
+                            <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">재기안</span>
+                            <br><br>
+                        </c:when>                       
+                        <c:when test="${ap.st eq '참조대기' || ap.st eq '참조전체'}" >
                         
-                </c:choose> 
-                
-                <!-- 몰래 수정하거나 삭제하기  -->
-				<form action method="POST" id="postForm">
-					<input type="hidden" name="no" value="${ap.appNo }">
-					<c:forEach var="o" items="${list3 }">
-						<input type="hidden" name="filePath" value="${o.changeName }">
-							<!-- 첨부파일까지 삭제하기 위해 -->
-					</c:forEach>	
-				</form>                
-                
-                             
-            </div>
+                        </c:when>  
+                        <c:when test="${loginUser.empNo != ap.writerNo &&  ap.tstatus != '진행중' }" >
 
+                            <br>
+                        </c:when>
+                        <c:when test="${loginUser.empNo != ap.writerNo && ap.tstatus eq '진행중'}">
+                            <c:forEach var="c" items="${list1}">
+                                <c:choose>
+                                    <c:when test="${c.recEmpNo eq loginUser.empNo && c.appStatus != '미결재' }">
+                                        <br>
+                                    </c:when>
+                                    <c:when test="${c.recEmpNo eq loginUser.empNo && c.appStatus eq '미결재' }">
+                                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#approval">결재</a> |  
+                                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#companion">반려</a> |
+                                    </c:when>
+                                    <c:otherwise>
+                                        <br>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>                    	
+                        </c:when>                               
+                        <c:otherwise>
 
-            <div class="left-form3">
-
-                <table class="draft" style="width:100px; text-align:center; font-size:12px; margin-right:10px;" border="1">
-                    <tr>
-                        <td rowspan="4" style="background:rgb(223, 221, 221);">신<br>청</td>
-                        <td>
-                           ${ap.jobCode == 'J1'?'사원':
-                             ap.jobCode == 'J2'?'대리':
-                             ap.jobCode == 'J3'?'과장':
-                             ap.jobCode == 'J4'?'부장':
-                             ap.jobCode == 'J5'?'상무':
-                             ap.jobCode == 'J6'?'대표':''}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-	                        <img src="resources/common_images/approval.png" width="45px" /> 
-	                        <br>
-	                        ${ap.empName }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>${ap.enrollDate }</td>
-                    </tr>
-                </table>
-                
-                	<c:choose>
-                		<c:when test="${empty list1 }">
-			                <table class="draft" style="width:100px; text-align:center; font-size:12px; margin-right:10px;" border="1">
-			                    <tr>
-			                        <td rowspan="4" style="background:rgb(223, 221, 221);">승<br>인</td>
-			                        <td>
-			                           ${ap.jobCode == 'J1'?'사원':
-			                             ap.jobCode == 'J2'?'대리':
-			                             ap.jobCode == 'J3'?'과장':
-			                             ap.jobCode == 'J4'?'부장':
-			                             ap.jobCode == 'J5'?'상무':
-			                             ap.jobCode == 'J6'?'대표':''}
-			                        </td>
-			                    </tr>
-			                    <tr>
-			                        <td>
-				                        <img src="resources/common_images/approval.png" width="45px" /> 
-				                        <br>
-				                        ${ap.empName }
-			                        </td>
-			                    </tr>
-			                    <tr>
-			                        <td>${ap.enrollDate }</td>
-			                    </tr>
-			               </table>
-                		</c:when>
-                		<c:otherwise> 
-                			<c:forEach var="i" items="${list1 }">
-		                		<table class="draft" style="width:100px; text-align:center; font-size:12px;" border="1">
-				                    <tr>
-				                        <td rowspan="4" style="background:rgb(223, 221, 221);">승<br>인</td>
-				                        <td>
-				                           ${i.jobCode == 'J1'?'사원':
-				                             i.jobCode == 'J2'?'대리':
-				                             i.jobCode == 'J3'?'과장':
-				                             i.jobCode == 'J4'?'부장':
-				                             i.jobCode == 'J5'?'상무':
-				                             i.jobCode == 'J6'?'대표':''}
-				                        </td>
-				                    </tr>
-				                    <tr>
-				                        <td>
-				                        	<c:choose>
-				                        		<c:when test="${i.appStatus eq '결재' }">
-				                        			<img src="resources/common_images/approval.png" width="45px" />  
-				                        		</c:when>
-				                        		<c:otherwise>
-				                        			<br>${i.appStatus }
-				                        		</c:otherwise>
-				                        	</c:choose>
-				                        	<br>
-				                        	${i.empName }
-			                        	</td>
-				                    </tr>
-				                    <tr>
-				                        <td>${i.updateDate }</td>
-				                    </tr> 
-				               </table>
-			               </c:forEach>
-		                 </c:otherwise>   
-                    </c:choose>
-                </table>
-                <br><br><br><br>
-                
-            </div>
-            <div class="left-form4">
-                <br><br><br><br>
-                <table class="table-bordered">
-                    <tr>
-                        <td width="100px;" style="text-align:center">기안자</td>
-                        <td width="200px;">${ap.empName }</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center">소속</td>
-                        <td>${ap.deptName }</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center">기안일</td>
-                        <td>${ap.enrollDate }</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center">문서번호</td>
-                        <td>${ap.appChange }</td>
-                    </tr>
-                </table>
-                <br>
-            </div>
-            <div class="left-form5">
-                <table class="table-bordered" >
-                    <tr>
-                        <td width="100px;" style="text-align:center">신청현황</td>
-                        <td width="700px;">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center">근무구분</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center">근무일시</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center">근무시간</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="text-align:center">
-                            * 주간 근무시간 - 근무일이 포함된 한 주 <br>
-
-                            정상근무시간 + 연장근무 승인 요청에 대한 결재가 완료된 총 시간입니다. <br>
+                            <br><br>
+                        </c:otherwise>    
                             
-                            근태관리에서 시간 수정이 가능하므로  <br>
-                            
-                            주간 근무시간은 상이해질 수 있습니다. <br>
-                        </td>
-                      
-                    </tr>
-                    <tr>
-                        <td rowspan="5" style="text-align:center">신청사유</td>
-                        <td rowspan="5" height="150px;">내용</td>
-                    </tr>
-                    <tr>
-                    </tr>
-                    <tr>
-                        
-                    </tr>
-                    <tr>
-                       
-                    </tr>
-                    <tr>
-                      
-                    </tr>
+                    </c:choose> 
+                    
+                    <!-- 몰래 수정하거나 삭제하기  -->
+                    <form action method="POST" id="postForm">
+                        <input type="hidden" name="no" value="${ap.appNo }">
+                        <c:forEach var="o" items="${list3 }">
+                            <input type="hidden" name="filePath" value="${o.changeName }">
+                                <!-- 첨부파일까지 삭제하기 위해 -->
+                        </c:forEach>	
+                    </form>                
+                    
+                                
+                </div>
 
-                    <tr>
-                        <td style="text-align:center">첨부파일</td>
-                        <td></td>
-                    </tr>
-                </table>
-            </div>
-            <br>
-            <div class="left-form6" id="replyArea">
-            	<table  id="repTable" class="table-borderless" style="border:1px;" style="width:100%;">
-                    <thead>
-                        <tr height="100px;">
-                            <th colspan="2">
-                                <textarea class="form-control" name="" placeholder="내용을 입력해주세요" id="content" cols="55" rows="2" style="resize:none; width:640px;"></textarea>
-                            </th>
-                            <th style="vertical-align: middle" ><button class="btn btn-secondary" onclick="addReply();" style="width:100%; height:100%;">댓글작성</button></th>
+
+                <div class="left-form3">
+
+                    <table class="draft" style="width:100px; text-align:center; font-size:12px; margin-right:10px;" border="1">
+                        <tr>
+                            <td rowspan="4" style="background:rgb(223, 221, 221);">신<br>청</td>
+                            <td>
+                            ${ap.jobCode == 'J1'?'사원':
+                                ap.jobCode == 'J2'?'대리':
+                                ap.jobCode == 'J3'?'과장':
+                                ap.jobCode == 'J4'?'부장':
+                                ap.jobCode == 'J5'?'상무':
+                                ap.jobCode == 'J6'?'대표':''}
+                            </td>
                         </tr>
                         <tr>
-                            <td colspan="3">댓글 (<span id="rcount"></span>) </td> 
-                         </tr>                        
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-               
-            </div>
-            
-        </div>
-        
-        <div class="right-outer" style="padding-left:20px;">
-            <br>
-            <div style="text-align:center; padding:20px; font-size:20px;">
-                 <p><b> 결재선</b></p>
-            </div>
-           
-            <div class="app-comment" style="font-size:15px;">
-                <img src="<c:out value='${ loginUser.empProfile }' default='resources/common_images/businessman.png' />" id="profile-img" width="30px">
-                 &nbsp;
-                 ${ap.empName }
-                 &nbsp;
-                 ${ap.jobCode == 'J1'?'사원':
-                   ap.jobCode == 'J2'?'대리':
-                   ap.jobCode == 'J3'?'과장':
-                   ap.jobCode == 'J4'?'부장':
-                   ap.jobCode == 'J5'?'상무':
-                   ap.jobCode == 'J6'?'대표':''}
-                <br><br>
-                이지피지 | ${ap.deptName }
-                <br>
-                
-                기안 | ${ap.enrollDate }
-                <br><br>
-                <hgroup class="speech-bubble">
+                            <td>
+                                <img src="resources/common_images/approval.png" width="45px" /> 
+                                <br>
+                                ${ap.empName }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>${ap.enrollDate }</td>
+                        </tr>
+                    </table>
+                    
+                        <c:choose>
+                            <c:when test="${empty list1 }">
+                                <table class="draft" style="width:100px; text-align:center; font-size:12px; margin-right:10px;" border="1">
+                                    <tr>
+                                        <td rowspan="4" style="background:rgb(223, 221, 221);">승<br>인</td>
+                                        <td>
+                                        ${ap.jobCode == 'J1'?'사원':
+                                            ap.jobCode == 'J2'?'대리':
+                                            ap.jobCode == 'J3'?'과장':
+                                            ap.jobCode == 'J4'?'부장':
+                                            ap.jobCode == 'J5'?'상무':
+                                            ap.jobCode == 'J6'?'대표':''}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img src="resources/common_images/approval.png" width="45px" /> 
+                                            <br>
+                                            ${ap.empName }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>${ap.enrollDate }</td>
+                                    </tr>
+                            </table>
+                            </c:when>
+                            <c:otherwise> 
+                                <c:forEach var="i" items="${list1 }">
+                                    <table class="draft" style="width:100px; text-align:center; font-size:12px;" border="1">
+                                        <tr>
+                                            <td rowspan="4" style="background:rgb(223, 221, 221);">승<br>인</td>
+                                            <td>
+                                            ${i.jobCode == 'J1'?'사원':
+                                                i.jobCode == 'J2'?'대리':
+                                                i.jobCode == 'J3'?'과장':
+                                                i.jobCode == 'J4'?'부장':
+                                                i.jobCode == 'J5'?'상무':
+                                                i.jobCode == 'J6'?'대표':''}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${i.appStatus eq '결재' }">
+                                                        <img src="resources/common_images/approval.png" width="45px" />  
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <br>${i.appStatus }
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <br>
+                                                ${i.empName }
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>${i.updateDate }</td>
+                                        </tr> 
+                                </table>
+                            </c:forEach>
+                            </c:otherwise>   
+                        </c:choose>
+                    </table>
+                    <br><br><br><br>
+                    
+                </div>
+                <div class="left-form4">
+                    <br><br><br><br>
+                    <table class="table-bordered">
+                        <tr>
+                            <td width="100px;" style="text-align:center">기안자</td>
+                            <td width="200px;">${ap.empName }</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center">소속</td>
+                            <td>${ap.deptName }</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center">기안일</td>
+                            <td>${ap.enrollDate }</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center">문서번호</td>
+                            <td>${ap.appChange }</td>
+                        </tr>
+                    </table>
                     <br>
-                    &nbsp;&nbsp;${ap.writerComment }
-                    <br><br>
-                </hgroup>
-                <br>
-            </div>
-			<c:choose>
-				<c:when test="${empty list1 }" >
-		            <div class="app-comment" style="font-size:15px;">
-		                <img src="<c:out value='${ loginUser.empProfile }' default='resources/common_images/businessman.png' />" id="profile-img" width="30px">
-		                 &nbsp;
-		                 ${ap.empName }
-		                 &nbsp;
-		                 ${ap.jobCode == 'J1'?'사원':
-		                   ap.jobCode == 'J2'?'대리':
-		                   ap.jobCode == 'J3'?'과장':
-		                   ap.jobCode == 'J4'?'부장':
-		                   ap.jobCode == 'J5'?'상무':
-		                   ap.jobCode == 'J6'?'대표':''}
-		                <br><br>
-		                이지피지 | ${ap.deptName }
-		                <br>
-		                
-		                결재 | ${ap.enrollDate }
-		                <br><br>
-		                <hgroup class="speech-bubble">
-		                    <br>
-		                    &nbsp;&nbsp;${ap.writerComment }
-		                    <br><br>
-		                </hgroup>
-		                <br>
-		            </div>				
-				</c:when>
-				<c:otherwise>
-					<c:forEach var="j" items="${list1 }">
-			            <div class="app-comment" style="font-size:15px;">
-			                <img src="<c:out value='${ j.empProfile }' default='resources/common_images/businessman.png' />" width="30px;" alt="">
-			                &nbsp;
-			                ${j.empName }
-			                &nbsp;
-                           ${j.jobCode == 'J1'?'사원':
-                             j.jobCode == 'J2'?'대리':
-                             j.jobCode == 'J3'?'과장':
-                             j.jobCode == 'J4'?'부장':
-                             j.jobCode == 'J5'?'상무':
-                             j.jobCode == 'J6'?'대표':''}
-			                <br><br>
-			                이지피지 | ${j.deptName }
-			                <br>
-			                 ${j.appStatus}  | ${j.updateDate }
-			                <br><br>
-			                 <c:choose>
-			                 	<c:when test="${not empty j.appComment }">
-					                <hgroup class="speech-bubble">
-					                    <br>
-					                    &nbsp;&nbsp;
-						                    	${j.appComment }
-					                    <br><br>
-					                </hgroup>
-				                </c:when>
-			                </c:choose>
-			                <br>
-			            </div>
-		            </c:forEach>
-	            </c:otherwise>
-            </c:choose>
+                </div>
+                <div class="left-form5">
+                    <table class="table-bordered" >
+                        <tr>
+                            <td colspan='2'  style="text-align:left">신청현황</td>
+                        </tr>
+                        <tr>
+                            <td width="100px;" style="text-align:center">근무구분</td>
+                            <td width="700px;">${ot.otKind }</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center">근무일시</td>
+                            <td>${ot.otDate }</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center">근무시간</td>
+                            <td>${ot.otUseTime }</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align:center">
+                                * 주간 근무시간 - 근무일이 포함된 한 주 <br>
 
+                                정상근무시간 + 연장근무 승인 요청에 대한 결재가 완료된 총 시간입니다. <br>
+                                
+                                근태관리에서 시간 수정이 가능하므로  <br>
+                                
+                                주간 근무시간은 상이해질 수 있습니다. <br>
+                            </td>
+                        
+                        </tr>
+                        <tr>
+                            <td rowspan="5" style="text-align:center">신청사유</td>
+                            <td rowspan="5" height="150px;">${ap.content }</td>
+                        </tr>
+                        <tr>
+                        </tr>
+                        <tr>
+                            
+                        </tr>
+                        <tr>
+                        
+                        </tr>
+                        <tr>
+                        
+                        </tr>
+
+                        <tr>
+                            <td style="text-align:center">첨부파일</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${empty list3 }">
+                                        첨부파일이 없습니다.
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:forEach var="t" items="${list3 }">
+                                            <a href="${t.filePath }" download="${t.changeName }">${t.originName }</a>
+                                        </c:forEach>
+                                    </c:otherwise>
+                                </c:choose>                            
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+                <div class="left-form6" id="replyArea">
+                    <table  id="repTable" class="table-borderless" style="border:1px;" style="width:100%;">
+                        <thead>
+                            <tr height="100px;">
+                                <th colspan="2">
+                                    <textarea class="form-control" name="" placeholder="내용을 입력해주세요" id="content" cols="55" rows="2" style="resize:none; width:640px;"></textarea>
+                                </th>
+                                <th style="vertical-align: middle" ><button class="btn btn-secondary" onclick="addReply();" style="width:100%; height:100%;">댓글작성</button></th>
+                            </tr>
+                            <tr>
+                                <td colspan="3">댓글 (<span id="rcount"></span>) </td> 
+                            </tr>                        
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                
+                </div>
+                
+            </div>
             
+            <div class="right-outer" style="padding-left:20px;">
+                <br>
+                <div style="text-align:center; padding:20px; font-size:20px;">
+                    <p><b> 결재선</b></p>
+                </div>
+            
+                <div class="app-comment" style="font-size:15px;">
+                    <img src="<c:out value='${ loginUser.empProfile }' default='resources/common_images/businessman.png' />" id="profile-img" width="30px">
+                    &nbsp;
+                    ${ap.empName }
+                    &nbsp;
+                    ${ap.jobCode == 'J1'?'사원':
+                    ap.jobCode == 'J2'?'대리':
+                    ap.jobCode == 'J3'?'과장':
+                    ap.jobCode == 'J4'?'부장':
+                    ap.jobCode == 'J5'?'상무':
+                    ap.jobCode == 'J6'?'대표':''}
+                    <br><br>
+                    이지피지 | ${ap.deptName }
+                    <br>
+                    
+                    기안 | ${ap.enrollDate }
+                    <br><br>
+                    <hgroup class="speech-bubble">
+                        <br>
+                        &nbsp;&nbsp;${ap.writerComment }
+                        <br><br>
+                    </hgroup>
+                    <br>
+                </div>
+                <c:choose>
+                    <c:when test="${empty list1 }" >
+                        <div class="app-comment" style="font-size:15px;">
+                            <img src="<c:out value='${ loginUser.empProfile }' default='resources/common_images/businessman.png' />" id="profile-img" width="30px">
+                            &nbsp;
+                            ${ap.empName }
+                            &nbsp;
+                            ${ap.jobCode == 'J1'?'사원':
+                            ap.jobCode == 'J2'?'대리':
+                            ap.jobCode == 'J3'?'과장':
+                            ap.jobCode == 'J4'?'부장':
+                            ap.jobCode == 'J5'?'상무':
+                            ap.jobCode == 'J6'?'대표':''}
+                            <br><br>
+                            이지피지 | ${ap.deptName }
+                            <br>
+                            
+                            결재 | ${ap.enrollDate }
+                            <br><br>
+                            <hgroup class="speech-bubble">
+                                <br>
+                                &nbsp;&nbsp;${ap.writerComment }
+                                <br><br>
+                            </hgroup>
+                            <br>
+                        </div>				
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach var="j" items="${list1 }">
+                            <div class="app-comment" style="font-size:15px;">
+                                <img src="<c:out value='${ j.empProfile }' default='resources/common_images/businessman.png' />" width="30px;" alt="">
+                                &nbsp;
+                                ${j.empName }
+                                &nbsp;
+                            ${j.jobCode == 'J1'?'사원':
+                                j.jobCode == 'J2'?'대리':
+                                j.jobCode == 'J3'?'과장':
+                                j.jobCode == 'J4'?'부장':
+                                j.jobCode == 'J5'?'상무':
+                                j.jobCode == 'J6'?'대표':''}
+                                <br><br>
+                                이지피지 | ${j.deptName }
+                                <br>
+                                ${j.appStatus}  | ${j.updateDate }
+                                <br><br>
+                                <c:choose>
+                                    <c:when test="${not empty j.appComment }">
+                                        <hgroup class="speech-bubble">
+                                            <br>
+                                            &nbsp;&nbsp;
+                                                    ${j.appComment }
+                                            <br><br>
+                                        </hgroup>
+                                    </c:when>
+                                </c:choose>
+                                <br>
+                            </div>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+
+                
+            </div>
         </div>
     </div>
 

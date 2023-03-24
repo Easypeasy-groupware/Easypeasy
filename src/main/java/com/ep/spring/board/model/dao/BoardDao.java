@@ -44,8 +44,8 @@ public class BoardDao {
 		return sqlSession.update("boardMapper.increaseCount", no);
 	}
 	
-	public Board selectBoard(SqlSessionTemplate sqlSession, int no) {
-		return sqlSession.selectOne("boardMapper.selectBoard", no);
+	public Board selectBoard(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.selectOne("boardMapper.selectBoard", b);
 	}
 	
 	
@@ -53,12 +53,24 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectAttachmentList", b); 
 	}
 	
-	public int deleteBoard(SqlSessionTemplate sqlSession, int no) {
-		return sqlSession.update("boardMapper.deleteBoard", no);
+	public int deleteBoard(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("boardMapper.deleteBoard", boardNo);
+	}
+	
+	public ArrayList<Attachment> selectAttList(SqlSessionTemplate sqlSession, Board b){
+		return (ArrayList)sqlSession.selectList("boardMapper.selectAttList", b);
 	}
 	
 	public int updateBoard(SqlSessionTemplate sqlSession, Board b) {
-		return sqlSession.update("boardMapper.deleteBoard", b);
+		return sqlSession.update("boardMapper.updateBoard", b);
+	}
+	
+	public int updateAttachment(SqlSessionTemplate sqlSession, ArrayList<Attachment> atList) {
+		int result = 0;
+		for(Attachment at : atList) {
+			result += sqlSession.insert("boardMapper.updateAttachment", at);
+		}
+		return result;
 	}
 	
 	public ArrayList<BoardReply> selectReplyList(SqlSessionTemplate sqlSession, int boardNo){
@@ -66,7 +78,11 @@ public class BoardDao {
 	}
 	
 	public int insertReply(SqlSessionTemplate sqlSession, BoardReply r) {
-		return sqlSession.insert("boardMapper.inserReply", r);
+		return sqlSession.insert("boardMapper.insertReply", r);
+	}
+	
+	public int deleteReply(SqlSessionTemplate sqlSession) {
+		return sqlSession.delete("boardMapper.deleteReply");
 	}
 	
 	public int selectSettings(SqlSessionTemplate sqlSession, BoardCate bc){
@@ -77,7 +93,9 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.insertCate", bc);
 	}
 	
-	
+	public int updateCate(SqlSessionTemplate sqlSession, BoardCate bc) {
+		return sqlSession.update("boardMapper.updateCate", bc);
+	}
 	
 	
 	

@@ -9,7 +9,25 @@
 		<result column="cal_default" property="calDefault" />
 		<result column="create_date" property="createDate" />
 		<result column="cal_color" property="calColor" />
+		<collection property="scheduleList" resultMap="scheduleResult" />
 	</resultMap>
+	
+	<resultMap id="scheduleResult" type="Schedule">
+		<id column="sc_no" property="scNo" />
+		<result column="sc_writer" property="scWriter" />
+		<result column="cal_no" property="calNo" />
+		<result column="sc_title" property="scTitle" />
+		<result column="sc_place" property="scPlace" />
+		<result column="sc_content" property="scContent" />
+		<result column="sc_company" property="scCompany" />
+		<result column="start_date" property="startDate" />
+		<result column="end_date" property="endDate" />
+		<result column="start_time" property="startTime" />
+		<result column="end_time" property="endTime" />
+		<result column="sc_allday" property="allDay" />
+		<result column="sc_status" property="status" />
+	</resultMap>
+	
 
 	<insert id="insertDefaultCalendar">
 		insert
@@ -125,5 +143,58 @@
 		     , cal_color = #{calColor}
 		 where cal_no = #{calNo}
 	</update>
+	
+	<delete id="deleteSchedule">
+		delete
+		  from schedule
+		 where cal_no = #{calNo}
+	</delete>
+	
+	<delete id="deleteCalendar">
+		delete
+		  from my_calendar
+		 where cal_no = #{calNo}
+	</delete>
+	
+	<update id="defaultCalUpdate">
+		update
+			   my_calendar
+		   set cal_default = 'Y'
+		 where cal_no = #{calNo}
+	</update>
+	
+	<update id="defaultUpdate">
+		update
+			   my_calendar
+		   set cal_default = 'N'
+		 where cal_no = #{calNo}
+	</update>
+	
+	
+	<select id="scheduleList" resultMap="calendarResult">
+		select
+		       c.cal_no
+		     , c.emp_no
+		     , c.cal_title
+		     , c.cal_default
+		     , c.cal_color
+		     , s.sc_no
+		     , s.sc_writer
+		     , s.cal_no
+		     , s.sc_title
+		     , s.sc_place
+		     , s.sc_content
+		     , s.sc_company
+		     , s.start_date
+		     , s.end_date
+		     , s.start_time
+		     , s.end_time
+		     , s.sc_allday
+		  from my_calendar c
+		  left join schedule s on (s.cal_no = c.cal_no)
+		 where c.emp_no = #{empNo}
+		 order
+		    by c.cal_no desc 
+	</select>
 	
 </mapper>

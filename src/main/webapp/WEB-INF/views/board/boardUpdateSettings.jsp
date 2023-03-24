@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <style>
 	/* 전체 wrapper */
-    .wrapper { width: 1200px; margin: 0 auto;} /* 중앙 정렬을 위한 margin: 0 auto; */
+    .wrapper { width: 1200px; margin: 0 auto; position: absolute; top: 120px} /* 중앙 정렬을 위한 margin: 0 auto; */
     body {font-family: Arial, sans-serif; margin: 0; padding: 0;}
     /* 게시판 스타일 */
     .board {width: 1000px;float: right;}
@@ -27,49 +27,80 @@
 	
 		<jsp:include page="../board/boardSidebar.jsp" />
        
-        <div class="board">
-        	<form action="update.bo" method="post">
-          <h3>게시글 수정/삭제</h3>
-          <br><br>
-              <label>게시판그룹</label>
-                  <select name="boardCno">
-                  	  <option value="${b.boardCno}" name="boardCno" id="b">${b.boardCno}</option>
-			          <option>-----수정----</option>
-                      <option value="1" name="boardCno" id="1">전체 공지사항</option>
-                      <option value="2" name="boardCno" id="2">식단표</option>
-                      <option value="3" name="boardCno" id="3">자유게시판</option>
-                      <option value="4" name="boardCno" id="4">커뮤니티</option>
-                      <option value="5" name="boardCno" id="5">부서 공지사항</option>
-                      <option value="6" name="boardCno" id="6">부서 자유게시판</option>
-                  </select><br>
-                  <script>
-					$(function(){
-						$('select[name=boardCno] value=[${b.boardCno}]').attr("selected", true);
-					})
-				  </script>
-              <label for="title">게시글 제목</label>
-                  <input type="text" id="boardTitle" name="boardTitle" value="${b.boardTitle}" required /><br>
-              <input type="hidden" name="boardWriter" value="${loginUser.empNo}">
-              <label for="file">파일첨부</label>
-                  <input type="file" id="file" name="file" /><br>
-              <label for="content">내용</label>
-                  <textarea name="boardContent" id="boardContent" value="${b.boardContent}" cols="30" rows="10" required placeholder="내용을 입력하세요"></textarea><br>
-              <label for="boardPin">공지등록</label>
-                  <input type="checkbox" id="N" name="boardPin" value="${b.boardPin}" /><br>
-                  
-              <script>
-              	$(function(){
-					$("input[value=${b.boardPin}]").attr("checked", true);
-                })
-              </script>
-               
-                    <br><br>
-              <div align="center">
-                <button type="button" class="btn btn-dark" onclick="javascript:history.go(-1);">이전으로</button>
-                <button type="submit" class="btn btn-success">수정하기</button>
-                <button type="button" class="btn btn-danger" onclick="location.href='deleteBoard.bo';">삭제하기</button>
-              </div>
+       <form action="updateSetting.bo" method="POST">
+                <h2>게시판 설정</h2>
+                <br><br>
+                    
+                    <label for="title">게시판 제목:</label>
+                        <input type="text" id="title" name="boardCname" value="${bc.boardCname}" required /><br>
+                        <input type="hidden" id="boardCno" name="boardCno" value="${bc.boardCno}">
+                        
+                    <hr>
+        
+                    <label>전체공개 설정</label><br>
+                     	<select name="deptCode" id="displayRange" >
+                     		<option value="${bc.displayRange}" name="displayRange" id="dr">${bc.displayRange}</option>
+                     		<option>-----</option>
+                    	 	<option value="1" name="displayRange" id="1">전체부서 공개</option>
+			                <option value="2" name="displayRange" id="2">인사관리부</option>
+			                <option value="3" name="displayRange" id="3">경영관리부</option>
+			                <option value="4" name="displayRange" id="4">영업1팀</option>
+			                <option value="5" name="displayRange" id="5">영업2팀</option>
+			                <option value="6" name="displayRange" id="6">영업3팀</option>
+			                <option value="7" name="displayRange" id="7">마케팅부</option>
+			            </select> 
+			            <script>
+					        $(function(){
+					        	$('select[name=displayRange] value=[${bc.displayRange}]').attr("selected", true);
+					        })
+				        </script>
+                        
+                        <!-- <button type="button" class="btn btn-outline-primary">+ 부서 추가</button> --><br><br>
+                    
+                    <label>비공개 설정</label><br>
+                        <input type="radio" id="private" name="privateStatus" value="N"  checked/>사용하지 않음  &nbsp;&nbsp;
+                        <input type="radio" id="private" name="privateStatus" value="Y"  />사용함<br><br>
+                    
+                    <script>
+                    	$(function(){
+                    		$("input[value=${privateStatus}]").attr("checked", true);
+                    	})
+                    </script>
+                    
+                    
+                    <label>익명 설정</label><br>
+                        <input type="radio" id="anonym" name="anonymStatus" value="N"  checked/>사용하지 않음  &nbsp;&nbsp;
+                        <input type="radio" id="anonym" name="anonymStatus" value="Y"  />사용함<br><br>
+                    
+                    <label>수정 권한 부서 설정</label><br>
+                    	<input type="radio" name="deptCode" value=""/>전체 부서  <br>
+                        <input type="radio" name="deptCode" value="D1"  />인사관리부서  &nbsp;&nbsp; 
+                        <input type="radio" name="deptCode" value="D2"  />경영관리부서  &nbsp;&nbsp; 
+                        <input type="radio" name="deptCode" value="D3"  />영업1팀  &nbsp;&nbsp; 
+                        <input type="radio" name="deptCode" value="D4"  />영업2팀  &nbsp;&nbsp; 
+                        <input type="radio" name="deptCode" value="D5"  />영업3팀  &nbsp;&nbsp; 
+                        <input type="radio" name="deptCode" value="D6"  />마케팅부서  &nbsp;&nbsp; <br><br>
+                    
+                    <script>
+					        $(function(){
+					        	$('select[name=deptCode] value=[${bc.deptCode}]').attr("selected", true);
+					        })
+				    </script>
+                    
+                    <!-- <label>댓글 작성</label><br>
+                        <input type="radio" id="reply" name="reply" value="Y"  checked/>허용  &nbsp;&nbsp;
+                        <input type="radio" id="reply" name="reply" value="N"  />허용하지 않음<br> -->
+                    
+                    <br><br><br>
+					<div align="center">
+						<button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1);">이전으로</button>
+						<button type="submit" class="btn btn-success">수정하기</button>
+						<button type="button" class="btn btn-danger" onclick="">삭제하기</button>
+					</div>
+            </form>   
+        
         </div>
+        
 	</div>
 </body>
 </html>

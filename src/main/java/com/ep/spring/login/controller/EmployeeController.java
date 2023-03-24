@@ -61,8 +61,6 @@ public class EmployeeController {
 		ArrayList<AddGroup> sharedGroup = aService.selectSharedAddGroup();
 		// 받은 메일 조회
 		ArrayList<Mail> recMailList = mService.selectReceiveMailList(loginUser.getEmail());
-		// 알람 조회
-		ArrayList<Alarm> alarmList = alService.selectAlarmList(loginUser.getEmpNo());
 		
 		/* 채팅 */
         // 현재 로그인 한 User 채팅 Session ArrayList에 추가.
@@ -91,11 +89,6 @@ public class EmployeeController {
 		
 		//int no = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		
-		int no = loginUser.getEmpNo();
-		
-		ArrayList<Employee> list = oService.selectOrgList(no);
-		ArrayList<Department> deptList = oService.selectDept();
-		ArrayList<Job> jList = oService.selectJob();
 		
 		
 		if(loginUser != null && bcryptPasswordEncoder.matches(e.getEmpPwd(), loginUser.getEmpPwd())) { // 성공
@@ -133,7 +126,18 @@ public class EmployeeController {
 	
 	// 메인페이지 이동
 	@RequestMapping("main.ep")
-	public String mainPage() {
+	public String mainPage(HttpSession session) {
+		
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
+		ArrayList<Employee> list = oService.selectOrgList(empNo);
+		ArrayList<Department> deptList = oService.selectDept();
+		ArrayList<Job> jList = oService.selectJob();
+		
+		session.setAttribute("list", list);
+		session.setAttribute("deptList", deptList);
+		session.setAttribute("jList", jList);
+		
 		return "common/main";
 	}
 	

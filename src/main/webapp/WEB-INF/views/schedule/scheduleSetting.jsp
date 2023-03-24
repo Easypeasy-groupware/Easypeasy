@@ -11,6 +11,10 @@
         box-sizing: border-box;
     }
     
+	#main{  
+        position: absolute; top: 120px;
+    }
+	
     #content{
         border-left: 1px solid lightgray;
         width: 1000px;
@@ -78,72 +82,79 @@
 
 	<jsp:include page="../common/header.jsp"/>
 
-    <jsp:include page="sidebar.jsp"/>
+    <div id="main">
 
-	<div id="content">
-        <div id="con-title">
-            <span>
-                <h5>내 캘린더 관리</h5>
-            </span>
-            <br>
-            <div id="add">
-                <div>
-                    <button class="btn btn-sm btn-light" style="margin: 0 -20px -5px -10px;">캘린더 추가</button>
-                </div>
-            </div>
-        </div>
-        <br>
-        <table class="table table-hover table-sm setting-list">
-            <thead>
-                <tr>
-                    <th>캘린더</th>
-                    <th>기본 캘린더</th>
-                </tr>
-            </thead>
-            <tbody>
-            	<c:forEach var="c" items="${ myCalList }">
-            		<c:choose>
-               			<c:when test="${ c.calDefault eq 'Y' }">
-               				<tr>
-			                    <td class="upDel_calendar">(기본) ${ c.calTitle }</td>
-			                    <input type="hidden" value="${ c.calNo }">
-			                    <td>
-			                        <div class="custom-control custom-radio">
-		                                <input type="radio" class="custom-control-input" id="Y" name="default" value="">
-		                                <label class="custom-control-label" for="Y"></label>
-		                            </div>
-			                    </td>
-			                </tr>
-               			</c:when>
-               			<c:otherwise>
-               				<tr>
-			                    <td class="upDel_calendar">${ c.calTitle }</td>
-			                    <input type="hidden" value="${ c.calNo }">
-			                    <td>
-			                        <div class="custom-control custom-radio">
-		                                <input type="radio" class="custom-control-input" id="customRadio${ c.calNo }" name="default" value="">
-		                                <label class="custom-control-label" for="customRadio${ c.calNo }"></label>
-		                            </div>
-			                    </td>
-			                </tr>
-               			</c:otherwise>
-               		</c:choose>
-            	</c:forEach>
-            </tbody>
-        </table>
-    </div>
+		<jsp:include page="sidebar.jsp"/>
+
+		<div id="content">
+			<div id="con-title">
+				<span>
+					<h5>내 캘린더 관리</h5>
+				</span>
+				<br>
+				<div id="add">
+					<div>
+						<a href="add.cal" class="btn btn-sm btn-light" style="margin: 0 -20px -5px -10px; background: rgb(214, 223, 204); color: white;">캘린더 추가</a>
+					</div>
+				</div>
+			</div>
+			<br>
+			<table class="table table-hover table-sm setting-list">
+				<thead>
+					<tr>
+						<th>캘린더</th>
+						<th>기본 캘린더</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="c" items="${ myCalList }">
+						<c:choose>
+							<c:when test="${ c.calDefault eq 'Y' }">
+								<tr>
+									<td class="upDel_calendar">(기본) ${ c.calTitle }</td>
+									<input type="hidden" id="defaultNo" value="${ c.calNo }">
+									<td>
+										<div class="custom-control custom-radio">
+											<input type="radio" class="custom-control-input radioDefault" id="Y" name="default">
+											<label class="custom-control-label" for="Y"></label>
+										</div>
+									</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<tr>
+									<td class="upDel_calendar">${ c.calTitle }</td>
+									<input type="hidden" value="${ c.calNo }">
+									<td>
+										<div class="custom-control custom-radio">
+											<input type="radio" class="custom-control-input radioDefault" id="customRadio${ c.calNo }" name="default">
+											<label class="custom-control-label" for="customRadio${ c.calNo }"></label>
+										</div>
+									</td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+	</div>
     
     
     
     <script>
+    	
+    	$("#Y").prop("checked", true);
+    
     
     	$(document).on("click", ".setting-list>tbody>tr>.upDel_calendar", function(){
 				
 			location.href = 'settingUpdel.cal?no=' + $(this).next().val();
 			
 		})
+		
     
-
+		/*
         // 체크 박스
         function allChecked(target){
     		if($(target).is(":checked")){
@@ -153,8 +164,6 @@
     		}
     	}
     	
-    	
-    	/*
     	function checkClicked(){
     		//체크박스 전체개수
     		var allCount = $("input:checkbox[name=check]").length;
@@ -171,8 +180,43 @@
     		
     	}
     	*/
+    
     	
-    	$("#Y").prop("checked", true);
+    	// 기본 캘린더 변경 ajax
+    	$(document).on("change", ".radioDefault", function(){
+			
+    		const no = $(this).parent().parent().prev().val();
+    		const dno = $("#defaultNo").val();
+    		
+    		console.log(no);
+    		console.log(dno);
+    		
+    		$.ajax({
+    			url:"defaultUpdate.cal",
+    			type:"post",
+    			data:{
+    				no:no,
+    				dno:dno
+    			},
+    			success:function(result){
+    				
+    				if(result > 0){
+    					
+    					location.reload();
+    					$("#Y").prop("checked", true);
+    					
+    				}else{
+    					
+    				}
+    				
+    			},error:function(){
+    				console.log("기본캘린더 변경 ajax 통신 실패");
+    			}
+    		})
+			
+		})
+    	
+    	
     </script>
 
 </body>

@@ -7,6 +7,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+    #main{  
+        position: absolute; top: 120px;
+    }
+    
 	#content{
         border-left: 1px solid lightgray;
         width: 1000px;
@@ -97,227 +101,243 @@
 
 	<jsp:include page="../common/header.jsp"/>
 
-    <jsp:include page="sidebar.jsp"/>
+    <div id="main">
 
-	<div id="content">
-        <div id="con-title">
-            <span>
-                <h5>일정 목록</h5>
-            </span>
-            <form action="">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="검색어를 입력해주세요" required>
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary" type="submit">검색</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <br>
-        <div id="calendar" style="padding-left: 10px; width: 1000px;">
-        
-        </div>
-    </div>
+        <jsp:include page="sidebar.jsp"/>
 
-
-    <!-- 일정 등록 모달 -->
-    <!-- myModal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">일정 등록</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button> 
-                </div>
-                <form action="insert.sc" method="post">
-                <input type="hidden" name="scWriter" value="${ loginUser.empNo }">
-                    <!-- Modal Body -->
-                    <div style="margin: 20px;">
-                        <table id="modal">
-                            <thead>
-                                <tr height="55">
-                                    <th width="85">일정명</th>
-                                    <td colspan="2">
-                                        <input type="text" name="scTitle" size="80" placeholder=" 추가할 일정을 입력하세요" required>
-                                    </td>
-                                </tr>
-                                <tr height="55">
-                                    <th>일시</th>
-                                    <td colspan="2">
-                                        <input type="text" id="sDate" size="10" name="startDate">
-                                        <span>
-                                            <select class="sel" name="startTime" id="sel1">
-                                                <option value="00:30">00:30</option>
-                                                <option value="01:00">01:00</option>
-                                                <option value="01:30">01:30</option>
-                                                <option value="02:00">02:00</option>
-                                                <option value="02:30">02:30</option>
-                                                <option value="03:00">03:00</option>
-                                                <option value="03:30">03:30</option>
-                                                <option value="04:00">04:00</option>
-                                                <option value="04:30">04:30</option>
-                                                <option value="05:00">05:00</option>
-                                                <option value="05:30">05:30</option>
-                                                <option value="06:00">06:00</option>
-                                                <option value="06:30">06:30</option>
-                                                <option value="07:00">07:00</option>
-                                                <option value="07:30">07:30</option>
-                                                <option value="08:00">08:00</option>
-                                                <option value="08:30">08:30</option>
-                                                <option value="09:00">09:00</option>
-                                                <option value="09:30">09:30</option>
-                                                <option value="10:00">10:00</option>
-                                                <option value="10:30">10:30</option>
-                                                <option value="11:00">11:00</option>
-                                                <option value="11:30">11:30</option>
-                                                <option value="12:00">12:00</option>
-                                                <option value="12:30">12:30</option>
-                                                <option value="13:00">13:00</option>
-                                                <option value="13:30">13:30</option>
-                                                <option value="14:00">14:00</option>
-                                                <option value="14:30">14:30</option>
-                                                <option value="15:00">15:00</option>
-                                                <option value="15:30">15:30</option>
-                                                <option value="16:00">16:00</option>
-                                                <option value="16:30">16:30</option>
-                                                <option value="17:00">17:00</option>
-                                                <option value="17:30">17:30</option>
-                                                <option value="18:00">18:00</option>
-                                                <option value="18:30">18:30</option>
-                                                <option value="19:00">19:00</option>
-                                                <option value="19:30">19:30</option>
-                                                <option value="20:00">20:00</option>
-                                                <option value="20:30">20:30</option>
-                                                <option value="21:00">21:00</option>
-                                                <option value="21:30">21:30</option>
-                                                <option value="22:00">22:00</option>
-                                                <option value="22:30">22:30</option>
-                                                <option value="23:00">23:00</option>
-                                                <option value="23:30">23:30</option>
-                                            </select>
-                                        </span>
-                                        <span>~</span>
-                                        <input type="text" id="eDate" size="11" name="endDate">
-                                        <span>
-                                            <select class="sel" name="endTime" id="sel2">
-                                                <option value="00:30">00:30</option>
-                                                <option value="01:00">01:00</option>
-                                                <option value="01:30">01:30</option>
-                                                <option value="02:00">02:00</option>
-                                                <option value="02:30">02:30</option>
-                                                <option value="03:00">03:00</option>
-                                                <option value="03:30">03:30</option>
-                                                <option value="04:00">04:00</option>
-                                                <option value="04:30">04:30</option>
-                                                <option value="05:00">05:00</option>
-                                                <option value="05:30">05:30</option>
-                                                <option value="06:00">06:00</option>
-                                                <option value="06:30">06:30</option>
-                                                <option value="07:00">07:00</option>
-                                                <option value="07:30">07:30</option>
-                                                <option value="08:00">08:00</option>
-                                                <option value="08:30">08:30</option>
-                                                <option value="09:00">09:00</option>
-                                                <option value="09:30">09:30</option>
-                                                <option value="10:00">10:00</option>
-                                                <option value="10:30">10:30</option>
-                                                <option value="11:00">11:00</option>
-                                                <option value="11:30">11:30</option>
-                                                <option value="12:00">12:00</option>
-                                                <option value="12:30">12:30</option>
-                                                <option value="13:00">13:00</option>
-                                                <option value="13:30">13:30</option>
-                                                <option value="14:00">14:00</option>
-                                                <option value="14:30">14:30</option>
-                                                <option value="15:00">15:00</option>
-                                                <option value="15:30">15:30</option>
-                                                <option value="16:00">16:00</option>
-                                                <option value="16:30">16:30</option>
-                                                <option value="17:00">17:00</option>
-                                                <option value="17:30">17:30</option>
-                                                <option value="18:00">18:00</option>
-                                                <option value="18:30">18:30</option>
-                                                <option value="19:00">19:00</option>
-                                                <option value="19:30">19:30</option>
-                                                <option value="20:00">20:00</option>
-                                                <option value="20:30">20:30</option>
-                                                <option value="21:00">21:00</option>
-                                                <option value="21:30">21:30</option>
-                                                <option value="22:00">22:00</option>
-                                                <option value="22:30">22:30</option>
-                                                <option value="23:00">23:00</option>
-                                                <option value="23:30">23:30</option>
-                                            </select>
-                                        </span>
-                                        &nbsp;
-                                        <div class="custom-control custom-checkbox" style="display: inline-block;">
-                                            <input type="checkbox" class="custom-control-input" name="allDay" value="" id="allDay" onclick="allDayShowHidden();">
-                                            <label class="custom-control-label" for="allDay">종일</label>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr height="55">
-                                    <th>전사일정</th>
-                                    <td colspan="2">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="scCompany" value="N" id="company" onclick="showHidden();">
-                                            <label class="custom-control-label" for="company">전사일정</label>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody class="body">
-                                <tr height="55">
-                                    <th>내 캘린더</th>
-                                    <td colspan="2">
-                                        <select class="custom-select mb-3" name="calNo" id="sel3">
-                                        	<c:forEach var="c" items="${ myCalList }">
-                                        		<c:choose>
-                                        			<c:when test="${ c.calDefault eq 'Y' }">
-                                        				<option value="${ c.calNo }">(기본) ${ c.calTitle }</option>
-                                        			</c:when>
-                                        			<c:otherwise>
-                                        				<option value="${ c.calNo }">${ c.calTitle }</option>
-                                        			</c:otherwise>
-                                        		</c:choose>
-                                       		</c:forEach>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr height="55">
-                                    <th>장소</th>
-                                    <td colspan="2">
-                                        <input type="text" name="scPlace" size="80" placeholder=" 장소를 입력하세요" required>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <br>
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <a href="enrollForm.sc" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">일정상세 입력</a>&nbsp;
-                        <button type="submit" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">확인</button>&nbsp;
-                        <button type="button" id="close" class="btn btn-sm btn-light" data-dismiss="modal">취소</button>
+        <div id="content">
+            <div id="con-title">
+                <span>
+                    <h5>일정 목록</h5>
+                </span>
+                <form action="">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="검색어를 입력해주세요" required>
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="submit">검색</button>
+                        </div>
                     </div>
                 </form>
+            </div>
+            <br>
+            <div id="calendar" style="padding-left: 10px; width: 1000px;">
+            
+            </div>
+        </div>
+
+
+        <!-- 일정 등록 모달 -->
+        <!-- myModal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">일정 등록</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                    </div>
+                    <form action="insert.sc" method="post">
+                    <input type="hidden" name="scWriter" value="${ loginUser.empNo }">
+                        <!-- Modal Body -->
+                        <div style="margin: 20px;">
+                            <table id="modal">
+                                <thead>
+                                    <tr height="55">
+                                        <th width="85">일정명</th>
+                                        <td colspan="2">
+                                            <input type="text" name="scTitle" size="80" placeholder=" 추가할 일정을 입력하세요" required>
+                                        </td>
+                                    </tr>
+                                    <tr height="55">
+                                        <th>일시</th>
+                                        <td colspan="2">
+                                            <input type="text" id="sDate" size="10" name="startDate">
+                                            <span>
+                                                <select class="sel" name="startTime" id="sel1">
+                                                    <option value="00:30">00:30</option>
+                                                    <option value="01:00">01:00</option>
+                                                    <option value="01:30">01:30</option>
+                                                    <option value="02:00">02:00</option>
+                                                    <option value="02:30">02:30</option>
+                                                    <option value="03:00">03:00</option>
+                                                    <option value="03:30">03:30</option>
+                                                    <option value="04:00">04:00</option>
+                                                    <option value="04:30">04:30</option>
+                                                    <option value="05:00">05:00</option>
+                                                    <option value="05:30">05:30</option>
+                                                    <option value="06:00">06:00</option>
+                                                    <option value="06:30">06:30</option>
+                                                    <option value="07:00">07:00</option>
+                                                    <option value="07:30">07:30</option>
+                                                    <option value="08:00">08:00</option>
+                                                    <option value="08:30">08:30</option>
+                                                    <option value="09:00">09:00</option>
+                                                    <option value="09:30">09:30</option>
+                                                    <option value="10:00">10:00</option>
+                                                    <option value="10:30">10:30</option>
+                                                    <option value="11:00">11:00</option>
+                                                    <option value="11:30">11:30</option>
+                                                    <option value="12:00">12:00</option>
+                                                    <option value="12:30">12:30</option>
+                                                    <option value="13:00">13:00</option>
+                                                    <option value="13:30">13:30</option>
+                                                    <option value="14:00">14:00</option>
+                                                    <option value="14:30">14:30</option>
+                                                    <option value="15:00">15:00</option>
+                                                    <option value="15:30">15:30</option>
+                                                    <option value="16:00">16:00</option>
+                                                    <option value="16:30">16:30</option>
+                                                    <option value="17:00">17:00</option>
+                                                    <option value="17:30">17:30</option>
+                                                    <option value="18:00">18:00</option>
+                                                    <option value="18:30">18:30</option>
+                                                    <option value="19:00">19:00</option>
+                                                    <option value="19:30">19:30</option>
+                                                    <option value="20:00">20:00</option>
+                                                    <option value="20:30">20:30</option>
+                                                    <option value="21:00">21:00</option>
+                                                    <option value="21:30">21:30</option>
+                                                    <option value="22:00">22:00</option>
+                                                    <option value="22:30">22:30</option>
+                                                    <option value="23:00">23:00</option>
+                                                    <option value="23:30">23:30</option>
+                                                </select>
+                                            </span>
+                                            <span>~</span>
+                                            <input type="text" id="eDate" size="11" name="endDate">
+                                            <span>
+                                                <select class="sel" name="endTime" id="sel2">
+                                                    <option value="00:30">00:30</option>
+                                                    <option value="01:00">01:00</option>
+                                                    <option value="01:30">01:30</option>
+                                                    <option value="02:00">02:00</option>
+                                                    <option value="02:30">02:30</option>
+                                                    <option value="03:00">03:00</option>
+                                                    <option value="03:30">03:30</option>
+                                                    <option value="04:00">04:00</option>
+                                                    <option value="04:30">04:30</option>
+                                                    <option value="05:00">05:00</option>
+                                                    <option value="05:30">05:30</option>
+                                                    <option value="06:00">06:00</option>
+                                                    <option value="06:30">06:30</option>
+                                                    <option value="07:00">07:00</option>
+                                                    <option value="07:30">07:30</option>
+                                                    <option value="08:00">08:00</option>
+                                                    <option value="08:30">08:30</option>
+                                                    <option value="09:00">09:00</option>
+                                                    <option value="09:30">09:30</option>
+                                                    <option value="10:00">10:00</option>
+                                                    <option value="10:30">10:30</option>
+                                                    <option value="11:00">11:00</option>
+                                                    <option value="11:30">11:30</option>
+                                                    <option value="12:00">12:00</option>
+                                                    <option value="12:30">12:30</option>
+                                                    <option value="13:00">13:00</option>
+                                                    <option value="13:30">13:30</option>
+                                                    <option value="14:00">14:00</option>
+                                                    <option value="14:30">14:30</option>
+                                                    <option value="15:00">15:00</option>
+                                                    <option value="15:30">15:30</option>
+                                                    <option value="16:00">16:00</option>
+                                                    <option value="16:30">16:30</option>
+                                                    <option value="17:00">17:00</option>
+                                                    <option value="17:30">17:30</option>
+                                                    <option value="18:00">18:00</option>
+                                                    <option value="18:30">18:30</option>
+                                                    <option value="19:00">19:00</option>
+                                                    <option value="19:30">19:30</option>
+                                                    <option value="20:00">20:00</option>
+                                                    <option value="20:30">20:30</option>
+                                                    <option value="21:00">21:00</option>
+                                                    <option value="21:30">21:30</option>
+                                                    <option value="22:00">22:00</option>
+                                                    <option value="22:30">22:30</option>
+                                                    <option value="23:00">23:00</option>
+                                                    <option value="23:30">23:30</option>
+                                                </select>
+                                            </span>
+                                            &nbsp;
+                                            <div class="custom-control custom-checkbox" style="display: inline-block;">
+                                                <input type="checkbox" class="custom-control-input" name="allDay" value="" id="allDay" onclick="allDayShowHidden();">
+                                                <label class="custom-control-label" for="allDay">종일</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr height="55">
+                                        <th>전사일정</th>
+                                        <td colspan="2">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" name="scCompany" value="N" id="company" onclick="showHidden();">
+                                                <label class="custom-control-label" for="company">전사일정</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody class="body">
+                                    <tr height="55">
+                                        <th>내 캘린더</th>
+                                        <td colspan="2">
+                                            <select class="custom-select mb-3" name="calNo" id="sel3">
+                                                <c:forEach var="c" items="${ myCalList }">
+                                                    <c:choose>
+                                                        <c:when test="${ c.calDefault eq 'Y' }">
+                                                            <option value="${ c.calNo }">(기본) ${ c.calTitle }</option>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <option value="${ c.calNo }">${ c.calTitle }</option>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:forEach>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr height="55">
+                                        <th>장소</th>
+                                        <td colspan="2">
+                                            <input type="text" name="scPlace" size="80" placeholder=" 장소를 입력하세요" required>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <br>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <a href="enrollForm.sc" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">일정상세 입력</a>&nbsp;
+                            <button type="submit" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">확인</button>&nbsp;
+                            <button type="button" id="close" class="btn btn-sm btn-light" data-dismiss="modal">취소</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
     
     <script>
-    	
+    
     	$(".close").click(function(){
     		$("#myModal").modal("hide");
     	})
     	$("#close").click(function(){
     		$("#myModal").modal("hide");
     	})
+    	
+    	/*
+    	$(document).on("click", ".inputCheck", function(){
+	    	$(".inputCheck").each(function() {
+		    	if($(this).is(":checked") == true){
+					var check = $(this).next().next().val();
+					console.log(check);
+			    }
+	    	})
+    	});
+		*/
+    	
+    	
     	
         // FullCalendar
         document.addEventListener('DOMContentLoaded', function() {
@@ -387,11 +407,37 @@
                 eventLimit: true, // 달력상에 셀 크기보다 많은 이벤트가 등록되어 있는 경우 'more' 표기
                 locale: 'ko', // 한국어 설정
                 events: [
-                    {
-                        title: 'ㅎㅇㅎㅇ',
-                        start: '2023-03-05',
-                        end: '2023-03-05'
-                    }
+                	
+                	$(document).on("click", ".inputCheck", function(){
+
+                		var checkArr = [];
+                    	$(".inputCheck").each(function() {
+                			if($(this).is(":checked") == true){
+                				var check = $(this).next().next().val();
+                				
+                				checkArr.push(check);
+                				console.log(checkArr);
+                		    }
+                			
+                		});
+                	
+                		
+            		})
+                	
+                	/*
+                	<c:forEach var="c" items="${ scList }">
+	                	<c:forEach var="s" items="${ c.scheduleList }">
+	                		<c:choose>
+	                			<c:when test="${ s.startTime == null }">
+	                				{ start: '${ s.startDate }', end: '${ s.endDate }', title: '${ s.scTitle }', color: '${ c.calColor }' },
+	                			</c:when>
+	                			<c:otherwise>
+	                				{ start: '${ s.startDate } ${ s.startTime }', end: '${ s.endDate } ${ s.endTime }', title: '${ s.scTitle }', color: '${ c.calColor }' },
+	                			</c:otherwise>
+	                		</c:choose>
+	    				</c:forEach>
+               		</c:forEach>
+               		*/
                 ]
             });
             calendar.render();

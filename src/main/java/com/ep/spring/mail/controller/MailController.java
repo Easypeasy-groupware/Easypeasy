@@ -82,8 +82,9 @@ public class MailController {
 	@ResponseBody
 	@RequestMapping(value = "send.ma", method=RequestMethod.POST)
 	public Object sendMail(@RequestPart(value = "key") Map<String, Object> param, 
-								 @RequestPart(value = "originNames", required = false) List<MultipartFile> originNames, 
-								 ModelAndView mv, HttpSession session) {
+						   @RequestPart(value = "originNames", required = false) List<MultipartFile> originNames, 
+						   ModelAndView mv, HttpSession session) {
+		System.out.println("12");
 		ArrayList<Mail> mList = new ArrayList<>();
 		ArrayList<Attachment> atList = new ArrayList<>();
 		AlertMsg msg = new AlertMsg();
@@ -195,7 +196,6 @@ public class MailController {
 	// 메일 상세 조회
 	@RequestMapping("select.ma")
 	public ModelAndView selectMail(HttpSession session, ModelAndView mv, Mail m) {
-		System.out.println(m);
 		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
 		mService.readMail(m);
 		Mail mail = mService.selectMail(m);
@@ -337,11 +337,12 @@ public class MailController {
 	}
 	
 	@RequestMapping("reply.ma")
-	public ModelAndView replyMail(Mail m, ModelAndView mv) {
+	public ModelAndView replyMail(Mail m, int replyForwadDiv,  ModelAndView mv) {
 		Mail mail = mService.selectMail(m);
 		ArrayList<Mail> receiverList = mService.selectReceiverList(m);
 		System.out.println(receiverList);
 		mv.addObject("mail", mail);
+		mv.addObject("mailDiv", replyForwadDiv);
 		mv.addObject("receiverList", receiverList);
 		mv.setViewName("mail/replyMail");
 		

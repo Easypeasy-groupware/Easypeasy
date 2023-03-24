@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+    #main{
+        position: absolute; top: 120px;
+    }
     
     .side{
         width: 200px;
@@ -80,8 +83,18 @@
     }
     .smallTitle{
         float: left;
-        margin-right: 700px;
+        margin-right: 650px;
         font-size: 20px;
+        padding-left: 40px;
+    }
+    .save-btn{
+        border: none;
+        width: 90px;
+        height: 30px;
+        font-size: 15px;
+        font-weight: bold;
+        background-color: rgb(214, 223, 204);
+        float: left;
     }
     th, td {
         border: 1px solid lightgray;
@@ -90,6 +103,7 @@
         background-color: rgb(240, 240, 240);
         border: 1px solid lightgray;
     }
+
 </style>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -106,6 +120,7 @@
 
 	<jsp:include page="../common/header.jsp"/>
 
+	<div id="main">
 	 
         <div class="side"><jsp:include page="../commute/HRsidebar.jsp"/></div>
         <div class="allContent">
@@ -122,8 +137,7 @@
                 <tr>
                     <th>이름</th>
                     <th>소속</th>
-                    <th>발생연차</th>
-                    <th>발생월차</th>
+                    <th>일반휴가</th>
                     <th>특별휴가</th>
                     <th>사용</th>
                     <th>잔여</th>
@@ -153,17 +167,15 @@
                 	</c:choose>
                     <td>16</td>
                     <td>2</td>
-                    <td>0</td>
                     <td>3</td>
                     <td>15</td>
                 </tr>
             </table>
 
             <br><br>
+            
 
-            <h3 class="smallTitle">휴가신청내역</h3><br>
-
-            <button class="button">휴가 부여 및 수정</button><br><br>
+            <h3 class="smallTitle">휴가 신청내역</h3><br>
 
             <table class="table2">
                 <tr>
@@ -206,14 +218,46 @@
             </table>
 
             <br><br>
+            <h3 class="smallTitle">휴가 부여 및 수정</h3><br>
             
+        <form action="" method="post">
+            <button class="save-btn" type="submit">수정하기</button><br><br>
+                <table class="table3">
+                    <tr>
+                        <th><label for="vacDivide">휴가 지급/차감</label></th>
+                        <td><select name="vacDivide" id="vacDivide">
+                            <option value="PA">지급</option>
+                            <option value="DE">차감</option>
+                        </select><br></td>
+                    </tr>
+                    <tr>
+                        <th><label for="vacCategory">일반휴가/특별휴가</label></th>
+                        <td><select name="vacCategory" id="vacCategory">
+                            <option value="GV">일반휴가</option>
+                            <option value="SV">특별휴가</option>
+                        </select><br></td>
+                    </tr>
+                    <tr>
+                        <th><label for="vacDays">지급/차감 일수</label></th>
+                        <td><input type="text" class="formData" id="vacDays" name="vacDays" ><br></td>
+                    </tr>
+                    <tr>
+                        <th><label for="vacReason">지급/차감 사유</label></th>
+                        <td><input type="text" class="formData" id="vacReason" name="vacReason" ><br></td>
+                    </tr>
 
+                
+            </table>
+     
+        <br>
+        
+        </form>
             
             
 
         </div>
    
-
+    </div>
 
 </body>
 </html>

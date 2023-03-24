@@ -1,6 +1,3 @@
-<!-- <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%> -->
-<!-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,7 +90,7 @@
                             &nbsp;&nbsp;&nbsp;<button type="button" id="add_receiver" class="btn btn-secondary">추가</button></td>
                         <td><button type="button" class="btn btn-secondary">주소록</button></td>
                     </tr>
-                    <tr class="detail_info_tr">
+                    <!-- <tr class="detail_info_tr">
                         <td colspan="2">
                             <div style="width: 150px; margin-left: 30px;">
                                 <b>수신자 목록 첨부<br>(excel 파일만 가능)</b>
@@ -101,7 +98,7 @@
                         </td>
                         <td><input class="mail_input" type="text"></td>
                         <td><button type="button" class="btn btn-secondary">주소록</button></td>
-                    </tr>
+                    </tr> -->
                     <tr class="detail_info_tr">
                         <th>참 조</th>
                         <td><button type="button" id="open_btn_hidden_reference" class="btn btn-outline-secondary">+</button></td>
@@ -423,7 +420,9 @@
                         success: function(result){
                             if(result == 1){
                                 if(sock){
-                                    let msg = "${mList}"
+                                    var msg = null;
+                                    <c:forEach var="m" items="${ mList }" >
+                                    </c:forEach>
                                     sock.send(msg);
                                 }
                             }

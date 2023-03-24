@@ -27,6 +27,6 @@ public class Schedule {
 	private String allDay;
 	private String status;
 	
-	private List<Attendee> attendeeList;
+	//private List<Attendee> attendeeList;
 	
 }

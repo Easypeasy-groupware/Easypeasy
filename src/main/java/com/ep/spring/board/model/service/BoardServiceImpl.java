@@ -50,8 +50,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public Board selectBoard(int no) {
-		return bDao.selectBoard(sqlSession, no);
+	public Board selectBoard(Board b) {
+		return bDao.selectBoard(sqlSession, b);
 	}
 	
 	@Override
@@ -60,13 +60,25 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int deleteBoard(int no) {
-		return bDao.deleteBoard(sqlSession, no);
+	public int deleteBoard(int boardNo) {
+		return bDao.deleteBoard(sqlSession, boardNo);
 	}
 
 	@Override
-	public int updateBoard(Board b) {
-		return bDao.updateBoard(sqlSession, b);
+	public ArrayList<Attachment> selectAttList(Board b) {
+		return bDao.selectAttList(sqlSession, b);
+	}
+
+	@Override
+	public int updateBoard(Board b, ArrayList<Attachment> atList) {
+		int result = bDao.updateBoard(sqlSession, b);
+		int attachResult = bDao.updateAttachment(sqlSession, atList);
+		
+		if(result> 0  && (atList.size() + attachResult > 0)) {
+			return 1;
+		}else {
+			return 0;
+		}
 	}
 
 	@Override
@@ -79,6 +91,12 @@ public class BoardServiceImpl implements BoardService{
 		return bDao.insertReply(sqlSession, r);
 	}
 
+	@Override
+	public int deleteReply() {
+		return bDao.deleteReply(sqlSession);
+	}
+	
+	
 	@Override
 	public ArrayList<Board> selectTopList() {
 		return null;
@@ -95,9 +113,24 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int updateSettings(BoardCate bc) {
+	public int updateCate(BoardCate bc) {
+		return bDao.updateCate(sqlSession, bc);
+	}
+
+	@Override
+	public ArrayList<BoardCate> selectDetailSettings(BoardCate bc) {
+		return null;
+	}
+
+	@Override
+	public int deleteSettings(BoardCate bc) {
 		return 0;
 	}
+
+	
+
+	
+	
 
 	
 

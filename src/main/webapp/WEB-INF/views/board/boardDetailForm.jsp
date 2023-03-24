@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <style>
 	/* 전체 wrapper */
-    .wrapper { width: 1200px; margin: 0 auto;}
+    .wrapper { width: 1200px; margin: 0 auto; position: absolute; top: 120px}
     body {font-family: Arial, sans-serif; margin: 0; padding: 0;}
 
     /* 게시판 스타일 */
@@ -24,7 +24,6 @@
 </style>
 </head>
 <body>
-	
 	<jsp:include page="../common/header.jsp" />
 	
 	<div class="wrapper">
@@ -44,7 +43,7 @@
 		                <a class="btn btn-danger btn-sm" onclick="postFormSubmit(2);">삭제하기</a>
 		                
 		                <form action="" method="post" id="postForm"> 
-				         	<input type="hidden" name="boardNo" value="${b.boardNo}">
+				         	<input type="hidden" name="no" value="${b.boardNo}">
 				        </form>
 			        
 			            <script>
@@ -84,7 +83,7 @@
                                   </c:when>
                                   <c:otherwise>
                                       <c:forEach var="a" items="${ attachmentList }">
-                                           <a href="${ a.changeName }" download="${ a.originName }">${ a.originName }</a><br>
+                                           <a href="${a.changeName}" download="${a.originName}">${a.originName}</a><br>
                                        </c:forEach>
                                    </c:otherwise>
                              </c:choose>
@@ -109,7 +108,7 @@
 		                </tr>
 			            <tr>
 			                <th colspan="2">
-			                     <textarea class="form-control" name="" id="rcontent" cols="55" rows="2" style="resize:none; width:100%"></textarea>
+			                     <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%"></textarea>
 			                 </th>
 			                  <th style="vertical-align: middle"><button class="btn btn-secondary"  onclick="addReply();">등록하기</button></th>
 			            </tr>
@@ -121,62 +120,87 @@
 		        </table>
 		    </div>
         	<script>
-		    	$(function(){
-		    		selectReplyList();
-		    	})	
-		    	
-		    	function addReply(){ 
-		    		if($("#rcontent").val().trim().length > 0){ 
-		    			
-		    			$.ajax({
-		    				url:"rinsert.bo",
-		    				data:{
-		    					replyContent:$("#rcontent").val(),  
-		    					replyWriter:'${loginUser.empNo}',
-		    					boardNo:${b.boardNo}  
-		    				},success:function(result){
-		    					
-		    					if(result == "success"){
-		    						$("#rcontent").val("");
-		    						selectReplyList();
-		    					}
-		    				}, error:function(){
-		    					console.log("댓글 작성용 ajax 통신 실패");
-		    				}
-		    			})
-		    		}else{
-		    			alertify.alert("댓글 작성 후 등록 요청해주세요"); 
-		    		}
-		    	}
-		    		
-		    	function selectReplyList(){
-		    		$.ajax({
-		    			url:"rlist.bo",
-		    			data:{no:${b.boardNo}}, 
-		    			success:function(list){
-		    				console.log(list);
-		    				
-		    				let value = "";
-		    				for(let i=0; i<list.length; i++){
-		    					value += "<tr>"
-		    							+	"<td>" + list[i].replyWriter + "</td>"
-		    							+	"<td>" + list[i].replyContent + "</td>"
-		    							+	"<td>" + list[i].createDate + "</td>"
-		    							+"</tr>";
-		    				}
-		    				
-		    				$("#replyArea tbody").html(value);
-		    				$("#rcount").text(list.length);
-		    				
-		    			},error:function(){
-	    					console.log("댓글 작성용 ajax 통신 실패");
-		    			}
-		    		})
-		    	}
+        	$(function(){
+        		selectReplyList();
+        	})
+        	
+        	/*  
+        	function deleteReply(){ // 댓글 삭제용 ajax
+        		$.ajax({
+        			uri:"rdelete.bo",
+        			data:{no:${b.boardNo}},
+        			success:function(result){
+        				
+        				$("#content").val("");
+        				deleteReply();
+        				
+        			}, error:function(){
+    					console.log("댓글 삭제 ajax 통신 실패");
+    				}
+        			
+        				
+        		})
+        		
+        	}
+        	*/
+        	
+        	function addReply(){ // 댓글 작성용 ajax
+        		
+        		if($("#content").val().trim().length > 0){ 
+        			
+        			$.ajax({
+        				url:"rinsert.bo",
+        				data:{
+        					replyContent:$("#content").val(),
+        					replyWriter:'${loginUser.empNo}',
+        					boardNo:'${b.boardNo}'
+        				},success:function(result){
+        					if(result == "success"){
+        						$("#content").val("");
+        						selectReplyList();
+        					}
+        				},error:function(){
+        					console.log("댓글 작성용 ajax 통신 실패");
+        				}
+        			})
+        			
+        			
+        		}else{
+        			alertify.alert("댓글 작성 후 등록 요청해주세요");
+        		}
+        			
+        	}
+        	
+        	function selectReplyList(){ //  조회용 ajax
+        		$.ajax({
+        			url:"rlist.bo",
+        			data:{no:${b.boardNo}},
+        			success:function(list){
+        				console.log(list);
+        				
+        				let value = "";
+        				for(let i=0; i<list.length; i++){
+        					value += "<tr>"
+        							+	"<td>" + list[i].replyWriter + "</td>"
+        							+	"<td>" + list[i].replyContent + "</td>"
+        							+	"<td>" + list[i].createDate + "</td>"
+        							+   "<td>" + "<button>"+ "삭제" + "</button>"+"</td>"
+        							+"</tr>";
+        				}
+        				
+        				$("#replyArea tbody").html(value);
+        				$("#rcount").text(list.length);
+        				
+        			},error:function(){
+        				console.log("댓글리스트 조회용 ajax 통신 실패");
+        			}
+        		})
+        	}
 		    </script>
         </div>
 	</div>
 	
+		
 	
 </body>
 </html>

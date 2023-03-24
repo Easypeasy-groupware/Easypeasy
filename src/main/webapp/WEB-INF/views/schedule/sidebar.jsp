@@ -76,9 +76,13 @@
 	.menu-list:hover{background-color: rgb(246, 246, 246); text-decoration:none;}
 
 
+
+	#add_calendar{
+		cursor: pointer;
+	}
 	#add_calendar_view {
 	    width: 300px;
-	    height: 280px;
+	    height: 300px;
 	    padding-top: 15px;
 	    position: absolute;
 	    top: 400px;
@@ -89,6 +93,8 @@
 	    z-index: 10;
 	    display: none;
 	}
+	
+	
 
 </style>
 </head>
@@ -108,35 +114,37 @@
             <a href="#" class="menu-a">
                 <b>내 캘린더</b>
             </a>
-            <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="calList-key"></span>
+            <span><img src="resources/common_images/list-up.png" style="width:15px;" class="dropdown-key" id="calList-key"></span>
         </div>
 
-        <div id="calList-in" style="display:none;">
+        <div id="calList-in">
         	<c:forEach var="c" items="${ myCalList }">
         		<c:choose>
            			<c:when test="${ c.calDefault eq 'Y' }">
-           				<div class="custom-control custom-checkbox" style="display: inline-block; margin-left: 28px">
-				            <input type="checkbox" class="custom-control-input" name="scCompany" id="${ c.calNo }">
-				            <label class="custom-control-label" for="${ c.calNo }">(기본) ${ c.calTitle }</label>
+           				<div class="custom-control custom-checkbox" style="display: inline-block; width: 130px; text-align: left;">
+				            <input type="checkbox" class="custom-control-input inputCheck" name="scCompany" id="defaultY">
+				            <label class="custom-control-label" for="defaultY">(기본) ${ c.calTitle }</label>
+		        			<input type="hidden" id="defaultCheckNo" value="${ c.calNo }">
 		        		</div>
            			</c:when>
            			<c:otherwise>
-           				<div class="custom-control custom-checkbox" style="display: inline-block;">
-				            <input type="checkbox" class="custom-control-input" name="scCompany" id="${ c.calNo }">
+           				<div class="custom-control custom-checkbox" style="display: inline-block; width: 130px; text-align: left;">
+				            <input type="checkbox" class="custom-control-input inputCheck" name="scCompany" id="${ c.calNo }">
 				            <label class="custom-control-label" for="${ c.calNo }">${ c.calTitle }</label>
+				            <input type="hidden" class="calNo" value="${ c.calNo }">
 		        		</div>
            			</c:otherwise>
            		</c:choose>
         		
         	</c:forEach>
         </div>
-        <br>
+        <br><br>
         
         <div id="add_calendar"> + 내 캘린더 추가</div>
 
         <!-- 캘린더 추가 화면 -->
         <form id="add_calendar_view" action="insert.cal" method="POST">
-            <b style="line-height: 50px; font-size: 20px; padding-left: 30px; color: grey;">내 캘린더 추가</b>
+        	<div><b style="line-height: 50px; font-size: 20px; color: grey; margin-left: 28px;">내 캘린더 추가</b></div>
             <br>
             <div style="width: 80%; margin: auto;">
                 <b style="color: rgb(80, 80, 80); margin-bottom: 3px;">추가할 일정 이름을 입력해주세요</b>
@@ -166,9 +174,10 @@
             })
         </script>
         
-        <div class="custom-control custom-checkbox checkbox-company" style="display: inline-block;">
-            <input type="checkbox" class="custom-control-input" name="scCompany" id="side-company">
+        <div class="custom-control custom-checkbox checkbox-company" style="display: inline-block; margin-left: -23px;">
+            <input type="checkbox" class="custom-control-input inputCheck" name="scCompany" id="side-company">
             <label class="custom-control-label" for="side-company">전사 일정</label>
+            <input type="hidden" class="calNo" value="0">
         </div>
 
         <br><br>
@@ -181,18 +190,19 @@
     </div>
     
     <script>
+    
+    	$("#defaultY").prop("checked", true);
+    
     	$(function(){
     		
     		
     		$("#calList-key").click(function(){
-    			if($(this).attr("src") === "resources/common_images/list-down.png"){
-    				$(this).attr("src", "resources/common_images/list-up.png");	
-    				$("#calList-in").show();
-    				$("#calList-in").show();
+    			if($(this).attr("src") === "resources/common_images/list-up.png"){
+    				$(this).attr("src", "resources/common_images/list-down.png");	
+    				$("#calList-in").hide();
     			}else {
-    				$(this).attr("src", "resources/common_images/list-down.png");
-    				$("#calList-in").hide();
-    				$("#calList-in").hide();
+    				$(this).attr("src", "resources/common_images/list-up.png");
+    				$("#calList-in").show();
     			}
     		})
     		

@@ -6,9 +6,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- 부트스트랩 -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- jQuery 라이브러리 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 /* 전체 wrapper */
-  .wrapper {width: 1200px;margin: 0 auto;}
+  .wrapper {width: 1200px;margin: 0 auto; width: 1200px;margin: 0 auto; position: absolute; top: 120px;}
   body {font-family: Arial, sans-serif;	margin: 0; padding: 0;}
 
  /* 게시판 스타일 */
