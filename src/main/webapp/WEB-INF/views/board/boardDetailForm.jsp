@@ -134,7 +134,7 @@
         				data:{
         					replyContent:$("#content").val(),
         					replyWriter:'${loginUser.empNo}',
-        					refBoardNo:${b.boardNo}
+        					boardNo:'${b.boardNo}'
         				},success:function(result){
         					if(result == "success"){
         						$("#content").val("");

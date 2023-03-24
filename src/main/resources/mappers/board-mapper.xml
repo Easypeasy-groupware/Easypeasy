@@ -212,7 +212,7 @@
 			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		  from board_reply 
 		 where status = 'N'
-		   and reply_no = #{boardNo}		
+		   and board_no = #{boardNo}		
 		 order
 		    by reply_no desc  
 	</select>
@@ -229,7 +229,7 @@
 		  values
 		  (
 		    seq_brno.nextval
-		  , #{replyCotent}
+		  , #{replyContent}
 		  , #{boardNo}
 		  , #{replyWriter}
 		  )

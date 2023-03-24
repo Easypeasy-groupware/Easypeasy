@@ -184,11 +184,11 @@
 					<div class="modal-header">
 						<h5 class="modal-title" id="tree-modal-label">
 						
-							<form action="searchForm.org" method="Get" id="searchForm">
-							<input type="hidden" name="cpage" value="1">
-								<input type="text" name="keyword" value="${keyword}" id="search" placeholder="사원 검색"></h5>
-								<button type="submit" class="btn btn-success" >검색</button>
-							</form>
+							<%-- <form action="searchForm.org" method="Get" id="searchForm">
+								<input type="hidden" name="cpage" value="1">
+									<input type="text" name="keyword" value="${keyword}" id="search" placeholder="사원 검색"></h5>
+									<button type="submit" class="btn btn-success" >검색</button>
+							</form> --%>
 							
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -206,15 +206,7 @@
 								<ul id="browser" class="filetree treeview-famfamfam">
 									<li><span class="folder">이지피지</span>
 										<ul class="empList">
-											<li><span class="file"><div id="result">결과</div></span></li>
-											
-											<c:forEach var="e" items="${list}">
-												<c:if test="${ e.jobCode eq 'J6' }">
-													<li><span class="file">${e.jobName} ${ e.empName }</span></li>
-												</c:if>
-											</c:forEach>
-											<li><span class="file">상무</span></li>
-											
+										
 											<c:forEach var="d" items="${deptList}">
 												<li class="closed">
 													<span class="folder">${d.deptName}</span>
@@ -225,7 +217,7 @@
 																	<span class="file">
 																		${e.jobName} ${ e.empName }
 																		<input type="hidden" name="empNo" value="${e.empNo}">
-																		<button class="btn btn-outline-secondary btn-sm addbtn">+</button>
+																		<!-- <button class="btn btn-outline-secondary btn-sm addbtn">+</button> -->
 																	</span>
 																</li>
 															</c:if>
@@ -239,7 +231,7 @@
 								</ul>
 							</form>
 							
-							<div class="chart2">
+							<!-- <div class="chart2">
 								<form action="">
 									<h5>사원 검색</h5>
 									<div class="searchArea">
@@ -253,11 +245,11 @@
 										</ul>
 									</div>
 								</form>                   
-							</div>
+							</div> -->
 							
 						</div>
 	                    <div class="modal-footer">
-	                    	<button type="button" onclick="copyApp();" class="btn btn-light" data-dismiss="modal">상세조회</button>
+	                    	<!-- <button type="button" onclick="copyApp();" class="btn btn-light" data-dismiss="modal">상세조회</button> -->
 	                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	                    </div>
 	                </div>
