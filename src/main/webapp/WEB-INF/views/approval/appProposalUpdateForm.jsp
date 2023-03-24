@@ -61,7 +61,9 @@
                 <p>
                 	<b style="font-size:30px;">일반품의서</b>
 	                <input type="hidden" name="formCode" value="2">
-	                <input type="hidden" name="formName" value="일반품의서"> 
+	                <input type="hidden" name="formName" value="일반품의서">
+	                <input type="hidden" name="appNo" value = "${ap.appNo}">
+	                 
                 </p>
             </div>
             <div class="left-form2">
@@ -453,6 +455,26 @@
         }
         
         function tempSave(){
+        	
+    		// 결재 / 참조자 목록들 배열에 담기
+    		const recEmpNo = [];
+    		const refList = [];
+    		
+    		const appBody = $(".app-body input");
+    		const refBody = $(".rep-body input");
+    		
+    		
+    		for(let i = 0; i < appBody.length; i++){
+    			console.log(appBody[i]);
+    			appBody[i].setAttribute('name', 'alList['+ i +'].recEmpNo');
+    	
+    		}
+
+    		for(let j = 0; j < refBody.length; j++){
+    			refBody[j].setAttribute('name', 'refList[' + j + '].recEmpNo');
+    	
+    		}
+
         	
 			let value = "";
 			value += "<input type='hidden' name='status' value='"+ 2 +"'>";

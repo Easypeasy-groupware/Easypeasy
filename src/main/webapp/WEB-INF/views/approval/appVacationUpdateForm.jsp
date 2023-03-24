@@ -94,7 +94,9 @@
                 <p>
 	                <b style="font-size:30px;">휴가신청서</b>
 	                <input type="hidden" name="formCode" value="3">
-	                <input type="hidden" name="formName" value="휴가신청서">	                
+	                <input type="hidden" name="formName" value="휴가신청서">
+	                <input type="hidden" name="appNo" value = "${ap.appNo}">
+	                	                
                 </p>
             </div>
 	            <div class="left-form2">
@@ -727,6 +729,28 @@
 			let value = "";
 			value += "<input type='hidden' name='status' value='"+ 2 +"'>";
 			$("#commentArea").html(value);
+			
+    		// 결재 / 참조자 목록들 배열에 담기
+    		const recEmpNo = [];
+    		const refList = [];
+    		
+    		const appBody = $(".app-body input");
+    		const refBody = $(".rep-body input");
+    		
+    		
+    		for(let i = 0; i < appBody.length; i++){
+    			console.log(appBody[i]);
+    			appBody[i].setAttribute('name', 'alList['+ i +'].recEmpNo');
+    	
+    		}
+
+    		for(let j = 0; j < refBody.length; j++){
+    			refBody[j].setAttribute('name', 'refList[' + j + '].recEmpNo');
+    	
+    		}
+
+			
+			
 			$("#contentArea").submit();
         }        
        

@@ -983,4 +983,27 @@
 			  where app_no = #{appNo}      	
 	</update>
 	
+	<insert id="updateApprovalLine">
+			 insert
+			   into app_line
+			      (
+			        app_line_no
+			      , ref_whether
+			      , app_seq_no
+			      , emp_no
+			      , app_no
+			      )  
+			        values
+			      (
+			        seq_alno.nextval
+			      , #{refWhether}
+			      , (
+			           SELECT count(*)+ 1 
+			             FROM  app_line
+			            where  app_no = #{appNo}
+			         )
+			      , #{recEmpNo} 
+			      , #{appNo}	
+	</insert>
+	
 </mapper>
