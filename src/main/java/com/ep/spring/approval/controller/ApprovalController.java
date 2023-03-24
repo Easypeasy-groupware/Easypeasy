@@ -289,7 +289,8 @@ public class ApprovalController {
 		
 		ArrayList<ApprovalReply> list = aService.selectReplyList(appNo);
 		System.out.println(list);
-		return new Gson().toJson(list);
+		return new Gson().toJson(list); 
+		
 	}
 	
 	@ResponseBody
@@ -431,11 +432,13 @@ public class ApprovalController {
 		
 		
 		ap.setAppSequence(1);
-		ap.setAppAmount(ap.getAlList().size());
+		
 		
 		ArrayList<ApprovalLine> al = new ArrayList<>();
 		if(ap.getAlList() != null) {
+			ap.setAppAmount(ap.getAlList().size());
 			for(int i = 0; i< ap.getAlList().size(); i++) {
+				
 				ap.getAlList();
 				al.add(i, ap.getAlList().get(i));
 				al.get(i).setRefWhether("N");
@@ -452,7 +455,7 @@ public class ApprovalController {
 			}
 		}
 		
-		System.out.println(al);
+		//System.out.println(al);
 		
 		// 휴가작성폼 셋팅하기
 		if(vf.getHalfOption() != null){
@@ -489,11 +492,20 @@ public class ApprovalController {
 		int result = aService.insertApproval(ap, al, vf, ot, atList);
 		
 		if(result > 0) {
+			
 			AlertMsg msg = new AlertMsg("결재상신", "성공적으로 문서상신 완료되었습니다!");
+			if(ap.getStatus().equals("2")) {
+				msg.setTitle("임시저장");
+				msg.setContent("성공적으로 임시저장 되었습니다!");
+			}
 			session.setAttribute("successMsg", msg);
 			return "redirect:main.ap";			
 		}else {
 			AlertMsg msg = new AlertMsg("상신실패", "문서 상신에 실패했습니다.");
+			if(ap.getStatus().equals("2")) {
+				msg.setTitle("임시저장");
+				msg.setContent("임시저장에 실패했습니다.");
+			}
 			session.setAttribute("failMsg", msg);
 			return "redirect:main.ap";
 		}

@@ -155,6 +155,21 @@
 		 where board_no = #{boardNo}
 	</update>
 	
+	<select id="selectAttList" resultMap="attachmentResult">
+		select
+			   attach_no
+			 , ref_no
+			 , origin_name
+			 , change_name
+			 , file_path
+			 , upload_date
+			 , division
+	      from attachment 
+	     where division = 'B'
+		   and ref_no = #{boardNo}
+	</select>
+	
+	
 	<update id="updateBoard">
 		update
 		       board
@@ -165,6 +180,30 @@
 		 where board_no = #{boardNo}
 	</update>
 	
+	<insert id="updateAttachment">
+		insert 
+		  into attachment
+		  (
+		    ATTACH_NO
+		  , REF_NO
+	  	  , ORIGIN_NAME
+		  , CHANGE_NAME
+		  , FILE_PATH
+		  , UPLOAD_DATE
+		  , DIVISION
+		  )
+		  values
+		  (
+		    seq_attno.nextval
+		  , seq_bno.currval
+		  , #{ originName }
+		  , #{ changeName }
+		  , #{ filePath }
+		  , to_char(sysdate, 'YYYY-MM-DD')
+		  , 'B'
+		  )
+	</insert>
+	
 	<select id="selectReplyList" resultMap="boardreplyResult">
 		select
 			   reply_no 						
@@ -173,7 +212,7 @@
 			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		  from board_reply 
 		 where status = 'N'
-		   and reply_no = #{boardNo}		
+		   and board_no = #{boardNo}		
 		 order
 		    by reply_no desc  
 	</select>
@@ -190,7 +229,7 @@
 		  values
 		  (
 		    seq_brno.nextval
-		  , #{replyCotent}
+		  , #{replyContent}
 		  , #{boardNo}
 		  , #{replyWriter}
 		  )
@@ -230,6 +269,16 @@
 		  )
 	</insert>
 
+	<update id="updateCate">
+		update
+			   board_cate
+		   set board_cname = #{boardCname}
+		  	 , display_range = #{displayRange}
+		  	 , private_status = #{privateStatus}
+		  	 , anonym_status = #{anonymStatus}
+		  	 , dept_code = #{deptCode}
+		 where board_cno = #{boardCno}
+	</update>
 
 
 

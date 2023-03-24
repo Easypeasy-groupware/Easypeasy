@@ -109,6 +109,8 @@
 
     <div id="main">
 
+    <jsp:include page="sidebar.jsp"/>
+    
         <jsp:include page="sidebar.jsp"/>
         
         <div id="content">

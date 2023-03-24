@@ -65,4 +65,9 @@ public class ScheduleDao {
 	public int defaultUpdate(SqlSessionTemplate sqlSession, int calNo) {
 		return sqlSession.update("scheduleMapper.defaultUpdate", calNo);
 	}
+	
+	
+	public ArrayList<Calendar> scheduleList(SqlSessionTemplate sqlSession, int empNo){
+		return (ArrayList)sqlSession.selectList("scheduleMapper.scheduleList", empNo);
+	}
 }

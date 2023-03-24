@@ -14,13 +14,21 @@
     /* 게시판 스타일 */
     .board {width: 1000px;float: right;}
     .container {margin: 20px auto; width: 900px; padding: 20px;}
-    .replyContent{margin: 20px auto; width: 900px; padding: 10px;}
-	h2 {padding:1% 1%;}
-	table {border-collapse: collapse; width: 100%;}
-	tr {text-align: center;}
-	th, td {text-align: center; padding: 8px; border-bottom: 1px solid #ccc;}
-	th {background-color: #ddd;}
-	.views {text-align: center;}
+    form {max-width: 1000px; margin: 0 auto; padding: 20px; border-radius: 5px; box-sizing: border-box;}
+    label {display: inline-block; margin-bottom: 5px; font-weight: bold;}
+	input[type="text"],input[type="file"],textarea,
+	select {width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 3px; box-sizing: border-box; margin-bottom: 20px; font-size: 16px; font-family: inherit;}
+	select {height: 40px;}
+	
+	/* 파일첨부 스타일 */
+	#attach_area{height: 100px; border: 2px dashed gray; background: whitesmoke; vertical-align: middle;}
+    #no_attachment{width: 100%; margin: auto; display: block;}
+    #no_attachment img, #no_attachment div{float: left;}
+    #no_attachment div{margin-left: 10px; line-height: 26px; font-size: 18px; font-weight: 600; color: gray;}
+    #in_attachments{width: 100%; max-height: 100px; padding-left: 20px; display: none;}
+    #attach{width: 25px;}
+    .attach_delete_btn{border: none;}
+	
 </style>
 </head>
 <body>
@@ -31,12 +39,14 @@
 		<jsp:include page="../board/boardSidebar.jsp" />
        
         <div class="board">
-        	<form id="enrollForm" method="post" action="update.bo" enctype="multipart/form-data">
+        	<form method="post" action="update.bo" enctype="multipart/form-data">
           <h3>게시글 수정/삭제</h3>
           <br><br>
           	  <input type="hidden" name="boardNo" value="${b.boardNo}">
               <label>게시판그룹</label>
                   <select name="boardCno">
+                  	  <option value="${b.boardCno}" name="boardCno" id="">${b.boardCno}</option>
+                      <option>-----</option>
                       <option value="1" name="boardCno" id="1">전체 공지사항</option>
                       <option value="2" name="boardCno" id="2">식단표</option>
                       <option value="3" name="boardCno" id="3">자유게시판</option>
@@ -44,11 +54,16 @@
                       <option value="5" name="boardCno" id="5">부서 공지사항</option>
                       <option value="6" name="boardCno" id="6">부서 자유게시판</option>
                   </select><br>
+                  <script>
+					$(function(){
+						$('select[name=boardCno] value=[${b.boardCno}]').attr("selected", true);
+					})
+				  </script>
+                  
               <label for="title">게시글 제목</label>
-                  <input type="text" id="boardTitle" name="boardTitle" required /><br>
-              	  <input type="hidden" name="boardWriter" value="${loginUser.empNo}">
-              
-              
+                  <input type="text" id="boardTitle" name="boardTitle" value="${b.boardTitle}" required /><br>
+              	  <input type="hidden" name="boardWriter" value="${b.boardWriter}">
+
               <label for="file">파일첨부</label>
                   <table>
                   	<tr>
@@ -72,9 +87,8 @@
                   </table>
               <br>    
               
-              
               <label for="content">내용</label>
-                  <textarea name="boardContent" id="boardContent" cols="30" rows="10" required></textarea><br>
+                  <textarea name="boardContent" id="boardContent" cols="30" rows="10" value="${b.boardContent}" required></textarea><br>
               <label for="boardPin">공지등록</label>
                   <input type="checkbox" id="N" name="boardPin" /><br>
                
@@ -82,7 +96,7 @@
               <div align="center">
                 <button type="button" class="btn btn-dark" onclick="javascript:history.go(-1);">이전으로</button>
                 <button type="submit" class="btn btn-success">수정하기</button>
-                <button type="button" class="btn btn-secondary">삭제하기</button>
+                <button type="button" class="btn btn-danger" onclick="location.href='delete.bo';">삭제하기</button>
               </div>
               </form>
         </div>
