@@ -421,7 +421,7 @@
 	    					
 	    				}, error: function(request, status, error ){
 	    					console.log("댓글 작성용 ajax 통신실패");
-	    					alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+	    					console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
 
 	    				}
 	    			});
@@ -468,8 +468,10 @@
 	    				$("#rcount").text(list.length);
 	    				
 	    				
-	    			}, error:function(){
+	    			}, error:function(request, status, error ){
 	    				console.log("댓글리스트 조회용 ajax 통신실패");
+    					console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+
 	    			}
 	    		})
 	    		

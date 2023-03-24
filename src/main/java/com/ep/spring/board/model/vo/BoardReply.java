@@ -11,12 +11,12 @@ import lombok.ToString;
 @ToString
 public class BoardReply {
 
-	private int ReplyNo;
-	private int BoardNo;
-	private String ReplyContent;
-	private int ReplyWriter;
-	private String CreateDate;
-	private String ModifyDate;
-	private String Status;
+	private int replyNo;
+	private int boardNo;
+	private String replyContent;
+	private int replyWriter;
+	private String createDate;
+	private String modifyDate;
+	private String status;
 	
 }

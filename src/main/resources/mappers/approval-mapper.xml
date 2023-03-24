@@ -538,7 +538,7 @@
 				        , APP_SEQUENCE
 				        , APP_CHANGE
 				        , emp_name
-				        , dept_name
+				        , NVL(dept_name, '이피그룹') as "dept_name"
 				        , job_code
 				  from approval a
 				  join employee b on (a.emp_no = b.emp_no)
@@ -654,7 +654,7 @@
 			            , APP_NO
 			            , a.EMP_NO
 			            , emp_name
-			            , dept_name
+			            , NVL(dept_name, '이피그룹') as "dept_name"
 			            , job_code
 			     from  app_reply a
 			     join  employee b on (a.emp_no = b.emp_no)
@@ -755,6 +755,7 @@
 			   , app_amount
 			   , app_sequence
 			   , app_change
+			   , status
 			  )
 			    values
 			  (
@@ -771,6 +772,7 @@
 			   , #{appAmount}
 			   , #{appSequence}
 			   , #{appChange}
+			   , #{status}
 			  )  	
 	</insert>
 	
