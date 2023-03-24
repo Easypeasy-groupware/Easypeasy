@@ -1004,6 +1004,7 @@
 			         )
 			      , #{recEmpNo} 
 			      , #{appNo}	
+			      )
 	</insert>
 	
 </mapper>
