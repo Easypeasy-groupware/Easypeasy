@@ -78,8 +78,8 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("attachmentMapper.selectMailAttachmentList", m);
 	}
 
-	public int readUnreadMail(Mail m, SqlSessionTemplate sqlSession) {
-		return sqlSession.update("mailMapper.readUnreadMail", m);
+	public int updateReadUnreadMail(Mail m, SqlSessionTemplate sqlSession) {
+		return sqlSession.update("mailMapper.updateReadUnreadMail", m);
 	}
 
 	public int deleteMail(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
@@ -137,6 +137,8 @@ public class MailDao {
 		}
 		return result;
 	}
+
+	
 
 	
 

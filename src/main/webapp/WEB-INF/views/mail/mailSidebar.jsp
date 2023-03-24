@@ -23,7 +23,7 @@
     .boxList{width: 170px;}
     .boxList>div{width: 140px; float: left; margin: 5px 0px 0px 15px; padding: 5px 0px 5px 0px; font-size: 14px;}
     .boxList>img{width: 15px; margin: 5px 0px 5px 0px; padding: 5px 0px 5px 0px;}
-    #tagList{min-height: 0px; max-height: 200px; overflow-y: auto; overflow-x: hidden;}
+    #tagList{min-height: 0px; max-height: 110px; overflow-y: auto; overflow-x: hidden;}
     #tagList>div{float: left;}
     .tagBoxList{width: 30px; float: left; float: left; line-height: 15px;}
     .tagBlock{display: inline-block; position: relative;}

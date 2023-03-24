@@ -2,12 +2,14 @@ package com.ep.spring.mail.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +29,8 @@ import com.ep.spring.login.model.vo.Employee;
 import com.ep.spring.mail.model.service.MailService;
 import com.ep.spring.mail.model.vo.Mail;
 import com.ep.spring.mail.model.vo.MailTag;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class MailController {
@@ -84,7 +88,6 @@ public class MailController {
 	public Object sendMail(@RequestPart(value = "key") Map<String, Object> param, 
 						   @RequestPart(value = "originNames", required = false) List<MultipartFile> originNames, 
 						   ModelAndView mv, HttpSession session) {
-		System.out.println("12");
 		ArrayList<Mail> mList = new ArrayList<>();
 		ArrayList<Attachment> atList = new ArrayList<>();
 		AlertMsg msg = new AlertMsg();
@@ -213,15 +216,23 @@ public class MailController {
 	// 메일 읽음/안읽음 처리
 	@ResponseBody
 	@RequestMapping(value="updateReadUnread.ma")
-	public void updateReadMail(HttpServletResponse response, HttpSession session, Mail m) throws IOException {
-		int result = mService.updateReadUnreadMail(m);
-		if(result > 0) {
-			m = mService.selectMail(m);
-			String recCheck = m.getRecCheck();
-			
-			response.setContentType("text/html; charset=UTF-8");
-			response.getWriter().print(recCheck);
-		}
+	public void updateReadMail(@RequestParam String recMailNoListData, HttpSession session) throws IOException {
+		String[] recMailNoList = recMailNoListData.split(",");
+//		for(int i=0; i<recMailNoList.length; i++) {
+//			System.out.println(recMailNoList[i]);
+//		}
+		String recCheck = "Y";
+		int result = mService.updateReadUnreadMail(recMailNoList, recCheck);
+		
+		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
+		ArrayList<Mail> selectMailList = mService.selectReceiveMailList(email);
+//		if(result > 0) {
+//			Map<String, Object> mailList = new HashMap<String, Object>();
+//			mailList.put("mailList", selectMailList);
+//			return mailList;
+//		}else {
+//			return null;
+//		}
 	}
 	
 	@RequestMapping("delete.ma")

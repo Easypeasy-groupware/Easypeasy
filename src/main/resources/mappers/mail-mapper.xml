@@ -249,7 +249,7 @@
 			   MAIL_NO = #{ mailNo }
 	</select>
 	
-	<update id="readUnreadMail">
+	<update id="updateReadUnreadMail">
 		update rec_mail
 		   set 
   	   		   rec_check = #{ recCheck }

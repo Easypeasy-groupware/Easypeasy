@@ -85,9 +85,17 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public int updateReadUnreadMail(Mail m) {
-		return mDao.readUnreadMail(m, sqlSession);
+	public int updateReadUnreadMail(String[] recMailNoList, String recCheck) {
+		int result = 0;
+		Mail m = new Mail();
+		for(int i=0; i<recMailNoList.length; i++) {
+			m.setRecMailNo(Integer.parseInt(recMailNoList[i]));
+			m.setRecCheck(recCheck);
+			result += mDao.updateReadUnreadMail(m, sqlSession);
+		}
+		return result;
 	}
+
 
 	@Override
 	public int deleteMail(Mail m, int[] recMailNoList) {
@@ -114,6 +122,7 @@ public class MailServiceImpl implements MailService {
 		return mDao.tagMail(m, recMailNoList, sqlSession);
 	}
 
+	
 	
 
 	

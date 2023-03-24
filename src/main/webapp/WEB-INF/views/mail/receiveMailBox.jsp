@@ -299,6 +299,7 @@
             let checkedBoxSum = 0
             let mailSelectArea = document.querySelectorAll(".mail_select_area");
             let index = 0;
+            let arr = [];
 
             // 메일 상세조회
             let mailSelectList = document.querySelectorAll('.mail_select_area');
@@ -331,7 +332,7 @@
             let spamEnroll = document.getElementById("spam");
             spamEnroll.addEventListener('click', function(){
                 checkedBoxSum = 0
-                let arr = [];
+                arr = [];
                     mailCheckBox.forEach((i) => {
                         if(i.checked == true) {
                             let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
@@ -419,7 +420,7 @@
             let deleteMail = document.getElementById("delete");
             deleteMail.addEventListener('click', function(){
                 checkedBoxSum = 0
-                let arr = [];
+                arr = [];
                     mailCheckBox.forEach((i) => {
                         if(i.checked == true) {
                             let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
@@ -451,7 +452,7 @@
             let tagBtnList = document.querySelectorAll(".tag_btn");
             tag.addEventListener('click', function(){
                 checkedBoxSum = 0
-                let arr = [];
+                arr = [];
                 mailCheckBox.forEach((i, index) => {
                     if(i.checked == true) {
                         let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
@@ -500,36 +501,54 @@
             let read = document.querySelector(".read");
             read.addEventListener('click', function(){
                 checkedBoxSum = 0
-                let arr = [];
-                let form = document.createElement("form");
-                    mailCheckBox.forEach((i, index) => {
-                        if(i.checked == true) {
-                            let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
-                            arr.push(value);
-                            checkedBoxSum += 1;
-                        };
-                    })
-                if(checkedBoxSum == 1) {
+                arr = [];
+                let recMailMoList = ""
+                mailCheckBox.forEach((i, index) => {
+                    if(i.checked == true) {
+                        let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
+                        arr.push(value);
+                        checkedBoxSum += 1;
+                    };
+                })
+                console.log(arr)
+                console.log(typeof(checkedBoxSum))
+                console.log(checkedBoxSum > 0)
+                let recCheck = 'Y'
+                for(let i=0; i<arr.length; i++){
+                    recMailMoList += (arr[i] + ",");
+                }
+                if(checkedBoxSum > 0) {
+                    $.ajax({
+                        url:"updateReadUnread.ma",
+                        type:"POST",
+                        data:{
+                            recMailNoListData: recMailMoList
+                        },
+                        success: function(){
 
+                        }, error: function(){
+
+                        }
+                    });
                 }else{
                     alert('체크박스를 선택해주세요');
                 }
             }); 
 
+            
             // 안읽음 처리
             let unread = document.querySelector(".unread");
-            read.addEventListener('click', function(){
+            unread.addEventListener('click', function(){
                 checkedBoxSum = 0
                 let arr = [];
-                let form = document.createElement("form");
-                    mailCheckBox.forEach((i, index) => {
-                        if(i.checked == true) {
-                            let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
-                            arr.push(value);
-                            checkedBoxSum += 1;
-                        };
-                    })
-                if(checkedBoxSum == 1) {
+                mailCheckBox.forEach((i, index) => {
+                    if(i.checked == true) {
+                        let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
+                        arr.push(value);
+                        checkedBoxSum += 1;
+                    };
+                })
+                if(checkedBoxSum > 1) {
                     
                 }else{
                     alert('체크박스를 선택해주세요');
@@ -544,8 +563,8 @@
 
             // 즐겨찾기
             let imporList = document.querySelectorAll('.mail_impor');
-            favoriteList.forEach(function(favorite){
-                favorite.addEventListener('click', function(){
+            imporList.forEach(function(impor){
+                impor.addEventListener('click', function(){
                     console.log("즐겨찾기");
                 });
             });

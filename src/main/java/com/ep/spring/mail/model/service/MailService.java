@@ -42,7 +42,7 @@ public interface MailService {
 
 	
 	/* 5. 메일 읽음/안읽음 처리 */
-	int updateReadUnreadMail(Mail m);
+	int updateReadUnreadMail(String[] recMailNoList, String recCheck);
 
 	
 	/* 6. 휴지통 보내기 */
@@ -61,6 +61,7 @@ public interface MailService {
 
 	/* 9. 메일 태그 등록 */
 	int tagMail(Mail m, int[] recMailNoList);
+
 
 	
 
