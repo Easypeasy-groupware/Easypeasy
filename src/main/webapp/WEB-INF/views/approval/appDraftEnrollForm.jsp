@@ -67,7 +67,7 @@
 	            </div>
 	            <div class="left-form2">
 		            <a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
-		            <a href="" style="padding:20px; color:rgb(71, 71, 71);">임시저장</a>|
+		            <span style="padding:20px; color:rgb(71, 71, 71);" onclick="tempSave();">임시저장</span>|
 		            <a href="" style="padding:20px; color:rgb(71, 71, 71);">취소</a>|
 		            <a href="" style="padding:20px; color:rgb(71, 71, 71);"  data-toggle="modal" data-target="#app-line">결재선지정</a>
 		            <br><br><br>
@@ -342,11 +342,10 @@
         		}
 			
 				let value = "";
-				value += "<input type='hidden' name='writerComment' value='"+ $("#writerComment").val() +"'>";
+				value += "<input type='hidden' name='writerComment' value='"+ $("#writerComment").val() +"'><br>"
+					  + "<input type='hidden' name='status' value='"+ 1 +"'>";
 				$("#commentArea").html(value);
 				
-				$("input[type=radio][name=start-half]").attr('name', 'halfStatus');
-				$("input[type=radio][name=end-half]").attr('name','halfStatus');
 
 				appContent.submit();
 				
@@ -355,7 +354,16 @@
         		swal("의견 작성 후 상신요청해주세요.");
         	}
         	
-        }        
+        }
+        
+        function tempSave(){
+        	
+			let value = "";
+			value += "<input type='hidden' name='status' value='"+ 2 +"'>";
+			$("#commentArea").html(value);
+			$("#contentArea").submit();
+        }
+        
     </script>
 
 </body>

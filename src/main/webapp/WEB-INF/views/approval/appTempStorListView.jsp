@@ -68,6 +68,7 @@
 			                    <tr>
 			                        <td>
 			                             <input type="checkbox" name="chk" id="">
+			                             <input type="hidden" id="num" value="${a.appNo }">
 			                        </td>
 			                        <td>${a.enrollDate}</td>
 			                        <td>${a.formName }</td>
@@ -143,7 +144,7 @@
     	     	// 상세페이지로 이동하는 function
     	     	if(${not empty list}){
     		        $("table tbody").on("click", "tr", function(){
-    		            location.href = 'xxx.ap?no=' + $(this).children().eq(0).text()+"&form="+ $(this).children().eq(2).text(); 
+    		            location.href = 'updateForm.ap?no=' + $(this).children().eq(0).find("#num").val();
     		        }); 
     	        }
             });

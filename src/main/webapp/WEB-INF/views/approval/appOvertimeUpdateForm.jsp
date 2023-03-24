@@ -122,7 +122,7 @@
 		                                <label for="content">근무구분</label>
 		                            </td>    
 		                            <td>
-		                                &nbsp;&nbsp;<input type="radio" id="extension" name="otKind" value="연장" checked>  <label for="extension" >연장</label>
+		                                &nbsp;&nbsp;<input type="radio" id="extension" name="otKind" value="연장">  <label for="extension" >연장</label>
 		                                &nbsp;&nbsp;<input type="radio" id="night" name="otKind" value="야간">  <label for="night" >야간</label>     
 		                                &nbsp;&nbsp;<input type="radio" id="holiday" name="otKind" value="휴일">  <label for="holiday">휴일</label>
 		                            </td>                        
@@ -145,7 +145,7 @@
 		                                <label for="content">근무시간</label>
 		                            </td>
 		                            <td id="overUseTime" name="otUseTime">
-		                                &nbsp;&nbsp;
+		                                &nbsp;&nbsp; 총  ${ot.otUseTime }  시간
 		                            </td>
 		                        </tr>
 		                        <tr>
@@ -164,7 +164,7 @@
 		                                <label for="content">신청사유</label>
 		                            </td>
 		                            <td rowspan="5" height="150px;">
-		                                <textarea class="form-control" name="content" id="content" rows="10" style="resize:none;"></textarea>
+		                                <textarea class="form-control" name="content" id="content" rows="10" style="resize:none;">${ap.content }</textarea>
 		                            </td>
 		                        </tr>
 		                        <tr></tr>
@@ -189,6 +189,13 @@
 		                                    <div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
 		                                </div>
 		                                <div id="in_attachments">
+		                                
+											<c:if test="${not empty list3}">
+												<c:forEach var="a" items="${list3 }">
+													<div> 첨부파일명 :  ${a.originName}  &nbsp;&nbsp;&nbsp; <br></div>
+												</c:forEach>
+											</c:if>			                                
+		                                
 		                                </div>
 		                                <input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
 		                            </td>
@@ -212,6 +219,32 @@
 			               </div>
 			               
 			               <div class="app-body">
+			               
+				               	<c:choose>
+					               	<c:when test="${empty list1}">
+					               		결재선이 비었습니다.
+					               	</c:when>
+					               	<c:otherwise>
+					               		<c:forEach var="e" items="${list1}">
+							               <div class="app-comment" style="font-size:15px;">
+							                   <img src="<c:out value='${e.empProfile}' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${e.empName} ${e.jobCode == 'J1'?'사원':
+																																										                             e.jobCode == 'J2'?'대리':
+																																										                             e.jobCode == 'J3'?'과장':
+																																										                             e.jobCode == 'J4'?'부장':
+																																										                             e.jobCode == 'J5'?'상무':
+																																										                             e.jobCode == 'J6'?'대표':''}
+											   <input type="hidden" name="recEmpNo" value="${e.recEmpNo }">																														                             
+							                   <br>
+							                     이지피지 | ${e.deptName}
+							                   <br>
+							                    결재
+							                   <br><br><br>
+											
+							               </div>	               			
+					               		</c:forEach>
+				               		</c:otherwise>
+				               </c:choose>			               
+			               
 			               </div>
 			               		                   
 		                   <div class="app-comment" style="font-size:15px;">
@@ -237,6 +270,30 @@
 			               </div>
 			               
 			               <div class="rep-body">
+				               	<c:choose>
+					               	<c:when test="${empty list2}">
+					               		참조선이 비었습니다.
+					               	</c:when>
+					               	<c:otherwise>
+					               		<c:forEach var="r" items="${list2}">
+							               <div class="app-comment" style="font-size:15px;">
+							                   <img src="<c:out value='${r.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${r.empName} ${r.jobCode == 'J1'?'사원':
+																																										                       r.jobCode == 'J2'?'대리':
+																																										                       r.jobCode == 'J3'?'과장':
+																																										                       r.jobCode == 'J4'?'부장':
+																																										                       r.jobCode == 'J5'?'상무':
+																																										                       r.jobCode == 'J6'?'대표':''}
+							                   <input type="hidden" name="recEmpNo" value="${r.recEmpNo }">	
+							                   <br>
+							                     이지피지 | ${r.deptName}
+							                   <br>
+							                    참조
+							                   <br><br><br>
+											
+							               </div>	               			
+					               		</c:forEach>
+				               		</c:otherwise>
+				               </c:choose>     			               
 			               </div>
 			               
 			               <div id="commentArea">

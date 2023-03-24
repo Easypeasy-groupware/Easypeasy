@@ -65,7 +65,7 @@
 		            </div>
 		            <div class="left-form2">
 		            	<a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
-		                <a href="" style="padding:20px; color:rgb(71, 71, 71);">임시저장</a>|
+		            <span style="padding:20px; color:rgb(71, 71, 71);" onclick="tempSave();">임시저장</span>|
 		                <a href="" style="padding:20px; color:rgb(71, 71, 71);">취소</a>|
 		                <a href="" style="padding:20px; color:rgb(71, 71, 71);"  data-toggle="modal" data-target="#app-line">결재선지정</a>
 		                <br><br><br>
@@ -135,8 +135,8 @@
 		                            <td>
 		                                &nbsp;&nbsp;
 		                                <input  class="dateSelect"  name="otDate" id="" required >
-		                                <input type="number"  class="dateSelect-start"  name="otStart" id="overStartHour" required style="width:80px;" min="0" max="24"> ~ 
-		                                <input type="number" class="dateSelect-end" name="otEnd" id="overEndHour" required style="width:80px;" min="0" max="24" onchange="diffTime();">
+		                                <input type="number"  class="dateSelect-start"  name="otStart" id="overStartHour" required style="width:80px;" min="1" max="24"> ~ 
+		                                <input type="number" class="dateSelect-end" name="otEnd" id="overEndHour" required style="width:80px;" min="1" max="24" onchange="diffTime();">
 		                                <span id="diff"></span>
 		                                <!-- <button onclick="diffTime();">계산</button> -->
 		                            </td>
@@ -146,7 +146,7 @@
 		                                <label for="content">근무시간</label>
 		                            </td>
 		                            <td id="overUseTime" name="otUseTime">
-		                                &nbsp;&nbsp; 총 + ${ot.otUseTime } + 시간
+		                                &nbsp;&nbsp;
 		                            </td>
 		                        </tr>
 		                        <tr>
@@ -165,7 +165,7 @@
 		                                <label for="content">신청사유</label>
 		                            </td>
 		                            <td rowspan="5" height="150px;">
-		                                <textarea class="form-control" name="content" id="content" rows="10" style="resize:none;">${ap.content }</textarea>
+		                                <textarea class="form-control" name="content" id="content" rows="10" style="resize:none;"></textarea>
 		                            </td>
 		                        </tr>
 		                        <tr></tr>
@@ -263,6 +263,7 @@
                                         
                     $("#writer").val(result.a.empName);
                     $("#dept").val(result.a.deptName);
+                    $("#appChange").val(result.appChange);
                     
                 }, error:function(request, status, error){
                     console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
@@ -285,7 +286,7 @@
                     document.getElementById("overUseTime").value = "";
                     document.getElementById("overUseTime").innerHTML = "";
                 }else{
-                	$("#diff").text("");g
+                	$("#diff").text("");
                     document.getElementById("overUseTime").value = diff;
                     document.getElementById("overUseTime").innerHTML = "총 " + diff + "시간";
                 }
@@ -409,7 +410,8 @@
         		}
 			
 				let value = "";
-				value += "<input type='hidden' name='writerComment' value='"+ $("#writerComment").val() +"'>";
+				value += "<input type='hidden' name='writerComment' value='"+ $("#writerComment").val() +"'><br>"
+				  + "<input type='hidden' name='status' value='"+ 1 +"'>";
 				$("#commentArea").html(value);
 				
 				$("input[type=radio][name=start-half]").attr('name', 'halfStatus');
@@ -424,7 +426,14 @@
         	}
         	
         }
-
+        
+        function tempSave(){
+        	
+			let value = "";
+			value += "<input type='hidden' name='status' value='"+ 2 +"'>";
+			$("#commentArea").html(value);
+			$("#contentArea").submit();
+        }
     </script>
 
 
