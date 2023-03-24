@@ -256,7 +256,7 @@
                                     </c:when>
                                     <c:otherwise>
                                         <c:forEach var="t" items="${list3 }">
-                                            <a href="${t.changeName }" download="${t.originName }">${t.originName }</a>
+                                            <a href="${t.filePath }" download="${t.changeName }">${t.originName }</a>
                                         </c:forEach>
                                     </c:otherwise>
                                 </c:choose>

@@ -59,7 +59,7 @@
     <jsp:include page="appMenubar.jsp" />
     <div class="form-outer">
         <div class="left-outer">
-        	<form id="contentArea" action="update.ap" method="POST" enctype="multipart/form-data">
+        	<form id="contentArea" method="POST" enctype="multipart/form-data">
             <div class="left-form1">
                 <p>
                 	<b style="font-size:30px;">일반품의서</b>
@@ -384,6 +384,19 @@
         // 유효한 기안의견 작성 시 update 요청되게 하기
         function insertApp(){
         	
+            $.ajax({
+                url:"enrollinfo.ap",
+                success:function(result){
+
+                    $("#appChange").val(result.appChange);
+                    
+                }, error:function(request, status, error){
+                    console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+                    console.log("직성용 정보 불러오기 ajax 통신실패");
+                }
+            });
+            
+       
         	if($("#writerComment").val().trim().length>0){
         		
         		if(!($("#content").val().trim().length>0)){
@@ -417,13 +430,14 @@
         		}
 			
 				let value = "";
-				value += "<input type='hidden' name='writerComment' value='"+ $("#writerComment").val() +"'>";
+				value += "<input type='hidden' name='writerComment' value='"+ $("#writerComment").val() +"'>"
+				 + "<input type='hidden' name='status' value='"+ 1 +"'>";
 				$("#commentArea").html(value);
 				
 				$("input[type=radio][name=start-half]").attr('name', 'halfStatus');
 				$("input[type=radio][name=end-half]").attr('name','halfStatus');
 				
-				appContent.submit();
+				$("#contentArea").attr("action","insert.ap").submit();;
 				
 
         		
@@ -433,6 +447,39 @@
         	}
         	
         }
+        
+        function tempSave(){
+        	
+        	
+        	
+        	
+			let value = "";
+			value += "<input type='hidden' name='status' value='"+ 2 +"'>";
+			$("#commentArea").html(value);
+			
+    		// 결재 / 참조자 목록들 배열에 담기
+    		const recEmpNo = [];
+    		const refList = [];
+    		
+    		const appBody = $(".app-body input");
+    		const refBody = $(".rep-body input");
+    		
+    		
+    		for(let i = 0; i < appBody.length; i++){
+    			console.log(appBody[i]);
+    			appBody[i].setAttribute('name', 'alList['+ i +'].recEmpNo');
+    	
+    		}
+
+    		for(let j = 0; j < refBody.length; j++){
+    			refBody[j].setAttribute('name', 'refList[' + j + '].recEmpNo');
+    	
+    		}
+
+			
+			
+    		$("#contentArea").attr("action","update.ap").submit();
+        }            
         
 
     </script>

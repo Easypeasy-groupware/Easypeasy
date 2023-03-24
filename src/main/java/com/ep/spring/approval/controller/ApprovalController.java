@@ -494,6 +494,7 @@ public class ApprovalController {
 		if(result > 0) {
 			
 			AlertMsg msg = new AlertMsg("결재상신", "성공적으로 문서상신 완료되었습니다!");
+			System.out.println("status : " + ap.getStatus());
 			if(ap.getStatus().equals("2")) {
 				msg.setTitle("임시저장");
 				msg.setContent("성공적으로 임시저장 되었습니다!");

@@ -230,21 +230,19 @@
                 <div class="left-form5">
                     <table class="table-bordered" >
                         <tr>
-                            <td width="100px;" style="text-align:center">신청현황</td>
-                            <td width="700px;">
-                            </td>
+                            <td colspan='2'  style="text-align:left">신청현황</td>
                         </tr>
                         <tr>
-                            <td style="text-align:center">근무구분</td>
-                            <td></td>
+                            <td width="100px;" style="text-align:center">근무구분</td>
+                            <td width="700px;">${ot.otKind }</td>
                         </tr>
                         <tr>
                             <td style="text-align:center">근무일시</td>
-                            <td></td>
+                            <td>${ot.otDate }</td>
                         </tr>
                         <tr>
                             <td style="text-align:center">근무시간</td>
-                            <td></td>
+                            <td>${ot.otUseTime }</td>
                         </tr>
                         <tr>
                             <td colspan="2" style="text-align:center">
@@ -260,7 +258,7 @@
                         </tr>
                         <tr>
                             <td rowspan="5" style="text-align:center">신청사유</td>
-                            <td rowspan="5" height="150px;">내용</td>
+                            <td rowspan="5" height="150px;">${ap.content }</td>
                         </tr>
                         <tr>
                         </tr>
@@ -276,7 +274,18 @@
 
                         <tr>
                             <td style="text-align:center">첨부파일</td>
-                            <td></td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${empty list3 }">
+                                        첨부파일이 없습니다.
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:forEach var="t" items="${list3 }">
+                                            <a href="${t.filePath }" download="${t.changeName }">${t.originName }</a>
+                                        </c:forEach>
+                                    </c:otherwise>
+                                </c:choose>                            
+                            </td>
                         </tr>
                     </table>
                 </div>
