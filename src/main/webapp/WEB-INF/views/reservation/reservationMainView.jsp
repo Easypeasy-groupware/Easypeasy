@@ -58,11 +58,11 @@
         border-radius: 5px;
     }
 
-	.dropdown{
+	.res-dropdown{
 		margin-top: 10px;
 		float: right;
 	}
-	.dropdown button{
+	.res-dropdown button{
 		background: rgb(214, 223, 204);
 		color: white;
 		border: none;
@@ -110,7 +110,7 @@
             <span>
                 <h5>자산 예약 현황</h5>
             </span>
-            <div class="dropdown">
+            <div class="res-dropdown">
 			  	<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
 			    	회의실/빔프로젝터
 			  	</button>

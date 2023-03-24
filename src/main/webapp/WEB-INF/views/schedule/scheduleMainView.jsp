@@ -319,41 +319,18 @@
     		$("#myModal").modal("hide");
     	})
     	
-    	
-		/*
+    	/*
     	$(document).on("click", ".inputCheck", function(){
-
-    		var checkArr = [];
-        	$(".inputCheck").each(function() {
-    			if($(this).is(":checked") == true){
-    				var check = $(this).next().next().val();
-    				checkArr.push(check);
-    		    }
-    		});
+	    	$(".inputCheck").each(function() {
+		    	if($(this).is(":checked") == true){
+					var check = $(this).next().next().val();
+					console.log(check);
+			    }
+	    	})
+    	});
+		*/
     	
-			$.ajax({
-    			url:"selectSchedule.sc",
-    			type:"post",
-    			data:{
-    				checkArr:checkArr
-    			},
-    			success:function(result){
-    				
-    				if(result > 0){
-    					
-    					location.reload();
-    					
-    				}else{
-    					
-    				}
-    				
-    			},error:function(){
-    				console.log("기본캘린더 변경 ajax 통신 실패");
-    			}
-    		})
-    		
-		});
-    	*/
+    	
     	
         // FullCalendar
         document.addEventListener('DOMContentLoaded', function() {
@@ -423,11 +400,37 @@
                 eventLimit: true, // 달력상에 셀 크기보다 많은 이벤트가 등록되어 있는 경우 'more' 표기
                 locale: 'ko', // 한국어 설정
                 events: [
-                    {
-                        title: 'ㅎㅇㅎㅇ',
-                        start: '2023-03-05',
-                        end: '2023-03-05'
-                    }
+                	
+                	$(document).on("click", ".inputCheck", function(){
+
+                		var checkArr = [];
+                    	$(".inputCheck").each(function() {
+                			if($(this).is(":checked") == true){
+                				var check = $(this).next().next().val();
+                				
+                				checkArr.push(check);
+                				console.log(checkArr);
+                		    }
+                			
+                		});
+                	
+                		
+            		})
+                	
+                	/*
+                	<c:forEach var="c" items="${ scList }">
+	                	<c:forEach var="s" items="${ c.scheduleList }">
+	                		<c:choose>
+	                			<c:when test="${ s.startTime == null }">
+	                				{ start: '${ s.startDate }', end: '${ s.endDate }', title: '${ s.scTitle }', color: '${ c.calColor }' },
+	                			</c:when>
+	                			<c:otherwise>
+	                				{ start: '${ s.startDate } ${ s.startTime }', end: '${ s.endDate } ${ s.endTime }', title: '${ s.scTitle }', color: '${ c.calColor }' },
+	                			</c:otherwise>
+	                		</c:choose>
+	    				</c:forEach>
+               		</c:forEach>
+               		*/
                 ]
             });
             calendar.render();

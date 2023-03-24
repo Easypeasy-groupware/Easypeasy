@@ -35,7 +35,14 @@ public class ScheduleController {
 		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		ArrayList<Calendar> myCalList = scService.selectMyCalendar(empNo); 
 		
+		
+		//ArrayList<Calendar> scList = scService.scheduleList();
+		
+		
 		session.setAttribute("myCalList", myCalList);
+		//session.setAttribute("scList", scList);
+		
+		//System.out.println(scList);
 		
 		return "schedule/scheduleMainView";
 	}
@@ -202,15 +209,6 @@ public class ScheduleController {
 		
 	}
 	
-	@RequestMapping("selectSchedule.sc")
-	public String selectSchedule(int no) {
-		
-		System.out.println(no);
-		
-		//ArrayList<Schedule> scList = scService.selectSchedule();
-
-		return "";
-	}
 	
 	@ResponseBody
 	@RequestMapping(value="defaultUpdate.cal")
@@ -227,5 +225,7 @@ public class ScheduleController {
 		return result;
 		
 	}
+	
+	
 
 }
