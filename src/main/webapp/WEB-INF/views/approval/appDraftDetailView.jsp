@@ -399,7 +399,7 @@
                             $("#postForm").submit();
                         }							
                         
-                    }else if(num == 3){
+                    }else if(num == 3){ // 재기안일 때
                     	$("#division").val(3);
                     	$("#postForm").attr("action", "updateForm.ap").submit();
                     }
