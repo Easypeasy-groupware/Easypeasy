@@ -14,14 +14,22 @@ public interface MailService {
 	ArrayList<Mail> selectReceiveMailList(String email);
 	// - 리스트 페이징
 	ArrayList<Mail> selectList(PageInfo pi, String email);
-	// - 즐겨찾기 리스트 조회
-	
-	// - 태그 리스트 조회
-	ArrayList<MailTag> selectTagList(int empNo);
+	// - 중요메일 리스트 조회
+	ArrayList<Mail> selectImporMailList(PageInfo mailPi, String email);
+	// - 첨부메일 리스트 조회
+	ArrayList<Mail> selectAttachMailList(PageInfo mailPi, String email);
+	// - 오늘 온 메일 리스트 조회
+	ArrayList<Mail> selectTodayMailList(PageInfo mailPi, String email);
+	// - 내게 쓴 메일 리스트 조회
+	ArrayList<Mail> selectToMeMailList(PageInfo mailPi, String email);
+	// - 안읽은 메일 리스트 조회
+	ArrayList<Mail> selectUnreadMailList(PageInfo mailPi, String email);
 	
 	
 	/* 2. 태그 생성 */
 	int insertTag(MailTag t);
+	// - 태그 리스트 조회
+	ArrayList<MailTag> selectTagList(int empNo);
 
 	
 	/* 3. 메일 발신 */
@@ -39,6 +47,8 @@ public interface MailService {
 	ArrayList<Mail> selectReceiverList(Mail m);
 	// 첨부파일 리스트 조회
 	ArrayList<Attachment> selectAttachmentList(Mail m);
+	
+	
 
 	
 	/* 5. 메일 읽음/안읽음 처리 */
@@ -61,7 +71,13 @@ public interface MailService {
 
 	/* 9. 메일 태그 등록 */
 	int tagMail(Mail m, int[] recMailNoList);
-
+	
+	
+	
+	
+	
+	
+	
 
 	
 

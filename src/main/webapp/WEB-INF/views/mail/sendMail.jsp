@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -407,6 +410,78 @@
                         mailTitle: $("#mail_title").val(),
                         mailContent: $("#summernote").val(),
                         imporMail: $("input:checkbox[name='imporMail']:checked").val()
+                    }
+
+                    formData.append('key', new Blob([JSON.stringify(data)], {type : "application/json"}));
+                    $.ajax({
+                        url:"send.ma",
+                        method:"POST",
+                        enctype:"multipart/form-data",
+                        data:formData,
+                        processData:false,
+                        contentType:false,
+                        success: function(result){
+                            if(result == 1){
+                                if(sock){
+                                    var msg = null;
+                                    <c:forEach var="m" items="${ mList }" >
+                                    </c:forEach>
+                                    sock.send(msg);
+                                }
+                            }
+                        }, error:function(){
+
+                        }
+                    });
+                }
+            });
+
+            // 임시저장
+            document.getElementById("temp_save").addEventListener('click', function(){
+                const receiverList = document.querySelectorAll("#in_receiver_list b");
+                const recAddList = document.getElementById("input_receiver_list");
+                const referAddList = document.getElementById("input_ref_list");
+                const hidRefAddList = document.getElementById("input_hid_ref_list");
+                const receiver = document.getElementsByClassName("receiver_one");
+                const mailTitle = document.getElementById("mail_title");
+                const mailContent = document.getElementById("summernote");
+
+                recAddList.value = "";
+                referAddList.value = "";
+                hidRefAddList.value = "";
+
+                for(let i=0; i<receiverList.length; i++) {
+                    if(receiverList[i].innerHTML.includes('숨은 참조')){
+                        hidRefAddList.value += receiverList[i].innerHTML
+                    }else if(receiverList[i].innerHTML.includes('참조')){
+                        referAddList.value += receiverList[i].innerHTML
+                    }else{
+                        recAddList.value += receiverList[i].innerHTML + ","
+                    }
+                }
+
+                if(receiver.length < 1) {
+                    alert("수신자를 입력해주세요.")
+                }else if(mailTitle.value == ""){
+                    alert("제목을 입력해주세요.")
+                }else if(mailContent.value == ""){
+                    alert("내용을 입력해주세요.")
+                }else{
+                    let formData = new FormData();
+
+                    for(let i=0; i<$("#attach_files")[0].files.length; i++) {
+                        console.log($("#attach_files")[0].files[i]);
+                        formData.append("originNames", $("#attach_files")[0].files[i]);
+                    }
+
+                    let data = {
+                        recAddList: $("#input_receiver_list").val(),
+                        refList: $("#input_ref_list").val(),
+                        hRefList: $("#input_hid_ref_list").val(),
+                        mailTitle: $("#mail_title").val(),
+                        mailContent: $("#summernote").val(),
+                        imporMail: $("input:checkbox[name='imporMail']:checked").val(),
+                        tempStorage : 'Y'
                     }
 
                     formData.append('key', new Blob([JSON.stringify(data)], {type : "application/json"}));

@@ -138,6 +138,61 @@ public class MailDao {
 		return result;
 	}
 
+	public ArrayList<Mail> selectTodayMailList(String email, PageInfo pi, SqlSessionTemplate sqlSession) {
+		if(pi != null) {
+			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+			int limit = pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectTodayMailList", email, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.selectTodayMailList", email);
+		}
+	}
+
+	public ArrayList<Mail> selectToMeMailList(String email, PageInfo pi, SqlSessionTemplate sqlSession) {
+		if(pi != null) {
+			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+			int limit = pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectToMeMailList", email, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.selectToMeMailList", email);
+		}
+	}
+
+	public ArrayList<Mail> selectAttachMailList(String email, PageInfo pi, SqlSessionTemplate sqlSession) {
+		if(pi != null) {
+			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+			int limit = pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectAttachMailList", email, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.selectAttachMailList", email);
+		}
+	}
+
+	public ArrayList<Mail> selectImporMailList(String email, PageInfo pi, SqlSessionTemplate sqlSession) {
+		if(pi != null) {
+			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+			int limit = pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectImporMailList", email, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.selectImporMailList", email);
+		}
+	}
+
+	public ArrayList<Mail> selectUnreadMailList(String email, PageInfo pi, SqlSessionTemplate sqlSession) {
+		if(pi != null) {
+			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+			int limit = pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectUnreadMailList", email, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.selectUnreadMailList", email);
+		}
+	}
+
 	
 
 	

@@ -72,15 +72,13 @@
             <div id="mail_header">
                 <div id="mail_header1" style="width:100%; float:left">
                     <div id="mail_header_info">
-                        <b>받은 메일함</b>
+                        <b>오늘 온 메일함</b>
                         <img src="">
                         <b style="font-size: 20px;">전체메일 </b>
                         <b id="all_mail_no" style="color: dodgerblue; font-size: 23px;">
                             <c:set var="allMail" value="0" />
                             <c:forEach var="m" items="${ mailList }">
-                                <c:if test="${ m.status == 'Y' and m.junkMail == 'N' }">
-                                    <c:set var="allMail" value="${allMail + 1}" />
-                                </c:if>
+                                <c:set var="allMail" value="${allMail + 1}" />
                             </c:forEach>
                             ${allMail}
                         </b>
@@ -89,10 +87,8 @@
                         <b id="unread_mail_no" style="color: crimson; font-size: 23px;">
                             <c:set var="readMail" value="0" />
                             <c:forEach var="m" items="${ mailList }">
-                                <c:if test="${ m.status == 'Y' and m.junkMail == 'N' }">
-                                    <c:if test="${ m.recCheck == 'Y' }">
-                                        <c:set var="readMail" value="${readMail + 1}" />
-                                    </c:if>
+                                <c:if test="${ m.recCheck == 'Y' }">
+                                    <c:set var="readMail" value="${readMail + 1}" />
                                 </c:if>
                             </c:forEach>
                             ${allMail-readMail}
@@ -611,7 +607,7 @@
             // 새로고침
             let refresh = document.getElementById("refresh");
             refresh.addEventListener('click', function(){
-                location.href = 'list.ma';
+                location.href = 'todayList.ma';
             });
 
             // 즐겨찾기

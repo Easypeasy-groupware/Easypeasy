@@ -72,7 +72,7 @@
             <div id="mail_header">
                 <div id="mail_header1" style="width:100%; float:left">
                     <div id="mail_header_info">
-                        <b>받은 메일함</b>
+                        <b>중요 메일함</b>
                         <img src="">
                         <b style="font-size: 20px;">전체메일 </b>
                         <b id="all_mail_no" style="color: dodgerblue; font-size: 23px;">
