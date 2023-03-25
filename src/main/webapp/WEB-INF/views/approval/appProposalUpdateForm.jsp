@@ -68,6 +68,7 @@
 	                <input type="hidden" name="appNo" value = "${ap.appNo}">
 	                 
                 </p>
+                <br><br><br>
             </div>
             <div class="left-form2">
             	<a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
@@ -322,7 +323,7 @@
                     let attach = "";
                     for(let i=0; i<attachFile.files.length; i++){
                     	
-                    	inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile[i].name + "&nbsp;&nbsp;&nbsp;<br></div>";
+                    	inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile.files[i].name + "&nbsp;&nbsp;&nbsp;<br></div>";
                         
                     };
                     inAttachs.append(attach);

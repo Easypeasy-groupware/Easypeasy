@@ -62,6 +62,7 @@
         	<form id="contentArea" method="POST" enctype="multipart/form-data">
 	            <div class="left-form1">
 	               	<b style="font-size:30px;">연장근무신청서</b>
+	               	<br><br><br>
 	                <input type="hidden" name="formCode" value="4">
 	                <input type="hidden" name="formName" value="연장근무신청서">
 	                <input type="hidden" name="appNo" value = "${ap.appNo}">
@@ -367,14 +368,6 @@
             dateSelector.flatpickr();
             dateSelector.flatpickr({
                 local: 'ko',
-                disable: [
-                
-                // 주말 제외 (토, 일)
-                function(date) {
-                    // return true to disable
-                    return (date.getDay() === 0 || date.getDay() === 6);
-                }
-                    ],
                 dateFormat: "Y-m-d",
                 minDate: "today",
                 maxDate:new Date().fp_incr(30)
@@ -397,7 +390,7 @@
                         let attach = "";
                         for(let i=0; i<attachFile.files.length; i++){
                         	
-                        	inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile[i].name + "&nbsp;&nbsp;&nbsp;<br></div>";
+                        	inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile.files[i].name + "&nbsp;&nbsp;&nbsp;<br></div>";
                             
                         };
                         inAttachs.append(attach);

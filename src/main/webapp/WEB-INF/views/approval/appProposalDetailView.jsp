@@ -249,14 +249,14 @@
                     
                         <tr>
                             <td style="text-align:center">첨부파일</td>
-                            <td>
+                            <td style="overflow: auto;">
                                 <c:choose>
                                     <c:when test="${empty list3 }">
                                         첨부파일이 없습니다.
                                     </c:when>
                                     <c:otherwise>
                                         <c:forEach var="t" items="${list3 }">
-                                            <a href="${t.filePath }" download="${t.changeName }">${t.originName }</a>
+                                            <a href="${t.filePath }" download="${t.changeName }">${t.originName }</a><br>
                                         </c:forEach>
                                     </c:otherwise>
                                 </c:choose>

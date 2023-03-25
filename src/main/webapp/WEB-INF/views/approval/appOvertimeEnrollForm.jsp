@@ -314,14 +314,6 @@
             dateSelector.flatpickr();
             dateSelector.flatpickr({
                 local: 'ko',
-                disable: [
-                
-                // 주말 제외 (토, 일)
-                function(date) {
-                    // return true to disable
-                    return (date.getDay() === 0 || date.getDay() === 6);
-                }
-                    ],
                 dateFormat: "Y-m-d",
                 minDate: "today",
                 defaultDate :"today",
