@@ -234,5 +234,67 @@ public class ScheduleController {
 	}
 	
 	
+	@RequestMapping("scheduleUpDel.sc")
+	public String scheduleUpDel(int no, Model model) {
+		
+		Schedule s = scService.selectSchedule(no);
+		ArrayList<Attendee> atList = scService.selectAttendee(no);
+		
+		model.addAttribute("s", s);
+		model.addAttribute("atList" ,atList);
+		
+		//System.out.println(atList);
+		
+		return "schedule/scheduleUpDel";
+	}
+	
+	
+	@RequestMapping("update.sc")
+	public String scheduleUpdate(int scNo, Schedule s, String empNo, HttpSession session, Model model) {
+		
+		if(s.getAllDay() == null) {
+			s.setAllDay("N");
+		}else {
+			s.setAllDay("Y");
+		}
+		
+		//System.out.println(s);
+		System.out.println("선택한 번호 empNo : " + empNo);
+		
+		int result1 = scService.scheduleUpdate(s);
+		
+		String empNoArr[] = empNo.split(",");
+		ArrayList<Attendee> atList = new ArrayList<>();
+		
+		for(int i=0; i<empNoArr.length; i++) {
+			Attendee a = new Attendee();
+			a.setScNo(scNo);
+			a.setEmpNo(empNoArr[i]);
+			atList.add(a);
+			//System.out.println("a : " + a);
+			//System.out.println("atList.get(i) : " + atList.get(i));
+		}
+		
+		int result2 = scService.deleteAttendee(scNo);
+		System.out.println("일정 번호 scNo : " + scNo);
+		
+		int result3 = scService.insertUpAttendee(atList);
+		System.out.println("atList : " + atList);
+		
+		if(result1 > 0 && result3 > 0) {
+			AlertMsg msg = new AlertMsg("일정 수정", "성공적으로 수정되었습니다");
+			session.setAttribute("successMsg", msg);
+			return "redirect:main.sc";
+			
+		}else {
+			
+			AlertMsg msg = new AlertMsg("일정 수정", "일정 수정 실패");
+			session.setAttribute("failMsg", msg);
+			return "redirect:main.sc";
+			
+		}
+		
+		
+	}
 
 }

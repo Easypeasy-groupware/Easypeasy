@@ -20,7 +20,6 @@ public interface ScheduleService {
 	
 	// 일정추가
 	int insertSchedule(Schedule s);
-	
 	// 참석자 추가
 	int insertAttendee(ArrayList<Attendee> atList);
 	
@@ -40,5 +39,17 @@ public interface ScheduleService {
 	
 	// 일정 조회
 	ArrayList<Calendar> scheduleList(int empNo);
+
+	// 일정 상세 조회
+	Schedule selectSchedule(int scNo);
+	ArrayList<Attendee> selectAttendee(int scNo);
+
+	// 일정 수정
+	int scheduleUpdate(Schedule s);
+	// 참석자 삭제
+	int deleteAttendee(int scNo);
+	// 참석자 다시 등록
+	int insertUpAttendee(ArrayList<Attendee> atList);
+	
 
 }

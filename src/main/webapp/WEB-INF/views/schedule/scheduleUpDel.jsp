@@ -7,22 +7,25 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    #main{  
+
+	#main{  
         position: absolute; top: 120px;
     }
-    
+
 	#content{
         border-left: 1px solid lightgray;
         width: 1000px;
         float: left;
         box-sizing: border-box;
     }
-
-    #con-title h5{
-    	color:rgb(93, 109, 75);
+    
+	#title h5{
         padding-left: 25px;
-        padding-top: 15px;
-        float: left;
+        margin-bottom: 20px;
+    }
+    #title div{
+        margin-bottom: -10px;
+        display: inline-block;
     }
 
     #enroll{
@@ -37,12 +40,9 @@
         border: 1px solid lightgray;
         border-radius: 5px;
     }
-    #enroll button[type=reset]{
-        border: 1px solid lightgray;
-    }
 
     .sel{
-        height: 28px;
+        height: 30px;
         border: 1px solid lightgray;
         border-radius: 5px;
     }
@@ -52,8 +52,6 @@
         height: 35px;
         margin-top: 15px;
     }
-    
-    
     
     /* 참석자 선택 모달 */
     /* 모달 창 가운데로 정렬*/
@@ -106,34 +104,59 @@
 <body>
 
 	<jsp:include page="../common/header.jsp"/>
+	
+	<div id="main">
+	
+		<jsp:include page="sidebar.jsp"/>
 
-    <div id="main">
-
-        <jsp:include page="sidebar.jsp"/>
-
-        <div id="content">
-            <div id="con-title">
-                <span>
-                    <h5>일정 등록</h5>
-                </span>
-            </div>
-            <br><br>
-            <hr>
-            <div id="content-1">
-                <form action="insert.sc" method="post">
-                    <table id="enroll">
-                        <thead>
-                            <tr style="height: 45px;">
-                                <td colspan="3">
-                                    <input type="text" name="scTitle" size="82" placeholder=" 추가할 일정을 입력하세요" required>
-                                </td>
-                            </tr>
-                            <tr style="height: 45px;">
-                                <td colspan="3">
-                                    <input type="text" id="sDate" size="11" name="startDate">
-                                    <span>
-                                        <select class="sel" name="startTime" id="sel1">
-                                            <option value="00:30">00:30</option>
+		<div id="content">
+			
+	        <form action="update.sc" method="post">
+	        <input type="hidden" name="scNo" value="${ s.scNo }">
+	            <div id="title">
+	                <span>
+	                    <h5>일정 상세</h5>
+	                </span>
+	                <div>
+	                    <button class="btn">
+	                        <i class="fas fa-check"></i>
+	                        확인
+	                    </button>
+	                </div>
+	                <div>
+	                    <button type="reset" class="btn">
+	                        <i class="far fa-times-circle"></i>
+	                        취소
+	                    </button>
+	                </div>
+	                <div>
+	                    <button type="button" class="btn" onclick="">
+	                        <i class="fas fa-trash-alt"></i>
+	                        삭제
+	                    </button>
+	                </div>
+	                <div style="margin-left: 605px;">
+	                    <a href="main.sc" class="btn" onclick="">
+	                        <i class="fas fa-calendar-alt"></i>
+	                        캘린더로 돌아가기
+	                    </a>
+	                </div>
+	            </div>
+	            <hr>
+	            <div id="content-1">
+	                <table id="enroll">
+	                    <thead>
+	                        <tr height="45">
+	                            <td colspan="3">
+	                                <input type="text" name="scTitle" size="82" value="${ s.scTitle }">
+	                            </td>
+	                        </tr>
+	                        <tr height="45">
+	                            <td colspan="3">
+	                                <input type="text" id="sDate" size="11" name="startDate" value="${ s.startDate }">
+	                                <span>
+	                                    <select class="sel" name="startTime" id="sel1">
+	                                        <option value="00:30">00:30</option>
                                             <option value="01:00">01:00</option>
                                             <option value="01:30">01:30</option>
                                             <option value="02:00">02:00</option>
@@ -180,13 +203,13 @@
                                             <option value="22:30">22:30</option>
                                             <option value="23:00">23:00</option>
                                             <option value="23:30">23:30</option>
-                                        </select>
-                                    </span>
-                                    <span>~</span>
-                                    <input type="text" id="eDate" size="11" name="endDate">
-                                    <span>
-                                        <select class="sel" name="endTime" id="sel2">
-                                            <option value="00:30">00:30</option>
+	                                    </select>
+	                                </span>
+	                                <span>~</span>
+	                                <input type="text" id="eDate" size="11" name="endDate" value="${ s.endDate }">
+	                                <span>
+	                                    <select class="sel" name="endTime" id="sel2">
+	                                        <option value="00:30">00:30</option>
                                             <option value="01:00">01:00</option>
                                             <option value="01:30">01:30</option>
                                             <option value="02:00">02:00</option>
@@ -233,21 +256,21 @@
                                             <option value="22:30">22:30</option>
                                             <option value="23:00">23:00</option>
                                             <option value="23:30">23:30</option>
-                                        </select>
-                                    </span>
-                                    &nbsp;
-                                    <div class="custom-control custom-checkbox" style="display: inline-block;">
-                                        <input type="checkbox" class="custom-control-input" name="allDay" id="allDay" onclick="allDayShowHidden();">
-                                        <label class="custom-control-label" for="allDay">종일</label>
-                                    </div>
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody class="body">
-                            <tr style="height: 45px;">
-                                <th>내 캘린더</th>
-                                <td colspan="2">
-                                    <select class="custom-select mb-3" name="calNo" id="sel3">
+	                                    </select>
+	                                </span>
+	                                &nbsp;
+	                                <div class="custom-control custom-checkbox" style="display: inline-block;">
+	                                    <input type="checkbox" class="custom-control-input" name="allDay" id="allDay" onclick="allDayShowHidden();">
+	                                    <label class="custom-control-label" for="allDay">종일</label>
+	                                </div>
+	                            </td>
+	                        </tr>
+	                    </thead>
+	                    <tbody class="body">
+	                        <tr height="45">
+	                            <th>내 캘린더</th>
+	                            <td colspan="2">
+	                                <select class="custom-select mb-3" name="calNo" id="sel3">
                                         <c:forEach var="c" items="${ myCalList }">
                                             <c:choose>
                                                 <c:when test="${ c.calDefault eq 'Y' }">
@@ -258,15 +281,24 @@
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:forEach>
-                                </select>
-                                </td>
-                            </tr>
-                            <tr style="height: 45px;">
+                                    </select>
+	                            </td>
+	                        </tr>
+	                        <tr style="height: 45px;">
                                 <th>참석자</th>
                                 <td width="150">
                                     <div style="overflow:auto; height: 100px; width: 150px;">
                                         <span style="background: rgb(238, 238, 238); border-radius: 15px; padding: 2px 10px 2px 10px;">${ loginUser.empName } ${ loginUser.jobName }</span><br>
-                                        <span class="app-body"></span>
+                                        <span class="app-body">
+                                        	<c:forEach var="a" items="${ atList }">
+                                    		<div style="background: rgb(214, 223, 204); display: inline-flex; border-radius: 15px; padding: 2px 10px 2px 10px;">
+	                                    		${ a.empName } ${ a.jobName }
+	                                    		<span class="empDelete">x</span>
+                                    		</div>
+                                    		<input type="hidden" name="empNo" value="${ a.empNo }">
+	                                    	<input type="hidden" name="scNo" value="${ a.scNo }">
+                                    		</c:forEach>
+                                        </span>
                                         <input type="hidden" name="scWriter" value="${ loginUser.empNo }">
                                     </div>
                                 </td>
@@ -291,96 +323,28 @@
                                     </div>
                                 </td>
                             </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr style="height: 55px;">
-                                <th>장소</th>
-                                <td colspan="2">
-                                    <input type="text" name="scPlace" size="70" placeholder=" 장소를 입력하세요" required>
-                                </td>
-                            </tr>
-                            <tr style="height: 50px;">
-                                <th style="vertical-align: top; padding-top: 10px;">내용</th>
-                                <td colspan="2" style="padding-top: 15px; padding-bottom: 20px;">
-                                    <textarea name="scContent" cols="69" rows="5" style="resize: none;" placeholder=" 내용을 입력하세요"></textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3" align="center">
-                                    <button class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">확인</button>&nbsp;&nbsp;
-                                    <button type="reset" class="btn btn-sm btn-light">취소</button>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </form>
-            </div>
-        </div>
-
-        <!-- 달력 -->
-        <script>
-            $(function(){
-                $("#sDate, #eDate").datepicker({
-                    dateFormat: "yy-mm-dd",
-                    showOtherMonths: true,
-                    showMonthAfterYear: true,
-                    changeYear: true,
-                    changeMonth: true,
-                    buttonImageOnly: true,
-                    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-                    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-                    dayNamesMin: ['일','월','화','수','목','금','토'],
-                    dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
-                    //minDate: "D" // 일정에서는 minDate속성 필요없음!!
-                })
-
-                $("#sDate").datepicker("setDate", "today");
-                $("#eDate").datepicker("setDate", "today");
-
-            
-                $("#sDate").datepicker();
-                $("#sDate").datepicker("option", "maxDate", $("#eDate").val());
-                $("#sDate").datepicker("option", "onClose", function (selectedDate) {
-                    $("#eDate").datepicker("option", "minDate", selectedDate);
-                });
-                
-                $("#eDate").datepicker();
-                $("#eDate").datepicker("option", "minDate", $("#sDate").val());
-                $("#eDate").datepicker("option", "onClose", function (selectedDate) {
-                    $("#sDate").datepicker("option", "maxDate", selectedDate);
-                });
-
-            })
-
-            function allDayShowHidden(){
-                if($("input:checkbox[id='allDay']").is(":checked") == true) {
-                    $(".sel").attr("hidden", true);
-                    $("#sel1").val(""); // null
-                    $("#sel2").val(""); // null
-                    $("input[name=allDay]").val("Y");
-                } else {
-                    //console.log($("input:checkbox[id='allDay']").prop("checked", false));
-                    $(".sel").attr("hidden", false);
-                } 
-            }
-
-            /*
-            // 전사일정 체크 확인
-            function showHidden(){
-                if($("input:checkbox[id='company']").is(":checked") == true) {
-                    $(".body").attr("hidden", true);
-                    $("#company").val("Y");
-                } else {
-                    $(".body").attr("hidden", false);
-                }
-            }
-			*/
-        </script>
-        
-    
-    
-    
-        <!-- 참석자 선택하는 모달 -->
+	                    </tbody>
+	                    <tfoot>
+	                        <tr height="55">
+	                            <th>장소</th>
+	                            <td colspan="2">
+	                                <input type="text" name="scPlace" size="70" value="${ s.scPlace }">
+	                            </td>
+	                        </tr>
+	                        <tr height="50">
+	                            <th style="vertical-align: top; padding-top: 10px;">내용</th>
+	                            <td colspan="2" style="padding-top: 15px; padding-bottom: 20px;">
+	                                <textarea name="scContent" cols="69" value="${ s.scContent }" rows="5" style="resize: none;"></textarea>
+	                            </td>
+	                        </tr>
+	                    </tfoot>
+	                </table>
+	            </div>
+	        </form>
+	    </div>
+	    
+	    
+	    <!-- 참석자 선택하는 모달 -->
         <!-- The Modal -->
         <div class="modal" id="attendee-add">
             <div class="modal-dialog">
@@ -419,7 +383,15 @@
                                 <h5>참석자</h5>
                                 <div class="appArea">
                                     <ul class="appList"><!-- 추가되는 사원리스트 -->
-
+                                    	<c:forEach var="a" items="${ atList }">
+	                                    	<li class="emp-list">
+		                                    	<span class="indiv-job">${ a.jobName }</span>
+		       									<span class="indiv-name">${ a.empName }</span>
+		        								<input type="hidden" name="empNo" value="${ a.empNo }">
+		        								<input type="hidden" name="scNo" value="${ a.scNo }">
+		        								<button type="button" class="btn btn-outline-secondary minusbtn">-</button>
+	        								</li>
+        								</c:forEach>
                                     </ul>
                                 </div>
                             </form>                    
@@ -579,8 +551,90 @@
     		
     	})
     </script>
+	    
+	    
 	
-	
+    <!-- 달력 -->
+    <script>
+         $(function(){
+             $("#sDate, #eDate").datepicker({
+                 dateFormat: "yy-mm-dd",
+                 showOtherMonths: true,
+                 showMonthAfterYear: true,
+                 changeYear: true,
+                 changeMonth: true,
+                 buttonImageOnly: true,
+                 monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                 monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                 dayNamesMin: ['일','월','화','수','목','금','토'],
+                 dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+                 minDate: "D"
+             })
+
+             //$("#sDate").datepicker("setDate", "today");
+             //$("#eDate").datepicker("setDate", "+7");
+
+            
+             $("#sDate").datepicker();
+             $("#sDate").datepicker("option", "maxDate", $("#eDate").val());
+             $("#sDate").datepicker("option", "onClose", function (selectedDate) {
+                 $("#eDate").datepicker("option", "minDate", selectedDate);
+             });
+             
+             $("#eDate").datepicker();
+             $("#eDate").datepicker("option", "minDate", $("#sDate").val());
+             $("#eDate").datepicker("option", "onClose", function (selectedDate) {
+                 $("#sDate").datepicker("option", "maxDate", selectedDate);
+             });
+
+         })
+
+         function allDayShowHidden(){
+	          if($("input:checkbox[id='allDay']").is(":checked") == true) {
+	              $(".sel").attr("hidden", true);
+	              $("#sel1").val(""); // 시간 값 00:00시부터
+	              $("#sel2").val(""); // 23:30시까지
+	              $("input[name=allDay]").val("Y");
+	          } else {
+	          	//console.log($("input:checkbox[id='allDay']").prop("checked", false));
+	              $(".sel").attr("hidden", false);
+	              $("input[name=allDay]").val("N");
+	          } 
+	      }
+         
+         
+      	// 시간 DB에 저장된 값으로 선택돼 있도록
+ 	    $("#sel1").val("${ s.startTime }").prop("selected", true);
+     	$("#sel2").val("${ s.endTime }").prop("selected", true);
+ 	 	
+     	
+     	// DB에 담긴 값이 allDay Y면 기본값으로 종일 선택시키고 시간 선택 숨기기
+     	var allDay = "<c:out value='${ s.allDay }'/>";
+     	
+     	if(allDay == "Y"){
+     		$("#allDay").prop("checked", true);
+     		$(".sel").attr("hidden", true);
+     	}
+     	
+     	
+     	var calendar = "<c:out value='${ s.calNo }'/>";
+     	$("#sel3").val("${ s.calNo }").prop("selected", true);
+     	
+
+         /*
+         // 전사일정 체크 확인
+         function showHidden(){
+             if($("input:checkbox[id='company']").is(":checked") == true) {
+                 $(".body").attr("hidden", true);    
+             } else {
+                 $(".body").attr("hidden", false);
+             }
+         }
+
+		*/
+         
+
+     </script>
 
 </body>
 </html>

@@ -15,4 +15,6 @@ public class Attendee {
 	private int scNo;
 	private String empNo;
 	
+	private String empName;
+	private String jobName;
 }

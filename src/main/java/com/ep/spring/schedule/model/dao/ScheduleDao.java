@@ -70,4 +70,50 @@ public class ScheduleDao {
 	public ArrayList<Calendar> scheduleList(SqlSessionTemplate sqlSession, int empNo){
 		return (ArrayList)sqlSession.selectList("scheduleMapper.scheduleList", empNo);
 	}
+	
+	
+	public Schedule selectSchedule(SqlSessionTemplate sqlSession, int scNo) {
+		return sqlSession.selectOne("scheduleMapper.selectSchedule", scNo);
+	}
+	
+	public ArrayList<Attendee> selectAttendee(SqlSessionTemplate sqlSession, int scNo){
+		return (ArrayList)sqlSession.selectList("scheduleMapper.attendeeList", scNo);
+	}
+	
+	
+	public int scheduleUpdate(SqlSessionTemplate sqlSession, Schedule s) {
+		
+		return sqlSession.update("scheduleMapper.scheduleUpdate", s);
+		
+	}
+	
+	/*
+	public int deleteAttendee(SqlSessionTemplate sqlSession, int scNo) {
+		
+		return sqlSession.delete("scheduleMapper.deleteAttendee", scNo);
+		
+	}
+	*/
+	
+	public int deleteAttendee(SqlSessionTemplate sqlSession, int scNo) {
+		
+		System.out.println("deleteAttendee");
+		return sqlSession.delete("scheduleMapper.deleteAttendee", scNo);
+		
+		
+	}
+	
+	public int insertUpAttendee(SqlSessionTemplate sqlSession, ArrayList<Attendee> atList) {
+		
+		int result = 1;
+		for(int i=0; i<atList.size(); i++) {
+			result = result * sqlSession.insert("scheduleMapper.insertUpAttendee", atList.get(i));
+			
+			System.out.println("insertUpAttendee" + atList.get(i));
+		}
+		
+		
+		return result;
+		
+	}
 }

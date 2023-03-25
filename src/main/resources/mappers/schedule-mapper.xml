@@ -26,6 +26,14 @@
 		<result column="end_time" property="endTime" />
 		<result column="sc_allday" property="allDay" />
 		<result column="sc_status" property="status" />
+		<!-- <collection property="attendeeList" resultMap="attendeeResult"/> -->
+	</resultMap>
+	
+	<resultMap id="attendeeResult" type="Attendee">
+		<id column="sc_no" property="scNo" />
+		<result column="emp_no" property="empNo" />
+		<result column="emp_name" property="empName" />
+		<result column="job_name" property="jobName" />
 	</resultMap>
 	
 
@@ -197,4 +205,89 @@
 		    by c.cal_no desc 
 	</select>
 	
+	
+	<select id="selectSchedule" resultMap="scheduleResult">
+		select
+			    sc_no
+			  , sc_writer
+			  , cal_no
+			  , sc_title
+			  , sc_place
+			  , sc_content
+			  , start_date
+			  , end_date
+			  , start_time
+			  , end_time
+			  , sc_allday
+		   from schedule
+		  where sc_no = #{scNo}
+		    and sc_status = 'Y'
+	</select>
+	
+	<select id="attendeeList" resultMap="attendeeResult">
+		select
+			    sc_no
+			  , emp_no
+			  , emp_name
+              , job_name
+		   from sc_attendee
+		   join employee using(emp_no)
+		   join job using(job_code)
+		  where sc_no = #{scNo}
+	</select>
+	
+	
+	<update id="scheduleUpdate">
+		update
+			   schedule
+		   set sc_title = #{scTitle}
+		  	 , sc_place = #{scPlace}
+		  	 , sc_content = #{scContent}
+		  	 , start_date = #{startDate}
+		  	 , end_date = #{endDate}
+		  	 , start_time = #{startTime}
+		  	 , end_time = #{endTime}
+		  	 , sc_allday = #{allDay}
+		 where sc_no = #{scNo}
+	</update>
+	
+	<!--  
+	<update id="updateAttendee">
+		update
+			   sc_attendee
+		   set emp_no = #{empNo}
+		 where sc_no = #{scNo}
+	</update>
+	-->
+	
+	
+	<delete id="deleteAttendee">
+		delete
+		  from sc_attendee
+		 where sc_no = #{scNo}
+	</delete>
+	
+	<insert id="insertUpAttendee">
+		insert
+		  into sc_attendee
+		  (
+		  	sc_no
+		  , emp_no
+		  )
+		  values
+		  (
+		  	#{scNo}
+		  , #{empNo}
+		  )
+	</insert>
+	
+	<!-- 
+	<update id="updateAttendee">
+		update
+			   sc_attendee
+		   set emp_no = #{empNo}
+		 where sc_no = #{scNo}
+	</update>
+	 -->
+	 
 </mapper>
