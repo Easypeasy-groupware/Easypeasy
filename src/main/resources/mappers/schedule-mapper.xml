@@ -201,6 +201,7 @@
 		  from my_calendar c
 		  left join schedule s on (s.cal_no = c.cal_no)
 		 where c.emp_no = #{empNo}
+		   and s.sc_status = 'Y'
 		 order
 		    by c.cal_no desc 
 	</select>
@@ -289,5 +290,12 @@
 		 where sc_no = #{scNo}
 	</update>
 	 -->
+	 
+	 <update id="scheduleDelete">
+		update
+			   schedule
+		   set sc_status = 'N'
+		 where sc_no = #{scNo}
+	</update>
 	 
 </mapper>

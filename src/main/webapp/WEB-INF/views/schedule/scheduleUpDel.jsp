@@ -130,10 +130,10 @@
 	                    </button>
 	                </div>
 	                <div>
-	                    <button type="button" class="btn" onclick="">
+	                    <a href="delete.sc?no=${ s.scNo }" class="btn" onclick="">
 	                        <i class="fas fa-trash-alt"></i>
 	                        삭제
-	                    </button>
+	                    </a>
 	                </div>
 	                <div style="margin-left: 605px;">
 	                    <a href="main.sc" class="btn" onclick="">

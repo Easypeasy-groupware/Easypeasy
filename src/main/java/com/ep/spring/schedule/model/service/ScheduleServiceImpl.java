@@ -112,4 +112,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public int deleteAttendee(int scNo) {
 		return scDao.deleteAttendee(sqlSession, scNo);
 	}
+
+	@Override
+	public int scheduleDelete(int scNo) {
+		return scDao.scheduleDelete(sqlSession, scNo);
+	}
 }

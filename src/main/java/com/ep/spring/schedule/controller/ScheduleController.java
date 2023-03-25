@@ -259,7 +259,7 @@ public class ScheduleController {
 		}
 		
 		//System.out.println(s);
-		System.out.println("선택한 번호 empNo : " + empNo);
+		//System.out.println("선택한 번호 empNo : " + empNo);
 		
 		int result1 = scService.scheduleUpdate(s);
 		
@@ -276,10 +276,10 @@ public class ScheduleController {
 		}
 		
 		int result2 = scService.deleteAttendee(scNo);
-		System.out.println("일정 번호 scNo : " + scNo);
+		//System.out.println("일정 번호 scNo : " + scNo);
 		
 		int result3 = scService.insertUpAttendee(atList);
-		System.out.println("atList : " + atList);
+		//System.out.println("atList : " + atList);
 		
 		if(result1 > 0 && result3 > 0) {
 			AlertMsg msg = new AlertMsg("일정 수정", "성공적으로 수정되었습니다");
@@ -294,6 +294,27 @@ public class ScheduleController {
 			
 		}
 		
+		
+	}
+	
+	@RequestMapping("delete.sc")
+	public String scheduleDelete(int no, HttpSession session) {
+		
+		System.out.println(no);
+		
+		int result = scService.scheduleDelete(no);
+		
+		if(result > 0) {
+			
+			AlertMsg msg = new AlertMsg("일정 삭제", "성공적으로 삭제되었습니다");
+			session.setAttribute("successMsg", msg);
+			return "redirect:main.sc";
+			
+		}else {
+			AlertMsg msg = new AlertMsg("일정 삭제", "일정 삭제 실패");
+			session.setAttribute("failMsg", msg);
+			return "redirect:main.sc";
+		}
 		
 	}
 

@@ -87,17 +87,10 @@ public class ScheduleDao {
 		
 	}
 	
-	/*
-	public int deleteAttendee(SqlSessionTemplate sqlSession, int scNo) {
-		
-		return sqlSession.delete("scheduleMapper.deleteAttendee", scNo);
-		
-	}
-	*/
+	
 	
 	public int deleteAttendee(SqlSessionTemplate sqlSession, int scNo) {
 		
-		System.out.println("deleteAttendee");
 		return sqlSession.delete("scheduleMapper.deleteAttendee", scNo);
 		
 		
@@ -109,11 +102,16 @@ public class ScheduleDao {
 		for(int i=0; i<atList.size(); i++) {
 			result = result * sqlSession.insert("scheduleMapper.insertUpAttendee", atList.get(i));
 			
-			System.out.println("insertUpAttendee" + atList.get(i));
 		}
 		
 		
 		return result;
+		
+	}
+	
+	public int scheduleDelete(SqlSessionTemplate sqlSession, int scNo) {
+		
+		return sqlSession.update("scheduleMapper.scheduleDelete", scNo);
 		
 	}
 }

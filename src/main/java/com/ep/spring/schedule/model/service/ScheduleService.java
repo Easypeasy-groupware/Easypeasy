@@ -50,6 +50,9 @@ public interface ScheduleService {
 	int deleteAttendee(int scNo);
 	// 참석자 다시 등록
 	int insertUpAttendee(ArrayList<Attendee> atList);
+
+	// 일정 삭제(status = 'N')
+	int scheduleDelete(int scNo);
 	
 
 }
