@@ -85,8 +85,8 @@
 	    height: 300px;
 	    padding-top: 15px;
 	    position: absolute;
-	    top: 400px;
-	    left: 110px;
+	    top: 280px;
+	    left: 20px;
 	    border-radius: 10px;
 	    border: 1px solid rgb(185, 187, 221);
 	    background: white;
