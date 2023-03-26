@@ -356,7 +356,7 @@
 												</div>
 											</td>
 											<td>
-												${ m.recDateDay }
+												${ m.dateDay }
 												<input class="mailNo" type="hidden" name="mailNo" value="${ m.mailNo }">
 												<input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
 											</td>
