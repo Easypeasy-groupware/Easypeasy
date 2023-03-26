@@ -104,7 +104,8 @@ public class EmployeeController {
 			
 			return "common/main";
 		}else { // 실패
-			session.setAttribute("alertMsg", "로그인에 실패했습니다. 다시 시도 해주세요.");
+			AlertMsg msg = new AlertMsg("로그인", "로그인에 실패했습니다. 다시 시도 해주세요.");
+			session.setAttribute("failMsg", msg);
 			return "redirect:/";
 		}
 		
