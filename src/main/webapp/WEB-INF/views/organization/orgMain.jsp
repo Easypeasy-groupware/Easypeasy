@@ -103,39 +103,162 @@
 	              </div>
 	          </form>
 	          
-	          <c:forEach var="d" items="${deptList}">
-		          <c:if test="${d.deptCode eq 'D1'}">
-			          <h4>${d.deptName}</h4>
-			      
-			          <c:forEach var="e" items="${list}">
-			          	<c:if test="${e.deptCode eq d.deptCode}">
-				           <div class="card" data-toggle="modal" data-target="#myModal${e.empNo}">
-				            <table>
-				            	<tr>
-				            		<td><img src="${e.empProfile}"  style="width:80px;"></td>
-				            			<td>
-				            				<br><h4>${e.jobName} | ${e.empName}</h4><input type="hidden" name="empNo" value="${e.empNo}">
-				            			</td>
-				            	</tr>
-				            </table>
-				           </div><br>
-				          </c:if>
-			          </c:forEach>
-		          </c:if>   
+	          <div class="main">
+	          	<c:forEach var="d" items="${deptList}">
+			        <c:if test="${d.deptCode eq 'D1'}">
+			            <h4><a onclick="dept1();">${d.deptName}</a></h4>
+	          			<div id="d1">
+				          <c:forEach var="e" items="${list}">
+				          	<c:if test="${e.deptCode eq d.deptCode}">
+					           <div class="card" data-toggle="modal" data-target="#myModal">
+					            <table>
+					            	<tr>
+					            		<td><img src="${e.empProfile}"  style="width:80px;"></td>
+					            		<td>
+					            			<br><h4>${e.jobName} | ${e.empName}</h4>
+					            			<input type="hidden" name="empNo" value="${e.empNo}">
+					            		</td>
+					            	</tr>
+					            </table>
+					           </div><br>
+					          </c:if>
+				          </c:forEach>
+				          </div>
+		          	</c:if> 
 	          </c:forEach>
 	          
+	          <c:forEach var="d" items="${deptList}">
+			        <c:if test="${d.deptCode eq 'D2'}">
+			            <h4><a onclick="dept2();">${d.deptName}</a></h4>
+	          			<div id="d2" style="display: none;">
+				          <c:forEach var="e" items="${list}">
+				          	<c:if test="${e.deptCode eq d.deptCode}">
+					           <div class="card" data-toggle="modal" data-target="#myModal">
+					            <table>
+					            	<tr>
+					            		<td><img src="${e.empProfile}"  style="width:80px;"></td>
+					            		<td>
+					            			<br><h4>${e.jobName} | ${e.empName}</h4>
+					            			<input type="hidden" name="empNo" value="${e.empNo}">
+					            		</td>
+					            	</tr>
+					            </table>
+					           </div><br>
+					          </c:if>
+				          </c:forEach>
+				          </div>
+		          	</c:if> 
+	          </c:forEach>
+	          
+	          <c:forEach var="d" items="${deptList}">
+			        <c:if test="${d.deptCode eq 'D3'}">
+			            <h4><a onclick="dept3();">${d.deptName}</a></h4>
+	          			<div id="d3" style="display: none;">
+				          <c:forEach var="e" items="${list}">
+				          	<c:if test="${e.deptCode eq d.deptCode}">
+					           <div class="card" data-toggle="modal" data-target="#myModal">
+					            <table>
+					            	<tr>
+					            		<td><img src="${e.empProfile}"  style="width:80px;"></td>
+					            		<td>
+					            			<br><h4>${e.jobName} | ${e.empName}</h4>
+					            			<input type="hidden" name="empNo" value="${e.empNo}">
+					            		</td>
+					            	</tr>
+					            </table>
+					           </div><br>
+					          </c:if>
+				          </c:forEach>
+				          </div>
+		          	</c:if> 
+	          </c:forEach>
+	          
+	          <c:forEach var="d" items="${deptList}">
+			        <c:if test="${d.deptCode eq 'D4'}">
+			            <h4><a onclick="dept4();">${d.deptName}</a></h4>
+	          			<div id="d4" style="display: none;">
+				          <c:forEach var="e" items="${list}">
+				          	<c:if test="${e.deptCode eq d.deptCode}">
+					           <div class="card" data-toggle="modal" data-target="#myModal">
+					            <table>
+					            	<tr>
+					            		<td><img src="${e.empProfile}"  style="width:80px;"></td>
+					            		<td>
+					            			<br><h4>${e.jobName} | ${e.empName}</h4>
+					            			<input type="hidden" name="empNo" value="${e.empNo}">
+					            		</td>
+					            	</tr>
+					            </table>
+					           </div><br>
+					          </c:if>
+				          </c:forEach>
+				          </div>
+		          	</c:if> 
+	          </c:forEach>
+	          
+	          <c:forEach var="d" items="${deptList}">
+			        <c:if test="${d.deptCode eq 'D5'}">
+			            <h4><a onclick="dept5();">${d.deptName}</a></h4>
+	          			<div id="d5" style="display: none;">
+				          <c:forEach var="e" items="${list}">
+				          	<c:if test="${e.deptCode eq d.deptCode}">
+					           <div class="card" data-toggle="modal" data-target="#myModal">
+					            <table>
+					            	<tr>
+					            		<td><img src="${e.empProfile}"  style="width:80px;"></td>
+					            		<td>
+					            			<br><h4>${e.jobName} | ${e.empName}</h4>
+					            			<input type="hidden" name="empNo" value="${e.empNo}">
+					            		</td>
+					            	</tr>
+					            </table>
+					           </div><br>
+					          </c:if>
+				          </c:forEach>
+				          </div>
+		          	</c:if> 
+	          </c:forEach>
+	          
+	          
+	          <c:forEach var="d" items="${deptList}">
+			        <c:if test="${d.deptCode eq 'D6'}">
+			            <h4><a onclick="dept6();">${d.deptName}</a></h4>
+	          			<div id="d6" style="display: none;">
+				          <c:forEach var="e" items="${list}">
+				          	<c:if test="${e.deptCode eq d.deptCode}">
+					           <div class="card" data-toggle="modal" data-target="#myModal">
+					            <table>
+					            	<tr>
+					            		<td><img src="${e.empProfile}"  style="width:80px;"></td>
+					            		<td>
+					            			<br><h4>${e.jobName} | ${e.empName}</h4>
+					            			<input type="hidden" name="empNo" value="${e.empNo}">
+					            		</td>
+					            	</tr>
+					            </table>
+					           </div><br>
+					          </c:if>
+				          </c:forEach>
+				          </div>
+		          	</c:if> 
+	          </c:forEach>
+	          
+	         </div> 
+	         
+	         
 	      </div>
 	    </div>
 	</div>
-	
-	   <!-- 모달 -->
-	 <div id="#myModal${e.empNo}" class="modal">
+	   
+	   <!--  모달  -->
+	 <div id="myModal" class="modal">
 	    <div class="modal-content">
 	      <span class="close">&times;</span>
 	      <div class="modal-body">
 	        <table>
 	          <tr>
-	            <td><img src="${e.empProfile}" alt="Profile Image"  style="width:80%;"></td>
+	            <td><input type="hidden" name="empNo" value="${e.empNo}">
+	            	<img src="${e.empProfile}" alt="Profile Image"  style="width:80%;"></td>
 	            <td><h3>${e.empName }</h3>
 	              <p>${e.jobName }</p>
 	              <p>${e.deptName }</p>
@@ -145,22 +268,116 @@
 	      </div>
 	    </div>
 	  </div>
+	  
+	  
+	<!-- The Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal-label" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
 	
-	  <script>
-		  $(document).ready(function() {
-			    $('.card').on('click', function() {
-			        var targetModal = $(this).data('target');
-			        $(targetModal).show();
-			    });
+	      <!-- Modal Header -->
+	      <div class="modal-header">
+	        <h4 class="modal-title">Modal Heading</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      </div>
 	
-			    $('.close').on('click', function() {
-			        $(this).closest('.modal').hide();
-			    });
+	      <!-- Modal body -->
+	      <div class="modal-body">
+	       <table>
+	          <tr>
+	            <td><input type="hidden" name="empNo" value="${e.empNo}">
+	            	<img src="${e.empProfile}" alt="Profile Image"  style="width:80%;"></td>
+	            <td><h3>${e.empName }</h3>
+	              <p>${e.jobName }</p>
+	              <p>${e.deptName }</p>
+	              <p>${e.email }</p></td>
+	          </tr>
+	        </table>
+	      </div>
+	
+	      <!-- Modal footer -->
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+	      </div>
+	
+	    </div>
+	  </div>
+	</div>
+		  <script>
+		  $('.card').on('click', function() {
+			  $('#myModal').css('display', 'block');
 			});
-	  </script>
 
-	    
-	    
+			
+			$('.close, .modal').on('click', function() {
+			  $('#myModal').css('display', 'none');
+			});
+
+			$(document).on('click', function(event) {
+			  if (event.target == $('#myModal')[0]) {
+			    $('#myModal').css('display', 'none');
+			  }
+			});
+		</script>
+		
+		<script>
+			function dept1(){
+				if($('#d1').css('display') == 'none'){
+				$('#d1').show();
+				
+				}else{
+					$('#d1').hide();
+				}
+			}
+			
+			function dept2(){
+				if($('#d2').css('display') == 'none'){
+				$('#d2').show();
+				
+				}else{
+					$('#d2').hide();
+				}
+			}
+			
+			function dept3(){
+				if($('#d3').css('display') == 'none'){
+				$('#d3').show();
+				
+				}else{
+					$('#d3').hide();
+				}
+			}
+			
+			function dept4(){
+				if($('#d4').css('display') == 'none'){
+				$('#d4').show();
+				
+				}else{
+					$('#d4').hide();
+				}
+			}
+			
+			function dept5(){
+				if($('#d5').css('display') == 'none'){
+				$('#d5').show();
+				
+				}else{
+					$('#d5').hide();
+				}
+			}
+			
+			function dept6(){
+				if($('#d6').css('display') == 'none'){
+				$('#d6').show();
+				
+				}else{
+					$('#d6').hide();
+				}
+			}
+		</script>
+			    
+			    
+			    
 	  <!-- 검색/조직도 트리 -->
 		<!-- 모달 -->
 		<div class="modal fade" id="tree-modal" tabindex="-1" role="dialog" aria-labelledby="tree-modal-label" aria-hidden="true">
@@ -216,21 +433,7 @@
 								</ul>
 							</form>
 							
-							<!-- <div class="chart2">
-								<form action="">
-									<h5>사원 검색</h5>
-									<div class="searchArea">
-										<ul>
-											<li>
-												<span>사원검색</span>
-											</li>                 
-										</ul>
-										<ul class="searchList">
-			
-										</ul>
-									</div>
-								</form>                   
-							</div> -->
+							
 							
 						</div>
 	                    <div class="modal-footer">
@@ -261,113 +464,7 @@
 				});
 			});
 		</script>
-			<!--  
-		<script>
-				// 조직도에서 결재선 직원 요소 추가하는 구문
-				var appE = document.querySelectorAll(".empList .addbtn");
 		
-				for (var i = 0; i < appE.length; i++) {
-					appE[i].addEventListener("click", click1);
-				}
-		 
-				function click1(){
-		
-					let emp = $(this).parents(".empInfo");
-					
-						emp.clone(true).appendTo(".searchList"); 
-					   
-						$(".searchList button").text('-');
-						$(this).attr("disabled", true);
-						delApp();            
-				}
-					
-				function delApp(){
-		
-					// 추가된 결재선 직원을 다시 삭제하는 구문
-					var appD = document.querySelectorAll(".searchList .addbtn");
-					for (var i = 0; i < appD.length; i++) {
-						appD[i].addEventListener("click", click2);
-					}
-		
-					function click2(){
-		
-						let del = $(this).parents(".empInfo");
-						del.remove(); 
-		
-						// 선택했던 추가버튼 다시 활성화 시키기
-						const bList = document.querySelectorAll(".empList input");
-		
-						for(var i = 0; i < bList.length; i++){
-		
-							if($(this).siblings("input").val() == bList[i].value){
-		
-								bList[i].nextElementSibling.removeAttribute("disabled");
-							}
-						}
-		
-					}
-		
-				}
-		</script>
-		
-		<script>
-			// 모달 -> 메인
-			function copyApp(){
-        	
-        	const arr1 = $(".searchList .empInfo").children("input");
-        	let val = "";
-        	
-        	for(var i = 0; i < arr1.length; i++){
-        		
-        		val+=  "<div>"
-	        		  	+"<table>"
-		            	+"<tr>"
-	            		+"<td><img src='${e.empProfile}'  style='width:80px;''></td>"
-	            		+"<td>"
-	            		+"<br><h4>${e.jobName} | ${e.empName}</h4><input type='hidden' name='empNo' value='"+ arr1[i].value +"'>" + arr1[i].value          
-	            		+"</td>"
-	            		+"</tr>"
-	            		+"</table>"
-	            		+"</div><br>"
-        		  	
-        		}
-        	$(".card").html(val);
-        	
-        	}
-		</script>	
-			-->
-		<!-- 사원 검색 
-		<script>
-			$(function(){
-				
-				if($("#search").val.trim().length > 0){
-					$.ajax({
-						type:"GET",
-						uri:"searchForm.org",
-						data:{keyword:$("#empName").val()},
-						success:function(list){
-							console.log(list);
-							
-							let value = "";
-							for(let i=0; i<list.length; i++){
-								value += "<ul>"
-											+ "<li>" 
-												+  "<span>" +"<div>"+ list[i].empName +"</div>"+"</span>"
-											+ "</li>"
-										+"</ul>";
-							}
-							$("#result").html(value);
-							
-					    }, error:function(){
-							console.log("ajax 검색 통신 실패");
-						},
-						
-					});
-				}
-				
-			})
-		</script> 
-		-->
 		
 </body>
 </html>

@@ -43,11 +43,11 @@
               <label>게시판그룹</label>
                   <select name="boardCno">
                       <option value="1" name="boardCno" id="1">전체 공지사항</option>
-                      <option value="2" name="boardCno" id="2">식단표</option>
+                <!--       <option value="2" name="boardCno" id="2">식단표</option>
                       <option value="3" name="boardCno" id="3">자유게시판</option>
                       <option value="4" name="boardCno" id="4">커뮤니티</option>
                       <option value="5" name="boardCno" id="5">부서 공지사항</option>
-                      <option value="6" name="boardCno" id="6">부서 자유게시판</option>
+                      <option value="6" name="boardCno" id="6">부서 자유게시판</option> -->
                   </select><br>
               <label for="title">게시글 제목</label>
                   <input type="text" id="boardTitle" name="boardTitle" required /><br>

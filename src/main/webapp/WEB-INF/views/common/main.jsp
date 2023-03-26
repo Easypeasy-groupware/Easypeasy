@@ -76,9 +76,7 @@
 		
 				<br><br>
 				<div class="subtitle board-title" id="board-notice">전체공지사항</div>
-				<div class="subtitle board-title" id="board-dept">부서게시판</div>
 				<div class="subtitle board-title" id="board-all">자유게시판</div>
-				<div class="subtitle board-title" id="board-menu">식단표</div>
 				<br clear="both"><br>
 		
 				<table class="board-table" id="notice-tb">
@@ -95,35 +93,11 @@
 						</tr>
 					</thead>
 					<tbody align="center">
-						<tr>
-							<td>전체게시글 제목입니다.</td>
-							<td>홍길동 부장</td>
-							<td>1시간전</td>
-						</tr>
-						<tr>
-							<td>전체게시글 제목입니다.</td>
-							<td>홍길동 부장</td>
-							<td>4시간전</td>
-						</tr>
-						<tr>
-							<td>전체게시글 제목입니다.</td>
-							<td>홍길동 부장</td>
-							<td>1일전</td>
-						</tr>
-						<tr>
-							<td>전체게시글 제목입니다.</td>
-							<td>홍길동 부장</td>
-							<td>3일전</td>
-						</tr>
-						<tr>
-							<td>전체게시글 제목입니다.</td>
-							<td>홍길동 부장</td>
-							<td>7일전</td>
-						</tr>
+						
 					</tbody>
 				</table>
 	 
-				<table class="board-table" id="dept-tb" style="display:none">
+				<table class="board-table" id="free-tb" style="display:none">
 					<colgroup>
 						<col style="width:70%;">
 						<col style="width:15%;">
@@ -137,31 +111,7 @@
 						</tr>
 					</thead>
 					<tbody align="center">
-						<tr>
-							<td>영업팀게시글 제목입니다.</td>
-							<td>박연진 부장</td>
-							<td>2일전</td>
-						</tr>
-						<tr>
-							<td>영업팀게시글 제목입니다</td>
-							<td>박연진 부장</td>
-							<td>2일전</td>
-						</tr>
-						<tr>
-							<td>영업팀게시글 제목입니다</td>
-							<td>박연진 부장</td>
-							<td>2일전</td>
-						</tr>
-						<tr>
-							<td>영업팀게시글 제목입니다</td>
-							<td>박연진 부장</td>
-							<td>2일전</td>
-						</tr>
-						<tr>
-							<td>영업팀게시글 제목입니다</td>
-							<td>박연진 부장</td>
-							<td>2일전</td>
-						</tr>
+						
 					</tbody>
 				</table>
 				 
@@ -181,7 +131,61 @@
 						$("#notice-tb").hide();
 					})
 				})
+				
+				$(function(){
+					topBoardList();
+				})
+				
+            	function topBoardList(){
+            		$.ajax({
+            			url:"topList.bo",
+            			success:function(list){
+            				console.log(list);
+            				
+            				let value = "";
+            				for(let i=0; i<list.length; i++){
+            					let b = list[i]; 
+            					value += "<tr>"
+            							+	"<td>" + b.boardTitle + "</td>"
+            							+	"<td>" + b.boardWriter + "</td>"
+            							+	"<td>" + b.createDate + "</td>"
+            					value += "</td></tr>"; 
+            				}
+            				
+            				$("#notice-tb tbody").html(value);
+            							
+            			},error:function(){
+            				console.log("top5 공지게시글 조회용 ajax 통신 실패");
+            			}
+            		})
+            	}
+			
+				function topFreeList(){
+            		$.ajax({
+            			url:"topFree.bo",
+            			success:function(result){
+            				console.log(result);
+            				
+            				let value = "";
+            				for(let i=0; i<list.length; i++){
+            					let b = list[i]; 
+            					value += "<tr>"
+            							+	"<td>" + b.boardTitle + "</td>"
+            							+	"<td>" + "익명" + "</td>"
+            							+	"<td>" + b.createDate + "</td>"
+            					value += "</td></tr>"; 
+            				}
+            				
+            				$("#free-tb tbody").html(value);
+            							
+            			},error:function(){
+            				console.log("top5 자유게시글 조회용 ajax 통신 실패");
+            			}
+            		})
+            	}
+				 
 			</script>	
+			
 			<div class="document">
 			<a href="main.ap"><b>결재문서</b></a>
 				

@@ -28,11 +28,36 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectList", null, rowBounds); 	
 	}
 	
+	public int selectFreeListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("boardMapper.selectListCount");
+	}
+	
+	public ArrayList<Board> selectFreeList(SqlSessionTemplate sqlSession, PageInfo pi){
+		
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);	
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectListFree", null, rowBounds); 	
+	}
+	
 	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.insert("boardMapper.insertBoard", b);
 	}
 	
 	public int insertAttachment(SqlSessionTemplate sqlSession, ArrayList<Attachment> atList) {
+		int result = 0;
+		for(Attachment at : atList) {
+			result += sqlSession.insert("boardMapper.insertAttachment", at);
+		}
+		return result;
+	}
+	
+	public int insertABoard(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.insert("boardMapper.insertBoard", b);
+	}
+	
+	public int insertAAttachment(SqlSessionTemplate sqlSession, ArrayList<Attachment> atList) {
 		int result = 0;
 		for(Attachment at : atList) {
 			result += sqlSession.insert("boardMapper.insertAttachment", at);
@@ -53,7 +78,23 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectAttachmentList", b); 
 	}
 	
+	public int increaseACount(SqlSessionTemplate sqlSession, int no) {
+		return sqlSession.update("boardMapper.increaseCount", no);
+	}
+	
+	public Board selectABoard(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.selectOne("boardMapper.selectBoard", b);
+	}
+	
+	public ArrayList<Attachment> selectAnAttachmentList(SqlSessionTemplate sqlSession, Board b){ 
+		return (ArrayList)sqlSession.selectList("boardMapper.selectAttachmentList", b); 
+	}
+	
 	public int deleteBoard(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("boardMapper.deleteBoard", boardNo);
+	}
+	
+	public int deleteABoard(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.update("boardMapper.deleteBoard", boardNo);
 	}
 	
@@ -77,6 +118,28 @@ public class BoardDao {
 		return sqlSession.delete("boardMapper.deleteAttachment", b);
 	}
 	
+	
+	public ArrayList<Attachment> selectAnonAttList(SqlSessionTemplate sqlSession, Board b){
+		return (ArrayList)sqlSession.selectList("boardMapper.selectAttList", b);
+	}
+	
+	public int updateABoard(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.update("boardMapper.updateBoard", b);
+	}
+	
+	public int updateAnonAttachment(SqlSessionTemplate sqlSession, ArrayList<Attachment> atList) {
+		int result = 0;
+		for(Attachment at : atList) {
+			result += sqlSession.insert("boardMapper.updateAttachment", at);
+		}
+		return result;
+	}
+	
+	public int deleteAnonAttachment(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.delete("boardMapper.deleteAttachment", b);
+	}
+	
+	
 	public ArrayList<BoardReply> selectReplyList(SqlSessionTemplate sqlSession, int boardNo){
 		return (ArrayList)sqlSession.selectList("boardMapper.selectReplyList", boardNo);	
 	}
@@ -89,8 +152,8 @@ public class BoardDao {
 		return sqlSession.delete("boardMapper.deleteReply", replyNo);
 	}
 	
-	public int updateReply(SqlSessionTemplate sqlSession, BoardReply r){
-		return sqlSession.update("boardMapper.updateReply", r);
+	public int updateReply(SqlSessionTemplate sqlSession, int replyNo){
+		return sqlSession.update("boardMapper.updateReply", replyNo);
 	}
 	
 	
@@ -106,9 +169,13 @@ public class BoardDao {
 		return sqlSession.update("boardMapper.updateCate", bc);
 	}
 	
+	public ArrayList<Board> selectTopList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("boardMapper.selectTopList");
+	}
 	
-	
-	
+	public ArrayList<Board> selectFreeList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("boardMapper.selectFreeList");
+	}
 	
 	
 }
