@@ -66,9 +66,9 @@
             <img class="settings" src="resources/common_images/setting.png">
             <br><br>
             <div class="boxList">
-                <div class="mailbox">안읽은 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
-                <div class="mailbox">중요 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
-                <div class="mailbox">작성중인 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
+                <div class="mailbox" id="unread_box">안읽은 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
+                <div class="mailbox" id="impor_box">중요 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
+                <div class="mailbox" id="temp_box">작성중인 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
             </div>
         </div>
         <br><br>
@@ -165,11 +165,11 @@
             <br><br>
             <div class="boxList">
                 <div id="recMailbox" class="mailbox">받은 메일함(전체)</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div class="mailbox">오늘 온 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div class="mailbox">내게 쓴 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div class="mailbox">첨부 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div class="mailbox">보낸 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div class="mailbox">예약 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div class="mailbox" id="today_box">오늘 온 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div class="mailbox" id="tome_box">내게 쓴 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div class="mailbox" id="attach_box">첨부파일 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div class="mailbox" id="send_box">보낸 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
+                <div class="mailbox" id="reservation_box">예약 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
                 <div style="width: 200px;">
                     <div class="mailbox" id="spambox">스팸 메일함 </div>
                     <button id="spam_completeDel" class="btn btn-outline-secondary btn-sm">비우기</button>
@@ -187,6 +187,46 @@
         // 받은 메일함 이동
         document.getElementById("recMailbox").addEventListener("click", function(){
             location.href="list.ma";
+        });
+
+        // 오늘 온 메일함
+        document.getElementById("today_box").addEventListener("click", function(){
+            location.href="todayList.ma";
+        });
+
+        // 내게 쓴 메일함
+        document.getElementById("tome_box").addEventListener("click", function(){
+            location.href="tomeList.ma";
+        });
+
+        // 첨부파일 메일함
+        document.getElementById("attach_box").addEventListener("click", function(){
+            location.href="attachList.ma";
+        });
+
+        // 예약 메일함
+        document.getElementById("reservation_box").addEventListener("click", function(){
+            location.href="reservationList.ma";
+        });
+
+        // 중요 메일함
+        document.getElementById("impor_box").addEventListener("click", function(){
+            location.href="imporList.ma";
+        });
+
+        // 안읽은 메일함
+        document.getElementById("unread_box").addEventListener("click", function(){
+            location.href="unreadList.ma";
+        });
+
+        // 작성중인 메일함
+        document.getElementById("temp_box").addEventListener("click", function(){
+            location.href="tempList.ma";
+        });
+
+        // 보낸 메일함
+        document.getElementById("send_box").addEventListener("click", function(){
+            location.href="sendList.ma";
         });
 
         // 스팸 메일함 이동

@@ -264,15 +264,6 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr height="55">
-                                        <th>전사일정</th>
-                                        <td colspan="2">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" name="scCompany" value="N" id="company" onclick="showHidden();">
-                                                <label class="custom-control-label" for="company">전사일정</label>
-                                            </div>
-                                        </td>
-                                    </tr>
                                 </thead>
                                 <tbody class="body">
                                     <tr height="55">
@@ -364,7 +355,8 @@
            					
            					let scheduleList = schedules[j].scheduleList;
            					
-           					let eventObj = {title:scheduleList[z].scTitle,
+           					let eventObj = {id:scheduleList[z].scNo,
+           									title:scheduleList[z].scTitle,
            									color:schedules[j].calColor};
            					
            					if(scheduleList[z].allDay == 'N'){
@@ -406,7 +398,8 @@
 	 						if(check[c] == scList[j].calNo){
 	 							for(let i=0; i<scList[j].scheduleList.length; i++){
 				 					
-				 					let eventObj = {title:scList[j].scheduleList[i].scTitle,
+				 					let eventObj = {id:scList[j].scheduleList[i].scNo,
+				 									title:scList[j].scheduleList[i].scTitle,
 				 									color:scList[j].calColor};
 				 					
 				 					if(scList[j].scheduleList[i].allDay == 'N'){
@@ -462,14 +455,11 @@
                     center : 'title',
                     end : 'dayGridMonth,dayGridWeek,dayGridDay'
                 },
-                /*
-                dateClick: function(info) {
-                    $("#myModal").modal("show");
-                    const dStart = info.dateStr;
-                    $("#sDate").datepicker("setDate", dStart);
-                    $("#eDate").datepicker("setDate", dStart);
+                eventClick: function(info) {
+                	
+					location.href = "scheduleUpDel.sc?no=" + info.event.id; // 상세페이지 이동
+                	
                 },
-                */
                 select: function(info) {
                     $("#myModal").modal("show");
                     /*alert('selected ' + info.startStr + ' to ' + info.endStr);*/
@@ -508,15 +498,10 @@
                         $("#sel2").val(Hour + ":" + "00").prop("selected", true);
                     }
                 },
-                /*
-                eventDrop: function(info) {
-                    $("#myModal").modal("show"); //이벤트 드래그드랍 시 모달 호출
-                },
-                */
                 //initialDate: '2021-07-15', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
                 selectable : true, // 달력 일자 드래그 설정가능
-                droppable : true,
-                editable : true,
+                //droppable : true,
+                //editable : true,
                 nowIndicator: true, // 현재 시간 마크
                 eventLimit: true, // 달력상에 셀 크기보다 많은 이벤트가 등록되어 있는 경우 'more' 표기
                 locale: 'ko', // 한국어 설정
@@ -575,6 +560,7 @@
             } 
         }
 
+        /*
      	// 전사일정 체크 확인
         function showHidden(){
             if($("input:checkbox[id='company']").is(":checked") == true) {
@@ -584,7 +570,7 @@
                 $(".body").attr("hidden", false);
             }
         }
-        
+        */
     </script>
 
 </body>

@@ -37,6 +37,23 @@
 	<task:scheduler id="myScheduler" pool-size="10"/>
 	<task:annotation-driven scheduler="myScheduler"/>
 	
+	<interceptors>
+		<interceptor>
+			<mapping path="/commute.ep"/>
+			<mapping path="/list.ma"/>
+			<mapping path="/main.ap"/>
+			<mapping path="/main.sc"/>
+			<mapping path="/main.re"/>
+			<mapping path="/list.db"/>
+			<mapping path="/list.bo"/>
+			<mapping path="/favorite.add"/>
+			<mapping path="/list.org"/>
+			<mapping path="/myPage.ep"/>
+			
+			<beans:bean class="com.ep.spring.common.interceptor.LoginInterceptor" id="loginInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
 	<!-- 웹소켓 빈 등록 -->
 	<!-- websocket 관련 구문 추가 -->
 	<beans:bean id="alarmEchoHandler" class="com.ep.spring.alarm.controller.AlarmEchoHandler"/>

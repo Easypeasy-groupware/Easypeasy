@@ -45,7 +45,7 @@
         #no_attachment{width: 360px; margin: auto; display: block;}
         #no_attachment img, #no_attachment div{float: left;}
         #no_attachment div{margin-left: 10px; line-height: 26px; font-size: 15px; font-weight: 400; color: gray;}
-        #in_attachments{width: 100%; max-height: 100px; padding-left: 20px; display: none;}
+        #in_attachments{width: 100%; max-height: 100px; padding-left: 20px; display: none; overflow: auto;}
         #attach{width: 25px;}
         .attach_delete_btn{border: none;}            
     </style>        
@@ -314,14 +314,6 @@
             dateSelector.flatpickr();
             dateSelector.flatpickr({
                 local: 'ko',
-                disable: [
-                
-                // 주말 제외 (토, 일)
-                function(date) {
-                    // return true to disable
-                    return (date.getDay() === 0 || date.getDay() === 6);
-                }
-                    ],
                 dateFormat: "Y-m-d",
                 minDate: "today",
                 defaultDate :"today",

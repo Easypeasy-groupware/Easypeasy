@@ -68,7 +68,7 @@
                         </c:when> 
                         <c:when test="${loginUser.empNo eq ap.writerNo &&  ap.tstatus != '진행중' }" >
                             <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(2);">문서삭제</span> |
-                            <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(1);">재기안</span>
+                            <span style="padding:20px; color:rgb(71, 71, 71);" onclick="postFormSubmit(3);">재기안</span>
                         </c:when>                       
                         <c:when test="${ap.st eq '참조대기' || ap.st eq '참조전체'}" >
                         
@@ -103,7 +103,8 @@
                         <c:forEach var="o" items="${list3 }">
                             <input type="hidden" name="filePath" value="${o.changeName }">
                                 <!-- 첨부파일까지 삭제하기 위해 -->
-                        </c:forEach>	
+                        </c:forEach>
+                        <input type="hidden" name="division" id="division" value="">   
                     </form>
                     
                 </div>
@@ -249,14 +250,14 @@
                     
                         <tr>
                             <td style="text-align:center">첨부파일</td>
-                            <td>
+                            <td style="overflow: auto;">
                                 <c:choose>
                                     <c:when test="${empty list3 }">
                                         첨부파일이 없습니다.
                                     </c:when>
                                     <c:otherwise>
                                         <c:forEach var="t" items="${list3 }">
-                                            <a href="${t.filePath }" download="${t.changeName }">${t.originName }</a>
+                                            <a href="${t.filePath }" download="${t.changeName }">${t.originName }</a><br>
                                         </c:forEach>
                                     </c:otherwise>
                                 </c:choose>
@@ -383,22 +384,27 @@
 
             <script>
 
-                function postFormSubmit(num){
-                    if(num == 1){ // 수정하기 클릭 시
-                        
-                        $("#postForm").attr("action", "updateForm.ap").submit();
-                    
-                    }else{ // 삭제하기 클릭시
-                        
-                        var con = confirm("해당문서를 삭제하시겠습니까?");
-                        console.log(con);
-                        if(con){
-                            $("#postForm").prop("action", "delete.ap");
-                            $("#postForm").submit();
-                        }							
-                        
-                    }
-                }
+	            function postFormSubmit(num){
+	                if(num == 1){ // 수정하기 클릭 시
+	                    
+	                	$("#division").val(1);
+	                    $("#postForm").attr("action", "updateForm.ap").submit();
+	                
+	                }else if(num ==2){ // 삭제하기 클릭시
+	                    
+	                    var con = confirm("해당문서를 삭제하시겠습니까?");
+	                    console.log(con);
+	                    if(con){
+	                        $("#postForm").prop("action", "delete.ap");
+	                        $("#postForm").submit();
+	                    }							
+	                    
+	                }else if(num == 3){ // 재기안일 때
+	                	$("#division").val(3);
+	                	$("#postForm").attr("action", "updateForm.ap").submit();
+	                }
+	                
+	            }
             
             
                 $(function(){

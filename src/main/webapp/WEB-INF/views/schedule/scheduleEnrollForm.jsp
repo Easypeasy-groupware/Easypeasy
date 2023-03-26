@@ -242,15 +242,6 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr style="height: 45px;">
-                                <th>전사일정</th>
-                                <td colspan="2">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="scCompany" value="N" id="company" onclick="showHidden();">
-                                        <label class="custom-control-label" for="company">전사일정</label>
-                                    </div>
-                                </td>
-                            </tr>
                         </thead>
                         <tbody class="body">
                             <tr style="height: 45px;">
@@ -373,6 +364,7 @@
                 } 
             }
 
+            /*
             // 전사일정 체크 확인
             function showHidden(){
                 if($("input:checkbox[id='company']").is(":checked") == true) {
@@ -382,7 +374,7 @@
                     $(".body").attr("hidden", false);
                 }
             }
-
+			*/
         </script>
         
     

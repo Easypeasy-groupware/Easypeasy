@@ -1,5 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="chatMapper">
+	
+	<resultMap id="chatEmployeeResult" type="Employee">
+		<id column="emp_no" property="empNo" />
+		<result column="emp_name" property="empName" />
+		<result column="emp_id" property="empId" />
+		<result column="emp_pwd" property="empPwd" />
+		<result column="email" property="email" />
+		<result column="address" property="address" />
+		<result column="phone" property="phone" />
+		<result column="emp_profile" property="empProfile" />
+		<result column="dept_code" property="deptCode" />
+		<result column="dept_name" property="deptName" />
+		<result column="job_code" property="jobCode" />
+		<result column="job_name" property="jobName" />
+		<result column="hire_date" property="hireDate" />
+		<result column="ent_yn" property="entYn" />
+		<result column="ent_date" property="entDate" />
+		<result column="status" property="status" />
+		<result column="add_emp_no" property="addEmpNo"/>
+	</resultMap>
+
+
+	<select id="viewChatEmpList" resultMap="chatEmployeeResult">
+		select
+			    emp_no
+			  , emp_name
+			  , emp_id
+			  , emp_pwd
+			  , email
+			  , address
+			  , phone
+			  , emp_profile
+			  , d.dept_code
+              , dept_name
+			  , j.job_code
+              , job_name
+			  , to_char(hire_date, 'YYYY"년"MM"월"DD"일"') as "hire_date"
+			  , ent_yn
+			  , ent_date
+			  , status
+		  from employee e
+          left join department d on (e.dept_code = d.dept_code)
+          left join job j on (e.job_code = j.job_code)
+		 where ent_yn = 'N'
+		 order
+		    by emp_name asc
+	</select>
 
 </mapper>

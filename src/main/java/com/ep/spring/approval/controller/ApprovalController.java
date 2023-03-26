@@ -423,7 +423,7 @@ public class ApprovalController {
 	public String insertApproval(HttpSession session, Model model, List<MultipartFile> originNames, 
 								 Approval ap, VacationForm vf, OverTimeForm ot) {
 		//System.out.println(ap);
-		//System.out.println(originNames);
+		System.out.println(originNames);
 		
 		ap.setWriterNo(((Employee)session.getAttribute("loginUser")).getEmpNo());
 		if(ap.getFormCode() == 3 || ap.getFormCode() == 4) {
@@ -435,7 +435,7 @@ public class ApprovalController {
 			ap.setSecGrade("A");
 		}
 		
-		System.out.println(ap);
+		//System.out.println(ap);
 		
 		// 결재자 ApprovalLine에 담기
 		
@@ -483,8 +483,10 @@ public class ApprovalController {
 		
 		ArrayList <Attachment> atList = new ArrayList<>();
 		
+		
 		if(originNames.size() > 1) {
 			String path = "resources/approval_attachFiles/";
+			
 			
 			for(MultipartFile mf : originNames) {
 				Attachment at = new Attachment();
@@ -497,14 +499,17 @@ public class ApprovalController {
 				at.setFilePath(saveFilePath);
 				atList.add(at);
 			}
+			
 		}
 		
 		int result = aService.insertApproval(ap, al, vf, ot, atList);
 		
+		System.out.println(atList);
+		
 		if(result > 0) {
 			
 			AlertMsg msg = new AlertMsg("결재상신", "성공적으로 문서상신 완료되었습니다!");
-			System.out.println("status : " + ap.getStatus());
+			//System.out.println("status : " + ap.getStatus());
 			if(ap.getStatus().equals("2")) {
 				msg.setTitle("임시저장");
 				msg.setContent("성공적으로 임시저장 되었습니다!");
@@ -545,9 +550,16 @@ public class ApprovalController {
 	}
 	
 	@RequestMapping("updateForm.ap")
-	public String updateForm(int no, ArrayList<Attachment> filePath, Model model, HttpSession session) {
+	public String updateForm(int no, ArrayList<Attachment> filePath, int division, Model model, HttpSession session) {
 
 		Approval ap = aService.selectTempApproval(no);
+		// 재기안인지 수정인지 구분하는 값 세팅해주기
+		
+		System.out.println("재기안일까요 수정일까요?" + division);
+		ap.setDivision(division);
+
+		System.out.println("화면에 돌려줄 재기안/수정값?" + ap.getDivision());
+		System.out.println(ap);
 		model.addAttribute("ap", ap);	
 		
 		ArrayList<ApprovalLine> list1 = aService.selectDetailSPrgAl(ap);
@@ -558,6 +570,8 @@ public class ApprovalController {
 		
 		ArrayList<Attachment> list3 = aService.selectDetailSPrgAt(ap);
 		model.addAttribute("list3", list3);
+		System.out.println("업데이트폼에서 보낼 기존 첨부파일 : " + list3);
+		
 		
 		if(ap.getFormCode() == 1) {
 			
@@ -585,7 +599,7 @@ public class ApprovalController {
 	public String updateApproval(HttpSession session, Model model, List<MultipartFile> originNames, 
 								 Approval ap, VacationForm vf, OverTimeForm ot) {
 		//System.out.println(ap);
-		//System.out.println(originNames);
+		System.out.println("넘어온 파일 : " + originNames);
 		
 		
 		/*
@@ -612,11 +626,11 @@ public class ApprovalController {
 		
 		ArrayList <Attachment> atList = new ArrayList<>();
 		
-		if(originNames.size() > 1) {
+		if(originNames.size() > 0) {
 			
 			// 기존 첨부파일이 있었을 경우 => 기존의 파일 지우기
-			
 			ArrayList<Attachment> list =  aService.selectDetailSPrgAt(ap);
+			System.out.println("기존의 지울 첨부파일 : " + list);
 			
 			if(list.size() > 0) {
 				
@@ -628,6 +642,7 @@ public class ApprovalController {
 			String path = "resources/approval_attachFiles/";
 			
 			for(MultipartFile mf : originNames) {
+				
 				Attachment at = new Attachment();
 				String originName = mf.getOriginalFilename();
 				String saveFilePath = FileUpload.saveFile(mf, session, path);
@@ -636,9 +651,16 @@ public class ApprovalController {
 				at.setOriginName(originName);
 				at.setChangeName(changeName);
 				at.setFilePath(saveFilePath);
+				System.out.println("추가할 하나하나의 첨부파일 : " + at);
 				atList.add(at);
+				
 			}
+			
 		}
+
+		
+		
+		
 		ap.setWriterNo(((Employee)session.getAttribute("loginUser")).getEmpNo());
 		if(ap.getFormCode() == 3 || ap.getFormCode() == 4) {
 			ap.setTitle(ap.getFormName());
@@ -698,6 +720,7 @@ public class ApprovalController {
 		int result = aService.updateApproval(ap, al, vf, ot, atList);
 		
 		if(result > 0) {
+			System.out.println("최종 담은 첨부 : " + atList);
 			AlertMsg msg = new AlertMsg("결재상신", "성공적으로 문서상신 완료되었습니다!");
 			session.setAttribute("successMsg", msg);
 			return "redirect:main.ap";			

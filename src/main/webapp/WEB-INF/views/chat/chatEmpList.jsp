@@ -8,6 +8,10 @@
 <title>Insert title here</title>
 <!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!--Bootstrap 5.3.0-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
 <style>
     * {padding: 0; margin: 0; box-sizing: border-box;}
 	a {text-decoration: none;}
@@ -37,7 +41,9 @@
 	.img-area img{height:100%; border-radius:50%;}
 	.room-info{height:100%; line-height:55px;}
 	.room-info span{display:inline-block;}
-	.emp-name{font-weight:600;}
+	.emp-name{font-weight:600; font-size:14px;}
+	.dept-name, .job-name{font-size:13px;}
+	.work-status{font-size:10px;}
 	
 	/*검색*/
 	.search-area{line-height:40px; background-color:white; text-align:center; display:none;}
@@ -78,97 +84,38 @@
         </script>
         
 		<div class="list-area">
-		
-			<div class="indiv-list">
-				<div class="img-area">
-					<img src="resources/chat-images/rockstar.png">
-				</div>
-				<div class="room-info">
-					<span class="dept-name">영엽1팀</span>
-					<span class="emp-name">홍길동</span>
-					<span class="job-name">사원</span>
-				</div>
-			</div>
-			<div class="indiv-list">
-				<div class="img-area">
-					<img src="resources/chat-images/rockstar.png">
-				</div>
-				<div class="room-info">
-					<span class="dept-name">영엽1팀</span>
-					<span class="emp-name">홍길동</span>
-					<span class="job-name">사원</span>
-				</div>
-			</div>
-			<div class="indiv-list">
-				<div class="img-area">
-					<img src="resources/chat-images/rockstar.png">
-				</div>
-				<div class="room-info">
-					<span class="dept-name">영엽1팀</span>
-					<span class="emp-name">홍길동</span>
-					<span class="job-name">사원</span>
-				</div>
-			</div>
-			<div class="indiv-list">
-				<div class="img-area">
-					<img src="resources/chat-images/rockstar.png">
-				</div>
-				<div class="room-info">
-					<span class="dept-name">영엽1팀</span>
-					<span class="emp-name">홍길동</span>
-					<span class="job-name">사원</span>
-				</div>
-			</div>
-			<div class="indiv-list">
-				<div class="img-area">
-					<img src="resources/chat-images/rockstar.png">
-				</div>
-				<div class="room-info">
-					<span class="dept-name">영엽1팀</span>
-					<span class="emp-name">홍길동</span>
-					<span class="job-name">사원</span>
-				</div>
-			</div>
-			<div class="indiv-list">
-				<div class="img-area">
-					<img src="resources/chat-images/rockstar.png">
-				</div>
-				<div class="room-info">
-					<span class="dept-name">영엽1팀</span>
-					<span class="emp-name">홍길동</span>
-					<span class="job-name">사원</span>
-				</div>
-			</div>
-			<div class="indiv-list">
-				<div class="img-area">
-					<img src="resources/chat-images/rockstar.png">
-				</div>
-				<div class="room-info">
-					<span class="dept-name">영엽1팀</span>
-					<span class="emp-name">홍길동</span>
-					<span class="job-name">사원</span>
-				</div>
-			</div>
-			<div class="indiv-list">
-				<div class="img-area">
-					<img src="resources/chat-images/rockstar.png">
-				</div>
-				<div class="room-info">
-					<span class="dept-name">영엽1팀</span>
-					<span class="emp-name">홍길동</span>
-					<span class="job-name">사원</span>
-				</div>
-			</div>
-			<div class="indiv-list">
-				<div class="img-area">
-					<img src="resources/chat-images/rockstar.png">
-				</div>
-				<div class="room-info">
-					<span class="dept-name">영엽1팀</span>
-					<span class="emp-name">홍길동</span>
-					<span class="job-name">사원</span>
-				</div>
-			</div>
+			
+				
+			<c:forEach var="e" items="${ list }">
+				<c:if test="${ loginUser.empNo ne e.empNo }">
+				
+					<div class="indiv-list">
+						<input type="hidden" name="empNo" value="${e.empNo}">
+						<div class="img-area">
+							<img src="<c:out value='${e.empProfile}' default='resources/chat-images/rockstar.png'/>">
+						</div>
+						<div class="room-info">
+							<span class="dept-name">${e.deptName}</span>
+							<span class="emp-name">${e.empName }</span>
+							<span class="job-name">${e.jobName }</span>
+							<c:choose>
+								<c:when test="${ e.status eq 'WO' }">
+									<span class="badge work-status rounded-pill text-bg-success">근무중</span>
+								</c:when>
+								<c:when test="${ e.status eq 'ME' }">
+									<span class="badge work-status rounded-pill text-bg-secondary">회의중</span>
+								</c:when>
+								<c:otherwise>
+									<span class="badge work-status rounded-pill text-bg-light">부재중</span>
+								</c:otherwise>
+							
+							</c:choose>
+						</div>
+					</div>
+				</c:if>		
+			</c:forEach>
+			
+			
 			
 			
 			
@@ -176,16 +123,18 @@
 		</div><!-- list-area끝 -->
 		<script>
 			$(function(){
-				$(".room-name").each(function(){
-					if($(this).text().length > 15){
-						$(this).text(($(this).text().substring(0,15)).concat("..."));
-					}
-				})
-				
-				$(".indiv-list").click(function(){
-					var wName = "room1"; // 새창의이름
-					var options = 'top=500, left=1400, width=400, height=600, status=no, menubar=no, toolbar=no, titlebar=no, resizable=no, location=no, scrollbars=no';
-					window.open("chatRoom.ch", wName, options);
+
+				let count = 0;
+				$(".indiv-list").each(function(){
+					$(this).click(function(){
+						count++;
+						var wName = "room1" + count; // 새창의이름
+						
+						let no = $(this).children("input").val();
+						var options = 'top=500, left=1400, width=400, height=600, status=no, menubar=no, toolbar=no, titlebar=no, resizable=no, location=no, scrollbars=no';
+						var url = "chatRoom.ch?emp=" + no;
+						window.open(url, wName, options);
+					})
 				})
 				
 			})

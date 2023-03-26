@@ -513,24 +513,14 @@
                       <tr>
                         <th class="tg-0lax">휴가기간</th>
                         <th class="tg-0lax">휴가일수</th>
-                        <th class="tg-0lax">상태</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td class="tg-0lax">2023-02-21~2023-02-24</td>
-                        <td class="tg-0lax">4일</td>
-                        <td class="tg-0lax"></td>
-                      </tr>
-                      <tr>
-                        <td class="tg-0lax">2023-02-21~2023-02-24</td>
-                        <td class="tg-0lax">4일</td>
-                        <td class="tg-0lax">완료</td>
-                      </tr>
-                      <tr>
-                        <td class="tg-0lax">2023-02-21~2023-02-24</td>
-                        <td class="tg-0lax">4일</td>
-                        <td class="tg-0lax">완료</td>
+                        <c:forEach var="list2" items="${ list2 }">
+                		<td class="tg-0lax">${ list2.vacStart }~${ list2.vacEnd }</td>
+                		<td class="tg-0lax">${ list2.vacUse }일</td>
+                	</c:forEach>
                       </tr>
                     </tbody>
                     </table>

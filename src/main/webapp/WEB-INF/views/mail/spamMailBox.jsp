@@ -138,7 +138,7 @@
                 <c:if test="${ not empty mailList }">
                     <c:forEach var="m" items="${ mailList }">
                         <c:if test="${ m.junkMail == 'Y' }">
-                            <c:set var="count" value="${count + 1}" />
+                            <c:set var="mailCount" value="${mailCount + 1}" />
                             <div class="mail_one" >
                                 <div class="mail_check">
                                     <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="">
@@ -187,7 +187,7 @@
                     </c:forEach>
                 </c:if>
                 <c:if test="${mailCount == 0}">
-                    <div class="empty">스팸 메일함이 비었습니다.</div>
+                    <div class="empty">메일함이 비었습니다.</div>
                 </c:if>
             </div>
             <div align="center">
@@ -247,7 +247,7 @@
                 if(checkedBoxSum != 0) {
                     const form = document.createElement("form");
                     const input = document.createElement("input");
-                    input.setAttribute("name", "mailNoList");
+                    input.setAttribute("name", "recMailNoList");
                     input.setAttribute("multiple", "multiple")
                     input.setAttribute("value", arr)
                     form.append(input)

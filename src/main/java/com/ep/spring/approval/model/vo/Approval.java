@@ -37,6 +37,7 @@ public class Approval {
 	private int receiverNo;
 	private String st;
 	private int attachCount;
+	private int division; // 재기안할것인지, 수정할것인지 구분하는
 	
 	private ArrayList<ApprovalLine> alList;
 	private ArrayList<ApprovalLine> refList;

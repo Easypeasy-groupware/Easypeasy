@@ -45,7 +45,7 @@
         #no_attachment{width: 360px; margin: auto; display: block;}
         #no_attachment img, #no_attachment div{float: left;}
         #no_attachment div{margin-left: 10px; line-height: 26px; font-size: 15px; font-weight: 400; color: gray;}
-        #in_attachments{width: 100%; max-height: 100px; padding-left: 20px; display: none;}
+        #in_attachments{width: 100%; max-height: 100px; padding-left: 20px; display: none; overflow: auto;}
         #attach{width: 25px;}
         .attach_delete_btn{border: none;}            
 
@@ -66,8 +66,9 @@
 	                <input type="hidden" name="formCode" value="2">
 	                <input type="hidden" name="formName" value="일반품의서">
 	                <input type="hidden" name="appNo" value = "${ap.appNo}">
-	                 
+	                <input type="hidden" name="division" id="division" value="${ap.division}">   
                 </p>
+                <br><br><br>
             </div>
             <div class="left-form2">
             	<a href=""  data-toggle="modal" data-target="#send-approval" style="padding:20px; color:rgb(71, 71, 71);">결재요청</a>|
@@ -107,7 +108,7 @@
                                     <label for="appNo">문서번호</label>
                                 </td>
                                 <td>
-                                    <input type="text" value="${ap.appChange}" id="appChange" name="appChange" readonly>
+                                    <input type="text" value="" id="appChange" name="appChange" readonly>
                                 </td>
                             </tr>
                         </table>
@@ -150,102 +151,56 @@
                             </tr>
                             <tr></tr>
                             <tr>
-                                <td colspan="2" id="attach_area">
-                                    <div id="no_attachment" >
-                                        <img id="attach" src="resources/common_images/attachment.png" width="30px;">
-                                        <div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
-                                    </div>
-                                    <div id="in_attachments">
-                                        <c:if test="${not empty list3}">
-                                            <c:forEach var="a" items="${list3 }">
-                                                <div> 첨부파일명 :  ${a.originName}  &nbsp;&nbsp;&nbsp; <br></div>
-                                            </c:forEach>
-                                        </c:if>                                
-                                    </div>
-                                    <input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
-                                </td>
+								<td colspan="2" id="attach_area">
+									<div id="no_attachment" >
+										<img id="attach" src="resources/common_images/attachment.png" width="30px;">
+										<div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
+									</div>
+									<div id="in_attachments">
+										
+											<c:if test="${not empty list3}">
+												<c:forEach var="a" items="${list3 }">
+													<div> 첨부파일명 :  ${a.originName}  &nbsp;&nbsp;&nbsp; <br></div>
+												</c:forEach>
+											</c:if>
+									</div>
+	
+									<input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
+								</td>
                             </tr>
                         </table>
                     </div>
                     <br>
-                <div class="left-form6">
-                    <div style=" padding:10px; font-size:20px;">
-                        <p><b> 결재선</b></p>
-                </div>
-                
-                <div class="app-comment" style="font-size:15px;">
-                    <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${loginUser.empName} ${loginUser.jobName}
-                    <br>
-                        이지피지 | ${loginUser.deptName}
-                    <br>
-                        기안
-                    <br><br><br>
-                    
-                </div>
-                
-                <div class="app-body">
-                        <c:choose>
-                            <c:when test="${empty list1}">
-                                결재선이 비었습니다.
-                            </c:when>
-                            <c:otherwise>
-                                <c:forEach var="e" items="${list1}">
-                                <div class="app-comment" style="font-size:15px;">
-                                    <img src="<c:out value='${e.empProfile}' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${e.empName} ${e.jobCode == 'J1'?'사원':
-                                                                                                                                                                                            e.jobCode == 'J2'?'대리':
-                                                                                                                                                                                            e.jobCode == 'J3'?'과장':
-                                                                                                                                                                                            e.jobCode == 'J4'?'부장':
-                                                                                                                                                                                            e.jobCode == 'J5'?'상무':
-                                                                                                                                                                                            e.jobCode == 'J6'?'대표':''}
-                                    <input type="hidden" name="recEmpNo" value="${e.recEmpNo }">																														                             
-                                    <br>
-                                        이지피지 | ${e.deptName}
-                                    <br>
-                                        결재
-                                    <br><br><br>
-                                    
-                                </div>	               			
-                                </c:forEach>
-                            </c:otherwise>
-                    </c:choose>               
-                </div>
-
-                
-                    <div style=" padding:10px; font-size:20px;">
-                        <p><b> 참조자</b></p>
-                </div>
-                
-
-                <div class="rep-body">
-                        <c:choose>
-                            <c:when test="${empty list2}">
-                                참조선이 비었습니다.
-                            </c:when>
-                            <c:otherwise>
-                                <c:forEach var="r" items="${list2}">
-                                <div class="app-comment" style="font-size:15px;">
-                                    <img src="<c:out value='${r.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${r.empName} ${r.jobCode == 'J1'?'사원':
-                                                                                                                                                                                    r.jobCode == 'J2'?'대리':
-                                                                                                                                                                                    r.jobCode == 'J3'?'과장':
-                                                                                                                                                                                    r.jobCode == 'J4'?'부장':
-                                                                                                                                                                                    r.jobCode == 'J5'?'상무':
-                                                                                                                                                                                    r.jobCode == 'J6'?'대표':''}
-                                    <input type="hidden" name="recEmpNo" value="${r.recEmpNo }">	
-                                    <br>
-                                        이지피지 | ${r.deptName}
-                                    <br>
-                                        참조
-                                    <br><br><br>
-                                    
-                                </div>	               			
-                                </c:forEach>
-                            </c:otherwise>
-                    </c:choose>               
-                </div>
-                
-                <div id="commentArea">
-                
-                </div>	            
+                	<div class="left-form6">
+	                    <div style=" padding:10px; font-size:20px;">
+	                        <p><b> 결재선</b></p>
+		                </div>
+	                
+		                <div class="app-comment" style="font-size:15px;">
+		                    <img src="<c:out value='${loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" width="30px;" alt=""> &nbsp;${loginUser.empName} ${loginUser.jobName}
+		                    <br>
+		                        이지피지 | ${loginUser.deptName}
+		                    <br>
+		                        기안
+		                    <br><br><br>
+		                </div>
+	                
+		                <div class="app-body" style=" padding:15px;">
+		                </div>
+	
+	                
+	                   <div style=" padding:10px; font-size:20px;">
+	                       <p><b> 참조자</b></p>
+	               		</div>
+	                
+	
+		                <div class="rep-body" style=" padding:15px;">
+		                               
+		                </div>
+	                
+		                <div id="commentArea">
+		                
+		                </div>	            
                 
                     </div>
                 </form>
@@ -267,6 +222,13 @@
 	    			$("#writer").val(result.a.empName);
 	    			$("#dept").val(result.a.deptName);
 	    			
+	    			if($("#division").val()==1){
+	    				$("#appChange").val("${ap.appChange}");
+	    			}else{
+	    				$("#appChange").val(result.appChange);
+	    			}
+	    			
+	    			
 	    		}, error:function(request, status, error){
 	    			console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
 					console.log("직성용 정보 불러오기 ajax 통신실패");
@@ -282,6 +244,18 @@
 	    		$("#in_attachments").css('display', 'none');
 	    		$("#no_attachment").css('display', 'block');	    		
 	    	}
+	    	
+	    	// action값 부여하기
+        	if($("#division").val() == 3){//재기안
+        	 	
+    			$("#contentArea").attr("action","insert.ap"); 
+    	
+	    	}else if($("#division").val() == 1){// 수정
+	    		
+	    		$("#contentArea").attr("action","update.ap"); 
+	    		
+	    	}
+	    	
 	    });
     
     
@@ -317,15 +291,15 @@
             attachFile.addEventListener('change', function(){
                 let vaildFile = attachFile.files.length >= 0;
                 if(vaildFile){
-                    //inAttachs.innerText = ''
+                    inAttachs.innerText = ''
                     noAttach.style.display = "none";
                     let attach = "";
                     for(let i=0; i<attachFile.files.length; i++){
                     	
-                    	inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile[i].name + "&nbsp;&nbsp;&nbsp;<br></div>";
+                    	inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile.files[i].name + "&nbsp;&nbsp;&nbsp;<br></div>";
                         
                     };
-                    inAttachs.append(attach);
+                    //inAttachs.append(attach);
                     
                     inAttachs.style.overflowY = 'auto';
                     inAttachs.style.display = "block";
@@ -352,7 +326,7 @@
             let attachFile = e.dataTransfer.files
             let vaildFile = e.dataTransfer.types.indexOf('Files') >= 0;
             if(vaildFile){
-                //inAttachs.innerText = ''
+                inAttachs.innerText = ''
                 noAttach.style.display = "none";
                 for(let i=0; i<attachFile.length; i++){
                     inAttachs.innerHTML += "<div>첨부파일명 : " + attachFile[i].name + "&nbsp;&nbsp;&nbsp;<br></div>";
@@ -360,8 +334,8 @@
                 inAttachs.style.overflowY = 'auto';
                 inAttachs.style.display = "block";
             };
-        });
-        
+        });        
+
         // 첨부파일 전체 삭제
         document.getElementById('file_delete').addEventListener('click', function(){
             let attachFile = document.getElementById("attach_files");
@@ -374,64 +348,50 @@
         // 유효한 기안의견 작성 시 update 요청되게 하기
         function insertApp(){
         	
-            $.ajax({
-                url:"enrollinfo.ap",
-                success:function(result){
-
-                    $("#appChange").val(result.appChange);
-                    
-                }, error:function(request, status, error){
-                    console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
-                    console.log("직성용 정보 불러오기 ajax 통신실패");
-                }
-            });
-            
-       
-        	if($("#writerComment").val().trim().length>0){
-        		
         		if(!($("#content").val().trim().length>0)){
+        			
         			swal("내용 작성 후 상신요청해주세요.");
-        		}
-        		
-        		
-        		if($(".app-body input").html() == null){
+        			
+        		}else if($(".app-body input").html() == null){
+        			
         			swal("결재선 선택 후 상신요청해주세요.");
-        		}
+        			
+        		} else if(($("#writerComment").val().trim().length>0) && ($(".app-body input").html() != null) && ($("#content").val().trim().length>0)){
         		
-        		const appContent = $("#contentArea");
-        		
-        		// 결재 / 참조자 목록들 배열에 담기
-        		const recEmpNo = [];
-        		const refList = [];
-        		
-        		const appBody = $(".app-body input");
-        		const refBody = $(".rep-body input");
-        		
-        		
-        		for(let i = 0; i < appBody.length; i++){
-        			console.log(appBody[i]);
-        			appBody[i].setAttribute('name', 'alList['+ i +'].recEmpNo');
-        	
-        		}
+	        		const appContent = $("#contentArea");
+	        		
+	        		// 결재 / 참조자 목록들 배열에 담기
+	        		const recEmpNo = [];
+	        		const refList = [];
+	        		
+	        		const appBody = $(".app-body input");
+	        		const refBody = $(".rep-body input");
+	        		
+	        		
+	        		for(let i = 0; i < appBody.length; i++){
+	        			console.log(appBody[i]);
+	        			appBody[i].setAttribute('name', 'alList['+ i +'].recEmpNo');
+	        	
+	        		}
+	
+	        		for(let j = 0; j < refBody.length; j++){
+	        			refBody[j].setAttribute('name', 'refList[' + j + '].recEmpNo');
+	        	
+	        		}
+				
+					let value = "";
+					value += "<input type='hidden' name='writerComment' value='"+ $("#writerComment").val() +"'><br>"
+					  + "<input type='hidden' name='status' value='"+ 1 +"'>";				
+					  $("#commentArea").html(value);
+					
+					$("input[type=radio][name=start-half]").attr('name', 'halfStatus');
+					$("input[type=radio][name=end-half]").attr('name','halfStatus');
+					
+					appContent.submit();
+					
 
-        		for(let j = 0; j < refBody.length; j++){
-        			refBody[j].setAttribute('name', 'refList[' + j + '].recEmpNo');
-        	
-        		}
-			
-				let value = "";
-				value += "<input type='hidden' name='writerComment' value='"+ $("#writerComment").val() +"'>"
-				 + "<input type='hidden' name='status' value='"+ 1 +"'>";
-				$("#commentArea").html(value);
-				
-				$("input[type=radio][name=start-half]").attr('name', 'halfStatus');
-				$("input[type=radio][name=end-half]").attr('name','halfStatus');
-				
-				$("#contentArea").attr("action","insert.ap").submit();;
-				
-
         		
-        	}else{
+        	}else if(!($("#writerComment").val().trim().length>0)){
         		
         		swal("의견 작성 후 상신요청해주세요.");
         	}
@@ -439,9 +399,6 @@
         }
         
         function tempSave(){
-        	
-        	
-        	
         	
 			let value = "";
 			value += "<input type='hidden' name='status' value='"+ 2 +"'>";
@@ -468,7 +425,7 @@
 
 			
 			
-    		$("#contentArea").attr("action","update.ap").submit();
+        	$("#contentArea").attr("action","insert.ap");
         }            
         
 

@@ -14,14 +14,25 @@ public interface MailService {
 	ArrayList<Mail> selectReceiveMailList(String email);
 	// - 리스트 페이징
 	ArrayList<Mail> selectList(PageInfo pi, String email);
-	// - 즐겨찾기 리스트 조회
-	
-	// - 태그 리스트 조회
-	ArrayList<MailTag> selectTagList(int empNo);
-	
+	// - 중요메일 리스트 조회
+	ArrayList<Mail> selectImporMailList(PageInfo mailPi, String email);
+	// - 첨부메일 리스트 조회
+	ArrayList<Mail> selectAttachMailList(PageInfo mailPi, String email);
+	// - 오늘 온 메일 리스트 조회
+	ArrayList<Mail> selectTodayMailList(PageInfo mailPi, String email);
+	// - 내게 쓴 메일 리스트 조회
+	ArrayList<Mail> selectToMeMailList(PageInfo mailPi, String email);
+	// - 안읽은 메일 리스트 조회
+	ArrayList<Mail> selectUnreadMailList(PageInfo mailPi, String email);
+	// - 작성중인 메일 리스트 조회
+	ArrayList<Mail> selectTempMailList(PageInfo mailPi, String email);
+	// - 보낸 메일 리스트 조회
+	ArrayList<Mail> selectSendMailList(PageInfo mailPi, String email);
 	
 	/* 2. 태그 생성 */
 	int insertTag(MailTag t);
+	// - 태그 리스트 조회
+	ArrayList<MailTag> selectTagList(int empNo);
 
 	
 	/* 3. 메일 발신 */
@@ -29,16 +40,19 @@ public interface MailService {
 
 	
 	/* 4. 메일 상세조회하기 */
-	// 메일 읽음 처리
+	// - 메일 읽음 처리
 	void readMail(Mail m);
-	// 안읽은 메일 수량 조회
+	// - 안읽은 메일 수량 조회
 	int unReadCount(Mail m);
-	// 보낸 메일 정보
+	// - 보낸 메일 정보
 	Mail selectMail(Mail m);
-	// 수신자 리스트 조회
+	// - 수신자 리스트 조회
 	ArrayList<Mail> selectReceiverList(Mail m);
-	// 첨부파일 리스트 조회
-	ArrayList<Attachment> selectAttachmentList(Mail m);
+	// - 메일 리스트 첨부파일 조회
+	ArrayList<Attachment> selectAttachmentList(ArrayList<Mail> mailList);
+	// - 단일 메일 첨부파일 리스트 조회
+	ArrayList<Attachment> selectMailAttachment(Mail m);
+	
 
 	
 	/* 5. 메일 읽음/안읽음 처리 */
@@ -61,7 +75,17 @@ public interface MailService {
 
 	/* 9. 메일 태그 등록 */
 	int tagMail(Mail m, int[] recMailNoList);
-
+	
+	/* 보낸 메일 삭제 */
+	int deleteSendMail(int[] mailNoList);
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 

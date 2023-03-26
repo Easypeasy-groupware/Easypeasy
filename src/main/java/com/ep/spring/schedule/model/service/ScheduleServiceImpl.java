@@ -79,4 +79,42 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public ArrayList<Calendar> scheduleList(int empNo) {
 		return scDao.scheduleList(sqlSession, empNo);
 	}
+	
+
+	@Override
+	public Schedule selectSchedule(int scNo) {
+		return scDao.selectSchedule(sqlSession, scNo);
+	}
+
+	@Override
+	public ArrayList<Attendee> selectAttendee(int scNo) {
+		return scDao.selectAttendee(sqlSession, scNo);
+	}
+
+	@Override
+	public int scheduleUpdate(Schedule s) {
+		return scDao.scheduleUpdate(sqlSession, s);
+	}
+
+	/*
+	@Override
+	public int updateAttendee(ArrayList<Attendee> atList) {
+		return scDao.updateAttendee(sqlSession, atList);
+	}
+	*/
+	
+	@Override
+	public int insertUpAttendee(ArrayList<Attendee> atList) {
+		return scDao.insertUpAttendee(sqlSession, atList);
+	}
+	
+	@Override
+	public int deleteAttendee(int scNo) {
+		return scDao.deleteAttendee(sqlSession, scNo);
+	}
+
+	@Override
+	public int scheduleDelete(int scNo) {
+		return scDao.scheduleDelete(sqlSession, scNo);
+	}
 }
