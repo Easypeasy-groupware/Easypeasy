@@ -95,6 +95,8 @@
 		  , board_writer
 		  , board_content
 		  , board_pin
+		  , origin_name
+		  , change_name
 		  ) 
 		  values
 		  (
@@ -104,6 +106,8 @@
 		  , #{boardWriter}
 		  , #{boardContent}
 		  , #{boardPin}
+		  , #{originName}
+		  , #{changeName}
 		  )
 	</insert>
 	
@@ -148,6 +152,8 @@
 			 , board_writer
 			 , board_content
 			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+			 , origin_name
+		     , change_name
 		  from board b
 		 where board_no = #{boardNo}
 	</select>
@@ -270,7 +276,9 @@
 		 	   board_reply 
 		   set 
 		       reply_content = #{replyContent}
-	 	 where reply_writer = #{replyWriter}	
+	 	 where reply_no = #{replyNo} 
+	 	   and reply_writer = #{replyWriter}
+	 	   and board_no = #{boardNo}	
 	</update>
 	
 	<select id="selectSettings" resultMap="boardcateResult">

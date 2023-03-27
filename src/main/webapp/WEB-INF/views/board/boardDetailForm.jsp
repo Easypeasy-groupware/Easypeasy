@@ -125,10 +125,9 @@
         	})
         	
 			function updateReply(replyNo, replyContent) { // 댓글 수정용 ajax
-        		
 			    $.ajax({
 			        url: "rupdate.bo",
-			        data: { replyNo: replyNo, replyContent: replyContent },
+			        data: { replyNo: replyNo, replyContent: replyContent, boardNo: '${b.boardNo}' },
 			        success: function(result) {
 			            if (result == "success") {
 			                selectReplyList();
@@ -138,15 +137,15 @@
 			            console.log("댓글 수정용 ajax 통신 실패");
 			        }
 			    });
-			
-			    // replyContent 수정
+			    
 			    let inputHtml = "<input type='text' id='updateInput_" + replyNo + "' value='" + replyContent + "'/>";
 			    $("#replyContent_" + replyNo).html(inputHtml);
-			    
 			}
-        	
-        	
-
+			
+			function updateReplyContent(replyNo) { // 댓글 수정 ajax 함수
+			    let newContent = $("#updateInput_" + replyNo).val();
+			    updateReply(replyNo, newContent);
+			}
         	
         	function deleteReply(replyNo) { // 댓글 삭제용 ajax
 			    $.ajax({

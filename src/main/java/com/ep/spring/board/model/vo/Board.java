@@ -21,6 +21,8 @@ public class Board {
 	private String ModifyDate;
 	private String DeleteStatus;
 	private String BoardPin;
+	private String OriginName;
+	private String ChangeName;
 	
 	
 }

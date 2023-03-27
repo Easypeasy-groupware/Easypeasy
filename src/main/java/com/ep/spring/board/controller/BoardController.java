@@ -49,7 +49,7 @@ public class BoardController {
 	public String enrollForm() {
 		return "board/boardEnrollForm";
 	}
-	
+	/*
 	@RequestMapping("insert.bo")
 	public ModelAndView insertBoard(@RequestParam List<MultipartFile> originNames, Board b, Attachment a, HttpSession session, ModelAndView mv) {
 		
@@ -85,8 +85,32 @@ public class BoardController {
 		return mv;
 		
 	}
-	
+	*/
+	@RequestMapping("insert.bo")
+	public ModelAndView insertBoard(Board b, MultipartFile upfile, HttpSession session, ModelAndView mv) {
 		
+		if(!upfile.getOriginalFilename().equals("")) {
+			
+			String  saveFilePath = FileUpload.saveFile(upfile, session, "resources/board_attachFiles/"); 
+			
+			b.setOriginName(upfile.getOriginalFilename()); 
+			b.setChangeName(saveFilePath); 
+		}
+		
+		int result = bService.insertBoard(b);
+		
+		if(result > 0) { 
+			AlertMsg msg = new AlertMsg("게시글 등록", "성공적으로 게시글이 등록되었습니다.");
+			mv.addObject("successMsg", msg);
+		}else { 
+			AlertMsg msg = new AlertMsg("게시글 등록", "게시글 등록 실패");
+			mv.addObject("successMsg", msg);
+		}
+		mv.setViewName("redirect:list.bo");
+		return mv;
+	}
+	
+	/*	
 	@RequestMapping("detailForm.bo")
 	public ModelAndView selectBoard(int no, HttpSession session, ModelAndView mv, Board b) {
 		
@@ -107,6 +131,23 @@ public class BoardController {
 		}
 		return mv;
 	}
+	*/
+	
+	@RequestMapping("detailForm.bo")
+	public ModelAndView selectBoard(int no, ModelAndView mv) {
+		int result = bService.increaseCount(no);
+		
+		if(result > 0) {
+			Board b = bService.selectBoard(no);
+			
+			mv.addObject("b", b).setViewName("board/boardDetailForm");
+			
+		}else {
+			mv.addObject("errorMsg", "조회수 증가 실패").setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
 	
 	
 	@RequestMapping("delete.bo")
@@ -144,9 +185,10 @@ public class BoardController {
 
 		// 첨부파일
 		ArrayList<Attachment> atList = new ArrayList<>();
+		
+		
+		// 기존의 첨부파일이 있었을 경우 => 기존의 파일 지우기
 		if(originNames != null) {
-
-			// 기존의 첨부파일이 있었을 경우 => 기존의 파일 지우기
 			ArrayList<Attachment> aList = bService.selectAttList(b);
 			if(aList != null) {
 				for(Attachment att : aList) {
@@ -154,6 +196,7 @@ public class BoardController {
 					File deleteFile = new File(session.getServletContext().getRealPath(filePath));
 					deleteFile.delete();
 				}
+				
 				bService.deleteAttachment(b);
 			}
 
@@ -205,7 +248,7 @@ public class BoardController {
 	public String enrollAForm() {
 		return "board/boardAnonymEnroll";
 	}
-	
+	/*
 	@RequestMapping("insertA.bo")
 	public ModelAndView insertABoard(@RequestParam List<MultipartFile> originNames, Board b, Attachment a, HttpSession session, ModelAndView mv) {
 		
@@ -239,7 +282,9 @@ public class BoardController {
 		return mv;
 		
 	}
+	*/
 	
+	/*
 	@RequestMapping("detailAForm.bo")
 	public ModelAndView selectABoard(int no, HttpSession session, ModelAndView mv, Board b) {
 		
@@ -260,7 +305,7 @@ public class BoardController {
 		}
 		return mv;
 	}
-	
+	*/
 	
 	@RequestMapping("deleteA.bo")
 	public String deleteABoard(@RequestParam(value="no")int boardNo, HttpSession session, Model model, ArrayList<String> filePath) {
@@ -371,21 +416,19 @@ public class BoardController {
 	
 	@ResponseBody
 	@RequestMapping("rupdate.bo")
-	public String updateReply(int replyNo) {
-			
-		int result = bService.updateReply(replyNo);
+	public String updateReply(BoardReply r) {
+	
+		int result = bService.updateReply(r);
 			
 		return result > 0 ? "success" : "fail";
 			
 	}
 	
-	@RequestMapping("rupdateform.bo")
-	public String updateReplyForm(BoardReply r, Model model) {
-	    int result = bService.updateReplyForm(r);
-	    model.addAttribute("reply", reply);
-	    return "updateReplyForm";
-	}
-
+	/*
+	 * @RequestMapping("rupdateform.bo") public String updateReplyForm(BoardReply r,
+	 * Model model) { int result = bService.updateReplyForm(r);
+	 * model.addAttribute("reply", reply); return "updateReplyForm"; }
+	 */
 		
 	
 	
