@@ -342,7 +342,7 @@
 		 where rownum between 1 and 3
 	</select>
 	
-	<select id="seheduleSearchAtList" resultMap="scheduleResult2">
+	<select id="seheduleSearchList" resultMap="scheduleResult2">
 		select final.* , ee.emp_name "attendee_name"
 		  from (select
 					    s.sc_no
@@ -359,37 +359,15 @@
 					  , sc_allday
 		              , sa.emp_no
 				   from schedule s
-				   left join employee e on (s.sc_writer = e.emp_no)
-				   left join sc_attendee sa on (s.sc_no = sa.sc_no)
+				   full outer join employee e on (s.sc_writer = e.emp_no)
+				   full outer join sc_attendee sa on (s.sc_no = sa.sc_no)
 				  where sc_status = 'Y'
 				    and sc_title like '%' || #{keyword} || '%'
 				   	 or sc_content like '%' || #{keyword} || '%'
 				   	 or sc_place like '%' || #{keyword} || '%') final
-		  join employee ee on (final.emp_no = ee.emp_no)
-		  order by sc_no desc
+		  	full outer join employee ee on (final.emp_no = ee.emp_no)
+  			order by sc_no desc
 	</select>
 	
-	<select id="seheduleSearchList" resultMap="scheduleResult">
-		select
-			    sc_no
-			  , s.sc_writer
-			  , emp_name
-			  , cal_no
-			  , sc_title
-			  , sc_place
-			  , sc_content
-			  , start_date
-			  , end_date
-			  , start_time
-			  , end_time
-			  , sc_allday
-		   from schedule s
-           join employee e on (s.sc_writer = e.emp_no)
-		  where sc_status = 'Y'
-		    and sc_title like '%' || #{keyword} || '%'
-		   	 or sc_content like '%' || #{keyword} || '%'
-		   	 or sc_place like '%' || #{keyword} || '%'
-          order by sc_no desc
-	</select>
 	 
 </mapper>

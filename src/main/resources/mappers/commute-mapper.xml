@@ -331,5 +331,44 @@
                                        where emp_no = #{empNo})) - #{vacDays}
              )
 	</insert>
+	
+	<select id="selectVacRemaining" resultMap="vacResult">
+		     select vac_recode
+                  , emp_no
+                  , vac_days
+                  , enroll_date
+                  , vac_reason
+                  , vac_divide
+                  , vac_category
+                  , vac_remaining
+               from vac_recode
+             where emp_no = #{empNo}
+               and vac_recode = (select max(vac_recode)
+                                        from vac_recode
+                                       where emp_no = #{empNo})
+	</select>
+	
+	<select id="selectGVac" resultType="_int">
+		select NVL(sum(vac_days), 0) as "GV"
+		  from vac_recode
+		 where emp_no = #{empNo}
+		   and vac_category = 'GV'
+		   and vac_divide = 'PA'
+	</select>
+	
+	<select id="selectSVac" resultType="_int">
+		select NVL(sum(vac_days), 0) as "SV"
+		  from vac_recode
+		 where emp_no = #{empNo}
+		   and vac_category = 'SV'
+		   and vac_divide = 'PA'
+	</select>
+	
+	<select id="selectUseVac" resultType="_int">
+		select NVL(sum(vac_days), 0) as "useVac"
+		  from vac_recode
+		 where emp_no = #{empNo}
+		   and vac_divide = 'DE'
+	</select>
 
 </mapper>

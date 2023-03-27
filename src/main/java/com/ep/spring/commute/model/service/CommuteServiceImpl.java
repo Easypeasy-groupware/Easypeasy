@@ -160,6 +160,34 @@ public class CommuteServiceImpl implements CommuteService{
 		
 		return cDao.insertVacRecodeMinus(sqlSession, vr);
 	}
+
+	//잔여휴가 조회
+	@Override
+	public VacationRecode selectVacRemaining(int empNo) {
+		
+		return cDao.selectVacRemaining(sqlSession, empNo);
+	}
+
+	//일반휴가 조회
+	@Override
+	public int selectGVac(int empNo) {
+		
+		return cDao.selectGVac(sqlSession, empNo);
+	}
+
+	//특별휴가 조회
+	@Override
+	public int selectSVac(int empNo) {
+		
+		return cDao.selectSVac(sqlSession, empNo);
+	}
+
+	//사용한 휴가 갯수 조회
+	@Override
+	public int selectUseVac(int empNo) {
+
+		return cDao.selectUseVac(sqlSession, empNo);
+	}
 	
 	
 

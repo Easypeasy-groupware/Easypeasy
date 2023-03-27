@@ -16,7 +16,7 @@ public class Scheduler {
 	public void insertCommuteDay() {
 		// 평일 00시 정각마다 Commute에 insert
 		int result = cService.insertCommuteDay();
-		System.out.println(result+"근태등록성공");
+		//System.out.println(result+"근태등록성공");
 		
 	}
 	

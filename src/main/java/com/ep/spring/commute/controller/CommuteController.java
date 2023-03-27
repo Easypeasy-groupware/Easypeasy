@@ -58,15 +58,19 @@ public class CommuteController {
 				end = cService.countEnd(empNo);
 				
 				//휴가기록 및 잔여휴가 조회
-				ArrayList<VacationRecode> list1 = cService.selectVacMain(empNo);
+			
+				VacationRecode vr = cService.selectVacRemaining(empNo);
 				ArrayList<VacationForm> list2 = cService.selectVacForm(empNo);
+				
+				//System.out.println(list1);
+				
 				
 				mv.addObject("c", c)
 				  .addObject("tr", tr)
 				  .addObject("countLe", countLe)
 				  .addObject("ab", ab)
 				  .addObject("end", end)
-				  .addObject("list1", list1)
+				  .addObject("vr", vr)
 				  .addObject("list2", list2)
 				  .setViewName("commute/commuteMain");
 				return mv;
@@ -131,10 +135,8 @@ public class CommuteController {
 			String endTime = c.getEndTime();
 			// 문자열
 			String dateStr = endTime;
-				 
 			// 포맷터
 			SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-				 
 	        // 문자열 -> Date
 	        Date date = formatter.parse(dateStr);
 	        //System.out.println(date);
@@ -142,7 +144,7 @@ public class CommuteController {
 	        int M = date.getMinutes();
 	        //System.out.println(H);
 	        
-	        //18시00분 전에는 조퇴(comStatus = "LE")
+	        //18시00분 전에는 조퇴(LE_STATUS = "Y")
 	        if(H<18) {
 	        	c.setLeStatus("Y");
 	        }else {
@@ -159,6 +161,21 @@ public class CommuteController {
 		public String selectVacMain(HttpSession session) {
 			int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 			
+			//일반휴가, 특별휴가 갯수 조회
+			int GVac = cService.selectGVac(empNo);
+			int SVac = cService.selectSVac(empNo);
+			
+			session.setAttribute("GVac", GVac);
+			session.setAttribute("SVac", SVac);
+			
+			//해당사원이 사용한 휴가 갯수 조회
+			int useVac = cService.selectUseVac(empNo);
+			session.setAttribute("useVac", useVac);
+
+			VacationRecode vr = cService.selectVacRemaining(empNo);
+			session.setAttribute("vr", vr);
+			
+			//휴가 기록 조회
 			ArrayList<VacationRecode> list1 = cService.selectVacMain(empNo);
 			ArrayList<VacationForm> list2 = cService.selectVacForm(empNo);
 			
@@ -243,6 +260,7 @@ public class CommuteController {
 			int result = cService.updateTimeHR(c);
 			int empNo = c.getEmpNo();
 			
+			
 			if(result>0) {
 				AlertMsg msg = new AlertMsg("근무시간 수정", "근무시간 수정이 성공적으로 완료되었습니다.");
 				session.setAttribute("successMsg", msg);
@@ -288,6 +306,19 @@ public class CommuteController {
 			ArrayList<VacationRecode> list1 = cService.selectVacMain(empNo);
 			ArrayList<VacationForm> list2 = cService.selectVacForm(empNo);
 			Employee e = cService.selectEmployeeInformation(empNo);
+			//일반휴가, 특별휴가 갯수 조회
+			int GVac = cService.selectGVac(empNo);
+			int SVac = cService.selectSVac(empNo);
+			
+			session.setAttribute("GVac", GVac);
+			session.setAttribute("SVac", SVac);
+			
+			//해당사원이 사용한 휴가 갯수 조회
+			int useVac = cService.selectUseVac(empNo);
+			session.setAttribute("useVac", useVac);
+
+			VacationRecode vr = cService.selectVacRemaining(empNo);
+			session.setAttribute("vr", vr);
 			
 			session.setAttribute("clickEmp", e);
 			session.setAttribute("list1", list1);

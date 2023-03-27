@@ -390,15 +390,10 @@ public class ScheduleController {
 		//int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		//Schedule s = new Schedule();
 		
-		ArrayList<Schedule> atList = scService.seheduleSearchAtList(keyword);
 		ArrayList<Schedule> list = scService.seheduleSearchList(keyword);
 		
-		model.addAttribute("atList", atList);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("list", list);
-		
-		System.out.println(keyword);
-		System.out.println(atList);
 		
 		return "schedule/scheduleSearchView";
 	}

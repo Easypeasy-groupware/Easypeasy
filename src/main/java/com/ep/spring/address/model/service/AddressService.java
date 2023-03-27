@@ -121,8 +121,20 @@ public interface AddressService {
 	int selectAddressBinListCount(int empNo);
 	ArrayList<Address> selectAddressBinList(PageInfo pi, int empNo);
 	
-	// 26. 주소록 다중 영구삭제(ajax)
+	// 27. 주소록 다중 영구삭제(ajax)
 	int completeDeleteAddList(ArrayList<Address> list);
+	
+	// 28. 즐겨찾기 다중 영구삭제(ajax)
+	int deleteFavList(ArrayList<Address> list);
+	
+	// 29. 휴지통 주소록 다중 복구(ajax)
+	int restoreAddList(ArrayList<Address> list);
+	
+	// 30. 페이징처리 없는 전체 공유주소록 검색
+	ArrayList<Address> selectAllSharedAddress();
+	
+	// 31. 공용주소록 그룹 이름 수정(ajax)
+	int updateSharedGroupName(AddGroup ag);
 
 	
 

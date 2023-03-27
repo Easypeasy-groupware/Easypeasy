@@ -6,6 +6,7 @@
 		<id column="recep_mail_no" property="recMailNo" />
 		<result column="mail_no" property="mailNo" />
 		<result column="tag_no" property="tagNo" />
+		<result column="tag_name" property="tagName" />
 		<result column="tag_color" property="tagColor" />
 		<result column="recep_mail_address" property="recMailAdd" />
 		<result column="send_mail_address" property="sendMailAdd" />
@@ -601,17 +602,57 @@
 	<delete id="deleteFavorMailBox">
 		delete
 		  from mail_fav
-		 where empNo = #{ empNo }
+		 where emp_no = #{ empNo }
 		   and mailbox_name = #{ mailBoxName }
 	</delete>
 	
-	<!-- <select id="selectMailFavorList" resultMap="MailFavorResult">
+	<select id="selectMailFavorList" resultMap="MailFavorResult">
 		select
-			 , FAV_NO
+			   FAV_NO
 			 , EMP_NO
 			 , FAV_ORDER
 			 , MAILBOX_NAME
 		  from mail_fav
 		 where emp_no = #{ empNo }
-	</select> -->
+	</select>
+	
+	<select id="selectTaggingMailList" resultMap="MailResult">
+		select
+		       RECEP_MAIL_NO
+			 , s.MAIL_NO
+			 , t.TAG_NO
+             , tag_name
+			 , emp_name
+			 , r.recep_MAIL_ADDRESS
+			 , r.send_mail_address
+			 , s.MAIL_TITLE
+			 , s.MAIL_CONTENT
+			 , REC_CHECK
+			 , rec_date
+			 , sent_date
+			 , IMPOR_MAIL
+			 , JUNK_MAIL
+			 , RESER_MAIL
+			 , r.STATUS
+			 , REFERENCE
+			 , HIDDEN_REFERENCE
+	      from rec_mail r
+          join send_mail s on s.mail_no = r.mail_no
+          join employee e on r.recep_mail_address = email
+          join mail_tag t on t.tag_no = r.tag_no 
+	     where 
+			   t.tag_no = ${ tagNo }
+	     order
+	        by recep_mail_no desc
+	</select>
+	
+	<select id="selectTag" resultMap="TagResult">
+		select
+		       TAG_NO
+			 , EMP_NO
+			 , TAG_NAME
+			 , TAG_COLOR
+		  from mail_tag
+		 where tag_no = #{ tagNo }
+	</select>
 </mapper>

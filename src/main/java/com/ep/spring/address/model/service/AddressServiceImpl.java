@@ -249,7 +249,27 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	public int completeDeleteAddList(ArrayList<Address> list) {
-		return 0;
+		return aDao.completeDeleteAddList(sqlSession, list);
+	}
+
+	@Override
+	public int deleteFavList(ArrayList<Address> list) {
+		return aDao.deleteFavList(sqlSession, list);
+	}
+
+	@Override
+	public int restoreAddList(ArrayList<Address> list) {
+		return aDao.restoreAddList(sqlSession, list);
+	}
+
+	@Override
+	public ArrayList<Address> selectAllSharedAddress() {
+		return aDao.selectAllSharedAddress(sqlSession);
+	}
+
+	@Override
+	public int updateSharedGroupName(AddGroup ag) {
+		return aDao.updateSharedGroupName(sqlSession, ag);
 	}
 
 

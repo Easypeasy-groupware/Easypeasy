@@ -127,9 +127,5 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public ArrayList<Schedule> seheduleSearchList(String keyword) {
 		return scDao.seheduleSearchList(sqlSession, keyword);
 	}
-
-	@Override
-	public ArrayList<Schedule> seheduleSearchAtList(String keyword) {
-		return scDao.seheduleSearchList(sqlSession, keyword);
-	}
+	
 }

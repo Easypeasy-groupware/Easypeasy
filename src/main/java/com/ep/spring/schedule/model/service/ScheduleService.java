@@ -59,7 +59,6 @@ public interface ScheduleService {
 
 	// 검색
 	ArrayList<Schedule> seheduleSearchList(String keyword);
-	ArrayList<Schedule> seheduleSearchAtList(String keyword);
 	
 
 }

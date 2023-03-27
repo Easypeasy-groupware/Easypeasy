@@ -175,6 +175,23 @@ public class ApprovalController {
 		return "approval/appSendListView";
 	}
 	
+	@RequestMapping("statusList.ap")
+	public String selectSendLists(@RequestParam(value="cpage", defaultValue="1") int currentPage, Approval a, HttpSession session, Model model) {
+		
+		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
+		if(a.getListType().equals("s")) {
+			a.setWriterNo(eNo);
+			return "";
+		}else {
+			return "";
+		}
+		
+		
+		
+		
+	}
+	
 	@RequestMapping("tempList.ap")
 	public String selectTempList(@RequestParam(value="cpage", defaultValue="1")int currentPage, HttpSession session, Model model) {
 		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
@@ -731,6 +748,30 @@ public class ApprovalController {
 		}
 		
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="search.ap", produces="application/json; charset=UTF-8")
+	public String selectSearchList(Approval a, @RequestParam(value="cpage", defaultValue="1") int currentPage, Model model, HttpSession session) {
+		
+		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		a.setWriterNo(eNo);
+		int listCount = aService.selectSearchListCount(a);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Approval> sList = aService.selectSearchList(a, pi);
+		
+		System.out.println(a);
+		System.out.println(listCount);
+		System.out.println(sList);
+		System.out.println(pi);
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("sList", sList);
+		map.put("spi", pi);
+		map.put("sListCount", listCount);
+		map.put("a", a);
+		return new Gson().toJson(map);
+	}
+			
 	
 
 	
