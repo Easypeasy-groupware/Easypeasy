@@ -9,10 +9,10 @@
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 <style>
 	*{padding:0; margin:0}
-	.menubar{width:200px; height:1000px; background:white; float:left; border-right:1px solid rgb(185, 187, 221); margin-right:20px;}
-	.menubar a{text-decoration:none; font-size:14px; color:black;}
-	.menubar a:hover{text-decoration:none; font-weight:600; color:black;}
-	.menubar li{list-style:none;}
+	.add-menubar{width:200px; height:1000px; background:white; float:left; border-right:1px solid rgb(185, 187, 221); margin-right:20px;}
+	.add-menubar a{text-decoration:none; font-size:14px; color:black;}
+	.add-menubar a:hover{text-decoration:none; font-weight:600; color:black;}
+	.add-menubar li{list-style:none;}
 	
 	/*메뉴이름*/
 	.menu-title{margin:20px 0 20px 0; text-align:center;}
@@ -69,7 +69,7 @@
 </head>
 <body>
 	
-    <div class="menubar">
+    <div class="add-menubar">
 
         <div class="menu-title">
             <a href="favorite.add" id="title" class="menu-a"><img src="resources/common_images/phone-book.png" style="width:20px;"> 주소록</a>

@@ -45,7 +45,7 @@
     #select_tag_color>div{width: 15px; height: 15px; margin: 4px; float: left; background-color: brown;}
 
     .favorite{width: 16px;}
-    .trashmailbox{width: 200px;}
+    .trashmailbox{width: 185px;}
     .trashmailbox>div{width: 140px; float: left; margin: 5px 0px 0px 15px; padding: 5px 0px 5px 0px; font-size: 14px;}
     #spambox, #trashcan{width: 125px; float: left;}
     #spambox+button, #trashcan+button{width: 40px; font-size: 10px; padding: 4px; margin-top: 10px;}
@@ -71,7 +71,7 @@
                 <c:if test="${ not empty mailFavorList }">
                     <c:forEach var="mf" items="${ mailFavorList }">
                         <div class="boxListOne">
-                            <div id="recMailbox" class="mailbox">${ mf.mailBoxName }</div><img class="unFavorite" src="resources/common_images/favorite.png">
+                            <div class="mailbox">${ mf.mailBoxName }</div><img class="unFavorite Box" src="resources/common_images/favorite.png">
                         </div>
                     </c:forEach>
                 </c:if>
@@ -171,38 +171,38 @@
             <br><br>
             <div class="boxList normal">
                 <div class="boxListOne">
-                    <div id="recMailbox" class="mailbox">받은 메일함(전체)</div><img class="unFavorite" src="resources/common_images/unFavorite.png">
+                    <div id="recMailbox" class="mailbox">받은 메일함(전체)</div><img class="unFavorite uBox" src="resources/common_images/unFavorite.png">
                 </div>
                 <div class="boxListOne">
-                    <div class="mailbox" id="today_box">오늘 온 메일함</div><img class="unFavorite" src="resources/common_images/unFavorite.png">
+                    <div class="mailbox" id="today_box">오늘 온 메일함</div><img class="unFavorite uBox" src="resources/common_images/unFavorite.png">
                 </div>
                 <div class="boxListOne">
-                    <div class="mailbox" id="tome_box">내게 쓴 메일함</div><img class="unFavorite" src="resources/common_images/unFavorite.png">
+                    <div class="mailbox" id="tome_box">내게 쓴 메일함</div><img class="unFavorite uBox" src="resources/common_images/unFavorite.png">
                 </div>
                 <div class="boxListOne">
-                    <div class="mailbox" id="attach_box">첨부파일 메일함</div><img class="unFavorite" src="resources/common_images/unFavorite.png">
+                    <div class="mailbox" id="attach_box">첨부파일 메일함</div><img class="unFavorite uBox" src="resources/common_images/unFavorite.png">
                 </div>
                 <div class="boxListOne">
-                    <div class="mailbox" id="send_box">보낸 메일함</div><img class="unFavorite" src="resources/common_images/unFavorite.png">
+                    <div class="mailbox" id="send_box">보낸 메일함</div><img class="unFavorite uBox" src="resources/common_images/unFavorite.png">
                 </div>
                 <div class="boxListOne">
-                    <div class="mailbox" id="unread_box">안읽은 메일함</div><img class="unFavorite" src="resources/common_images/unFavorite.png">
+                    <div class="mailbox" id="unread_box">안읽은 메일함</div><img class="unFavorite uBox" src="resources/common_images/unFavorite.png">
                 </div>
                 <div class="boxListOne">
-                    <div class="mailbox" id="impor_box">중요 메일함</div><img class="unFavorite" src="resources/common_images/unFavorite.png">
+                    <div class="mailbox" id="impor_box">중요 메일함</div><img class="unFavorite uBox" src="resources/common_images/unFavorite.png">
                 </div>
                 <div class="boxListOne">
-                    <div class="mailbox" id="temp_box">작성중인 메일함</div><img class="unFavorite" src="resources/common_images/unFavorite.png">
+                    <div class="mailbox" id="temp_box">작성중인 메일함</div><img class="unFavorite uBox" src="resources/common_images/unFavorite.png">
                 </div>
                 <div class="boxListOne">
-                    <div class="mailbox" id="reservation_box">예약 메일함</div><img class="unFavorite" src="resources/common_images/unFavorite.png">
+                    <div class="mailbox" id="reservation_box">예약 메일함</div><img class="unFavorite uBox" src="resources/common_images/unFavorite.png">
                 </div>
                 <div class="trashmailbox">
-                    <div class="mailbox" id="spambox">스팸 메일함 </div>
+                    <div class="mailbox" id="spambox">스팸 메일함</div>
                     <button id="spam_completeDel" class="btn btn-outline-secondary btn-sm">비우기</button>
                 </div>
                 <div class="trashmailbox">
-                    <div class="mailbox" id="trashcan">휴지통 </div>
+                    <div class="mailbox" id="trashcan">휴지통</div>
                     <button id="trashcan_completeDel" class="btn btn-outline-secondary btn-sm">비우기</button>
                 </div>
             </div>
@@ -212,54 +212,33 @@
 
     <script>
         // 받은 메일함 이동
-        document.getElementById("recMailbox").addEventListener("click", function(){
-            location.href="list.ma";
-        });
-
-        // 오늘 온 메일함
-        document.getElementById("today_box").addEventListener("click", function(){
-            location.href="todayList.ma";
-        });
-
-        // 내게 쓴 메일함
-        document.getElementById("tome_box").addEventListener("click", function(){
-            location.href="tomeList.ma";
-        });
-
-        // 첨부파일 메일함
-        document.getElementById("attach_box").addEventListener("click", function(){
-            location.href="attachList.ma";
-        });
-
-        // 예약 메일함
-        document.getElementById("reservation_box").addEventListener("click", function(){
-            location.href="reservationList.ma";
-        });
-
-        // 중요 메일함
-        document.getElementById("impor_box").addEventListener("click", function(){
-            location.href="imporList.ma";
-        });
-
-        // 안읽은 메일함
-        document.getElementById("unread_box").addEventListener("click", function(){
-            location.href="unreadList.ma";
-        });
-
-        // 작성중인 메일함
-        document.getElementById("temp_box").addEventListener("click", function(){
-            location.href="tempList.ma";
-        });
-
-        // 보낸 메일함
-        document.getElementById("send_box").addEventListener("click", function(){
-            location.href="sendList.ma";
-        });
-
-        // 스팸 메일함 이동
-        document.getElementById("spambox").addEventListener("click", function(){
-            location.href="spamList.ma";
-        });
+        document.querySelectorAll(".mailbox").forEach(function(selectBox){
+            selectBox.addEventListener("click", function(){
+                if(this.innerText == "받은 메일함(전체)"){
+                    location.href="list.ma";
+                }else if(this.innerText == "오늘 온 메일함"){
+                    location.href="todayList.ma";
+                }else if(this.innerText == "내게 쓴 메일함"){
+                    location.href="tomeList.ma";
+                }else if(this.innerText == "첨부파일 메일함"){
+                    location.href="attachList.ma";
+                }else if(this.innerText == "보낸 메일함"){
+                    location.href="sendList.ma";
+                }else if(this.innerText == "안읽은 메일함"){
+                    location.href="unreadList.ma";
+                }else if(this.innerText == "중요 메일함"){
+                    location.href="imporList.ma";
+                }else if(this.innerText == "작성중인 메일함"){
+                    location.href="tempList.ma";
+                }else if(this.innerText == "예약 메일함"){
+                    location.href="reservationList.ma";
+                }else if(this.innerText == "스팸 메일함"){
+                    location.href="spamList.ma";
+                }else if(this.innerText == "휴지통"){
+                    location.href="deleteList.ma";
+                }
+            })
+        })
 
         // 스팸 메일함 비우기
         document.getElementById("spam_completeDel").addEventListener("click", function(){
@@ -283,11 +262,6 @@
                     form.submit();
                 }
             });
-        });
-
-        // 휴지통 이동
-        document.getElementById("trashcan").addEventListener("click", function(){
-            location.href="deleteList.ma";
         });
 
         // 휴지통 비우기
@@ -316,21 +290,23 @@
         });
 
         // 즐겨찾기 등록
-        document.querySelectorAll(".unFavorite").forEach(function(favor){
+        document.querySelectorAll(".uBox").forEach(function(favor){
             favor.addEventListener('click', function(){
                 const favorBox = document.getElementsByClassName("boxList favor");
                 const mailBoxName = this.previousSibling.innerText;
+                const src = $(this);
+                console.log(src)
                 let box = this.parentNode;
-
                 $.ajax({
                     url: "enrollFavorMailBox.ma",
                     type: "POST",
                     data: {mailBoxName: mailBoxName},
                     success: function(result){
                         if(result == '1'){
-                            if($(this).attr("src") == "resources/common_images/unFavorite.png"){
-                                $(this).attr("src", "resources/common_images/favorite.png");
-                                $(this).attr("class", "favorite");
+                            if(src == "resources/common_images/unFavorite.png"){
+                                    consoel.log("as")
+                                src.attr("src", "resources/common_images/favorite.png");
+                                src.attr("class", "favorite fBox");
                                 favorBox[0].append(box)
                             }
                         }
@@ -341,28 +317,28 @@
             })
         })
 
-        document.querySelectorAll(".favorite").forEach(function(favor){
+        document.querySelectorAll(".fBox").forEach(function(favor){
             favor.addEventListener('click', function(){
                 const normalBox = document.getElementsByClassName("boxList normal");
                 const mailBoxName = this.previousSibling.innerText;
                 let box = this.parentNode;
+                console.log(box)
+                // $.ajax({
+                //     url: "deleteFavorMailBox.ma",
+                //     type: "POST",
+                //     data: {mailBoxName: mailBoxName},
+                //     success: function(result){
+                //         if(result == '1'){
+                //             if($(this).attr("src") == "resources/common_images/favorite.png"){
+                //                 $(this).attr("src", "resources/common_images/unFavorite.png");
+                //                 $(this).attr("class", "unFavorite uBox");
+                //                 normalBox[0].append(box)
+                //             }
+                //         }
+                //     }, error: function(){
 
-                $.ajax({
-                    url: "deleteFavorMailBox.ma",
-                    type: "POST",
-                    data: {mailBoxName: mailBoxName},
-                    success: function(result){
-                        if(result == '1'){
-                            if($(this).attr("src") == "resources/common_images/favorite.png"){
-                                $(this).attr("src", "resources/common_images/unFavorite.png");
-                                $(this).attr("class", "unFavorite");
-                                normalBox[0].append(box)
-                            }
-                        }
-                    }, error: function(){
-
-                    }
-                })
+                //     }
+                // })
             })
         })
 

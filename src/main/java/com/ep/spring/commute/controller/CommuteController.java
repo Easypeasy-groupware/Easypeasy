@@ -163,6 +163,14 @@ public class CommuteController {
 		public String selectVacMain(HttpSession session) {
 			int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 			
+			//일반휴가, 특별휴가 갯수 조회
+			int GVac = cService.selectGVac(empNo);
+			int SVac = cService.selectSVac(empNo);
+			
+			session.setAttribute("GVac", GVac);
+			session.setAttribute("SVac", SVac);
+			
+			//휴가 기록 조회
 			ArrayList<VacationRecode> list1 = cService.selectVacMain(empNo);
 			ArrayList<VacationForm> list2 = cService.selectVacForm(empNo);
 			

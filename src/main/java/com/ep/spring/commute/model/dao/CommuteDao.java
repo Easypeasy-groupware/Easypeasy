@@ -120,6 +120,14 @@ public class CommuteDao {
 	public VacationRecode selectVacRemaining(SqlSessionTemplate sqlSession, int empNo) {
 		return sqlSession.selectOne("commuteMapper.selectVacRemaining", empNo);
 	}
+	
+	public int selectGVac(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("commuteMapper.selectGVac", empNo);
+	}
+	
+	public int selectSVac(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("commuteMapper.selectSVac", empNo);
+	}
 
 
 }
