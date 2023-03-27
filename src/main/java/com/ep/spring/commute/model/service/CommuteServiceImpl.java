@@ -160,6 +160,12 @@ public class CommuteServiceImpl implements CommuteService{
 		
 		return cDao.insertVacRecodeMinus(sqlSession, vr);
 	}
+
+	@Override
+	public VacationRecode selectVacRemaining(int empNo) {
+		
+		return cDao.selectVacRemaining(sqlSession, empNo);
+	}
 	
 	
 

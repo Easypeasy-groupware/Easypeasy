@@ -331,5 +331,21 @@
                                        where emp_no = #{empNo})) - #{vacDays}
              )
 	</insert>
+	
+	<select id="selectVacRemaining" resultMap="vacResult">
+		     select vac_recode
+                  , emp_no
+                  , vac_days
+                  , enroll_date
+                  , vac_reason
+                  , vac_divide
+                  , vac_category
+                  , vac_remaining
+               from vac_recode
+             where emp_no = #{empNo}
+               and vac_recode = (select max(vac_recode)
+                                        from vac_recode
+                                       where emp_no = #{empNo})
+	</select>
 
 </mapper>
