@@ -86,6 +86,7 @@
 		  from employee e
 		  join department d on (e.dept_code = d.dept_code)
           join job j on (e.job_code = j.job_code)
+         where ent_yn = 'N'
 		 order
 	        by emp_no desc
 	</select>
@@ -161,7 +162,7 @@
 	<delete id="deleteMember">
 		delete 
 		  from employee
-		 where ent_yn ='Y' 
+		 where ent_yn ='Y'
 	</delete>
 	
 	 <select id="selectSettingForm" resultMap="departmentResult">

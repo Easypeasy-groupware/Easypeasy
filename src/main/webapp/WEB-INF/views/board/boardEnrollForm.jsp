@@ -92,7 +92,7 @@
               </form>
         </div>
 	</div>
-	
+	<!-- 
         <script>
      	// 첨부파일 업로드 하기
        let fileNames = [];
@@ -156,6 +156,6 @@
         });
         
         </script>
-	
+	 -->
 </body>
 </html>

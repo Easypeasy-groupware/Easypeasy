@@ -128,14 +128,14 @@
 				$(function(){
 					$("#board-notice").click(function(){
 						$(this).css("border-bottom", "4px solid rgb(166, 184, 145)").css("font-weight", 600);
-						$("#board-dept").css("border-bottom", "2px solid lightgray").css("font-weight", 400);
+						$("#board-all").css("border-bottom", "2px solid lightgray").css("font-weight", 400);
 						$("#notice-tb").show();
-						$("#dept-tb").hide();
+						$("#free-tb").hide();
 					})
-					$("#board-dept").click(function(){
+					$("#board-all").click(function(){
 						$(this).css("border-bottom", "4px solid rgb(166, 184, 145)").css("font-weight", 600);
 						$("#board-notice").css("border-bottom", "2px solid lightgray").css("font-weight", 400);
-						$("#dept-tb").show();
+						$("#free-tb").show();
 						$("#notice-tb").hide();
 					})
 				})
@@ -148,15 +148,15 @@
             		$.ajax({
             			url:"topList.bo",
             			success:function(list){
-            				console.log(list[0].BoardTitle);
+            				console.log(list[0].boardTitle);
             				
             				let value = "";
             				for(let i=0; i<list.length; i++){
             					let b = list[i]; 
             					value += "<tr>"
-            							+	"<td>" + list[i].BoardTitle + "</td>"
-            							+	"<td>" + list[i].BoardWriter + "</td>"
-            							+	"<td>" + list[i].CreateDate + "</td>"
+            							+	"<td>" + list[i].boardTitle + "</td>"
+            							+	"<td>" + list[i].boardWriter + "</td>"
+            							+	"<td>" + list[i].createDate + "</td>"
             							+ "</tr>"; 
             				}
             				
@@ -167,20 +167,21 @@
             			}
             		})
             	}
-			/* 
-				function topFreeList(){
+				
+			
+			/* 	function topFreeList(){
             		$.ajax({
             			url:"topFree.bo",
             			success:function(result){
             				console.log(result);
             				
             				let value = "";
-            				for(let i=0; j<list.length; j++){
+            				for(let j=0; j<list.length; j++){
             					let b = list[j]; 
             					value += "<tr>"
-            							+	"<td>" + list[j].BoardTitle + "</td>"
+            							+	"<td>" + list[j].boardTitle + "</td>"
             							+	"<td>" + "익명" + "</td>"
-            							+	"<td>" + list[j].CreateDate + "</td>"
+            							+	"<td>" + list[j].createDate + "</td>"
             							+   "</tr>"; 
             				}
             				
@@ -190,8 +191,8 @@
             				console.log("top5 자유게시글 조회용 ajax 통신 실패");
             			}
             		})
-            	}
-				  */
+            	} */
+				  
 			</script>	
 			
 			<div class="document">

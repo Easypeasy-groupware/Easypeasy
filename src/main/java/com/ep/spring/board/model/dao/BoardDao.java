@@ -73,10 +73,11 @@ public class BoardDao {
 		return sqlSession.selectOne("boardMapper.selectBoard", boardNo);
 	}
 	
-	
+	/*
 	public ArrayList<Attachment> selectAttachmentList(SqlSessionTemplate sqlSession, Board b){ 
 		return (ArrayList)sqlSession.selectList("boardMapper.selectAttachmentList", b); 
 	}
+	*/
 	
 	public int increaseACount(SqlSessionTemplate sqlSession, int no) {
 		return sqlSession.update("boardMapper.increaseCount", no);
@@ -85,11 +86,11 @@ public class BoardDao {
 	public Board selectABoard(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.selectOne("boardMapper.selectBoard", b);
 	}
-	
+	/*
 	public ArrayList<Attachment> selectAnAttachmentList(SqlSessionTemplate sqlSession, Board b){ 
 		return (ArrayList)sqlSession.selectList("boardMapper.selectAttachmentList", b); 
 	}
-	
+	*/
 	public int deleteBoard(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.update("boardMapper.deleteBoard", boardNo);
 	}
@@ -97,15 +98,15 @@ public class BoardDao {
 	public int deleteABoard(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.update("boardMapper.deleteBoard", boardNo);
 	}
-	
+	/*
 	public ArrayList<Attachment> selectAttList(SqlSessionTemplate sqlSession, Board b){
 		return (ArrayList)sqlSession.selectList("boardMapper.selectAttList", b);
 	}
-	
+	*/
 	public int updateBoard(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.update("boardMapper.updateBoard", b);
 	}
-	
+	/*
 	public int updateAttachment(SqlSessionTemplate sqlSession, ArrayList<Attachment> atList) {
 		int result = 0;
 		for(Attachment at : atList) {
@@ -122,11 +123,12 @@ public class BoardDao {
 	public ArrayList<Attachment> selectAnonAttList(SqlSessionTemplate sqlSession, Board b){
 		return (ArrayList)sqlSession.selectList("boardMapper.selectAttList", b);
 	}
+	*/
 	
 	public int updateABoard(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.update("boardMapper.updateBoard", b);
 	}
-	
+	/*
 	public int updateAnonAttachment(SqlSessionTemplate sqlSession, ArrayList<Attachment> atList) {
 		int result = 0;
 		for(Attachment at : atList) {
@@ -138,7 +140,7 @@ public class BoardDao {
 	public int deleteAnonAttachment(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.delete("boardMapper.deleteAttachment", b);
 	}
-	
+	*/
 	
 	public ArrayList<BoardReply> selectReplyList(SqlSessionTemplate sqlSession, int boardNo){
 		return (ArrayList)sqlSession.selectList("boardMapper.selectReplyList", boardNo);	

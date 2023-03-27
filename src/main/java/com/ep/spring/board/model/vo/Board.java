@@ -11,18 +11,18 @@ import lombok.ToString;
 @ToString
 public class Board {
 
-	private int BoardNo;
-	private int BoardCno;
-	private String BoardTitle;
-	private String BoardContent;
-	private int BoardWriter;
-	private int BoardCount;
-	private String CreateDate;
-	private String ModifyDate;
-	private String DeleteStatus;
-	private String BoardPin;
-	private String OriginName;
-	private String ChangeName;
+	private int boardNo;
+	private int boardCno;
+	private String boardTitle;
+	private String boardContent;
+	private int boardWriter;
+	private int boardCount;
+	private String createDate;
+	private String modifyDate;
+	private String deleteStatus;
+	private String boardPin;
+	private String originName;
+	private String changeName;
 	
 	
 }

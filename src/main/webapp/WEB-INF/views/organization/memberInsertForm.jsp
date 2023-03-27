@@ -63,8 +63,8 @@
 			<div class="container">
 				<form action="insert.org" method="POST" id="enrollForm">
 					<br>
-			        <label for="empNo">*사원번호:</label>
-			            <input type="text" id="empNo" name="empNo" required><br />
+			        <!-- <label for="empNo">*사원번호:</label> -->
+			            <input type="hidden" id="empNo" name="empNo" value="" required><br />
 			            <div id="checkResult" style="font-size:0.8em; display:none"></div>
 			            <br>
 			        <label for="userId">*아이디:</label>
@@ -97,7 +97,7 @@
 					<label>연락처</label>
 					    <input type="text" id="phone" name="phone" >
 					<label>이메일</label>
-					    <input type="email" id="email" name="email">
+					    <input type="email" id="email" name="email" required>
 			        
 			         <label for="address">주소:</label>
 			            <input type="text" id="address" name="address"></input><br/>

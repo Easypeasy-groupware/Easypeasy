@@ -87,7 +87,7 @@ public class BoardController {
 	}
 	*/
 	@RequestMapping("insert.bo")
-	public ModelAndView insertBoard(Board b, MultipartFile upfile, HttpSession session, ModelAndView mv) {
+	public String insertBoard(Board b, MultipartFile upfile, HttpSession session, Model model) {
 		
 		if(!upfile.getOriginalFilename().equals("")) {
 			
@@ -100,14 +100,12 @@ public class BoardController {
 		int result = bService.insertBoard(b);
 		
 		if(result > 0) { 
-			AlertMsg msg = new AlertMsg("게시글 등록", "성공적으로 게시글이 등록되었습니다.");
-			mv.addObject("successMsg", msg);
+			session.setAttribute("alertMsg", "성공적으로 게시글이 등록되었습니다.");
+			return "redirect:list.bo";
 		}else { 
-			AlertMsg msg = new AlertMsg("게시글 등록", "게시글 등록 실패");
-			mv.addObject("successMsg", msg);
+			return "redirect:list.bo";
 		}
-		mv.setViewName("redirect:list.bo");
-		return mv;
+		
 	}
 	
 	/*	
@@ -139,17 +137,16 @@ public class BoardController {
 		
 		if(result > 0) {
 			Board b = bService.selectBoard(no);
-			
+			//System.out.println(b);
 			mv.addObject("b", b).setViewName("board/boardDetailForm");
-			
+	
 		}else {
 			mv.addObject("errorMsg", "조회수 증가 실패").setViewName("common/errorPage");
 		}
 		return mv;
 	}
 	
-	
-	
+	/*
 	@RequestMapping("delete.bo")
 	public String deleteBoard(@RequestParam(value="no")int boardNo, HttpSession session, Model model, ArrayList<String> filePath) {
 		
@@ -170,13 +167,33 @@ public class BoardController {
 		}
 		
 	}
+	*/
 	
-	
+	@RequestMapping("delete.bo")
+	public String deleteBoard(int no, String filePath, HttpSession session, Model model) {
+		int result = bService.deleteBoard(no);
+		
+		if(result > 0) {	
+			
+			if(!filePath.equals("")) {
+				new File(session.getServletContext().getRealPath(filePath)).delete(); 
+			}
+			session.setAttribute("alertMsg", "성공적으로 게시글이 삭제되었습니다."); 
+			return "redirect:list.bo";
+			
+		}else {	
+			model.addAttribute("errorMsg", "게시글 삭제 실패");
+			return "common/errorPage";
+		}
+	}
+		
 	@RequestMapping("updateForm.bo")
-	 public String updateForm() {
-	   return "board/boardUpdateForm"; 
+	 public String updateForm(int no, Model model) {
+		model.addAttribute("b", bService.selectBoard(no));
+		
+		return "board/boardUpdateForm"; 
 	 }
-	
+	/*
 	@RequestMapping("update.bo")
 	public String updateBoard(@RequestParam("no") int boardNo, Board b, HttpSession session, Model model, @RequestParam(value="originNames", required=false) List<MultipartFile> originNames) {
 
@@ -228,6 +245,33 @@ public class BoardController {
 			return "common/errorPage";
 		}
 	}
+	*/
+	
+	@RequestMapping("update.bo")
+	public String updateBoard(Board b, MultipartFile reupfile, HttpSession session, Model model) {
+		
+		if(!reupfile.getOriginalFilename().equals("")) {  
+			
+			if(b.getOriginName() != null) {
+				new File(session.getServletContext().getRealPath(b.getChangeName())).delete(); 
+			}
+			
+			String saveFilePath = FileUpload.saveFile(reupfile, session, "resources/board_attachFiles/");
+			
+			b.setOriginName(reupfile.getOriginalFilename());
+			b.setChangeName(saveFilePath);
+		}
+		int result = bService.updateBoard(b);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다."); 
+			return "redirect:detailForm.bo?no=" + b.getBoardNo();	
+		}else {
+			model.addAttribute("errorMsg", "게시글 수정 실패");
+			return "common/errorPage";
+		}
+	}
+
 
 	// 익명
 	
@@ -333,7 +377,7 @@ public class BoardController {
 	 public String updateAForm() {
 	   return "board/boardAnonymUpdate"; 
 	 }
-	
+	/*
 	@RequestMapping("updateA.bo")
 	public String updateABoard(@RequestParam("no") int no, Board b, HttpSession session, Model model, @RequestParam(value="originNames", required=false) List<MultipartFile> originNames) {
 
@@ -383,7 +427,7 @@ public class BoardController {
 			return "redirect:free.bo";
 		}
 	}
-	
+	*/
 	
 	
 	// 댓글 ajax
