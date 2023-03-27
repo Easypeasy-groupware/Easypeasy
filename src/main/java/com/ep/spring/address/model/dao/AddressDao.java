@@ -226,6 +226,18 @@ public class AddressDao {
 		return sqlSession.update("addressMapper.updatePsGroupName", ag);
 	}
 
+	public int selectAddressBinListCount(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("addressMapper.selectAddressBinListCount", empNo);
+	}
+
+	public ArrayList<Address> selectAddressBinList(SqlSessionTemplate sqlSession, PageInfo pi, int empNo) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		return (ArrayList) sqlSession.selectList("addressMapper.selectAddressBinList", empNo, rowBounds);
+	}
+
 
 
 

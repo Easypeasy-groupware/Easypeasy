@@ -833,7 +833,46 @@
 		   set group_name = #{groupName}
 		 where group_no = #{groupNo}
 	</update>
-
+	
+	<select id="selectAddressBinListCount" resultType="_int">
+		select
+		       count(*)
+		  from address
+		 where emp_no = #{empNo}
+		   and add_type = 'P'
+		   and add_bin = 'Y'
+		
+	</select>
+	
+	<select id="selectAddressBinList" resultMap="addressResult">
+		select
+		       ADD_NO
+		     , a.EMP_NO
+		     , a.ADD_TYPE
+		     , ADD_NAME
+		     , EMAIL
+		     , PHONE
+		     , ADD_EMP
+		     , ADD_DEPT
+		     , ADD_JOB
+		     , a.GROUP_NO
+		     , GROUP_NAME
+		     , EMP_PHONE
+		     , EMP_ADDRESS
+		     , MEMO
+		     , CREATE_DATE
+		     , MODIFY_DATE
+		     , DELETE_DATE
+		     , ADD_BIN
+		     , EDITABLE
+		 from address a
+         left join add_group g on (a.group_no = g.group_no)
+		 where a.emp_no = #{empNo}
+		   and a.add_type = 'P'
+		   and add_bin = 'Y'
+		 order
+		    by DELETE_DATE desc
+	</select>
 
 
 </mapper>

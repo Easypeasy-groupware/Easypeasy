@@ -237,6 +237,21 @@ public class AddressServiceImpl implements AddressService {
 		return aDao.updatePsGroupName(sqlSession, ag);
 	}
 
+	@Override
+	public int selectAddressBinListCount(int empNo) {
+		return aDao.selectAddressBinListCount(sqlSession, empNo);
+	}
+
+	@Override
+	public ArrayList<Address> selectAddressBinList(PageInfo pi, int empNo) {
+		return aDao.selectAddressBinList(sqlSession, pi, empNo);
+	}
+
+	@Override
+	public int completeDeleteAddList(ArrayList<Address> list) {
+		return 0;
+	}
+
 
 
 
