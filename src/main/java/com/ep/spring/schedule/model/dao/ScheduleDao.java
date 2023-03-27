@@ -115,8 +115,5 @@ public class ScheduleDao {
 		return (ArrayList)sqlSession.selectList("scheduleMapper.seheduleSearchList", keyword);
 	}
 	
-	public ArrayList<Schedule> seheduleSearchAtList(SqlSessionTemplate sqlSession, String keyword) {
-		return (ArrayList)sqlSession.selectList("scheduleMapper.seheduleSearchAtList", keyword);
-	}
 }
 

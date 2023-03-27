@@ -81,7 +81,6 @@
             </thead>
             <tbody>
             
-            	
             	<c:forEach var="s" items="${ list }">
 	            	<c:if test="${ s.scWriter eq loginUser.empNo }">
 	            		<tr>
