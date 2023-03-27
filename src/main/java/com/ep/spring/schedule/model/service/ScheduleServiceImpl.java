@@ -122,4 +122,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public ArrayList<Schedule> scheduleTopList(int empNo) {
 		return scDao.scheduleTopList(sqlSession, empNo);
 	}
+
+	@Override
+	public ArrayList<Schedule> seheduleSearchList(String keyword) {
+		return scDao.seheduleSearchList(sqlSession, keyword);
+	}
+
+	@Override
+	public ArrayList<Schedule> seheduleSearchAtList(String keyword) {
+		return scDao.seheduleSearchList(sqlSession, keyword);
+	}
 }

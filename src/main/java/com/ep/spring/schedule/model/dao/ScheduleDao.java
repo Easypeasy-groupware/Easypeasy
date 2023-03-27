@@ -110,5 +110,13 @@ public class ScheduleDao {
 	public ArrayList<Schedule> scheduleTopList(SqlSessionTemplate sqlSession, int empNo) {
 		return (ArrayList)sqlSession.selectList("scheduleMapper.scheduleTopList", empNo);
 	}
+	
+	public ArrayList<Schedule> seheduleSearchList(SqlSessionTemplate sqlSession, String keyword) {
+		return (ArrayList)sqlSession.selectList("scheduleMapper.seheduleSearchList", keyword);
+	}
+	
+	public ArrayList<Schedule> seheduleSearchAtList(SqlSessionTemplate sqlSession, String keyword) {
+		return (ArrayList)sqlSession.selectList("scheduleMapper.seheduleSearchAtList", keyword);
+	}
 }
 

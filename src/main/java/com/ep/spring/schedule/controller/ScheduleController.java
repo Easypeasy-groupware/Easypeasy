@@ -8,9 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ep.spring.common.model.vo.AlertMsg;
+import com.ep.spring.common.model.vo.PageInfo;
+import com.ep.spring.common.template.Pagination;
+import com.ep.spring.dataBoard.model.vo.DataBoard;
 import com.ep.spring.login.model.vo.Department;
 import com.ep.spring.login.model.vo.Employee;
 import com.ep.spring.login.model.vo.Job;
@@ -378,6 +382,25 @@ public class ScheduleController {
 		
 		return new Gson().toJson(scList);
 		
+	}
+	
+	@RequestMapping("search.sc")
+	public String seheduleSearchList(String keyword, Model model, HttpSession session) {
+		
+		//int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		//Schedule s = new Schedule();
+		
+		ArrayList<Schedule> atList = scService.seheduleSearchAtList(keyword);
+		ArrayList<Schedule> list = scService.seheduleSearchList(keyword);
+		
+		model.addAttribute("atList", atList);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("list", list);
+		
+		System.out.println(keyword);
+		System.out.println(atList);
+		
+		return "schedule/scheduleSearchView";
 	}
 
 }

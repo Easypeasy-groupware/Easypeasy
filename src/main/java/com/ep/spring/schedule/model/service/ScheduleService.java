@@ -56,6 +56,10 @@ public interface ScheduleService {
 
 	// 메인페이지 일정top3 조회
 	ArrayList<Schedule> scheduleTopList(int empNo);
+
+	// 검색
+	ArrayList<Schedule> seheduleSearchList(String keyword);
+	ArrayList<Schedule> seheduleSearchAtList(String keyword);
 	
 
 }

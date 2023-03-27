@@ -110,9 +110,9 @@
                 <span>
                     <h5>일정 목록</h5>
                 </span>
-                <form action="">
+                <form action="search.sc">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="검색어를 입력해주세요" required>
+                        <input type="text" name="keyword" value="${ keyword }" class="form-control" placeholder="검색어를 입력해주세요" required>
                         <div class="input-group-append">
                             <button class="btn btn-secondary" type="submit">검색</button>
                         </div>
