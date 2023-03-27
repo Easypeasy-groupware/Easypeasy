@@ -91,9 +91,9 @@
     .outer{margin-top:100px; padding-top:15px;}
     
 	/*스크롤*/
-	body::-webkit-scrollbar{width:20px;}
+	/* body::-webkit-scrollbar{width:20px;}
 	body::-webkit-scrollbar-thumb{background-color:rgb(185, 187, 221); border-radius:10px;}
-	body::-webkit-scrollbar-track{background-color:white;}
+	body::-webkit-scrollbar-track{background-color:white;} */
 
     /* 알람 */
     #hide_block{width: 350px; height: 900px; background: white; transform: translate(1200px, -50px);
