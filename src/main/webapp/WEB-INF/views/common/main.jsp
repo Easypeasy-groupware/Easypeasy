@@ -159,7 +159,7 @@
             			}
             		})
             	}
-			
+			/* 
 				function topFreeList(){
             		$.ajax({
             			url:"topFree.bo",
@@ -183,7 +183,7 @@
             			}
             		})
             	}
-				 
+				  */
 			</script>	
 			
 			<div class="document">
