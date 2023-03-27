@@ -100,7 +100,7 @@
 			 		<span id="name-insert" style="display:none;" onclick="updateName();">✔️</span>
 			 </div>
 			 <div class="room-manage">
-			 	<span id="member-count1">👩🏻‍🤝‍🧑🏻</span><span id="member-count2">(30)</span>
+			 	<span id="member-count1">👩🏻‍🤝‍🧑🏻</span><span id="member-count2">${ room.count }</span>
 			 	<span id="member-add"ㄴㄴㄴ>➕</span>
 			 	<span id="room-exit">🚪</span>
 			 </div>
@@ -122,7 +122,8 @@
 		        		
 		        			<div class="chat-message mine">
 					            <div class="icon"><img src="<c:out value='${msg.empProfile}' default='resources/chat-images/rockstar.png'/>" ></div>
-					            <div class="textbox">${msg.message}</div>
+					            <div class="textbox">${msg.message}</div> 
+					            <%-- <span>${msg.unReadCount}</span> --%>
 					        </div>
 					        
 		        		</c:when>
@@ -133,6 +134,7 @@
 					            <div class="msg-wrap">
 					            	<div class="user-info"><span class="user-name">${msg.empName}</span> <span class="user-job">${msg.jobName}</span></div>
 					            	<div class="textbox">${msg.message}</div>
+					            	<%-- <span>${msg.unReadCount}</span> --%>
 					            </div>
 					        </div>
 					        
@@ -224,15 +226,37 @@
             
             if(MO == "mine"){
             	newMsg = '<div class="chat-message mine">'
-            			+ '<div class="icon"><img src="' + data.empProfile + '" default="resources/chat-images/rockstar.png" ></div>'
-            			+ '<div class="textbox">' + data.message + '</div></div>';
+            			+ '<div class="icon">';
+            			if(data.empProfile==""){
+            				newMsg += '<img src="resources/chat-images/rockstar.png" >';
+            			}else{
+            				newMsg += '<img src="'+data.empProfile+'" >';
+            			}
+            			
+        	    newMsg += '</div>'
+            			+ '<div class="textbox">' + data.message + '</div>'
+            			/* + '<span>' + data.unReadCount + '</span>' */
+            			+ '</div>';
+            			
             }else if(MO == "other"){
             	newMsg = '<div class="chat-message other">'
-		        			+ '<div class="icon"><img src="' + data.empProfile + '" default="resources/chat-images/rockstar.png" ></div>'
-		        			+ ' <div class="msg-wrap"><div class="user-info">'
-		        			+ ' <span class="user-name">' + data.empName + '</span>' 
-		        			+ '<span class="user-job">' + data.jobName + '</span>' + '</div>'
-		        			+ '<div class="textbox">' + data.message + '</div></div></div>';
+            			+ '<div class="icon">';
+	    			if(data.empProfile==""){
+	    				newMsg += '<img src="resources/chat-images/rockstar.png" >';
+	    			}else{
+	    				newMsg += '<img src="'+data.empProfile+'" >';
+	    			}
+    			
+	    			newMsg += '</div>'
+		        			+ ' <div class="msg-wrap">'
+			        			+ '<div class="user-info">'
+				        			+ ' <span class="user-name">' + data.empName + '</span>' 
+				        			+ '<span class="user-job">' + data.jobName + '</span>'
+			        			+ '</div>'
+			        			+ '<div class="textbox">' + data.message + '</div>'
+		        				/* + '<span>' + data.unReadCount + '</span>' */
+		        			+'</div>'
+		        		+'</div>';
             }
             
         	}else if(data.chatType == "title"){
@@ -252,8 +276,9 @@
                     "empName" : receive[1],
                     "jobName" : receive[2],
                  "empProfile" : receive[3],
-                 "message" : receive[4],
-                 "chatType" : receive[5]
+                    "message" : receive[4],
+                   "chatType" : receive[5],
+                 "unReaCount" : receive[6]
             };
 	 		
 	 		if(data.empNo != "${ loginUser.empNo }"){
@@ -287,6 +312,20 @@
             sock.send(jsonData); 
 	 	}
     
+	 	function onClose(){
+	 		const data = {
+                    "roomNo" : "${ room.roomNo }",
+                    "empNo" : "${ loginUser.empNo }",
+                    "empName" : "${ loginUser.empName }",
+                    "empProfile" : "${loginUser.empProfile}",
+                    "jobName" : "${loginUser.jobName}",
+                 	"message" : "EXIT-CHAT",
+                 	"chatType" : "exit"
+            };
+	    	let jsonData = JSON.stringify(data);
+	    	sock.send(jsonData);
+            console.log("퇴장");
+	 	}
     </script>
     
     <script>

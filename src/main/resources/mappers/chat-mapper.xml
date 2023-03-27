@@ -181,7 +181,7 @@
 		   set unread_count = 0
 		 where room_no = #{roomNo}
 		   and emp_no = #{empNo}
-		   and unread_count = 1
+		   and unread_count = unread_count -1
 	</update>
 	
 	<select id="selectChatRoom" resultMap="chatRoomResult">
@@ -192,9 +192,6 @@
 	</select>
 	
 	<insert id="insertMessage">
-	<if test="sessionCount == 1">
-        
-    </if>
 		insert
 		  into CHAT_RECORD
 		     ( 
