@@ -243,6 +243,7 @@ public class CommuteController {
 			int result = cService.updateTimeHR(c);
 			int empNo = c.getEmpNo();
 			
+			
 			if(result>0) {
 				AlertMsg msg = new AlertMsg("근무시간 수정", "근무시간 수정이 성공적으로 완료되었습니다.");
 				session.setAttribute("successMsg", msg);
