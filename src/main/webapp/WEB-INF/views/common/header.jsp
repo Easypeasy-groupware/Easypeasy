@@ -260,7 +260,7 @@
 
     <!-- 웹소켓 -->
     <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
-	<script>
+	<!-- <script>
         // 웹소켓 접속
         let sock = null
 
@@ -289,7 +289,7 @@
                 // * 웹소켓과의 통신도 끊기게됨 => ChatEchoHandler클래스의 afterConnectionClosed메소드 실행됨
             }
         }
-	</script>
+	</script> -->
 
 	<script>
 		// 전체 알람창 열고 닫기 이벤트

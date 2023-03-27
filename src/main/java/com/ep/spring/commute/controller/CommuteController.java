@@ -51,16 +51,23 @@ public class CommuteController {
 			int ab = 0;
 			int end = 0;
 			if(c != null) {
+				//근태현황 카운트
 				tr = cService.countTr(empNo);
 				countLe = cService.countLe(empNo);
 				ab = cService.countAb(empNo);
 				end = cService.countEnd(empNo);
+				
+				//휴가기록 및 잔여휴가 조회
+				ArrayList<VacationRecode> list1 = cService.selectVacMain(empNo);
+				ArrayList<VacationForm> list2 = cService.selectVacForm(empNo);
 				
 				mv.addObject("c", c)
 				  .addObject("tr", tr)
 				  .addObject("countLe", countLe)
 				  .addObject("ab", ab)
 				  .addObject("end", end)
+				  .addObject("list1", list1)
+				  .addObject("list2", list2)
 				  .setViewName("commute/commuteMain");
 				return mv;
 			}else {

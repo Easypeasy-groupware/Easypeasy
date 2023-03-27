@@ -265,7 +265,14 @@ public class OrgController {
 		}
 	}
 	
-	
+	@RequestMapping("sideSettings.org") 
+	public ModelAndView selectSideSettings(Employee e, ModelAndView mv) {
+		
+		ArrayList<Department> dList = oService.selectSettingForm();
+		mv.addObject("dList", dList).setViewName("organization/orgSidebar");
+		return mv;
+		
+	}
 	
 	
 }

@@ -45,10 +45,11 @@
     .mail_imgList{width: 110px; text-align: center; line-height: 43px;}
     .mail_img{width: 30px; line-height: 2.5;}
     #selectMailLine:hover{font-weight: 600; cursor: pointer;}
-    .mail_sender_name{width: 60px; margin-right: 15px; overflow: hidden;}
-    .mail_sender{width: 180px; margin-right: 15px; overflow: hidden;}
-    .mail_title{width: 380px; margin-right: 15px; overflow: hidden;}
-    .mail_date{width: 160px; text-align: right;}
+    .mail_sender_name{width: 50px; margin-right: 15px; overflow: hidden; text-overflow: ellipsis;}
+    .mail_sender{width: 100px; margin-right: 15px; overflow: hidden; text-overflow: ellipsis;}
+    .mail_title{width: 270px; margin-right: 15px; overflow: hidden; text-overflow: ellipsis;}
+    .mail_sent_date, .mail_read_date{width: 175px; text-align: right; text-align: center;}
+    .mail_sent_date{margin-right: 15px; color: gray;}
 
     #paging{text-align: center; display: inline-block; padding-left :0; margin-top: 20px;}
     #paging li {text-align: center; float: left; list-style:none; border-radius:10px; margin:2px; background-color: rgb(234, 234, 234);}
@@ -72,7 +73,7 @@
             <div id="mail_header">
                 <div id="mail_header1" style="width:100%; float:left">
                     <div id="mail_header_info">
-                        <b>받은 메일함</b>
+                        <b>보낸 메일함</b>
                         <img src="">
                         <b style="font-size: 20px;">전체메일 </b>
                         <b id="all_mail_no" style="color: dodgerblue; font-size: 23px;">
@@ -85,11 +86,11 @@
                             ${allMail}
                         </b>
                         <b>/ </b>
-                        <b style="font-size: 20px;">안읽은 메일 </b>
+                        <b style="font-size: 20px;">수신 미확인 </b>
                         <b id="unread_mail_no" style="color: crimson; font-size: 23px;">
                             <c:set var="readMail" value="0" />
                             <c:forEach var="m" items="${ mailList }">
-                                <c:if test="${ m.status == 'Y' and m.junkMail == 'N' }">
+                                <c:if test="${ m.status == 'Y'}">
                                     <c:if test="${ m.recCheck == 'Y' }">
                                         <c:set var="readMail" value="${readMail + 1}" />
                                     </c:if>
@@ -114,14 +115,9 @@
                 </div><br>
                 <div id="mail_header2">
                     <div style="width: 27px; float: left; padding-left: 5px; padding-top: 8px;"><input type="checkbox" name="" id="check_all"></div>
-                    <div class="menu menu1" id="spam">스팸 등록</div>
                     <div class="menu menu2" id="reply">답장</div>
-                    <div class="menu menu2" id="delete">삭제</div>
-                    <div class="menu menu2" id="tag">태그</div>
                     <div class="menu menu2" id="forward">전달</div>
-                    <div class="menu menu2 read">읽음</div>
-                    <div class="menu menu2 unread">안읽음</div>
-                    <div class="menu menu1" id="refresh">새로고침</div>
+                    <div class="menu menu2" id="delete">삭제</div>
                     <div style="float: right; width: 150px; font-size: 12px;">
                         정렬
                         <select name="" id="">
@@ -132,81 +128,11 @@
                 </div>
             </div>
 
-            <!-- 태그 블록 -->
-            <div class="block tag_block">
-                <b style="line-height: 40px;">태그 목록</b>
-                <div class="x-btn">
-                    <button class="x btn btn-outline-secondary btn-sm">X</button>
-                </div>
-                <div class="block_list tag_list">
-                    <c:choose>
-                        <c:when test="${ not empty tagList }">
-                            <c:forEach var="t" items="${ tagList }">
-                                <div class="block_one tag_one">
-                                    <div class="tagTriangleList">
-                                        <span class="tagBlock">
-                                            <span class="tag_innerBlock1 tagColor" style="background-color: ${t.tagColor}; border: 1px solid ${t.tagColor};">
-                                                <span class="tag_innerBlock2" style="border-inline-color: inherit;">
-                                                    <span style="border-inline-color: inherit;"></span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div class="tag_name">${t.tagName}</div>
-                                    <div>
-                                        <button class="tag_btn btn btn-outline-primary btn-sm">적용</button>
-                                        <input type="hidden" class="tagNo" name="tagNo" value="${t.tagNo}">
-                                    </div>
-                                </div>
-                            </c:forEach>
-                        </c:when>
-                        <c:otherwise>
-                            <br>
-                            <div style="width: 100%; text-align: center"> 생성된 태그가 없습니다</div>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>
-
-            <!-- 이동 블록 -->
-            <div class="block shift_block">
-                <b style="line-height: 40px;">메일함</b>
-                <div class="x-btn">
-                    <button class="x btn btn-outline-secondary btn-sm">X</button>
-                </div>
-                <div class="block_list shift_list">
-                    <div class="block_one shift_one">
-                        <div class="shift_name">받은 메일함</div>
-                        <div>
-                            <button class="tag_btn btn btn-outline-primary btn-sm">적용</button>
-                            <input type="hidden" class="tagNo" name="tagNo" value="">
-                        </div>
-                    </div>
-                    <br>
-                    <div class="block_one shift_one">
-                        <div class="shift_name">중요 메일함</div>
-                        <div>
-                            <button class="tag_btn btn btn-outline-primary btn-sm">적용</button>
-                            <input type="hidden" class="tagNo" name="tagNo" value="">
-                        </div>
-                    </div>
-                    <br>
-                    <div class="block_one shift_one">
-                        <div class="shift_name">메일함 이름</div>
-                        <div>
-                            <button class="tag_btn btn btn-outline-primary btn-sm">적용</button>
-                            <input type="hidden" class="tagNo" name="tagNo" value="">
-                        </div>
-                    </div>
-                    <br>
-                </div>
-            </div>
-
             <!-- 메일 리스트 -->
             <div id="mail_list">
                 <c:if test="${ not empty pgMailList }">
                     <c:forEach var="m" items="${ pgMailList }">
-                        <c:if test="${ m.status == 'Y' and m.junkMail == 'N' }">
+                        <c:if test="${ m.status == 'Y' }">
                             <div class="mail_one" >
                                 <div class="mail_check">
                                     <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="">
@@ -240,7 +166,7 @@
                                             ${m.empName}
                                         </div>
                                         <div class="mail_sender">
-                                            ${ m.sendMailAdd }
+                                            ${ m.recMailAdd }
                                         </div>
                                         <div class="mail_title">
                                             <c:forEach var="t" items="${tagList}">
@@ -258,8 +184,18 @@
                                             </c:forEach>
                                             ${ m.mailTitle }
                                         </div>
-                                        <div class="mail_date">
-                                            ${ m.dateDay } ${ m.dateTime }
+                                        <div class="mail_sent_date">
+                                            ${ m.sentDate }
+                                        </div>
+                                        <div class="mail_read_date">
+                                            <c:choose>
+                                                <c:when test="${m.recDate == null}">
+                                                    <b>미확인</b>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${ m.recDate }
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
                                 </form>
@@ -327,37 +263,6 @@
                 })
             });
 
-            
-            // 스팸 등록
-            let spamEnroll = document.getElementById("spam");
-            spamEnroll.addEventListener('click', function(){
-                checkedBoxSum = 0
-                arr = [];
-                    mailCheckBox.forEach((i) => {
-                        if(i.checked == true) {
-                            let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
-                            arr.push(value);
-                            checkedBoxSum += 1;
-                        };
-                    })
-
-                if(checkedBoxSum != 0) {
-                    const form = document.createElement("form");
-                    const input = document.createElement("input");
-                    form.setAttribute("style", "display:none;");
-                    input.setAttribute("name", "recMailNoList");
-                    input.setAttribute("multiple", "multiple");
-                    input.setAttribute("value", arr);
-                    form.append(input);
-                    form.method = "POST";
-                    form.action = "spamEnroll.ma";
-                    document.body.append(form);
-                    form.submit();
-                }else {
-                    alert('체크박스를 선택해주세요');
-                };
-            });
-
             // 답장
             let reply = document.getElementById("reply");
             reply.addEventListener('click', function(){
@@ -421,72 +326,40 @@
             deleteMail.addEventListener('click', function(){
                 checkedBoxSum = 0
                 arr = [];
-                    mailCheckBox.forEach((i) => {
-                        if(i.checked == true) {
-                            let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
-                            arr.push(value);
-                            checkedBoxSum += 1;
-                        };
-                    })
-
-                if(checkedBoxSum != 0) {
-                    const form = document.createElement("form");
-                    const input = document.createElement("input");
-                    form.setAttribute("style", "display:none;");
-                    input.setAttribute("name", "recMailNoList");
-                    input.setAttribute("value", arr);
-                    form.append(input);
-                    console.log(form)
-                    form.method = "POST";
-                    form.action = "delete.ma";
-                    document.body.append(form);
-                    form.submit();
-                }else {
-                    alert('체크박스를 선택해주세요');
-                };
-            });
-
-            // 태그
-            let tag = document.getElementById("tag");
-            let tagBlock = document.querySelector(".tag_block");
-            let tagBtnList = document.querySelectorAll(".tag_btn");
-            tag.addEventListener('click', function(){
-                checkedBoxSum = 0
-                arr = [];
-                mailCheckBox.forEach((i, index) => {
+                mailCheckBox.forEach((i) => {
                     if(i.checked == true) {
-                        let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
+                        let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("mailNo")[0].value;
                         arr.push(value);
                         checkedBoxSum += 1;
                     };
                 })
-                if(checkedBoxSum >= 1) {
-                    tagBlock.style.display = 'block';
-                    let tagNo = document.querySelectorAll(".tagNo");
-                    tagBtnList.forEach(function(tagBtn, index){
-                        tagBtn.addEventListener('click', function(){
-                            tagNo = tagNo.item(index).value
-                            const form = document.createElement("form");
-                            const input1 = document.createElement("input");
-                            const input2 = document.createElement("input");
-                            form.setAttribute("style", "display:none;");
-                            input1.setAttribute("name", "recMailNoList");
-                            input1.setAttribute("multiple", "multiple");
-                            input1.setAttribute("value", arr);
-                            input2.setAttribute("name", "tagNo");
-                            input2.setAttribute("value", tagNo);
-                            form.append(input1);
-                            form.append(input2);
+
+                if(checkedBoxSum != 0) {
+                    swal({
+                        title: "영구 삭제하시겠습니까?",
+                        text: "삭제된 메일은 복구되지 않습니다.",
+                        icon: "warning",
+                        buttons: ["취소", "삭제"],
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if(willDelete){
+                            let form = document.createElement("form");
+                            let input = document.createElement("input");
+                            input.setAttribute("name", "mailNoList");
+                            input.setAttribute("multiple", "multiple");
+                            input.setAttribute("value", arr);
+                            form.action = "delete.sm";
                             form.method = "POST";
-                            form.action = "tag.ma";
-                            console.log(form)
+                            form.append(input);
                             document.body.append(form);
+                            console.log(input)
                             form.submit();
-                        });
+                        }
                     });
-                }else{
-                    alert('체크박스를 선택해주세요')
-                }
+                }else {
+                    alert('체크박스를 선택해주세요');
+                };
             });
 
             // x button 닫기 효과
@@ -495,123 +368,6 @@
                 x.addEventListener('click', function(){
                     this.parentNode.parentNode.style.display = 'none';
                 })
-            });
-
-            // 읽음 처리
-            let read = document.querySelector(".read");
-            read.addEventListener('click', function(){
-                checkedBoxSum = 0
-                arr = [];
-                let recMailMoList = ""
-                mailCheckBox.forEach((i, index) => {
-                    if(i.checked == true) {
-                        let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
-                        arr.push(value);
-                        checkedBoxSum += 1;
-                    };
-                })
-                let recCheck = 'Y'
-                for(let i=0; i<arr.length; i++){
-                    recMailMoList += (arr[i] + ",");
-                }
-                if(checkedBoxSum > 0) {
-                    $.ajax({
-                        url:"updateReadUnread.ma",
-                        type:"POST",
-                        data:{
-                            recMailNoListData: recMailMoList,
-                            recCheck: recCheck
-                        },
-                        success: function(result){
-                            let mailCount = 0
-                            let unreadCount = 0;
-                            result.mailList.forEach(function(i, index){
-                                if(i.status == 'Y' && i.junkMail == 'N'){
-                                    mailCount += 1;
-                                }
-                                if(i.recCheck == 'Y' && i.status == 'Y' && i.junkMail == 'N'){
-                                    $(".mail_read").each(function(){
-                                        if($(this).closest($(".mail_one")).find($(".recMailNo")).val() == i.recMailNo){
-                                            $(this).attr("src", "resources/common_images/mail_read.png");
-                                        };
-                                    });
-                                    unreadCount += 1;
-                                };
-                            });
-                            $("input:checkbox").each(function(){
-                                $(this).prop("checked", false);
-                            })
-                            $("#all_mail_no").text(mailCount);
-                            $("#unread_mail_no").text(mailCount-unreadCount);
-                        }, error: function(){
-
-                        }
-                    });
-                }else{
-                    alert('체크박스를 선택해주세요');
-                }
-            }); 
-
-            
-            // 안읽음 처리
-            let unread = document.querySelector(".unread");
-            unread.addEventListener('click', function(){
-                checkedBoxSum = 0
-                arr = [];
-                let recMailMoList = ""
-                mailCheckBox.forEach((i, index) => {
-                    if(i.checked == true) {
-                        let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
-                        arr.push(value);
-                        checkedBoxSum += 1;
-                    };
-                })
-                let recCheck = 'N'
-                for(let i=0; i<arr.length; i++){
-                    recMailMoList += (arr[i] + ",");
-                }
-                if(checkedBoxSum > 0) {
-                    $.ajax({
-                        url:"updateReadUnread.ma",
-                        type:"POST",
-                        data:{
-                            recMailNoListData: recMailMoList,
-                            recCheck: recCheck
-                        },
-                        success: function(result){
-                            let mailCount = 0
-                            let readCount = 0;
-                            result.mailList.forEach(function(i, index){
-                                if(i.status == 'Y' && i.junkMail == 'N'){
-                                    mailCount += 1;
-                                }
-                                if(i.recCheck == 'N' && i.status == 'Y' && i.junkMail == 'N'){
-                                    $(".mail_read").each(function(){
-                                        if($(this).closest($(".mail_one")).find($(".recMailNo")).val() == i.recMailNo){
-                                            $(this).attr("src", "resources/common_images/mail_unRead.png");
-                                        };
-                                    });
-                                    readCount += 1;
-                                };
-                            });
-                            $("#all_mail_no").text(mailCount);
-                            $("#unread_mail_no").text(readCount);
-                            $("input:checkbox").each(function(){
-                                $(this).prop("checked", false);
-                            })
-                        }, error: function(){
-
-                        }
-                    });
-                }else{
-                    alert('체크박스를 선택해주세요');
-                }
-            }); 
-
-            // 새로고침
-            let refresh = document.getElementById("refresh");
-            refresh.addEventListener('click', function(){
-                location.href = 'list.ma';
             });
 
             // 즐겨찾기

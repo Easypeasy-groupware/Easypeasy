@@ -51,6 +51,9 @@ public interface OrgService {
 	int updateJob(Job j);
 	int deleteJob(Job j);
 	
+	// 11. 사이드바
+	ArrayList<Department> selectSideSettings();
+	
 	
 	
 	

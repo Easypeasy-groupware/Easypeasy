@@ -49,14 +49,11 @@ public class MailServiceImpl implements MailService {
 	public int sendMail(Mail m, ArrayList<Mail> mList, ArrayList<Attachment> atList) {
 		int sendResult = mDao.insertSendMail(m, sqlSession);
 		int attachResult = mDao.insertAttachment(atList, sqlSession);
-		int receiveResult = 0;
-		if(m.getTempStorage() == null) {
-			receiveResult = mDao.insertReceiveMail(mList, sqlSession);
-		}
+		int receiveResult = mDao.insertReceiveMail(mList, sqlSession);
 		
-		if((sendResult > 0 ) || (atList.size() + attachResult > 0)) {
+		if((sendResult > 0 && receiveResult > 0 ) || (atList.size() + attachResult > 0)) {
 			int mailNo = mDao.selectRecSendMailNo(sqlSession);
-			aService.receiveMailAlarm(mList, mailNo);
+//			aService.receiveMailAlarm(mList, mailNo);
 			return 1;
 		}else {
 			return 0;
@@ -84,8 +81,8 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public ArrayList<Attachment> selectAttachmentList(Mail m) {
-		return mDao.selectAttachmentList(m, sqlSession);
+	public ArrayList<Attachment> selectAttachmentList(ArrayList<Mail> mailList) {
+		return mDao.selectAttachmentList(mailList, sqlSession);
 	}
 
 	@Override
@@ -149,6 +146,26 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public ArrayList<Mail> selectUnreadMailList(PageInfo pi, String email) {
 		return mDao.selectUnreadMailList(email, pi, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Mail> selectSendMailList(PageInfo pi, String email) {
+		return mDao.selectSendMailList(email, pi, sqlSession);
+	}
+
+	@Override
+	public int deleteSendMail(int[] mailNoList) {
+		return mDao.deleteSendMail(mailNoList, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Mail> selectTempMailList(PageInfo pi, String email) {
+		return mDao.selectTempMailList(email, pi, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Attachment> selectMailAttachment(Mail m) {
+		return mDao.selectAttachMailList(m, sqlSession);
 	}
 
 	

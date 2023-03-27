@@ -130,6 +130,11 @@ public class OrgServiceImpl implements OrgService {
 		return oDao.deleteJob(sqlSession, j);
 	}
 
+	@Override
+	public ArrayList<Department> selectSideSettings() {
+		return oDao.selectSideSettings(sqlSession);
+	}
+
 	
 
 	

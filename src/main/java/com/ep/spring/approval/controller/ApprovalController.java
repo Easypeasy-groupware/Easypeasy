@@ -509,7 +509,7 @@ public class ApprovalController {
 		if(result > 0) {
 			
 			AlertMsg msg = new AlertMsg("결재상신", "성공적으로 문서상신 완료되었습니다!");
-			System.out.println("status : " + ap.getStatus());
+			//System.out.println("status : " + ap.getStatus());
 			if(ap.getStatus().equals("2")) {
 				msg.setTitle("임시저장");
 				msg.setContent("성공적으로 임시저장 되었습니다!");
@@ -553,12 +553,13 @@ public class ApprovalController {
 	public String updateForm(int no, ArrayList<Attachment> filePath, int division, Model model, HttpSession session) {
 
 		Approval ap = aService.selectTempApproval(no);
-		ap.setDivision(division);
-		//System.out.println("재기안일까요 수정일까요?" + division);
+		// 재기안인지 수정인지 구분하는 값 세팅해주기
 		
-		if(ap.getDivision() == 3) { // 재기안 일 시 문서번호는 0으로 세팅하기
-			ap.setAppNo(0);
-		}
+		System.out.println("재기안일까요 수정일까요?" + division);
+		ap.setDivision(division);
+
+		System.out.println("화면에 돌려줄 재기안/수정값?" + ap.getDivision());
+		System.out.println(ap);
 		model.addAttribute("ap", ap);	
 		
 		ArrayList<ApprovalLine> list1 = aService.selectDetailSPrgAl(ap);
@@ -570,9 +571,6 @@ public class ApprovalController {
 		ArrayList<Attachment> list3 = aService.selectDetailSPrgAt(ap);
 		model.addAttribute("list3", list3);
 		System.out.println("업데이트폼에서 보낼 기존 첨부파일 : " + list3);
-		
-		// 재기안인지 수정인지 구분하는 값 세팅해주기
-		
 		
 		
 		if(ap.getFormCode() == 1) {

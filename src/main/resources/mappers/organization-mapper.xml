@@ -252,5 +252,12 @@
 	 	  from job
 	 	 where job_code = #{jobCode}
 	 </delete>
+	 
+	 <select id="selectSideSettings" resultMap="departmentResult">
+		select 
+			   dept_code
+			 , dept_name
+		  from department
+	 </select>
 	
 </mapper>

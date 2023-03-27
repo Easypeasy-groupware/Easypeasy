@@ -259,7 +259,7 @@
                                             ${ m.mailTitle }
                                         </div>
                                         <div class="mail_date">
-                                            ${ m.recDateDay } ${ m.recDateTime }
+                                            ${ m.dateDay } ${ m.dateTime }
                                         </div>
                                     </div>
                                 </form>

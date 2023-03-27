@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,25 +32,26 @@
 </style>
 </head>
 <body>
-<jsp:include page="../common/header.jsp" />
+	
+	<jsp:include page="../common/header.jsp" />
 	
 	<div class="wrapper">
 	
 		<jsp:include page="../board/boardSidebar.jsp" />
        
         <div class="board">
-        	<form method="post" action="update.bo" enctype="multipart/form-data">
+        	<form method="post" action="updateA.bo" enctype="multipart/form-data">
           <h3>게시글 수정/삭제</h3>
           <br><br>
           	  <input type="hidden" name="boardNo" value="${b.boardNo}">
               <label>게시판그룹</label>
                   <select name="boardCno">
-                  	  <option value="${b.boardCno}" name="boardCno" id="">${b.boardCno}</option>
+                  	 <%--  <option value="${b.boardCno}" name="boardCno" id="">${b.boardCno}</option>
                       <option>-----</option>
                       <option value="1" name="boardCno" id="1">전체 공지사항</option>
-                  <!--     <option value="2" name="boardCno" id="2">식단표</option>
+                      <option value="2" name="boardCno" id="2">식단표</option> --%>
                       <option value="3" name="boardCno" id="3">자유게시판</option>
-                      <option value="4" name="boardCno" id="4">커뮤니티</option>
+                     <!--  <option value="4" name="boardCno" id="4">커뮤니티</option>
                       <option value="5" name="boardCno" id="5">부서 공지사항</option>
                       <option value="6" name="boardCno" id="6">부서 자유게시판</option> -->
                   </select><br>
@@ -96,10 +97,13 @@
               <div align="center">
                 <button type="button" class="btn btn-dark" onclick="javascript:history.go(-1);">이전으로</button>
                 <button type="submit" class="btn btn-success">수정하기</button>
-                <button type="button" class="btn btn-danger" onclick="location.href='delete.bo';">삭제하기</button>
+                <button type="button" class="btn btn-danger" onclick="location.href='deleteA.bo';">삭제하기</button>
               </div>
               </form>
         </div>
 	</div>
+	
+	
+	
 </body>
 </html>

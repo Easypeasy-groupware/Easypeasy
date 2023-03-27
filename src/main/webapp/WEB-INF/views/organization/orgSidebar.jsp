@@ -28,7 +28,7 @@
 <body>
 	 <div class="sidebar">
 	    	<div class="menu-title">
-				<a href="" id="org-title">조직도</a>
+				<a href="list.org" id="org-title">조직도</a>
 			</div>
 			
 	    	<c:if test="${ loginUser.deptCode eq 'D1' }">
@@ -37,12 +37,15 @@
 	      
 	      <div class="menu">
 	        <ul>
+	        <%-- 
 	          <li><a href="list.org">인사관리부</a></li>
 	          <li><a href="list_d2.org">경영지원부</a></li>
 	          <li><a href="list_d3.org">영업 1팀</a></li>
 	          <li><a href="list_d4.org">영업 2팀</a></li>
 	          <li><a href="list_d5.org">영업 3팀</a></li>
 	          <li><a href="list_d6.org">마케팅부</a></li>
+	          --%>
+	          
 	        </ul>
 	      </div>
 	  </div>

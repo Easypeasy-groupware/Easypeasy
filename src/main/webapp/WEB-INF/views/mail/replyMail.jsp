@@ -50,6 +50,7 @@
     #in_attachments{width: 100%; max-height: 100px; padding-left: 20px; display: none;}
     #attach{width: 25px;}
     .attach_delete_btn{border: none;}
+    #existing_attachment{padding-left: 20px;}
     
     #reply_content{margin: 5px; padding: 5px;}
     
@@ -93,15 +94,6 @@
                         <td style="width: 100px;"><input id="to_me" type="checkbox"> 나에게</td>
                         <td><input id="input_receiver" class="mail_input" type="text">
                             &nbsp;&nbsp;&nbsp;<button type="button" id="add_receiver" class="btn btn-secondary">추가</button></td>
-                        <td><button type="button" class="btn btn-secondary">주소록</button></td>
-                    </tr>
-                    <tr class="detail_info_tr">
-                        <td colspan="2">
-                            <div style="width: 150px; margin-left: 30px;">
-                                <b>수신자 목록 첨부<br>(excel 파일만 가능)</b>
-                            </div>
-                        </td>
-                        <td><input class="mail_input" type="text"></td>
                         <td><button type="button" class="btn btn-secondary">주소록</button></td>
                     </tr>
                     <tr class="detail_info_tr">
@@ -162,13 +154,32 @@
                         <td></td>
                         <td></td>
                         <td colspan="2" id="attach_area">
-                            <div id="no_attachment">
-                                <img id="attach" src="resources/common_images/attachment.png">
-                                <div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
+                            <div class="detail_info_attach">
+                                <c:choose>
+                                    <c:when test="${ empty attachmentList }">
+                                        <div id="no_attachment">
+                                            <img id="attach" src="resources/common_images/attachment.png">
+                                            <div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
+                                        </div>
+                                        <div id="in_attachments">
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div id="no_attachment" style="display: none;">
+                                            <img id="attach" src="resources/common_images/attachment.png">
+                                            <div>첨부파일을 여기로 끌어다 옮겨주세요.</div>
+                                        </div>
+                                        <div id="existing_attachment">
+                                            <c:forEach var="a" items="${ attachmentList }">
+                                                첨부파일명 : <a href="${ a.filePath }">${ a.originName }</a>&nbsp;&nbsp;&nbsp;<br>
+                                            </c:forEach>
+                                        </div>
+                                        <div id="in_attachments" style="display: block;">
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
-                            <div id="in_attachments">
-                            </div>
-                            <input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
+                            <input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" value="" style="display: none;">
                         </td>
                     </tr>
                     <tr style="height: 20px;"></tr>
@@ -188,7 +199,7 @@
                                                 </c:if>
                                             </c:forEach>
                                     </c:if><br> 
-                                    Sent: ${mail.recDate}<br>
+                                    Sent: ${mail.sentDate}<br>
                                     Subject: ${mail.mailTitle}<br><br>
                                     ${mail.mailContent}
                                 </div>
@@ -341,25 +352,36 @@
             //     alert('editor content is empty');
             // }
 
+                
             // 첨부파일 업로드1 (버튼 클릭 방식)
             let fileNames = [];
             let noAttach = document.getElementById("no_attachment");
             let inAttachs = document.getElementById("in_attachments");
+            let existingAttach = document.getElementById("existing_attachment");
+            let attachList = document.createElement("div");
             document.getElementById("file_choose").addEventListener('click', function(){
                 let attachFile = document.getElementById("attach_files");
+                for(let i=0; i<attachFile.files.length; i++){
+                    attachFile.files[i]
+                    console.log(attachFile.files[i])
+                    document.selection.clear;
+                };
+                attachList.innerHTML = '';
                 attachFile.click();
                 attachFile.addEventListener('change', function(){
                     let vaildFile = attachFile.files.length >= 0;
                     if(vaildFile){
-                        inAttachs.innerText = ''
+                        inAttachs.innerText = '';
                         noAttach.style.display = "none";
                         for(let i=0; i<attachFile.files.length; i++){
-                            inAttachs.innerHTML += "첨부파일명 : " + "<b>" + attachFile.files[i].name + "</b>" + "&nbsp;&nbsp;&nbsp; <br>"
+                            attachList.innerHTML += "첨부파일명 : " + "<b>" + attachFile.files[i].name + "</b>" + "&nbsp;&nbsp;&nbsp; <br>"
+                            inAttachs.append(attachList);
                         };
                         inAttachs.style.overflowY = 'auto';
                         inAttachs.style.display = "block";
+                        console.log(attachFile.files)
                     };
-                });  
+                });
             });
 
             // 첨부파일 업로드2 (Drag And Drop 방식)
@@ -386,7 +408,7 @@
                     inAttachs.innerText = ''
                     noAttach.style.display = "none";
                     for(let i=0; i<attachFile.length; i++){
-                        inAttachs.innerHTML += "<div>첨부파일명 : " + "<b>" + attachFile[i].name + "</b>" + "&nbsp;&nbsp;&nbsp;<br>"
+                        inAttachs.innerHTML += "<div>첨부파일명 : " + "<b>" + attachFile[i].name + "</b>" + "&nbsp;&nbsp;&nbsp;</div>"
                     };
                     inAttachs.style.overflowY = 'auto';
                     inAttachs.style.display = "block";
@@ -397,10 +419,13 @@
             document.getElementById('file_delete').addEventListener('click', function(){
                 let attachFile = document.getElementById("attach_files");
                 attachFile.value = ''
-                inAttachs.innerText = ''
+                existingAttach.innerHTML = '';
+                inAttachs.innerText = '';
                 inAttachs.style.display = "none";
                 noAttach.style.display = "block";
             });
+
+            
 
             // 메일 보내기
             document.getElementById("send").addEventListener('click', function(){

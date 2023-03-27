@@ -227,7 +227,7 @@
 	    			$("#writer").val(result.a.empName);
 	    			$("#dept").val(result.a.deptName);
 	    			
-	    			if($("#division").val(1)){
+	    			if($("#division").val()==1){
 	    				$("#appChange").val("${ap.appChange}");
 	    			}else{
 	    				$("#appChange").val(result.appChange);

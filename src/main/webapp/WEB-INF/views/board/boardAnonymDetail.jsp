@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,11 +32,11 @@
        
         <div class="board">
         
-        	 <h1>${b.boardCno}</h1><br><br>
+        	 <h1>자유게시판</h1><br><br><input type="hidden" name="no" value="${b.boardCno}">
     
 		    <div class="container" style="width:1000px">
 		    	
-		            <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enrollForm.bo';"> 새글쓰기</button>
+		            <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enrollAForm.bo';"> 새글쓰기</button>
 		            
 		            <c:if test="${ loginUser.empNo eq b.boardWriter }">
 			            <a class="btn btn-primary btn-sm" onclick="postFormSubmit(1);">수정하기</a>
@@ -49,15 +49,15 @@
 			            <script>
 				            function postFormSubmit(num){
 				                if(num == 1){ 
-				                	$("#postForm").attr("action", "updateForm.bo").submit();
+				                	$("#postForm").attr("action", "updateAForm.bo").submit();
 				                }else{ 
-				                	$("#postForm").attr("action", "delete.bo").submit();
+				                	$("#postForm").attr("action", "deleteA.bo").submit();
 				                }
 				        	}
 				        </script>
 		            </c:if>
 		            
-		            <button type="button" class="btn btn-outline-secondary btn-sm" style="float:right" onclick="location.href='list.bo';">목록으로</button> 
+		            <button type="button" class="btn btn-outline-secondary btn-sm" style="float:right" onclick="location.href='free.bo';">목록으로</button> 
 		            <br><br>
 		             
 		            <table id="contentArea" align="center" class="table" border="1px, solid">
@@ -66,10 +66,10 @@
 		                </tr>
 		                <tr>
 		                    <td>
-		                        작성자 프로필이미지(-)
+		                       <img src="resources/profile_images/default_profile.png" style="width:50px; height:50px;">
 		                    </td>
 		                    <td>
-		                        ${b.boardWriter}
+		                        <input type="hidden" name="boardWriter" value="${b.boardWriter}"> 익명
 		                    </td>
 		                    <td>
 		                        ${b.createDate}
@@ -213,8 +213,6 @@
 		    </script>
         </div>
 	</div>
-	
-		
 	
 </body>
 </html>
