@@ -37,13 +37,15 @@
 		</div>
 		
 	</div>
+	
 	<script>
 		function empListPop(url, name){
 			var options = 'top=500, left=1400, width=400, height=600, status=no, menubar=no, toolbar=no, titlebar=no, resizable=no, scrollbars=yes';
 			window.open(url, name, options);
 		}
 		
-		function roomListPop(url, name){
+		function roomListPop(url, name){	
+			
 			var options = 'top=500, left=1400, width=400, height=600, status=no, menubar=no, toolbar=no, titlebar=no, resizable=no, scrollbars=yes';
 			window.open(url, name, options);
 		}
