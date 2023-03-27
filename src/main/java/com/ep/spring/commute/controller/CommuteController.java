@@ -293,23 +293,45 @@ public class CommuteController {
 			session.setAttribute("list1", list1);
 			session.setAttribute("list2", list2);
 			
-			System.out.println(list1);
-			System.out.println(list2);
+			//System.out.println(list1);
+			//System.out.println(list2);
 			
 			return "vacation/vacationUpdate";
 			
 		}
 		
+		//휴가 지급 및 차감(인사계정)
 		@RequestMapping("insertRecode.vac")
 		public String updateRecodeVac(VacationRecode vr, HttpSession session) {
-			int result = cService.insertVacRecode(vr);
 			
-			if(result>0) {
-				
-			}else {
-				
+			if(vr.getVacDivide().equals("PA")) {//휴가 지급 선택했을 때
+				int result1 = cService.insertVacRecodePlus(vr);
+				if(result1>0) {
+					AlertMsg msg = new AlertMsg("휴가지급", "휴가 지급이 완료되었습니다.");
+					session.setAttribute("successMsg", msg);
+					
+					return "redirect:updateVac.HR?no="+vr.getEmpNo();
+				}else {
+					AlertMsg msg = new AlertMsg("휴가지급", "휴가 지급이 실패되었습니다.");
+					session.setAttribute("failMsg", msg);
+					
+					return "redirect:updateVac.HR?no="+vr.getEmpNo();
+				}
+			}else {//휴가 차감 선택했을때
+				int result2 = cService.insertVacRecodeMinus(vr);
+				if(result2>0) {
+					AlertMsg msg = new AlertMsg("휴가차감", "휴가 차감이 완료되었습니다.");
+					session.setAttribute("successMsg", msg);
+					
+					return "redirect:updateVac.HR?no="+vr.getEmpNo();
+				}else {
+					AlertMsg msg = new AlertMsg("휴가차감", "휴가 차감이 실패되었습니다.");
+					session.setAttribute("failMsg", msg);
+					
+					return "redirect:updateVac.HR?no="+vr.getEmpNo();
+				}
 			}
-			return "";
+			
 		}
 		
 
