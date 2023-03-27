@@ -827,6 +827,12 @@
     </choose>
 		 where add_no = #{addNo} 
 	</update>
+	
+	<update id="updatePsGroupName">
+		update add_group
+		   set group_name = #{groupName}
+		 where group_no = #{groupNo}
+	</update>
 
 
 

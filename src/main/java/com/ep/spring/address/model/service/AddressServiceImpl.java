@@ -232,6 +232,11 @@ public class AddressServiceImpl implements AddressService {
 		return aDao.changeGroupAddList(sqlSession, list);
 	}
 
+	@Override
+	public int updatePsGroupName(AddGroup ag) {
+		return aDao.updatePsGroupName(sqlSession, ag);
+	}
+
 
 
 
