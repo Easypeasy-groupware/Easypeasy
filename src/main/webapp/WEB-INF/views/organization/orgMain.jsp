@@ -32,7 +32,7 @@
   .container {margin: 20px auto; width: 100%; padding: 20px;}
   form {max-width: 1000px; margin: 0 auto; padding: 10px; border-radius: 5px; box-sizing: border-box;}
   .search-container {display: flex; justify-content: flex-end;margin-bottom: 10px;}
-  .card {
+  .namebox {
       display: inline-block;
       width: 300px;
       height: 120px;
@@ -70,7 +70,7 @@
       z-index: 1; /* Make modal appear on top of other elements */
       left: 0;
       top: 0;
-      width: 100%;
+      width: 300px;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.4); /* Add black background with opacity */
     }
@@ -79,7 +79,7 @@
       margin: 15% auto; /* 15% from the top and centered */
       padding: 20px;
       border: 1px solid #888;
-      width: 500px; /* Could be more or less, depending on screen size */
+      width: 300px; /* Could be more or less, depending on screen size */
     }
     .close {color: #aaa; float: right; font-size: 28px; font-weight: bold;}
     .close:hover, .close:focus {color: black; text-decoration: none; cursor: pointer;}
@@ -110,10 +110,15 @@
 	          			<div id="d1">
 				          <c:forEach var="e" items="${list}">
 				          	<c:if test="${e.deptCode eq d.deptCode}">
-					           <div class="card" data-toggle="modal" data-target="#myModal">
+					           <div class="namebox" data-toggle="modal" data-target="#myModal${ e.empNo }">
 					            <table>
 					            	<tr>
-					            		<td><img src="${e.empProfile}"  style="width:80px;"></td>
+					            		<td>
+					            			<c:if test="${e.empProfile eq null}">
+					            				<img src="resources/profile_images/default_profile.png"  style="width:100px;">
+					            			</c:if>
+					            			<img src="${e.empProfile}"  style="width:100px;">
+					            		</td>
 					            		<td>
 					            			<br><h4>${e.jobName} | ${e.empName}</h4>
 					            			<input type="hidden" name="empNo" value="${e.empNo}">
@@ -121,22 +126,50 @@
 					            	</tr>
 					            </table>
 					           </div><br>
+							  
+					            <!--  모달  -->
+								 <div id="myModal${ e.empNo }" class="modal">
+									<div class="modal-dialog">
+								    <div class="modal-content">
+								      <span class="close" data-dismiss="modal">&times;</span>
+								      <div class="modal-body">
+								        <table>
+								          <tr>
+								            <td><input type="hidden" name="empNo" value="${e.empNo}">
+								            	<c:if test="${e.empProfile eq null}">
+					            					<img src="resources/profile_images/default_profile.png"  style="width:100px;">
+					            				</c:if>
+								            	<img src="${e.empProfile}"  style="width:200px;"></td>
+								            <td><h3>${e.empName }</h3>
+								              <p>${e.jobName }</p>
+								              <p>${e.deptName }</p>
+								              <p>${e.email }</p></td>
+								          </tr>
+								        </table>
+								      </div>
+								    </div>
+								</div>
+								  </div>
 					          </c:if>
 				          </c:forEach>
 				          </div>
 		          	</c:if> 
 	          </c:forEach>
 	          
-	          <c:forEach var="d" items="${deptList}">
+	            <c:forEach var="d" items="${deptList}">
 			        <c:if test="${d.deptCode eq 'D2'}">
 			            <h4><a onclick="dept2();">${d.deptName}</a></h4>
 	          			<div id="d2" style="display: none;">
 				          <c:forEach var="e" items="${list}">
 				          	<c:if test="${e.deptCode eq d.deptCode}">
-					           <div class="card" data-toggle="modal" data-target="#myModal">
+					           <div class="namebox" data-toggle="modal" data-target="#myModal${ e.empNo }">
 					            <table>
 					            	<tr>
-					            		<td><img src="${e.empProfile}"  style="width:80px;"></td>
+					            		<td>
+					            			<c:if test="${e.empProfile eq null}">
+					            				<img src="resources/profile_images/default_profile.png"  style="width:100px;">
+					            			</c:if>
+					            			<img src="${e.empProfile}"  style="width:80px;"></td>
 					            		<td>
 					            			<br><h4>${e.jobName} | ${e.empName}</h4>
 					            			<input type="hidden" name="empNo" value="${e.empNo}">
@@ -144,6 +177,29 @@
 					            	</tr>
 					            </table>
 					           </div><br>
+					           <!--  모달  -->
+								 <div id="myModal${ e.empNo }" class="modal">
+									<div class="modal-dialog">
+								    <div class="modal-content">
+								      <span class="close" data-dismiss="modal">&times;</span>
+								      <div class="modal-body">
+								        <table>
+								          <tr>
+								            <td><input type="hidden" name="empNo" value="${e.empNo}">
+								            	<c:if test="${e.empProfile eq null}">
+					            					<img src="resources/profile_images/default_profile.png"  style="width:100px;">
+					            				</c:if>
+								            	<img src="${e.empProfile}"  style="width:200px;"></td>
+								            <td><h3>${e.empName }</h3>
+								              <p>${e.jobName }</p>
+								              <p>${e.deptName }</p>
+								              <p>${e.email }</p></td>
+								          </tr>
+								        </table>
+								      </div>
+								    </div>
+								  </div>
+								</div>
 					          </c:if>
 				          </c:forEach>
 				          </div>
@@ -156,10 +212,14 @@
 	          			<div id="d3" style="display: none;">
 				          <c:forEach var="e" items="${list}">
 				          	<c:if test="${e.deptCode eq d.deptCode}">
-					           <div class="card" data-toggle="modal" data-target="#myModal">
+					           <div class="namebox" data-toggle="modal" data-target="#myModal${ e.empNo }">
 					            <table>
 					            	<tr>
-					            		<td><img src="${e.empProfile}"  style="width:80px;"></td>
+					            		<td>
+					            			<c:if test="${e.empProfile eq null}">
+					            				<img src="resources/profile_images/default_profile.png"  style="width:100px;">
+					            			</c:if>
+					            			<img src="${e.empProfile}"  style="width:80px;"></td>
 					            		<td>
 					            			<br><h4>${e.jobName} | ${e.empName}</h4>
 					            			<input type="hidden" name="empNo" value="${e.empNo}">
@@ -167,6 +227,29 @@
 					            	</tr>
 					            </table>
 					           </div><br>
+					           <!--  모달  -->
+								 <div id="myModal${ e.empNo }" class="modal">
+									<div class="modal-dialog">
+								    <div class="modal-content">
+								      <span class="close" data-dismiss="modal">&times;</span>
+								      <div class="modal-body">
+								        <table>
+								          <tr>
+								            <td><input type="hidden" name="empNo" value="${e.empNo}">
+								            	<c:if test="${e.empProfile eq null}">
+					            					<img src="resources/profile_images/default_profile.png"  style="width:100px;">
+					            				</c:if>
+								            	<img src="${e.empProfile}"  style="width:200px;"></td>
+								            <td><h3>${e.empName }</h3>
+								              <p>${e.jobName }</p>
+								              <p>${e.deptName }</p>
+								              <p>${e.email }</p></td>
+								          </tr>
+								        </table>
+								      </div>
+								    </div>
+								  </div>
+								</div>
 					          </c:if>
 				          </c:forEach>
 				          </div>
@@ -179,10 +262,14 @@
 	          			<div id="d4" style="display: none;">
 				          <c:forEach var="e" items="${list}">
 				          	<c:if test="${e.deptCode eq d.deptCode}">
-					           <div class="card" data-toggle="modal" data-target="#myModal">
+					          <div class="namebox" data-toggle="modal" data-target="#myModal${ e.empNo }">
 					            <table>
 					            	<tr>
-					            		<td><img src="${e.empProfile}"  style="width:80px;"></td>
+					            		<td>
+					            			<c:if test="${e.empProfile eq null}">
+					            				<img src="resources/profile_images/default_profile.png"  style="width:100px;">
+					            			</c:if>
+					            			<img src="${e.empProfile}"  style="width:80px;"></td>
 					            		<td>
 					            			<br><h4>${e.jobName} | ${e.empName}</h4>
 					            			<input type="hidden" name="empNo" value="${e.empNo}">
@@ -190,6 +277,29 @@
 					            	</tr>
 					            </table>
 					           </div><br>
+					           <!--  모달  -->
+								 <div id="myModal${ e.empNo }" class="modal">
+									<div class="modal-dialog">
+								    <div class="modal-content">
+								      <span class="close"  data-dismiss="modal">&times;</span>
+								      <div class="modal-body">
+								        <table>
+								          <tr>
+								            <td><input type="hidden" name="empNo" value="${e.empNo}">
+								            	<c:if test="${e.empProfile eq null}">
+					            					<img src="resources/profile_images/default_profile.png"  style="width:100px;">
+					            				</c:if>
+								            	<img src="${e.empProfile}"  style="width:200px;"></td>
+								            <td><h3>${e.empName }</h3>
+								              <p>${e.jobName }</p>
+								              <p>${e.deptName }</p>
+								              <p>${e.email }</p></td>
+								          </tr>
+								        </table>
+								      </div>
+								    </div>
+								  </div>
+								</div>
 					          </c:if>
 				          </c:forEach>
 				          </div>
@@ -202,10 +312,14 @@
 	          			<div id="d5" style="display: none;">
 				          <c:forEach var="e" items="${list}">
 				          	<c:if test="${e.deptCode eq d.deptCode}">
-					           <div class="card" data-toggle="modal" data-target="#myModal">
+					          <div class="namebox" data-toggle="modal" data-target="#myModal${ e.empNo }">
 					            <table>
 					            	<tr>
-					            		<td><img src="${e.empProfile}"  style="width:80px;"></td>
+					            		<td>
+					            			<c:if test="${e.empProfile eq null}">
+					            				<img src="resources/profile_images/default_profile.png"  style="width:100px;">
+					            			</c:if>
+					            			<img src="${e.empProfile}"  style="width:80px;"></td>
 					            		<td>
 					            			<br><h4>${e.jobName} | ${e.empName}</h4>
 					            			<input type="hidden" name="empNo" value="${e.empNo}">
@@ -213,6 +327,29 @@
 					            	</tr>
 					            </table>
 					           </div><br>
+					           <!--  모달  -->
+								 <div id="myModal${ e.empNo }" class="modal">
+									<div class="modal-dialog">
+								    <div class="modal-content">
+								      <span class="close" data-dismiss="modal">&times;</span>
+								      <div class="modal-body">
+								        <table>
+								          <tr>
+								            <td><input type="hidden" name="empNo" value="${e.empNo}">
+								            	<c:if test="${e.empProfile eq null}">
+					            					<img src="resources/profile_images/default_profile.png"  style="width:100px;">
+					            				</c:if>
+								            	<img src="${e.empProfile}"  style="width:200px;"></td>
+								            <td><h3>${e.empName }</h3>
+								              <p>${e.jobName }</p>
+								              <p>${e.deptName }</p>
+								              <p>${e.email }</p></td>
+								          </tr>
+								        </table>
+								      </div>
+								    </div>
+								  </div>
+								</div>
 					          </c:if>
 				          </c:forEach>
 				          </div>
@@ -226,10 +363,14 @@
 	          			<div id="d6" style="display: none;">
 				          <c:forEach var="e" items="${list}">
 				          	<c:if test="${e.deptCode eq d.deptCode}">
-					           <div class="card" data-toggle="modal" data-target="#myModal">
+					           <div class="namebox" data-toggle="modal" data-target="#myModal${ e.empNo }">
 					            <table>
 					            	<tr>
-					            		<td><img src="${e.empProfile}"  style="width:80px;"></td>
+					            		<td>
+					            			<c:if test="${e.empProfile eq null}">
+					            				<img src="resources/profile_images/default_profile.png"  style="width:100px;">
+					            			</c:if>
+					            			<img src="${e.empProfile}"  style="width:80px;"></td>
 					            		<td>
 					            			<br><h4>${e.jobName} | ${e.empName}</h4>
 					            			<input type="hidden" name="empNo" value="${e.empNo}">
@@ -237,88 +378,41 @@
 					            	</tr>
 					            </table>
 					           </div><br>
+					           <!--  모달  -->
+								 <div id="myModal${ e.empNo }" class="modal">
+									<div class="modal-dialog">
+								    <div class="modal-content">
+								      <span class="close"  data-dismiss="modal">&times;</span>
+								      <div class="modal-body">
+								        <table>
+								          <tr>
+								            <td><input type="hidden" name="empNo" value="${e.empNo}">
+								            	<c:if test="${e.empProfile eq null}">
+					            					<img src="resources/profile_images/default_profile.png"  style="width:100px;">
+					            				</c:if>
+								            	<img src="${e.empProfile}"  style="width:200px;"></td>
+								            <td><h3>${e.empName }</h3>
+								              <p>${e.jobName }</p>
+								              <p>${e.deptName }</p>
+								              <p>${e.email }</p></td>
+								          </tr>
+								        </table>
+								      </div>
+								    </div>
+								  </div>
+								</div>
 					          </c:if>
 				          </c:forEach>
 				          </div>
 		          	</c:if> 
 	          </c:forEach>
-	          
 	         </div> 
-	         
-	         
 	      </div>
 	    </div>
 	</div>
 	   
-	   <!--  모달  -->
-	 <div id="myModal" class="modal">
-	    <div class="modal-content">
-	      <span class="close">&times;</span>
-	      <div class="modal-body">
-	        <table>
-	          <tr>
-	            <td><input type="hidden" name="empNo" value="${e.empNo}">
-	            	<img src="${e.empProfile}" alt="Profile Image"  style="width:80%;"></td>
-	            <td><h3>${e.empName }</h3>
-	              <p>${e.jobName }</p>
-	              <p>${e.deptName }</p>
-	              <p>${e.email }</p></td>
-	          </tr>
-	        </table>
-	      </div>
-	    </div>
-	  </div>
 	  
 	  
-	<!-- The Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal-label" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	
-	      <!-- Modal Header -->
-	      <div class="modal-header">
-	        <h4 class="modal-title">Modal Heading</h4>
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	      </div>
-	
-	      <!-- Modal body -->
-	      <div class="modal-body">
-	       <table>
-	          <tr>
-	            <td><input type="hidden" name="empNo" value="${e.empNo}">
-	            	<img src="${e.empProfile}" alt="Profile Image"  style="width:80%;"></td>
-	            <td><h3>${e.empName }</h3>
-	              <p>${e.jobName }</p>
-	              <p>${e.deptName }</p>
-	              <p>${e.email }</p></td>
-	          </tr>
-	        </table>
-	      </div>
-	
-	      <!-- Modal footer -->
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-	      </div>
-	
-	    </div>
-	  </div>
-	</div>
-		  <script>
-		  $('.card').on('click', function() {
-			  $('#myModal').css('display', 'block');
-			});
-
-			
-			$('.close, .modal').on('click', function() {
-			  $('#myModal').css('display', 'none');
-			});
-
-			$(document).on('click', function(event) {
-			  if (event.target == $('#myModal')[0]) {
-			    $('#myModal').css('display', 'none');
-			  }
-			});
-		</script>
 		
 		<script>
 			function dept1(){

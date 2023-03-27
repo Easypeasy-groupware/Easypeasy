@@ -21,6 +21,39 @@
 		<result column="status" property="status" />
 		<result column="add_emp_no" property="addEmpNo"/>
 	</resultMap>
+	
+	<resultMap id="chatRoomResult" type="ChatRoom">
+		<id column="room_no" property="roomNo" />
+		<result column="room_name" property="roomName" />
+		<result column="create_date" property="createDate" />
+		<result column="count" property="count"/>
+		
+		<association property="oneMember" resultMap="chatMemberResult"/>
+		<collection property="memList" resultMap="chatMemberResult"/>
+	</resultMap>
+	
+	<resultMap id="chatMemberResult" type="ChatMember">
+		<id column="member_id" property="memberId" />
+		<result column="emp_no" property="empNo" />
+		<result column="room_no" property="roomNo" />
+		<result column="emp_name" property="empName"/>
+	</resultMap>
+	
+	<resultMap id="chatRecordResult" type="ChatRecord">
+		<id column="CHAT_NO" property="messageNo"/>
+		<result column="ROOM_NO" property="roomNo" />
+		<result column="CHAT_MESSAGE" property="message" />
+		<result column="EMP_NO" property="empNo" />
+		<result column="emp_name" property="empName" />
+		<result column="status" property="status"/>
+		<result column="unread_count" property="unReadCount" />
+		<result column="CHAT_TIME" property="chatTime" />
+		<result column="CHAT_TYPE" property="chatType" />
+
+		<result column="emp_profile" property="empProfile" />
+		<result column="job_name" property="jobName" />
+		
+	</resultMap>
 
 
 	<select id="viewChatEmpList" resultMap="chatEmployeeResult">
@@ -48,5 +81,150 @@
 		 order
 		    by emp_name asc
 	</select>
+	
+	<select id="selectChatRoom1" resultMap="chatRoomResult">
+		select
+		       r.room_no
+		     , room_name
+		     , create_date
+		  from chat_room r
+		  join chat_member m on (r.room_no = m.room_no)
+		 where emp_no = #{empNo}
+	</select>
+	
+	<select id="selectChatRoom2" resultMap="chatRoomResult">
+		select
+		        r.room_no
+		      , room_name
+		      , create_date
+		      , m.emp_no
+		      , emp_name
+		  from chat_room r
+		  join chat_member m on (r.room_no = m.room_no)
+		  join employee e on (m.emp_no = e.emp_no)
+		 where m.room_no = #{roomNo}
+		   and m.emp_no = #{empNo}
+	</select>
+	
+	<insert id="insertNewRoom">
+		insert
+		  into chat_room
+		     (
+		       room_no
+		     )
+		values
+		      (
+		        seq_rmno.nextval
+		      )
+	</insert>
+	
+	<insert id="insertNewMember">
+		insert
+		  into chat_MEMBER
+		     (
+		       MEMBER_ID
+		     , EMP_NO
+		     , ROOM_NO
+		     )
+		 values
+		      (
+		        seq_MEMNO.nextval
+		      , #{empNo}
+		      , seq_rmno.currval
+		      )
+	</insert>
+	
+	<select id="selectChatNewRoom" resultMap="chatRoomResult">
+		select
+		        room_no
+		      , room_name
+		      , create_date
+		      , count
+		  from (select
+		              rownum, chat_room.*
+		         from chat_room 
+		         order
+		            by room_no desc)
+		 where rownum = 1
+	</select>
+	
+	<select id="selectEmpInfo" resultMap="chatEmployeeResult">
+		select
+			    emp_no
+			  , emp_name
+		  from employee
+		 where emp_no = #{no}
+	</select>
+	
+	<select id="selectMessageList" resultMap="chatRecordResult">
+		select
+		       c.chat_no
+		     , c.emp_no
+		     , emp_name
+		     , c.chat_message
+		     , to_char(chat_time, 'MM-DD AMHH:MI:SS') "chat_time" 
+		     , c.room_no
+		     , c.status
+		     , c.chat_type
+		     , c.unread_count
+		     , job_name
+		     , emp_profile
+		  from chat_record c
+		  left join employee e on (c.emp_no = e.emp_no) 
+		  left join job j on (e.job_code = j.job_code)
+		 where room_no = #{roomNo}
+	</select>
+	
+	<update id="updateCount">
+		update 
+		       chat_record
+		   set unread_count = 0
+		 where room_no = #{roomNo}
+		   and emp_no = #{empNo}
+		   and unread_count = unread_count -1
+	</update>
+	
+	<select id="selectChatRoom" resultMap="chatRoomResult">
+		select
+		       *
+		  from chat_room
+		 where room_no = #{roomNo}
+	</select>
+	
+	<insert id="insertMessage">
+		insert
+		  into CHAT_RECORD
+		     ( 
+		        CHAT_NO
+			  , EMP_NO
+		 	  , CHAT_MESSAGE
+			  , ROOM_NO
+		      , CHAT_TYPE
+		      , UNREAD_COUNT 
+		     )
+		VALUES 
+		      (
+		        SEQ_CHTNO.NEXTVAL
+		      , #{empNo}
+		      , #{message}
+		      , #{roomNo}
+		      , #{chatType}
+			  , #{unReadCount}
+		      )
+	</insert>
+	
+	<update id="updateTitle">
+		update
+		       chat_room
+		   set room_name = #{message}
+		 where room_no = #{roomNo}
+	</update>
+	
+	<update id="insertNewRoomCount">
+		update
+		       chat_room
+		   set count = count + 1
+		 where room_no = #{roomNo}
+	</update>
 
 </mapper>

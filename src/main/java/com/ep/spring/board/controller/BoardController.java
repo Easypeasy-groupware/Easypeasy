@@ -379,6 +379,16 @@ public class BoardController {
 			
 	}
 	
+	@RequestMapping("rupdateform.bo")
+	public String updateReplyForm(BoardReply r, Model model) {
+	    int result = bService.updateReplyForm(r);
+	    model.addAttribute("reply", reply);
+	    return "updateReplyForm";
+	}
+
+		
+	
+	
 	
 	// Settings
 	@RequestMapping("adminSettings.bo")
