@@ -147,6 +147,13 @@ public class CommuteServiceImpl implements CommuteService{
 		return cDao.countEnd(sqlSession, empNo);
 	}
 
+	//휴가 지급 및 차감(인사계정)
+	@Override
+	public int insertVacRecode(VacationRecode vr) {
+		
+		return cDao.insertVacRecode(sqlSession, vr);
+	}
+
 
 	
 	

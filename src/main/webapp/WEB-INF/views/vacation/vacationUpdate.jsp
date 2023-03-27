@@ -220,7 +220,8 @@
             <br><br>
             <h3 class="smallTitle">휴가 부여 및 수정</h3><br>
             
-        <form action="" method="post">
+        <form action="insertRecode.vac" method="post">
+         <input type="hidden" name="empNo" value="${ clickEmp.empNo }">
             <button class="save-btn" type="submit">수정하기</button><br><br>
                 <table class="table3">
                     <tr>
@@ -248,6 +249,7 @@
 
                 
             </table>
+     
      
         <br>
         

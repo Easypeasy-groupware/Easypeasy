@@ -300,5 +300,17 @@ public class CommuteController {
 			
 		}
 		
+		@RequestMapping("insertRecode.vac")
+		public String updateRecodeVac(VacationRecode vr, HttpSession session) {
+			int result = cService.insertVacRecode(vr);
+			
+			if(result>0) {
+				
+			}else {
+				
+			}
+			return "";
+		}
+		
 
 }
