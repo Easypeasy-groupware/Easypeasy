@@ -279,7 +279,18 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 
+	@Override
+	public int selectSearchListCount(Approval a) {
+		return aDao.selectSearchListCount(sqlSession, a);
+	}
 
+
+	@Override
+	public ArrayList<Approval> selectSearchList(Approval a, PageInfo pi) {
+	
+		return aDao.selectSearchList(sqlSession, a, pi);
+		
+	}
 
 
 
