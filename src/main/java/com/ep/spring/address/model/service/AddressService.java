@@ -116,6 +116,13 @@ public interface AddressService {
 	
 	// 25. 개인주소록 그룹이름수정
 	int updatePsGroupName(AddGroup ag);
+	
+	// 26. 휴지통 목록 조회
+	int selectAddressBinListCount(int empNo);
+	ArrayList<Address> selectAddressBinList(PageInfo pi, int empNo);
+	
+	// 26. 주소록 다중 영구삭제(ajax)
+	int completeDeleteAddList(ArrayList<Address> list);
 
 	
 

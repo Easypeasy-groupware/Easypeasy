@@ -140,7 +140,7 @@
         <br>
 
         <div class="menu-type menu-list">
-            <a href="#" class="menu-a"><img src="resources/common_images/trashcan.png" style="width:15px;"> <b> 휴지통 </b></a>
+            <a href="addressBin.add" class="menu-a"><img src="resources/common_images/trashcan.png" style="width:15px;"> <b> 휴지통 </b></a>
         </div>
         
         <br>

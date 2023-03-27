@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -479,14 +480,44 @@ public class AddressController {
 		}else {
 			return "fail";
 		}
-		
-		
 	}
 	
 	
+	@RequestMapping(value="addressBin.add")
+	public ModelAndView selectAddressBinList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, ModelAndView mv) {
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
+		int listCount = aService.selectAddressBinListCount(empNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+		
+		ArrayList<Address> list = aService.selectAddressBinList(pi, empNo);
+		
+		mv.addObject("count", listCount)
+		  .addObject("list", list)
+		  .addObject("pi", pi)
+		  .setViewName("address/addressBin");
+		return mv;
 	
 	
+	}
 	
+	@ResponseBody
+	@RequestMapping(value="deleteFromBin.add") // ajax 개인주소록 선택한 여러주소록 삭제
+	public int ajaxCompleteDeleteAddList(@RequestParam(value="addList[]") List<String> addList) {
+		
+		ArrayList<Address> list = new ArrayList<>();
+		
+		for(String addNo : addList) {
+			Address a = new Address();
+			a.setAddNo(Integer.parseInt(addNo));
+			list.add(a);
+		}
+		int result = aService.completeDeleteAddList(list);
+		
+		return result;
+		
+	}
 	
 	
 
