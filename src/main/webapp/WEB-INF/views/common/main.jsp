@@ -63,6 +63,14 @@
     #out-btn{background: gray; margin-left:5px;}
     #out-btn:hover{cursor:pointer; font-weight:600; background: rgb(85, 85, 85);}
 
+
+	#scheduleList a{
+		text-decoration: none;
+		color: black;
+	}
+	#scheduleList a:hover{
+		font-weight:600;
+	}
 </style>
 </head>
 <body>
@@ -540,11 +548,14 @@
 									
 									for(let i=0; i<scList.length; i++){
 										let s = scList[i]; // {}
-										if(s.allDay == 'Y'){ // 첨부파일이 있을 경우
-											value += "<li>" + s.scTitle + "<br>" + s.startDate +  " ~ "  + s.endDate + "</li>"
-											
+										if(s.allDay == 'Y'){ 
+											value += "<a href='scheduleUpDel.sc?no=" + s.scNo + "'>"
+												   + 	"<li>" + s.scTitle + "<br>" + s.startDate +  " ~ "  + s.endDate + "</li>"
+												   + "</a>"
 										}else{
-											value += "<li>" + s.scTitle + "<br>" + s.startDate + " " + s.startTime +  " ~ "  + s.endDate + " " + s.endTime + "</li>"
+											value += "<a href='scheduleUpDel.sc?no=" + s.scNo + "'>"
+												   +	"<li>" + s.scTitle + "<br>" + s.startDate + " " + s.startTime +  " ~ "  + s.endDate + " " + s.endTime + "</li>"
+												   + "</a>"
 										}
 									}
 									
