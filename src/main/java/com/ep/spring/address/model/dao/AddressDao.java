@@ -263,6 +263,14 @@ public class AddressDao {
 		return result;
 	}
 
+	public ArrayList<Address> selectAllSharedAddress(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("addressMapper.selectAllSharedAddress");
+	}
+
+	public int updateSharedGroupName(SqlSessionTemplate sqlSession, AddGroup ag) {
+		return sqlSession.update("addressMapper.updateSharedGroupName", ag);
+	}
+
 
 
 

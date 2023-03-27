@@ -262,6 +262,16 @@ public class AddressServiceImpl implements AddressService {
 		return aDao.restoreAddList(sqlSession, list);
 	}
 
+	@Override
+	public ArrayList<Address> selectAllSharedAddress() {
+		return aDao.selectAllSharedAddress(sqlSession);
+	}
+
+	@Override
+	public int updateSharedGroupName(AddGroup ag) {
+		return aDao.updateSharedGroupName(sqlSession, ag);
+	}
+
 
 
 
