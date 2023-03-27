@@ -108,6 +108,14 @@ public class CommuteDao {
 	public int countEnd(SqlSessionTemplate sqlSession, int empNo) {
 		return sqlSession.selectOne("commuteMapper.countEnd", empNo);
 	}
+	
+	public int insertVacRecodePlus(SqlSessionTemplate sqlSession, VacationRecode vr) {
+		return sqlSession.insert("commuteMapper.insertVacRecodePlus", vr);
+	}
+	
+	public int insertVacRecodeMinus(SqlSessionTemplate sqlSession, VacationRecode vr) {
+		return sqlSession.insert("commuteMapper.insertVacRecodeMinus", vr);
+	}
 
 
 }

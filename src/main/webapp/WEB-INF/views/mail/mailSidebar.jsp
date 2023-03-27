@@ -21,8 +21,8 @@
     .mailbox_subject{width: 157px; float: left; font-size: 18px; font-weight: 700; color: darkslategrey;}
     .settings{width: 13px; padding-top: 5px;}
     .boxList{width: 170px;}
-    .boxList>div{width: 140px; float: left; margin: 5px 0px 0px 15px; padding: 5px 0px 5px 0px; font-size: 14px;}
-    .boxList>img{width: 15px; margin: 5px 0px 5px 0px; padding: 5px 0px 5px 0px;}
+    .boxListOne>div{width: 140px; float: left; margin: 5px 0px 0px 15px; padding: 5px 0px 5px 0px; font-size: 14px;}
+    .boxListOne>img{width: 15px; margin: 5px 0px 5px 0px; padding: 6px 0px 5px 0px;}
     #tagList{min-height: 0px; max-height: 110px; overflow-y: auto; overflow-x: hidden;}
     #tagList>div{float: left;}
     .tagBoxList{width: 30px; float: left; float: left; line-height: 15px;}
@@ -45,8 +45,10 @@
     #select_tag_color>div{width: 15px; height: 15px; margin: 4px; float: left; background-color: brown;}
 
     .favorite{width: 16px;}
+    .trashmailbox{width: 200px;}
+    .trashmailbox>div{width: 140px; float: left; margin: 5px 0px 0px 15px; padding: 5px 0px 5px 0px; font-size: 14px;}
     #spambox, #trashcan{width: 125px; float: left;}
-    #spambox+button, #trashcan+button{width: 40px; font-size: 10px; padding: 4px;}
+    #spambox+button, #trashcan+button{width: 40px; font-size: 10px; padding: 4px; margin-top: 10px;}
 
 </style>
 </head>
@@ -60,18 +62,22 @@
         <div class="menu-btn">
             <a href="enrollForm.sm" id="menu-add-btn">메일 쓰기</a>
         </div>
-        <br><br><br>
+        <br>
         <div>
             <div class="mailbox_subject">즐겨찾기</div>
             <img class="settings" src="resources/common_images/setting.png">
-            <br><br>
-            <div class="boxList">
-                <div class="mailbox" id="unread_box">안읽은 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
-                <div class="mailbox" id="impor_box">중요 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
-                <div class="mailbox" id="temp_box">작성중인 메일함</div><img class="favorite" src="resources/common_images/favorite.png">
+            <br>
+            <div class="boxList favor">
+                <c:if test="${ not empty mailFavorList }">
+                    <c:forEach var="mf" items="${ mailFavorList }">
+                        <div class="boxListOne">
+                            <div id="recMailbox" class="mailbox">${ mf.mailBoxName }</div><img class="unFavorite" src="resources/common_images/favorite.png">
+                        </div>
+                    </c:forEach>
+                </c:if>
             </div>
         </div>
-        <br><br>
+        <br>
         <div>
             <div class="mailbox_subject">태그</div>
             <br><br>
@@ -163,18 +169,39 @@
             <div class="mailbox_subject">메일함</div>
             <img class="settings" src="resources/common_images/setting.png">
             <br><br>
-            <div class="boxList">
-                <div id="recMailbox" class="mailbox">받은 메일함(전체)</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div class="mailbox" id="today_box">오늘 온 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div class="mailbox" id="tome_box">내게 쓴 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div class="mailbox" id="attach_box">첨부파일 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div class="mailbox" id="send_box">보낸 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div class="mailbox" id="reservation_box">예약 메일함</div><img class="favorite" src="resources/common_images/unFavorite.png">
-                <div style="width: 200px;">
+            <div class="boxList normal">
+                <div class="boxListOne">
+                    <div id="recMailbox" class="mailbox">받은 메일함(전체)</div><img class="unFavorite" src="resources/common_images/unFavorite.png">
+                </div>
+                <div class="boxListOne">
+                    <div class="mailbox" id="today_box">오늘 온 메일함</div><img class="unFavorite" src="resources/common_images/unFavorite.png">
+                </div>
+                <div class="boxListOne">
+                    <div class="mailbox" id="tome_box">내게 쓴 메일함</div><img class="unFavorite" src="resources/common_images/unFavorite.png">
+                </div>
+                <div class="boxListOne">
+                    <div class="mailbox" id="attach_box">첨부파일 메일함</div><img class="unFavorite" src="resources/common_images/unFavorite.png">
+                </div>
+                <div class="boxListOne">
+                    <div class="mailbox" id="send_box">보낸 메일함</div><img class="unFavorite" src="resources/common_images/unFavorite.png">
+                </div>
+                <div class="boxListOne">
+                    <div class="mailbox" id="unread_box">안읽은 메일함</div><img class="unFavorite" src="resources/common_images/unFavorite.png">
+                </div>
+                <div class="boxListOne">
+                    <div class="mailbox" id="impor_box">중요 메일함</div><img class="unFavorite" src="resources/common_images/unFavorite.png">
+                </div>
+                <div class="boxListOne">
+                    <div class="mailbox" id="temp_box">작성중인 메일함</div><img class="unFavorite" src="resources/common_images/unFavorite.png">
+                </div>
+                <div class="boxListOne">
+                    <div class="mailbox" id="reservation_box">예약 메일함</div><img class="unFavorite" src="resources/common_images/unFavorite.png">
+                </div>
+                <div class="trashmailbox">
                     <div class="mailbox" id="spambox">스팸 메일함 </div>
                     <button id="spam_completeDel" class="btn btn-outline-secondary btn-sm">비우기</button>
                 </div>
-                <div style="width: 200px;">
+                <div class="trashmailbox">
                     <div class="mailbox" id="trashcan">휴지통 </div>
                     <button id="trashcan_completeDel" class="btn btn-outline-secondary btn-sm">비우기</button>
                 </div>
@@ -287,8 +314,59 @@
                 }
             });
         });
+
+        // 즐겨찾기 등록
+        document.querySelectorAll(".unFavorite").forEach(function(favor){
+            favor.addEventListener('click', function(){
+                const favorBox = document.getElementsByClassName("boxList favor");
+                const mailBoxName = this.previousSibling.innerText;
+                let box = this.parentNode;
+
+                $.ajax({
+                    url: "enrollFavorMailBox.ma",
+                    type: "POST",
+                    data: {mailBoxName: mailBoxName},
+                    success: function(result){
+                        if(result == '1'){
+                            if($(this).attr("src") == "resources/common_images/unFavorite.png"){
+                                $(this).attr("src", "resources/common_images/favorite.png");
+                                $(this).attr("class", "favorite");
+                                favorBox[0].append(box)
+                            }
+                        }
+                    }, error: function(){
+
+                    }
+                })
+            })
+        })
+
+        document.querySelectorAll(".favorite").forEach(function(favor){
+            favor.addEventListener('click', function(){
+                const normalBox = document.getElementsByClassName("boxList normal");
+                const mailBoxName = this.previousSibling.innerText;
+                let box = this.parentNode;
+
+                $.ajax({
+                    url: "deleteFavorMailBox.ma",
+                    type: "POST",
+                    data: {mailBoxName: mailBoxName},
+                    success: function(result){
+                        if(result == '1'){
+                            if($(this).attr("src") == "resources/common_images/favorite.png"){
+                                $(this).attr("src", "resources/common_images/unFavorite.png");
+                                $(this).attr("class", "unFavorite");
+                                normalBox[0].append(box)
+                            }
+                        }
+                    }, error: function(){
+
+                    }
+                })
+            })
+        })
+
     </script>
     
-
 </body>
 </html>

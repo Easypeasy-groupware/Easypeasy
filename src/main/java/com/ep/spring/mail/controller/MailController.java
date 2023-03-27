@@ -8,10 +8,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,9 +27,8 @@ import com.ep.spring.common.template.Pagination;
 import com.ep.spring.login.model.vo.Employee;
 import com.ep.spring.mail.model.service.MailService;
 import com.ep.spring.mail.model.vo.Mail;
+import com.ep.spring.mail.model.vo.MailFavorite;
 import com.ep.spring.mail.model.vo.MailTag;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class MailController {
@@ -45,7 +43,7 @@ public class MailController {
 		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
 		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
-		ArrayList<Attachment> attachList = mService.selectAttachmentList(mailList);
+		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
 		
 		int listCount = mailList.size();
 		PageInfo mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
@@ -396,6 +394,7 @@ public class MailController {
 		PageInfo mailPi = null;
 		ArrayList<Mail> mailList = mService.selectTodayMailList(mailPi, email);
 		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
+		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
 		
 		int listCount = mailList.size();
 		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
@@ -404,6 +403,7 @@ public class MailController {
 		session.setAttribute("tagList", tagList);
 		mv.addObject("mailList", mailList);
 		mv.addObject("pgMailList", pagingMailList);
+		mv.addObject("attachList", attachList);
 		mv.addObject("mailPi", mailPi);
 		mv.setViewName("mail/todayMailBox");
 		return mv;
@@ -416,6 +416,7 @@ public class MailController {
 		PageInfo mailPi = null;
 		ArrayList<Mail> mailList = mService.selectToMeMailList(mailPi, email);
 		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
+		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
 		
 		int listCount = mailList.size();
 		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
@@ -424,6 +425,7 @@ public class MailController {
 		session.setAttribute("tagList", tagList);
 		mv.addObject("mailList", mailList);
 		mv.addObject("pgMailList", pagingMailList);
+		mv.addObject("attachList", attachList);
 		mv.addObject("mailPi", mailPi);
 		mv.setViewName("mail/toMeMailBox");
 		return mv;
@@ -436,6 +438,7 @@ public class MailController {
 		PageInfo mailPi = null;
 		ArrayList<Mail> mailList = mService.selectAttachMailList(mailPi, email);
 		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
+		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
 		
 		int listCount = mailList.size();
 		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
@@ -444,6 +447,7 @@ public class MailController {
 		session.setAttribute("tagList", tagList);
 		mv.addObject("mailList", mailList);
 		mv.addObject("pgMailList", pagingMailList);
+		mv.addObject("attachList", attachList);
 		mv.addObject("mailPi", mailPi);
 		mv.setViewName("mail/attachMailbox");
 		return mv;
@@ -456,6 +460,7 @@ public class MailController {
 		PageInfo mailPi = null;
 		ArrayList<Mail> mailList = mService.selectImporMailList(mailPi, email);
 		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
+		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
 		
 		int listCount = mailList.size();
 		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
@@ -464,6 +469,7 @@ public class MailController {
 		session.setAttribute("tagList", tagList);
 		mv.addObject("mailList", mailList);
 		mv.addObject("pgMailList", pagingMailList);
+		mv.addObject("attachList", attachList);
 		mv.addObject("mailPi", mailPi);
 		mv.setViewName("mail/imporMailBox");
 		return mv;
@@ -476,6 +482,7 @@ public class MailController {
 		PageInfo mailPi = null;
 		ArrayList<Mail> mailList = mService.selectUnreadMailList(mailPi, email);
 		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
+		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
 		
 		int listCount = mailList.size();
 		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
@@ -484,6 +491,7 @@ public class MailController {
 		session.setAttribute("tagList", tagList);
 		mv.addObject("mailList", mailList);
 		mv.addObject("pgMailList", pagingMailList);
+		mv.addObject("attachList", attachList);
 		mv.addObject("mailPi", mailPi);
 		mv.setViewName("mail/unreadMailBox");
 		return mv;
@@ -496,6 +504,7 @@ public class MailController {
 		PageInfo mailPi = null;
 		ArrayList<Mail> mailList = mService.selectSendMailList(mailPi, email);
 		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
+		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
 		
 		int listCount = mailList.size();
 		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
@@ -504,6 +513,7 @@ public class MailController {
 		session.setAttribute("tagList", tagList);
 		mv.addObject("mailList", mailList);
 		mv.addObject("pgMailList", pagingMailList);
+		mv.addObject("attachList", attachList);
 		mv.addObject("mailPi", mailPi);
 		mv.setViewName("mail/sendMailbox");
 		return mv;
@@ -523,6 +533,7 @@ public class MailController {
 		PageInfo mailPi = null;
 		ArrayList<Mail> mailList = mService.selectTempMailList(mailPi, email);
 		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
+		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
 		
 		int listCount = mailList.size();
 		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
@@ -531,8 +542,34 @@ public class MailController {
 		session.setAttribute("tagList", tagList);
 		mv.addObject("mailList", mailList);
 		mv.addObject("pgMailList", pagingMailList);
+		mv.addObject("attachList", attachList);
 		mv.addObject("mailPi", mailPi);
 		mv.setViewName("mail/tempMailBox");
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping("imporEroll.ma")
+	public String enrollImporMail(Mail m) {
+		String result = Integer.toString(mService.enrollImporMail(m)); 
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("enrollFavorMailBox.ma")
+	public String enrollFavorMailBox(MailFavorite mf, HttpSession session) {
+		mf.setEmpNo(((Employee)session.getAttribute("loginUser")).getEmpNo());
+		String result = Integer.toString(mService.enrollFavorMailBox(mf));
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("deleteFavorMailBox.ma")
+	public String deleteFavorMailBox(MailFavorite mf, HttpSession session) {
+		mf.setEmpNo(((Employee)session.getAttribute("loginUser")).getEmpNo());
+		String result = Integer.toString(mService.deleteFavorMailBox(mf));
+		
+		return result;
 	}
 }

@@ -11,6 +11,7 @@ import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.mail.model.dao.MailDao;
 import com.ep.spring.mail.model.vo.Mail;
+import com.ep.spring.mail.model.vo.MailFavorite;
 import com.ep.spring.mail.model.vo.MailTag;
 
 @Service
@@ -81,7 +82,7 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public ArrayList<Attachment> selectAttachmentList(ArrayList<Mail> mailList) {
+	public ArrayList<ArrayList<Attachment>> selectAttachmentList(ArrayList<Mail> mailList) {
 		return mDao.selectAttachmentList(mailList, sqlSession);
 	}
 
@@ -166,6 +167,26 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public ArrayList<Attachment> selectMailAttachment(Mail m) {
 		return mDao.selectAttachMailList(m, sqlSession);
+	}
+
+	@Override
+	public int enrollImporMail(Mail m) {
+		return mDao.enrollImporMail(m, sqlSession);
+	}
+
+	@Override
+	public int enrollFavorMailBox(MailFavorite mf) {
+		return mDao.enrollFavorMailBox(mf, sqlSession);
+	}
+
+	@Override
+	public int deleteFavorMailBox(MailFavorite mf) {
+		return mDao.deleteFavorMailBox(mf, sqlSession);
+	}
+
+	@Override
+	public ArrayList<MailFavorite> selectMailFavorList(int empNo) {
+		return mDao.selectMailFavorList(empNo, sqlSession);
 	}
 
 	
