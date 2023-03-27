@@ -135,10 +135,8 @@ public class CommuteController {
 			String endTime = c.getEndTime();
 			// 문자열
 			String dateStr = endTime;
-				 
 			// 포맷터
 			SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-				 
 	        // 문자열 -> Date
 	        Date date = formatter.parse(dateStr);
 	        //System.out.println(date);
@@ -146,7 +144,7 @@ public class CommuteController {
 	        int M = date.getMinutes();
 	        //System.out.println(H);
 	        
-	        //18시00분 전에는 조퇴(comStatus = "LE")
+	        //18시00분 전에는 조퇴(LE_STATUS = "Y")
 	        if(H<18) {
 	        	c.setLeStatus("Y");
 	        }else {
