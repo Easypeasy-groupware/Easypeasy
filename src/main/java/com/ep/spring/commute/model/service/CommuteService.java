@@ -60,6 +60,9 @@ public interface CommuteService {
 	
 	//휴가 차감(인사게정)
 	int insertVacRecodeMinus(VacationRecode vr);
+	
+	//잔여휴가 조회
+	VacationRecode selectVacRemaining(int empNo);
 
 	
 

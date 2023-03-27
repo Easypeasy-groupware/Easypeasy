@@ -58,15 +58,19 @@ public class CommuteController {
 				end = cService.countEnd(empNo);
 				
 				//휴가기록 및 잔여휴가 조회
-				ArrayList<VacationRecode> list1 = cService.selectVacMain(empNo);
+			
+				VacationRecode vr = cService.selectVacRemaining(empNo);
 				ArrayList<VacationForm> list2 = cService.selectVacForm(empNo);
+				
+				//System.out.println(list1);
+				
 				
 				mv.addObject("c", c)
 				  .addObject("tr", tr)
 				  .addObject("countLe", countLe)
 				  .addObject("ab", ab)
 				  .addObject("end", end)
-				  .addObject("list1", list1)
+				  .addObject("vr", vr)
 				  .addObject("list2", list2)
 				  .setViewName("commute/commuteMain");
 				return mv;
@@ -242,6 +246,7 @@ public class CommuteController {
 			//System.out.println(c);
 			int result = cService.updateTimeHR(c);
 			int empNo = c.getEmpNo();
+			
 			
 			if(result>0) {
 				AlertMsg msg = new AlertMsg("근무시간 수정", "근무시간 수정이 성공적으로 완료되었습니다.");

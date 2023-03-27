@@ -513,11 +513,30 @@ public class AddressController {
 			a.setAddNo(Integer.parseInt(addNo));
 			list.add(a);
 		}
-		int result = aService.completeDeleteAddList(list);
+		int result1 = aService.deleteFavList(list);
+		int result2 = aService.completeDeleteAddList(list);
+		
+		return result1*result2;
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="restoreAddList.add") // ajax 개인주소록 선택한 여러주소록 삭제
+	public int ajaxRestoreAddList(@RequestParam(value="addList[]") List<String> addList) {
+		
+		ArrayList<Address> list = new ArrayList<>();
+		
+		for(String addNo : addList) {
+			Address a = new Address();
+			a.setAddNo(Integer.parseInt(addNo));
+			list.add(a);
+		}
+		int result = aService.restoreAddList(list);
 		
 		return result;
 		
 	}
+	
 	
 	
 

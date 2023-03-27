@@ -505,7 +505,7 @@
                 <table class="vac">
                     <tr>
                         <td>잔여휴가</td>
-                        <td>14일</td>
+                        <td>${ vr.vacRemaining }일</td>
                     </tr>
                 </table><br>
                 <table class="tg">
@@ -517,12 +517,14 @@
                     </thead>
                     
                     <tbody>
+                    <c:forEach var="list2" items="${ list2 }">
                       <tr>
-                        <c:forEach var="list2" items="${ list2 }">
+                        
                 		<td class="tg-0lax">${ list2.vacStart }~${ list2.vacEnd }</td>
                 		<td class="tg-0lax">${ list2.vacUse }일</td>
-                	</c:forEach>
+                	
                       </tr>
+                      </c:forEach>
                     </tbody>
                     </table>
             </div>

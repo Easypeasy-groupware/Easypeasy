@@ -29,6 +29,8 @@ import com.ep.spring.mail.model.vo.Mail;
 import com.ep.spring.mail.model.vo.MailFavorite;
 import com.ep.spring.mail.model.vo.MailTag;
 import com.ep.spring.organization.model.service.OrgService;
+import com.ep.spring.schedule.model.service.ScheduleService;
+import com.ep.spring.schedule.model.vo.Calendar;
 
 @Controller
 public class EmployeeController {
@@ -46,6 +48,9 @@ public class EmployeeController {
 	private MailService mService;
 	@Autowired
 	private AlarmService alService;
+	
+	@Autowired
+	private ScheduleService scService;
 	
 	/* 채팅 */
 	@Autowired
@@ -68,6 +73,19 @@ public class EmployeeController {
 		ArrayList<MailTag> tagList = mService.selectTagList(loginUser.getEmpNo());
 		// 메일함 즐겨찾기 리스트 조회
 //		ArrayList<MailFavorite> mailFavorList = mService.selectMailFavorList(loginUser.getEmpNo());
+
+		
+		
+		
+		int empNo = loginUser.getEmpNo();
+		
+		
+		ArrayList<Employee> list = oService.selectOrgList(empNo);
+		ArrayList<Department> deptList = oService.selectDept();
+		ArrayList<Job> jList = oService.selectJob();
+		ArrayList<Calendar> myCalList = scService.selectMyCalendar(empNo);
+		
+		
 		
 		/* 채팅 */
         // 현재 로그인 한 User 채팅 Session ArrayList에 추가.
@@ -102,10 +120,15 @@ public class EmployeeController {
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("pList", userGroup); //로그인한 사원의 주소록 그룹리스트 세션에 저장
 			session.setAttribute("sList", sharedGroup); //외부 공유주소록 그룹리스트 세션에 저장
-			session.setAttribute("recMailList", recMailList);
+			//session.setAttribute("recMailList", recMailList);
 			session.setAttribute("tagList", tagList);
 //			session.setAttribute("mailFavorList", mailFavorList);
 			//session.setAttribute("alarmList", alarmList);
+			
+			session.setAttribute("jList", jList);
+			session.setAttribute("deptList", deptList);
+			session.setAttribute("list", list);
+			session.setAttribute("myCalList", myCalList);
 			
 			cSession.addLoginChatUser(loginUser.getEmpNo());
 			
@@ -137,15 +160,7 @@ public class EmployeeController {
 	@RequestMapping("main.ep")
 	public String mainPage(HttpSession session) {
 		
-		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		
-		ArrayList<Employee> list = oService.selectOrgList(empNo);
-		ArrayList<Department> deptList = oService.selectDept();
-		ArrayList<Job> jList = oService.selectJob();
-		
-		session.setAttribute("list", list);
-		session.setAttribute("deptList", deptList);
-		session.setAttribute("jList", jList);
 		
 		return "common/main";
 	}

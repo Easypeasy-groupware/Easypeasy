@@ -176,6 +176,7 @@
                     <th>내용</th>
                 </tr>
                 
+                <c:forEach var="list2" items="${ list2 }">
                 <tr>
                     <td>${ loginUser.empName }</td>
                     <c:choose>
@@ -198,13 +199,13 @@
                 		<td>마케팅팀</td>
                 	</c:otherwise>
                 	</c:choose>
-                	<c:forEach var="list2" items="${ list2 }">
+                	
                 		<td>${ list2.vacStart }~${ list2.vacEnd }</td>
 	                    <td>${ list2.vacKind }</td>
-                	</c:forEach>
+                	
                     
                 </tr>
-
+				</c:forEach>
                
             </table>
 
