@@ -48,16 +48,16 @@
             <br>
          </bheader>
         <div class="container">
-            <form>
+            <!-- <form>
                 <div class="search-container">
-                <!-- 
+                
                     <select>
                         <option value="all">전체</option>
                         <option value="1">1일</option>
                         <option value="7">1주일</option>
                         <option value="30">1개월</option>
                     </select>
-                  -->   
+                    
                     <select>
                         <option value="title">제목</option>
                         <option value="content">내용</option>
@@ -65,7 +65,7 @@
                         <input type="text" placeholder="검색">
                         <button type="button" class="btn btn-success btn-sm" onclick="search()">검색</button>
                 </div>
-            </form>
+            </form> -->
             <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enrollAForm.bo';">새글쓰기</button>
             <%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> 
             	<button type="button" class="btn btn-outline-danger btn-sm" onclick="location.href='delete.bo';"> 삭제</button>
