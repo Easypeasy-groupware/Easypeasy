@@ -537,6 +537,28 @@ public class AddressController {
 		
 	}
 	
+	@RequestMapping(value="sharedGroup.add")
+	public ModelAndView sharedGroupEditView(ModelAndView mv) {
+		
+		ArrayList<AddGroup> gList = aService.selectSharedAddGroup();
+		int total = aService.selectExternalAllListCount();
+		ArrayList<Address> aList = aService.selectAllSharedAddress();
+		
+		mv.addObject("gList", gList) // 외부그룹리스트
+		  .addObject("total", total) // 전체 공유주소록 개수
+		  .addObject("aList", aList) // 전체 공유 주소록
+		  .setViewName("address/adminGroupManageList");
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="updateSharedGroup.add")
+	public int ajaxUpdateSharedGroupName(AddGroup ag) {
+		
+		return aService.updateSharedGroupName(ag);
+		
+		
+	}
 	
 	
 

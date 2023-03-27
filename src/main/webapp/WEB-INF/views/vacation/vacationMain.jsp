@@ -155,10 +155,10 @@
                 		<td>마케팅팀</td>
                 	</c:otherwise>
                 	</c:choose>
-                    <td>16</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>15</td>
+                    <td>${GVac}</td>
+                    <td>${SVac}</td>
+                    <td>${useVac}</td>
+                    <td>${vr.vacRemaining}</td>
                 </tr>
             </table>
 

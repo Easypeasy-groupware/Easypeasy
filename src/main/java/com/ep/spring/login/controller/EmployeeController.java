@@ -76,7 +76,7 @@ public class EmployeeController {
 		
 		
 		int empNo = loginUser.getEmpNo();
-		
+		System.out.println(empNo);
 		
 		ArrayList<Employee> list = oService.selectOrgList(empNo);
 		ArrayList<Department> deptList = oService.selectDept();

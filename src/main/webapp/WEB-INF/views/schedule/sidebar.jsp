@@ -93,25 +93,7 @@
 	    z-index: 10;
 	    display: none;
 	}
-:root{
-    --form-color: #a00; /* CSS 변수로 색상 지정 */
-}
-fieldset{
-    margin: 20px;
-    border: 1px solid #e0e0e0;
-}
-fieldset legend{
-    padding: 5px;
-    background-color: #555;
-    color: #fff;
-}
-input{
-    accent-color: var(--form-color); /* 폼 요소에 변수 색상 지정 */
-}
-input[type=checkbox], input[type=radio]{
-    width: 1.25em;
-    height: 1.25em;
-}
+
 </style>
 </head>
 <body>
@@ -137,16 +119,16 @@ input[type=checkbox], input[type=radio]{
         	<c:forEach var="c" items="${ myCalList }">
         		<c:choose>
            			<c:when test="${ c.calDefault eq 'Y' }">
-           				<div class="custom-control custom-checkbox" style="display: inline-block; width: 130px; text-align: left;">
-				            <input type="checkbox" class="custom-control-input inputCheck" name="scCompany" id="defaultY">
-				            <label class="custom-control-label" for="defaultY">(기본) ${ c.calTitle }</label>
+           				<div class="custom-checkbox" style="display: inline-block; width: 130px; text-align: left;">
+				            <input type="checkbox" class="inputCheck" name="scCompany" id="defaultY" style="accent-color: ${ c.calColor }; width: 15px; height: 15px;">
+				            <label class="control-label" for="defaultY">(기본) ${ c.calTitle }</label>
 		        			<input type="hidden" id="defaultCheckNo" value="${ c.calNo }">
 		        		</div>
            			</c:when>
            			<c:otherwise>
-           				<div class="custom-control custom-checkbox" style="display: inline-block; width: 130px; text-align: left;">
-				            <input type="checkbox" class="custom-control-input inputCheck" name="scCompany" id="${ c.calNo }">
-				            <label class="custom-control-label" for="${ c.calNo }">${ c.calTitle }</label>
+           				<div class="custom-checkbox" style="display: inline-block; width: 130px; text-align: left;">
+				            <input type="checkbox" class="inputCheck" name="scCompany" id="${ c.calNo }" style="accent-color: ${ c.calColor }; width: 15px; height: 15px;">
+				            <label class="control-label" for="${ c.calNo }">${ c.calTitle }</label>
 				            <input type="hidden" class="calNo" value="${ c.calNo }">
 		        		</div>
            			</c:otherwise>
@@ -154,7 +136,7 @@ input[type=checkbox], input[type=radio]{
         		
         	</c:forEach>
         </div>
-        <br><br>
+        <br><br><br>
         
         <div id="add_calendar"> + 내 캘린더 추가</div>
 
