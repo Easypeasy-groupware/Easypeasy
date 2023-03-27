@@ -55,6 +55,13 @@ public interface CommuteService {
 	int countAb(int empNo);
 	int countEnd(int empNo);
 	
+	//휴가 지급(인사계정)
+	int insertVacRecodePlus(VacationRecode vr);
+	
+	//휴가 차감(인사게정)
+	int insertVacRecodeMinus(VacationRecode vr);
+
+	
 
 
 }

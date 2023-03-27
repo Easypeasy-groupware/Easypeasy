@@ -269,5 +269,67 @@
              and emp_no = #{empNo}
 	</select>
 	
+	<insert id="insertVacRecodePlus">
+		insert
+          into VAC_RECODE
+			  (
+			    vac_recode
+			  , emp_no
+			  , vac_days
+			  , enroll_date
+			  , vac_reason
+			  , vac_divide
+	          , vac_category
+              , vac_remaining
+			  )
+			  values
+			  (
+			    SEQ_VACNO.nextval
+			  , #{empNo}
+			  , #{vacDays}
+			  , SYSDATE
+			  , #{vacReason}
+			  , #{vacDivide}
+	          , #{vacCategory}
+              , (select vac_remaining
+                    from vac_recode
+                    where emp_no = #{empNo}
+                    and vac_recode = (select max(vac_recode)
+                                        from vac_recode
+                                       where emp_no = #{empNo})) + #{vacDays}
+             )
+	</insert>
+	
+	
+	<insert id="insertVacRecodeMinus">
+		insert
+          into VAC_RECODE
+			  (
+			    vac_recode
+			  , emp_no
+			  , vac_days
+			  , enroll_date
+			  , vac_reason
+			  , vac_divide
+	          , vac_category
+              , vac_remaining
+			  )
+			  values
+			  (
+			    SEQ_VACNO.nextval
+			  , #{empNo}
+			  , #{vacDays}
+			  , SYSDATE
+			  , #{vacReason}
+			  , #{vacDivide}
+	          , #{vacCategory}
+              , (select vac_remaining
+                    from vac_recode
+                    where emp_no = #{empNo}
+                    and vac_recode = (select max(vac_recode)
+                                        from vac_recode
+                                       where emp_no = #{empNo})) - #{vacDays}
+             )
+	</insert>
 
 </mapper>

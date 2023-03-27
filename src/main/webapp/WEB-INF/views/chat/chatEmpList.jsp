@@ -114,25 +114,23 @@
 					</div>
 				</c:if>		
 			</c:forEach>
-			
-			
-			
-			
-			
-			
+
 		</div><!-- list-area끝 -->
+		
+	
 		<script>
 			$(function(){
-
 				let count = 0;
 				$(".indiv-list").each(function(){
 					$(this).click(function(){
+
 						count++;
-						var wName = "room1" + count; // 새창의이름
-						
 						let no = $(this).children("input").val();
+						
+						var wName = "room" + no; // 새창의이름
+
 						var options = 'top=500, left=1400, width=400, height=600, status=no, menubar=no, toolbar=no, titlebar=no, resizable=no, location=no, scrollbars=no';
-						var url = "chatRoom.ch?emp=" + no;
+						var url = "chatRoom.ch?no=" + no;
 						window.open(url, wName, options);
 					})
 				})

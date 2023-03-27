@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- 
@@ -28,6 +33,7 @@
 	  
 	  <bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource" destroy-method="close">
 	  	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+	  	<!-- <property name="url" value="jdbc:oracle:thin:@14.36.141.71:8877:xe" /> -->
 	  	<property name="url" value="jdbc:oracle:thin:@14.36.141.71:8877:xe" />
 	  	<property name="username" value="gdj57_easypeasy" />
 	  	<property name="password" value="gdj57_easypeasy" />

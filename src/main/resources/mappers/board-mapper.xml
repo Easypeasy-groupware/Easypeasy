@@ -195,7 +195,6 @@
 		   set board_cno = #{boardCno}
 		     , board_title = #{boardTitle}
 		     , board_content = #{boardContent}
-		     , board_pin = #{boardPin}
 		 where board_no = #{boardNo}
 	</update>
 	

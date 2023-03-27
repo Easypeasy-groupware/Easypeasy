@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ep.spring.address.model.service.AddressService;
 import com.ep.spring.address.model.vo.AddGroup;
 import com.ep.spring.alarm.model.service.AlarmService;
+import com.ep.spring.alarm.model.vo.Alarm;
+import com.ep.spring.chat.model.vo.ChatSession;
 //import com.ep.spring.chat.model.vo.ChatSession;
 import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.common.template.FileUpload;
@@ -46,8 +48,8 @@ public class EmployeeController {
 	private AlarmService alService;
 	
 	/* 채팅 */
-	//@Autowired
-	//private ChatSession cSession;
+	@Autowired
+	private ChatSession cSession;
 	
 	//로그인
 	@RequestMapping("login.ep")
@@ -105,6 +107,8 @@ public class EmployeeController {
 			session.setAttribute("mailFavorList", mailFavorList);
 			//session.setAttribute("alarmList", alarmList);
 			
+			cSession.addLoginChatUser(loginUser.getEmpNo());
+			
 			return "common/main";
 		}else { // 실패
 			AlertMsg msg = new AlertMsg("로그인", "로그인에 실패했습니다. 다시 시도 해주세요.");
@@ -120,8 +124,9 @@ public class EmployeeController {
 	public String logoutMember(HttpSession session) {
 		
 		/* 채팅 */
-        // 로그아웃한 사원을 채팅 Session ArrayList에서 삭제
+        // 로그아웃한 사원을 채팅 cSession ArrayList에서 삭제
 		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+        cSession.removeLoginChatUser(empNo);
         
 		//세션무효화
 		session.invalidate();

@@ -11,6 +11,13 @@
     #main{
         position: absolute; top: 120px;
     }
+    
+    #content{
+        border-left: 1px solid lightgray;
+        width: 1000px;
+        float: left;
+        box-sizing: border-box;
+    }
 
 	#con-title h5{
     	color:rgb(93, 109, 75);

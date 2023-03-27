@@ -55,6 +55,7 @@ public interface BoardService {
 	// 8. 댓글 수정&삭제 서비스 
 	int deleteReply(int replyNo);
 	int updateReply(int replyNo);
+	int updateReplyForm(BoardReply r);
 	
 		
 	// 9. 메인 페이지 게시글 top5 조회용 서비스 (ajax)

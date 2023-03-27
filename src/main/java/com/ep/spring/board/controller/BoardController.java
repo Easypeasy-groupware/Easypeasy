@@ -19,6 +19,7 @@ import com.ep.spring.board.model.service.BoardService;
 import com.ep.spring.board.model.vo.Board;
 import com.ep.spring.board.model.vo.BoardCate;
 import com.ep.spring.board.model.vo.BoardReply;
+import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.common.template.FileUpload;
@@ -74,9 +75,11 @@ public class BoardController {
 		int result = bService.insertBoard(b, atList);
 		
 		if(result > 0) {
-			mv.addObject("successMsg", "게시글 등록 성공");
+			AlertMsg msg = new AlertMsg("게시글 등록", "성공적으로 게시글이 등록되었습니다.");
+			mv.addObject("successMsg", msg);
 		}else {
-			mv.addObject("successMsg", "게시글 등록 실패");
+			AlertMsg msg = new AlertMsg("게시글 등록", "게시글 등록 실패");
+			mv.addObject("successMsg", msg);
 		}
 		mv.setViewName("redirect:list.bo");
 		return mv;
@@ -134,10 +137,10 @@ public class BoardController {
 	 }
 	
 	@RequestMapping("update.bo")
-	public String updateBoard(@RequestParam("no") int no, Board b, HttpSession session, Model model, @RequestParam(value="originNames", required=false) List<MultipartFile> originNames) {
+	public String updateBoard(@RequestParam("no") int boardNo, Board b, HttpSession session, Model model, @RequestParam(value="originNames", required=false) List<MultipartFile> originNames) {
 
 		// 게시물 번호 설정
-		b.setBoardNo(no);
+		b.setBoardNo(boardNo);
 
 		// 첨부파일
 		ArrayList<Attachment> atList = new ArrayList<>();
@@ -176,7 +179,7 @@ public class BoardController {
 		int result = bService.updateBoard(b, atList);
 		if(result > 0) {
 			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
-			return "redirect:detailForm.bo?no=" + no;
+			return "redirect:detailForm.bo?no=" + boardNo;
 		} else {
 			model.addAttribute("errorMsg", "게시글 수정 실패");
 			return "common/errorPage";
@@ -375,6 +378,16 @@ public class BoardController {
 		return result > 0 ? "success" : "fail";
 			
 	}
+	
+	@RequestMapping("rupdateform.bo")
+	public String updateReplyForm(BoardReply r, Model model) {
+	    int result = bService.updateReplyForm(r);
+	    model.addAttribute("reply", reply);
+	    return "updateReplyForm";
+	}
+
+		
+	
 	
 	
 	// Settings

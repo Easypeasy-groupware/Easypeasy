@@ -156,7 +156,7 @@
 		   
             
             <div class="icons">
-                <a href="javascript:openWindowPop('chatList.ch', 'popup');" class="position-relative" id="chat-a">
+                <a href="javascript:openWindowPop('empList.ch', 'popup');" class="position-relative" id="chat-a">
                     <img src="resources/common_images/comments.png" class="chat-icon"> 
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger websk-num">
                         99+

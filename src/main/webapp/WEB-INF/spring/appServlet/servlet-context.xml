@@ -3,8 +3,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
 		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
@@ -69,13 +69,14 @@
 	<!-- chatEchoHandler -->
 	<beans:bean id="chatEchoHandler" class="com.ep.spring.chat.controller.ChatEchoHandler"/>
 	<websocket:handlers>
-		<websocket:mapping handler="chatEchoHandler" path="/chat" /> <!-- /spring/chat url요청시 -->
+		<websocket:mapping handler="chatEchoHandler" path="/chat" /> <!-- /EP/chat url요청시 -->
 		<!-- HttpSession 데이터를 사용할 수 있도록 설정 -->
 		<websocket:handshake-interceptors> <!-- websocket세션객체 내에서 httpsession객체의 정보도 같이 사용하고자 할때 써야함(로그인한 회원의 정보가 필요) -->
 			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
 		</websocket:handshake-interceptors>
 		<websocket:sockjs/>
 	</websocket:handlers>
+	
 	
 
 </beans:beans>

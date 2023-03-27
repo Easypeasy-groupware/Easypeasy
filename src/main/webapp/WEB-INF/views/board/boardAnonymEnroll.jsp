@@ -80,14 +80,14 @@
               
               <label for="content">내용</label>
                   <textarea name="boardContent" id="boardContent" cols="30" rows="10" required placeholder="내용을 입력하세요"></textarea><br>
-              <label for="boardPin">공지등록</label>
-                  <input type="checkbox" id="N" name="boardPin" /><br>
+           <!--    <label for="boardPin">공지등록</label>
+                  <input type="checkbox" id="N" name="boardPin" /><br> -->
                
                     <br><br>
               <div align="center">
                 <button type="button" class="btn btn-dark" onclick="javascript:history.go(-1);">이전으로</button>
                 <button type="submit" class="btn btn-success">등록하기</button>
-                <button type="button" class="btn btn-secondary">임시저장</button>
+                <!-- <button type="button" class="btn btn-secondary">임시저장</button> -->
               </div>
               </form>
         </div>
