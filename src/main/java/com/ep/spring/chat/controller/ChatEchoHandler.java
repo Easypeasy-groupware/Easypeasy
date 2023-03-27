@@ -13,6 +13,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.ep.spring.chat.model.service.ChatService;
 import com.ep.spring.chat.model.vo.ChatRecord;
 import com.ep.spring.chat.model.vo.ChatRoom;
+import com.ep.spring.login.model.vo.Employee;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -55,12 +56,24 @@ public class ChatEchoHandler extends TextWebSocketHandler {
 	    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 	        i--;
 	        System.out.println(session.getId() + " 연결 종료 => 총 접속 인원 : " + i + "명");
+	        
+	        String roomNo = "";
 	        // sessionList에 session이 있다면
 	        if(sessionList.get(session) != null) {
 	            // 해당 session의 방 번호를 가져와서, 방을 찾고, 그 방의 ArrayList<session>에서 해당 session을 지운다.
 	            RoomList.get(sessionList.get(session)).remove(session);
+	            roomNo = sessionList.get(session);
+	            
 	            sessionList.remove(session);
 	        }
+	        ChatRecord chatMessage = new ChatRecord();
+	        chatMessage.setEmpNo(String.valueOf(((Employee) session.getAttributes().get("loginUser")).getEmpNo()));
+	        chatMessage.setMessage("EXIT-CHAT");
+	        chatMessage.setRoomNo(roomNo);
+	        chatMessage.setChatType("exit");
+	        chatMessage.setUnReadCount(0);
+	        System.out.println("exit chatMessage : " + chatMessage);
+	        int a = cService.insertMessage(chatMessage);
 	    }
 		
 	    @Override
@@ -93,6 +106,8 @@ public class ChatEchoHandler extends TextWebSocketHandler {
 	            RoomList.put(chatRoom.getRoomNo(), sessionTwo);
 	            // 확인용
 	            System.out.println("채팅방 생성");
+	            
+	            int a = cService.insertMessage(chatMessage);
 	        }
 	        
 	        // 채팅방이 존재 할 때
@@ -104,13 +119,15 @@ public class ChatEchoHandler extends TextWebSocketHandler {
 	            sessionList.put(session, chatRoom.getRoomNo());
 	            // 확인용
 	            System.out.println("생성된 채팅방으로 입장");
+	            int a = cService.insertMessage(chatMessage);
 	        }
 	        
 	        // 채팅 메세지 입력 시
 	        else if(RoomList.get(chatRoom.getRoomNo()) != null && chatMessage.getChatType().equals("msg") && chatRoom != null) {
 	            
 	            // 메세지에 이름, 이메일, 내용을 담는다.
-	            TextMessage textMessage = new TextMessage(chatMessage.getEmpNo() + "," + chatMessage.getEmpName() + "," + chatMessage.getJobName() + "," + chatMessage.getEmpProfile() + "," + chatMessage.getMessage() + "," + chatMessage.getChatType());   
+	            TextMessage textMessage = new TextMessage(chatMessage.getEmpNo() + "," + chatMessage.getEmpName() + "," + chatMessage.getJobName() + "," + chatMessage.getEmpProfile()
+	            											+ "," + chatMessage.getMessage() + "," + chatMessage.getChatType()+ "," + chatMessage.getUnReadCount());   
 	            
 	            // 현재 session 수
 	            int sessionCount = 0;
@@ -157,6 +174,11 @@ public class ChatEchoHandler extends TextWebSocketHandler {
 	                System.out.println("메세지 전송 실패!!! & DB 저장 실패!!");
 	           }
 	        }
+	       
+	        
+	        
+	        
+	        
 	        
 	    }
 
