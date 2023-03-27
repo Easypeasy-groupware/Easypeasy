@@ -238,6 +238,31 @@ public class AddressDao {
 		return (ArrayList) sqlSession.selectList("addressMapper.selectAddressBinList", empNo, rowBounds);
 	}
 
+	public int completeDeleteAddList(SqlSessionTemplate sqlSession, ArrayList<Address> list) {
+		int result = 0;
+		for(Address a: list) {
+			result += sqlSession.delete("addressMapper.completeDeleteAddList", a);
+		}
+		return result;
+	}
+
+	public int deleteFavList(SqlSessionTemplate sqlSession, ArrayList<Address> list) {
+		int result = 0;
+		for(Address a: list) {
+			result += sqlSession.delete("addressMapper.deleteFavList", a);
+		}
+		return result;
+	}
+
+	public int restoreAddList(SqlSessionTemplate sqlSession, ArrayList<Address> list) {
+		
+		int result = 0;
+		for(Address a: list) {
+			result += sqlSession.update("addressMapper.restoreAddList", a);
+		}
+		return result;
+	}
+
 
 
 
