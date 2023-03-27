@@ -156,7 +156,7 @@
 		   
             
             <div class="icons">
-                <a href="javascript:openWindowPop('chatList.ch', 'popup');" class="position-relative" id="chat-a">
+                <a href="javascript:openWindowPop('empList.ch', 'popup');" class="position-relative" id="chat-a">
                     <img src="resources/common_images/comments.png" class="chat-icon"> 
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger websk-num">
                         99+
@@ -260,7 +260,7 @@
 
     <!-- 웹소켓 -->
     <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
-	<script>
+	<!-- <script>
         // 웹소켓 접속
         let sock = null
 
@@ -289,7 +289,7 @@
                 // * 웹소켓과의 통신도 끊기게됨 => ChatEchoHandler클래스의 afterConnectionClosed메소드 실행됨
             }
         }
-	</script>
+	</script> -->
 
 	<script>
 		// 전체 알람창 열고 닫기 이벤트

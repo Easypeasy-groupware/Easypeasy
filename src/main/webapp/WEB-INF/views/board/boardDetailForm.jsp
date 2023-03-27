@@ -124,7 +124,8 @@
         		selectReplyList();
         	})
         	
-        	function updateReply(replyNo, replyContent) { // 댓글 수정용 ajax
+			function updateReply(replyNo, replyContent) { // 댓글 수정용 ajax
+        		
 			    $.ajax({
 			        url: "rupdate.bo",
 			        data: { replyNo: replyNo, replyContent: replyContent },
@@ -137,7 +138,15 @@
 			            console.log("댓글 수정용 ajax 통신 실패");
 			        }
 			    });
-			} 
+			
+			    // replyContent 수정
+			    let inputHtml = "<input type='text' id='updateInput_" + replyNo + "' value='" + replyContent + "'/>";
+			    $("#replyContent_" + replyNo).html(inputHtml);
+			    
+			}
+        	
+        	
+
         	
         	function deleteReply(replyNo) { // 댓글 삭제용 ajax
 			    $.ajax({
@@ -194,8 +203,9 @@
         							+	"<td>" + list[i].replyWriter + "</td>"
         							+	"<td>" + list[i].replyContent + "</td>"
         							+	"<td>" + list[i].createDate + "</td>"
-        							+  "<td>" + "<button onclick='deleteReply(" + list[i].replyNo + ")'>" + "삭제" + "</button>" 
-        							+  "|" + "<button onclick='updateReply(" + list[i].replyNo + ",$(\"#content\" + list[i].replyNo).val()'>" +"수정"+"</button>"
+        							+  "<td>" + "<a onclick='deleteReply(" + list[i].replyNo + ")'>" + "삭제" + "</a>" 
+        							+ "|"
+        							+  "<a onclick='updateReply(" + list[i].replyNo + ",\"" + list[i].replyContent + "\")'>" +"수정"+"</a>"    
         							+ "</td>"
         							+"</tr>";
         				}

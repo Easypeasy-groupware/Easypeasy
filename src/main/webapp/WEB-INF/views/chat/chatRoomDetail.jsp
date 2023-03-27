@@ -29,6 +29,8 @@
 	#room-name:hover{cursor:default; font-size:16px;}
 	#member-count1:hover, #member-count2:hover{cursor:default; font-size:16px;}
 	
+	#newName{margin:0 5px 0 15px; height:25px; width:150px; padding:10px; border:0; border-bottom:1px solid gray;}
+	
 	/*채팅출력창 스크롤바*/
 	.chat-area::-webkit-scrollbar{width:5px;}
 	.chat-area::-webkit-scrollbar-thumb{background-color:rgb(92, 95, 197); border-radius:10px;}
@@ -83,72 +85,272 @@
 	<div class="chat">
 		<div class="room-header">
 			 <div class="room-info">
-			 		<span id="room-name">채팅방이름채팅방이름채팅방이름이</span>
+			 		<span id="room-name">
+			 			<c:choose>
+			 				<c:when test="${ empty room.roomName }">
+			 					${ room.oneMember.empName }
+			 				</c:when>
+			 				<c:otherwise>
+			 					${ room.roomName }
+			 				</c:otherwise>
+			 			</c:choose> 
+					</span>
 			 		<span id="name-edit">✏️</span>
+			 		<input type="text" name="roomName" id="newName" style="display:none;">
+			 		<span id="name-insert" style="display:none;" onclick="updateName();">✔️</span>
 			 </div>
 			 <div class="room-manage">
-			 	<span id="member-count1">👩🏻‍🤝‍🧑🏻</span><span id="member-count2">(30)</span>
-			 	<span id="member-add">➕</span>
+			 	<span id="member-count1">👩🏻‍🤝‍🧑🏻</span><span id="member-count2">${ room.count }</span>
+			 	<span id="member-add"ㄴㄴㄴ>➕</span>
 			 	<span id="room-exit">🚪</span>
 			 </div>
 		</div>
 		<script>
 			$(function(){ // 채팅방이름이 15자를 초과할경우 이름조정
-				if($("#room-name").text().length > 7){
+				if($("#room-name").text().trim().length > 7){
 					$("#room-name").text(($("#room-name").text().substring(0,7)).concat("..."));
 				}
 			})
 		</script>
 		
 	    <div class="chat-area">
-	    
-	    	<div class="chat-user entry">
-	           xxx님이 들어왔습니다
-	        </div>
+
+	        <c:forEach var="msg" items="${ msg }">
+	        	<c:if test="${ msg.chatType eq 'msg' }">
+		        	<c:choose>
+		        		<c:when test="${ msg.empNo eq loginUser.empNo }">
+		        		
+		        			<div class="chat-message mine">
+					            <div class="icon"><img src="<c:out value='${msg.empProfile}' default='resources/chat-images/rockstar.png'/>" ></div>
+					            <div class="textbox">${msg.message}</div> 
+					            <%-- <span>${msg.unReadCount}</span> --%>
+					        </div>
+					        
+		        		</c:when>
+		        		<c:otherwise>
+		        		
+		        			<div class="chat-message other">
+					            <div class="icon"><img src="<c:out value='${msg.empProfile}' default='resources/chat-images/rockstar.png'/>"></div>
+					            <div class="msg-wrap">
+					            	<div class="user-info"><span class="user-name">${msg.empName}</span> <span class="user-job">${msg.jobName}</span></div>
+					            	<div class="textbox">${msg.message}</div>
+					            	<%-- <span>${msg.unReadCount}</span> --%>
+					            </div>
+					        </div>
+					        
+		        		</c:otherwise>
+		        	</c:choose>
+	        	</c:if>
+	        	<c:if test="${ msg.chatType eq 'title' }">
+	        		<div class="chat-user">
+			           방 이름이<b> ${msg.message}</b>로 변경되었습니다
+			        </div>
+	        	</c:if>
+	        </c:forEach>
 	        
-	        <div class="chat-user exit">
+	        
+	       <!--  <div class="chat-user exit">
 	           xxx님이 나갔습니다
-	        </div>    
+	        </div> -->
 	        
-	        <div class="chat-message other">
-	            <div class="icon"><img src="resources/common_images/businessman.png" default='resources/common_images/businessman.png'></div>
-	            <div class="msg-wrap">
-	            	<div class="user-info"><span class="user-job">사원</span> <span class="user-name">홍길동</span></div>
-	            	<div class="textbox">안녕하세요. 반갑습니다.</div>
-	            </div>
-	            
-	        </div>
-	        <div class="chat-message mine">
-	            <div class="icon"><img src="resources/common_images/businessman.png" default='resources/common_images/businessman.png' ></div>
-	            <div class="textbox">안녕하세요. 친절한효자손입니다. 그동안 잘 지내셨어요?</div>
-	        </div>
-	        <div class="chat-message other">
-	            <div class="icon"><img src="resources/common_images/businessman.png" default='resources/common_images/businessman.png' ></div>
-	            <div class="msg-wrap">
-	            	<div class="user-info"><span class="user-job">사원</span> <span class="user-name">홍길동</span></div>
-	            	<div class="textbox">아유~ 너무요너무요! 요즘 어떻게 지내세요?</div>
-	            </div>
-	        </div>
 	        
-	        <div class="chat-user exit">
-	           xxx님이 나갔습니다
-	        </div>
-	        
-	        <div class="chat-message mine">
-	            <div class="icon"><img src="resources/common_images/businessman.png" default='resources/common_images/businessman.png' ></div>
-	            <div class="textbox">뭐~ 늘 똑같은 하루 하루를 보내는 중이에요. 코로나가 다시 극성이어서 모이지도 못하구 있군요 ㅠㅠ 얼른 좀 잠잠해졌으면 좋겠습니다요!</div>
-	        </div>
 	    </div>
 	    
 	    
 	    
 	    <div class="input-area">
             <textarea class="form-control" rows="4" id="message" style="resize:none"></textarea>
-	        <button id="message-input">전송하기</button>
+	        <button id="message-input" onclick="sendMessage();">전송하기</button>
 	    </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>  
+    <script>
+    	
+	    const sock = new SockJS("${pageContext.request.contextPath}/chat"); // * 웹소켓 서버와 연결됨(== 웹소켓 접속 => ChatEchoHandler 클래스의 afterConnectionEstablished메소드 실행됨)
+	    sock.onopen = onOpen;
+	    sock.onmessage = onMessage;
+	    sock.onclose = onClose;
+		
+	    function onOpen() {
+	    	
+	    	const data = {
+                    "roomNo" : "${ room.roomNo }",
+                    "empNo" : "${ loginUser.empNo }",
+                    "empName" : "${ loginUser.empName }",
+                    "empProfile" : "${loginUser.empProfile}",
+                    "jobName" : "${loginUser.jobName}",
+                 	"message" : "ENTER-CHAT",
+                 	"chatType" : "enter"
+            };
+	    	let jsonData = JSON.stringify(data);
+	    	sock.send(jsonData);
+            console.log("입장");
+	    }
+	    
+	    
+	    
+	    
+	    function sendMessage(){
+	    	let msg = $("#message").val();
+
+	    	if(msg != ""){
+	    		
+	    		const data = {
+	    				"roomNo" : "${ room.roomNo }",
+	    				"empNo" : "${ loginUser.empNo }",
+	                    "empName" : "${ loginUser.empName }",
+	                    "empProfile" : "${loginUser.empProfile}",
+	                    "jobName" : "${loginUser.jobName}",
+	                 	"message" : msg,
+	                 	"chatType" : "msg"
+	            };
+	    		
+	    		CheckMO(data); // 화면에 추가하기
+	    		$("#message").val("");
+	    		
+	    		let jsonData = JSON.stringify(data);
+	            sock.send(jsonData); 
+	            
+	    	}
+	    }
+	    
+	 	// 추가 된 것이 내가 보낸 것인지, 상대방이 보낸 것인지 확인 후 추가
+        function CheckMO(data) {
+        	let newMsg = "";
+        	
+        	if(data.chatType == "msg"){
+            // empNo가 loginSession의 empNo와 다르면 other, 같으면 mine
+            const MO = (data.empNo != "${ loginUser.empNo }") ? "other" : "mine";
+            
+            
+            if(MO == "mine"){
+            	newMsg = '<div class="chat-message mine">'
+            			+ '<div class="icon">';
+            			if(data.empProfile==""){
+            				newMsg += '<img src="resources/chat-images/rockstar.png" >';
+            			}else{
+            				newMsg += '<img src="'+data.empProfile+'" >';
+            			}
+            			
+        	    newMsg += '</div>'
+            			+ '<div class="textbox">' + data.message + '</div>'
+            			/* + '<span>' + data.unReadCount + '</span>' */
+            			+ '</div>';
+            			
+            }else if(MO == "other"){
+            	newMsg = '<div class="chat-message other">'
+            			+ '<div class="icon">';
+	    			if(data.empProfile==""){
+	    				newMsg += '<img src="resources/chat-images/rockstar.png" >';
+	    			}else{
+	    				newMsg += '<img src="'+data.empProfile+'" >';
+	    			}
+    			
+	    			newMsg += '</div>'
+		        			+ ' <div class="msg-wrap">'
+			        			+ '<div class="user-info">'
+				        			+ ' <span class="user-name">' + data.empName + '</span>' 
+				        			+ '<span class="user-job">' + data.jobName + '</span>'
+			        			+ '</div>'
+			        			+ '<div class="textbox">' + data.message + '</div>'
+		        				/* + '<span>' + data.unReadCount + '</span>' */
+		        			+'</div>'
+		        		+'</div>';
+            }
+            
+        	}else if(data.chatType == "title"){
+        		newMsg = '<div class="chat-user">방 이름이 <b>' + data.message + '</b>로 변경되었습니다</div>';
+        	}
+        	
+            $(".chat-area").append(newMsg);	
+            $(".chat-area").scrollTop($(".chat-area").prop('scrollHeight'));
+
+        }
+	 	
+	 	function onMessage(evt){ // 메세지수신
+	 		let receive = evt.data.split(",");
+	 		
+	 		const data = {
+	 				"empNo"   : receive[0],
+                    "empName" : receive[1],
+                    "jobName" : receive[2],
+                 "empProfile" : receive[3],
+                    "message" : receive[4],
+                   "chatType" : receive[5],
+                 "unReaCount" : receive[6]
+            };
+	 		
+	 		if(data.empNo != "${ loginUser.empNo }"){
+                CheckMO(data);
+             }
+	 		
+	 	}
+	 	
+	 	function updateName(){
+	 		let name = $("#newName").val();
+	 		
+	 		const data = {
+	 				"roomNo" : "${ room.roomNo }",
+    				"empNo" : "${ loginUser.empNo }",
+                    "empName" : "${ loginUser.empName }",
+                    "empProfile" : "${loginUser.empProfile}",
+                    "jobName" : "${loginUser.jobName}",
+                 	"message" : name,
+                 	"chatType" : "title"
+	 		}
+	 		
+	 		CheckMO(data);
+	 		
+	 		$("#name-edit").show();
+	 		$("#room-name").text(name);
+	 		$("#room-name").show();
+	 		$("#newName").hide();
+	 		$("#name-insert").hide();
+	 		
+	 		let jsonData = JSON.stringify(data);
+            sock.send(jsonData); 
+	 	}
+    
+	 	function onClose(){
+	 		const data = {
+                    "roomNo" : "${ room.roomNo }",
+                    "empNo" : "${ loginUser.empNo }",
+                    "empName" : "${ loginUser.empName }",
+                    "empProfile" : "${loginUser.empProfile}",
+                    "jobName" : "${loginUser.jobName}",
+                 	"message" : "EXIT-CHAT",
+                 	"chatType" : "exit"
+            };
+	    	let jsonData = JSON.stringify(data);
+	    	sock.send(jsonData);
+            console.log("퇴장");
+	 	}
+    </script>
+    
+    <script>
+    	$(function(){
+    		$(".chat-area").scrollTop($(".chat-area").prop('scrollHeight')); // 스크롤바 항상 아래에
+    		
+    		$("#name-edit").click(function(){
+    	 		$("#room-name").hide();
+    	 		$(this).hide();
+    	 		$("#newName").show();
+    	 		$("#name-insert").show();
+    	 		
+    	 	})
+    	 	
+    	 	$("#message").keydown(function(key){ // 엔터키로 값 넘기기
+    	 		if(key.keyCode == 13){
+    	 			key.preventDefault();
+    	 			sendMessage();
+    	 			$("#message").val("");
+    	 		}
+    	 	})
+    	 	
+    		
+    	})
+    </script>
 
 </body>
 </html>

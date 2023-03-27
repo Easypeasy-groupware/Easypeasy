@@ -63,6 +63,14 @@
     #out-btn{background: gray; margin-left:5px;}
     #out-btn:hover{cursor:pointer; font-weight:600; background: rgb(85, 85, 85);}
 
+
+	#scheduleList a{
+		text-decoration: none;
+		color: black;
+	}
+	#scheduleList a:hover{
+		font-weight:600;
+	}
 </style>
 </head>
 <body>
@@ -76,9 +84,7 @@
 		
 				<br><br>
 				<div class="subtitle board-title" id="board-notice">전체공지사항</div>
-				<div class="subtitle board-title" id="board-dept">부서게시판</div>
 				<div class="subtitle board-title" id="board-all">자유게시판</div>
-				<div class="subtitle board-title" id="board-menu">식단표</div>
 				<br clear="both"><br>
 		
 				<table class="board-table" id="notice-tb">
@@ -95,35 +101,11 @@
 						</tr>
 					</thead>
 					<tbody align="center">
-						<tr>
-							<td>전체게시글 제목입니다.</td>
-							<td>홍길동 부장</td>
-							<td>1시간전</td>
-						</tr>
-						<tr>
-							<td>전체게시글 제목입니다.</td>
-							<td>홍길동 부장</td>
-							<td>4시간전</td>
-						</tr>
-						<tr>
-							<td>전체게시글 제목입니다.</td>
-							<td>홍길동 부장</td>
-							<td>1일전</td>
-						</tr>
-						<tr>
-							<td>전체게시글 제목입니다.</td>
-							<td>홍길동 부장</td>
-							<td>3일전</td>
-						</tr>
-						<tr>
-							<td>전체게시글 제목입니다.</td>
-							<td>홍길동 부장</td>
-							<td>7일전</td>
-						</tr>
+						
 					</tbody>
 				</table>
 	 
-				<table class="board-table" id="dept-tb" style="display:none">
+				<table class="board-table" id="free-tb" style="display:none">
 					<colgroup>
 						<col style="width:70%;">
 						<col style="width:15%;">
@@ -137,31 +119,7 @@
 						</tr>
 					</thead>
 					<tbody align="center">
-						<tr>
-							<td>영업팀게시글 제목입니다.</td>
-							<td>박연진 부장</td>
-							<td>2일전</td>
-						</tr>
-						<tr>
-							<td>영업팀게시글 제목입니다</td>
-							<td>박연진 부장</td>
-							<td>2일전</td>
-						</tr>
-						<tr>
-							<td>영업팀게시글 제목입니다</td>
-							<td>박연진 부장</td>
-							<td>2일전</td>
-						</tr>
-						<tr>
-							<td>영업팀게시글 제목입니다</td>
-							<td>박연진 부장</td>
-							<td>2일전</td>
-						</tr>
-						<tr>
-							<td>영업팀게시글 제목입니다</td>
-							<td>박연진 부장</td>
-							<td>2일전</td>
-						</tr>
+						
 					</tbody>
 				</table>
 				 
@@ -181,7 +139,61 @@
 						$("#notice-tb").hide();
 					})
 				})
+				
+				$(function(){
+					topBoardList();
+				})
+				
+            	function topBoardList(){
+            		$.ajax({
+            			url:"topList.bo",
+            			success:function(list){
+            				console.log(list[0].BoardTitle);
+            				
+            				let value = "";
+            				for(let i=0; i<list.length; i++){
+            					let b = list[i]; 
+            					value += "<tr>"
+            							+	"<td>" + list[i].BoardTitle + "</td>"
+            							+	"<td>" + list[i].BoardWriter + "</td>"
+            							+	"<td>" + list[i].CreateDate + "</td>"
+            							+ "</tr>"; 
+            				}
+            				
+            				$("#notice-tb tbody").html(value);
+            							
+            			},error:function(){
+            				console.log("top5 공지게시글 조회용 ajax 통신 실패");
+            			}
+            		})
+            	}
+			/* 
+				function topFreeList(){
+            		$.ajax({
+            			url:"topFree.bo",
+            			success:function(result){
+            				console.log(result);
+            				
+            				let value = "";
+            				for(let i=0; j<list.length; j++){
+            					let b = list[j]; 
+            					value += "<tr>"
+            							+	"<td>" + list[j].BoardTitle + "</td>"
+            							+	"<td>" + "익명" + "</td>"
+            							+	"<td>" + list[j].CreateDate + "</td>"
+            							+   "</tr>"; 
+            				}
+            				
+            				$("#free-tb tbody").html(value);
+            							
+            			},error:function(){
+            				console.log("top5 자유게시글 조회용 ajax 통신 실패");
+            			}
+            		})
+            	}
+				  */
 			</script>	
+			
 			<div class="document">
 			<a href="main.ap"><b>결재문서</b></a>
 				
@@ -356,7 +368,7 @@
 												</div>
 											</td>
 											<td>
-												${ m.recDateDay }
+												${ m.dateDay }
 												<input class="mailNo" type="hidden" name="mailNo" value="${ m.mailNo }">
 												<input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
 											</td>
@@ -514,12 +526,51 @@
 				<br>
 				<div>
 					<span>Today's 일정</span>
-					<ul>
-						<li>어쩌구 저쩌구</li>
-						<li>어쩌구 저쩌구</li>
-						<li>어쩌구 저쩌구</li>
+					<ul id="scheduleList">
+						
 					</ul>
 				</div>
+				
+				
+				<script>
+					$(function(){
+					
+						topScheduleList();
+						
+						function topScheduleList(){
+							
+							$.ajax({
+								url:"topList.sc",
+								success:function(scList){
+									console.log(scList);
+									
+									let value = "";
+									
+									for(let i=0; i<scList.length; i++){
+										let s = scList[i]; // {}
+										if(s.allDay == 'Y'){ 
+											value += "<a href='scheduleUpDel.sc?no=" + s.scNo + "'>"
+												   + 	"<li>" + s.scTitle + "<br>" + s.startDate +  " ~ "  + s.endDate + "</li>"
+												   + "</a>"
+										}else{
+											value += "<a href='scheduleUpDel.sc?no=" + s.scNo + "'>"
+												   +	"<li>" + s.scTitle + "<br>" + s.startDate + " " + s.startTime +  " ~ "  + s.endDate + " " + s.endTime + "</li>"
+												   + "</a>"
+										}
+									}
+									
+									$("#scheduleList").html(value);
+									
+								},error:function(){
+									console.log("top3 일정 조회용 ajax 통신 실패");
+								}
+							})
+							
+						}
+						
+					})
+				</script>
+				
 		
 				<script>
 					$(function(){

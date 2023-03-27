@@ -62,9 +62,28 @@
 		     , board_pin
 		  from board 
 		 where delete_status = 'N'
+		   and board_cno = 1
 		 order
 		    by board_no desc
 	</select>
+	
+	<select id="selectListFree" resultMap="boardResult">
+		select
+		       board_no
+		     , board_cno
+		     , board_title
+		     , board_writer
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , board_count
+		     , board_pin
+		  from board 
+		 where delete_status = 'N'
+		   and board_cno = 3
+		 order
+		    by board_no desc
+	</select>
+	
+	
 	
 	<insert id="insertBoard">
 		insert
@@ -124,12 +143,12 @@
 	<select id="selectBoard" resultMap="boardResult">
 		select
 			   board_no
-			 , board_cno
+			 , b.board_cno
 			 , board_title
 			 , board_writer
 			 , board_content
 			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
-		  from board
+		  from board b
 		 where board_no = #{boardNo}
 	</select>
 	
@@ -176,7 +195,6 @@
 		   set board_cno = #{boardCno}
 		     , board_title = #{boardTitle}
 		     , board_content = #{boardContent}
-		     , board_pin = #{boardPin}
 		 where board_no = #{boardNo}
 	</update>
 	
@@ -205,8 +223,9 @@
 	</insert>
 	
 	<delete id="deleteAttachment">
-	    delete from attachment
-	    where ref_no = #{boardNo}
+	    delete 
+	      from attachment
+	     where board_no = #{boardNo}
 	</delete>
 	
 	<select id="selectReplyList" resultMap="boardreplyResult">
@@ -243,16 +262,15 @@
 	<delete id="deleteReply">
 		delete
 		  from board_reply
+		 where reply_no = #{replyNo}  
 	</delete>
 	
 	<update id="updateReply">
 		update
 		 	   board_reply 
-		   set reply_no = #{replyNo}						
-			 , reply_writer = #{replyWriter}
-			 , reply_content = #{replyContent}
-		where status = 'N'
-		   and board_no = #{boardNo}	
+		   set 
+		       reply_content = #{replyContent}
+	 	 where reply_writer = #{replyWriter}	
 	</update>
 	
 	<select id="selectSettings" resultMap="boardcateResult">
@@ -300,9 +318,41 @@
 		 where board_cno = #{boardCno}
 	</update>
 
+	<select id="selectTopList" resultMap="boardResult">
+		 select *
+           from (
+		         select
+				        board_no
+				      , board_cno
+				      , board_title
+				      , board_writer
+				      , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+				   from board					
+				  where delete_status = 'N'
+				    and board_cno = 1
+				  order
+				     by create_date desc
+		        )
+		  where rownum between 1 and 5	
+	</select>
 
-
-
+	<select id="selectFreeList" resultMap="boardResult">
+		 select *
+           from (
+		         select
+				        board_no
+				      , board_cno
+				      , board_title
+				      , board_writer
+				      , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+				   from board					
+				  where delete_status = 'N'
+				    and board_cno = 2
+				  order
+				     by create_date desc
+		        )
+		  where rownum between 1 and 5	
+	</select>
 
 
 

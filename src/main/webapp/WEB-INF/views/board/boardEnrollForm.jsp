@@ -43,11 +43,11 @@
               <label>게시판그룹</label>
                   <select name="boardCno">
                       <option value="1" name="boardCno" id="1">전체 공지사항</option>
-                      <option value="2" name="boardCno" id="2">식단표</option>
+                <!--       <option value="2" name="boardCno" id="2">식단표</option>
                       <option value="3" name="boardCno" id="3">자유게시판</option>
                       <option value="4" name="boardCno" id="4">커뮤니티</option>
                       <option value="5" name="boardCno" id="5">부서 공지사항</option>
-                      <option value="6" name="boardCno" id="6">부서 자유게시판</option>
+                      <option value="6" name="boardCno" id="6">부서 자유게시판</option> -->
                   </select><br>
               <label for="title">게시글 제목</label>
                   <input type="text" id="boardTitle" name="boardTitle" required /><br>
@@ -78,14 +78,14 @@
               
               <label for="content">내용</label>
                   <textarea name="boardContent" id="boardContent" cols="30" rows="10" required placeholder="내용을 입력하세요"></textarea><br>
-              <label for="boardPin">공지등록</label>
-                  <input type="checkbox" id="N" name="boardPin" /><br>
+              <!-- <label for="boardPin">공지등록</label>
+                  <input type="checkbox" id="N" name="boardPin" /><br> -->
                
                     <br><br>
               <div align="center">
                 <button type="button" class="btn btn-dark" onclick="javascript:history.go(-1);">이전으로</button>
                 <button type="submit" class="btn btn-success">등록하기</button>
-                <button type="button" class="btn btn-secondary">임시저장</button>
+                <!-- <button type="button" class="btn btn-secondary">임시저장</button> -->
               </div>
               </form>
         </div>

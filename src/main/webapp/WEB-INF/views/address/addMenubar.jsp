@@ -47,6 +47,9 @@
 	.submenu a{text-decoration:none; font-size:14px; color:black;}
 	.submenu a:hover{text-decoration:none; font-weight:600; color:black;}
 	
+	.group-edit{float:right; padding-right:3px;}
+	.editName{width:80%; border:0; border-bottom:1px solid black;}
+	
 	/*휴지통*/
 	.menu-list{width:98%; height:35px; margin:auto; padding:5px 0 5px 42px; border-radius:4px;}
 	.menu-list:hover{background-color: rgb(246, 246, 246); text-decoration:none;}
@@ -86,7 +89,13 @@
         </div>
         <ul class="submenu" id="pslist" style="display:none;">
         	<c:forEach var="p" items="${ pList }">
-        		<li><a href="psGroup.add?group=${ p.groupNo }">- ${ p.groupName } </a></li>
+        		<li>
+	        		<a href="psGroup.add?group=${ p.groupNo }" class="personal-groups">- ${ p.groupName } </a>
+	        		<input type="text" class="editName" style="display:none;">
+	        		<input typs="hidden" name="groupNo" value="${ p.groupNo }">
+	        		<span class="group-edit"><img src="resources/common_images/edit-btn.png" style="width:10px;"></span>
+	        		<span class="group-update" style="display:none;"><img src="resources/common_images/update-btn.png" style="width:10px;"></span>
+        		</li>
         	</c:forEach>
         	<li><a href="psGroup.add">- 기타 </a></li>
         </ul>
@@ -212,6 +221,23 @@
 	   				$("#exlist").hide();
 	   			}
     		}) 
+    		
+    		$(".personal-groups").each(function(){
+    			if($(this).text().trim().length > 10){
+    				$(this).text(($(this).text().substring(0,10).concat("...")));
+    			}
+    		})
+    		
+    		
+    		$("#pslist").on("click", ".group-edit", function(){
+   				let groupName = $(this).siblings().eq(0);
+   				let editName = $(this).siblings().eq(1);
+   				groupName.hide();
+   				editName.show();
+   				
+    			
+    			
+    		})
     		
     		
     		

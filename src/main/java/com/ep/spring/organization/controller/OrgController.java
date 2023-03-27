@@ -212,7 +212,7 @@ public class OrgController {
 		if(result>0) {
 			AlertMsg msg = new AlertMsg("부서 삭제", "성공적으로 부서정보가 삭제되었습니다.");
 			session.setAttribute("successMsg", msg);
-			return "redirect:/";
+			return "organization/orgSettings";
 		}else {
 			model.addAttribute("errorMsg", "부서정보 삭제 실패");
 			return "common/errorPage";	
@@ -258,14 +258,21 @@ public class OrgController {
 		if(result>0) {
 			AlertMsg msg = new AlertMsg("직위 삭제", "성공적으로 직위정보가 삭제되었습니다.");
 			session.setAttribute("successMsg", msg);
-			return "redirect:/";
+			return "redirect:settings.org";
 		}else {
 			model.addAttribute("errorMsg", "직위정보 삭제 실패");
 			return "common/errorPage";	
 		}
 	}
 	
-	
+	@RequestMapping("sideSettings.org") 
+	public ModelAndView selectSideSettings(Employee e, ModelAndView mv) {
+		
+		ArrayList<Department> dList = oService.selectSettingForm();
+		mv.addObject("dList", dList).setViewName("organization/orgSidebar");
+		return mv;
+		
+	}
 	
 	
 }

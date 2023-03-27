@@ -74,10 +74,22 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiverList", m);
 	}
 
-	public ArrayList<Attachment> selectAttachmentList(Mail m, SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("attachmentMapper.selectMailAttachmentList", m);
+	public ArrayList<Attachment> selectAttachmentList(ArrayList<Mail> mailList, SqlSessionTemplate sqlSession) {
+		ArrayList<Attachment> attachList = new ArrayList<Attachment>();
+		for(Mail m : mailList) {
+			Attachment at = new Attachment();
+			at = sqlSession.selectOne("mailMapper.selectMailAttachment", m);
+			if(at != null) {
+				attachList.add(at);
+			}
+		}
+		return attachList;
 	}
-
+	
+	public ArrayList<Attachment> selectAttachMailList(Mail m, SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("mailMapper.selectMailAttachment", m);
+	}
+	
 	public int updateReadUnreadMail(Mail m, SqlSessionTemplate sqlSession) {
 		return sqlSession.update("mailMapper.updateReadUnreadMail", m);
 	}
@@ -192,6 +204,42 @@ public class MailDao {
 			return (ArrayList)sqlSession.selectList("mailMapper.selectUnreadMailList", email);
 		}
 	}
+
+	public ArrayList<Mail> selectSendMailList(String email, PageInfo pi, SqlSessionTemplate sqlSession) {
+		if(pi != null) {
+			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+			int limit = pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectSendMailList", email, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.selectSendMailList", email);
+		}
+	}
+
+	public int deleteSendMail(int[] mailNoList, SqlSessionTemplate sqlSession) {
+		int result = 0;
+		for(int i=0; i<mailNoList.length; i++) {
+			Mail m = new Mail();
+			m.setMailNo(mailNoList[i]);
+			result = sqlSession.update("mailMapper.deleteSendMail", m);
+		}
+		return result;
+	}
+
+	public ArrayList<Mail> selectTempMailList(String email, PageInfo pi, SqlSessionTemplate sqlSession) {
+		if(pi != null) {
+			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+			int limit = pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectTempMailList", email, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.selectTempMailList", email);
+		}
+	}
+
+	
+
+	
 
 	
 

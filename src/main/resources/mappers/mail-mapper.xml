@@ -14,15 +14,15 @@
 		<result column="mail_content" property="mailContent" />
 		<result column="rec_check" property="recCheck" />
 		<result column="rec_date" property="recDate" />
-		<result column="rec_date_day" property="recDateDay" />
-		<result column="rec_date_time" property="recDateTime" />
+		<result column="date_day" property="dateDay" />
+		<result column="date_time" property="dateTime" />
 		<result column="impor_mail" property="imporMail" />
 		<result column="junk_mail" property="junkMail" />
 		<result column="reser_mail" property="reserMail" />
 		<result column="status" property="status" />
 		<result column="reference" property="reference" />
 		<result column="hidden_reference" property="hiddenReference" />
-		<result column="sent_date" property="sendDate" />
+		<result column="sent_date" property="sentDate" />
 		<result column="temp_storage" property="tempStorage" />
 	</resultMap>
 
@@ -33,60 +33,72 @@
 		<result column="tag_color" property="tagColor" />
 	</resultMap> 
 	
+	<resultMap id="AttachResult" type="Attachment">
+		<id column="attach_no" property="attachNo" />
+		<result column="ref_no" property="refNo" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
+		<result column="file_path" property="filePath" />
+		<result column="upload_date" property="uploadDate" />
+		<result column="division" property="division" />
+	</resultMap>
+	
 	<select id="selectReceiceMailList" resultMap="MailResult">
-		select 
+		select
 		       RECEP_MAIL_NO
-			 , MAIL_NO
+			 , s.MAIL_NO
 			 , TAG_NO
 			 , emp_name
-			 , SEND_MAIL_ADDRESS
-			 , MAIL_TITLE
-			 , MAIL_CONTENT
+			 , r.recep_MAIL_ADDRESS
+			 , r.send_mail_address
+			 , s.MAIL_TITLE
+			 , s.MAIL_CONTENT
 			 , REC_CHECK
-			 , REC_DATE
-			 , substr(rec_date, 0, 11) "rec_date_day"
-             , substr(rec_date, 14) "rec_date_time"
+			 , sent_DATE
+			 , substr(sent_DATE, 0, 11) "date_day"
+             , substr(sent_DATE, 14) "date_time"
 			 , IMPOR_MAIL
 			 , JUNK_MAIL
 			 , RESER_MAIL
 			 , r.STATUS
 			 , REFERENCE
 			 , HIDDEN_REFERENCE
-	      from rec_mail r
-	      join employee e on r.send_mail_address = e.email
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.send_mail_address = email
 	     where 
-			   recep_mail_address = #{email}
+			   recep_mail_address = #{ email }
 		   and r.status = 'Y'
-		   and junk_mail = 'N'
 	     order
 	        by recep_mail_no desc
 	</select>
 	
 	<select id="selectList" resultMap="MailResult">
-		select 
+		select
 		       RECEP_MAIL_NO
-			 , MAIL_NO
+			 , s.MAIL_NO
 			 , TAG_NO
 			 , emp_name
-			 , SEND_MAIL_ADDRESS
-			 , MAIL_TITLE
-			 , MAIL_CONTENT
+			 , r.recep_MAIL_ADDRESS
+			 , r.send_mail_address
+			 , s.MAIL_TITLE
+			 , s.MAIL_CONTENT
 			 , REC_CHECK
-			 , REC_DATE
-			 , substr(rec_date, 0, 11) "rec_date_day"
-             , substr(rec_date, 14) "rec_date_time"
+			 , sent_DATE
+			 , substr(sent_DATE, 0, 11) "date_day"
+             , substr(sent_DATE, 14) "date_time"
 			 , IMPOR_MAIL
 			 , JUNK_MAIL
 			 , RESER_MAIL
 			 , r.STATUS
 			 , REFERENCE
 			 , HIDDEN_REFERENCE
-	      from rec_mail r
-	      join employee e on r.send_mail_address = e.email
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.send_mail_address = email
 	     where 
-			   recep_mail_address = #{email}
-		   and r.STATUS = 'Y'
-		   and junk_mail = 'N'
+			   recep_mail_address = #{ email }
+		   and r.status = 'Y'
 	     order
 	        by recep_mail_no desc
 	</select>
@@ -128,6 +140,7 @@
 		  , SEND_MAIL_ADDRESS
 		  , MAIL_TITLE
 		  , MAIL_CONTENT
+		  , SENT_DATE
 		  , TEMP_STORAGE
 		  )
 		  values
@@ -136,6 +149,7 @@
 		  , #{ sendMailAdd }
 		  , #{ mailTitle }
 		  , #{ mailContent }
+		  , to_char(sysdate, 'YYYY-MM-DD DY HH24:mi:SS')
 		  , #{ tempStorage }
 		  )
 	</insert>
@@ -150,10 +164,10 @@
 		  , SEND_MAIL_ADDRESS
 		  , MAIL_TITLE
 		  , MAIL_CONTENT
-		  , REC_DATE
 		  , IMPOR_MAIL
 		  , REFERENCE
 		  , HIDDEN_REFERENCE
+		  , status
 		  )
 		  values
 		  (
@@ -163,10 +177,10 @@
 		  , #{ sendMailAdd }
 		  , #{ mailTitle }
 		  , #{ mailContent }
-		  , to_char(sysdate, 'YYYY-MM-DD DY HH24:mi:SS')
 		  , #{ imporMail }
 		  , #{ reference }
 		  , #{ hiddenReference }
+		  , #{ status }
 		  )
 	</insert>
 	
@@ -194,6 +208,18 @@
 		  )
 	</insert>
 	
+	<select id="selectMailAttachment" resultMap="AttachResult">
+		select 
+			   ATTACH_NO
+		     , REF_NO
+			 , ORIGIN_NAME
+			 , FILE_PATH
+			 , DIVISION
+		 from attachment
+		where division = 'M'
+		  and ref_no = #{ mailNo }
+	</select>
+	
 	<select id="selectRecSendMailNo" resultType="_int">
 		select 
 		   	   seq_mano.currval "mail_no"		   	   
@@ -204,6 +230,7 @@
 	<update id="readMail">
 		update rec_mail 
 		   set rec_check = 'Y'
+		     , rec_date = to_char(sysdate, 'YYYY-MM-DD DY HH24:mi:SS')
 		 where mail_no = #{ mailNo }
 		   and recep_mail_address = #{ recMailAdd }
 	</update>
@@ -217,26 +244,28 @@
 	
 	<select id="selectMail" resultMap="MailResult">
 		select
-			   RECEP_MAIL_NO
-			 , MAIL_NO
-			 , r.tag_no
-			 , tag_color
+		       RECEP_MAIL_NO
+			 , s.MAIL_NO
+			 , r.TAG_NO
 			 , emp_name
-			 , SEND_MAIL_ADDRESS
-			 , MAIL_TITLE
-			 , MAIL_CONTENT
+			 , r.recep_MAIL_ADDRESS
+			 , r.send_mail_address
+			 , s.MAIL_TITLE
+			 , s.MAIL_CONTENT
 			 , REC_CHECK
-			 , REC_DATE
-			 , substr(rec_date, 0, 11) "rec_date_day"
-             , substr(rec_date, 14) "rec_date_time"
+			 , sent_DATE
+			 , substr(sent_DATE, 0, 11) "date_day"
+             , substr(sent_DATE, 14) "date_time"
 			 , IMPOR_MAIL
+			 , JUNK_MAIL
+			 , RESER_MAIL
+			 , r.STATUS
 			 , REFERENCE
 			 , HIDDEN_REFERENCE
-			 , junk_mail
-			 , r.status
-	      from rec_mail r
-	      join employee e on r.send_mail_address = e.email
-	 left join mail_tag t on r.tag_no = t.tag_no
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.send_mail_address = email
+     left join mail_tag t on r.tag_no = t.tag_no
 	     where 
 			   RECEP_MAIL_NO = #{ recMailNo }
 	</select>
@@ -303,28 +332,30 @@
 	</update>
 	
 	<select id="selectTodayMailList" resultMap="MailResult">
-		select 
+		select
 		       RECEP_MAIL_NO
-			 , MAIL_NO
+			 , s.MAIL_NO
 			 , TAG_NO
 			 , emp_name
-			 , SEND_MAIL_ADDRESS
-			 , MAIL_TITLE
-			 , MAIL_CONTENT
+			 , r.recep_MAIL_ADDRESS
+			 , r.send_mail_address
+			 , s.MAIL_TITLE
+			 , s.MAIL_CONTENT
 			 , REC_CHECK
-			 , REC_DATE
-			 , substr(rec_date, 0, 11) "rec_date_day"
-             , substr(rec_date, 14) "rec_date_time"
+			 , sent_DATE
+			 , substr(sent_DATE, 0, 11) "date_day"
+             , substr(sent_DATE, 14) "date_time"
 			 , IMPOR_MAIL
 			 , JUNK_MAIL
 			 , RESER_MAIL
 			 , r.STATUS
 			 , REFERENCE
 			 , HIDDEN_REFERENCE
-	      from rec_mail r
-	      join employee e on r.send_mail_address = e.email
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.recep_mail_address = email
 	inner join (select to_char(to_date(sysdate), 'YYYY-MM-DD') as selectDate  from dual) e
-     		on r.rec_date like '%' || e.selectDate || '%'
+     		on s.sent_date like '%' || e.selectDate || '%'
 	     where 
 			   recep_mail_address = #{email}
 		   and r.status = 'Y'
@@ -334,29 +365,31 @@
 	</select>
 	
 	<select id="selectToMeMailList" resultMap="MailResult">
-		select 
+		select
 		       RECEP_MAIL_NO
-			 , MAIL_NO
+			 , s.MAIL_NO
 			 , TAG_NO
 			 , emp_name
-			 , SEND_MAIL_ADDRESS
-			 , MAIL_TITLE
-			 , MAIL_CONTENT
+			 , r.recep_MAIL_ADDRESS
+			 , r.send_mail_address
+			 , s.MAIL_TITLE
+			 , s.MAIL_CONTENT
 			 , REC_CHECK
-			 , REC_DATE
-			 , substr(rec_date, 0, 11) "rec_date_day"
-             , substr(rec_date, 14) "rec_date_time"
+			 , sent_DATE
+			 , substr(sent_DATE, 0, 11) "date_day"
+             , substr(sent_DATE, 14) "date_time"
 			 , IMPOR_MAIL
 			 , JUNK_MAIL
 			 , RESER_MAIL
 			 , r.STATUS
 			 , REFERENCE
 			 , HIDDEN_REFERENCE
-	      from rec_mail r
-	      join employee e on r.send_mail_address = e.email
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.recep_mail_address = email
 	     where 
 			   recep_mail_address = #{email}
-		   and send_mail_address = #{email}
+		   and s.send_mail_address = #{email}
 		   and r.status = 'Y'
 		   and junk_mail = 'N'
 	     order
@@ -364,27 +397,29 @@
 	</select>
 	
 	<select id="selectAttachMailList" resultMap="MailResult">
-		select 
+		select
 		       RECEP_MAIL_NO
-			 , MAIL_NO
+			 , s.MAIL_NO
 			 , TAG_NO
 			 , emp_name
-			 , SEND_MAIL_ADDRESS
-			 , MAIL_TITLE
-			 , MAIL_CONTENT
+			 , r.recep_MAIL_ADDRESS
+			 , r.send_mail_address
+			 , s.MAIL_TITLE
+			 , s.MAIL_CONTENT
 			 , REC_CHECK
-			 , REC_DATE
-			 , substr(rec_date, 0, 11) "rec_date_day"
-             , substr(rec_date, 14) "rec_date_time"
+			 , sent_DATE
+			 , substr(sent_DATE, 0, 11) "date_day"
+             , substr(sent_DATE, 14) "date_time"
 			 , IMPOR_MAIL
 			 , JUNK_MAIL
 			 , RESER_MAIL
 			 , r.STATUS
 			 , REFERENCE
 			 , HIDDEN_REFERENCE
-	      from rec_mail r
-	      join employee e on r.send_mail_address = e.email
-	     join attachment a on r.mail_no = a.ref_no
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.recep_mail_address = email
+	      join attachment a on r.mail_no = a.ref_no
 	     where 
 			   recep_mail_address = #{email}
 		   and r.status = 'Y'
@@ -395,26 +430,28 @@
 	</select>
 	
 	<select id="selectImporMailList" resultMap="MailResult">
-		select 
+		select
 		       RECEP_MAIL_NO
-			 , MAIL_NO
+			 , s.MAIL_NO
 			 , TAG_NO
 			 , emp_name
-			 , SEND_MAIL_ADDRESS
-			 , MAIL_TITLE
-			 , MAIL_CONTENT
+			 , r.recep_MAIL_ADDRESS
+			 , r.send_mail_address
+			 , s.MAIL_TITLE
+			 , s.MAIL_CONTENT
 			 , REC_CHECK
-			 , REC_DATE
-			 , substr(rec_date, 0, 11) "rec_date_day"
-             , substr(rec_date, 14) "rec_date_time"
+			 , sent_DATE
+			 , substr(sent_DATE, 0, 11) "date_day"
+             , substr(sent_DATE, 14) "date_time"
 			 , IMPOR_MAIL
 			 , JUNK_MAIL
 			 , RESER_MAIL
 			 , r.STATUS
 			 , REFERENCE
 			 , HIDDEN_REFERENCE
-	      from rec_mail r
-	      join employee e on r.send_mail_address = e.email
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.recep_mail_address = email
 	     where 
 			   recep_mail_address = #{email}
 		   and r.status = 'Y'
@@ -425,31 +462,100 @@
 	</select>
 	
 	<select id="selectUnreadMailList" resultMap="MailResult">
-		select 
+		select
 		       RECEP_MAIL_NO
-			 , MAIL_NO
+			 , s.MAIL_NO
 			 , TAG_NO
 			 , emp_name
-			 , SEND_MAIL_ADDRESS
-			 , MAIL_TITLE
-			 , MAIL_CONTENT
+			 , r.recep_MAIL_ADDRESS
+			 , r.send_mail_address
+			 , s.MAIL_TITLE
+			 , s.MAIL_CONTENT
 			 , REC_CHECK
-			 , REC_DATE
-			 , substr(rec_date, 0, 11) "rec_date_day"
-             , substr(rec_date, 14) "rec_date_time"
+			 , sent_DATE
+			 , substr(sent_DATE, 0, 11) "date_day"
+             , substr(sent_DATE, 14) "date_time"
 			 , IMPOR_MAIL
 			 , JUNK_MAIL
 			 , RESER_MAIL
 			 , r.STATUS
 			 , REFERENCE
 			 , HIDDEN_REFERENCE
-	      from rec_mail r
-	      join employee e on r.send_mail_address = e.email
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.recep_mail_address = email
 	     where 
 			   recep_mail_address = #{email}
 		   and r.status = 'Y'
 		   and junk_mail = 'N'
 		   and rec_check = 'N'
+	     order
+	        by recep_mail_no desc
+	</select>
+	
+	<select id="selectSendMailList" resultMap="MailResult">
+		select
+		       RECEP_MAIL_NO
+			 , s.MAIL_NO
+			 , TAG_NO
+			 , emp_name
+			 , r.recep_MAIL_ADDRESS
+			 , r.send_mail_address
+			 , s.MAIL_TITLE
+			 , s.MAIL_CONTENT
+			 , REC_CHECK
+			 , REC_DATE
+			 , sent_date
+			 , IMPOR_MAIL
+			 , JUNK_MAIL
+			 , RESER_MAIL
+			 , r.STATUS
+			 , REFERENCE
+			 , HIDDEN_REFERENCE
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.recep_mail_address = email
+	     where 
+			   s.send_mail_address = #{email}
+		   and r.status = 'Y'
+           and s.status = 'Y'
+	     order
+	        by recep_mail_no desc
+	</select>
+	
+	<update id="deleteSendMail">
+		update send_mail
+		   set status = 'N'
+		 where mail_no = #{mailNo}
+	</update>
+	
+	<select id="selectTempMailList" resultMap="MailResult">
+		select
+		       RECEP_MAIL_NO
+			 , s.MAIL_NO
+			 , TAG_NO
+			 , emp_name
+			 , r.recep_MAIL_ADDRESS
+			 , r.send_mail_address
+			 , s.MAIL_TITLE
+			 , s.MAIL_CONTENT
+			 , REC_CHECK
+			 , rec_date
+			 , sent_date
+			 , IMPOR_MAIL
+			 , JUNK_MAIL
+			 , RESER_MAIL
+			 , r.STATUS
+			 , REFERENCE
+			 , HIDDEN_REFERENCE
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.recep_mail_address = email
+	     where 
+			   s.send_mail_address = #{email}
+		   and r.status = 'T'
+           and s.status = 'Y'
+           and s.temp_storage = 'Y'
 	     order
 	        by recep_mail_no desc
 	</select>

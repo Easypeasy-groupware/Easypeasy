@@ -297,5 +297,25 @@
 		   set sc_status = 'N'
 		 where sc_no = #{scNo}
 	</update>
+	
+	<select id="scheduleTopList" resultMap="scheduleResult">
+		select *
+		  from (
+		        select
+		               sc_no
+		             , sc_title
+		             , start_date
+		             , end_date
+		             , start_time
+		             , end_time
+		             , sc_allday
+		          from schedule
+		         where sc_status = 'Y'
+		           and sc_writer = #{empNo}
+		         order
+		            by sc_no desc
+		      )
+		 where rownum between 1 and 3
+	</select>
 	 
 </mapper>

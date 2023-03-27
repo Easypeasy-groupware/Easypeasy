@@ -114,5 +114,8 @@ public class OrgDao {
 		return sqlSession.delete("organizationMapper.deleteJob", j);
 	}
 	
+	public ArrayList<Department> selectSideSettings(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("organizationMapper.selectSideSettings");
+	}
 
 }

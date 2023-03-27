@@ -46,6 +46,19 @@
 </style>
 </head>
 <body>
+	<audio id='audio_play' src='resources/chat-audioFiles/chat-alarm.mp3'></audio>
+	<script type="text/javascript"> 
+	function play() { 
+	    var audio = document.getElementById('audio_play'); 
+	    if (audio.paused) { 
+	        audio.play(); 
+	    }else{ 
+	        audio.pause(); 
+	        audio.currentTime = 0 
+	    } 
+	} 
+	</script>
+
     <div class="chat">
         <div class="chat-header">
         	<div class="chat-title">
@@ -101,81 +114,25 @@
 					<span class="chat-hour">9:35</span>
 				</div>
 			</div>
-			<div class="indiv-list">
-				<div class="room-info">
-					<span class="room-name">채팅방3</span>
-					<span class="member-count">6</span>
-				</div>
-				<div class="last-chat">
-					<span class="chat-content">마지막 메세지 입니다</span>
-					<span class="chat-hour">9:35</span>
-				</div>
-			</div>
 			
-			<div class="indiv-list">
-				<div class="room-info">
-					<span class="room-name">채팅방4</span>
-					<span class="member-count">6</span>
-				</div>
-				<div class="last-chat">
-					<span class="chat-content">마지막 메세지 입니다</span>
-					<span class="chat-hour">9:35</span>
-				</div>
-			</div>
 			
-			<div class="indiv-list">
-				<div class="room-info">
-					<span class="room-name">채팅방5</span>
-					<span class="member-count">6</span>
-				</div>
-				<div class="last-chat">
-					<span class="chat-content">마지막 메세지 입니다</span>
-					<span class="chat-hour">9:35</span>
-				</div>
-			</div>
-			<div class="indiv-list">
-				<div class="room-info">
-					<span class="room-name">채팅방6</span>
-					<span class="member-count">6</span>
-				</div>
-				<div class="last-chat">
-					<span class="chat-content">마지막 메세지 입니다</span>
-					<span class="chat-hour">9:35</span>
-				</div>
-			</div>
-			<div class="indiv-list">
-				<div class="room-info">
-					<span class="room-name">채팅방7</span>
-					<span class="member-count">6</span>
-				</div>
-				<div class="last-chat">
-					<span class="chat-content">마지막 메세지 입니다</span>
-					<span class="chat-hour">9:35</span>
-				</div>
-			</div>
-			<div class="indiv-list">
-				<div class="room-info">
-					<span class="room-name">채팅방8</span>
-					<span class="member-count">6</span>
-				</div>
-				<div class="last-chat">
-					<span class="chat-content">마지막 메세지 입니다</span>
-					<span class="chat-hour">9:35</span>
-				</div>
-			</div>
 			
-			<div class="indiv-list">
-				<div class="room-info">
-					<span class="room-name">채팅방9</span>
-					<span class="member-count">6</span>
-				</div>
-				<div class="last-chat">
-					<span class="chat-content">마지막 메세지 입니다</span>
-					<span class="chat-hour">9:35</span>
-				</div>
-			</div>
+		</div><!-- list-area끝 -->		
+		
+		
+		<script>
 			
-		</div><!-- list-area끝 -->
+			
+			
+			
+				
+			
+		</script>
+		
+		
+		
+		
+		
 		<script>
 			$(function(){
 				$(".room-name").each(function(){
@@ -183,13 +140,6 @@
 						$(this).text(($(this).text().substring(0,15)).concat("..."));
 					}
 				})
-				
-				$(".indiv-list").click(function(){
-					var wName = "room1"; // 새창의이름
-					var options = 'top=500, left=1400, width=400, height=600, status=no, menubar=no, toolbar=no, titlebar=no, resizable=no, location=no, scrollbars=no';
-					window.open("chatRoom.ch", wName, options);
-				})
-				
 			})
 		</script>
     </div>

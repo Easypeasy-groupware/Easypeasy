@@ -42,37 +42,41 @@
             <div class="menu">
                 <ul>
                     <li><a href="list.bo">전체 공지사항</a>
-                    <%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> --%>
+                    <%-- <c:if test="${ loginUser.deptCode eq 'D1' }">
                     		<a href="updateSettingForms.bo"><img src="resources/common_images/board_icon.png" style="width:20px; height:20px;"></a>
-                    <%-- </c:if> --%>
+                    </c:if> --%>
                     </li>
+                    <%--
                     <li><a href="food.bo?boardCno=2">식단표</a>
-                    <%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> --%>
+                    	<c:if test="${ loginUser.deptCode eq 'D1' }"> 
                     		<a href="updateSettingForm.bo"><img src="resources/common_images/board_icon.png" style="width:20px; height:20px;"></a>
-                    <%-- </c:if> --%>
+                    	</c:if> 
                     </li>
-                        
-                    <li><a href="free.bo?boardCno=3">자유게시판</a>
-                    <%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> --%>
+                     --%>   
+                    <li><a href="free.bo">자유게시판</a>
+                    <%-- <c:if test="${ loginUser.deptCode eq 'D1' }">
                     		<a href="updateSettingForm.bo"><img src="resources/common_images/board_icon.png" style="width:20px; height:20px;"></a>
-                    <%-- </c:if> --%>
+                     </c:if> --%>
                     </li>
+                    
+                    <%--
                     <li><a href="comm.bo?boardCno=4">커뮤니티</a>
-                    <%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> --%>
+                    	 <c:if test="${ loginUser.deptCode eq 'D1' }"> 
                     		<a href="updateSettingForm.bo"><img src="resources/common_images/board_icon.png" style="width:20px; height:20px;"></a>
-                    <%-- </c:if> --%>
+                   		 </c:if> 
                     </li>
-    
+    				
                     <li><a href="deplist.bo?boardCno=5">부서 공지사항</a>
-                    <%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> --%>
+                    	 <c:if test="${ loginUser.deptCode eq 'D1' }">
                     		<a href="updateSettingForm.bo"><img src="resources/common_images/board_icon.png" style="width:20px; height:20px;"></a>
-                    <%-- </c:if> --%>
+                    	 </c:if> 
                     </li> 
                     <li><a href="defree.bo?boardCno=6">부서 자유게시판</a>
-                    <%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> --%>
+                    	 <c:if test="${ loginUser.deptCode eq 'D1' }"> 
                     		<a href="updateSettingForm.bo"><img src="resources/common_images/board_icon.png" style="width:20px; height:20px;"></a>
-                    <%-- </c:if> --%>
+                    	 </c:if> 
                     </li>
+                    --%>
                 </ul>
             </div>
         </div>

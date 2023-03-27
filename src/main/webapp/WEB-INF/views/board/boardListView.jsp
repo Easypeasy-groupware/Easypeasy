@@ -50,15 +50,15 @@
          </bheader>
         <div class="container">
             <form>
-                <div class="search-container">
-                <!-- 
+               <!--  <div class="search-container">
+                
                     <select>
                         <option value="all">전체</option>
                         <option value="1">1일</option>
                         <option value="7">1주일</option>
                         <option value="30">1개월</option>
                     </select>
-                  -->   
+                    
                     <select>
                         <option value="title">제목</option>
                         <option value="author">작성자</option>
@@ -66,7 +66,7 @@
                     </select>
                         <input type="text" placeholder="검색">
                         <button type="button" class="btn btn-success btn-sm" onclick="search()">검색</button>
-                </div>
+                </div> -->
             </form>
             <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enrollForm.bo';">새글쓰기</button>
             <%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> 

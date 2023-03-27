@@ -31,6 +31,16 @@ public class BoardServiceImpl implements BoardService{
 	public ArrayList<Board> selectList(PageInfo pi) {
 		return bDao.selectList(sqlSession, pi);
 	}
+	
+	@Override
+	public int selectFreeListCount() {
+		return bDao.selectFreeListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Board> selectFreeList(PageInfo pi) {
+		return bDao.selectFreeList(sqlSession, pi);
+	}
 
 	@Override
 	public int insertBoard(Board b, ArrayList<Attachment> atList) {
@@ -43,6 +53,19 @@ public class BoardServiceImpl implements BoardService{
 			return 0;
 		}
 	}
+	
+	@Override
+	public int insertABoard(Board b, ArrayList<Attachment> atList) {
+		int result = bDao.insertABoard(sqlSession, b);
+		int attachResult = bDao.insertAAttachment(sqlSession, atList);
+		
+		if(result> 0  && (atList.size() + attachResult > 0)) {
+			return 1;
+		}else {
+			return 0;
+		}
+	}
+	
 	
 	@Override
 	public int increaseCount(int no) {
@@ -59,10 +82,32 @@ public class BoardServiceImpl implements BoardService{
 		return bDao.selectAttachmentList(sqlSession, b);
 	}
 
+	
+	@Override
+	public int increaseACount(int no) {
+		return bDao.increaseACount(sqlSession, no);
+	}
+
+	@Override
+	public Board selectABoard(Board b) {
+		return bDao.selectABoard(sqlSession, b);
+	}
+
+	@Override
+	public ArrayList<Attachment> selectAnAttachmentList(Board b) {
+		return bDao.selectAnAttachmentList(sqlSession, b);
+	}
+	
 	@Override
 	public int deleteBoard(int boardNo) {
 		return bDao.deleteBoard(sqlSession, boardNo);
 	}
+	
+	@Override
+	public int deleteABoard(int boardNo) {
+		return bDao.deleteABoard(sqlSession, boardNo);
+	}
+
 
 	@Override
 	public ArrayList<Attachment> selectAttList(Board b) {
@@ -86,6 +131,30 @@ public class BoardServiceImpl implements BoardService{
 		return bDao.deleteAttachment(sqlSession, b);
 	}
 
+	@Override
+	public ArrayList<Attachment> selectAnonAttList(Board b) {
+		return bDao.selectAnonAttList(sqlSession, b);
+	}
+
+	@Override
+	public int updateABoard(Board b, ArrayList<Attachment> atList) {
+		int result = bDao.updateABoard(sqlSession, b);
+		int attachResult = bDao.updateAnonAttachment(sqlSession, atList);
+		
+		if(result> 0  && (atList.size() + attachResult > 0)) {
+			return 1;
+		}else {
+			return 0;
+		}
+	}
+	
+	@Override
+	public int deleteAnonAttachment(Board b) {
+		return bDao.deleteAnonAttachment(sqlSession, b);
+	}
+	
+	
+	
 
 	@Override
 	public ArrayList<BoardReply> selectReplyList(int boardNo) {
@@ -103,15 +172,26 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public int updateReply(BoardReply r) {
-		return bDao.updateReply(sqlSession, r);
+	public int updateReply(int replyNo) {
+		return bDao.updateReply(sqlSession, replyNo);
+	}
+	
+	@Override
+	public int updateReplyForm(BoardReply r) {
+		return bDao.updateReplyForm(sqlSession, r);
 	}
 	
 	@Override
 	public ArrayList<Board> selectTopList() {
-		return null;
+		return bDao.selectTopList(sqlSession);
 	}
 
+	@Override
+	public ArrayList<Board> selectFreeList() {
+		return bDao.selectFreeList(sqlSession);
+	}
+	
+	
 	@Override
 	public int selectSettings(BoardCate bc) {
 		return bDao.selectSettings(sqlSession, bc);
@@ -136,6 +216,17 @@ public class BoardServiceImpl implements BoardService{
 	public int deleteSettings(BoardCate bc) {
 		return 0;
 	}
+
+	
+
+	
+
+	
+
+	
+	
+
+	
 
 	
 
