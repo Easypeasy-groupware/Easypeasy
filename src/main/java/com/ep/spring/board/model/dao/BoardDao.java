@@ -156,6 +156,9 @@ public class BoardDao {
 		return sqlSession.update("boardMapper.updateReply", replyNo);
 	}
 	
+	public int updateReplyForm(SqlSessionTemplate sqlSession, BoardReply r) {
+		return sqlSession.update("boardMapper.updateReply", r);
+	}
 	
 	public int selectSettings(SqlSessionTemplate sqlSession, BoardCate bc){
 		return sqlSession.selectOne("boardMapper.selectSettings", bc);

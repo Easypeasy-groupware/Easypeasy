@@ -148,16 +148,16 @@
             		$.ajax({
             			url:"topList.bo",
             			success:function(list){
-            				console.log(list);
+            				console.log(list[0].BoardTitle);
             				
             				let value = "";
             				for(let i=0; i<list.length; i++){
             					let b = list[i]; 
             					value += "<tr>"
-            							+	"<td>" + b.boardTitle + "</td>"
-            							+	"<td>" + b.boardWriter + "</td>"
-            							+	"<td>" + b.createDate + "</td>"
-            					value += "</td></tr>"; 
+            							+	"<td>" + list[i].BoardTitle + "</td>"
+            							+	"<td>" + list[i].BoardWriter + "</td>"
+            							+	"<td>" + list[i].CreateDate + "</td>"
+            							+ "</tr>"; 
             				}
             				
             				$("#notice-tb tbody").html(value);
@@ -167,7 +167,7 @@
             			}
             		})
             	}
-			
+			/* 
 				function topFreeList(){
             		$.ajax({
             			url:"topFree.bo",
@@ -175,13 +175,13 @@
             				console.log(result);
             				
             				let value = "";
-            				for(let i=0; i<list.length; i++){
-            					let b = list[i]; 
+            				for(let i=0; j<list.length; j++){
+            					let b = list[j]; 
             					value += "<tr>"
-            							+	"<td>" + b.boardTitle + "</td>"
+            							+	"<td>" + list[j].BoardTitle + "</td>"
             							+	"<td>" + "익명" + "</td>"
-            							+	"<td>" + b.createDate + "</td>"
-            					value += "</td></tr>"; 
+            							+	"<td>" + list[j].CreateDate + "</td>"
+            							+   "</tr>"; 
             				}
             				
             				$("#free-tb tbody").html(value);
@@ -191,7 +191,7 @@
             			}
             		})
             	}
-				 
+				  */
 			</script>	
 			
 			<div class="document">

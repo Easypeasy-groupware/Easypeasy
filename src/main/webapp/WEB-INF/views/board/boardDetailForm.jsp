@@ -125,6 +125,7 @@
         	})
         	
 			function updateReply(replyNo, replyContent) { // 댓글 수정용 ajax
+        		
 			    $.ajax({
 			        url: "rupdate.bo",
 			        data: { replyNo: replyNo, replyContent: replyContent },
@@ -137,7 +138,14 @@
 			            console.log("댓글 수정용 ajax 통신 실패");
 			        }
 			    });
+			
+			    // replyContent 수정
+			    let inputHtml = "<input type='text' id='updateInput_" + replyNo + "' value='" + replyContent + "'/>";
+			    $("#replyContent_" + replyNo).html(inputHtml);
+			    
 			}
+        	
+        	
 
         	
         	function deleteReply(replyNo) { // 댓글 삭제용 ajax
