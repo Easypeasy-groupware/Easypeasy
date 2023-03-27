@@ -154,7 +154,7 @@
        
        <c:if test="${ loginUser.deptCode eq 'D1' }">
 	        <div class="menu-type menu-list">
-	        	<a href="#" class="menu-a"><img src="resources/common_images/admin-setting.png" style="width:15px; color:orange;"> <b> 주소록 관리 </b></a>
+	        	<a href="sharedGroup.add" class="menu-a"><img src="resources/common_images/admin-setting.png" style="width:15px; color:orange;"> <b> 주소록 관리 </b></a>
 	        </div>
         </c:if>
     </div>

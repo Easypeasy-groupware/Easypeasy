@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	#main{position: absolute; top: 120px; left: 330px;}
+	#main{position: absolute; top: 120px;}
     .content-outer{width:1000px; margin-left:200px; padding-top:20px;}
     .content-outer *{box-sizing: border-box;}
     #address-group{font-size:20px; font-weight:600; color:rgb(93, 109, 75);}
@@ -42,7 +42,7 @@
         border-collapse: collapse;
     }
     .like-tb tr{border-radius:5px;}
-    .like-tb tbody>tr:hover{background:rgb(233, 233, 233); font-weight:600; cursor:pointer;}
+    .like-tb tbody>tr:hover{background:rgb(233, 233, 233);}
     .like-tb thead>tr{background-color:rgb(210, 217, 201); position: sticky; top:0;}
     .like-tb th{padding:8px 0 8px 0;}
     .like-tb td{padding:3px 0 3px 0;}
@@ -312,13 +312,7 @@
 				
 			</script>
 
-			<script>
-				$(function(){
-					$('.clck-detail').on("click", $('.clck-detail'), function(){
-						location.href = 'detail.ad?no=' + $(this).siblings().eq(0).text(); 
-					})
-				})
-			</script>
+			
 
 
 		</div>

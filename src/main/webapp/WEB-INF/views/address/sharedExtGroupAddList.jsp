@@ -12,7 +12,7 @@
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 
 <style>
-	#main{position: absolute; top: 120px; left: 330px;}
+	#main{position: absolute; top: 120px;}
     .content-outer{width:1000px; padding-left:10px; margin-left:200px; padding-top:20px;}
     .content-outer *{box-sizing: border-box;}
     
