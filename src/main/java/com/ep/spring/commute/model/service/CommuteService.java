@@ -67,6 +67,9 @@ public interface CommuteService {
 	//일반휴가/ 특별휴가 갯수 조회
 	int selectGVac(int empNo);
 	int selectSVac(int empNo);
+	
+	//사용한 휴가 갯수 조회
+	int selectUseVac(int empNo);
 
 
 }
