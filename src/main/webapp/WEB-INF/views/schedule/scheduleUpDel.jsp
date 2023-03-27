@@ -16,6 +16,7 @@
         border-left: 1px solid lightgray;
         width: 1000px;
         float: left;
+        margin-top: 15px;
         box-sizing: border-box;
     }
     

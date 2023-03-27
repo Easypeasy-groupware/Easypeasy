@@ -351,7 +351,7 @@ public class ScheduleController {
 	@RequestMapping("delete.sc")
 	public String scheduleDelete(int no, HttpSession session) {
 		
-		System.out.println(no);
+		//System.out.println(no);
 		
 		int result = scService.scheduleDelete(no);
 		
