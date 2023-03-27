@@ -347,5 +347,21 @@
                                         from vac_recode
                                        where emp_no = #{empNo})
 	</select>
+	
+	<select id="selectGVac" resultType="_int">
+		select sum(vac_remaining) as "GV"
+		  from vac_recode
+		 where emp_no = #{empNo}
+		   and vac_category = 'GV'
+		   and vac_divide = 'PA'
+	</select>
+	
+	<select id="selectSVac" resultType="_int">
+		select sum(vac_remaining) as "SV"
+		  from vac_recode
+		 where emp_no = #{empNo}
+		   and vac_category = 'SV'
+		   and vac_divide = 'PA'
+	</select>
 
 </mapper>
