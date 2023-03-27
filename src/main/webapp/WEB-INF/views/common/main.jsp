@@ -518,12 +518,48 @@
 				<br>
 				<div>
 					<span>Today's 일정</span>
-					<ul>
-						<li>어쩌구 저쩌구</li>
-						<li>어쩌구 저쩌구</li>
-						<li>어쩌구 저쩌구</li>
+					<ul id="scheduleList">
+						
 					</ul>
 				</div>
+				
+				
+				<script>
+					$(function(){
+					
+						topScheduleList();
+						
+						function topScheduleList(){
+							
+							$.ajax({
+								url:"topList.sc",
+								success:function(scList){
+									console.log(scList);
+									
+									let value = "";
+									
+									for(let i=0; i<scList.length; i++){
+										let s = scList[i]; // {}
+										if(s.allDay == 'Y'){ // 첨부파일이 있을 경우
+											value += "<li>" + s.scTitle + "<br>" + s.startDate +  " ~ "  + s.endDate + "</li>"
+											
+										}else{
+											value += "<li>" + s.scTitle + "<br>" + s.startDate + " " + s.startTime +  " ~ "  + s.endDate + " " + s.endTime + "</li>"
+										}
+									}
+									
+									$("#scheduleList").html(value);
+									
+								},error:function(){
+									console.log("top3 일정 조회용 ajax 통신 실패");
+								}
+							})
+							
+						}
+						
+					})
+				</script>
+				
 		
 				<script>
 					$(function(){

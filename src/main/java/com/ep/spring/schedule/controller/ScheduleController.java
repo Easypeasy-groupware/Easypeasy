@@ -261,8 +261,59 @@ public class ScheduleController {
 		//System.out.println(s);
 		//System.out.println("선택한 번호 empNo : " + empNo);
 		
+		if(empNo == null) {
+			int result1 = scService.scheduleUpdate(s);
+			
+			if(result1 > 0) {
+				AlertMsg msg = new AlertMsg("일정 수정", "성공적으로 수정되었습니다");
+				session.setAttribute("successMsg", msg);
+				return "redirect:main.sc";
+			}else {
+				AlertMsg msg = new AlertMsg("일정 삭제", "일정 삭제 실패");
+				session.setAttribute("failMsg", msg);
+				return "redirect:main.sc";
+			}
+			
+		}else {
+			int result1 = scService.scheduleUpdate(s);
+			
+			String empNoArr[] = empNo.split(",");
+			ArrayList<Attendee> atList = new ArrayList<>();
+			
+			for(int i=0; i<empNoArr.length; i++) {
+				Attendee a = new Attendee();
+				a.setScNo(scNo);
+				a.setEmpNo(empNoArr[i]);
+				atList.add(a);
+				//System.out.println("a : " + a);
+				//System.out.println("atList.get(i) : " + atList.get(i));
+			}
+			
+			
+			int result2 = scService.deleteAttendee(scNo);
+			//System.out.println("일정 번호 scNo : " + scNo);
+			
+			int result3 = scService.insertUpAttendee(atList);
+			//System.out.println("atList : " + atList);
+			
+			if(result1 > 0 && result3 > 0) {
+				AlertMsg msg = new AlertMsg("일정 수정", "성공적으로 수정되었습니다");
+				session.setAttribute("successMsg", msg);
+				return "redirect:main.sc";
+				
+			}else {
+				
+				AlertMsg msg = new AlertMsg("일정 수정", "일정 수정 실패");
+				session.setAttribute("failMsg", msg);
+				return "redirect:main.sc";
+				
+			}
+		}
+		
+		/*
 		int result1 = scService.scheduleUpdate(s);
 		
+	
 		String empNoArr[] = empNo.split(",");
 		ArrayList<Attendee> atList = new ArrayList<>();
 		
@@ -293,7 +344,7 @@ public class ScheduleController {
 			return "redirect:main.sc";
 			
 		}
-		
+		*/
 		
 	}
 	
@@ -315,6 +366,17 @@ public class ScheduleController {
 			session.setAttribute("failMsg", msg);
 			return "redirect:main.sc";
 		}
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="topList.sc", produces="application/json; charset=utf-8")
+	public String ajaxScheduleTopList(HttpSession session) {
+		
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		ArrayList<Schedule> scList = scService.scheduleTopList(empNo);
+		
+		return new Gson().toJson(scList);
 		
 	}
 

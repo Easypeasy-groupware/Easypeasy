@@ -82,18 +82,13 @@ public class ScheduleDao {
 	
 	
 	public int scheduleUpdate(SqlSessionTemplate sqlSession, Schedule s) {
-		
 		return sqlSession.update("scheduleMapper.scheduleUpdate", s);
-		
 	}
 	
 	
 	
 	public int deleteAttendee(SqlSessionTemplate sqlSession, int scNo) {
-		
 		return sqlSession.delete("scheduleMapper.deleteAttendee", scNo);
-		
-		
 	}
 	
 	public int insertUpAttendee(SqlSessionTemplate sqlSession, ArrayList<Attendee> atList) {
@@ -104,14 +99,16 @@ public class ScheduleDao {
 			
 		}
 		
-		
 		return result;
 		
 	}
 	
 	public int scheduleDelete(SqlSessionTemplate sqlSession, int scNo) {
-		
 		return sqlSession.update("scheduleMapper.scheduleDelete", scNo);
-		
+	}
+	
+	public ArrayList<Schedule> scheduleTopList(SqlSessionTemplate sqlSession, int empNo) {
+		return (ArrayList)sqlSession.selectList("scheduleMapper.scheduleTopList", empNo);
 	}
 }
+

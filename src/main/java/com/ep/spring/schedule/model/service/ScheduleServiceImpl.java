@@ -117,4 +117,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public int scheduleDelete(int scNo) {
 		return scDao.scheduleDelete(sqlSession, scNo);
 	}
+
+	@Override
+	public ArrayList<Schedule> scheduleTopList(int empNo) {
+		return scDao.scheduleTopList(sqlSession, empNo);
+	}
 }

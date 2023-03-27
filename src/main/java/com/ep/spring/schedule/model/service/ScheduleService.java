@@ -53,6 +53,9 @@ public interface ScheduleService {
 
 	// 일정 삭제(status = 'N')
 	int scheduleDelete(int scNo);
+
+	// 메인페이지 일정top3 조회
+	ArrayList<Schedule> scheduleTopList(int empNo);
 	
 
 }
