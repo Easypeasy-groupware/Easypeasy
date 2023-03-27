@@ -505,7 +505,7 @@
                 <table class="vac">
                     <tr>
                         <td>잔여휴가</td>
-                        <td>14일</td>
+                        <td>${ vr.vacRemaining }일</td>
                     </tr>
                 </table><br>
                 <table class="tg">
