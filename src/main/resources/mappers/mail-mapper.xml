@@ -605,7 +605,7 @@
 		   and mailbox_name = #{ mailBoxName }
 	</delete>
 	
-	<select id="selectMailFavorList" resultMap="MailFavorResult">
+	<!-- <select id="selectMailFavorList" resultMap="MailFavorResult">
 		select
 			 , FAV_NO
 			 , EMP_NO
@@ -613,5 +613,5 @@
 			 , MAILBOX_NAME
 		  from mail_fav
 		 where emp_no = #{ empNo }
-	</select>
+	</select> -->
 </mapper>
