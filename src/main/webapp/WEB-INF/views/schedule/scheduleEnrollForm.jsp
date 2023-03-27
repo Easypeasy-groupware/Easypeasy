@@ -395,7 +395,7 @@
                     <!-- Modal body -->
                     <div class="modal-body appLine">
                         <div class="appLine1">
-                        <c:forEach var="d" items="${deptList}" begin="0" end="5" varStatus="dept">
+                        <c:forEach var="d" items="${deptList}" begin="0" end="6" varStatus="dept">
                             <div>
                                 <b class="${ d.deptCode }">${ d.deptName }</b>
                                 <span><img src="resources/common_images/list-down.png" style="width:15px;" class="dropdown-key" id="cList-key${ dept.index }"></span>
@@ -573,6 +573,15 @@
     			}else {
     				$(this).attr("src", "resources/common_images/list-down.png");
     				$("#cList-in6").hide();
+    			}
+    		})
+    		$("#cList-key7").click(function(){
+    			if($(this).attr("src") === "resources/common_images/list-down.png"){
+    				$(this).attr("src", "resources/common_images/list-up.png");	
+    				$("#cList-in7").show();
+    			}else {
+    				$(this).attr("src", "resources/common_images/list-down.png");
+    				$("#cList-in7").hide();
     			}
     		})
     		
