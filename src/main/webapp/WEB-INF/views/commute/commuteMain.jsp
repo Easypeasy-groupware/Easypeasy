@@ -517,12 +517,14 @@
                     </thead>
                     
                     <tbody>
+                    <c:forEach var="list2" items="${ list2 }">
                       <tr>
-                        <c:forEach var="list2" items="${ list2 }">
+                        
                 		<td class="tg-0lax">${ list2.vacStart }~${ list2.vacEnd }</td>
                 		<td class="tg-0lax">${ list2.vacUse }일</td>
-                	</c:forEach>
+                	
                       </tr>
+                      </c:forEach>
                     </tbody>
                     </table>
             </div>
