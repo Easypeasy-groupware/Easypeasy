@@ -47,8 +47,10 @@
 	.submenu a{text-decoration:none; font-size:14px; color:black;}
 	.submenu a:hover{text-decoration:none; font-weight:600; color:black;}
 	
-	.group-edit{float:right; padding-right:3px;}
-	.editName{width:80%; border:0; border-bottom:1px solid black;}
+	.group-edit{float:right; padding-right:10px;}
+	.group-update{float:right; padding-right:10px;}
+	.editName{width:80%; border:0; border-bottom:1px solid black; font-size:13px; color:darkgreen;}
+	#pslist img:hover{cursor:pointer;}
 	
 	/*휴지통*/
 	.menu-list{width:98%; height:35px; margin:auto; padding:5px 0 5px 42px; border-radius:4px;}
@@ -91,10 +93,10 @@
         	<c:forEach var="p" items="${ pList }">
         		<li>
 	        		<a href="psGroup.add?group=${ p.groupNo }" class="personal-groups">- ${ p.groupName } </a>
-	        		<input type="text" class="editName" style="display:none;">
-	        		<input typs="hidden" name="groupNo" value="${ p.groupNo }">
-	        		<span class="group-edit"><img src="resources/common_images/edit-btn.png" style="width:10px;"></span>
-	        		<span class="group-update" style="display:none;"><img src="resources/common_images/update-btn.png" style="width:10px;"></span>
+	        		<input type="text" class="editName" value="${ p.groupName }" style="display:none;">
+	        		<input type="hidden" name="groupNo" value="${ p.groupNo }">
+	        		<span class="group-edit"><img src="resources/common_images/update-btn.png" style="width:10px;"></span>
+	        		<span class="group-update" style="display:none;"><img src="resources/common_images/edit-btn.png" style="width:10px;"></span>
         		</li>
         	</c:forEach>
         	<li><a href="psGroup.add">- 기타 </a></li>
@@ -222,22 +224,54 @@
 	   			}
     		}) 
     		
+    	
+    		$("#pslist").on("click", ".group-edit", function(){
+   				let groupName = $(this).siblings().eq(0);
+   				let editName = $(this).siblings().eq(1);
+   				let updateBtn = $(this).siblings(".group-update");
+
+   				groupName.hide();
+   				$(this).hide();
+   				editName.show();
+   				updateBtn.show();
+    		})
+    		
     		$(".personal-groups").each(function(){
     			if($(this).text().trim().length > 10){
     				$(this).text(($(this).text().substring(0,10).concat("...")));
     			}
     		})
     		
-    		
-    		$("#pslist").on("click", ".group-edit", function(){
-   				let groupName = $(this).siblings().eq(0);
-   				let editName = $(this).siblings().eq(1);
-   				groupName.hide();
-   				editName.show();
-   				
-    			
-    			
+    		$("#pslist").on("click", ".group-update", function(){
+    			let $name = $(this).siblings().eq(0); 
+	    		let groupNo = $(this).siblings().eq(2);
+	    		let groupName = $(this).siblings().eq(1);
+	    		let edit = $(this).siblings(".group-edit");
+	    		let check = $(this);
+    			$.ajax({
+    				url:"updatePsGroupName.add",
+    				data:{
+    					groupNo : groupNo.val(),
+    					groupName : groupName.val()
+    				},
+    				success:function(result) {
+    					if(result == "success"){
+    						console.log("성공함");
+    						$name.text("- " + groupName.val());
+    						$name.show();
+    						$(this).siblings().eq(1).hide();
+    						groupName.hide();
+    						edit.show();
+    						check.hide();
+    					
+    					}
+    					
+    				},error:function(){
+    					console.log("주소록이름 수정 실패");
+    				}
+    			});
     		})
+    		
     		
     		
     		

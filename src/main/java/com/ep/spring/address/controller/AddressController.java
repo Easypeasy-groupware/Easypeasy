@@ -468,7 +468,20 @@ public class AddressController {
 	}
 	
 	
-	
+	@ResponseBody
+	@RequestMapping(value="updatePsGroupName.add")
+	public String ajaxUpdatePsGroupName(AddGroup ag) {
+		System.out.println(ag);
+		int result = aService.updatePsGroupName(ag);
+		System.out.println(result);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+		
+		
+	}
 	
 	
 	

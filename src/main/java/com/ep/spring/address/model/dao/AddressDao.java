@@ -222,6 +222,10 @@ public class AddressDao {
 		return result;
 	}
 
+	public int updatePsGroupName(SqlSessionTemplate sqlSession, AddGroup ag) {
+		return sqlSession.update("addressMapper.updatePsGroupName", ag);
+	}
+
 
 
 

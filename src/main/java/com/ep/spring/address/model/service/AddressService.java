@@ -113,6 +113,9 @@ public interface AddressService {
 	
 	// 24. 개인주소록 다중 그룹변경(ajax)
 	int changeGroupAddList(ArrayList<Address> list);
+	
+	// 25. 개인주소록 그룹이름수정
+	int updatePsGroupName(AddGroup ag);
 
 	
 
