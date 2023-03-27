@@ -26,6 +26,7 @@ import com.ep.spring.login.model.vo.Employee;
 import com.ep.spring.login.model.vo.Job;
 import com.ep.spring.mail.model.service.MailService;
 import com.ep.spring.mail.model.vo.Mail;
+import com.ep.spring.mail.model.vo.MailFavorite;
 import com.ep.spring.mail.model.vo.MailTag;
 import com.ep.spring.organization.model.service.OrgService;
 
@@ -65,6 +66,8 @@ public class EmployeeController {
 		ArrayList<Mail> recMailList = mService.selectReceiveMailList(loginUser.getEmail());
 		// 태그 리스트 조회
 		ArrayList<MailTag> tagList = mService.selectTagList(loginUser.getEmpNo());
+		// 메일함 즐겨찾기 리스트 조회
+//		ArrayList<MailFavorite> mailFavorList = mService.selectMailFavorList(loginUser.getEmpNo());
 		
 		/* 채팅 */
         // 현재 로그인 한 User 채팅 Session ArrayList에 추가.
@@ -101,6 +104,7 @@ public class EmployeeController {
 			session.setAttribute("sList", sharedGroup); //외부 공유주소록 그룹리스트 세션에 저장
 			session.setAttribute("recMailList", recMailList);
 			session.setAttribute("tagList", tagList);
+//			session.setAttribute("mailFavorList", mailFavorList);
 			//session.setAttribute("alarmList", alarmList);
 			
 			cSession.addLoginChatUser(loginUser.getEmpNo());

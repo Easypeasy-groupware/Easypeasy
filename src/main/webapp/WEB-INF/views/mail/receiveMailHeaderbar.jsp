@@ -441,11 +441,43 @@
                 location.href = 'list.ma';
             });
 
-            // 즐겨찾기
+            // 중요 메일 등록
             let imporList = document.querySelectorAll('.mail_impor');
             imporList.forEach(function(impor){
                 impor.addEventListener('click', function(){
-                    console.log("즐겨찾기");
+                    const recMailNo = this.closest(".mail_one").getElementsByClassName("recMailNo")[0].value;
+                    let imporMail;
+                    if($(this).attr("src") == "resources/common_images/unFavorite.png") {
+                        imporMail = 'Y'
+                    }else{
+                        imporMail = 'N'
+                    }
+                    $.ajax({
+                        url: "imporEroll.ma",
+                        type: "POST",
+                        data: {
+                            recMailNo: recMailNo,
+                            imporMail: imporMail
+                        },
+                        success:function(result){
+                            if(result == 1 && imporMail == 'Y'){
+                                $(".mail_impor").each(function(){
+                                    if($(this).closest($(".mail_one")).find($(".recMailNo")).val() == recMailNo){
+                                        $(this).attr("src", "resources/common_images/favorite.png");
+                                    };
+                                });
+                            }else if(result == 1 && imporMail == 'N'){
+                                $(".mail_impor").each(function(){
+                                    if($(this).closest($(".mail_one")).find($(".recMailNo")).val() == recMailNo){
+                                        $(this).attr("src", "resources/common_images/unFavorite.png");
+                                    };
+                                });
+                            }
+
+                        }, error:function(){
+
+                        }
+                    });
                 });
             });
         });

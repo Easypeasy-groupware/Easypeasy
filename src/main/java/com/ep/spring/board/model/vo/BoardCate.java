@@ -11,10 +11,10 @@ import lombok.ToString;
 @ToString
 public class BoardCate {
 	
-	private int BoardCno;
-	private String BoardCname;
-	private int DisplayRange;
-	private String PrivateStatus;
-	private String AnonymStatus;
-	private String DeptCode;
+	private int boardCno;
+	private String boardCname;
+	private int displayRange;
+	private String privateStatus;
+	private String anonymStatus;
+	private String deptCode;
 }

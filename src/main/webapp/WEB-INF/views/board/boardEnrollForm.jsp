@@ -55,7 +55,8 @@
               
               
               <label for="file">파일첨부</label>
-                  <!-- <input type="file" id="board_files" name="originNames" multiple="multiple" /><br> -->
+                  <input type="file" id="upfile" class="form-control-file border" name="upfile"><br>
+               <!--    
                   <table>
                   	<tr>
 	                  <td>
@@ -73,6 +74,7 @@
 	                        <input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
 	                 </td>
                   </table>
+                   -->
               <br>    
               
               

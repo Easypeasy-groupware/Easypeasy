@@ -44,7 +44,7 @@ public class BoardDao {
 	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.insert("boardMapper.insertBoard", b);
 	}
-	
+	/*
 	public int insertAttachment(SqlSessionTemplate sqlSession, ArrayList<Attachment> atList) {
 		int result = 0;
 		for(Attachment at : atList) {
@@ -52,11 +52,11 @@ public class BoardDao {
 		}
 		return result;
 	}
-	
+	*/
 	public int insertABoard(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.insert("boardMapper.insertBoard", b);
 	}
-	
+	/*
 	public int insertAAttachment(SqlSessionTemplate sqlSession, ArrayList<Attachment> atList) {
 		int result = 0;
 		for(Attachment at : atList) {
@@ -64,13 +64,13 @@ public class BoardDao {
 		}
 		return result;
 	}
-	
-	public int increaseCount(SqlSessionTemplate sqlSession, int no) {
-		return sqlSession.update("boardMapper.increaseCount", no);
+	*/
+	public int increaseCount(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("boardMapper.increaseCount", boardNo);
 	}
 	
-	public Board selectBoard(SqlSessionTemplate sqlSession, Board b) {
-		return sqlSession.selectOne("boardMapper.selectBoard", b);
+	public Board selectBoard(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.selectOne("boardMapper.selectBoard", boardNo);
 	}
 	
 	
@@ -152,13 +152,10 @@ public class BoardDao {
 		return sqlSession.delete("boardMapper.deleteReply", replyNo);
 	}
 	
-	public int updateReply(SqlSessionTemplate sqlSession, int replyNo){
-		return sqlSession.update("boardMapper.updateReply", replyNo);
-	}
-	
-	public int updateReplyForm(SqlSessionTemplate sqlSession, BoardReply r) {
+	public int updateReply(SqlSessionTemplate sqlSession, BoardReply r){
 		return sqlSession.update("boardMapper.updateReply", r);
 	}
+	
 	
 	public int selectSettings(SqlSessionTemplate sqlSession, BoardCate bc){
 		return sqlSession.selectOne("boardMapper.selectSettings", bc);

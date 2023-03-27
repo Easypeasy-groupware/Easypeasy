@@ -41,7 +41,7 @@ public class BoardServiceImpl implements BoardService{
 	public ArrayList<Board> selectFreeList(PageInfo pi) {
 		return bDao.selectFreeList(sqlSession, pi);
 	}
-
+/*
 	@Override
 	public int insertBoard(Board b, ArrayList<Attachment> atList) {
 		int result = bDao.insertBoard(sqlSession, b);
@@ -65,8 +65,13 @@ public class BoardServiceImpl implements BoardService{
 			return 0;
 		}
 	}
+	*/
+	@Override
+	public int insertBoard(Board b) {
+		return bDao.insertBoard(sqlSession, b);
+	}
 	
-	
+	/*
 	@Override
 	public int increaseCount(int no) {
 		return bDao.increaseCount(sqlSession, no);
@@ -97,6 +102,18 @@ public class BoardServiceImpl implements BoardService{
 	public ArrayList<Attachment> selectAnAttachmentList(Board b) {
 		return bDao.selectAnAttachmentList(sqlSession, b);
 	}
+	*/
+	
+	@Override
+	public int increaseCount(int boardNo) {
+		return bDao.increaseCount(sqlSession, boardNo);
+	}
+
+	@Override
+	public Board selectBoard(int boardNo) {
+		return bDao.selectBoard(sqlSession, boardNo);
+	}
+	
 	
 	@Override
 	public int deleteBoard(int boardNo) {
@@ -172,14 +189,14 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public int updateReply(int replyNo) {
-		return bDao.updateReply(sqlSession, replyNo);
+	public int updateReply(BoardReply r) {
+		return bDao.updateReply(sqlSession, r);
 	}
 	
-	@Override
-	public int updateReplyForm(BoardReply r) {
-		return bDao.updateReplyForm(sqlSession, r);
-	}
+	/*
+	 * @Override public int updateReplyForm(BoardReply r) { return
+	 * bDao.updateReplyForm(sqlSession, r); }
+	 */
 	
 	@Override
 	public ArrayList<Board> selectTopList() {

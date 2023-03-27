@@ -17,4 +17,6 @@ public class Attendee {
 	
 	private String empName;
 	private String jobName;
+	
+	private String attendeeName;
 }

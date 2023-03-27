@@ -43,6 +43,13 @@
 		<result column="division" property="division" />
 	</resultMap>
 	
+	<resultMap id="MailFavorResult" type="MailFavorite">
+		<id column="fav_no" property="favNo" />
+		<result column="emp_no" property="empNo" />
+		<result column="fav_order" property="favOrder" />
+		<result column="mailbox_name" property="mailBoxName" />
+	</resultMap>
+	
 	<select id="selectReceiceMailList" resultMap="MailResult">
 		select
 		       RECEP_MAIL_NO
@@ -288,6 +295,11 @@
 		update rec_mail
 		   set 
   	   		   rec_check = #{ recCheck }
+  	   		 , rec_date = case
+  	   		   when rec_check = 'Y' then null
+               when rec_check = 'N' then to_char(sysdate, 'YYYY-MM-DD HH24:mi:SS')
+  	   		   else rec_date
+  	   		   end
 		 where recep_mail_no = #{ recMailNo }
 	</update>
 	
@@ -419,7 +431,7 @@
 	      from send_mail s
           join rec_mail r on s.mail_no = r.mail_no
           join employee e on r.recep_mail_address = email
-	      join attachment a on r.mail_no = a.ref_no
+	      join (select distinct ref_no, division from attachment) a on s.mail_no = a.ref_no
 	     where 
 			   recep_mail_address = #{email}
 		   and r.status = 'Y'
@@ -559,4 +571,47 @@
 	     order
 	        by recep_mail_no desc
 	</select>
+	
+	<update id="enrollImporMail">
+		update rec_mail
+		   set impor_mail = #{ imporMail }
+		 where recep_mail_no = #{ recMailNo }
+	</update>
+	
+	<insert id="enrollFavorMailBox">
+		insert 
+		  into mail_fav
+		  (
+	        FAV_NO
+		  , EMP_NO
+		  , FAV_ORDER
+	      , MAILBOX_NAME
+		  )
+		  values
+		  (
+		    seq_favno.nextval
+		  , #{ empNo }
+		  , (select count(fav_no)
+		  	   from mail_fav
+		  	  where emp_no = #{ empNo })
+		  , #{ mailBoxName }
+		  )
+	</insert>
+	
+	<delete id="deleteFavorMailBox">
+		delete
+		  from mail_fav
+		 where empNo = #{ empNo }
+		   and mailbox_name = #{ mailBoxName }
+	</delete>
+	
+	<!-- <select id="selectMailFavorList" resultMap="MailFavorResult">
+		select
+			 , FAV_NO
+			 , EMP_NO
+			 , FAV_ORDER
+			 , MAILBOX_NAME
+		  from mail_fav
+		 where emp_no = #{ empNo }
+	</select> -->
 </mapper>
