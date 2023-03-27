@@ -873,6 +873,25 @@
 		 order
 		    by DELETE_DATE desc
 	</select>
+	
+	<delete id="completeDeleteAddList">
+		delete
+		  from address
+		 where add_no = #{addNo}
+	</delete>
+	
+	<delete id="deleteFavList">
+		delete
+		  from add_fav
+		 where add_no = #{addNo}
+	</delete>
+	
+	<update id="restoreAddList">
+		update
+		       address
+		   set add_bin = 'N'
+		 where add_no = #{addNo}
+	</update>
 
 
 </mapper>

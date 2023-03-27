@@ -35,9 +35,7 @@
     .btnGroup{width:80px; height:25px; border:0; border-radius:5px; margin-bottom:10px; color:white;}
     .btnGroup:hover{cursor: pointer;}
     #delete{background: rgb(134, 134, 134); text-align:center;}
-    #change-group{background: rgb(166, 184, 145);}
-    #sendMail{background: rgb(77, 88, 64);}
-
+	#restore{background: rgb(166, 184, 145); text-align:center;}
 
     /*주소록 리스트 테이블*/
     #addList{
@@ -91,12 +89,11 @@
 			
 
 			<button class="btnGroup" id="delete">영구삭제</button>
-			<button class="btnGroup" id="change-group" data-bs-toggle="modal" data-bs-target="#changeModal">복구</button>
+			<button class="btnGroup" id="restore">복구</button>
 			<script>
 				$(function(){
-					
 					const list = []; //빈 배열 생성
-					
+
 					$("#delete").click(function(){ // 삭제하기 버튼 클릭시
 						let num = $("input:checkbox[name=name-checkbox]:checked").length; // 선택한 체크박스의 개수
 						if(num == 0){
@@ -104,6 +101,16 @@
 						}else{
 							$("#add-num").text(num);
 							$("#deleteModal").modal("show");
+						}
+					})
+					
+					$("#restore").click(function(){ // 복구 버튼 클릭시
+						let num = $("input:checkbox[name=name-checkbox]:checked").length; // 선택한 체크박스의 개수
+						if(num == 0){
+							$("#restoreFailModal").modal("show");
+						}else{
+							$("#add-num2").text(num);
+							$("#restoreModal").modal("show");
 						}
 					})
 				})
@@ -141,7 +148,7 @@
 					<tbody align="center" id="ps-tbody">
 					<c:choose>
 						<c:when test="${ empty list }">
-							<tr><td colspan="11"> 등록된 개인주소록이 없습니다 🤐</td></tr>
+							<tr><td colspan="11"> 휴지통이 비어있습니다 😶‍🌫️ </td></tr>
 						</c:when>
 						<c:otherwise>
 							<c:forEach var="a" items="${ list }">
@@ -243,7 +250,7 @@
 						data : objParams,
 						success : function(result){
 							if(result > 0){
-								location.href= "psAll.add";
+								location.href= "addressBin.add";
 							}
 						},
 						error : function(){
@@ -251,45 +258,78 @@
 						}
 					});
 				}
-				
-				
+			
+			
 			</script>
+			
+			<!-- 삭제 불가용 모달-->
+			<div class="modal fade" id="restoreFailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header" style="background-color:rgb(166, 184, 145);">
+							<p class="modal-title" style="font-weight:600">연락처 복구</p>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<br>
+							📌 연락처를 한 개 이상 선택해 주세요 🫥
+							<br><br><br>
+							<button type="button" class="btn-event-green" id="modal-del-btn" data-bs-dismiss="modal">확인</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- 삭제 확인용 모달-->
+			<div class="modal fade" id="restoreModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header" style="background-color:rgb(166, 184, 145);">
+							<p class="modal-title" style="font-weight:600">연락처 복구</p>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							선택한 <span id="add-num2" style="font-weight:600;"></span>개의 연락처를 복구하시겠습니까?
+							<br><br>
+							<button type="button" class="btn-event-gray" data-bs-dismiss="modal" id="modal-close-btn">취소</button>
+							<button type="button" class="btn-event-green" id="modal-del-btn" onclick="restoreAddList();">복구</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
 			<script>
-				$(function(){
-					$("#add-new-group").click(function(){
-						$("#insertModal").modal('show');
-					})
-				})
-				function changeAddList(val){// 선택한 주소록 다중 그룹변경용 ajax
+				function restoreAddList(){ // 선택한 주소록 다중 삭제용 ajax
 					const aList = []; //빈 배열 생성
 					for(var i=0; i<$("#ps-tbody>tr").length; i++){
 						if($("#ps-tbody>tr").eq(i).children().find("input[type='checkbox']").is(":checked")){
+							
+							//var setData={}; // 배열에 넣을 데이터쌍 변수 생성
+							//setData{'addNo'} = $("#ps-tbody>tr").eq(i).children().eq(0).text();
 							aList.push($("#ps-tbody>tr").eq(i).children().eq(0).text());
 						}
 					}
-					var objParams = {
-							"addList" : aList, // 그룹을 업데이트할 주소록 번호배열 저장
-							"groupNo" : val // 변경할 주소록그룹 번호 저장
-							}
+					var objParams = {"addList" : aList}
 					
 					$.ajax({
-						url:"changeAddList.add",
+						url:"restoreAddList.add",
 						dataType : "json",
 						contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 						type:"post",
 						data : objParams,
 						success : function(result){
 							if(result > 0){
-								location.href= "psAll.add";
+								location.href= "addressBin.add";
 							}
 						},
 						error : function(){
-							console.log("주소록 그룹변경용 ajax 통신 실패");
+							console.log("주소록 삭제용 ajax 통신 실패");
 						}
 					});
-					
 				}
 			</script>
+			
+			
 			
 
 			<div align="center">
