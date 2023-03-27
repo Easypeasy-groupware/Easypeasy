@@ -269,5 +269,29 @@
              and emp_no = #{empNo}
 	</select>
 	
+	<insert id="insertVacRecode">
+		insert
+			  into vac_recode
+			  (
+			    vac_recode
+			  , emp_no
+			  , vac_days
+			  , enroll_date
+			  , vac_reason
+			  , vac_divide
+	          , vac_category
+			  )
+			  values
+			  (
+			    SEQ_VACNO.nextval.nextval
+			  , #{empNo}
+			  , #{vacDays}
+			  , sysdate
+			  , #{vacReason}
+			  , #{vacDivide}
+	          , #{vacCategory}
+			  )
+	</insert>
+	
 
 </mapper>

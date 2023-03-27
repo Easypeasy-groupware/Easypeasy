@@ -515,6 +515,7 @@
                         <th class="tg-0lax">휴가일수</th>
                       </tr>
                     </thead>
+                    
                     <tbody>
                       <tr>
                         <c:forEach var="list2" items="${ list2 }">
