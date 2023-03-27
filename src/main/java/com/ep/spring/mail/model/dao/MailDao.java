@@ -1,7 +1,9 @@
 package com.ep.spring.mail.model.dao;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.mail.model.vo.Mail;
+import com.ep.spring.mail.model.vo.MailFavorite;
 import com.ep.spring.mail.model.vo.MailTag;
 
 @Repository
@@ -74,12 +77,12 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiverList", m);
 	}
 
-	public ArrayList<Attachment> selectAttachmentList(ArrayList<Mail> mailList, SqlSessionTemplate sqlSession) {
-		ArrayList<Attachment> attachList = new ArrayList<Attachment>();
+	public ArrayList<ArrayList<Attachment>> selectAttachmentList(ArrayList<Mail> mailList, SqlSessionTemplate sqlSession) {
+		ArrayList<ArrayList<Attachment>> attachList = new ArrayList<ArrayList<Attachment>>();
 		for(Mail m : mailList) {
-			Attachment at = new Attachment();
-			at = sqlSession.selectOne("mailMapper.selectMailAttachment", m);
-			if(at != null) {
+			ArrayList<Attachment> at = new ArrayList<Attachment>();
+			at = (ArrayList)sqlSession.selectList("mailMapper.selectMailAttachment", m);
+			if(!at.isEmpty()) {
 				attachList.add(at);
 			}
 		}
@@ -235,6 +238,22 @@ public class MailDao {
 		}else {
 			return (ArrayList)sqlSession.selectList("mailMapper.selectTempMailList", email);
 		}
+	}
+
+	public int enrollImporMail(Mail m, SqlSessionTemplate sqlSession) {
+		return sqlSession.update("mailMapper.enrollImporMail", m);
+	}
+
+	public int enrollFavorMailBox(MailFavorite mf, SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("mailMapper.enrollFavorMailBox", mf);
+	}
+
+	public int deleteFavorMailBox(MailFavorite mf, SqlSessionTemplate sqlSession) {
+		return sqlSession.delete("mailMapper.deleteFavorMailBox", mf);
+	}
+
+	public ArrayList<MailFavorite> selectMailFavorList(int empNo, SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("mailMapper.selectMailFavorList", empNo);
 	}
 
 	

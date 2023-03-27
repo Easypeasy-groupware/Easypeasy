@@ -154,8 +154,14 @@
                                             <div class="mail_img unread"><img class="mail_read" src="resources/common_images/mail_unRead.png"></div>
                                         </c:otherwise>
                                     </c:choose>
-                                    <c:if test="${ not empty attachmentList }">
-                                        <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
+                                    <c:if test="${ not empty attachList }">
+                                        <c:forEach var="attach" items="${ attachList }">
+                                            <c:forEach var="a" begin="0" end="0" items="${ attach }">
+                                                <c:if test="${ m.mailNo == a.refNo }">
+                                                    <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
+                                                </c:if>
+                                            </c:forEach>
+                                        </c:forEach>
                                     </c:if>
                                 </div>
                                 <form class="mail_select_area">

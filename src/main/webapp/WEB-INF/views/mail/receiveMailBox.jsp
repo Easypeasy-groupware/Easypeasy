@@ -130,10 +130,10 @@
                                 <div class="mail_imgList">
                                     <c:choose>
                                         <c:when test="${ m.imporMail == 'Y' }">
-                                            <div class="mail_img read"><img class="mail_impor" src="resources/common_images/favorite.png"></div>
+                                            <div class="mail_img read"><img class="mail_impor impor" src="resources/common_images/favorite.png"></div>
                                         </c:when>
                                         <c:otherwise>
-                                            <div class="mail_img unread"><img class="mail_impor" src="resources/common_images/unFavorite.png"></div>
+                                            <div class="mail_img unread"><img class="mail_impor unImpor" src="resources/common_images/unFavorite.png"></div>
                                         </c:otherwise>
                                     </c:choose>
                                     <c:choose>
@@ -145,10 +145,12 @@
                                         </c:otherwise>
                                     </c:choose>
                                     <c:if test="${ not empty attachList }">
-                                        <c:forEach var="a" items="${ attachList }">
-                                            <c:if test="${ m.mailNo == a.refNo }">
-                                                <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
-                                            </c:if>
+                                        <c:forEach var="attach" items="${ attachList }">
+                                            <c:forEach var="a" begin="0" end="0" items="${ attach }">
+                                                <c:if test="${ m.mailNo == a.refNo }">
+                                                    <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
+                                                </c:if>
+                                            </c:forEach>
                                         </c:forEach>
                                     </c:if>
                                 </div>

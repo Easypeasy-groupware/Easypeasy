@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ep.spring.address.model.service.AddressService;
 import com.ep.spring.address.model.vo.AddGroup;
 import com.ep.spring.alarm.model.service.AlarmService;
-import com.ep.spring.alarm.model.vo.Alarm;
 //import com.ep.spring.chat.model.vo.ChatSession;
 import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.common.template.FileUpload;
@@ -25,6 +24,7 @@ import com.ep.spring.login.model.vo.Employee;
 import com.ep.spring.login.model.vo.Job;
 import com.ep.spring.mail.model.service.MailService;
 import com.ep.spring.mail.model.vo.Mail;
+import com.ep.spring.mail.model.vo.MailFavorite;
 import com.ep.spring.mail.model.vo.MailTag;
 import com.ep.spring.organization.model.service.OrgService;
 
@@ -64,6 +64,8 @@ public class EmployeeController {
 		ArrayList<Mail> recMailList = mService.selectReceiveMailList(loginUser.getEmail());
 		// 태그 리스트 조회
 		ArrayList<MailTag> tagList = mService.selectTagList(loginUser.getEmpNo());
+		// 메일함 즐겨찾기 리스트 조회
+		ArrayList<MailFavorite> mailFavorList = mService.selectMailFavorList(loginUser.getEmpNo());
 		
 		/* 채팅 */
         // 현재 로그인 한 User 채팅 Session ArrayList에 추가.
@@ -100,6 +102,7 @@ public class EmployeeController {
 			session.setAttribute("sList", sharedGroup); //외부 공유주소록 그룹리스트 세션에 저장
 			session.setAttribute("recMailList", recMailList);
 			session.setAttribute("tagList", tagList);
+			session.setAttribute("mailFavorList", mailFavorList);
 			//session.setAttribute("alarmList", alarmList);
 			
 			return "common/main";

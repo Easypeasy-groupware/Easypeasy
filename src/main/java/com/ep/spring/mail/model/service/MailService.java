@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.mail.model.vo.Mail;
+import com.ep.spring.mail.model.vo.MailFavorite;
 import com.ep.spring.mail.model.vo.MailTag;
 
 public interface MailService {
@@ -37,7 +38,7 @@ public interface MailService {
 	
 	/* 3. 메일 발신 */
 	int sendMail(Mail m, ArrayList<Mail> mList, ArrayList<Attachment> atList);
-
+	
 	
 	/* 4. 메일 상세조회하기 */
 	// - 메일 읽음 처리
@@ -49,7 +50,7 @@ public interface MailService {
 	// - 수신자 리스트 조회
 	ArrayList<Mail> selectReceiverList(Mail m);
 	// - 메일 리스트 첨부파일 조회
-	ArrayList<Attachment> selectAttachmentList(ArrayList<Mail> mailList);
+	ArrayList<ArrayList<Attachment>> selectAttachmentList(ArrayList<Mail> mailList);
 	// - 단일 메일 첨부파일 리스트 조회
 	ArrayList<Attachment> selectMailAttachment(Mail m);
 	
@@ -65,6 +66,8 @@ public interface MailService {
 	
 	/* 7. 비우기 처리(영구 삭제) */
 	int completeDeleteMail(Mail m);
+	// - 보낸 메일 삭제
+	int deleteSendMail(int[] mailNoList);
 
 	
 	/* 8. 스팸처리 */
@@ -76,8 +79,21 @@ public interface MailService {
 	/* 9. 메일 태그 등록 */
 	int tagMail(Mail m, int[] recMailNoList);
 	
-	/* 보낸 메일 삭제 */
-	int deleteSendMail(int[] mailNoList);
+	/* 10. 중요 메일 등록 */
+	int enrollImporMail(Mail m);
+	
+	/* 11. 메일함 즐겨찾기 */
+	// - 메일함 즐겨찾기 리스트 조회
+	ArrayList<MailFavorite> selectMailFavorList(int empNo);
+	// - 등록
+	int enrollFavorMailBox(MailFavorite mf);
+	// - 삭제
+	int deleteFavorMailBox(MailFavorite mf);
+	
+	
+	
+	
+	
 	
 	
 	
