@@ -304,10 +304,54 @@ public class CommuteController {
 			int empNo = c.getEmpNo();
 			
 			if(result>0) {
-				AlertMsg msg = new AlertMsg("근무시간 수정", "근무시간 수정이 성공적으로 완료되었습니다.");
-				session.setAttribute("successMsg", msg);
+
 				
-				return "redirect:workingEmp.HR?no="+empNo;
+				//출퇴근시간 수정 성공 후 근무시간 수정
+				String dateStart = c.getStartTime();
+	    		String dateEnd = c.getEndTime();
+
+	    		// Custom date format
+	    		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");  
+
+	    		Date d1 = null;
+	    		Date d2 = null;
+	    		try {
+	    		    d1 = format.parse(dateStart);
+	    		    d2 = format.parse(dateEnd);
+	    		} catch (ParseException e) {
+	    		    e.printStackTrace();
+	    		}    
+
+	    		// Get msec from each, and subtract.
+	    		long diff = d2.getTime() - d1.getTime();       
+	    		long diffMinutes = diff / (60 * 1000) % 60;         
+	    		long diffHours = diff / (60 * 60 * 1000);                             
+	    		//System.out.println("Time in minutes: " + diffMinutes + " minutes.");         
+	    		//System.out.println("Time in hours: " + diffHours + " hours.");
+	    		
+	    		String H = diffHours < 10 ? "0" + diffHours : String.valueOf(diffHours);
+	    		String M = diffMinutes < 10 ? "0" + diffMinutes : String.valueOf(diffMinutes);
+
+	    		
+	    		String workTime = H + "시간" + M + "분" ;
+	    		c.setWorkTime(workTime);
+	    		
+	    		//System.out.println(c);
+	    		
+	    		int result2 = cService.updateWorkTime(c);
+	    		
+	    		if(result2>0) {
+	    			AlertMsg msg = new AlertMsg("근무시간 수정", "근무시간 수정에 실패하였습니다.");
+					session.setAttribute("successMsg", msg);	    			
+	    			return "redirect:workingEmp.HR?no="+empNo;
+	    		}else {
+	    			AlertMsg msg = new AlertMsg("출,퇴근시간 수정", "출,퇴근시간 수정이 성공적으로 완료되었습니다.");
+					session.setAttribute("failMsg", msg);
+					
+					return "redirect:workingEmp.HR?no="+empNo;
+	    		}
+				
+				
 			}else {
 			
 				AlertMsg msg = new AlertMsg("근무시간 수정", "근무시간 수정에 실패하였습니다.");

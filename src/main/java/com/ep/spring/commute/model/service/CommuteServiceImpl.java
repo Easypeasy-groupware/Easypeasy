@@ -112,6 +112,13 @@ public class CommuteServiceImpl implements CommuteService{
 		
 		return cDao.updateTimeHR(sqlSession, c);
 	}
+	
+	//workTime(총근무시간 계산 후 업데이트)
+	@Override
+	public int updateWorkTime(Commute c) {
+
+		return cDao.updateWorkTime(sqlSession, c);
+	}
 
 	//출근 등록시 지각,정상근무 변경
 	@Override
@@ -196,6 +203,8 @@ public class CommuteServiceImpl implements CommuteService{
 
 		return cDao.selectUseVac(sqlSession, empNo);
 	}
+
+
 
 
 	
