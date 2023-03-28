@@ -330,7 +330,7 @@
 	    		check.push($(this).next().next().val())
 	    	}
     	})
-		console.log(check)
+		//console.log(check)
 		
 		// 체크 이벤트 발생시 캘린더 번호 arr로
 		$(document).on("click", ".inputCheck", function(){
@@ -340,7 +340,7 @@
    					check.push($(this).next().next().val());
    			    }
    	    	})
-   	    	console.log(check);
+   	    	//console.log(check);
        		
        		
        		let eventArr = [];
@@ -387,7 +387,7 @@
 	 				empNo:${ loginUser.empNo }
 	 			},
 	 			success:function(scList){
-	 				console.log(scList); // [{calNo: }, {calNo:, ..}]
+	 				//console.log(scList); // [{calNo: }, {calNo:, ..}]
 	 				
 	 				schedules = scList;
 	 				let eventArr = [];

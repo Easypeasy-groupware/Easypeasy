@@ -201,7 +201,7 @@ public class ReservationController {
 		
 	}
 	
-	@RequestMapping("BeamProjectorDel.re")
+	@RequestMapping("beamProjectorDel.re")
 	public String BeamProjectorDelete(int bno, HttpSession session) {
 
 		int result = reService.BeamProjectorDelete(bno);

@@ -30,6 +30,7 @@
     /*게시판*/
     .board{height:280px;}
     .board-title:hover{cursor:pointer; font-weight:600;}
+    #doc-etc{width:48%;}
     #board-notice{border-bottom:4px solid rgb(166, 184, 145); font-weight:600;}
 
     /*결재문서*/
@@ -85,6 +86,7 @@
 				<br><br>
 				<div class="subtitle board-title" id="board-notice">전체공지사항</div>
 				<div class="subtitle board-title" id="board-all">자유게시판</div>
+				<div class="subtitle" id="doc-etc"></div>
 				<br clear="both"><br>
 		
 				<table class="board-table" id="notice-tb">
@@ -155,17 +157,27 @@
             				console.log(list[0].boardTitle);
             				
             				let value = "";
-            				for(let i=0; i<list.length; i++){
-            					let b = list[i]; 
-            					value += "<tr>"
-            							+	"<td>" + list[i].boardTitle + "</td>"
-            							+	"<td>" + list[i].empName + "</td>"
-            							+	"<td>" + list[i].createDate + "</td>"
-            							+ "</tr>"; 
-            				}
+            				if(list.length == 0){
+								value1+= "<tr>" 
+										+ "<td colspan='3'>"
+										+ "전체 공지사항이 없습니다."
+										+ "</td>"
+										+"</tr>";
+							}else{
+								
+	            				for(let i=0; i<list.length; i++){
+	            					let b = list[i]; 
+	            					value += "<tr>"
+	            							+	"<td>" + list[i].boardTitle + "</td>"
+	            							+	"<td>" + list[i].boardWriter + "</td>"
+	            							+	"<td>" + list[i].createDate + "</td>"
+	            							+ "</tr>"; 
+	            				}
+	            				
+							}
             				
             				$("#notice-tb tbody").html(value);
-            							
+            				
             			},error:function(){
             				console.log("top5 공지게시글 조회용 ajax 통신 실패");
             			}
@@ -173,29 +185,38 @@
             	}
 				
 			
-			/* 	function topFreeList(){
+			function topFreeList(){
             		$.ajax({
             			url:"topFree.bo",
             			success:function(result){
             				console.log(result);
             				
             				let value = "";
-            				for(let j=0; j<list.length; j++){
-            					let b = list[j]; 
-            					value += "<tr>"
-            							+	"<td>" + list[j].boardTitle + "</td>"
-            							+	"<td>" + "익명" + "</td>"
-            							+	"<td>" + list[j].createDate + "</td>"
-            							+   "</tr>"; 
-            				}
+            				if(result.length == 0){
+								value1+= "<tr>" 
+										+ "<td colspan='3'>"
+										+ "자유게시판에 게시글이 없습니다."
+										+ "</td>"
+										+"</tr>";
+							}else{
+								
+	            				for(let j=0; j<list.length; j++){
+	            					let b = list[j]; 
+	            					value += "<tr>"
+	            							+	"<td>" + list[j].boardTitle + "</td>"
+	            							+	"<td>" + "익명" + "</td>"
+	            							+	"<td>" + list[j].createDate + "</td>"
+	            							+   "</tr>"; 
+	            				}
+	            				
+							}
             				
             				$("#free-tb tbody").html(value);
-            							
             			},error:function(){
             				console.log("top5 자유게시글 조회용 ajax 통신 실패");
             			}
             		})
-            	} */
+            	}
 				  
 			</script>	
 			

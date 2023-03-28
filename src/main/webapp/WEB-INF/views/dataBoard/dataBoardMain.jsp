@@ -106,7 +106,7 @@
 				<br>
 				<!-- 경영지원팀만 글작성 할 수 있도록 -->
 				<c:if test="${ loginUser.deptCode eq 'D2' }">
-					<a class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white; margin-left: 920px; margin-bottom: -15px;" href="enrollForm.db">글쓰기</a>
+					<a class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white; margin-left: 940px; margin-bottom: -15px;" href="enrollForm.db">글쓰기</a>
 				</c:if>
 				<br><br>
 				<table class="table table-hover table-sm" id="dbList">
@@ -147,20 +147,24 @@
 					<ul id="paging">
 						<c:choose>
 							<c:when test="${ empty keyword }">
-								<li><a href="list.db?cpage=${ pi.currentPage-1 }">&lt;</a></li>
+								<c:if test="${ pi.currentPage ne 1 }">
+									<li><a href="list.db?cpage=${ pi.currentPage-1 }">&lt;</a></li>
+								</c:if>
 							</c:when>
 							<c:otherwise>
-								<li><a href="search.db?cpage=${ pi.currentPage-1 }&keyword="${ keyword }">&lt;</a></li>
+								<c:if test="${ pi.currentPage ne 1 }">
+									<li><a href="search.db?cpage=${ pi.currentPage-1 }&keyword=${ keyword }">&lt;</a></li>
+								</c:if>
 							</c:otherwise>
 						</c:choose>
 							
 						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 							<c:choose>
 								<c:when test="${ empty keyword }">
-									<li><a href="list.db?cpage=${ p }">${ p }</a></li>
+									<li class="on"><a href="list.db?cpage=${ p }">${ p }</a></li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="search.db?cpage=${ p }&keyword="${ keyword }">${ p }</a></li>
+									<li class="on"><a href="search.db?cpage=${ p }&keyword=${ keyword }">${ p }</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
@@ -170,7 +174,7 @@
 								<li><a href="list.db?cpage=${ pi.currentPage+1 }">&gt;</a></li>
 							</c:when>
 							<c:otherwise>
-								<li><a href="search.db?cpage=${ pi.currentPage+1 }&keyword="${ keyword }">&gt;</a></li>
+								<li><a href="search.db?cpage=${ pi.currentPage+1 }&keyword=${ keyword }">&gt;</a></li>
 							</c:otherwise>
 						</c:choose>
 					</ul>
