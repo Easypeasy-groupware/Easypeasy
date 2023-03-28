@@ -5,6 +5,7 @@
 	<resultMap id="MailResult" type="Mail">
 		<id column="recep_mail_no" property="recMailNo" />
 		<result column="mail_no" property="mailNo" />
+		<result column="ref_no" property="refNo" />
 		<result column="tag_no" property="tagNo" />
 		<result column="tag_name" property="tagName" />
 		<result column="tag_color" property="tagColor" />
@@ -308,6 +309,7 @@
 		update rec_mail
 		   set 
 		       status = 'N'
+		     , junk_mail = 'N'
 		 where recep_mail_no = #{ recMailNo }
 	</update>
 	
@@ -315,18 +317,14 @@
 		delete 
 		  from rec_mail
 		 where 
-	 	   <if test='junkMail == "Y"'>
-	 	       junk_mail = #{ junkMail }		
-	 	   </if>
-	 	   <if test='status == "N"'>
-	 	   	   status = #{ status }
-	 	   </if>
+	 	       recep_mail_no = #{ recMailNo }
 	</delete>
 	
 	<update id="spamEnroll">
 		update rec_mail
 		   set
 		       junk_mail = 'Y'
+		     , status = 'Y'
 		 where recep_mail_no = #{ recMailNo }
 	</update>
 	
@@ -507,33 +505,36 @@
 	</select>
 	
 	<select id="selectSendMailList" resultMap="MailResult">
-		select
-		       RECEP_MAIL_NO
-			 , s.MAIL_NO
-			 , TAG_NO
-			 , emp_name
-			 , r.recep_MAIL_ADDRESS
-			 , r.send_mail_address
-			 , s.MAIL_TITLE
-			 , s.MAIL_CONTENT
-			 , REC_CHECK
-			 , REC_DATE
-			 , sent_date
-			 , IMPOR_MAIL
-			 , JUNK_MAIL
-			 , RESER_MAIL
-			 , r.STATUS
-			 , REFERENCE
-			 , HIDDEN_REFERENCE
-	      from send_mail s
-          join rec_mail r on s.mail_no = r.mail_no
-          join employee e on r.recep_mail_address = email
-	     where 
-			   s.send_mail_address = #{email}
-		   and r.status = 'Y'
-           and s.status = 'Y'
-	     order
-	        by recep_mail_no desc
+			select
+			       RECEP_MAIL_NO
+				 , s.MAIL_NO
+	             , ref_no
+				 , TAG_NO
+				 , emp_name
+				 , r.recep_MAIL_ADDRESS
+				 , r.send_mail_address
+				 , s.MAIL_TITLE
+				 , s.MAIL_CONTENT
+				 , REC_CHECK
+				 , REC_DATE
+				 , sent_date
+				 , IMPOR_MAIL
+				 , JUNK_MAIL
+				 , RESER_MAIL
+				 , r.STATUS
+				 , REFERENCE
+				 , HIDDEN_REFERENCE
+		      from send_mail s
+	          join rec_mail r on s.mail_no = r.mail_no
+	          join employee e on r.recep_mail_address = email	
+   full outer join (select distinct ref_no 
+                      from attachment) a on s.mail_no = a.ref_no
+		     where 
+				   s.send_mail_address = #{email}
+			   and r.status = 'Y'
+	           and s.status = 'Y'
+		     order
+		        by recep_mail_no desc
 	</select>
 	
 	<update id="deleteSendMail">
@@ -655,4 +656,57 @@
 		  from mail_tag
 		 where tag_no = #{ tagNo }
 	</select>
+	
+	<select id="selectDeleteMailList" resultMap="MailResult">
+		select
+		       RECEP_MAIL_NO
+			 , s.MAIL_NO
+			 , TAG_NO
+			 , emp_name
+			 , r.recep_MAIL_ADDRESS
+			 , r.send_mail_address
+			 , s.MAIL_TITLE
+			 , s.MAIL_CONTENT
+			 , REC_CHECK
+			 , sent_DATE
+			 , substr(sent_DATE, 0, 11) "date_day"
+             , substr(sent_DATE, 14) "date_time"
+			 , IMPOR_MAIL
+			 , JUNK_MAIL
+			 , RESER_MAIL
+			 , r.STATUS
+			 , REFERENCE
+			 , HIDDEN_REFERENCE
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.send_mail_address = email
+	     where 
+			   recep_mail_address = #{ email }
+		   and r.status = 'N'
+	     order
+	        by recep_mail_no desc
+	</select>
+	
+	<update id="restoreDeleteMail">
+		update rec_mail
+		   set
+		       status = 'Y'
+		 where recep_mail_no = #{ recMailNo }
+	</update>
+	
+	<delete id="completeDeleteMailAll1">
+		delete 
+		  from rec_mail
+		 where 
+		   	   recep_mail_address = #{ email }
+		   and status = 'N'
+	</delete>
+	
+	<delete id="completeDeleteMailAll2">
+		delete 
+		  from rec_mail
+		 where 
+		   	   recep_mail_address = #{ email }
+		   and junk_mail = 'Y'
+	</delete>
 </mapper>

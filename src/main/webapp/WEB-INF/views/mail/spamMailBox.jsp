@@ -104,30 +104,12 @@
                     <div style="width: 27px; float: left; padding-left: 5px; padding-top: 8px;"><input type="checkbox" name="" id="check_all"></div>
                     <div class="menu menu1" id="spam_clear"><img src="">스팸 해제</div>
                     <div class="menu menu2" id="complete_delete"><img src="">영구 삭제</div>
-                    <div class="menu menu2" id="shift"><img src="">이동</div>
                     <div style="float: right; width: 150px; font-size: 12px;">
                         정렬
                         <select name="" id="">
                             <option value="">최근 메일</option>
                             <option value="">오래된 메일</option>
                         </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 이동 블록 -->
-            <div class="block shift_block">
-                <b style="line-height: 30px;">메일함</b>
-                <div class="x-btn">
-                    <button class="x">X</button>
-                </div>
-                <div class="block_list shift_list">
-                    <div class="block_one shift_one">
-                        <div class="shift_name">메일함 이름</div><br>
-                        <div class="shift_name">메일함 이름</div><br>
-                        <div class="shift_name">메일함 이름</div><br>
-                        <div class="shift_name">메일함 이름</div><br>
-                        <div class="shift_name">메일함 이름</div><br>
                     </div>
                 </div>
             </div>
@@ -214,18 +196,24 @@
             let mailSelectList = document.querySelectorAll('.mail_select_area');
             mailSelectList.forEach(function(select){
                 select.addEventListener('click', function(){
+                    const input = document.createElement("input");
+                    input.setAttribute("style", "display:none")
+                    input.setAttribute("name", "div");
+                    input.setAttribute("value", 9);
+                    this.append(input);
                     this.action = "select.ma";
                     this.method = "POST";
                     this.submit();
+
                 });
             });
 
             // 페이징
             $(function(){
-                    $("#ps-tbody").on("click", "tr", function(){
-                        location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
-                    })
+                $("#ps-tbody").on("click", "tr", function(){
+                    location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
                 })
+            })
 
             // 전체 체크박스 선택 취소
             let checkAll = document.getElementById("check_all");
@@ -284,29 +272,6 @@
 
                 if(checkedBoxSum != 0) {
 
-                }else{
-                    alert('체크박스를 선택해주세요');
-                }
-            });
-
-            // 이동
-            let shift = document.getElementById("shift");
-            let shiftBlock = document.querySelector(".shift_block")
-            shift.addEventListener('click', function(){
-                let checkedBoxSum = 0
-                let count = 0;
-                let arr = [];
-                let form = document.createElement("form");
-                mailCheckBox.forEach((i) => {
-                    if(i.checked == true) {
-                        checkedBoxSum += 1;
-                        arr[count] = mailNoList[i.value];
-                        count += 1; 
-                    }
-                })
-                if(checkedBoxSum > 0) {
-                    console.log(checkedBoxSum);
-                    shiftBlock.style.display = 'block';
                 }else{
                     alert('체크박스를 선택해주세요');
                 }

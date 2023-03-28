@@ -168,20 +168,11 @@
                 });
             });
 
-            // x button 닫기 효과
-            let x_blocks = document.querySelectorAll('.x');
-            x_blocks.forEach(function(x){
-                x.addEventListener('click', function(){
-                    this.parentNode.parentNode.style.display = 'none';
-                })
-            });
-
             // 나에게 버튼
             const toMeBtn = document.getElementById("to_me");
             toMeBtn.addEventListener('click', function(){
                 const noReceiverList = document.getElementById("no_receiver_list");
                 const inReceiverList = document.getElementById("in_receiver_list");
-                
                 if(toMeBtn.checked == true) {
                     const eAddress = document.createElement("div");
                     eAddress.innerHTML = '<div class="receiver_one to_me"><b>${ loginUser.email }</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary">x</button></div>';
@@ -193,10 +184,11 @@
                             deleteBtn.parentNode.remove();
                         });
                     });
-                }else{
-                    const toMeDiv = document.querySelector('.to_me');
+                }else if(toMeBtn.checked == false){
+                    let toMeDiv = document.querySelector('.to_me');
                     toMeDiv.remove();
                 }
+                
             });
 
             // 수신자 주소 추가
@@ -413,12 +405,13 @@
                         contentType:false,
                         success: function(result){
                             if(result == 1){
-                                if(sock){
-                                    var msg = null;
-                                    <c:forEach var="m" items="${ mList }" >
-                                    </c:forEach>
-                                    sock.send(msg);
-                                }
+                                // if(sock){
+                                //     var msg = null;
+                                //     <c:forEach var="m" items="${ mList }" >
+                                //     </c:forEach>
+                                //     sock.send(msg);
+                                // }
+                                location.href="sendList.ma";
                             }
                         }, error:function(){
 

@@ -307,13 +307,17 @@
             let index = 0;
             let arr = [];
 
-            // 메일 상세조회
             let mailSelectList = document.querySelectorAll('.mail_select_area');
             mailSelectList.forEach(function(select){
                 select.addEventListener('click', function(){
+                    const input = document.createElement("input");
+                    input.setAttribute("name", "div");
+                    input.setAttribute("value", 3);
+                    this.append(input);
                     this.action = "select.ma";
                     this.method = "POST";
                     this.submit();
+
                 });
             });
 
