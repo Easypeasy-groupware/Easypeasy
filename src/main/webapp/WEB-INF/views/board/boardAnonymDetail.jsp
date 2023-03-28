@@ -91,7 +91,7 @@
 		                </tr>
 		                <tr>
 		                    <td colspan="4">
-		                        <textarea style="height:400px; width:100%; border:none; text-align:left;" readonly>
+		                        <textarea style="height:400px; width:100%; border:none; text-align:left; resize:none;" readonly>
 		                        	${b.boardContent}
 		                        </textarea>
 		                    </td>
@@ -107,7 +107,7 @@
 		                    <td colspan="5">댓글 (<span id="rcount"></span>) </td> 
 		                </tr>
 			            <tr>
-			                <th colspan="4">
+			                <th colspan="3">
 			                  <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:770px;"></textarea>
 			                </th>
 			                <th style="vertical-align: middle; width:100px;">
