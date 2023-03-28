@@ -230,7 +230,7 @@
                         let form = document.createElement("form");
                         let input = document.createElement("input");
                         input.setAttribute("name", "junkMail");
-                        input.setAttribute("value", "Y");
+                        input.setAttribute("value", "N");
                         form.action = "completeDeleteAll.ma";
                         form.method = "POST";
                         form.append(input);
@@ -251,13 +251,8 @@
                 })
                 .then((willDelete) => {
                     if(willDelete){
-                        let form = document.createElement("form");
-                        let input = document.createElement("input");
-                        input.setAttribute("name", "status");
-                        input.setAttribute("value", "Y");
                         form.action = "completeDeleteAll.ma";
                         form.method = "POST";
-                        form.append(input);
                         document.body.append(form);
                         form.submit();
                     }

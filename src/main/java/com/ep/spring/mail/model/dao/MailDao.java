@@ -300,11 +300,12 @@ public class MailDao {
 
 	public int completeDeleteMailAll(String email, Mail m, SqlSessionTemplate sqlSession) {
 		int result = 0;
-		if(m.getStatus() != null) {
-			return sqlSession.delete("mailMapper.completeDeleteMailAll1", email);
+		if(m.getJunkMail() == null) {
+			result = sqlSession.delete("mailMapper.completeDeleteMailAll1", email);
 		}else {
-			return sqlSession.delete("mailMapper.completeDeleteMailAll2", email);
+			result = sqlSession.delete("mailMapper.completeDeleteMailAll2", email);
 		}
+		return result;
 	}
 
 	

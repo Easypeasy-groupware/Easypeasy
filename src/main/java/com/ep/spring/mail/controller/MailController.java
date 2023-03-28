@@ -643,13 +643,17 @@ public class MailController {
 		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
 		int result = mService.completeDeleteMailAll(email, m);
 		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
-			
+		String division = m.getJunkMail();
 		if(result > 0) {
 			msg.setTitle("비우기");
 			msg.setContent("비우기 처리에 성공했습니다.");
 			mv.addObject("successMsg", msg);
 			mv.addObject("mailList", mailList);
-			return deleteMailList(1, mv, session);
+			if(division != null) {
+				return deleteMailList(1, mv, session);
+			}else {
+				return spamMailList(1, mv, session);
+			}
 		}else {
 			msg.setTitle("비우기");
 			msg.setContent("비우기 처리에 실패했습니다.");
