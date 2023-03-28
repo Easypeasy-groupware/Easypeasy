@@ -336,6 +336,7 @@
 		          from schedule
 		         where sc_status = 'Y'
 		           and sc_writer = #{empNo}
+		           and start_date = to_char(sysdate, 'YYYY-MM-DD')
 		         order
 		            by sc_no desc
 		      )

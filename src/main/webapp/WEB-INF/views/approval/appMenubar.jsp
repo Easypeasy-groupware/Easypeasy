@@ -13,6 +13,11 @@
         box-sizing:border-box; 
          border:1px solid red;
          }  */
+		.area a:hover {
+		  text-decoration: none;
+		  font-weight:600; color:black;
+		  
+		}
        .area{width:1200px;}
        .menubar{
         float:left;
@@ -44,6 +49,7 @@
        .menu-title{margin:20px 0 20px 0; text-align:center; }
         #title>a{font-size:20px; font-weight:600; color:rgb(93, 109, 75);}
         #title>a:hover{color:rgb(58, 69, 47); text-decoration:none;}
+       
 
         /*연락처추가버튼*/
         #newBtn{width:70%; height:35px; margin:auto; margin-bottom:15px; padding:5px 0 5px 0; background-color: rgb(142, 161, 122); border-radius:4px; text-align:center;
@@ -116,8 +122,7 @@
     	}
     	.modal-body appLine{padding:20px;}
          	
-        
-
+  
       
     </style>
     
@@ -696,7 +701,7 @@
                         
                             <tr>
                                 <td>결재문서명</td>
-                                <td>결재문서제목</td>
+                                <td id="formName">결재문서제목</td>
                             </tr>
                             <tr>
                                 <td>기안의견</td>
@@ -718,6 +723,12 @@
         </div>
     </div>
 
-
+	<script>
+		$(function(){ // 결재의견 작성란에 문서이름 넣기
+			var formTitle = $("input[name=formName]").val();
+			
+			$("#formName").html(formTitle);
+		})
+	</script>
 </body>
 </html>

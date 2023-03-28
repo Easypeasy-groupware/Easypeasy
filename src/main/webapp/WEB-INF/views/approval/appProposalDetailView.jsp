@@ -46,6 +46,7 @@
             margin-left: -10px;
             margin-top: -20px;
         } 
+        .left-form2 span:hover{cursor:pointer;}
     </style>
 </head>
 <body>
@@ -58,6 +59,7 @@
             <div class="left-outer" style=" border-right:1px solid gray;">
                 <div class="left-form1">
                     <p><b style="font-size:30px;">일반품의서</b></p>
+                    <input type="hidden" id="formTitle-1" value="일반품의서">
                 </div>
                     <div class="left-form2">
                     <br><br>
@@ -83,7 +85,7 @@
                                     </c:when>
                                     <c:when test="${c.recEmpNo eq loginUser.empNo && c.appStatus eq '미결재' }">
                                         <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#approval">결재</a> |  
-                                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#companion">반려</a> |
+                                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#companion">반려</a>
                                     </c:when>
                                     <c:otherwise>
                                     </c:otherwise>
@@ -111,7 +113,7 @@
 
                 <div class="left-form3" >
 
-                    <table class="draft" style="width:100px; text-align:center; font-size:12px; margin-right:10px;" border="1">
+                    <table class="draft" style="width:100px; text-align:center; font-size:12px; margin-right:10px; height:120px;" border="1">
                         <tr>
                             <td rowspan="4" style="background:rgb(223, 221, 221);">신<br>청</td>
                             <td>
@@ -138,7 +140,7 @@
                 
                         <c:choose>
                             <c:when test="${empty list1 }">
-                                <table class="draft" style="width:100px; text-align:center; font-size:12px; margin-right:10px;" border="1">
+                                <table class="draft" style="width:100px; text-align:center; font-size:12px; margin-right:10px; height:120px;" border="1" >
                                     <tr>
                                         <td rowspan="4" style="background:rgb(223, 221, 221);">승<br>인</td>
                                         <td>
@@ -164,7 +166,7 @@
                             </c:when>
                             <c:otherwise> 
                                 <c:forEach var="i" items="${list1 }">
-                                    <table class="draft" style="width:100px; text-align:center; font-size:12px;" border="1">
+                                    <table class="draft" style="width:100px; text-align:center; font-size:12px; height:120px; height:120px;" border="1">
                                         <tr>
                                             <td rowspan="4" style="background:rgb(223, 221, 221);">승<br>인</td>
                                             <td>
@@ -409,8 +411,15 @@
             
                 $(function(){
                     selectReplyList();
+					selectFormName();
                     
                 })
+                
+               function selectFormName(){
+                	var fTitle = $("#formTitle-1").val();
+                	console.log(fTitle);
+                	$(".appFormTitle").html(fTitle);
+                }
                 
                 function addReply(){ //댓글작성용 ajax
                     
@@ -531,7 +540,7 @@
                                 
                                     <tr>
                                         <td>결재문서명</td>
-                                        <td>결재문서제목</td>
+                                        <td class="appFormTitle"></td>
                                     </tr>
                                     <tr>
                                         <td>결재의견</td>
@@ -574,7 +583,7 @@
                                 
                                     <tr>
                                         <td>결재문서명</td>
-                                        <td>결재문서제목</td>
+                                        <td class="appFormTitle"></td>
                                     </tr>
                                     <tr>
                                         <td>반려의견</td>
@@ -633,6 +642,8 @@
     		}
     		
     	}
+    	
+    	
  	</script>  
  	 	
 </body>

@@ -205,8 +205,8 @@ public class ApprovalServiceImpl implements ApprovalService{
 		  c = aDao.insertAttachment(sqlSession, atList);
 		}
 		
-		System.out.println(vf);
-		System.out.println(ot);
+		//System.out.println(vf);
+		//System.out.println(ot);
 		
 		if(vf.getVacStart() != null) {
 			d = aDao.insertVacationForm(sqlSession, vf);
@@ -227,7 +227,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 		// 현재 결재문서를 불러오는 구문
 		Approval ap = aDao.selectDetailRec(sqlSession, n);
 		
-		System.out.println(ap);
+		//System.out.println(ap);
 		
 		int result1 = 0;
 		
@@ -257,17 +257,14 @@ public class ApprovalServiceImpl implements ApprovalService{
 		int d = 1;
 		int e = 1;
 		
-		if(al.size() != 0) {
+		if(al.size() > 0) {
 			b = aDao.updateApprovalLine(sqlSession, al);
 		}
 		
-		if(atList.size() != 0) {
+		if(atList.size() > 0) {
 		  c = aDao.updateAttachment(sqlSession, atList);
 		}
-		
-		//System.out.println(vf);
-		//System.out.println(ot);
-		
+
 		if(vf.getVacStart() != null) {
 			d = aDao.updateVacationForm(sqlSession, vf);
 			
@@ -276,6 +273,11 @@ public class ApprovalServiceImpl implements ApprovalService{
 		}
 		
 		return a * b * c * d * e;
+	}
+	
+	@Override
+	public int deleteAttachment(int appNo) {
+		return aDao.deleteAttachment(sqlSession, appNo);
 	}
 
 
@@ -291,6 +293,18 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return aDao.selectSearchList(sqlSession, a, pi);
 		
 	}
+
+	@Override
+	public int selectStatusListCount(Approval a) {
+		return aDao.selectStatusListCount(sqlSession, a);
+	}
+
+	@Override
+	public ArrayList<Approval> selectStatusList(PageInfo pi, Approval a) {
+		return aDao.selectStatusList(sqlSession, pi, a);
+	}
+
+
 
 
 

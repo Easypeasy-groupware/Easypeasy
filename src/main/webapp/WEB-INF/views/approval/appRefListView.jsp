@@ -15,7 +15,9 @@
             margin:auto;
             float:left;
             box-sizing: border-box;
-        }	
+        }
+      tbody>tr:hover{background:rgb(233, 233, 233); cursor:pointer;}
+        	
 	</style>
 </head>
 <body>
@@ -80,7 +82,14 @@
 											<input type="hidden" id="num" value="${a.appNo }">
 										</td>
 										<td>${a.enrollDate}</td>
-										<td>${a.updateDate }</td>
+										<c:choose>
+											<c:when test="${a.tstatus == '결재'}">
+												<td>${a.updateDate }</td>
+											</c:when>
+											<c:otherwise>
+												<td> - </td>
+											</c:otherwise>
+										</c:choose>
 										<td>${a.formName }</td>
 										<c:choose>
 											<c:when test="${a.formCode == 3 || a.formCode == 4 }">

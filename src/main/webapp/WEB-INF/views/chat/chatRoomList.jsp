@@ -65,7 +65,7 @@
         		홍길동님의 채팅방
         	</div>
         	<div class="room-manage">
-        		<span id="room-search">🔍</span>
+        		<span id="room-search">🔔</span>
         		<span id="room-add">➕</span>
         	</div>
         	
@@ -121,19 +121,6 @@
 		
 		
 		<script>
-			
-			
-			
-			
-				
-			
-		</script>
-		
-		
-		
-		
-		
-		<script>
 			$(function(){
 				$(".room-name").each(function(){
 					if($(this).text().length > 15){
@@ -142,6 +129,153 @@
 				})
 			})
 		</script>
+		
+		
+		
+		
+	<script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>  
+    <script>
+    	
+	    const sock = new SockJS("${pageContext.request.contextPath}/chat"); // * 웹소켓 서버와 연결됨(== 웹소켓 접속 => ChatEchoHandler 클래스의 afterConnectionEstablished메소드 실행됨)
+	    sock.onopen = onOpen;
+	    sock.onmessage = onMessage;
+	    sock.onclose = onClose;
+		
+	    function onOpen() {
+	    	
+	    	const data = {
+                    "roomNo" : "${ room.roomNo }",
+                    "empNo" : "${ loginUser.empNo }",
+                    "empName" : "${ loginUser.empName }",
+                    "empProfile" : "${loginUser.empProfile}",
+                    "jobName" : "${loginUser.jobName}",
+                 	"message" : "ENTER-CHAT",
+                 	"chatType" : "enter"
+            };
+	    	let jsonData = JSON.stringify(data);
+	    	sock.send(jsonData);
+            console.log("입장");
+	    }
+    
+	
+		<!-- 채팅 목록 관련 -->
+   
+        // 총 읽지 않은 갯수
+        let countAll = 0;
+        
+        function getRoomList(){
+            // 채팅 방 목록 가져오기
+             $.ajax({
+                url:"chatRoomList.do",
+                data:{
+                    empNo:"${loginUser.empNo}"
+                },
+                dataType:"json",
+                async:false, // async : false를 줌으로써 비동기를 동기로 처리 할 수 있다.
+                success:function(data){
+                    
+                    // 현재 로그인 된 User들
+                    let loginList = "";
+                      
+                    // 로그인 된 User들을 가져온다.
+                    $.ajax({
+                        url:"chatSession.do",
+                        data:{
+                        },
+                        async:false,
+                        dataType:"json",
+                        success:function(data){
+                            for(var i = 0; i < data.length; i++){
+                                loginList += data[i];
+                            }
+                        }
+                    });
+                      
+                    $chatWrap = $(".chatList");
+                    $chatWrap.html("");
+                    
+                    var $div;     // 1단계
+                    var $img;     // 2단계
+                    var $divs;     // 2단계
+                    var $span;    // 2단계
+                    
+                    if(data.length > 0){
+                        // 읽지 않은 메세지 초기화
+                        countAll = 0;
+                        
+                        // 태그 동적 추가
+                        for(var i in data){
+                        
+                            // 자신이 구매자 입장일 때
+                            if(data[i].userEmail == "${loginUser.email}"){
+                                // 현재 판매자가 로그인 상태 일 때
+                                if(loginList.indexOf(data[i].masterEmail) != -1){
+                                    $div = $("<div class='chatList_box enterRoomList' onclick='enterRoom(this);'>").attr("id",data[i].roomId).attr("email",data[i].masterEmail);
+                                }
+                                // 현재 판매자가 로그아웃 상태 일 때
+                                else{
+                                    $div = $("<div class='chatList_box2 enterRoomList' onclick='enterRoom(this);'>").attr("id",data[i].roomId).attr("email",data[i].masterEmail);
+                                }
+                                $img = $("<img class='profile_img'>").attr("src", "resources/masterImg/" + data[i].masterPic);
+                                $divs = $("<div class='userNameId'>").text(data[i].masterName);
+                            }
+                            // 자신이 판매자 입장일 때
+                            else{                        
+                                // 현재 구매자가 로그인 상태 일 때
+                                if(loginList.indexOf(data[i].userEmail) != -1){
+                                    $div = $("<div class='chatList_box enterRoomList' onclick='enterRoom(this);'>").attr("id",data[i].roomId).attr("email",data[i].userEmail);
+                                }
+                                // 현재 구매자가 로그아웃 상태 일 때
+                                else{
+                                    $div = $("<div class='chatList_box2 enterRoomList' onclick='enterRoom(this);'>").attr("id",data[i].roomId).attr("email",data[i].userEmail);
+                                }                                
+                                $img = $("<img class='profile_img'>").attr("src", "resources/img/" + data[i].userPic);
+                                $divs = $("<div class='userNameId'>").text(data[i].userName);
+                            }
+                            
+                            // 읽지 않은 메세지가 0이 아닐 때
+                            if(data[i].unReadCount != 0){
+                                $span = $("<span class='notRead'>").text(data[i].unReadCount);
+                            }else{
+                                $span = $("<span>");
+                            }
+                            
+                            $div.append($img);
+                            $div.append($divs);
+                            $div.append($span);
+                            
+                            $chatWrap.append($div);
+                            
+                            // String을 int로 바꿔주고 더해준다.
+                            countAll += parseInt(data[i].unReadCount);
+                        }
+                    }
+                }
+            });
+        }
+        
+        // 화면 로딩 된 후
+        $(window).on('load', function(){
+            
+            // 2초에 한번씩 채팅 목록 불러오기(실시간 알림 전용)
+            setInterval(function(){
+                // 방 목록 불러오기
+                getRoomList();
+                
+                // 읽지 않은 메세지 총 갯수가 0개가 아니면
+                if(countAll != 0){
+                    // 채팅 icon 깜빡거리기
+                    $('.chatIcon').addClass('iconBlink');
+                    play();
+                }else{
+                    // 깜빡거림 없애기
+                    $('.chatIcon').removeClass('iconBlink');
+                }
+            },2000);
+        });
+    </script>
+			
+		
     </div>
     <jsp:include page="chatFooter.jsp"/>
 

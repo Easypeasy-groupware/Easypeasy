@@ -91,9 +91,9 @@
     .outer{margin-top:100px; padding-top:15px;}
     
 	/*스크롤*/
-	/* body::-webkit-scrollbar{width:20px;}
+	body::-webkit-scrollbar{width:20px;}
 	body::-webkit-scrollbar-thumb{background-color:rgb(185, 187, 221); border-radius:10px;}
-	body::-webkit-scrollbar-track{background-color:white;} */
+	body::-webkit-scrollbar-track{background-color:white;}
 
     /* 알람 */
     #hide_block{width: 350px; height: 900px; background: white; transform: translate(1200px, -50px);
@@ -120,6 +120,8 @@
     #paging li.on {background:rgb(166, 184, 145);}
     #paging li.on a { color: white;}
     
+    #topButton{position: fixed; right: 15%; bottom: 50px; display:none;  z-index: 999;}
+    
 </style>
 </head>
 <body>
@@ -139,8 +141,7 @@
 	</c:if>
 	 
 	
-    <div class="wrap">
-
+    <div class="wrap">	
     <div class="header">
         <div id="header1">
 
@@ -257,40 +258,9 @@
             </ul>
 		</div>
 	</div>
-
-    <!-- 웹소켓 -->
-    <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
-	<!-- <script>
-        // 웹소켓 접속
-        let sock = null
-
-        $(document).ready(function (){
-            connectWs();
-        })
-        function connectWs(){
-            sock = new SockJS("${pageContext.request.contextPath}/alarm");
-            sock.onopen = function() {
-                sock.send("${loginUser.empNo}");
-            }
-
-            sock.onmessage = onMessage;
-            sock.onclose = onClose;
-
-            function sendMessage(){
-                
-            };
-
-            function onMessage(evt){
-                console.log(evt.data)
-            };
-
-            function onClose(){ // 퇴장하기 클릭시 실행되는 함수
-                // location.href = "${pageContext.request.contextPath}";
-                // * 웹소켓과의 통신도 끊기게됨 => ChatEchoHandler클래스의 afterConnectionClosed메소드 실행됨
-            }
-        }
-	</script> -->
-
+	
+	
+   
 	<script>
 		// 전체 알람창 열고 닫기 이벤트
 		let toggleList = document.querySelectorAll('.alarm_toggle');
@@ -358,6 +328,27 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 	<!-- Latest compiled JavaScript -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+	
+	<div id="topButton" style="cursor:pointer;"><img src="resources/common_images/scroll-top.png" id="topButtonImg" style="width:30px;"></div>
+	<script>
+		$(document).ready(function() {
+		
+			$(window).scroll(function() {
+			    // top button controll
+			    if ($(this).scrollTop() > 10) {
+			        $('#topButton').fadeIn();
+			    } else {
+			        $('#topButton').fadeOut();
+			    }
+			});
+		
+			$("#topButtonImg").click(function() {
+				$('html, body').scrollTop(0);
+			});
+		
+		});
+	</script>
+
 </body>
 </html>
 	
