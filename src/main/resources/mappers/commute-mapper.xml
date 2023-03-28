@@ -72,6 +72,14 @@
 		   and enroll_date = #{enrollDate}
 	</update>
 	
+	<update id="workTime">
+		update
+			   commute
+		   set work_time = #{workTime}
+		 where emp_no = #{empNo}
+		   and enroll_date = #{enrollDate}
+	</update>
+	
 	<update id="updateStatus">
 		update
 		       employee

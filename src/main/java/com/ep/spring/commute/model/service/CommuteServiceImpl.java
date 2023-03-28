@@ -49,6 +49,14 @@ public class CommuteServiceImpl implements CommuteService{
 		
 		return cDao.outTime(sqlSession, c);
 	}
+	
+	//근무시간 등록
+	@Override
+	public int workTime(Commute c) {
+		
+		return cDao.workTime(sqlSession, c);
+	}
+	
 
 	//12시마다 insert 스케쥴링
 	@Override
@@ -188,7 +196,8 @@ public class CommuteServiceImpl implements CommuteService{
 
 		return cDao.selectUseVac(sqlSession, empNo);
 	}
-	
+
+
 	
 
 

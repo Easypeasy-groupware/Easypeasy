@@ -43,7 +43,7 @@ public class CommuteController {
 			//System.out.println(empNo);
 			
 			Commute c = cService.commuteMainPage(empNo);
-			//System.out.println(c);
+			System.out.println(c);
 			
 			// 지각, 조기퇴근, 결근, 퇴근 미체크 횟수 카운트
 			int tr = 0;
@@ -154,6 +154,50 @@ public class CommuteController {
 					
 			return (result1*result2) > 0 ? "success" : "fail";
 					
+		}
+		
+		//근무시간 등록
+		@ResponseBody
+		@RequestMapping("workTime.co")
+		public String workTime(Commute c) throws ParseException {
+		
+		    		
+		    		String dateStart = c.getStartTime();
+		    		String dateEnd = c.getEndTime();
+
+		    		// Custom date format
+		    		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");  
+
+		    		Date d1 = null;
+		    		Date d2 = null;
+		    		try {
+		    		    d1 = format.parse(dateStart);
+		    		    d2 = format.parse(dateEnd);
+		    		} catch (ParseException e) {
+		    		    e.printStackTrace();
+		    		}    
+
+		    		// Get msec from each, and subtract.
+		    		long diff = d2.getTime() - d1.getTime();
+		    		long diffSeconds = diff / 1000;         
+		    		long diffMinutes = diff / (60 * 1000);         
+		    		long diffHours = diff / (60 * 60 * 1000);                      
+		    		//System.out.println("Time in seconds: " + diffSeconds + " seconds.");         
+		    		//System.out.println("Time in minutes: " + diffMinutes + " minutes.");         
+		    		//System.out.println("Time in hours: " + diffHours + " hours.");
+		    		
+		    		String H = diffHours < 10 ? "0" + diffHours : String.valueOf(diffHours);
+		    		String M = diffMinutes < 10 ? "0" + diffMinutes : String.valueOf(diffMinutes);
+					
+		    		String workTime = H + "시간" + M + "분" ;
+		    		c.setWorkTime(workTime);
+		    		
+		    		int result = cService.workTime(c);
+		    		
+		    		return result > 0 ? "success" : "fail";
+		   
+		   
+			
 		}
 		
 		//휴가내역 메인페이지

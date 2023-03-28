@@ -39,6 +39,11 @@ public class CommuteDao {
 		return sqlSession.update("commuteMapper.outTime", c);
 	}
 	
+	//근무시간 등록
+	public int workTime(SqlSessionTemplate sqlSession, Commute c) {
+		return sqlSession.update("commuteMapper.workTime", c);
+	}
+	
 	//12시 정각마다 실행되는 스케줄링
 	public int insertCommuteDay(SqlSessionTemplate sqlSession) {
 		return sqlSession.insert("commuteMapper.insertCommuteDay");
