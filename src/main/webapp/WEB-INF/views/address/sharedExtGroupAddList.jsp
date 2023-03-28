@@ -38,7 +38,7 @@
         border-collapse: collapse;
     }
     #addList th{border-bottom:1px solid gray; padding:5px 0 5px 0;}
-    #addList td{height:40px;}
+    #addList td{height:40px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
     #addList input[type="checkbox"]{accent-color:rgb(166, 184, 145);}
     .like:hover{cursor: pointer;}
     #addList tbody>tr:hover{background:rgb(233, 233, 233); font-weight:600; cursor:pointer;}
@@ -84,6 +84,7 @@
 			<button class="btnGroup" id="myAddr">등록한 연락처</button>
 			<script>
 				$("#myAddr").click(function(){
+					
 					if("${ag.groupNo}" == ""){
 						console.log("0");
 						location.href="extReg.add?group=0";

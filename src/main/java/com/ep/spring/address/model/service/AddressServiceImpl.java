@@ -57,7 +57,10 @@ public class AddressServiceImpl implements AddressService {
 	
 	@Override public int insertSharedAdd(Address a) {
 		int result1 = aDao.insertSharedAdd(sqlSession, a);
-		int result2 = aDao.insertEditableEmpList(sqlSession, a);
+		int result2 = 1;
+		if(a.getEditable() != "N") {
+			result2 += aDao.insertEditableEmpList(sqlSession, a);
+		}
 		return result1*result2; 
 	}
 
@@ -274,7 +277,12 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	public int deleteSharedGroup(int no) {
-		return 0;
+		return aDao.deleteSharedGroup(sqlSession, no);
+	}
+
+	@Override
+	public int deleteOndAdd(int no) {
+		return aDao.deleteOneAdd(sqlSession, no);
 	}
 
 

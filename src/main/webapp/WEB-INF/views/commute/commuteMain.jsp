@@ -146,6 +146,8 @@
     .tg th{background-color:#f0f0f0;border-color:#ccc;border-style:solid;border-width:0px;color:#333;
              font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
     .tg .tg-0lax{text-align:center;vertical-align:top}
+    
+    .in-button, .out-button, .btn-status{border-radius:10px;}
 </style>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -250,7 +252,7 @@
                         var seconds = time.getSeconds();
             
                         Target.innerText = 
-                        	(month + 1)+"월 "+ date + "일 " + week[day] +"요일" +
+                        	(month + 1)+"월 "+ date + "일 " + week[day] +"요일 " +
                         	(hours < 10 ? "0"+hours : hours )
                         	+ ":" +( minutes < 10 ? "0"+minutes : minutes )
                         	+ ":" +( seconds < 10 ? "0"+seconds : seconds );
