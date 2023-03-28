@@ -566,7 +566,7 @@ public class ApprovalController {
 		
 		int result = aService.insertApproval(ap, al, vf, ot, atList);
 		
-		System.out.println(atList);
+		//System.out.println(atList);
 		
 		if(result > 0) {
 			

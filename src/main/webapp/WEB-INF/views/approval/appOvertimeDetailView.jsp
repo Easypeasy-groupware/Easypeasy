@@ -28,7 +28,7 @@
         .left-form1, .left-form2 ,.left-form3,.left-form4,.left-form5,.left-form6{width:100%;}
         .speech-bubble {
             position: relative;
-            background: #d1d2d2;
+            background: #ebece4;
             border-radius: .4em;
         }
 
@@ -36,11 +36,11 @@
             content: '';
             position: absolute;
             top: 0;
-            left: 50%;
+            left: 30%;
             width: 0;
             height: 0;
             border: 20px solid transparent;
-            border-bottom-color: #d1d2d2;
+            border-bottom-color:#ebece4;
             border-top: 0;
             border-left: 0;
             margin-left: -10px;
@@ -228,27 +228,27 @@
                 <div class="left-form5">
                     <table class="table-bordered" >
                         <tr>
-                            <td colspan='2'  style="text-align:left">신청현황</td>
+                            <td colspan='2'  style="text-align:left; padding:10px;">신청현황</td>
                         </tr>
                         <tr>
                             <td width="100px;" style="text-align:center">근무구분</td>
-                            <td width="700px;">${ot.otKind }</td>
+                            <td style="padding:10px;width:700px;">${ot.otKind }</td>
                         </tr>
                         <tr>
                             <td style="text-align:center">근무일시</td>
-                            <td>${ot.otDate }</td>
+                            <td style="padding:10px;">${ot.otDate }</td>
                         </tr>
                         <tr>
                             <td style="text-align:center">근무시간</td>
-                            <td>${ot.otUseTime }</td>
+                            <td style="padding:10px;">${ot.otUseTime }</td>
                         </tr>
                         <tr>
-                            <td colspan="2" style="text-align:center">
+                            <td colspan="2" style="text-align:center; font-size:13px;">
                                 * 주간 근무시간 - 근무일이 포함된 한 주 <br>
 
                                 정상근무시간 + 연장근무 승인 요청에 대한 결재가 완료된 총 시간입니다. <br>
                                 
-                                근태관리에서 시간 수정이 가능하므로  <br>
+                                근태관리에서 시간 수정이 가능하므로  
                                 
                                 주간 근무시간은 상이해질 수 있습니다. <br>
                             </td>
@@ -256,7 +256,7 @@
                         </tr>
                         <tr>
                             <td rowspan="5" style="text-align:center">신청사유</td>
-                            <td rowspan="5" height="150px;">${ap.content }</td>
+                            <td rowspan="5" style="height:150px; padding:30px;">${ap.content }</td>
                         </tr>
                         <tr>
                         </tr>
@@ -272,7 +272,7 @@
 
                         <tr>
                             <td style="text-align:center">첨부파일</td>
-                            <td style="overflow: auto;">
+                            <td style="overflow: auto; padding:20px;">
                                 <c:choose>
                                     <c:when test="${empty list3 }">
                                         첨부파일이 없습니다.
