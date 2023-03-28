@@ -203,9 +203,9 @@
 	            				for(let j=0; j<list.length; j++){
 	            					let b = list[j]; 
 	            					value += "<tr>"
-	            							+	"<td>" + list[j].boardTitle + "</td>"
+	            							+	"<td>" + b.boardTitle + "</td>"
 	            							+	"<td>" + "익명" + "</td>"
-	            							+	"<td>" + list[j].createDate + "</td>"
+	            							+	"<td>" + b.createDate + "</td>"
 	            							+   "</tr>"; 
 	            				}
 	            				
