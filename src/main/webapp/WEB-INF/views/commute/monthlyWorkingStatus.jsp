@@ -29,7 +29,6 @@
     }
     .allContent{
         width: 990px;
-        height: 900px;
         float: left;
         margin-left:10px;
     }
@@ -38,6 +37,15 @@
         width: 900px;
         
     }
+   .table1{
+        height: 100px;
+        font-size: 16px;
+        border: 1px solid lightgray;
+        border-collapse: collapse;
+        width: 900px;
+        text-align: center;
+        font-size: 16px;
+    } 
 </style>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -68,7 +76,25 @@
 
         <div class="allContent">
 
-            <div class="title"><b>근무현황 및 계획</b><hr></div>
+            <div class="title"><b>근무현황 및 계획</b><hr></div><br>
+            
+            <table class="table1">
+                <tr>
+                    <th>이름</th>
+                    <th>소속</th>
+                    <th>근무계획시간</th>
+                    <th>연장근무시간</th>
+                    <th>총 근무시간</th>
+                </tr>
+
+                <tr>
+                    <td>정형돈</td>
+                    <td>인사팀</td>
+                    <td>16</td>
+                    <td>2</td>
+                    <td>0</td>
+                </tr>
+            </table><br>
 
             <div id='calendar'></div>
 

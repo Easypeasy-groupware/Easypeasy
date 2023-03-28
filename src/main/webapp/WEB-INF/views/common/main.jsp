@@ -48,8 +48,8 @@
 
     /*근태*/
     .attendance{height:320px;}
-    #date-today{color:gray; display: inline-block;}
-    #current-time{display: inline-block; margin-left:10px; color:gray;}
+    #clock{color:gray; display: inline-block;}
+    #clock{display: inline-block; margin-left:10px; color:gray; font-size:20px;}
     .work-time{width:80%;}
     .work-th{font-size:17px; font-weight:700; color:rgb(65, 64, 64); width:30%; height:30px; padding:0;}
     .work-td2{width:70%; height:30px; padding:0;}
@@ -459,14 +459,8 @@
 			<div class="attendance">
 				<b>근태현황</b>
 				<br>
-				<p id="date-today">2023년 3월 3일 (금)</p>
-				<div id="current-time">
-					<span id="hour"></span>
-					:
-					<span id="minutes"></span>
-					:
-					<span id="seconds"></span>
-				</div>
+				<p id="clock"></p>
+
 		
 				<table class="work-time">
 					<tr>
@@ -504,28 +498,29 @@
 						updateClock();
 					})
 		
-					function updateClock(){ /* 실시간 시계 */
-						const ampmEl = document.getElementById("ampm");
-						const hourEl = document.getElementById("hour");
-						const minuteEl = document.getElementById("minutes");
-						const secondEl = document.getElementById("seconds");
-		
-						h = new Date().getHours();
-						m = new Date().getMinutes();
-						s = new Date().getSeconds();
-		
-						h = h < 10 ? "0" + h : h;
-						m = m < 10 ? "0" + m : m;
-						s = s < 10 ? "0" + s : s;
-		
-						hourEl.innerText = h;
-						minuteEl.innerText = m;
-						secondEl.innerText = s;
-						
-						setTimeout(()=>{
-							updateClock()
-						}, 1000)
-					}
+                	//현재 날짜 시간 출력
+                    var Target = document.getElementById("clock");
+                    function clock() {
+                        var time = new Date();
+            
+                        var month = time.getMonth();
+                        var date = time.getDate();
+                        var day = time.getDay();
+                        var week = ['일', '월', '화', '수', '목', '금', '토'];
+            
+                        var hours = time.getHours();
+                        var minutes = time.getMinutes();
+                        var seconds = time.getSeconds();
+            
+                        Target.innerText = 
+                        	(month + 1)+"월 "+ date + "일 " + week[day] +"요일" +
+                        	(hours < 10 ? "0"+hours : hours )
+                        	+ ":" +( minutes < 10 ? "0"+minutes : minutes )
+                        	+ ":" +( seconds < 10 ? "0"+seconds : seconds );
+                        
+                    }
+                    clock();
+                    setInterval(clock, 1000); // 1초마다 실행
 					
 					let strTime = "";
 					let endTime = "";
