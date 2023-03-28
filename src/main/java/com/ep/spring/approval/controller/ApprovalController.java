@@ -362,7 +362,7 @@ public class ApprovalController {
 
 		int result = aService.deleteApproval(appNo);
 		
-		//System.out.println(result);
+		System.out.println(result);
 		
 		
 		if(result > 0) {
@@ -540,7 +540,7 @@ public class ApprovalController {
 		ArrayList <Attachment> atList = new ArrayList<>();
 		
 		
-		if(originNames.size() > 1) {
+		if(originNames != null) {
 			String path = "resources/approval_attachFiles/";
 			
 			
@@ -685,13 +685,13 @@ public class ApprovalController {
 		
 		ArrayList <Attachment> atList = new ArrayList<>();
 		
-		if(originNames.size() > 1) {
+		if(originNames != null) {
 			
 			// 기존 첨부파일이 있었을 경우 => 기존의 파일 지우기
 			ArrayList<Attachment> list =  aService.selectDetailSPrgAt(ap);
-			//System.out.println("기존의 지울 첨부파일 : " + list);
+			System.out.println("기존의 지울 첨부파일 : " + list);
 			
-			if(list.size() > 0) {
+			if(list.size() > 1) {
 				
 			
 					for(Attachment b : list) {
@@ -723,7 +723,7 @@ public class ApprovalController {
 				at.setOriginName(originName);
 				at.setChangeName(changeName);
 				at.setFilePath(saveFilePath);
-				//System.out.println("추가할 하나하나의 첨부파일 : " + at);
+				System.out.println("추가할 하나하나의 첨부파일 : " + at);
 				atList.add(at);
 				
 			}

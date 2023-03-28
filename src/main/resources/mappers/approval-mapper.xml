@@ -25,6 +25,7 @@
  		<result column="count" property="count" />
  		<result column="job_code" property="jobCode" />
  		<result column="attach_count" property="attachCount" />
+ 		<result column="vac_remaining" property="vacRemaining" />
 	</resultMap>
 	
 	<resultMap id="approvalLineResult" type="ApprovalLine">
@@ -625,6 +626,7 @@
 				        , HALF_STATUS
 				        , VAC_USE
 				        , HALF_DAY
+				        
 				   from vac_form
 				  where app_no = #{appNo}
 	</select>			
@@ -1260,6 +1262,15 @@
 				     </if>                 
 					 order 
 					    by app_no desc 	
+	</select>
+	
+	<select id="selectEnrollInfo" resultMap="approvalResult">
+					select vac_remaining
+					  from vac_recode
+					 where  vac_recode =  (select max(vac_recode)
+					                       from vac_recode
+					                      where emp_no = #{eNo}
+					                          )		
 	</select>
 	
 </mapper>

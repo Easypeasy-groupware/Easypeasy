@@ -35,4 +35,6 @@ public class Employee {
 	private String entDate;
 	private String status;
 	private String addEmpNo;
+	private int vacRemaining;
+
 }

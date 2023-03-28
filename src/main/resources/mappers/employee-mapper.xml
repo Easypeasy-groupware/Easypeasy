@@ -21,6 +21,7 @@
 		<result column="ent_yn" property="entYn" />
 		<result column="ent_date" property="entDate" />
 		<result column="status" property="status" />
+		<result column="vac_remaining" property="vacRemaining" />
 	</resultMap>
 	
 	<resultMap type="Department" id="departmentResult">
@@ -87,9 +88,15 @@
 			select 
 			        emp_name
 			      , dept_name
+			      , vac_remaining
 			  from employee e
 			  left join department d on (d.dept_code = e.dept_code)
-			  where emp_no = #{eNo}			
+              left join vac_recode v on (e.emp_no = v.emp_no)
+			  where e.emp_no = #{eNo}	
+                and vac_recode =  (select max(vac_recode)
+                                     from vac_recode
+                                     where emp_no = #{eNo}
+                                  )			  		
 	</select>
 	
 	
