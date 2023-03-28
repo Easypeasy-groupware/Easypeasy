@@ -104,10 +104,10 @@
 		        <table id="replyArea" class="table" style="align:center; boder:1px solid; width:900px;">
 		            <thead>
 		                <tr>
-		                    <td colspan="4">댓글 (<span id="rcount"></span>) </td> 
+		                    <td colspan="5">댓글 (<span id="rcount"></span>) </td> 
 		                </tr>
 			            <tr>
-			                <th colspan="3">
+			                <th colspan="4">
 			                  <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:770px;"></textarea>
 			                </th>
 			                <th style="vertical-align: middle; width:100px;">
