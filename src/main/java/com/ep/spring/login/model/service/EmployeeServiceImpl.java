@@ -57,6 +57,11 @@ public class EmployeeServiceImpl implements EmployeeService{
 		return eDao.selectDeptList(sqlSession);
 	}
 
+	@Override
+	public int updateDefaultProfile(Employee e) {
+		return eDao.updateDefaultProfile(sqlSession, e);
+	}
+
 	
 	
 	

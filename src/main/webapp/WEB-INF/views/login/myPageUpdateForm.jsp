@@ -11,32 +11,35 @@
         position: absolute; top: 120px;
     }
 
-    .outer{
+    .myPage-outer{
         width: 1200px;
         margin: auto;
     }
 
     .title{
-        width: 1200px;
+        
         height: 100px;
         box-sizing: none;
         float: left;
         font-size: 30px;
+        margin-left:100px;
+        margin-top:30px;
         
     }
+    
 	.innerOuter{
-		margin-left: 150px;
+		margin-left: 100px;
 	}
     .img{
         width: 300px;
         height: 300px;
         margin: 80px;
-        border: 1px solid gray;
+        
         float: left;
-        border-radius: 150px;
+        border-radius: 100%;
     }
     .img-area{
-    	float:left;
+    	display:border-box;
     }
     .content{
         font-size: 15px;
@@ -46,13 +49,22 @@
         margin: 0 auto;
     }
     .update-btn{
-        margin-top: 230px;
+        margin-top: 200px;
         border: none;
         width: 200px;
         height: 30px;
         font-size: 15px;
         font-weight: bold;
-        
+        border-radius:10px;
+    }
+    .select-img{
+    	margin-top: 20px;
+    	border: none;
+    	width: 200px;
+        height: 30px;
+        font-size: 15px;
+        font-weight: bold;
+        border-radius:10px;
     }
     .save-btn{
         border: none;
@@ -78,6 +90,14 @@
     border-bottom: 1px solid lightgray;
     padding: 10px;
    }
+   
+   .save-btn, #pwdBtn{border-radius:5px;}
+   .save-btn:hover, #pwdBtn:hover{color:white;}
+   
+   
+   #img-archive{width:900px; margin-left:130px;}
+   #img-archive img{width:80px; border-radius:50%; margin:10px;}
+   #img-archive img:hover{cursor:pointer;}
 </style>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -96,25 +116,85 @@
 
     <div id="main">
 
-		<div class="outer">
+		<div class="myPage-outer">
 			
 			
 			<div class="title"><b>마이페이지</b><hr></div>
 			
 			<div class="innerOuter">
 			<div class="box">
-				<button class="update-btn" onclick="$('#profileImgFile').click();">프로필 사진 변경하기</button>
-			<div class="img-area">
-				<img  class="img" id="profileImg" src="<c:out value='${ loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" >
+				<div class="img-area">
+					<img  class="img" id="profileImg" src="<c:out value='${ loginUser.empProfile }' default='resources/profile_images/default_profile.png' />" >
 					<input type="file" id="profileImgFile" style="display:none;">
+				</div>
+				<button class="update-btn" onclick="$('#profileImgFile').click();">프로필 사진 변경하기</button>
+				<br>
+				<button class="select-img">기본 프로필 고르기</button>
+			
+			<br clear="all">
+			<div id="img-archive" style="display:none;">
+				<img class="images" src="resources/profile_images/1.png">
+				<img class="images" src="resources/profile_images/2.png">
+				<img class="images" src="resources/profile_images/3.png">
+				<img class="images" src="resources/profile_images/4.png">
+				<img class="images" src="resources/profile_images/5.png">
+				<img class="images" src="resources/profile_images/6.png">
+				<img class="images" src="resources/profile_images/7.png">
+				<img class="images" src="resources/profile_images/8.png">
+				<img class="images" src="resources/profile_images/9.png">
+				<img class="images" src="resources/profile_images/10.png">
+				<img class="images" src="resources/profile_images/12.png">
+				<img class="images" src="resources/profile_images/13.png">
+				<img class="images" src="resources/profile_images/11.png">
+				<img class="images" src="resources/profile_images/14.png">
+				<img class="images" src="resources/profile_images/15.png">
+				<img class="images" src="resources/profile_images/16.png">
+				<img class="images" src="resources/profile_images/17.png">
+				<img class="images" src="resources/profile_images/18.png">
+				<img class="images" src="resources/profile_images/19.png">
+				<img class="images" src="resources/profile_images/20.png">
+				<img class="images" src="resources/profile_images/21.png">
+				<img class="images" src="resources/profile_images/22.png">
+				<img class="images" src="resources/profile_images/23.png">
+				<img class="images" src="resources/profile_images/24.png">
 			</div>
+			
+			<script>
+				$(".select-img").click(function(){
+					if($("#img-archive").css("display") == "none"){
+						$("#img-archive").show();		
+					}else{
+						$("#img-archive").hide();
+					}
+				})
+				
+				$(".box").on("click", ".images", function(){
+					let i = $(this).attr("src");
+					console.log(i);
+					$.ajax({
+						url:"updateDefaultProfile.me",
+						data:{
+							empProfile : i,
+							empNo : "${loginUser.empNo}"
+						},
+						success:function(){
+							//$("#profileImg").attr("src", i);
+							location.reload();
+						},
+						error:function(){
+							console.log("기본이미지업데이트실패");
+						}
+					})
+				})
+			</script>
+			
 			
 			<script>
 					$(function(){
 						$("#profileImgFile").change(function(){
 							//* 비동기식으로 첨부파일 업로드
 							//새로운 파일이 선택되는 순간 곧바로 ajax요청으로 첨부파일 넘겨서 => 서버 업로드 => db에도 update
-							
+							console.log($("#profileImgFile").val());
 							let formData = new FormData();  //가상의 form요소
 							
 							let uploadFile = this.files[0];  //현재선택된 파일 객체

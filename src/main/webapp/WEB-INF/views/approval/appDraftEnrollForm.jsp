@@ -158,7 +158,7 @@
 										</div>
 										<div id="in_attachments">
 										</div>
-										<input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
+										<input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip,.xlsx" name="originNames" style="display: none;">
 									</td>
 								</tr>
 							</table>

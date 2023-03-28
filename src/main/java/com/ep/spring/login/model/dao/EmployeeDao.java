@@ -42,4 +42,8 @@ public class EmployeeDao {
 	public ArrayList<Department> selectDeptList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("employeeMapper.selectDeptList");
 	}
+
+	public int updateDefaultProfile(SqlSessionTemplate sqlSession, Employee e) {
+		return sqlSession.update("employeeMapper.updateDefaultProfile", e);
+	}
 }

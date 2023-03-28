@@ -197,7 +197,7 @@
 										연차일수 
 									</td>
 									<td>
-										잔여연차 : <input type="text" style="width:50px;" readonly> 
+										잔여연차 : <input type="text" id="remain" style="width:50px;" readonly> 
 										신청연차 : <input type="number" id="vacUse" name="vacUse" style="width:50px;" value="${vf.vacUse }" readonly>
 									</td>
 								</tr>
@@ -249,7 +249,7 @@
 													</c:if>
 											</div>
 
-											<input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
+											<input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip,.xlsx" name="originNames" style="display: none;">
 										</td>
 								</tr>
 							</table>
@@ -304,6 +304,7 @@
     				    			
     			$("#writer").val(result.a.empName);
     			$("#dept").val(result.a.deptName);
+    			$("#remain").val(result.a.vacRemaining);
     			
     			if($("#division").val()==1){
     				$("#appChange").val("${ap.appChange}");

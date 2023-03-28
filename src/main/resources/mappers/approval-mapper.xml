@@ -627,6 +627,7 @@
 				        , HALF_STATUS
 				        , VAC_USE
 				        , HALF_DAY
+				        
 				   from vac_form
 				  where app_no = #{appNo}
 	</select>			
