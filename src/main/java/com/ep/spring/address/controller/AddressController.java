@@ -565,10 +565,9 @@ public class AddressController {
 	
 	@ResponseBody
 	@RequestMapping("adminDel.add")
-	public String deleteSharedGroup(int no) {
-		System.out.println(no);
+	public String deleteSharedGroup(AddGroup ag) {
 		
-		int result = aService.deleteSharedGroup(no);
+		int result = aService.deleteSharedGroup(ag);
 		
 		return "success";
 	}
@@ -586,6 +585,11 @@ public class AddressController {
 			session.setAttribute("failMsg", msg);
 		}
 		return "redirect:psAll.add";
+	}
+	
+	@RequestMapping("groupSetting.add")
+	public String personalGroupSetting() {
+		return "address/personalGroupSettings";
 	}
 	
 	

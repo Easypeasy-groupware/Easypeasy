@@ -72,7 +72,7 @@
 		
 		<div class="address-content-outer">
 
-			<p id="address-group">${loginUser.empName }님의 공유주소록 그룹 관리</p>
+			<p id="address-group">관리자 공유주소록 그룹 관리</p>
 
 			<br>
 			<br>
@@ -82,7 +82,7 @@
 				<div id="more-group">그룹추가 <span id="plus">➕</span></div>
 			</span>
 			
-			<c:forEach var="g" items="${pList}">
+			<c:forEach var="g" items="${gList}">
 				<span class="groupNames">
 					<span class="each-group">
 						${ g.groupName }
@@ -116,7 +116,7 @@
 						let group = $(this).siblings(".each-group");
 						
 						$.ajax({
-							url:"updatePersonalGroup.add",
+							url:"updateSharedGroup.add",
 							data:{
 								groupName : name.val(),
 								groupNo : no.val()
@@ -141,11 +141,9 @@
 					$(".address-content-outer").on("click", ".group-delete", function(){
 						let no = $(this).parent().siblings(".groupNo").val();
 						$.ajax({
-							url:"personalDel.add",
+							url:"adminDel.add",
 							data:{
-								groupNo : no,
-								empNo : '${loginUser.empNo}'
-								
+								groupNo : no
 							},
 							success:function(msg){
 								
@@ -178,7 +176,7 @@
 					let name = $(this).siblings("input").val();
 					
 						$.ajax({
-							url:"insertPsGroup.add",
+							url:"insertShGroup.add",
 							data:{
 								groupName : name,
 								empNo : '${loginUser.empNo}'
@@ -201,7 +199,5 @@
 
 		</div>
 	</div>
-
-
 </body>
 </html>

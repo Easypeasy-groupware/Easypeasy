@@ -137,7 +137,7 @@ public interface AddressService {
 	int updateSharedGroupName(AddGroup ag);
 	
 	// 32. 공용주소록 그룹 삭제
-	int deleteSharedGroup(int no);
+	int deleteSharedGroup(AddGroup ag);
 	
 	// 33. 개인주소록 개별삭제
 	int deleteOndAdd(int no);
