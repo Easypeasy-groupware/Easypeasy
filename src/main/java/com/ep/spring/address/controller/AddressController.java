@@ -74,6 +74,12 @@ public class AddressController {
 	@RequestMapping("insertNewSh.add")
 	public String insertSharedAdd(Address a, HttpSession session) { // 외부 공유주소록 등록
 		
+		if(a.getEditList()==null) {
+			a.setEditable("N");
+		}else {
+			a.setEditable("N");
+		}
+		System.out.println(a);
 		int result = aService.insertSharedAdd(a);
 		
 		if(result> 0) {

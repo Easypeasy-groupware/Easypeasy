@@ -660,7 +660,7 @@
 		 where a.add_type = 'S'
 		   and add_bin = 'N'
 		 order
-		    by create_date
+		    by create_date desc
 	</select>
 	
 	<select id="selectExternalGroupListCount"  resultType="_int">
@@ -712,7 +712,7 @@
 		</choose>
 		    and add_bin = 'N'
 		  order
-		     by create_date
+		     by create_date desc
 	</select>
 	
 	<select id="selectExternalAddDetail" resultMap="addressResult">
@@ -754,6 +754,7 @@
 		  from address
 		 where add_type = 'S'
 		   and add_bin = 'N'
+		   and emp_no = #{empNo}
 		 <if test="groupNo != null">
 			 <choose>
 			 	<when test="groupNo == 0">
@@ -805,6 +806,7 @@
 			 </choose>
 		</if>
 		    and add_bin = 'N'
+		    and a.emp_no = #{empNo}
 		  order
 		     by create_date
 	</select>

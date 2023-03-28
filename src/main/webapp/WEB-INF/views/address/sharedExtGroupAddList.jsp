@@ -84,6 +84,7 @@
 			<button class="btnGroup" id="myAddr">등록한 연락처</button>
 			<script>
 				$("#myAddr").click(function(){
+					
 					if("${ag.groupNo}" == ""){
 						console.log("0");
 						location.href="extReg.add?group=0";

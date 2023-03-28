@@ -81,7 +81,10 @@
 		 transition: .3s;
 	}
 	.editable-check:checked::before {left: 20px;}
-
+	
+	input[type=text]{padding-left:10px;}
+	input[type=email]{padding-left:10px;}
+	
     /*사원추가 div*/
     .empBox-mini{overflow:auto; width:48%; height:150px; float:left; border:1px solid gray; padding:0 10px 10px 10px; border-radius:10px;}
     .emp-mini2{margin-left:15px;}
@@ -168,7 +171,7 @@
 					<tr>
 						<td>그룹</td>
 						<td>
-							<select class="td-select">
+							<select class="td-select" name="groupNo">
 								<option>선택안함</option>
 								<c:forEach var="s" items="${ sList }">
 									<option name="groupNo" value="${ s.groupNo }"> ${ s.groupName } </option>
@@ -407,6 +410,7 @@
     			$(".edit-list").append(list);
     			++count;
     		})
+    		
     		
     		$("#frm").submit();
     	})
