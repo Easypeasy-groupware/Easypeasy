@@ -40,8 +40,9 @@
 						<option value="form">결재양식</option>
 					</select>
 					<input type="hidden" name="listType" id="listType" value="s">
-					<input type="search" name="keyword" id="keyword"> 
-					<button onclick="searchResult();">검색</button>
+				<button onclick="searchResult();" style="float:right;text-align:center;height:23px;line-height:12px;" class="btn btn-outline-secondary btn-sm">검색</button>
+				<input type="search" class="form-control" style="display:block;width:200px; height:20px;float:right; margin-right:0px;" name="keyword" id="keyword"> 
+
 				
 			</div>
 

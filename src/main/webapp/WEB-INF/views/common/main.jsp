@@ -93,7 +93,7 @@
 				<div class="subtitle" id="doc-etc"></div>
 				<br clear="both"><br>
 		
-				<table class="board-table" id="notice-tb">
+				<table class="board-table" id="notice-tb" style="table-layout:fixed;">
 					<colgroup>
 						<col style="width:70%;">
 						<col style="width:15%;">
@@ -111,7 +111,7 @@
 					</tbody>
 				</table>
 	 
-				<table class="board-table" id="free-tb" style="display:none">
+				<table class="board-table" id="free-tb" style="display:none; table-layout:fixed;">
 					<colgroup>
 						<col style="width:70%;">
 						<col style="width:15%;">
@@ -124,7 +124,7 @@
 							<th>게시일</th>
 						</tr>
 					</thead>
-					<tbody align="center" style=" overflow: hidden; text-overflow: ellipsis;">
+					<tbody align="center">
 						
 					</tbody>
 				</table>
@@ -172,7 +172,7 @@
 	            				for(let i=0; i<list.length; i++){
 	            					let b = list[i]; 
 	            					value += "<tr>"
-	            							+	"<td>" + list[i].boardTitle + "</td>"
+	            							+	"<td style='width: 98%; text-overflow:ellipsis; overflow:hidden; white-space: nowrap;'>" + list[i].boardTitle + "</td>"
 	            							+	"<td>" + list[i].empName + "</td>"
 	            							+	"<td>" + list[i].createDate + "</td>"
 	            							+ "</tr>"; 
@@ -207,7 +207,7 @@
 		            				for(let j=0; j<flist.length; j++){
 		            					let b = flist[j]; 
 		            					value += "<tr>"
-		            							+	"<td>" + b.boardTitle + "</td>"
+		            							+	"<td style='width: 98%; text-overflow:ellipsis; overflow:hidden; white-space: nowrap;'>" + b.boardTitle + "</td>"
 		            							+	"<td>" + "익명" + "</td>"
 		            							+	"<td>" + b.createDate + "</td>"
 		            							+   "</tr>"; 

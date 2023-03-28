@@ -76,14 +76,14 @@
             	<button type="button" class="btn btn-outline-danger btn-sm" onclick="location.href='delete.bo';"> 삭제</button>
            </c:if> --%>
             <br><br>
-            <table id="boardList">
+            <table id="boardList" style="table-layout:fixed;">
                 <thead>
                     <tr>
                     	<%-- <c:if test="${ loginUser.deptCode eq 'D1' }">
                     		<th style="width: 10px;"><input type="checkbox" name="ckbAll" id="ckbAll"></th>
                     	 </c:if> --%>
                         <th>글번호</th>
-                        <th>제목</th>
+                        <th width="500">제목</th>
                         <th>작성자</th>
                         <th>작성일</th>
                         <th>조회수</th>
@@ -96,7 +96,7 @@
 	                    		<td><input type="checkbox" name="ckb"></td>
 	                    	 </c:if> --%>
 	                        <td class="bno">${b.boardNo}</td>
-	                        <td class="notice" style="text-align:left">${b.boardTitle}</td>
+	                        <td class="notice" style="text-align:left; width: 98%; text-overflow:ellipsis; overflow:hidden; white-space: nowrap;">${b.boardTitle}</td>
 	                        <td>${b.empName}</td>
 	                        <td>${b.createDate}</td>
 	                        <td>${b.boardCount}</td>
