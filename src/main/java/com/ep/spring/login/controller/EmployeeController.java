@@ -328,6 +328,15 @@ public class EmployeeController {
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping("updateDefaultProfile.me")
+	public int updateDefaultProfile(Employee e) {
+		
+		int result = eService.updateDefaultProfile(e);
+		
+		return result;
+	}
+	
 	
 	
 

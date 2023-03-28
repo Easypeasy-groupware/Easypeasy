@@ -32,4 +32,6 @@ public interface EmployeeService {
 	// [추가] 부서 전체 조회
 	ArrayList<Department> selectDeptList();
 
+	int updateDefaultProfile(Employee e);
+
 }
