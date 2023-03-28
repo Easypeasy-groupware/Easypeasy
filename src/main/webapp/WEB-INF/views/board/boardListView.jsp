@@ -49,8 +49,9 @@
             <br><br><br><br>
          </bheader>
         <div class="container">
+        <div id="search-container">
             <form action="listSearch.bo" method="get">
-            	<div class="search-container">
+            	
             	<input type="hidden" name="cpage" value="1">
              	
                 	
@@ -68,10 +69,11 @@
                     </select>
                         <input type="text" name="keyword" value="${ keyword }">
                         <button type="submit" class="btn btn-success btn-sm">검색</button>
-                </div> 
+                
             </form>
+            </div> 
             <script>
-	        	document.querySelector("#search-area option[value=${condition}]").selected = true;
+	        	document.querySelector("#search-container option[value=${condition}]").selected = true;
 	        </script>
             
             <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enrollForm.bo';">새글쓰기</button>
