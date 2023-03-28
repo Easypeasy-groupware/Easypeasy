@@ -272,6 +272,11 @@ public class AddressServiceImpl implements AddressService {
 		return aDao.updateSharedGroupName(sqlSession, ag);
 	}
 
+	@Override
+	public int deleteSharedGroup(int no) {
+		return 0;
+	}
+
 
 
 

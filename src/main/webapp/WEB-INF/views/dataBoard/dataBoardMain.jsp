@@ -51,6 +51,30 @@
     }
     
     
+    .files{
+        display:inline-block;
+        width:200px;
+        height:200px;
+        margin:20px 23px;
+        padding:20px 20px;
+        border-radius:20px;
+        border:1px solid rgb(188, 189, 190);
+    }
+    .files img{
+        display:inline-block;
+        width:100px;
+        text-align:center;
+        margin-left:30px;
+    }
+    .bTitle{
+        display:inline-block;
+        margin-left:15px;
+        width:120px;
+        white-space: nowrap;
+    }
+    .files span{font-size:11px;}
+    .date-head, .count-head{margin-left:30px;}
+        
     /* 페이징바 */
     #paging {
 	    text-align: center;
@@ -109,34 +133,46 @@
 					<a class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white; margin-left: 940px; margin-bottom: -15px;" href="enrollForm.db">글쓰기</a>
 				</c:if>
 				<br><br>
-				<table class="table table-hover table-sm" id="dbList">
-					<thead>
-						<tr>
-							<th>번호</th>
-							<th>제목</th>
-							<th>등록일</th>
-							<th>조회수</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="db" items="${ list }">
-							<tr>
-								<td class="dbno">${ db.dbNo }</td>
-								<td>${ db.dbTitle }</td>
-								<td>${ db.createDate }</td>
-								<td>${ db.count }</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+				<div class="list-outer">
+				
+				<c:forEach var="db" items="${ list }">
+			        <div class="files">
+			        	<div class="dbno" style="display:none;">${ db.dbNo }</div>
+			        	
+			        	<c:choose>
+			        		<c:when test="${ db.originName eq 'pdf' }">
+			        			<img src="resources/fileType-images/pdf.png">
+			        		</c:when>
+			        		<c:when test="${ db.originName eq 'png' }">
+			        			<img src="resources/fileType-images/png.png">
+			        		</c:when>
+			        		<c:otherwise>
+			        			<img src="resources/fileType-images/file.png">
+			        		</c:otherwise>
+			        	</c:choose>
+
+			            <div class="bTitle">${ db.dbTitle }</div>
+			            <br>
+			            <span class="date-head">Date : </span>
+			            <span class="createDate">${ db.createDate }</span> 
+			            <br>
+			            <span class="count-head">조회수 : </span>
+			            <span class="bCount">${ db.count }</span>
+			        </div>
+			    </c:forEach>
+			    
+			    </div>
 				<br>
 				
 				<script>
 				$(function(){
-					$("#dbList>tbody>tr").click(function(){
-						
+					$(".files").click(function(){
 						location.href = 'detail.db?no=' + $(this).children(".dbno").text();
 					})
+					
+					
+					// 제목 문자열 정리
+					
 				})
 				</script>
 			

@@ -116,6 +116,11 @@
 						});
 					})
 					
+					$(".address-content-outer").on("click", ".group-delete", function(){
+						let no = $(this).parent().siblings(".groupNo").val();
+						location.href="adminDel.add?no=" + no;
+					}
+					
 				})
 			</script>
 

@@ -392,7 +392,7 @@
 						data : objParams,
 						success : function(result){
 							if(result > 0){
-								location.href= "psGroup.add?group={ag.groupNo}";
+								location.href= "psGroup.add?group=${ag.groupNo}";
 							}
 						},
 						error : function(){
