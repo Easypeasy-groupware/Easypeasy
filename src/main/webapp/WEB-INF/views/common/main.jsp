@@ -575,15 +575,26 @@
 									
 									for(let i=0; i<scList.length; i++){
 										let s = scList[i]; // {}
-										if(s.allDay == 'Y'){ 
-											value += "<a href='scheduleUpDel.sc?no=" + s.scNo + "'>"
-												   + 	"<li>" + s.scTitle + "<br>" + s.startDate +  " ~ "  + s.endDate + "</li>"
-												   + "</a>"
+										
+										if(scList.length == 0){
+											value+= "<tr>" 
+												+ "<td colspan='1'>"
+												+ "오늘의 일정이 없습니다."
+												+ "</td>"
+												+"</tr>";							
 										}else{
-											value += "<a href='scheduleUpDel.sc?no=" + s.scNo + "'>"
-												   +	"<li>" + s.scTitle + "<br>" + s.startDate + " " + s.startTime +  " ~ "  + s.endDate + " " + s.endTime + "</li>"
-												   + "</a>"
+										
+											if(s.allDay == 'Y'){ 
+												value += "<a href='scheduleUpDel.sc?no=" + s.scNo + "'>"
+													   + 	"<li>" + s.scTitle + "<br>" + s.startDate +  " ~ "  + s.endDate + "</li>"
+													   + "</a>"
+											}else{
+												value += "<a href='scheduleUpDel.sc?no=" + s.scNo + "'>"
+													   +	"<li>" + s.scTitle + "<br>" + s.startDate + " " + s.startTime +  " ~ "  + s.endDate + " " + s.endTime + "</li>"
+													   + "</a>"
+											}
 										}
+										
 									}
 									
 									$("#scheduleList").html(value);
