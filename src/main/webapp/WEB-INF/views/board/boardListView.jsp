@@ -58,12 +58,12 @@
 	                        <option value="1">1일</option>
 	                        <option value="7">1주일</option>
 	                        <option value="30">1개월</option>
-	                    </select> -->
+	                    </select> 
 	                    <select name="condition">
 	                        <option value="title">제목</option>
 	                        <option value="content">내용</option>
-	                    </select>
-	                        <input type="text" name="keyword" value="${keyword}" placeholder="검색어를 입력하세요">
+	                    </select>-->
+	                        <input type="text" name="keyword" value="${keyword}" placeholder="제목, 내용 검색하시오">
 	                        <button type="submit" class="btn btn-success">검색</button>
 	            </form>
 	          </div> 

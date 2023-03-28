@@ -228,6 +228,14 @@
 		   and com_code = #{comCode}
 	</update>
 	
+	<update id="updateWorkTime">
+		update
+			   commute
+		   set work_time = #{workTime}
+		 where emp_no = #{empNo}
+		   and com_code = #{comCode}		
+	</update>
+	
 	<update id="updateComStatus">
 		update 
 			   commute

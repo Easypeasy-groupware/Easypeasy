@@ -88,6 +88,10 @@ public class CommuteDao {
 		return sqlSession.update("commuteMapper.updateTimeHR", c);
 	}
 	
+	public int updateWorkTime(SqlSessionTemplate sqlSession, Commute c) {
+		return sqlSession.update("commuteMapper.updateWorkTime", c);
+	}
+	
 	//출근 등록시 지각,정상근무 변경
 	public int updateComStatus(SqlSessionTemplate sqlSession, Commute c) {
 		return sqlSession.update("commuteMapper.updateComStatus", c);

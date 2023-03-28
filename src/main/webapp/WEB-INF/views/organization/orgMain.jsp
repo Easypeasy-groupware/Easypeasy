@@ -48,6 +48,7 @@
   .details { align-items: center; margin-top: 10px;}
   .details h4 { margin: 0; text-align: center; transform: translateY(70%); }
 
+	img{border-radius:100%;}
 /* Modal styles */
     .modal {
       display: none; /* Hide modal by default */

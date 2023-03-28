@@ -389,9 +389,11 @@
 	
 	<select id="selectPsFavList" resultMap="addFavoriteResult">
 		select
-		       add_no
-		  from add_fav
-		 where emp_no = #{empNo}
+		       f.add_no
+		  from add_fav f
+          join address a on (f.add_no = a.add_no)
+		 where f.emp_no = #{empNo}
+		   and add_bin = 'N'
 	</select>
 	
 	<select id="selectPsGroupAddListCount" resultType="_int">
@@ -517,6 +519,7 @@
 		 from address a
          left join add_group g on (a.group_no = g.group_no)
 		 where a.add_no = #{no}
+		  and add_bin = 'N'
 	</select>
 	
 	<update id="updatePsAdd">
@@ -660,7 +663,7 @@
 		 where a.add_type = 'S'
 		   and add_bin = 'N'
 		 order
-		    by create_date
+		    by create_date desc
 	</select>
 	
 	<select id="selectExternalGroupListCount"  resultType="_int">
@@ -712,7 +715,7 @@
 		</choose>
 		    and add_bin = 'N'
 		  order
-		     by create_date
+		     by create_date desc
 	</select>
 	
 	<select id="selectExternalAddDetail" resultMap="addressResult">
@@ -739,6 +742,7 @@
 		 from address a
          left join add_group g on (a.group_no = g.group_no)
 		 where ADD_NO = #{no}
+		  and add_bin = 'N'
 	</select>
 	
 	<select id="selectExternalAddEditList" resultMap="addEditResult">
@@ -747,6 +751,7 @@
 		     , emp_no
 		  from add_edit
 		 where add_no = #{no}
+		  and add_bin = 'N'
 	</select>
 	
 	<select id="selectExternalAddRegListCount" resultType="_int">
@@ -754,6 +759,7 @@
 		  from address
 		 where add_type = 'S'
 		   and add_bin = 'N'
+		   and emp_no = #{empNo}
 		 <if test="groupNo != null">
 			 <choose>
 			 	<when test="groupNo == 0">
@@ -805,6 +811,7 @@
 			 </choose>
 		</if>
 		    and add_bin = 'N'
+		    and a.emp_no = #{empNo}
 		  order
 		     by create_date
 	</select>
@@ -917,13 +924,31 @@
 		 from address a
          left join add_group g on (a.group_no = g.group_no)
 		 where a.add_type = 'S'
-		   and add_bin = 'Y'
+		   and add_bin = 'N'
 	</select>
 	
 	<update id="updateSharedGroupName">
 		update
 		       add_group
 		   set group_name = #{groupName}
+		 where group_no = #{groupNo}
+	</update>
+	
+	<update id="deleteOneAdd">
+		update address
+		   set add_bin = 'Y'
+		 where add_no = #{no}
+	</update>
+	
+	<delete id="deleteSharedGroup">
+		delete
+		  from add_group
+		 where group_no = #{groupNo}
+	</delete>
+	
+	<update id="updateDeleteAddGroup">
+		update address
+		   set group_no = ''
 		 where group_no = #{groupNo}
 	</update>
 

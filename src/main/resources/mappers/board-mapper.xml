@@ -250,17 +250,17 @@
 	
 	<select id="selectReplyList" resultMap="boardreplyResult">
 		select
-			   reply_no 						
+			   r.reply_no 						
 			 , r.reply_writer
-			 , reply_content
+			 , r.reply_content
 			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
-			 
+			 , e.emp_name
 		  from board_reply r
-		
-		 where status = 'N'
-		   and board_no = #{boardNo}		
+		  left join employee e on (e.emp_no = r.reply_writer)
+		 where r.status = 'N'
+		   and r.board_no = #{boardNo}		
 		 order
-		    by reply_no asc  
+		    by r.reply_no asc  
 	</select>
 	
 	<insert id="insertReply">
@@ -386,15 +386,8 @@
 		  from board
 		 where delete_status = 'N'
 		   and board_cno = 1
-	 	   <choose>
-			   <when test="condition == 'title'">
-			   		and board_title  
-			   </when>
-			   <otherwise>
-			  		and board_content
-			   </otherwise>
-			</choose>  
-		         like '%' || #{keyword} || '%' 
+		    and board_title  like '%' || #{keyword} || '%'
+			 or board_content like '%' || #{keyword} || '%'
 	</select>
 	
 	<select id="selectSearchList" resultMap="boardResult">
@@ -408,17 +401,8 @@
 		   left join employee e on (b.board_writer = e.emp_no)
 		  where delete_status = 'N'
 		    and board_cno = 1
-           <choose>
-			   <when test="condition == 'title'">
-			   		and board_title  
-			   </when>
-			   <otherwise>
-			  		and board_content
-			   </otherwise>
-			</choose>  
-		         like '%' || #{keyword} || '%' 
-		  order
-		     by board_no desc
+            and board_title  like '%' || #{keyword} || '%'
+			 or board_content like '%' || #{keyword} || '%'
 	</select>
 
 	<select id="selectSearchFreeCount" resultType="_int">
@@ -427,15 +411,8 @@
 		  from board
 		 where delete_status = 'N'
 		   and board_cno = 3
-           <choose>
-			   <when test="condition == 'title'">
-			   		and board_title  
-			   </when>
-			   <otherwise>
-			  		and board_content
-			   </otherwise>
-			</choose>  
-		         like '%' || #{keyword} || '%' 
+           and board_title  like '%' || #{keyword} || '%'
+		    or board_content like '%' || #{keyword} || '%'
 	</select>
 	
 	<select id="selectSearchFree" resultMap="boardResult">
@@ -449,15 +426,8 @@
 		   left join employee e on (b.board_writer = e.emp_no)
 		  where delete_status = 'N'
 		    and board_cno = 3
-           <choose>
-			   <when test="condition == 'title'">
-			   		and board_title  
-			   </when>
-			   <otherwise>
-			  		and board_content
-			   </otherwise>
-			</choose>  
-		         like '%' || #{keyword} || '%' 
+             and board_title  like '%' || #{keyword} || '%'
+			 or board_content like '%' || #{keyword} || '%'
 		  order
 		     by board_no desc
 	</select>

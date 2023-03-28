@@ -271,6 +271,19 @@ public class AddressDao {
 		return sqlSession.update("addressMapper.updateSharedGroupName", ag);
 	}
 
+	public int deleteOneAdd(SqlSessionTemplate sqlSession, int no) {
+		return sqlSession.update("addressMapper.deleteOneAdd", no);
+		
+	}
+
+	public int deleteSharedGroup(SqlSessionTemplate sqlSession, AddGroup ag) {
+		return sqlSession.delete("addressMapper.deleteSharedGroup", ag);
+	}
+
+	public int updateDeleteAddGroup(SqlSessionTemplate sqlSession, AddGroup ag) {
+		return sqlSession.update("addressMapper.updateDeleteAddGroup", ag);
+	}
+
 
 
 

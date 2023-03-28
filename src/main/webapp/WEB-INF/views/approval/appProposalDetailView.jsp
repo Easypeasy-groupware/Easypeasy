@@ -28,7 +28,7 @@
         .left-form1, .left-form2 ,.left-form3,.left-form4,.left-form5,.left-form6{width:100%;}
         .speech-bubble {
             position: relative;
-            background: #d1d2d2;
+            background: #ebece4;
             border-radius: .4em;
         }
 
@@ -36,11 +36,11 @@
             content: '';
             position: absolute;
             top: 0;
-            left: 50%;
+            left: 30%;
             width: 0;
             height: 0;
             border: 20px solid transparent;
-            border-bottom-color: #d1d2d2;
+            border-bottom-color: #ebece4;
             border-top: 0;
             border-left: 0;
             margin-left: -10px;
@@ -232,11 +232,11 @@
 
                         <tr>
                             <td width="100px;" style="text-align:center">제목</td>
-                            <td width="700px;">${ap.title }</td>
+                            <td style="width:700px; text-align:center;">${ap.title }</td>
                         </tr>
                         <tr>
                             <td rowspan="5" style="text-align:center">내용</td>
-                            <td rowspan="5" height="150px;">${ap.content }</td>
+                            <td rowspan="5" style="height:150px; padding:30px;">${ap.content }</td>
                         </tr>
                         <tr>
                         </tr>
@@ -252,7 +252,7 @@
                     
                         <tr>
                             <td style="text-align:center">첨부파일</td>
-                            <td style="overflow: auto;">
+                            <td style="overflow: auto; padding:20px;">
                                 <c:choose>
                                     <c:when test="${empty list3 }">
                                         첨부파일이 없습니다.

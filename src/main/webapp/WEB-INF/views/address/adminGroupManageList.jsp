@@ -27,6 +27,7 @@
 		
 	}
     .groupNames img{width:15px;}
+    .groupNames img:hover{cursor:pointer;}
     
     .each-group{display:inline-block; width:150px;}
     .input-name{
@@ -42,12 +43,27 @@
     .group-rename{width:30px; pading:10px;}
     .group-delete{width:30px; pading:10px;}
     
+    .group-rename:hover{cursor: pointer;}
+    input{padding-left:5px;}
     
     /*스크롤*/
 	#psLike::-webkit-scrollbar, #pbLike::-webkit-scrollbar{width:5px;}
 	#psLike::-webkit-scrollbar-thumb, #pbLike::-webkit-scrollbar-thumb{background-color:rgb(166, 184, 145); border-radius:5px;}
 	#psLike::-webkit-scrollbar-track, #pbLike::-webkit-scrollbar-track{background-color:white;}
 
+	#more-group{align:right; text-align:right;}
+	.input-new{
+		display:inline-block; 
+		width:120px; 
+    	border:0; 
+    	border-bottom:1px solid black; 
+    	margin:30px 10px 0 10px;
+    	font-size:13px;
+    }
+    #plus:hover{cursor:pointer;}
+    
+    #setting-outer{margin-left:100px;}
+    #address-group{margin:10px 0 0 30px;}
 </style>
 </head>
 <body>
@@ -63,7 +79,12 @@
 
 			<br>
 			<br>
-			
+			<div id="setting-outer">
+			<span class="groupNames" style="border:0; height:10px;">
+			</span>
+			<span class="groupNames" style="border:0; height:30px;">
+				<div id="more-group">그룹추가 <span id="plus">➕</span></div>
+			</span>
 			
 			<c:forEach var="g" items="${gList}">
 				<span class="groupNames">
@@ -80,6 +101,8 @@
 				</span>
 			</c:forEach>
 			
+				
+			</div>
 			<script>
 				$(function(){
 					$(".group-rename").click(function(){
@@ -89,7 +112,7 @@
 						$(this).parent().siblings(".submit-name").show();
 					})
 					
-					$(".address-content-outer").on("click", ".submit-name", function(){
+					$("#setting-outer").on("click", ".submit-name", function(){
 						let name = $(this).siblings(".input-name");
 						let val = $(this).siblings(".input-name").val();
 						let no = $(this).siblings(".groupNo");
@@ -103,12 +126,15 @@
 								groupNo : no.val()
 							},
 							success:function(result){
+								/*
 								if(result>0){
 									name.hide();
 									no.hide();
 									search.hide();
 									group.text(val).show();
 								}
+								*/
+								location.reload();
 							},
 							error:function(){
 		    					console.log("공용주소록그룹 수정 실패");
@@ -116,14 +142,62 @@
 						});
 					})
 					
-					$(".address-content-outer").on("click", ".group-delete", function(){
+					$("#setting-outer").on("click", ".group-delete", function(){
 						let no = $(this).parent().siblings(".groupNo").val();
-						location.href="adminDel.add?no=" + no;
-					}
+						$.ajax({
+							url:"adminDel.add",
+							data:{
+								groupNo : no
+							},
+							success:function(msg){
+								
+								location.reload();
+							},
+							error:function(){
+		    					console.log("공용주소록그룹 삭제 실패");
+		    				}
+							
+						});
+						
+					})
 					
 				})
 			</script>
-
+			<script>
+				$(function(){
+					let value;
+					value = '<span class="groupNames newGroups">'
+						+ '<input type="text" name="groupName" class="input-new">'
+						+ '<img src="resources/common_images/save-icon.png"  class="submit-new">'
+						+ '</span>';
+					
+						$("#more-group").click(function(){
+							$("#setting-outer").append(value);
+						})
+				})
+				
+				$("#setting-outer").on("click", ".submit-new", function(){
+					let name = $(this).siblings("input").val();
+					
+						$.ajax({
+							url:"insertShGroup.add",
+							data:{
+								groupName : name,
+								empNo : '${loginUser.empNo}'
+							},
+							success:function(msg){
+								if(msg=="success"){
+									location.reload();
+								}
+							},
+							error:function(){
+		    					console.log("공용주소록그룹 삭제 실패");
+		    				}
+							
+						});
+					})
+				
+			</script>
 			
 
 

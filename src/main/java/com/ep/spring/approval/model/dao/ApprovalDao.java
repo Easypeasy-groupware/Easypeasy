@@ -29,6 +29,7 @@ public class ApprovalDao {
 	
 	public Employee selectEnrollInfo(SqlSessionTemplate sqlSession, int eNo) {
 		return sqlSession.selectOne("employeeMapper.selectEnrollInfo", eNo);
+		
 	}
 	
 	public int selectWaitingAListCount(SqlSessionTemplate sqlSession, int eNo) {

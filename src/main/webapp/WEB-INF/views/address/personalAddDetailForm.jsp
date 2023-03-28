@@ -67,7 +67,7 @@
 
             <form action="updatePsAdd.ad" method="post">
                 <input type="hidden" name="empNo" value="${ loginUser.empNo }">
-                <input type="hidden" name="addNo" value="${ a.addNo }">
+                <input type="hidden" id="add-no" name="addNo" value="${ a.addNo }">
                 <table class="input-table">
                     <colgroup>
                         <col style="width:100px;">
@@ -156,7 +156,17 @@
 
             </form>
         </div>
-
+		
+		<script>
+			$(function(){
+				$("#reset-btn").click(function(){
+					let no = $("#add-no").val();
+					location.href="deleteOne.add?no=" + no;
+				})
+			})
+		</script>
+		
+		
         <!--새로운 그룹 추가용 모달-->
         <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">

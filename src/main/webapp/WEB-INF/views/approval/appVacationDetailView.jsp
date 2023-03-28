@@ -29,7 +29,7 @@
         .left-form1, .left-form2 ,.left-form3,.left-form4,.left-form5,.left-form6{width:100%;}
         .speech-bubble {
             position: relative;
-            background: #d1d2d2;
+            background: #ebece4;
             border-radius: .4em;
         }
 
@@ -37,11 +37,11 @@
             content: '';
             position: absolute;
             top: 0;
-            left: 50%;
+            left: 30%;
             width: 0;
             height: 0;
             border: 20px solid transparent;
-            border-bottom-color: #d1d2d2;
+            border-bottom-color: #ebece4;
             border-top: 0;
             border-left: 0;
             margin-left: -10px;
@@ -232,17 +232,17 @@
                     <table class="table-bordered" >
                         <tr>
                             <td width="100px;" style="text-align:center">휴가종류</td>
-                            <td width="700px;">${vf.vacKind }</td>
+                            <td style="padding:10px;width:700px;">${vf.vacKind }</td>
                         </tr>
                         <tr>
                             <td style="text-align:center">기간 및 일시</td>
-                            <td>
+                            <td style="padding:10px;">
                                 <span>${vf.vacStart } ~ ${vf.vacEnd }</span> &nbsp; , <span>${vf.vacUse } 일 사용</span> 
                             </td>
                         </tr>
                         <tr>
                             <td style="text-align:center">반차여부</td>
-                            <td>
+                            <td style="padding:10px;">
                                 <c:choose>
                                     <c:when test="${vf.halfStatus eq 'BOTH' }">
                                         ${vf.halfDay }
@@ -250,7 +250,7 @@
                                     <c:otherwise>
                                     ${vf.halfStatus == 'AM'?'오전':
                                         vf.halfStatus == 'PM'?'오후':
-                                        vf.halfStatus == 'N'?'해당없음':''}
+                                        vf.halfStatus == 'N'?'해당없음':'해당없음'}
                                         &nbsp;
                                     ${vf.halfDay }   
                                     </c:otherwise>
@@ -259,7 +259,7 @@
                         </tr>
                         <tr>
                             <td rowspan="5" style="text-align:center">휴가사유</td>
-                            <td rowspan="5" height="150px;">${ap.content }</td>
+                            <td rowspan="5" style="height:150px; padding:30px;">${ap.content }</td>
                         </tr>
                         <tr>
                         </tr>
@@ -273,7 +273,7 @@
                         
                         </tr>
                         <tr>
-                            <td colspan="2">
+                            <td colspan="2" style="padding:20px;font-size:12px;">
                                 1. 연차의 사용은 근로기준법에 따라 전년도에 발생한 개인별 잔여 연차에 한하여 사용함을 원칙으로 한다. <br>
                                 &nbsp;&nbsp;&nbsp;&nbsp;단, 최초 입사시에는 근로 기준법에 따라 발생 예정된 연차를 차용하여 월 1회 사용 할 수 있다. <br>
                                 2. 경조사 휴가는 행사일을 증명할 수 있는 가족 관계 증명서 또는 등본, 청첩장 등 제출 <br>
@@ -282,7 +282,7 @@
                         </tr>
                         <tr>
                             <td style="text-align:center">첨부파일</td>
-                            <td style="overflow: auto;">
+                            <td style="overflow: auto; padding:20px;">
                                 <c:choose>
                                     <c:when test="${empty list3 }">
                                         첨부파일이 없습니다.
