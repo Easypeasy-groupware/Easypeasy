@@ -32,7 +32,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"></script>
 <style>
 	*{padding:0; margin:0}
-	.menubar{width:200px; background:white; float:left; border-right: 2px solid rgb(185, 187, 221); height: 750px;}
+	.menubar{width:200px; background:white; float:left; border-right: 2px solid rgb(185, 187, 221); height: 1200px;}
 	a{text-decoration:none; color:black;}
 	a:hover{font-weight:600; color:black;}
 	li{list-style:none;}

@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,8 @@ import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.common.template.FileUpload;
 import com.ep.spring.common.template.Pagination;
+import com.ep.spring.commute.model.service.CommuteService;
+import com.ep.spring.commute.model.vo.VacationRecode;
 import com.ep.spring.login.model.service.EmployeeService;
 import com.ep.spring.login.model.vo.Department;
 import com.ep.spring.login.model.vo.Employee;
@@ -46,6 +49,9 @@ public class ApprovalController {
 	
 	@Autowired
 	private EmployeeService eService;
+	
+	@Autowired
+	private CommuteService cService;	
 	
 	@RequestMapping("main.ap")
 	public String selectAppMain(HttpSession session, Model model) {
@@ -594,6 +600,24 @@ public class ApprovalController {
 		int result = aService.updateAppLine(al);
 		
 		if(result > 0) {
+			
+			Approval a = aService.selectVacationInfo(al.getAppNo());
+			//System.out.println("가져온 값" + a );
+			
+			if(a!=null) {
+				VacationRecode vr = new VacationRecode();
+				vr.setEmpNo(a.getWriterNo());
+				vr.setVacDays(a.getVacUse());
+				vr.setVacCategory("GV");
+				vr.setVacReason("결재완료");
+				vr.setVacDivide("DE");
+				
+				int result2 = cService.insertVacRecodeMinus(vr);
+				
+				if(result2>0) {
+					System.out.println(result2);
+				}
+			}
 			AlertMsg msg = new AlertMsg("의견등록성공", "의견등록에 성공했습니다!");
 			session.setAttribute("successMsg", msg);
 			return "redirect:recWlist.ap";	

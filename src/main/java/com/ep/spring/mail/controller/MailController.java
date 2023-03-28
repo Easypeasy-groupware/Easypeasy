@@ -206,13 +206,37 @@ public class MailController {
 	
 	// 메일 상세 조회
 	@RequestMapping("select.ma")
-	public ModelAndView selectMail(HttpSession session, ModelAndView mv, Mail m) {
+	public ModelAndView selectMail(@RequestParam int div, Mail m, HttpSession session, ModelAndView mv) {
 		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
 		mService.readMail(m);
 		Mail mail = mService.selectMail(m);
 		ArrayList<Mail> receiverList = mService.selectReceiverList(m);
 		ArrayList<Attachment> attachmentList = mService.selectMailAttachment(m);
-		ArrayList<Mail> mailList = mService.selectReceiveMailList(m.getRecMailAdd());
+		ArrayList<Mail> mailList = new ArrayList<Mail>();
+		switch(div) {
+			case 1: mailList = mService.selectReceiveMailList(m.getRecMailAdd());
+				break;
+			case 2: mailList = mService.selectTodayMailList(null, m.getRecMailAdd());
+				break;
+			case 3: mailList = mService.selectToMeMailList(null, m.getRecMailAdd());
+				break;
+			case 4: mailList = mService.selectAttachMailList(null, m.getRecMailAdd());
+				break;
+			case 5: mailList = mService.selectSendMailList(null, m.getRecMailAdd());
+				break;
+			case 6: mailList = mService.selectUnreadMailList(null, m.getRecMailAdd());
+				break;
+			case 7: mailList = mService.selectImporMailList(null, m.getRecMailAdd());
+				break;
+			case 8: mailList = mService.selectTempMailList(null, m.getRecMailAdd());
+				break;
+			case 9: mailList = mService.selectSendMailList(null, m.getRecMailAdd());
+				break;
+//			case 10:mailList = mService.select
+//				break;
+		}
+		
+		mv.addObject("division", div);
 		mv.addObject("mail", mail);
 		mv.addObject("receiverList", receiverList);
 		mv.addObject("attachmentList", attachmentList);
@@ -255,8 +279,7 @@ public class MailController {
 			msg.setTitle("메일 삭제");
 			msg.setContent("메일을 성공적으로 삭제했습니다.");
 			mv.addObject("successMsg", msg);
-			mv.setViewName("mail/receiveMailBox");
-			return mv;
+			return deleteMailList(1, mv, session);
 		}else {
 			msg.setTitle("메일 삭제");
 			msg.setContent("메일 삭제에 실패했습니다.");
@@ -268,9 +291,9 @@ public class MailController {
 	}
 	
 	@RequestMapping("deleteList.ma")
-	public ModelAndView deleteMailList(ModelAndView mv, HttpSession session) {
+	public ModelAndView deleteMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, HttpSession session) {
 		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
-		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
+		ArrayList<Mail> mailList = mService.selectDeleteMailList(email);
 		
 		mv.addObject("mailList", mailList);
 		mv.setViewName("mail/deleteMailBox");
@@ -279,21 +302,19 @@ public class MailController {
 	
 	/* 비우기 기능 */
 	@RequestMapping("completeDelete.ma")
-	public ModelAndView completeDeleteMail(Mail m) {
-		ModelAndView mv = new ModelAndView();
+	public ModelAndView completeDeleteMail(Mail m, ModelAndView mv, int[] recMailNoList, HttpSession session) {
 		AlertMsg msg = new AlertMsg();
-		int result = mService.completeDeleteMail(m);
+		int result = mService.completeDeleteMail(m, recMailNoList);
 		if(result > 0) {
-			msg.setTitle("비우기");
+			msg.setTitle("영구 삭제");
 			msg.setContent("메일을 성공적으로 삭제했습니다.");
 			mv.addObject("successMsg", msg);
 		}else {
-			msg.setTitle("비우기");
+			msg.setTitle("영구 삭제");
 			msg.setContent("메일 삭제에 실패했습니다.\n삭제할 메일이 있는지 확인해주세요.");
 			mv.addObject("failMsg", msg);
 		}
-		mv.setViewName("mail/receiveMailBox");
-		return mv;
+		return deleteMailList(1, mv, session);
 	}
 	
 	@RequestMapping("spamEnroll.ma")
@@ -306,6 +327,7 @@ public class MailController {
 			msg.setTitle("스팸 등록");
 			msg.setContent("메일을 스팸 처리했습니다.");
 			mv.addObject("successMsg", msg);
+			mv.addObject("mailList", mailList);
 		}else {
 			msg.setTitle("스팸 등록");
 			msg.setContent("메일 스팸 처리에 실패했습니다.");
@@ -316,7 +338,7 @@ public class MailController {
 	}
 	
 	@RequestMapping("spamList.ma")
-	public ModelAndView spamMailList(ModelAndView mv, HttpSession session) {
+	public ModelAndView spamMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, HttpSession session) {
 		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
 		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
 		
@@ -333,19 +355,16 @@ public class MailController {
 		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
 		
 		if(result > 0) {
-			msg.setTitle("스팸 등록");
-			msg.setContent("메일을 스팸 처리했습니다.");
+			msg.setTitle("스팸 해제");
+			msg.setContent("메일 스팸 해제를 성공했습니다.");
 			mv.addObject("successMsg", msg);
-			mv.addObject("mailList", mailList);
+			return selectMailList(1, session, mv);
 		}else {
-			msg.setTitle("스팸 등록");
-			msg.setContent("메일 스팸 처리에 실패했습니다.");
+			msg.setTitle("스팸 해제");
+			msg.setContent("메일 스팸 해제에 실패했습니다.");
 			mv.addObject("failMsg", msg);
-			mv.addObject("mailList", mailList);
+			return spamMailList(1, mv, session);
 		}
-		mv.setViewName("mail/spamMailBox");
-		
-		return mv;
 	}
 	
 	@RequestMapping("reply.ma")
@@ -376,15 +395,15 @@ public class MailController {
 			msg.setContent("해당 메일을 태그 등록했습니다.");
 			mv.addObject("successMsg", msg);
 			mv.addObject("mailList", mailList);
+			return selectTaggingMailList(1, mv, t, session);
 		}else {
 			msg.setTitle("태그 등록");
 			msg.setContent("메일 태그 등록에 실패했습니다.");
 			mv.addObject("failMsg", msg);
 			mv.addObject("mailList", mailList);
+			mv.setViewName("mail/receiveMailBox");
+			return mv;
 		}
-		mv.setViewName("mail/receiveMailBox");
-		
-		return mv;
 	}
 	
 	@RequestMapping("todayList.ma")
@@ -509,11 +528,11 @@ public class MailController {
 		int listCount = mailList.size();
 		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
 		ArrayList<Mail> pagingMailList = mService.selectSendMailList(mailPi, email);
-		
 		session.setAttribute("tagList", tagList);
 		mv.addObject("mailList", mailList);
 		mv.addObject("pgMailList", pagingMailList);
 		mv.addObject("attachList", attachList);
+		
 		mv.addObject("mailPi", mailPi);
 		mv.setViewName("mail/sendMailbox");
 		return mv;
@@ -596,4 +615,51 @@ public class MailController {
 		return mv;
 	}
 	
+	@RequestMapping("restore.ma")
+	public ModelAndView restoreDeleteMail(Mail m, ModelAndView mv, int[] recMailNoList, HttpSession session) {
+		AlertMsg msg = new AlertMsg();
+		int result = mService.restoreDeleteMail(m, recMailNoList);
+		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
+		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
+		
+		if(result > 0) {
+			msg.setTitle("메일 복원");
+			msg.setContent("메일을 복원 처리했습니다.");
+			mv.addObject("successMsg", msg);
+			mv.addObject("mailList", mailList);
+			return selectMailList(1, session, mv);
+		}else {
+			msg.setTitle("메일 복원");
+			msg.setContent("메일 복원 처리에 실패했습니다.");
+			mv.addObject("failMsg", msg);
+			mv.addObject("mailList", mailList);
+			return deleteMailList(1, mv, session);
+		}
+	}
+	
+	@RequestMapping("completeDeleteAll.ma")
+	public ModelAndView completeDeletAll(ModelAndView mv, HttpSession session, Mail m) {
+		AlertMsg msg = new AlertMsg();
+		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
+		int result = mService.completeDeleteMailAll(email, m);
+		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
+		String division = m.getJunkMail();
+		if(result > 0) {
+			msg.setTitle("비우기");
+			msg.setContent("비우기 처리에 성공했습니다.");
+			mv.addObject("successMsg", msg);
+			mv.addObject("mailList", mailList);
+			if(division != null) {
+				return deleteMailList(1, mv, session);
+			}else {
+				return spamMailList(1, mv, session);
+			}
+		}else {
+			msg.setTitle("비우기");
+			msg.setContent("비우기 처리에 실패했습니다.");
+			mv.addObject("failMsg", msg);
+			return selectMailList(1, session, mv);
+		}
+		
+	}
 }

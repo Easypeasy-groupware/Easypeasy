@@ -66,11 +66,12 @@
                 <div id="mail_header1" style="width:100%; float:left">
                     <div id="mail_header_info">
                         <c:choose>
-                            <c:when test="${mail.status == 'Y' && mail.junkMail == 'N'}">
+                            <c:when test="${division >= 1 && division < 9}">
                                 <b style="font-size: 20px;">전체메일 </b>
                                 <b style="color: dodgerblue; font-size: 23px;">
+                                    <c:set var="allMail" value="0" />
                                     <c:forEach var="m" items="${ mailList }">
-                                        <c:if test="${ m.status == 'Y' }">
+                                        <c:if test="${ m.status == 'Y' and m.junkMail == 'N' }">
                                             <c:set var="allMail" value="${allMail + 1}" />
                                         </c:if>
                                     </c:forEach>
@@ -79,22 +80,18 @@
                                 <b>/ </b>
                                 <b style="font-size: 20px;">안읽은 메일 </b>
                                 <b style="color: crimson; font-size: 23px;">
+                                    <c:set var="readMail" value="0" />
                                     <c:forEach var="m" items="${ mailList }">
-                                        <c:if test="${ m.status == 'Y' }">
-                                            <c:choose>
-                                                <c:when test="${ m.recCheck == 'Y' }">
-                                                    <c:set var="readMail" value="${readMail + 1}" />
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <c:set var="readMail" value="0" />
-                                                </c:otherwise>
-                                            </c:choose>
+                                        <c:if test="${ m.status == 'Y' and m.junkMail == 'N' }">
+                                            <c:if test="${ m.recCheck == 'Y' }">
+                                                <c:set var="readMail" value="${readMail + 1}" />
+                                            </c:if>
                                         </c:if>
                                     </c:forEach>
                                     ${allMail-readMail}
                                 </b>
                             </c:when>
-                            <c:when test="${mail.status == 'N' && mail.junkMail == 'N'}">
+                            <c:when test="${division} == 1">
                                 <b>휴지통</b>
                                 <b style="font-size: 20px;">삭제메일 </b>
                                 <b style="color: cadetblue; font-size: 23px;">
@@ -135,13 +132,13 @@
                     <div id="search_bar">
                         <form action="">
                             <select name="search" id="">
-                                <option value="searchAll">전체</option>
+                                    <option value="searchAll">전체</option>
                                 <option value="searchAddress">메일 주소</option>
                                 <option value="searchTitle">메일 제목</option>
                                 <option value="searchContent">메일 내용</option>
                             </select>
                             <input type="text">
-                            <button>검색</button>
+                                <button>검색</button>
                         </form>
                     </div>
                 </div><br>
@@ -197,15 +194,19 @@
                         <img id="favorite" style="width: 18px; margin-right: 20px; float: left; padding-top: 6px;" src="resources/common_images/favorite.png">
                         <div style="font-size: 22px; font-weight: 700;">
                             ${ mail.mailTitle }
-                            <div class="mail_tag" style="line-height: 25px; margin-right: 5px;">
-                                <span class="tagBlock">
-                                    <span class="tag_innerBlock1 tagColor" style="background-color: ${mail.tagColor}; border: 1px solid ${mail.tagColor};">
-                                        <span class="tag_innerBlock2" style="border-inline-color: inherit;">
-                                            <span style="border-inline-color: inherit;"></span>
+                            <c:forEach var="t" items="${ tagList }">
+                                <c:if test="${t.tagNo == mail.tagNo}">
+                                    <div class="mail_tag" style="line-height: 25px; margin-right: 5px;">
+                                        <span class="tagBlock">
+                                            <span class="tag_innerBlock1 tagColor" style="background-color: ${t.tagColor}; border: 1px solid ${t.tagColor};">
+                                                <span class="tag_innerBlock2" style="border-inline-color: inherit;">
+                                                    <span style="border-inline-color: inherit;"></span>
+                                                </span>
+                                            </span>
                                         </span>
-                                    </span>
-                                </span>
-                            </div>
+                                    </div>
+                                </c:if>
+                            </c:forEach>
                         </div> 
                         <br>
                         <table>

@@ -97,4 +97,7 @@ public interface ApprovalService {
 	int selectStatusListCount(Approval a);
 	ArrayList<Approval> selectStatusList( PageInfo pi, Approval a);
 	
+	// 21. 휴가정보와 연장근무 데이터 insert서비스
+	Approval selectVacationInfo(int no);
+	
 }

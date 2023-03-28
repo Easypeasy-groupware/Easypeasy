@@ -58,7 +58,7 @@
 	                        <option value="30">1개월</option>
 	                    </select> -->
 	                    
-	                    <select>
+	                    <select name="condition">
 	                        <option value="title">제목</option>
 	                        <option value="content">내용</option>
 	                    </select>

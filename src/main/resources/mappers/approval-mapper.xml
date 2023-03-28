@@ -25,7 +25,8 @@
  		<result column="count" property="count" />
  		<result column="job_code" property="jobCode" />
  		<result column="attach_count" property="attachCount" />
- 		<result column="vac_remaining" property="vacRemaining" />
+ 		<result column="vac_kind" property="vacKind" /> 
+		<result column="vac_use" property="vacUse" /> 
 	</resultMap>
 	
 	<resultMap id="approvalLineResult" type="ApprovalLine">
@@ -1264,13 +1265,25 @@
 					    by app_no desc 	
 	</select>
 	
-	<select id="selectEnrollInfo" resultMap="approvalResult">
-					select vac_remaining
-					  from vac_recode
-					 where  vac_recode =  (select max(vac_recode)
-					                       from vac_recode
-					                      where emp_no = #{eNo}
-					                          )		
+	<select id="selectVacationInfo" resultMap="approvalResult">
+				select 
+				       a.app_no
+				      , app_tstatus
+                      , VAC_KIND
+                      , VAC_USE
+                      , a.emp_no
+				  from  approval a
+                  join vac_form v on (a.app_no = v.app_no)
+				  left join employee e on (a.emp_no = e.emp_no)
+				 where a.emp_no = (
+                                select emp_no
+                                  from approval
+                                 where app_no = #{appNo}
+                                    )
+                   and APP_TSTATUS = '결재'
+				   and a.status = 1	
+                   and form_code = 3	
+                   and a.app_no = #{appNo}
 	</select>
 	
 </mapper>

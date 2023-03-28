@@ -296,7 +296,7 @@
                             <tr style="height: 55px;">
                                 <th>장소</th>
                                 <td colspan="2">
-                                    <input type="text" name="scPlace" size="70" placeholder=" 장소를 입력하세요" required>
+                                    <input type="text" name="scPlace" size="70" placeholder=" 장소를 입력하세요">
                                 </td>
                             </tr>
                             <tr style="height: 50px;">
@@ -335,7 +335,7 @@
                 })
 
                 $("#sDate").datepicker("setDate", "today");
-                $("#eDate").datepicker("setDate", "today");
+                $("#eDate").datepicker("setDate", "+5");
 
             
                 $("#sDate").datepicker();

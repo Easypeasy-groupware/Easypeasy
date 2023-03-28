@@ -9,7 +9,7 @@
 </head>
 <body>
 
-	<embed src="${ db.changeName }" type="application/pdf" width=700px height=500px/>
+	<embed src="${ db.changeName }" type="application/pdf" width=900px height=600px/>
 
 </body>
 </html>

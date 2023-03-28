@@ -105,8 +105,8 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public int completeDeleteMail(Mail m) {
-		return mDao.completeDeleteMail(m, sqlSession);
+	public int completeDeleteMail(Mail m, int[] recMailNoList) {
+		return mDao.completeDeleteMail(m, recMailNoList, sqlSession);
 	}
 
 	@Override
@@ -197,6 +197,21 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public MailTag selectTag(MailTag t) {
 		return mDao.selectTag(t, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Mail> selectDeleteMailList(String email) {
+		return mDao.selectDeleteMailList(email, sqlSession);
+	}
+
+	@Override
+	public int restoreDeleteMail(Mail m, int[] recMailNoList) {
+		return mDao.restoreDeleteMail(m, recMailNoList, sqlSession);
+	}
+
+	@Override
+	public int completeDeleteMailAll(String email, Mail m) {
+		return mDao.completeDeleteMailAll(email, m, sqlSession);
 	}
 
 	

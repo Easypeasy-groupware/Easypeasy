@@ -366,4 +366,8 @@ public class ApprovalDao {
 		
 	}
 	
+	public Approval selectVacationInfo(SqlSessionTemplate sqlSession, int no) {
+		return sqlSession.selectOne("approvalMapper.selectVacationInfo", no);
+	}
+	
 }

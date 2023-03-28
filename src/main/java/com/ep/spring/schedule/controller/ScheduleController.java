@@ -169,7 +169,7 @@ public class ScheduleController {
 		int result1 = scService.deleteSchedule(no);
 		int result2 = scService.deleteCalendar(no);
 		
-		if(result1 > 0 && result2 > 0) {
+		if(result2 > 0) {
 			
 			AlertMsg msg = new AlertMsg("캘린더 삭제", "성공적으로 삭제되었습니다");
 			session.setAttribute("successMsg", msg);
@@ -262,7 +262,8 @@ public class ScheduleController {
 			s.setAllDay("Y");
 		}
 		
-		//System.out.println(s);
+		
+		System.out.println(s);
 		//System.out.println("선택한 번호 empNo : " + empNo);
 		
 		if(empNo == null) {

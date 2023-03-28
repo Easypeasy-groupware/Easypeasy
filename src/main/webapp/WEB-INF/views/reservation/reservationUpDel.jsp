@@ -157,7 +157,7 @@
                 <div class="footer">
                     <a href="" id="list" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">목록으로 돌아가기</a>&nbsp;
                     <button type="submit" id="updateBtn" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">예약 수정하기</button>&nbsp;
-                    <a href="reservationDel.re?no=${ r.reNo }" class="btn btn-sm btn-light" style="background: white;" data-dismiss="modal">예약 취소하기</a>
+                    <a href="reservationDel.re?no=${ r.reNo }" class="btn btn-sm btn-light" id="deleteBtn" style="background: white;" data-dismiss="modal">예약 취소하기</a>
                 </div>
             </form>
         </div>
@@ -241,6 +241,13 @@
     	if(writer != loginUser){
     		$("#updateBtn").prop("disabled", true);
     		$("#updateBtn").css("background", "lightgray");
+    	}
+    	
+    	if(writer != loginUser){
+    		$("#deleteBtn").css("pointer-events", "none");
+			$("#deleteBtn").css("cursor", "default");
+			$("#deleteBtn").css("background", "rgb(235, 235, 235)");
+			$("#deleteBtn").css("color", "white");
     	}
     	
     </script>

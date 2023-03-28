@@ -254,9 +254,9 @@
 			 , r.reply_writer
 			 , reply_content
 			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
-			
+			 
 		  from board_reply r
-		 
+		
 		 where status = 'N'
 		   and board_no = #{boardNo}		
 		 order
@@ -444,7 +444,9 @@
 			  , board_title
 			  , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 			  , board_count
+			  , e.emp_name
 		   from board b
+		   left join employee e on (b.board_writer = e.emp_no)
 		  where delete_status = 'N'
 		    and board_cno = 3
            <choose>

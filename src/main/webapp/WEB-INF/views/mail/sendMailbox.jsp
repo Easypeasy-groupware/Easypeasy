@@ -154,14 +154,8 @@
                                             <div class="mail_img unread"><img class="mail_read" src="resources/common_images/mail_unRead.png"></div>
                                         </c:otherwise>
                                     </c:choose>
-                                    <c:if test="${ not empty attachList }">
-                                        <c:forEach var="attach" items="${ attachList }">
-                                            <c:forEach var="a" begin="0" end="0" items="${ attach }">
-                                                <c:if test="${ m.mailNo == a.refNo }">
-                                                    <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
-                                                </c:if>
-                                            </c:forEach>
-                                        </c:forEach>
+                                    <c:if test="${ m.refNo > 0}" >
+                                        <div class="mail_img"><img class="attachment" src="resources/common_images/attachment.png"></div>
                                     </c:if>
                                 </div>
                                 <form class="mail_select_area">
@@ -243,22 +237,20 @@
             let index = 0;
             let arr = [];
 
-            // 메일 상세조회
             let mailSelectList = document.querySelectorAll('.mail_select_area');
             mailSelectList.forEach(function(select){
                 select.addEventListener('click', function(){
+                    const input = document.createElement("input");
+                    input.setAttribute("style", "display:none")
+                    input.setAttribute("name", "div");
+                    input.setAttribute("value", 5);
+                    this.append(input);
                     this.action = "select.ma";
                     this.method = "POST";
                     this.submit();
+
                 });
             });
-
-            // 페이징
-            $(function(){
-                    $("#ps-tbody").on("click", "tr", function(){
-                        location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
-                    })
-                })
 
             // 전체 체크박스 선택 취소
             let checkAll = document.getElementById("check_all");
