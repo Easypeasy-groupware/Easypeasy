@@ -45,6 +45,7 @@
             margin-left: -10px;
             margin-top: -20px;
         } 
+        .left-form2 span:hover{cursor:pointer;}
     </style>
 </head>
 <body>
@@ -57,6 +58,7 @@
             <div class="left-outer" style=" border-right:1px solid gray;">
                 <div class="left-form1">
                     <p><b style="font-size:30px;"> 업무기안</b></p>
+                    <input type="hidden" id="formTitle-1" value="업무기안">
                 </div>
                 <div class="left-form2">
                 <br><br>
@@ -409,8 +411,14 @@
             
                 $(function(){
                     selectReplyList();
-                    
+					selectFormName();
                 })
+                
+             	function selectFormName(){
+                	var fTitle = $("#formTitle-1").val();
+                	console.log(fTitle);
+                	$(".appFormTitle").html(fTitle);
+                }
                 
                 function addReply(){ //댓글작성용 ajax
                     
@@ -487,29 +495,64 @@
                     
                 }
                 
-                function deleteReply(a){
-                    
-                    var con = confirm("댓글을 삭제하시겠습니까?");
-                    
-                    if(con){
-                        $.ajax({
-                            url:"rdelete.ap",
-                            data : {no:a},
-                            success:function(result){
-                                
-                                if(result == "success"){
-                                    alert("성공적으로 삭제되었습니다.");
-                                    selectReplyList();
-                                }		    				
-                                
-                            }, error:function(){
-                                console.log("댓글 작성용 ajax 통신실패");
-                                alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
-                                
-                            }
-                        });
-                    }
-                }
+    	    	function deleteReply(a){
+    	    		
+    	    		var con = confirm("댓글을 삭제하시겠습니까?");
+    	    		
+    	    		if(con){
+    		    		$.ajax({
+    		    			url:"rdelete.ap",
+    		    			data : {no:a},
+    		    			success:function(result){
+    		    				
+    	    					if(result == "success"){
+    	    						alert("성공적으로 삭제되었습니다.");
+    	    						selectReplyList();
+    	    					}		    				
+    		    				
+    		    			}, error:function(){
+    	    					console.log("댓글 작성용 ajax 통신실패");
+    	    					alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+    		    				
+    		    			}
+    		    		});
+    	    		}
+    	    	
+                	/*
+                	swal({
+	              		  title: '삭제',
+	            		  text: "댓글을 삭제하시겠습니까?",
+                		  icon: "warning",
+                		  buttons: true,
+                		  dangerMode: true,
+                		})
+                		.then((willDelete) => {
+                		  if (willDelete) {
+                			  
+		                        $.ajax({
+		                            url:"rdelete.ap",
+		                            data : {no:a},
+		                            success:function(result){
+		                                
+		                                if(result == "success"){
+		                                    swal("성공적으로 삭제되었습니다.");
+		                                    selectReplyList();
+		                                }		    				
+		                                
+		                            }, error:function(){
+		                                console.log("댓글 작성용 ajax 통신실패");
+		                                alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+		                                
+		                            }
+		                        });
+                			  
+                			   }
+                		    });*/
+                	
+	                }
+	                
+	                
+                
                 
                 
         </script>
@@ -532,7 +575,7 @@
                                 
                                     <tr>
                                         <td>결재문서명</td>
-                                        <td>결재문서제목</td>
+                                        <td class="appFormTitle">결재문서제목</td>
                                     </tr>
                                     <tr>
                                         <td>결재의견</td>
@@ -575,7 +618,7 @@
                                 
                                     <tr>
                                         <td>결재문서명</td>
-                                        <td>결재문서제목</td>
+                                        <td class="appFormTitle">결재문서제목</td>
                                     </tr>
                                     <tr>
                                         <td>반려의견</td>

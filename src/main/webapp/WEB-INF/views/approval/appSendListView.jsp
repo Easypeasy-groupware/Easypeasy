@@ -18,6 +18,8 @@
         }
         .list1-1 a{text-decoration:none; color:rgb(142, 161, 122); font-size:17px;}		
         .list1-1 a:hover{text-decoration:none;color:rgb(142, 161, 122);}	
+      tbody>tr:hover{background:rgb(233, 233, 233); cursor:pointer;}
+        
 	</style>
 </head>
 <body>
@@ -199,7 +201,7 @@
 							
 							if(result){
 									
-								//swal("총 " + result.sListCount + "건의 결과가 조회되었습니다.");
+								swal("총 " + result.sListCount + "건의 결과가 조회되었습니다.");
 									
 								$("#condition").val(result.a.condition);
 								$("#listType").val(result.a.listType);
@@ -243,23 +245,23 @@
 									let val2 = "";
 									
 									if(result.spi.currentPage == 1){
-										val2 += "<li class='page-item disabled'><button class='btn-sm'>&lt;</button></li>";
+										val2 += "<li class='page-item disabled'><a class='page-link'>&lt;</a></li>";
 										
 									}else{
 																			
-										val2 += "<li class='page-link'><button onclick='searchResult(" + (result.spi.currentPage-1) + ");' class='btn-sm' >&lt;</button></li>";
+										val2 += "<li class='page-item'><a class='page-link' onclick='searchResult(" + (result.spi.currentPage-1) + ");' >&lt;</a></li>";
 									}
 									
-									for(var i = result.spi.startPage;  i < result.spi.endPage ; i++){
+									for(var i = result.spi.startPage;  i <= result.spi.endPage ; i++){
 										
-										val2 +=" <li class=''><button onclick='searchResult(" + i + ");' class='btn-sm' >"+ i +" </button></li>";									
+										val2 +=" <li class='page-item'><a class='page-link' onclick='searchResult(" + i + ");' >"+ i +"</a></li>";									
 									}
 									
 									if(result.spi.currentPage == result.spi.maxPage){
-										val2 += "<li class='page-item disabled'><button class='btn-sm'>&gt;</button></li>";
+										val2 += "<li class='page-item disabled'><a class='page-link'>&gt;</a></li>";
 									}else{
 										
-										val2+= "<button onclick='searchResult("+ (result.spi.currentPage+1) + ");' class='btn-sm' > &gt;</button>";															
+										val2+= "<li class='page-item'><a onclick='searchResult("+ (result.spi.currentPage+1) + ");' class='page-link' > &gt;</a></li>";															
 									}
 									
 									$("#pagingArea-1 ul").html(val2);

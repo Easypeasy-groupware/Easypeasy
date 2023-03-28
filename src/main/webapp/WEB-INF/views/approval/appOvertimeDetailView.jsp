@@ -46,6 +46,7 @@
             margin-left: -10px;
             margin-top: -20px;
         } 
+        .left-form2 span:hover{cursor:pointer;}
     </style>
 </head>
 <body>
@@ -58,6 +59,7 @@
             <div class="left-outer" style=" border-right:1px solid gray;">
                 <div class="left-form1">
                     <p><b style="font-size:30px;">연장근무 신청서</b></p>
+                    <input type="hidden" id="formTitle-1" value="연장근무 신청서">
                 </div>
                 <div class="left-form2">
                 	<br><br>
@@ -432,8 +434,15 @@
 		
 	    	$(function(){
 	    		selectReplyList();
-	    		
+	    		selectFormName();
+
 	    	})
+	    	
+            function selectFormName(){
+             	var fTitle = $("#formTitle-1").val();
+             	console.log(fTitle);
+             	$(".appFormTitle").html(fTitle);
+             }  
 	    	
 	    	function addReply(){ //댓글작성용 ajax
 	    		
@@ -554,7 +563,7 @@
                             
                                 <tr>
                                     <td>결재문서명</td>
-                                    <td>결재문서제목</td>
+                                    <td class="appFormTitle">결재문서제목</td>
                                 </tr>
                                 <tr>
                                     <td>결재의견</td>
@@ -597,7 +606,7 @@
                             
                                 <tr>
                                     <td>결재문서명</td>
-                                    <td>결재문서제목</td>
+                                    <td class="appFormTitle">결재문서제목</td>
                                 </tr>
                                 <tr>
                                     <td>반려의견</td>

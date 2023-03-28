@@ -15,7 +15,9 @@
             margin:auto;
             float:left;
             box-sizing: border-box;
-        }	
+        }
+      tbody>tr:hover{background:rgb(233, 233, 233); cursor:pointer;}
+        	
 	</style>
 </head>
 <body>

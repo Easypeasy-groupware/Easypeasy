@@ -18,6 +18,8 @@
             box-sizing: border-box;
         }
         .outer thead, .outer tbody{font-size:15px;}	
+       tbody>tr:hover{background:rgb(233, 233, 233); cursor:pointer;}
+        
 	</style>
 </head>
 <body>

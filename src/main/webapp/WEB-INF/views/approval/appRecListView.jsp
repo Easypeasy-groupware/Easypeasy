@@ -17,7 +17,9 @@
             box-sizing: border-box;
         }	
         .list1-1 a{text-decoration:none; color:rgb(142, 161, 122); font-size:17px;}		
-        .list1-1 a:hover{text-decoration:none;color:rgb(142, 161, 122);}	        
+        .list1-1 a:hover{text-decoration:none;color:rgb(142, 161, 122);}
+      tbody>tr:hover{background:rgb(233, 233, 233); cursor:pointer;}
+      tbody *{overflow:hidden; font-size:13px;}	        
 	</style>
 </head>
 <body>
@@ -31,18 +33,14 @@
 			<br>
 
 			<div class="list-1">
-				<select name="period" id="">
-					<option value="">전체기간</option>
-					<option value="">1개월</option>
-					<option value="">6개월</option>
-					<option value="">1년</option>
+				<select name="condition" id="condition">
+					<option value="writer">기안자</option>
+					<option value="title">문서제목</option>
+					<option value="form">결재양식</option>
 				</select>
-				<select name="option" id="">
-					<option value="">기안자</option>
-					<option value="">기안부서</option>
-					<option value="">결재양식</option>
-				</select>
-				<input type="search"> <button>검색</button>
+				<input type="hidden" name="listType" id="listType" value="c">
+				<input type="search" name="keyword" id="keyword"> 
+				<button onclick="searchResult();">검색</button>
 
 			</div>
 
@@ -118,7 +116,7 @@
 					</tbody>
 				</table>
 				<br><br>
-				<div align="center">
+				<div id="pagingArea-1" align="center">
 					<ul id="paging">
 						<c:choose>
 							<c:when test="${tpi == null }">
@@ -200,6 +198,108 @@
 						}); 
 					}
 				});
+				
+				function searchResult(page){
+					
+					$.ajax({
+						url:"search.ap",
+						data: {condition : $("#condition").val(),
+							  listType : $("#listType").val(),
+							  keyword : $("#keyword").val(),
+							  cpage:page
+						}
+						,success:function(result){
+							
+							if(result){
+									
+								swal("총 " + result.sListCount + "건의 결과가 조회되었습니다.");
+									
+								$("#condition").val(result.a.condition);
+								$("#listType").val(result.a.listType);
+								$("#keyword").val(result.a.keyword);
+								
+								let val1 = "";
+								
+								if(result.sList.length == 0){
+									val1 += "<td colspan='9'> 검색결과에 일치되는 문서가 없습니다. </td>"
+								}else{
+									
+									for(var i = 0; i < result.sList.length; i++){
+										
+										val1 += "<tr>"
+											  + "<td>"
+											  + "<input type='checkbox' name='chk'>"
+											  + "<input type='hidden' id='num' value="+ result.sList[i].appNo + " >"
+											  + "</td>"
+											  + "<td>" + result.sList[i].enrollDate + "</td>";
+											  
+											  if(result.sList[i].tstatus == '결재'){
+												  val1 += "<td>" + result.sList[i].updateDate + "</td>";
+											  }else{
+												  val1 += "<td> - </td>";
+											  }
+											  
+											  val1 += "<td>" + result.sList[i].formName + "</td>";
+											  
+											  if(result.sList[i].formCode == 3 || result.sList[i].formCode == 4){
+												 val1 += "<td>" + result.sList[i].formName + "</td>";
+											  }else{
+												  val1 += "<td>" + result.sList[i].title + "</td>";
+											  }
+											  val1 += "<td>" + result.sList[i].empName + "</td>";
+											  if(result.sList[i].attachCount > 0){
+												  val1 += "<td><span><img src='resources/common_images/attachment.png' width='10px;'></span></td>";
+											  }else{
+												  val1 += "<td></td>";
+											  }
+											  val1 += "<td>" + result.sList[i].appChange +"</td>"
+												   + "<td>" + result.sList[i].tstatus +"</td></tr>";
+										
+									}
+									
+								}
+								
+								$("#result-tb tbody").html(val1);
+								
+								if(result.spi != null){
+										
+									let val2 = "";
+									
+									if(result.spi.currentPage == 1){
+										val2 += "<li class='page-item disabled'><a class='page-link'>&lt;</a></li>";
+										
+									}else{
+																			
+										val2 += "<li class='page-item'><a class='page-link' onclick='searchResult(" + (result.spi.currentPage-1) + ");' >&lt;</a></li>";
+									}
+									
+									for(var i = result.spi.startPage;  i <= result.spi.endPage ; i++){
+										
+										val2 +=" <li class='page-item'><a class='page-link' onclick='searchResult(" + i + ");' >"+ i +"</a></li>";									
+									}
+									
+									if(result.spi.currentPage == result.spi.maxPage){
+										val2 += "<li class='page-item disabled'><a class='page-link'>&gt;</a></li>";
+									}else{
+										
+										val2+= "<li class='page-item'><a onclick='searchResult("+ (result.spi.currentPage+1) + ");' class='page-link' > &gt;</a></li>";															
+									}
+									
+									
+									$("#pagingArea-1 ul").html(val2);
+									
+								}
+							}
+							
+						}, error :function(request, status, error){
+							console.log("검색용 ajax 통신실패");
+                            console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+
+						}	  
+					});
+					
+				}
+				
 				</script>
 			
 				<br clear="both"><br>

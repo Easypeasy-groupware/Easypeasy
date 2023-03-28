@@ -1050,8 +1050,34 @@
 					   		and form_name like '%' || #{keyword} || '%'
 					   </if>
 	</select>
+	<select id="selectSearchCListCount" resultType="_int">
+					select 
+			        		count(distinct app_no)
+					   from approval a
+                       join employee e on (e.emp_no = a.emp_no) 
+					  where a.status = 1
+					    and app_no in (
+					                    select distinct app_no
+					                      from app_line
+					                     where ref_whether = 'N'
+					                       and emp_no = #{receiverNo}
+					                       and app_seq_no <![CDATA[ <= ]]> a.app_sequence
+					                  )
+ 
+						   <if test="condition == 'writer'">
+						   and emp_name
+						   </if>
+						  <if test="condition == 'title'">
+						   and title  	
+						   </if>
+						   <if test="condition == 'form'">
+						   and form_name 
+						   </if>
+						    like '%' || #{keyword} || '%'
+	</select>
+
 	
-	<select id="selectSearchList" resultMap="approvalResult">
+	<select id="selectSearchSList" resultMap="approvalResult">
 				select 
 				       a.app_no
 				      , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
@@ -1092,6 +1118,54 @@
 					   
 				 order 
                     by a.enroll_date desc		
+	</select>
+	<select id="selectSearchCList" resultMap="approvalResult">
+				select  
+				       distinct a.app_no
+				       , to_char(a.enroll_date, 'YYYY-MM-dd')as "enroll_date"
+				       , to_char(update_date, 'YYYY-MM-dd') as "update_date"
+				       , app_tstatus
+				       , title
+				       , emp_name
+				       , form_name
+				       , form_code
+		               , (
+		                    select count(*)
+		                      from attachment
+		                     where division = 'A'
+		                       and ref_no = a.app_no
+		                    ) attach_count
+				       , app_change
+				   from approval a
+				   left join employee e on (e.emp_no = a.emp_no)
+				   left join app_line l on (l.app_no = a.app_no)
+				  where a.status = 1
+				    and a.app_no in (
+				                    select distinct app_no
+				                      from app_line
+				                     where ref_whether = 'N'
+				                       and emp_no = #{receiverNo}
+				                       and app_seq_no <![CDATA[ <= ]]> a.app_sequence
+				                       
+				                  )
+				    and update_date = (select max(update_date)
+				                        from app_line
+				                       where ref_whether = 'N'
+				                         and app_no = a.app_no
+				                    )
+				   <if test="condition == 'writer'">
+				   and emp_name
+				   </if>
+				  <if test="condition == 'title'">
+				   and title  	
+				   </if>
+				   <if test="condition == 'form'">
+				   and form_name 
+				   </if>
+				    like '%' || #{keyword} || '%'               
+					 order 
+					    by app_no desc 	
+
 	</select>
 	
 	<select id="selectStatusSListCount" resultType="_int">

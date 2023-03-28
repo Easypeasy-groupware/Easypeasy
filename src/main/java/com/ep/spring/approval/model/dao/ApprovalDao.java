@@ -280,7 +280,7 @@ public class ApprovalDao {
 			
 		}else if(a.getListType().equals("c")) {
 			
-			return 0;
+			return sqlSession.selectOne("approvalMapper.selectSearchCListCount", a);
 			
 		}else if(a.getListType().equals("f")) {
 			
@@ -314,7 +314,7 @@ public class ApprovalDao {
 			
 		}else if(a.getListType().equals("s")) {
 			
-			return (ArrayList)sqlSession.selectList("approvalMapper.selectSearchList", a, rowBounds);
+			return (ArrayList)sqlSession.selectList("approvalMapper.selectSearchSList", a, rowBounds);
 			
 		}else if(a.getListType().equals("t")) {
 			
@@ -322,7 +322,7 @@ public class ApprovalDao {
 			
 		}else if(a.getListType().equals("c")) {
 			
-			return null;
+			return (ArrayList)sqlSession.selectList("approvalMapper.selectSearchCList", a, rowBounds);
 			
 		}else if(a.getListType().equals("f")) {
 			

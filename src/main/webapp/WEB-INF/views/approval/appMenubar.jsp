@@ -122,8 +122,7 @@
     	}
     	.modal-body appLine{padding:20px;}
          	
-        tbody>tr:hover{background:rgb(233, 233, 233); cursor:pointer;}
-
+  
       
     </style>
     
@@ -702,7 +701,7 @@
                         
                             <tr>
                                 <td>결재문서명</td>
-                                <td>결재문서제목</td>
+                                <td id="formName">결재문서제목</td>
                             </tr>
                             <tr>
                                 <td>기안의견</td>
@@ -724,6 +723,12 @@
         </div>
     </div>
 
-
+	<script>
+		$(function(){ // 결재의견 작성란에 문서이름 넣기
+			var formTitle = $("input[name=formName]").val();
+			
+			$("#formName").html(formTitle);
+		})
+	</script>
 </body>
 </html>

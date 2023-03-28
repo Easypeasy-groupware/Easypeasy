@@ -35,7 +35,7 @@
         .app-wait button{width:144px;}
         .app-wait>p>b>a, .app-prgs>p>b>a{color:black;}
       	#recBtn:hover{background:rgb(234, 234, 234); border:none; color:gray;}
-
+		tbody>tr:hover{background:rgb(233, 233, 233); cursor:pointer;}
     </style>   
 </head>
 <body>

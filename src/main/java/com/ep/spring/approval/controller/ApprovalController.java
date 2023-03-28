@@ -626,7 +626,9 @@ public class ApprovalController {
 		
 		ArrayList<Attachment> list3 = aService.selectDetailSPrgAt(ap);
 		if(division == 1) {
+			if(list3.size() > 0) {
 			model.addAttribute("list3", list3);
+			}
 		}
 		System.out.println("업데이트폼에서 보낼 기존 첨부파일 : " + list3);
 		
@@ -683,7 +685,7 @@ public class ApprovalController {
 		
 		ArrayList <Attachment> atList = new ArrayList<>();
 		
-		if(originNames.size() > 0) {
+		if(originNames.size() > 1) {
 			
 			// 기존 첨부파일이 있었을 경우 => 기존의 파일 지우기
 			ArrayList<Attachment> list =  aService.selectDetailSPrgAt(ap);
@@ -691,11 +693,12 @@ public class ApprovalController {
 			
 			if(list.size() > 0) {
 				
-				for(Attachment b : list) {
-					new File(session.getServletContext().getRealPath(b.getFilePath())).delete();
-
-				}
-				
+			
+					for(Attachment b : list) {
+						new File(session.getServletContext().getRealPath(b.getFilePath())).delete();
+	
+					}					
+			
 				int delResult = aService.deleteAttachment(ap.getAppNo());
 				
 				if(delResult > 0) {
@@ -803,7 +806,13 @@ public class ApprovalController {
 	public String selectSearchList(Approval a, @RequestParam(value="cpage", defaultValue="1") int currentPage, Model model, HttpSession session) {
 		
 		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
-		a.setWriterNo(eNo);
+		
+		if(a.getListType().equals("s")) {
+			a.setWriterNo(eNo);
+		}else if(a.getListType().equals("c")) {
+			a.setReceiverNo(eNo);
+		}
+		
 		int listCount = aService.selectSearchListCount(a);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 		ArrayList<Approval> sList = aService.selectSearchList(a, pi);
@@ -811,8 +820,8 @@ public class ApprovalController {
 		/*
 		System.out.println(a);
 		System.out.println(listCount);
-		System.out.println(sList);
-		System.out.println(pi);*/
+		System.out.println(sList);*/
+		System.out.println(pi);
 		
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("sList", sList);

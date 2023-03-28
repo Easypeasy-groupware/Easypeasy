@@ -72,7 +72,7 @@
 		font-weight:600;
 	}
 	
-	#arrived-tb *, #departed-tb *{overflow:hidden;}
+	#arrived-tb *, #departed-tb *{overflow:hidden; text-overflow: ellipsis;}
 	.board-table th, #arrived-tb th, #departed-tb th, #tb-mail th{text-align:center;}
 	
 </style>
