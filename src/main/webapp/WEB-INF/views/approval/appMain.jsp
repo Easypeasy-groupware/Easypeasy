@@ -7,9 +7,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <style>
+    
          /* div{border:1px solid red;}  */
 		#main{position: absolute; top: 120px;}
-
+		#main a:hover {
+		  text-decoration: none;
+		  font-weight:600; color:black;
+		}
         .outer1{
             width:1000px; 
             padding:50px;
@@ -28,9 +32,9 @@
             font-size:13px;
            
         }
-        .app-wait button{width:160px;}
+        .app-wait button{width:144px;}
         .app-wait>p>b>a, .app-prgs>p>b>a{color:black;}
-      
+      	#recBtn:hover{background:rgb(234, 234, 234); border:none; color:gray;}
 
     </style>   
 </head>
@@ -40,10 +44,10 @@
 		<jsp:include page="appMenubar.jsp" />
 			<div class="outer1" >
 				<div class="outer1-1">
-					<p style="font-size:33px; "><a style="color:black;" href="main.ap"><b> 전자결재 홈</b></a></p>
+					<p style="font-size:30px; "><a style="color: rgb(142, 161, 122);" href="main.ap"><b> 전자결재 홈</b></a></p>
 					<br><br>
 					<div class="app-wait">
-						<p style="font-size:25px; "><b><a href="">결재대기</a></b></p>
+						<p style="font-size:25px; "><b><a href="" style="color: gray;"> 결재 대기 문서</a></b></p>
 						<c:choose>
 							<c:when test="${empty list1}">
 								<br><br>
@@ -68,7 +72,7 @@
 										<br><br>
 										${w.empName}<br>
 										${w.enrollDate } <br><br>
-										<button type="button" id="recBtn" class="btn btn-outline-secondary" onclick="receiveDetail(${w.appNo },'${w.formName }');">결재하기</button>
+										<span style="padding-left:0px;"><button type="button" id="recBtn" class="btn btn-outline-secondary" onclick="receiveDetail(${w.appNo },'${w.formName }');">결재하기</button></span>
 									</div>
 								</c:forEach>
 							</c:otherwise>
@@ -79,7 +83,7 @@
 					<br><br>
 
 					<div class="app-prgs">
-						<p style="font-size:25px; "><b><a href="">기안 진행 문서</a></b></p>
+						<p style="font-size:25px; "><b><a href="" style="color: gray;">기안 진행 문서</a></b></p>
 						<table style="width:800px; text-align:center" class="table">
 							<thead>
 								<tr>

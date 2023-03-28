@@ -277,6 +277,11 @@ public class ApprovalServiceImpl implements ApprovalService{
 		
 		return a * b * c * d * e;
 	}
+	
+	@Override
+	public int deleteAttachment(int appNo) {
+		return aDao.deleteAttachment(sqlSession, appNo);
+	}
 
 
 	@Override
@@ -291,6 +296,18 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return aDao.selectSearchList(sqlSession, a, pi);
 		
 	}
+
+	@Override
+	public int selectStatusListCount(Approval a) {
+		return aDao.selectStatusListCount(sqlSession, a);
+	}
+
+	@Override
+	public ArrayList<Approval> selectStatusList(PageInfo pi, Approval a) {
+		return aDao.selectStatusList(sqlSession, pi, a);
+	}
+
+
 
 
 

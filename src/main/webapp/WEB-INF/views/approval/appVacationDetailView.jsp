@@ -85,7 +85,7 @@
                                     </c:when>
                                     <c:when test="${c.recEmpNo eq loginUser.empNo && c.appStatus eq '미결재' }">
                                         <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#approval">결재</a> |  
-                                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#companion">반려</a> |
+                                        <a href="" style="padding:20px; color:rgb(71, 71, 71);" data-toggle="modal" data-target="#companion">반려</a>
                                     </c:when>
                                     <c:otherwise>
                                     </c:otherwise>
@@ -114,7 +114,7 @@
                 
                 <div class="left-form3" >
 
-                    <table class="draft" style="width:100px; text-align:center; font-size:12px; margin-right:10px;" border="1">
+                    <table class="draft" style="width:100px; text-align:center; font-size:12px; margin-right:10px; height:120px;" border="1">
                         <tr>
                             <td rowspan="4" style="background:rgb(223, 221, 221);">신<br>청</td>
                             <td>
@@ -141,7 +141,7 @@
                 
                         <c:choose>
                             <c:when test="${empty list1 }">
-                                <table class="draft" style="width:100px; text-align:center; font-size:12px; margin-right:10px;" border="1">
+                                <table class="draft" style="width:100px; text-align:center; font-size:12px; margin-right:10px; height:120px;" border="1">
                                     <tr>
                                         <td rowspan="4" style="background:rgb(223, 221, 221);">승<br>인</td>
                                         <td>
@@ -167,7 +167,7 @@
                             </c:when>
                             <c:otherwise> 
                                 <c:forEach var="i" items="${list1 }">
-                                    <table class="draft" style="width:100px; text-align:center; font-size:12px;" border="1">
+                                    <table class="draft" style="width:100px; text-align:center; font-size:12px; height:120px;" border="1">
                                         <tr>
                                             <td rowspan="4" style="background:rgb(223, 221, 221);">승<br>인</td>
                                             <td>

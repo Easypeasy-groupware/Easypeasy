@@ -15,7 +15,9 @@
             margin:auto;
             float:left;
             box-sizing: border-box;
-        }		
+        }
+        .list1-1 a{text-decoration:none; color:rgb(142, 161, 122); font-size:17px;}		
+        .list1-1 a:hover{text-decoration:none;color:rgb(142, 161, 122);}	
 	</style>
 </head>
 <body>
@@ -42,7 +44,7 @@
 			</div>
 
 			<div class="list1-1">
-				<a href="statusList.ap?tstatus='전체'&listType='s'">전체</a> | <a href="statusList.ap?tstatus='진행중'&listType='s'">진행</a> | <a href="statusList.ap?tstatus='결재'&listType='s'">완료</a> | <a href="statusList.ap?tstatus='반려'&listType='s'">반려</a>
+				<a href="statusList.ap?tstatus=전체&listType=s">전체</a> | <a href="statusList.ap?tstatus=진행중&listType=s">진행</a> | <a href="statusList.ap?tstatus=결재&listType=s">완료</a> | <a href="statusList.ap?tstatus=반려&listType=s">반려</a>
 			</div>
 
 			<br><br>
@@ -103,24 +105,51 @@
 				<div id="pagingArea-1" align="center">
 					<ul id="paging">
 						<c:choose>
-							<c:when test="${pi.currentPage eq 1 }">
-								<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+							<c:when test="${tpi == null }">
+								<c:choose>
+									<c:when test="${pi.currentPage eq 1 }">
+										<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+									</c:when>
+									<c:otherwise>
+										<li class=""><a class="page-link" href="sendList.ap?cpage=${pi.currentPage -1 }">&lt;</a>  </li> 
+									</c:otherwise>
+								</c:choose>
+								
+								<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+									<li class=""><a class="page-link" href="sendList.ap?cpage=${p }">${p }</a></li>
+								</c:forEach>
+								
+								<c:choose>
+									<c:when test="${pi.currentPage eq pi.maxPage }">
+										<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
+									</c:when>
+									<c:otherwise>
+										<li class="page-item"><a class="page-link" href="sendList.ap?cpage=${pi.currentPage + 1 }">&gt;</a></li>
+									</c:otherwise>
+								</c:choose>
 							</c:when>
 							<c:otherwise>
-								<li class=""><a class="page-link" href="sendList.ap?cpage=${pi.currentPage -1 }">&lt;</a>  </li> 
-							</c:otherwise>
-						</c:choose>
-						
-						<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-							<li class=""><a class="page-link" href="sendList.ap?cpage=${p }">${p }</a></li>
-						</c:forEach>
-						
-						<c:choose>
-							<c:when test="${pi.currentPage eq pi.maxPage }">
-								<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
-							</c:when>
-							<c:otherwise>
-								<li class="page-item"><a class="page-link" href="sendList.ap?cpage=${pi.currentPage + 1 }">&gt;</a></li>
+								<c:choose>
+									<c:when test="${tpi.currentPage eq 1 }">
+										<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+									</c:when>
+									<c:otherwise>
+										<li class=""><a class="page-link" href="statusList.ap?cpage=${tpi.currentPage -1 }&tstatus=${ta.tstatus }&listType=${ta.listType}">&lt;</a>  </li> 
+									</c:otherwise>
+								</c:choose>
+								
+								<c:forEach var="p" begin="${tpi.startPage }" end="${tpi.endPage }">
+									<li class=""><a class="page-link" href="statusList.ap?cpage=${p}&tstatus=${ta.tstatus }&listType=${ta.listType}">${p }</a></li>
+								</c:forEach>
+								
+								<c:choose>
+									<c:when test="${tpi.currentPage eq tpi.maxPage }">
+										<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
+									</c:when>
+									<c:otherwise>
+										<li class="page-item"><a class="page-link" href="statusList.ap?cpage=${tpi.currentPage +1 }&tstatus=${ta.tstatus }&listType=${ta.listType}">&gt;</a></li>
+									</c:otherwise>
+								</c:choose>								
 							</c:otherwise>
 						</c:choose>
 					</ul>

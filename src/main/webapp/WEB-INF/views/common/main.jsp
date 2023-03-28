@@ -71,6 +71,10 @@
 	#scheduleList a:hover{
 		font-weight:600;
 	}
+	
+	#arrived-tb *, #departed-tb *{overflow:hidden;}
+	.board-table th, #arrived-tb th, #departed-tb th, #tb-mail th{text-align:center;}
+	
 </style>
 </head>
 <body>
@@ -208,8 +212,8 @@
 				<table class="doc-table" id="arrived-tb">
 					<colgroup>
 						<col style="width:15%;">
-						<col style="width:15%;">
-						<col style="width:55%;">
+						<col style="width:35%;">
+						<col style="width:35%;">
 						<col style="width:15%;">
 					</colgroup>
 					<thead>
@@ -227,8 +231,8 @@
 				<table class="doc-table" id="departed-tb" style="display:none;">
 					<colgroup>
 						<col style="width:15%;">
-						<col style="width:15%;">
-						<col style="width:55%;">
+						<col style="width:35%;">
+						<col style="width:35%;">
 						<col style="width:15%;">
 					</colgroup>
 					<thead>
@@ -261,6 +265,8 @@
 				$(function(){
 					recentApproval();
 					//setInterval(recentApproval, 3000);
+					
+					
 				})
 				
 				function recentApproval(){
@@ -282,7 +288,7 @@
 								for(let i = 0; i < result.list1.length; i++){
 									let a = result.list1[i];
 									value1 += "<tr>"
-											+ "<td>" + a.enrollDate + "</td>"
+											+ "<td>" + a.enrollDate + "<input type='hidden' id='aNum1' value=" + a.appNo + "></td>"
 											+ "<td>" + a.formName + "</td>";
 											if(a.formCode == 3 || a.formCode == 4){
 												value1 += "<td>" + a.formName + "</td>";
@@ -292,6 +298,7 @@
 											
 											value1+= "<td>" + a.empName + "</td></tr>";
 								}
+								
 							}
 							$("#arrived-tb tbody").html(value1);
 							
@@ -307,7 +314,7 @@
 								for(let i = 0; i<result.list2.length; i++){
 									let b = result.list2[i];
 									value2 += "<tr>"
-										+ "<td>" + b.enrollDate + "</td>"
+										+ "<td>" + b.enrollDate +"<input type='hidden' id='aNum2' value=" + b.appNo + "> </td>"
 										+ "<td>" + b.formName + "</td>";
 										if(b.formCode == 3 || b.formCode == 4){
 											value2 += "<td>" + b.formName + "</td>";
@@ -320,6 +327,18 @@
 							}
 							
 							$("#departed-tb tbody").html(value2);
+							
+							if(result.list1.length > 0){
+								$("#arrived-tb tbody").on("click", "tr", function(){
+						            location.href = 'detailRec.ap?no=' + $(this).eq(0).children().find("#aNum1").val()+"&form="+ $(this).children().eq(1).text()+"&st=결재대기"; 
+						        }); 
+							}
+							
+							if(result.list2.length > 0){
+								$("#departed-tb tbody").on("click", "tr", function(){
+						            location.href = 'detailSPrg.ap?no=' + $(this).eq(0).children().find("#aNum2").val()+"&form="+ $(this).children().eq(1).text()+"&st=결재대기"; 
+						        }); 
+							}
 							
 						}, error:function(){
 							//console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
@@ -336,7 +355,7 @@
 				<div class="subtitle mail-list" id="mail-etc"></div>
 				<br clear="both"><br>
 		
-				<table>
+				<table id="tb-mail">
 					<colgroup>
 						<col style="width:35%;">
 						<col sytle="width:50%;">

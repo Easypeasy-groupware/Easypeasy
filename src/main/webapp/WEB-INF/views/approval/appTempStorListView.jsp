@@ -149,7 +149,7 @@
 					// 상세페이지로 이동하는 function
 					if(${not empty list}){
 						$("table tbody").on("click", "tr", function(){
-							location.href = 'updateForm.ap?no=' + $(this).children().eq(0).find("#num").val();
+							location.href = 'updateForm.ap?no=' + $(this).children().eq(0).find("#num").val() + "&division=1";
 						}); 
 					}
 				});

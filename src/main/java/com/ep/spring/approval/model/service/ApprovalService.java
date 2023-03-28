@@ -88,8 +88,13 @@ public interface ApprovalService {
 	
 	// 18. 문서수정용 서비스
 	int updateApproval(Approval ap, ArrayList<ApprovalLine> al, VacationForm vf, OverTimeForm ot, ArrayList<Attachment> atList);
-	
+	int deleteAttachment(int appNo);
 	// 19. 문서목록 검색용 서비스
 	int selectSearchListCount(Approval a);
 	ArrayList<Approval> selectSearchList(Approval a, PageInfo pi); 
+	
+	// 20. 문서 상태별 조회용 서비스
+	int selectStatusListCount(Approval a);
+	ArrayList<Approval> selectStatusList( PageInfo pi, Approval a);
+	
 }
