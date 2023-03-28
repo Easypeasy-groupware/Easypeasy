@@ -74,6 +74,12 @@ public class AddressController {
 	@RequestMapping("insertNewSh.add")
 	public String insertSharedAdd(Address a, HttpSession session) { // 외부 공유주소록 등록
 		
+		if(a.getEditList()==null) {
+			a.setEditable("N");
+		}else {
+			a.setEditable("N");
+		}
+		System.out.println(a);
 		int result = aService.insertSharedAdd(a);
 		
 		if(result> 0) {
@@ -557,13 +563,33 @@ public class AddressController {
 		return aService.updateSharedGroupName(ag);
 	}
 	
+	@ResponseBody
 	@RequestMapping("adminDel.add")
-	public String deleteSharedGroup(int no) {
-		System.out.println(no);
+	public String deleteSharedGroup(AddGroup ag) {
 		
-		int result = aService.deleteSharedGroup(no);
+		int result = aService.deleteSharedGroup(ag);
 		
-		return "address/adminGroupManageList";
+		return "success";
+	}
+	
+	@RequestMapping("deleteOne.add")
+	public String deleteOneAdd(int no, HttpSession session) {
+		
+		int result = aService.deleteOndAdd(no);
+		
+		if(result>0) {
+			AlertMsg msg = new AlertMsg("주소록 삭제", "주소록이 삭제되었습니다");
+			session.setAttribute("successMsg", msg);
+		}else {
+			AlertMsg msg = new AlertMsg("주소록 삭제", "삭제 실패했습니다");
+			session.setAttribute("failMsg", msg);
+		}
+		return "redirect:psAll.add";
+	}
+	
+	@RequestMapping("groupSetting.add")
+	public String personalGroupSetting() {
+		return "address/personalGroupSettings";
 	}
 	
 	

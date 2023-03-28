@@ -80,12 +80,6 @@ public class CommuteController {
 				  .setViewName("common/main");
 				return mv;
 			}
-			
-			  
-			 
-			
-			
-		
 		}
 		
 		//출근시간 등록
@@ -299,7 +293,7 @@ public class CommuteController {
 		//근무시간 수정(인사계정)
 		@RequestMapping("updateTime.HR")
 		public String updateTimeHR(Commute c, HttpSession session){
-			System.out.println(c);
+			//System.out.println(c);
 			int result = cService.updateTimeHR(c);
 			int empNo = c.getEmpNo();
 			
@@ -341,7 +335,7 @@ public class CommuteController {
 	    		int result2 = cService.updateWorkTime(c);
 	    		
 	    		if(result2>0) {
-	    			AlertMsg msg = new AlertMsg("근무시간 수정", "근무시간 수정에 실패하였습니다.");
+	    			AlertMsg msg = new AlertMsg("근무시간 수정", "근무시간 수정에 성공하였습니다.");
 					session.setAttribute("successMsg", msg);	    			
 	    			return "redirect:workingEmp.HR?no="+empNo;
 	    		}else {

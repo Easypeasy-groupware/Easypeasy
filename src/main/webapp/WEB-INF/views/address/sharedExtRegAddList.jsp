@@ -37,7 +37,7 @@
         border-collapse: collapse;
     }
     #addList th{border-bottom:1px solid gray; padding:5px 0 5px 0;}
-    #addList td{padding:3px 0 3px 0;}
+    #addList td{padding:3px 0 3px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
     #addList input[type="checkbox"]{accent-color:rgb(166, 184, 145);}
     .like:hover{cursor: pointer;}
     #addList tbody>tr:hover{background:rgb(233, 233, 233); font-weight:600;}

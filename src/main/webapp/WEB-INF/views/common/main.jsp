@@ -61,7 +61,7 @@
     .commute-btn{width:100px; height:35px; border:0; border-radius:5px; color:white; font-size:16px;}
     #in-btn{background:rgb(166, 184, 145); margin-left:30px;}
     #in-btn:hover{font-weight:600; background: rgb(116, 129, 101); cursor:pointer;}
-    #out-btn{background: gray; margin-left:5px;}
+    #out-btn{background: gray; margin-left:50px;}
     #out-btn:hover{cursor:pointer; font-weight:600; background: rgb(85, 85, 85);}
 
 
@@ -469,17 +469,6 @@
 				<p id="clock"></p>
 
 		
-				<table class="work-time">
-					<tr>
-						<td class="work-th" style="text-align:center;">정규근무</td>
-						<td class="work-td2" style="text-align:right;"><span id="sum-time"></span>/40h</td>
-					</tr>
-					<tr>
-						<td class="work-th" style="text-align:center;">추가근무</td>
-						<td class="work-td2" style="text-align:right;">0h</td>
-					</tr>
-				</table>
-		
 				<br><br>
 		
 				<table class="commute-time" style="text-align:center;">
@@ -488,14 +477,36 @@
 						<td class="commute-th">퇴근시각</td>
 					</tr>
 					<tr>
-						<td id="in-time"></td>
-						<td id="out-time"></td>
+						<td id="in-time">
+							<c:if test="${ not empty userCom.startTime }">
+	                    		${ userCom.startTime }
+	                    	</c:if>
+                    	</td>
+						<td id="out-time">
+							<c:if test="${ not empty userCom.endTime }">
+	                    		${ userCom.endTime }
+	                    	</c:if>
+						</td>
 					</tr>
 				</table>
 				<br>
 				<button class="commute-btn" id="in-btn" onclick="inTime();">출근하기</button>
 				<button class="commute-btn" id="out-btn" onclick="outTime();">퇴근하기</button>
 		
+                <script>
+	                $(function(){
+	         			
+	                	//출근시간 등록이 되어 있을 시 버튼 비활성화
+	                	if($("#in-time").html().trim().length != 0){
+	                		$("#in-btn").css("background-color", "rgb(93, 104, 83)").attr("disabled", true);
+	                	} 
+	                	
+	                	//퇴근시간 등록이 되어 있을 시 버튼 비활성화
+	                	if($("#out-time").html().trim().length != 0){
+	                		$("#out-btn").css("background-color", "rgb(93, 104, 83)").attr("disabled", true);
+	                	}
+	                })
+                </script>
 				<script>
 					let h = "";
 					let m = "";
@@ -532,38 +543,132 @@
 					let strTime = "";
 					let endTime = "";
 		
-					function inTime(){/*출근하기 버튼 클릭시*/
-		
-						strTime = new Date(); /*경과시간계산용*/
-		
-						let inTime = h + ":" + m + ":" + s;
-						$("#in-time").text(inTime);
-						$("#in-btn").css("color", "gray").css("background-color", "rgb(93, 104, 83)").attr("disabled", true);
-					}
-					function outTime(){/*퇴근하기 버튼 클릭시*/
-		
-						endTime = new Date();/*경과시간계산용*/
-		
-						let outTime = h + ":" + m + ":" + s;
-						$("#out-time").text(outTime);
-						$("#out-btn").css("color", "gray").css("background-color","rgb(85, 85, 85)").attr("disabled", true);
-		
-						/*경과시간 계산*/
-						let diff = (endTime - strTime);
-						var hh = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-						var mm = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-						var ss = Math.ceil((diff % (1000 * 60)) / 1000);
-		
-						var diffResult = hh + "h " + mm + "m " + ss + "s ";
-		
-						$("#sum-time").text(diffResult);
-		
-		
-					}
-					$(function(){
-						
-						
-					})
+					//출근하기 버튼 클릭
+                    function inTime(){
+                    	const a = new Date(); 
+
+                    	let h = a.getHours();
+                    	let m = a.getMinutes(); 
+                    	let s = a.getSeconds(); 
+                    	
+                    	h = h < 10 ? "0" + h : h;
+						m = m < 10 ? "0" + m : m;
+						s = s < 10 ? "0" + s : s;
+                    	
+                    	let inTime = h+":"+m+":"+s;
+                    	
+                    	$("#in-time").text(inTime);
+    	                $("#in-btn").css("color", "gray").css("background-color", "rgb(93, 104, 83)").attr("disabled", true);
+    	                
+    	                var year = a.getFullYear();
+    	                var month = a.getMonth()+1;  
+                        var date = a.getDate();
+                        
+    	                month = month < 10 ? "0" + month : month;
+    	                date = date < 10 ? "0" + date : date;
+                        
+                        var today = year + "/" + month + "/" + date;
+                        
+                        
+    	                inTimeInsertAjax(today);
+    	                
+    	                
+    	            }
+                    
+                    function inTimeInsertAjax(today){
+                    	
+                    	$.ajax({
+    	                	url:"inTime.co",
+    	                	data:{
+    	                		startTime:$("#in-time").html().trim(),
+    	                		empNo:${loginUser.empNo},
+    	                		enrollDate:today
+    	                		},
+    	                	success:function(result){
+    	                		if(result=="success"){
+    	                			console.log(result);
+    	                			swal({
+    	                	            title:   '출근 확인', 
+    	                	            text: "출근시간이 기록되었습니다", 
+    	                	            icon: "success",
+    	                	            button: "확인"
+    	                	         });
+    	                		}
+    	                	},error:function(){
+    	                		console.log("출근시간등록 ajax 통신실패");
+    	                		swal({
+	                	            title:   '출근 확인', 
+	                	            text: "출근시간 기록에 실패했습니다", 
+	                	            icon: "error",
+	                	            button: "확인"
+	                	         });
+    	                	}
+    	                })
+                    }
+                    //퇴근하기 버튼 클릭
+    	            function outTime(){
+    	
+    	            	const a = new Date(); 
+
+                    	let h = a.getHours();
+                    	let m = a.getMinutes(); 
+                    	let s = a.getSeconds(); 
+                    	
+                    	h = h < 10 ? "0" + h : h;
+						m = m < 10 ? "0" + m : m;
+						s = s < 10 ? "0" + s : s;
+                    	
+                    	let outTime = h+":"+m+":"+s;
+    	               
+    	                $("#out-time").text(outTime);
+    	                $("#out-btn").css("color", "gray").css("background-color","rgb(85, 85, 85)").attr("disabled", true);
+    	                
+    	                var year = a.getFullYear();
+    	                var month = a.getMonth()+1;  
+                        var date = a.getDate();
+                        
+    	                month = month < 10 ? "0" + month : month;
+    	                date = date < 10 ? "0" + date : date;
+                        
+                        var today = year + "/" + month + "/" + date;
+                        
+                        
+    	                outTimeInsertAjax(today);
+    	                workTimeInsertAjax(today);
+    	
+    	                
+    	            }
+                    
+					function outTimeInsertAjax(today){
+                    	
+                    	$.ajax({
+    	                	url:"outTime.co",
+    	                	data:{
+    	                		endTime:$("#out-time").html().trim(),
+    	                		empNo:${loginUser.empNo},
+    	                		enrollDate:today
+    	                		},
+    	                	success:function(result){
+    	                		if(result=="success"){
+    	                			console.log(result);
+    	                			swal({
+    	                	            title:   '퇴근 확인', 
+    	                	            text: "퇴근시간이 기록되었습니다", 
+    	                	            icon: "success",
+    	                	            button: "확인"
+    	                	         });
+    	                		}
+    	                	},error:function(){
+    	                		console.log("퇴근시간등록 ajax 통신실패");
+    	                		swal({
+	                	            title:   '퇴근 확인', 
+	                	            text: "퇴근시간이 기록에 실패했습니다", 
+	                	            icon: "error",
+	                	            button: "확인"
+	                	         });
+    	                	}
+    	                })
+                    }
 				</script>
 			</div>
 			<div class="schedule">

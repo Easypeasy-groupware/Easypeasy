@@ -146,7 +146,7 @@
         <br>
         
         <div class="menu-type menu-list">
-        	<a href="#" class="menu-a"><img src="resources/common_images/group-setting.png" style="width:15px;"> <b> 그룹 설정 </b></a>
+        	<a href="groupSetting.add" class="menu-a"><img src="resources/common_images/group-setting.png" style="width:15px;"> <b> 그룹 설정 </b></a>
         </div>
         
         

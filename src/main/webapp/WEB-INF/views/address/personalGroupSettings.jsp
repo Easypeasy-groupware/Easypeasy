@@ -19,7 +19,7 @@
 		display:inline-block;
 		height:70px; 
 		width:300px; 
-		border:2px dashed gray; 
+		border:2px dashed darkgreen; 
 		border-radius:5px; 
 		margin:0 0 15px 30px; 
 		padding-left:15px;
@@ -62,8 +62,8 @@
     }
     #plus:hover{cursor:pointer;}
     
-    #setting-outer{margin-left:100px;}
     #address-group{margin:10px 0 0 30px;}
+    #setting-outer{margin-left:100px;}
 </style>
 </head>
 <body>
@@ -75,7 +75,7 @@
 		
 		<div class="address-content-outer">
 
-			<p id="address-group">관리자 공유주소록 그룹 관리</p>
+			<p id="address-group">${loginUser.empName }님 공유주소록 그룹 관리</p>
 
 			<br>
 			<br>
@@ -86,7 +86,7 @@
 				<div id="more-group">그룹추가 <span id="plus">➕</span></div>
 			</span>
 			
-			<c:forEach var="g" items="${gList}">
+			<c:forEach var="g" items="${pList}">
 				<span class="groupNames">
 					<span class="each-group">
 						${ g.groupName }
@@ -180,7 +180,7 @@
 					let name = $(this).siblings("input").val();
 					
 						$.ajax({
-							url:"insertShGroup.add",
+							url:"insertPsGroup.add",
 							data:{
 								groupName : name,
 								empNo : '${loginUser.empNo}'
@@ -203,7 +203,5 @@
 
 		</div>
 	</div>
-
-
 </body>
 </html>
