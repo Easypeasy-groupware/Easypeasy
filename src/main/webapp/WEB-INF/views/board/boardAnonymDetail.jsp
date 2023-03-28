@@ -100,17 +100,19 @@
 		      
 		    </div>
 		
-		    <div class="replyContent" style="width:1000px" >
-		        <table id="replyArea" class="table" align="center" border="1px, solid">
+		    <div class="replyContent" style="width:1000px;" >
+		        <table id="replyArea" class="table" style="align:center; boder:1px solid; width:900px;">
 		            <thead>
 		                <tr>
-		                    <td colspan="4">댓글 (<span id="rcount">3</span>) </td> 
+		                    <td colspan="4">댓글 (<span id="rcount"></span>) </td> 
 		                </tr>
 			            <tr>
 			                <th colspan="3">
-			                     <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%"></textarea>
-			                 </th>
-			                  <th style="vertical-align: middle"><button class="btn btn-secondary"  onclick="addReply();">등록하기</button></th>
+			                  <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:770px;"></textarea>
+			                </th>
+			                <th style="vertical-align: middle; width:100px;">
+			                  	<button class="btn btn-secondary"  onclick="addReply();">등록하기</button>
+			                </th>
 			            </tr>
 		            </thead>
 		            <tbody>
@@ -141,18 +143,21 @@
 
         	
         	function deleteReply(replyNo) { // 댓글 삭제용 ajax
-			    $.ajax({
-			        url: "rdelete.bo",
-			        data: { replyNo: replyNo },
-			        success: function(result) {
-			            if (result == "success") {
-			                selectReplyList();
-			            }
-			        },
-			        error: function() {
-			            console.log("댓글 삭제용 ajax 통신 실패");
-			        }
-			    });
+        		
+       			$.ajax({
+   			        url: "rdelete.bo",
+   			        data: { replyNo: replyNo },
+   			        success: function(result) {
+   			            if (result == "success") {
+   			                selectReplyList();
+   			            }
+   			        },
+   			        error: function() {
+   			            console.log("댓글 삭제용 ajax 통신 실패");
+   			        }
+   			    });
+        	
+			    
 			}
         	
         	function addReply(){ // 댓글 작성용 ajax
@@ -192,12 +197,18 @@
         				let value = "";
         				for(let i=0; i<list.length; i++){
         					value += "<tr>"
-        							+	"<td>" + "익명" + "</td>"
-        							+	"<td style='width: 80%; text-overflow:ellipsis; overflow:hidden; white-space: nowrap;'>" + list[i].replyContent + "</td>"
-        							+	"<td>" + list[i].createDate + "</td>"
-        							+  "<td>" + "<a onclick='deleteReply(" + list[i].replyNo + ")'>" + "삭제" + "</a>" 
+        							+  "<td style='display:none'>" + list[i].replyWriter +"</td>"
+        							+	"<td style='width:80px;'>" + "익명" + "</td>"
+        							+	"<td style='width:800px;'>" + list[i].replyContent + "</td>"
+        							+	"<td style='width:150px;'>" + list[i].createDate + "</td>";
+        							if(list[i].replyWriter == ${loginUser.empNo}){
+        								value +=  "<td>" + "<a onclick='deleteReply(" + list[i].replyNo + ")'>" + "삭제" + "</a>";
+        							}else{
+        								value +=  "<td>";
+        							}
+        							
         						/* 	+ "|"
-        							+  "<a onclick='updateReply(" + list[i].replyNo + ",\"" + list[i].replyContent + "\")'>" +"수정"+"</a>"     */
+        							+  "<a onclick='updateReply(" + list[i].replyNo + ",\"" + list[i].replyContent + "\")'>" +"수정"+"</a>"    */
         							+ "</td>"
         							+"</tr>";
         				}
@@ -210,6 +221,8 @@
         			}
         		})
         	}
+        	
+        	
 		    </script>
         </div>
 	</div>
