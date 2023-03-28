@@ -21,6 +21,7 @@
 	th, td {text-align: center; padding: 8px; border-bottom: 1px solid #ccc;}
 	th {background-color: #ddd;}
 	.views {text-align: center;}
+	#replyArea td {overflow: hidden; text-overflow: ellipsis; white-space: nowrap; resize:none;}
 </style>
 </head>
 <body>
@@ -192,7 +193,7 @@
         				for(let i=0; i<list.length; i++){
         					value += "<tr>"
         							+	"<td>" + "익명" + "</td>"
-        							+	"<td>" + list[i].replyContent + "</td>"
+        							+	"<td style='width: 80%; text-overflow:ellipsis; overflow:hidden; white-space: nowrap;'>" + list[i].replyContent + "</td>"
         							+	"<td>" + list[i].createDate + "</td>"
         							+  "<td>" + "<a onclick='deleteReply(" + list[i].replyNo + ")'>" + "삭제" + "</a>" 
         						/* 	+ "|"
