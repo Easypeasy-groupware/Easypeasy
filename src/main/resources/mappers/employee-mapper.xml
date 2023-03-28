@@ -107,5 +107,12 @@
 			     , dept_name
 			  from department
 	</select>
+	
+	<update id="updateDefaultProfile">
+		update
+		       employee
+		  set emp_profile = #{empProfile}
+		where emp_no = #{empNo}
+	</update>
 
 </mapper>
