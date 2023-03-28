@@ -91,6 +91,10 @@ public class ChatDao {
 		return result;
 	}
 
+	public ArrayList<Employee> selectChatEmpList(SqlSessionTemplate sqlSession, Employee e) {
+		return (ArrayList)sqlSession.selectList("chatMapper.selectChatEmpList", e);
+	}
+
 	
 	
 	

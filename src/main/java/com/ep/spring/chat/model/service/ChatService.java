@@ -41,6 +41,9 @@ public interface ChatService {
 	// 새로만든 방의 멤버수 추가하기
 	int insertNewRoomCount(int[] n2);
 
+	// 채팅가능한 사원 검색
+	ArrayList<Employee> selectChatEmpList(Employee e);
+
 	
 	
 	

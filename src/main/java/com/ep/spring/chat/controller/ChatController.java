@@ -9,12 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ep.spring.chat.model.service.ChatService;
 import com.ep.spring.chat.model.vo.ChatMember;
 import com.ep.spring.chat.model.vo.ChatRecord;
 import com.ep.spring.chat.model.vo.ChatRoom;
 import com.ep.spring.login.model.vo.Employee;
+import com.google.gson.Gson;
 
 @Controller
 public class ChatController {
@@ -30,7 +32,7 @@ public class ChatController {
 			
 			m.addAttribute("list", list);
 			return "chat/chatEmpList";
-	}
+	 }
 	 
 	@RequestMapping("chatList.ch")
 	public String viewChatList(Model model) { // 채팅창목록리스트페이지로이동
@@ -121,6 +123,14 @@ public class ChatController {
 		return "chat/chatRoomDetail";
 	}
 
+	@ResponseBody
+	@RequestMapping(value="searchEmp.ch", produces="application/json; charset=utf-8")
+	public String ajaxSelectEmployeeList(Employee e) {
+		
+		ArrayList<Employee> list = cService.selectChatEmpList(e);
+		
+		return new Gson().toJson(list);
+	}
 	
 	
 	

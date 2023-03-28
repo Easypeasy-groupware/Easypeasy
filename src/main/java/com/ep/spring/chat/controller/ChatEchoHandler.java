@@ -32,7 +32,9 @@ public class ChatEchoHandler extends TextWebSocketHandler {
 	    // session, 방 번호가 들어간다.
 	    private Map<WebSocketSession, String> sessionList = new ConcurrentHashMap<WebSocketSession, String>();
     
-		
+	
+	    private Map<String, ArrayList<WebSocketSession>> EmpList = new ConcurrentHashMap<String, ArrayList<WebSocketSession>>();
+	    
 		private static int i;
 		
 		
@@ -107,7 +109,7 @@ public class ChatEchoHandler extends TextWebSocketHandler {
 	            // 확인용
 	            System.out.println("채팅방 생성");
 	            
-	            int a = cService.insertMessage(chatMessage);
+	           // int a = cService.insertMessage(chatMessage);
 	        }
 	        
 	        // 채팅방이 존재 할 때
@@ -119,7 +121,7 @@ public class ChatEchoHandler extends TextWebSocketHandler {
 	            sessionList.put(session, chatRoom.getRoomNo());
 	            // 확인용
 	            System.out.println("생성된 채팅방으로 입장");
-	            int a = cService.insertMessage(chatMessage);
+	            //int a = cService.insertMessage(chatMessage);
 	        }
 	        
 	        // 채팅 메세지 입력 시
@@ -174,7 +176,7 @@ public class ChatEchoHandler extends TextWebSocketHandler {
 	                System.out.println("메세지 전송 실패!!! & DB 저장 실패!!");
 	           }
 	        }
-	       
+	        
 	        
 	        
 	        

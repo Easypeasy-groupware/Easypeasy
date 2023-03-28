@@ -89,6 +89,11 @@ public class ChatServiceImpl implements ChatService{
 		return cDao.insertNewRoomCount(sqlSession, n2);
 	}
 
+	@Override
+	public ArrayList<Employee> selectChatEmpList(Employee e) {
+		return cDao.selectChatEmpList(sqlSession, e);
+	}
+
 
 
 
