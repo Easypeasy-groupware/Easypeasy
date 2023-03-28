@@ -149,9 +149,14 @@
 				$(function(){
 					topBoardList();
 					topFreeList();
-            		/* $(document).on("click", "#notice-tb>tbody>tr", function(){
+            	 	
+					$(document).on("click", "#notice-tb>tbody>tr", function(){
             			location.href = 'detailForm.bo?no=' + $(this).children().eq(0).text(); // 자손들 중 첫번째 값
-            		}) */
+            		}) 
+            		
+            		$(document).on("click", "#free-tb>tbody>tr", function(){
+            			location.href = 'detailAForm.bo?no=' + $(this).children().eq(0).text(); // 자손들 중 첫번째 값
+            		}) 
 				})
 				
             	function topBoardList(){
@@ -172,6 +177,7 @@
 	            				for(let i=0; i<list.length; i++){
 	            					let b = list[i]; 
 	            					value += "<tr>"
+	            							+   "<td style='display:none'>" + list[i].boardNo +"</td>"
 	            							+	"<td style='width: 98%; text-overflow:ellipsis; overflow:hidden; white-space: nowrap;'>" + list[i].boardTitle + "</td>"
 	            							+	"<td>" + list[i].empName + "</td>"
 	            							+	"<td>" + list[i].createDate + "</td>"
@@ -207,6 +213,7 @@
 		            				for(let j=0; j<flist.length; j++){
 		            					let b = flist[j]; 
 		            					value += "<tr>"
+		            							+   "<td style='display:none'>" + b.boardNo +"</td>"
 		            							+	"<td style='width: 98%; text-overflow:ellipsis; overflow:hidden; white-space: nowrap;'>" + b.boardTitle + "</td>"
 		            							+	"<td>" + "익명" + "</td>"
 		            							+	"<td>" + b.createDate + "</td>"
