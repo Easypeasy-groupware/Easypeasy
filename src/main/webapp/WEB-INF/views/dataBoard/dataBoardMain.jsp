@@ -54,26 +54,32 @@
     .files{
         display:inline-block;
         width:200px;
-        height:200px;
+        height:210px;
         margin:20px 23px;
         padding:20px 20px;
         border-radius:20px;
         border:1px solid rgb(188, 189, 190);
+        text-align:center;
     }
+    .files:hover{cursor:pointer; font-weight:500;}
     .files img{
         display:inline-block;
         width:100px;
         text-align:center;
-        margin-left:30px;
+        margin-bottom:5px;
+        /* margin-left:30px; */
     }
     .bTitle{
         display:inline-block;
-        margin-left:15px;
-        width:120px;
-        white-space: nowrap;
+        /* margin-left:15px; */
+        width:150px;
+        font-size:14px;
+        text-overflow:ellipsis; overflow:hidden; white-space: nowrap;
+        align:center;
+        text-align:center;
     }
     .files span{font-size:11px;}
-    .date-head, .count-head{margin-left:30px;}
+    .date-head, .count-head{/* margin-left:30px; */}
         
     /* 페이징바 */
     #paging {
@@ -145,6 +151,33 @@
 			        		</c:when>
 			        		<c:when test="${ db.originName eq 'png' }">
 			        			<img src="resources/fileType-images/png.png">
+			        		</c:when>
+			        		<c:when test="${ db.originName eq 'html' }">
+			        			<img src="resources/fileType-images/html.png">
+			        		</c:when>
+			        		<c:when test="${ db.originName eq 'jpg' }">
+			        			<img src="resources/fileType-images/jpg.png">
+			        		</c:when>
+			        		<c:when test="${ db.originName eq 'pdf' }">
+			        			<img src="resources/fileType-images/pdf.png">
+			        		</c:when>
+			        		<c:when test="${ db.originName eq 'ppt' }">
+			        			<img src="resources/fileType-images/ppt.png">
+			        		</c:when>
+			        		<c:when test="${ db.originName eq 'pptx' }">
+			        			<img src="resources/fileType-images/ppt.png">
+			        		</c:when>
+			        		<c:when test="${ db.originName eq 'txt' }">
+			        			<img src="resources/fileType-images/txt.png">
+			        		</c:when>
+			        		<c:when test="${ db.originName eq 'xlsx' }">
+			        			<img src="resources/fileType-images/xls.png">
+			        		</c:when>
+			        		<c:when test="${ db.originName eq 'xls' }">
+			        			<img src="resources/fileType-images/xls.png">
+			        		</c:when>
+			        		<c:when test="${ db.originName eq 'zip' }">
+			        			<img src="resources/fileType-images/zip.png">
 			        		</c:when>
 			        		<c:otherwise>
 			        			<img src="resources/fileType-images/file.png">

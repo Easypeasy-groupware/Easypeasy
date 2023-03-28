@@ -29,7 +29,7 @@ public class DataBoardController {
 		
 		int listCount = daService.selectDbListCount();
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 16);
 		
 		ArrayList<DataBoard> list = daService.selectDbList(pi);
 		
