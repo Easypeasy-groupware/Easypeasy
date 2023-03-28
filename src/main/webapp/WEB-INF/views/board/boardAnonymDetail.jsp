@@ -18,10 +18,11 @@
 	h4 {padding-left: 25px; padding-top: 15px; float: left		!important;}
 	table {border-collapse: collapse; width: 100%;}
 	tr {text-align: center;}
-	th, td {text-align: center; padding: 8px; border-bottom: 1px solid #ccc;}
+	th, td {text-align: center; padding: 8px; border-bottom: 1px solid #ccc; }
 	th {background-color: #ddd;}
 	.views {text-align: center;}
-	#replyArea td {overflow: hidden; text-overflow: ellipsis; white-space: nowrap; resize:none;}
+	#replyArea td { resize:none; vertical-align: middle;}
+	.reply_content{min-height: 25px; max-height: 200px;}
 </style>
 </head>
 <body>
@@ -101,17 +102,17 @@
 		    </div>
 		
 		    <div class="replyContent" style="width:1000px;" >
-		        <table id="replyArea" class="table" style="align:center; boder:1px solid; width:900px;">
+		        <table id="replyArea" class="table" style="align:center; boder:1px solid; width:990px;">
 		            <thead>
 		                <tr>
 		                    <td colspan="5">댓글 (<span id="rcount"></span>) </td> 
 		                </tr>
 			            <tr>
 			                <th colspan="3">
-			                  <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:770px;"></textarea>
+			                  <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:800px;"></textarea>
 			                </th>
 			                <th style="vertical-align: middle; width:100px;">
-			                  	<button class="btn btn-secondary"  onclick="addReply();">등록하기</button>
+			                  	<button class="btn btn-secondary"style="width:100px; height:60px;" onclick="addReply();">등록하기</button>
 			                </th>
 			            </tr>
 		            </thead>
@@ -198,9 +199,9 @@
         				for(let i=0; i<list.length; i++){
         					value += "<tr>"
         							+  "<td style='display:none'>" + list[i].replyWriter +"</td>"
-        							+	"<td style='width:80px;'>" + "익명" + "</td>"
-        							+	"<td style='width:800px;'>" + list[i].replyContent + "</td>"
-        							+	"<td style='width:150px;'>" + list[i].createDate + "</td>";
+        							+	"<td style='width:110px;'>" + "익명" + "</td>"
+        							+	"<td style='width:800px;'><div class='reply_content'>" + list[i].replyContent + "</div></td>"
+        							+	"<td style='width:200px;'>" + list[i].createDate + "</td>";
         							if(list[i].replyWriter == ${loginUser.empNo}){
         								value +=  "<td>" + "<a onclick='deleteReply(" + list[i].replyNo + ")'>" + "삭제" + "</a>";
         							}else{
