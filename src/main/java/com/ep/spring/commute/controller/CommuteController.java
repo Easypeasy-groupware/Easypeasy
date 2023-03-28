@@ -43,7 +43,7 @@ public class CommuteController {
 			//System.out.println(empNo);
 			
 			Commute c = cService.commuteMainPage(empNo);
-			System.out.println(c);
+			//System.out.println(c);
 			
 			// 지각, 조기퇴근, 결근, 퇴근 미체크 횟수 카운트
 			int tr = 0;
@@ -178,17 +178,16 @@ public class CommuteController {
 		    		}    
 
 		    		// Get msec from each, and subtract.
-		    		long diff = d2.getTime() - d1.getTime();
-		    		long diffSeconds = diff / 1000;         
-		    		long diffMinutes = diff / (60 * 1000);         
-		    		long diffHours = diff / (60 * 60 * 1000);                      
-		    		//System.out.println("Time in seconds: " + diffSeconds + " seconds.");         
+		    		long diff = d2.getTime() - d1.getTime();       
+		    		long diffMinutes = diff / (60 * 1000) % 60;         
+		    		long diffHours = diff / (60 * 60 * 1000);                             
 		    		//System.out.println("Time in minutes: " + diffMinutes + " minutes.");         
 		    		//System.out.println("Time in hours: " + diffHours + " hours.");
 		    		
 		    		String H = diffHours < 10 ? "0" + diffHours : String.valueOf(diffHours);
 		    		String M = diffMinutes < 10 ? "0" + diffMinutes : String.valueOf(diffMinutes);
-					
+
+		    		
 		    		String workTime = H + "시간" + M + "분" ;
 		    		c.setWorkTime(workTime);
 		    		
@@ -299,11 +298,10 @@ public class CommuteController {
 		
 		//근무시간 수정(인사계정)
 		@RequestMapping("updateTime.HR")
-		public String updateTimeHR(Commute c, HttpSession session) {
-			//System.out.println(c);
+		public String updateTimeHR(Commute c, HttpSession session){
+			System.out.println(c);
 			int result = cService.updateTimeHR(c);
 			int empNo = c.getEmpNo();
-			
 			
 			if(result>0) {
 				AlertMsg msg = new AlertMsg("근무시간 수정", "근무시간 수정이 성공적으로 완료되었습니다.");

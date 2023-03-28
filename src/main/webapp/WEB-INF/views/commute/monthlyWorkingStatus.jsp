@@ -78,6 +78,7 @@
 
             <div class="title"><b>근무현황 및 계획</b><hr></div><br>
             
+            <!-- 
             <table class="table1">
                 <tr>
                     <th>이름</th>
@@ -95,6 +96,7 @@
                     <td>0</td>
                 </tr>
             </table><br>
+             -->
 
             <div id='calendar'></div>
 
@@ -125,7 +127,7 @@
                        	{ 
                        	  start: '${ c.enrollDate }', 
                        	  end: '${ c.enrollDate }', 
-                       	  title: '근무시간: ${ c.workTime }',
+                       	  title: '근무: ${ c.workTime }',
                        	  color: 'rgb(166, 184, 145)',
                        	  sortIdx: 2,
                        	  
