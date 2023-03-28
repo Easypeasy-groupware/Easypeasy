@@ -44,6 +44,7 @@
 		                
 		                <form action="" method="post" id="postForm"> 
 				         	<input type="hidden" name="no" value="${b.boardNo}">
+				         	<input type="hidden" name="filePath" value="${ b.changeName }">
 				        </form>
 			        
 			            <script>
