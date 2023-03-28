@@ -270,6 +270,7 @@
 		        			+'</div>'
 		        		+'</div>';
 		        play();
+
             }
             
         	}else if(data.chatType == "title"){

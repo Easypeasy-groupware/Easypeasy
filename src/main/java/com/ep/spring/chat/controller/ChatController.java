@@ -1,7 +1,10 @@
 package com.ep.spring.chat.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +20,19 @@ import com.ep.spring.chat.model.vo.ChatRecord;
 import com.ep.spring.chat.model.vo.ChatRoom;
 import com.ep.spring.login.model.vo.Employee;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 
 @Controller
 public class ChatController {
 	
 	
-	 @Autowired private ChatService cService;
+	 @Autowired 
+	 private ChatService cService;
 	 
 	
 	 @RequestMapping("empList.ch")
-		public String viewChatEmpList(Model m) { // 사원목록리스트페이지로 이동
+	 public String viewChatEmpList(Model m) { // 사원목록리스트페이지로 이동
 			
 			ArrayList<Employee> list = cService.viewChatEmpList();
 			
@@ -132,8 +138,20 @@ public class ChatController {
 		return new Gson().toJson(list);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="newAlert.ch")
+	public String ajaxChatAlarm(HttpSession session, int count) {
+		session.setAttribute("newMessage", count);
+		return "success";
+	}
 	
 	
+	@ResponseBody
+	@RequestMapping(value="deleteAlarm.ch")
+	public String ajaxDeleteAlarm(HttpSession session, String erase) {
+		session.removeAttribute("newMessage");
+		return "success";
+	}
 	
 	
 

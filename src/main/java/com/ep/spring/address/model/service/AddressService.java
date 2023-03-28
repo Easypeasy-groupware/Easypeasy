@@ -135,6 +135,9 @@ public interface AddressService {
 	
 	// 31. 공용주소록 그룹 이름 수정(ajax)
 	int updateSharedGroupName(AddGroup ag);
+	
+	// 32. 공용주소록 그룹 삭제
+	int deleteSharedGroup(int no);
 
 	
 

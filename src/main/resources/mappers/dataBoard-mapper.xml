@@ -29,6 +29,7 @@
 			  , db_title
 			  , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 			  , count
+			  , origin_name
 		   from data_board
 		  where db_status = 'Y'
 		  order
