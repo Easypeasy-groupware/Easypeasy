@@ -30,6 +30,7 @@
     /*게시판*/
     .board{height:280px;}
     .board-title:hover{cursor:pointer; font-weight:600;}
+    #doc-etc{width:48%;}
     #board-notice{border-bottom:4px solid rgb(166, 184, 145); font-weight:600;}
 
     /*결재문서*/
@@ -85,6 +86,7 @@
 				<br><br>
 				<div class="subtitle board-title" id="board-notice">전체공지사항</div>
 				<div class="subtitle board-title" id="board-all">자유게시판</div>
+				<div class="subtitle" id="doc-etc"></div>
 				<br clear="both"><br>
 		
 				<table class="board-table" id="notice-tb">
@@ -128,70 +130,95 @@
 				$(function(){
 					$("#board-notice").click(function(){
 						$(this).css("border-bottom", "4px solid rgb(166, 184, 145)").css("font-weight", 600);
-						$("#board-dept").css("border-bottom", "2px solid lightgray").css("font-weight", 400);
+						$("#board-all").css("border-bottom", "2px solid lightgray").css("font-weight", 400);
 						$("#notice-tb").show();
-						$("#dept-tb").hide();
+						$("#free-tb").hide();
 					})
-					$("#board-dept").click(function(){
+					$("#board-all").click(function(){
 						$(this).css("border-bottom", "4px solid rgb(166, 184, 145)").css("font-weight", 600);
 						$("#board-notice").css("border-bottom", "2px solid lightgray").css("font-weight", 400);
-						$("#dept-tb").show();
+						$("#free-tb").show();
 						$("#notice-tb").hide();
 					})
 				})
 				
 				$(function(){
 					topBoardList();
+					topFreeList();
+            		/* $(document).on("click", "#notice-tb>tbody>tr", function(){
+            			location.href = 'detailForm.bo?no=' + $(this).children().eq(0).text(); // 자손들 중 첫번째 값
+            		}) */
 				})
 				
             	function topBoardList(){
             		$.ajax({
             			url:"topList.bo",
             			success:function(list){
-            				console.log(list[0].BoardTitle);
+            				console.log(list);
             				
             				let value = "";
-            				for(let i=0; i<list.length; i++){
-            					let b = list[i]; 
-            					value += "<tr>"
-            							+	"<td>" + list[i].BoardTitle + "</td>"
-            							+	"<td>" + list[i].BoardWriter + "</td>"
-            							+	"<td>" + list[i].CreateDate + "</td>"
-            							+ "</tr>"; 
-            				}
+            				if(list.length == 0){
+								value1+= "<tr>" 
+										+ "<td colspan='3'>"
+										+ "전체 공지사항이 없습니다."
+										+ "</td>"
+										+"</tr>";
+							}else{
+								
+	            				for(let i=0; i<list.length; i++){
+	            					let b = list[i]; 
+	            					value += "<tr>"
+	            							+	"<td>" + list[i].boardTitle + "</td>"
+	            							+	"<td>" + list[i].boardWriter + "</td>"
+	            							+	"<td>" + list[i].createDate + "</td>"
+	            							+ "</tr>"; 
+	            				}
+	            				
+							}
             				
             				$("#notice-tb tbody").html(value);
-            							
+            				
             			},error:function(){
             				console.log("top5 공지게시글 조회용 ajax 통신 실패");
             			}
             		})
             	}
-			/* 
+				
+			
 				function topFreeList(){
-            		$.ajax({
-            			url:"topFree.bo",
-            			success:function(result){
-            				console.log(result);
-            				
-            				let value = "";
-            				for(let i=0; j<list.length; j++){
-            					let b = list[j]; 
-            					value += "<tr>"
-            							+	"<td>" + list[j].BoardTitle + "</td>"
-            							+	"<td>" + "익명" + "</td>"
-            							+	"<td>" + list[j].CreateDate + "</td>"
-            							+   "</tr>"; 
-            				}
-            				
-            				$("#free-tb tbody").html(value);
-            							
-            			},error:function(){
-            				console.log("top5 자유게시글 조회용 ajax 통신 실패");
-            			}
-            		})
-            	}
-				  */
+	            		$.ajax({
+	            			url:"topFree.bo",
+	            			success:function(flist){
+	            				console.log(flist);
+	            				
+	            				let value = "";
+	            				if(flist.length == 0){
+									value1+= "<tr>" 
+											+ "<td colspan='3'>"
+											+ "자유게시판에 게시글이 없습니다."
+											+ "</td>"
+											+"</tr>";
+								}else{
+									
+		            				for(let j=0; j<flist.length; j++){
+		            					let b = flist[j]; 
+		            					value += "<tr>"
+		            							+	"<td>" + b.boardTitle + "</td>"
+		            							+	"<td>" + "익명" + "</td>"
+		            							+	"<td>" + b.createDate + "</td>"
+		            							+   "</tr>"; 
+		            				}
+		            				
+								}
+	            				
+	            				$("#free-tb tbody").html(value);
+	            				
+	            			},error:function(){
+	            				console.log("top5 자유게시글 조회용 ajax 통신 실패");
+	            			}
+	            		})
+	            	}
+				  
 			</script>	
 			
 			<div class="document">

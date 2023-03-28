@@ -128,6 +128,10 @@ public class CommuteDao {
 	public int selectSVac(SqlSessionTemplate sqlSession, int empNo) {
 		return sqlSession.selectOne("commuteMapper.selectSVac", empNo);
 	}
+	
+	public int selectUseVac(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("commuteMapper.selectUseVac", empNo);
+	}
 
 
 }

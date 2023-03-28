@@ -38,6 +38,9 @@ public class Approval {
 	private String st;
 	private int attachCount;
 	private int division; // 재기안할것인지, 수정할것인지 구분하는
+	private String keyword;
+	private String condition;
+	private String listType; // 검색결과를 돌려줄 리스트목록들에 대한 구분
 	
 	private ArrayList<ApprovalLine> alList;
 	private ArrayList<ApprovalLine> refList;

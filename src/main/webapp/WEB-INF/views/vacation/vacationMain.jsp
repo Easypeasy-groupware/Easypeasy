@@ -157,8 +157,8 @@
                 	</c:choose>
                     <td>${GVac}</td>
                     <td>${SVac}</td>
-                    <td>3</td>
-                    <td>15</td>
+                    <td>${useVac}</td>
+                    <td>${vr.vacRemaining}</td>
                 </tr>
             </table>
 

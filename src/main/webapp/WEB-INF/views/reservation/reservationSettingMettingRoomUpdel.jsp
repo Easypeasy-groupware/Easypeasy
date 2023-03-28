@@ -65,8 +65,8 @@
                     <br>
                     <div align="center">
                         <button class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">확인</button>&nbsp;&nbsp;
-                        <input type="reset" class="btn btn-sm btn-light" style="background: white;" value="취소">&nbsp;&nbsp;
-                        <a href="mettingRoomDel.re?mno=${ mno }" class="btn btn-sm" style="border: 1px solid lightgray; background: white;">삭제</a>
+                        <a href="settingMettingRoomView.re" class="btn btn-sm btn-light" style="background: white;">취소</a>&nbsp;&nbsp;
+                        <a href="mettingRoomDel.re?mno=${ mno }" class="btn btn-sm" style="border: 1px solid lightgray; background: lightgray;">삭제</a>
                     </div>
                 </div>
             </form>

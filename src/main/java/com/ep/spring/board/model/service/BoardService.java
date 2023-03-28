@@ -22,6 +22,7 @@ public interface BoardService {
 	//int insertBoard(Board b, ArrayList<Attachment> atList);
 	//int insertABoard(Board b, ArrayList<Attachment> atList);
 	int insertBoard(Board b);
+	int insertABoard(Board b);
 	
 	// 3. 게시글 상세조회용 서비스
 	/*
@@ -35,21 +36,25 @@ public interface BoardService {
 	*/
 	int increaseCount(int boardNo);
 	Board selectBoard(int boardNo);
+	int increaseACount(int boardNo);
+	Board selectABoard(int boardNo);
 	
 	// 4. 게시글 삭제용 서비스
-	int deleteBoard(int boardNo);
+	 int deleteBoard(int boardNo);
+	 int deleteABoard(int boardNo);
 	
-	int deleteABoard(int boardNo);
-		
 	// 5. 게시글 수정용 서비스
+	/*
 	int updateBoard(Board b, ArrayList<Attachment> atList);
 	ArrayList<Attachment> selectAttList(Board b);
 	int deleteAttachment(Board b);
-	
 	int updateABoard(Board b, ArrayList<Attachment> atList);
 	ArrayList<Attachment> selectAnonAttList(Board b);
 	int deleteAnonAttachment(Board b);
-		
+	*/
+	 int updateBoard(Board b);
+	 int updateABoard(Board b);
+	 
 	// 6. 댓글 리스트 조회용 서비스 (ajax)
 	ArrayList<BoardReply> selectReplyList(int boardNo);
 		
@@ -75,5 +80,8 @@ public interface BoardService {
 	// 11. 메뉴바
 	ArrayList<BoardCate> selectDetailSettings(BoardCate bc);
 	
+	// 12. 검색
+	int selectSearchListCount(String keyword);
+	ArrayList<Board> selectSearchList(PageInfo pi, String keyword);
 	
 }

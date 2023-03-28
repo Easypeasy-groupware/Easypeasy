@@ -66,7 +66,14 @@
               	  <input type="hidden" name="boardWriter" value="${b.boardWriter}">
 
               <label for="file">파일첨부</label>
-                  <table>
+              	<input type="file" id="upfile" class="form-control-file border" name="reupfile"> 
+	              	 <c:if test="${ not empty b.originName }">
+		                    현재 업로드된 파일 : 
+							<a href="${ b.changeName }" download="${ b.originName }">${ b.originName }</a>
+		                    <input type="hidden" name="originName" value="${b.originName }">  
+		                    <input type="hidden" name="changeName" value="${b.changeName }">
+	                 </c:if>
+                 <%--  <table>
                   	<tr>
 	                  <td>
 		                  <button id="file_choose" type="button" class="btn btn-secondary btn-sm">파일 선택</button>
@@ -85,19 +92,19 @@
                                    </c:otherwise>
                              </c:choose>
 	                 </td>
-                  </table>
+                  </table> --%>
               <br>    
               
               <label for="content">내용</label>
-                  <textarea name="boardContent" id="boardContent" cols="30" rows="10" value="${b.boardContent}" required></textarea><br>
-              <label for="boardPin">공지등록</label>
+                  <textarea name="boardContent" id="boardContent" cols="30" rows="10"  required>${b.boardContent}</textarea><br>
+              <!-- <label for="boardPin">공지등록</label>
                   <input type="checkbox" value="N" name="boardPin" /><br>
-               
+                -->
                     <br><br>
               <div align="center">
                 <button type="button" class="btn btn-dark" onclick="javascript:history.go(-1);">이전으로</button>
                 <button type="submit" class="btn btn-success">수정하기</button>
-                <button type="button" class="btn btn-danger" onclick="location.href='deleteA.bo';">삭제하기</button>
+               <!--  <button type="button" class="btn btn-danger" onclick="location.href='deleteA.bo';">삭제하기</button> -->
               </div>
               </form>
         </div>

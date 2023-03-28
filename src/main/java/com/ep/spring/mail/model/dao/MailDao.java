@@ -256,6 +256,21 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectMailFavorList", empNo);
 	}
 
+	public ArrayList<Mail> selectTaggingMailList(MailTag t, PageInfo pi, SqlSessionTemplate sqlSession) {
+		if(pi != null) {
+			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+			int limit = pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectTaggingMailList", t, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.selectTaggingMailList", t);
+		}
+	}
+
+	public MailTag selectTag(MailTag t, SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("mailMapper.selectTag", t);
+	}
+
 	
 
 	

@@ -29,6 +29,8 @@ public interface MailService {
 	ArrayList<Mail> selectTempMailList(PageInfo mailPi, String email);
 	// - 보낸 메일 리스트 조회
 	ArrayList<Mail> selectSendMailList(PageInfo mailPi, String email);
+	// - 태그 한 메일 리스트 조회
+	ArrayList<Mail> selectTaggingMailList(MailTag t, PageInfo mailPi);
 	
 	/* 2. 태그 생성 */
 	int insertTag(MailTag t);
@@ -78,6 +80,8 @@ public interface MailService {
 
 	/* 9. 메일 태그 등록 */
 	int tagMail(Mail m, int[] recMailNoList);
+	// - 태그 조회
+	MailTag selectTag(MailTag t);
 	
 	/* 10. 중요 메일 등록 */
 	int enrollImporMail(Mail m);
@@ -89,6 +93,8 @@ public interface MailService {
 	int enrollFavorMailBox(MailFavorite mf);
 	// - 삭제
 	int deleteFavorMailBox(MailFavorite mf);
+
+	
 	
 	
 	

@@ -181,6 +181,13 @@ public class CommuteServiceImpl implements CommuteService{
 		
 		return cDao.selectSVac(sqlSession, empNo);
 	}
+
+	//사용한 휴가 갯수 조회
+	@Override
+	public int selectUseVac(int empNo) {
+
+		return cDao.selectUseVac(sqlSession, empNo);
+	}
 	
 	
 

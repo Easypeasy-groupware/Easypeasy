@@ -23,7 +23,7 @@
     .boxList{width: 170px;}
     .boxListOne>div{width: 140px; float: left; margin: 5px 0px 0px 15px; padding: 5px 0px 5px 0px; font-size: 14px;}
     .boxListOne>img{width: 15px; margin: 5px 0px 5px 0px; padding: 6px 0px 5px 0px;}
-    #tagList{min-height: 0px; max-height: 110px; overflow-y: auto; overflow-x: hidden;}
+    #tagList{min-height: 0px; max-height: 160px; overflow-y: auto; overflow-x: hidden;}
     #tagList>div{float: left;}
     .tagBoxList{width: 30px; float: left; float: left; line-height: 15px;}
     .tagBlock{display: inline-block; position: relative;}
@@ -34,7 +34,7 @@
     .tag_innerBlock1 span{position: absolute; width: 0; height: 0;}
     .tag_innerBlock1 span.tag_innerBlock2 span{border-bottom: 5px solid transparent; border-style: solid; border-top: 5px solid transparent; border-width: 5px 0 5px 5px;
                                                right: 2px; top: -5px;}
-    .tag{width: 200px; float: left; margin: 0px 0px 2px 10px;}
+    .tag{width: 200px; float: left; margin: 0px 0px 6px 10px;}
     .mail_tag{width: 30px; line-height: 32px; float: left;}
     .tagOne{float: left;}
     .tag>div{font-size: 14px;}
@@ -64,21 +64,6 @@
         </div>
         <br>
         <div>
-            <div class="mailbox_subject">즐겨찾기</div>
-            <img class="settings" src="resources/common_images/setting.png">
-            <br>
-            <div class="boxList favor">
-                <c:if test="${ not empty mailFavorList }">
-                    <c:forEach var="mf" items="${ mailFavorList }">
-                        <div class="boxListOne">
-                            <div class="mailbox">${ mf.mailBoxName }</div><img class="unFavorite Box" src="resources/common_images/favorite.png">
-                        </div>
-                    </c:forEach>
-                </c:if>
-            </div>
-        </div>
-        <br>
-        <div>
             <div class="mailbox_subject">태그</div>
             <br><br>
             <div id="tagList">
@@ -95,6 +80,7 @@
                                 </span>
                             </div>
                             <div class="tagOne">${ t.tagName }</div>
+                            <input type="hidden" class="tagNo" name="tagNo" value="${ t.tagNo }" >
                         </div>
                     </c:forEach>
                 </c:if>
@@ -144,7 +130,416 @@
             </form>
         </div>
 
-        <script>
+        <div>
+            <div class="mailbox_subject">메일함</div>
+            <br><br>
+            <div class="boxList normal">
+                <div class="boxListOne">
+                    <div id="recMailbox" class="mailbox">받은 메일함(전체)</div>
+                </div>
+                <div class="boxListOne">
+                    <div class="mailbox" id="today_box">오늘 온 메일함</div>
+                </div>
+                <div class="boxListOne">
+                    <div class="mailbox" id="tome_box">내게 쓴 메일함</div>
+                </div>
+                <div class="boxListOne">
+                    <div class="mailbox" id="attach_box">첨부파일 메일함</div>
+                </div>
+                <div class="boxListOne">
+                    <div class="mailbox" id="send_box">보낸 메일함</div>
+                </div>
+                <div class="boxListOne">
+                    <div class="mailbox" id="unread_box">안읽은 메일함</div>
+                </div>
+                <div class="boxListOne">
+                    <div class="mailbox" id="impor_box">중요 메일함</div>
+                </div>
+                <div class="boxListOne">
+                    <div class="mailbox" id="temp_box">작성중인 메일함</div>
+                </div>
+                <div class="trashmailbox">
+                    <div class="mailbox" id="spambox">스팸 메일함</div>
+                    <button id="spam_completeDel" class="btn btn-outline-secondary btn-sm">비우기</button>
+                </div>
+                <div class="trashmailbox">
+                    <div class="mailbox" id="trashcan">휴지통</div>
+                    <button id="trashcan_completeDel" class="btn btn-outline-secondary btn-sm">비우기</button>
+                </div>
+            </div>
+        </div>
+        <br><br>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){
+
+            // 전역 번수 선언부
+            let checkedBoxSum = 0
+            let index = 0;
+            let arr = [];
+
+            // 메일 상세조회
+            let mailSelectList = document.querySelectorAll('.mail_select_area');
+            mailSelectList.forEach(function(select){
+                select.addEventListener('click', function(){
+                    this.action = "select.ma";
+                    this.method = "POST";
+                    this.submit();
+                });
+            });
+
+            // 페이징
+            $(function(){
+                    $("#ps-tbody").on("click", "tr", function(){
+                        location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
+                    })
+                })
+
+            // 전체 체크박스 선택 취소
+            let checkAll = document.getElementById("check_all");
+            let mailCheckBox = document.querySelectorAll('.mail_checkbox');
+            checkAll.addEventListener('change', function(event){
+                mailCheckBox.forEach((checkbox) => {
+                    checkbox.checked = checkAll.checked;
+                })
+            });
+
+
+            // 스팸 등록
+            let spamEnroll = document.getElementById("spam");
+            spamEnroll.addEventListener('click', function(){
+                checkedBoxSum = 0
+                arr = [];
+                    mailCheckBox.forEach((i) => {
+                        if(i.checked == true) {
+                            let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
+                            arr.push(value);
+                            checkedBoxSum += 1;
+                        };
+                    })
+
+                if(checkedBoxSum != 0) {
+                    const form = document.createElement("form");
+                    const input = document.createElement("input");
+                    form.setAttribute("style", "display:none;");
+                    input.setAttribute("name", "recMailNoList");
+                    input.setAttribute("multiple", "multiple");
+                    input.setAttribute("value", arr);
+                    form.append(input);
+                    form.method = "POST";
+                    form.action = "spamEnroll.ma";
+                    document.body.append(form);
+                    form.submit();
+                }else {
+                    alert('체크박스를 선택해주세요');
+                };
+            });
+
+            // 답장
+            let reply = document.getElementById("reply");
+            reply.addEventListener('click', function(){
+                mailSelectArea = document.querySelectorAll(".mail_select_area");
+                checkedBoxSum = 0;
+                index = 0;
+                mailCheckBox.forEach((i, number) => {
+                    if(i.checked == true) {
+                        index = number
+                        checkedBoxSum += 1;
+                    }
+                })
+                if(checkedBoxSum == 1) {
+                    mailSelectArea = mailSelectArea.item(index);
+                    let replyAdd = mailSelectArea.getElementsByClassName("mail_sender");
+                    if(replyAdd[0].innerText == userInfo.innerText){
+                        alert('자신에게 답장할 수 없습니다.')
+                    }else{
+                        const mail = mailSelectArea.cloneNode(true);
+                        const input = document.createElement("input");
+                        mail.setAttribute("style", "display:none;");
+                        mail.method = "POST";
+                        mail.action = "reply.ma";
+                        input.name = "replyForwadDiv"
+                        // 1 = 답장 / 2 = 전달
+                        input.value = 1
+                        mail.append(input)
+                        document.body.append(mail);
+                        mail.submit();
+                    }
+                }else{
+                    alert('한 개의 체크박스를 선택해주세요!')
+                }
+            });
+
+            // 전달
+            let forward = document.getElementById("forward");
+            forward.addEventListener('click', function(){
+                let mailSelectArea = document.querySelectorAll(".mail_select_area");
+                checkedBoxSum = 0
+                index = 0;
+                mailCheckBox.forEach((i, number) => {
+                    if(i.checked == true) {
+                        index = number;
+                        checkedBoxSum += 1;
+                    }
+                })
+                if(checkedBoxSum == 1) {
+                    mailSelectArea = mailSelectArea.item(index)
+                    const mail = mailSelectArea.cloneNode(true);
+                    const input = document.createElement("input");
+                    mail.setAttribute("style", "display:none;");
+                    mail.method = "POST";
+                    mail.action = "reply.ma";
+                    input.name = "replyForwadDiv"
+                    // 1 = 답장 / 2 = 전달
+                    input.value = 2
+                    mail.append(input)
+                    document.body.append(mail);
+                    mail.submit();
+                }else{
+                    alert('한 개의 체크박스를 선택해주세요!')
+                }
+            });
+
+            // 메일 삭제
+            let deleteMail = document.getElementById("delete");
+            deleteMail.addEventListener('click', function(){
+                checkedBoxSum = 0
+                arr = [];
+                    mailCheckBox.forEach((i) => {
+                        if(i.checked == true) {
+                            let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
+                            arr.push(value);
+                            checkedBoxSum += 1;
+                        };
+                    })
+
+                if(checkedBoxSum != 0) {
+                    const form = document.createElement("form");
+                    const input = document.createElement("input");
+                    form.setAttribute("style", "display:none;");
+                    input.setAttribute("name", "recMailNoList");
+                    input.setAttribute("value", arr);
+                    form.append(input);
+                    console.log(form)
+                    form.method = "POST";
+                    form.action = "delete.ma";
+                    document.body.append(form);
+                    form.submit();
+                }else {
+                    alert('체크박스를 선택해주세요');
+                };
+            });
+
+            // 태그
+            let tag = document.getElementById("tag");
+            let tagBlock = document.querySelector(".tag_block");
+            let tagBtnList = document.querySelectorAll(".tag_btn");
+            tag.addEventListener('click', function(){
+                checkedBoxSum = 0
+                arr = [];
+                mailCheckBox.forEach((i, index) => {
+                    if(i.checked == true) {
+                        let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
+                        arr.push(value);
+                        checkedBoxSum += 1;
+                    };
+                })
+                if(checkedBoxSum >= 1) {
+                    tagBlock.style.display = 'block';
+                    let tagNo = document.querySelectorAll(".tagNo");
+                    tagBtnList.forEach(function(tagBtn, index){
+                        tagBtn.addEventListener('click', function(){
+                            tagNo = tagNo.item(index).value
+                            const form = document.createElement("form");
+                            const input1 = document.createElement("input");
+                            const input2 = document.createElement("input");
+                            form.setAttribute("style", "display:none;");
+                            input1.setAttribute("name", "recMailNoList");
+                            input1.setAttribute("multiple", "multiple");
+                            input1.setAttribute("value", arr);
+                            input2.setAttribute("name", "tagNo");
+                            input2.setAttribute("value", tagNo);
+                            form.append(input1);
+                            form.append(input2);
+                            form.method = "POST";
+                            form.action = "tag.ma";
+                            console.log(form)
+                            document.body.append(form);
+                            form.submit();
+                        });
+                    });
+                }else{
+                    alert('체크박스를 선택해주세요')
+                }
+            });
+
+            // x button 닫기 효과
+            let x_blocks = document.querySelectorAll('.x');
+            x_blocks.forEach(function(x){
+                x.addEventListener('click', function(){
+                    this.parentNode.parentNode.style.display = 'none';
+                })
+            });
+
+            // 읽음 처리
+            let read = document.querySelector(".read");
+            read.addEventListener('click', function(){
+                checkedBoxSum = 0
+                arr = [];
+                let recMailMoList = ""
+                mailCheckBox.forEach((i, index) => {
+                    if(i.checked == true) {
+                        let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
+                        arr.push(value);
+                        checkedBoxSum += 1;
+                    };
+                })
+                let recCheck = 'Y'
+                for(let i=0; i<arr.length; i++){
+                    recMailMoList += (arr[i] + ",");
+                }
+                if(checkedBoxSum > 0) {
+                    $.ajax({
+                        url:"updateReadUnread.ma",
+                        type:"POST",
+                        data:{
+                            recMailNoListData: recMailMoList,
+                            recCheck: recCheck
+                        },
+                        success: function(result){
+                            let mailCount = 0
+                            let unreadCount = 0;
+                            result.mailList.forEach(function(i, index){
+                                if(i.status == 'Y' && i.junkMail == 'N'){
+                                    mailCount += 1;
+                                }
+                                if(i.recCheck == 'Y' && i.status == 'Y' && i.junkMail == 'N'){
+                                    $(".mail_read").each(function(){
+                                        if($(this).closest($(".mail_one")).find($(".recMailNo")).val() == i.recMailNo){
+                                            $(this).attr("src", "resources/common_images/mail_read.png");
+                                        };
+                                    });
+                                    unreadCount += 1;
+                                };
+                            });
+                            $("input:checkbox").each(function(){
+                                $(this).prop("checked", false);
+                            })
+                            $("#all_mail_no").text(mailCount);
+                            $("#unread_mail_no").text(mailCount-unreadCount);
+                        }, error: function(){
+
+                        }
+                    });
+                }else{
+                    alert('체크박스를 선택해주세요');
+                }
+            }); 
+
+
+            // 안읽음 처리
+            let unread = document.querySelector(".unread");
+            unread.addEventListener('click', function(){
+                checkedBoxSum = 0
+                arr = [];
+                let recMailMoList = ""
+                mailCheckBox.forEach((i, index) => {
+                    if(i.checked == true) {
+                        let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
+                        arr.push(value);
+                        checkedBoxSum += 1;
+                    };
+                })
+                let recCheck = 'N'
+                for(let i=0; i<arr.length; i++){
+                    recMailMoList += (arr[i] + ",");
+                }
+                if(checkedBoxSum > 0) {
+                    $.ajax({
+                        url:"updateReadUnread.ma",
+                        type:"POST",
+                        data:{
+                            recMailNoListData: recMailMoList,
+                            recCheck: recCheck
+                        },
+                        success: function(result){
+                            let mailCount = 0
+                            let readCount = 0;
+                            result.mailList.forEach(function(i, index){
+                                if(i.status == 'Y' && i.junkMail == 'N'){
+                                    mailCount += 1;
+                                }
+                                if(i.recCheck == 'N' && i.status == 'Y' && i.junkMail == 'N'){
+                                    $(".mail_read").each(function(){
+                                        if($(this).closest($(".mail_one")).find($(".recMailNo")).val() == i.recMailNo){
+                                            $(this).attr("src", "resources/common_images/mail_unRead.png");
+                                        };
+                                    });
+                                    readCount += 1;
+                                };
+                            });
+                            $("#all_mail_no").text(mailCount);
+                            $("#unread_mail_no").text(readCount);
+                            $("input:checkbox").each(function(){
+                                $(this).prop("checked", false);
+                            })
+                        }, error: function(){
+
+                        }
+                    });
+                }else{
+                    alert('체크박스를 선택해주세요');
+                }
+            }); 
+
+            // 새로고침
+            let refresh = document.getElementById("refresh");
+            refresh.addEventListener('click', function(){
+                location.href = 'list.ma';
+            });
+
+            // 중요 메일 등록
+            let imporList = document.querySelectorAll('.mail_impor');
+            imporList.forEach(function(impor){
+                impor.addEventListener('click', function(){
+                    const recMailNo = this.closest(".mail_one").getElementsByClassName("recMailNo")[0].value;
+                    let imporMail;
+                    if($(this).attr("src") == "resources/common_images/unFavorite.png") {
+                        imporMail = 'Y'
+                    }else{
+                        imporMail = 'N'
+                    }
+                    $.ajax({
+                        url: "imporEroll.ma",
+                        type: "POST",
+                        data: {
+                            recMailNo: recMailNo,
+                            imporMail: imporMail
+                        },
+                        success:function(result){
+                            if(result == 1 && imporMail == 'Y'){
+                                $(".mail_impor").each(function(){
+                                    if($(this).closest($(".mail_one")).find($(".recMailNo")).val() == recMailNo){
+                                        $(this).attr("src", "resources/common_images/favorite.png");
+                                    };
+                                });
+                            }else if(result == 1 && imporMail == 'N'){
+                                $(".mail_impor").each(function(){
+                                    if($(this).closest($(".mail_one")).find($(".recMailNo")).val() == recMailNo){
+                                        $(this).attr("src", "resources/common_images/unFavorite.png");
+                                    };
+                                });
+                            }
+
+                        }, error:function(){
+
+                        }
+                    });
+                });
+            });
+
             // 태그 추가 화면
             document.getElementById("add_tag").addEventListener('click', function(){
                 document.getElementById("add_tag_view").style.display = 'block'
@@ -163,186 +558,100 @@
                     inputColor.setAttribute("value", colorValue);
                 });
             });
-        </script>
 
-        <div>
-            <div class="mailbox_subject">메일함</div>
-            <img class="settings" src="resources/common_images/setting.png">
-            <br><br>
-            <div class="boxList normal">
-                <div class="boxListOne">
-                    <div id="recMailbox" class="mailbox">받은 메일함(전체)</div><img class="unFavorite uBox" src="resources/common_images/unFavorite.png">
-                </div>
-                <div class="boxListOne">
-                    <div class="mailbox" id="today_box">오늘 온 메일함</div><img class="unFavorite uBox" src="resources/common_images/unFavorite.png">
-                </div>
-                <div class="boxListOne">
-                    <div class="mailbox" id="tome_box">내게 쓴 메일함</div><img class="unFavorite uBox" src="resources/common_images/unFavorite.png">
-                </div>
-                <div class="boxListOne">
-                    <div class="mailbox" id="attach_box">첨부파일 메일함</div><img class="unFavorite uBox" src="resources/common_images/unFavorite.png">
-                </div>
-                <div class="boxListOne">
-                    <div class="mailbox" id="send_box">보낸 메일함</div><img class="unFavorite uBox" src="resources/common_images/unFavorite.png">
-                </div>
-                <div class="boxListOne">
-                    <div class="mailbox" id="unread_box">안읽은 메일함</div><img class="unFavorite uBox" src="resources/common_images/unFavorite.png">
-                </div>
-                <div class="boxListOne">
-                    <div class="mailbox" id="impor_box">중요 메일함</div><img class="unFavorite uBox" src="resources/common_images/unFavorite.png">
-                </div>
-                <div class="boxListOne">
-                    <div class="mailbox" id="temp_box">작성중인 메일함</div><img class="unFavorite uBox" src="resources/common_images/unFavorite.png">
-                </div>
-                <div class="boxListOne">
-                    <div class="mailbox" id="reservation_box">예약 메일함</div><img class="unFavorite uBox" src="resources/common_images/unFavorite.png">
-                </div>
-                <div class="trashmailbox">
-                    <div class="mailbox" id="spambox">스팸 메일함</div>
-                    <button id="spam_completeDel" class="btn btn-outline-secondary btn-sm">비우기</button>
-                </div>
-                <div class="trashmailbox">
-                    <div class="mailbox" id="trashcan">휴지통</div>
-                    <button id="trashcan_completeDel" class="btn btn-outline-secondary btn-sm">비우기</button>
-                </div>
-            </div>
-        </div>
-        <br><br>
-    </div>
-
-    <script>
-        // 받은 메일함 이동
-        document.querySelectorAll(".mailbox").forEach(function(selectBox){
-            selectBox.addEventListener("click", function(){
-                if(this.innerText == "받은 메일함(전체)"){
-                    location.href="list.ma";
-                }else if(this.innerText == "오늘 온 메일함"){
-                    location.href="todayList.ma";
-                }else if(this.innerText == "내게 쓴 메일함"){
-                    location.href="tomeList.ma";
-                }else if(this.innerText == "첨부파일 메일함"){
-                    location.href="attachList.ma";
-                }else if(this.innerText == "보낸 메일함"){
-                    location.href="sendList.ma";
-                }else if(this.innerText == "안읽은 메일함"){
-                    location.href="unreadList.ma";
-                }else if(this.innerText == "중요 메일함"){
-                    location.href="imporList.ma";
-                }else if(this.innerText == "작성중인 메일함"){
-                    location.href="tempList.ma";
-                }else if(this.innerText == "예약 메일함"){
-                    location.href="reservationList.ma";
-                }else if(this.innerText == "스팸 메일함"){
-                    location.href="spamList.ma";
-                }else if(this.innerText == "휴지통"){
-                    location.href="deleteList.ma";
-                }
-            })
-        })
-
-        // 스팸 메일함 비우기
-        document.getElementById("spam_completeDel").addEventListener("click", function(){
-            swal({
-                title: "영구 삭제하시겠습니까?",
-                text: "삭제된 메일들은 복구되지 않습니다.",
-                icon: "warning",
-                buttons: ["취소", "삭제"],
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if(willDelete){
-                    let form = document.createElement("form");
-                    let input = document.createElement("input");
-                    input.setAttribute("name", "junkMail");
-                    input.setAttribute("value", "Y");
-                    form.action = "completeDelete.ma";
-                    form.method = "POST";
-                    form.append(input);
-                    document.body.append(form);
-                    form.submit();
-                }
-            });
-        });
-
-        // 휴지통 비우기
-        document.getElementById("trashcan_completeDel").addEventListener("click", function(){
-            swal({
-                title: "영구 삭제하시겠습니까?",
-                text: "삭제된 메일들은 복구되지 않습니다.",
-                icon: "warning",
-                buttons: ["취소", "삭제"],
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if(willDelete){
-                    let form = document.createElement("form");
-                    let input = document.createElement("input");
-                    input.setAttribute("name", "status");
-                    input.setAttribute("value", "N");
-                    form.action = "completeDelete.ma";
-                    form.method = "POST";
-                    form.append(input);
-                    document.body.append(form);
-                    console.log(input)
-                    form.submit();
-                }
-            });
-        });
-
-        // 즐겨찾기 등록
-        document.querySelectorAll(".uBox").forEach(function(favor){
-            favor.addEventListener('click', function(){
-                const favorBox = document.getElementsByClassName("boxList favor");
-                const mailBoxName = this.previousSibling.innerText;
-                const src = $(this);
-                console.log(src)
-                let box = this.parentNode;
-                $.ajax({
-                    url: "enrollFavorMailBox.ma",
-                    type: "POST",
-                    data: {mailBoxName: mailBoxName},
-                    success: function(result){
-                        if(result == '1'){
-                            if(src == "resources/common_images/unFavorite.png"){
-                                    consoel.log("as")
-                                src.attr("src", "resources/common_images/favorite.png");
-                                src.attr("class", "favorite fBox");
-                                favorBox[0].append(box)
-                            }
-                        }
-                    }, error: function(){
-
+            // 받은 메일함 이동
+            document.querySelectorAll(".mailbox").forEach(function(selectBox){
+                selectBox.addEventListener("click", function(){
+                    if(this.innerText == "받은 메일함(전체)"){
+                        location.href="list.ma";
+                    }else if(this.innerText == "오늘 온 메일함"){
+                        location.href="todayList.ma";
+                    }else if(this.innerText == "내게 쓴 메일함"){
+                        location.href="tomeList.ma";
+                    }else if(this.innerText == "첨부파일 메일함"){
+                        location.href="attachList.ma";
+                    }else if(this.innerText == "보낸 메일함"){
+                        location.href="sendList.ma";
+                    }else if(this.innerText == "안읽은 메일함"){
+                        location.href="unreadList.ma";
+                    }else if(this.innerText == "중요 메일함"){
+                        location.href="imporList.ma";
+                    }else if(this.innerText == "작성중인 메일함"){
+                        location.href="tempList.ma";
+                    }else if(this.innerText == "예약 메일함"){
+                        location.href="reservationList.ma";
+                    }else if(this.innerText == "스팸 메일함"){
+                        location.href="spamList.ma";
+                    }else if(this.innerText == "휴지통"){
+                        location.href="deleteList.ma";
                     }
                 })
             })
-        })
 
-        document.querySelectorAll(".fBox").forEach(function(favor){
-            favor.addEventListener('click', function(){
-                const normalBox = document.getElementsByClassName("boxList normal");
-                const mailBoxName = this.previousSibling.innerText;
-                let box = this.parentNode;
-                console.log(box)
-                // $.ajax({
-                //     url: "deleteFavorMailBox.ma",
-                //     type: "POST",
-                //     data: {mailBoxName: mailBoxName},
-                //     success: function(result){
-                //         if(result == '1'){
-                //             if($(this).attr("src") == "resources/common_images/favorite.png"){
-                //                 $(this).attr("src", "resources/common_images/unFavorite.png");
-                //                 $(this).attr("class", "unFavorite uBox");
-                //                 normalBox[0].append(box)
-                //             }
-                //         }
-                //     }, error: function(){
+            // 스팸 메일함 비우기
+            document.getElementById("spam_completeDel").addEventListener("click", function(){
+                swal({
+                    title: "영구 삭제하시겠습니까?",
+                    text: "삭제된 메일들은 복구되지 않습니다.",
+                    icon: "warning",
+                    buttons: ["취소", "삭제"],
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if(willDelete){
+                        let form = document.createElement("form");
+                        let input = document.createElement("input");
+                        input.setAttribute("name", "junkMail");
+                        input.setAttribute("value", "Y");
+                        form.action = "completeDelete.ma";
+                        form.method = "POST";
+                        form.append(input);
+                        document.body.append(form);
+                        form.submit();
+                    }
+                });
+            });
 
-                //     }
-                // })
-            })
-        })
+            // 휴지통 비우기
+            document.getElementById("trashcan_completeDel").addEventListener("click", function(){
+                swal({
+                    title: "영구 삭제하시겠습니까?",
+                    text: "삭제된 메일들은 복구되지 않습니다.",
+                    icon: "warning",
+                    buttons: ["취소", "삭제"],
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if(willDelete){
+                        let form = document.createElement("form");
+                        let input = document.createElement("input");
+                        input.setAttribute("name", "status");
+                        input.setAttribute("value", "N");
+                        form.action = "completeDelete.ma";
+                        form.method = "POST";
+                        form.append(input);
+                        document.body.append(form);
+                        form.submit();
+                    }
+                });
+            });
 
+            document.querySelectorAll(".tagOne").forEach(function(tag){
+                tag.addEventListener('click', function(){
+                    let form = document.createElement("form");
+                    let input = document.createElement("input");
+                    input.setAttribute("name", "tagNo");
+                    input.setAttribute("value", this.nextElementSibling.value);
+                    form.action = "tagginMailList.ma";
+                    form.method = "POST";
+                    form.append(input);
+                    document.body.append(form);
+                    form.submit();
+                });
+            });
+
+        });    
     </script>
-    
+
 </body>
 </html>

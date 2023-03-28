@@ -125,7 +125,7 @@ public class BoardServiceImpl implements BoardService{
 		return bDao.deleteABoard(sqlSession, boardNo);
 	}
 
-
+	/*
 	@Override
 	public ArrayList<Attachment> selectAttList(Board b) {
 		return bDao.selectAttList(sqlSession, b);
@@ -169,8 +169,34 @@ public class BoardServiceImpl implements BoardService{
 	public int deleteAnonAttachment(Board b) {
 		return bDao.deleteAnonAttachment(sqlSession, b);
 	}
+	*/
+	
+	@Override
+	public int insertABoard(Board b) {
+		return bDao.insertABoard(sqlSession, b);
+	}
+	
+	@Override
+	public int increaseACount(int boardNo) {
+		return bDao.increaseACount(sqlSession, boardNo);
+	}
+
+	@Override
+	public Board selectABoard(int boardNo) {
+		return bDao.selectABoard(sqlSession, boardNo);
+	}
 	
 	
+	@Override
+	public int updateBoard(Board b) {
+		return bDao.updateBoard(sqlSession, b);
+	}
+	
+	@Override
+	public int updateABoard(Board b) {
+		return bDao.updateABoard(sqlSession, b);
+	}
+
 	
 
 	@Override
@@ -234,6 +260,17 @@ public class BoardServiceImpl implements BoardService{
 		return 0;
 	}
 
+	@Override
+	public int selectSearchListCount(String keyword) {
+		return bDao.selectSearchListCount(sqlSession, keyword);
+	}
+
+	@Override
+	public ArrayList<Board> selectSearchList(PageInfo pi, String keyword) {
+		return bDao.selectSearchList(sqlSession, pi, keyword);
+	}
+
+	
 	
 
 	

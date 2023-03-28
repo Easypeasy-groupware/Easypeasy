@@ -189,6 +189,16 @@ public class MailServiceImpl implements MailService {
 		return mDao.selectMailFavorList(empNo, sqlSession);
 	}
 
+	@Override
+	public ArrayList<Mail> selectTaggingMailList(MailTag t, PageInfo pi) {
+		return mDao.selectTaggingMailList(t, pi, sqlSession);
+	}
+
+	@Override
+	public MailTag selectTag(MailTag t) {
+		return mDao.selectTag(t, sqlSession);
+	}
+
 	
 	
 
