@@ -119,14 +119,14 @@
         	<c:forEach var="c" items="${ myCalList }">
         		<c:choose>
            			<c:when test="${ c.calDefault eq 'Y' }">
-           				<div class="custom-checkbox" style="display: inline-block; width: 150px; text-align: left;">
+           				<div class="custom-checkbox" style="display: inline-block; width: 190px; text-align: left;">
 				            <input type="checkbox" class="inputCheck" name="scCompany" id="defaultY" style="accent-color: ${ c.calColor }; width: 15px; height: 15px;">
 				            <label class="control-label" for="defaultY">(기본) ${ c.calTitle }</label>
 		        			<input type="hidden" id="defaultCheckNo" value="${ c.calNo }">
 		        		</div>
            			</c:when>
            			<c:otherwise>
-           				<div class="custom-checkbox" style="display: inline-block; width: 150px; text-align: left;">
+           				<div class="custom-checkbox" style="display: inline-block; width: 190px; text-align: left;">
 				            <input type="checkbox" class="inputCheck" name="scCompany" id="${ c.calNo }" style="accent-color: ${ c.calColor }; width: 15px; height: 15px;">
 				            <label class="control-label" for="${ c.calNo }">${ c.calTitle }</label>
 				            <input type="hidden" class="calNo" value="${ c.calNo }">
