@@ -58,18 +58,18 @@
 	                        <option value="1">1일</option>
 	                        <option value="7">1주일</option>
 	                        <option value="30">1개월</option>
-	                    </select> 
+	                    </select> -->
 	                    <select name="condition">
 	                        <option value="title">제목</option>
 	                        <option value="content">내용</option>
-	                    </select>-->
-	                        <input type="text" name="keyword" value="${ keyword }" placeholder="검색어를 입력하세요">
+	                    </select>
+	                        <input type="text" name="keyword" value="${keyword}" placeholder="검색어를 입력하세요">
 	                        <button type="submit" class="btn btn-success">검색</button>
 	            </form>
 	          </div> 
-            <!-- <script>
+            <script>
 	        	document.querySelector("#search-container option[value=${condition}]").selected = true;
-	        </script> -->
+	        </script> 
             
             <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enrollForm.bo';">새글쓰기</button>
             <%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> 
@@ -96,7 +96,7 @@
 	                    		<td><input type="checkbox" name="ckb"></td>
 	                    	 </c:if> --%>
 	                        <td class="bno">${b.boardNo}</td>
-	                        <td class="notice" style="text-align:left">${b.boardTitle}</td>
+	                        <td class="notice" style="text-align:left;">${b.boardTitle}</td>
 	                        <td>${b.empName}</td>
 	                        <td>${b.createDate}</td>
 	                        <td>${b.boardCount}</td>

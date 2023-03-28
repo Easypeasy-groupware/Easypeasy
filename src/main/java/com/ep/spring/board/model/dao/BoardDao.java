@@ -29,7 +29,7 @@ public class BoardDao {
 	}
 	
 	public int selectFreeListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("boardMapper.selectListCount");
+		return sqlSession.selectOne("boardMapper.selectFreeListCount");
 	}
 	
 	public ArrayList<Board> selectFreeList(SqlSessionTemplate sqlSession, PageInfo pi){
