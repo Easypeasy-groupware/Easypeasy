@@ -79,7 +79,7 @@ public class DataBoardController {
 			
 			DataBoard db = daService.selectDataBoard(no);
 			
-			model.addAttribute("db", db);
+			session.setAttribute("db", db);
 			return "dataBoard/dataBoardDetailView";
 			
 		}else {
@@ -165,5 +165,10 @@ public class DataBoardController {
 		return "dataBoard/dataBoardMain";
 	}
 	
+	@RequestMapping("openPdf.db")
+	public String openPdf(Model model) {
+		
+		return "dataBoard/openPdf";
+	}
 	
 }

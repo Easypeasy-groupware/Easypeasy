@@ -16,6 +16,8 @@
             float:left;
             box-sizing: border-box;
         }	
+      tbody>tr:hover{background:rgb(233, 233, 233); cursor:pointer;}
+        
 	</style>
 </head>
 <body>
@@ -149,7 +151,7 @@
 					// 상세페이지로 이동하는 function
 					if(${not empty list}){
 						$("table tbody").on("click", "tr", function(){
-							location.href = 'updateForm.ap?no=' + $(this).children().eq(0).find("#num").val();
+							location.href = 'updateForm.ap?no=' + $(this).children().eq(0).find("#num").val() + "&division=1";
 						}); 
 					}
 				});

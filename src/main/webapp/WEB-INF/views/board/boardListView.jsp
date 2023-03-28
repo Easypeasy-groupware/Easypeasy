@@ -21,9 +21,9 @@
 	th {background-color: #ddd;}
 	tr:hover {background-color: #f5f5f5;}
 	.views {text-align: center;}
-    .search-container {display: flex; justify-content: flex-end; margin-bottom: 10px;}
-	.search-container input[type=text] {padding: 6px; margin-right: 10px; border: none; border-radius: 3px; width: 200px;}
-	.notice{font-color:red;}
+    #search-container {display: flex; justify-content: flex-end; margin-bottom: 10px;}
+	#search-container input[type=text] {padding: 6px; margin-right: 10px; border-radius: 3px; width: 200px; border:0.5px solid;}
+	.notice{font-color:red; overflow: hidden; text-overflow: ellipsis; width:600px;}
 
 	/* 페이징바 */
     #paging{text-align: center; display: inline-block; padding-left :0;}
@@ -49,32 +49,27 @@
             <br><br><br><br>
          </bheader>
         <div class="container">
-        <div id="search-container">
-            <form action="listSearch.bo" method="get">
-            	
-            	<input type="hidden" name="cpage" value="1">
-             	
-                	
-                   <!--  <select>
-                        <option value="all">전체</option>
-                        <option value="1">1일</option>
-                        <option value="7">1주일</option>
-                        <option value="30">1개월</option>
-                    </select> -->
-                    
-                    <select name="condition">
-                        <option value="title">제목</option>
-                        <!-- <option value="author">작성자</option> -->
-                        <option value="content">내용</option>
-                    </select>
-                        <input type="text" name="keyword" value="${ keyword }">
-                        <button type="submit" class="btn btn-success btn-sm">검색</button>
-                
-            </form>
-            </div> 
-            <script>
+	        <div id="search-container">
+	            <form action="listSearch.bo" method="get">
+	            	<input type="hidden" name="cpage" value="1">
+	             	
+	                   <!--  <select>
+	                        <option value="all">전체</option>
+	                        <option value="1">1일</option>
+	                        <option value="7">1주일</option>
+	                        <option value="30">1개월</option>
+	                    </select> 
+	                    <select name="condition">
+	                        <option value="title">제목</option>
+	                        <option value="content">내용</option>
+	                    </select>-->
+	                        <input type="text" name="keyword" value="${ keyword }" placeholder="검색어를 입력하세요">
+	                        <button type="submit" class="btn btn-success">검색</button>
+	            </form>
+	          </div> 
+            <!-- <script>
 	        	document.querySelector("#search-container option[value=${condition}]").selected = true;
-	        </script>
+	        </script> -->
             
             <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enrollForm.bo';">새글쓰기</button>
             <%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> 
@@ -101,7 +96,7 @@
 	                    		<td><input type="checkbox" name="ckb"></td>
 	                    	 </c:if> --%>
 	                        <td class="bno">${b.boardNo}</td>
-	                        <td class="notice">${b.boardTitle}</td>
+	                        <td class="notice" style="text-align:left">${b.boardTitle}</td>
 	                        <td>${b.empName}</td>
 	                        <td>${b.createDate}</td>
 	                        <td>${b.boardCount}</td>
@@ -118,7 +113,7 @@
 		            })
 		            
 		          
-	                // 체크박스 
+	                /* // 체크박스 
 	                $(document).ready(function() {
 	                    $("#ckbAll").click(function() {
 	                      if($("#ckbAll").is(":checked")) $("input[name=ckb]").prop("checked", true);
@@ -133,34 +128,45 @@
 	                      else $("#ckbAll").prop("checked", true); 
 	                    });
 	                  });
-           
+            */
 		        </script>
             
             <br><br>
             <tfoot>
-                <div align="center">
+                <div id="pagingArea" align="center">
 		            <ul id="paging">
 		               <c:choose>
-		                	<c:when test="${ pi.currentPage eq 1 }">
-			                    <li class="page-item disabled"><a class="page-link" href="#"> < </a></li>
-			                </c:when>
-			                <c:otherwise>
-			                    <li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage-1 }"> < </a></li>
-		                    </c:otherwise>
-	                    </c:choose>
-	                    
-	                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-	                    	<li class="page-item"><a class="page-link" href="list.bo?cpage=${p}">${p}</a></li>
-	     				</c:forEach>
-	                    
-	                    <c:choose>
-		                    <c:when test="${pi.currentPage eq pi.maxPage }">
-		                    	<li class="page-item disabled"><a class="page-link" href="#"> > </a></li>
-		                    </c:when>
-		                    <c:otherwise>
-		                    	<li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage + 1 }"> > </a></li>
-	                    	</c:otherwise>
-	                    </c:choose>
+							<c:when test="${ empty keyword }">
+								<c:if test="${ pi.currentPage ne 1 }">
+									<li><a href="list.bo?cpage=${ pi.currentPage-1 }">&lt;</a></li>
+								</c:if>
+							</c:when>
+							<c:otherwise>
+								<c:if test="${ pi.currentPage ne 1 }">
+									<li><a href="listSearch.bo?cpage=${ pi.currentPage-1 }&keyword=${ keyword }">&lt;</a></li>
+								</c:if>
+							</c:otherwise>
+						</c:choose>
+							
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+							<c:choose>
+								<c:when test="${ empty keyword }">
+									<li class="on"><a href="list.bo?cpage=${ p }">${ p }</a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="on"><a href="listSearch.bo?cpage=${ p }&keyword=${ keyword }">${ p }</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+							
+						<c:choose>
+							<c:when test="${ empty keyword }">
+								<li><a href="list.bo?cpage=${ pi.currentPage+1 }">&gt;</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="listSearch.bo?cpage=${ pi.currentPage+1 }&keyword=${ keyword }">&gt;</a></li>
+							</c:otherwise>
+						</c:choose>
 		            </ul>
 		        </div>
 		        

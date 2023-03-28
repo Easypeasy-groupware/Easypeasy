@@ -31,7 +31,7 @@
     .board{height:280px;}
     .board-title:hover{cursor:pointer; font-weight:600;}
     #doc-etc{width:48%;}
-    #board-notice{border-bottom:4px solid rgb(166, 184, 145); font-weight:600;}
+    #board-notice{border-bottom:4px solid rgb(166, 184, 145); font-weight:600;  overflow: hidden; text-overflow: ellipsis;}
 
     /*결재문서*/
     .document{height:280px;}
@@ -72,6 +72,10 @@
 	#scheduleList a:hover{
 		font-weight:600;
 	}
+	
+	#arrived-tb *, #departed-tb *{overflow:hidden; text-overflow: ellipsis;}
+	.board-table th, #arrived-tb th, #departed-tb th, #tb-mail th{text-align:center;}
+	
 </style>
 </head>
 <body>
@@ -95,7 +99,7 @@
 						<col style="width:15%;">
 						<col style="width:15%;">
 					</colgroup>
-					<thead>
+					<thead align="center">
 						<tr>
 							<th>제목</th>
 							<th>작성자</th>
@@ -113,14 +117,14 @@
 						<col style="width:15%;">
 						<col style="width:15%;">
 					</colgroup>
-					<thead>
+					<thead align="center">
 						<tr>
 							<th>제목</th>
 							<th>작성자</th>
 							<th>게시일</th>
 						</tr>
 					</thead>
-					<tbody align="center">
+					<tbody align="center" style=" overflow: hidden; text-overflow: ellipsis;">
 						
 					</tbody>
 				</table>
@@ -169,7 +173,7 @@
 	            					let b = list[i]; 
 	            					value += "<tr>"
 	            							+	"<td>" + list[i].boardTitle + "</td>"
-	            							+	"<td>" + list[i].boardWriter + "</td>"
+	            							+	"<td>" + list[i].empName + "</td>"
 	            							+	"<td>" + list[i].createDate + "</td>"
 	            							+ "</tr>"; 
 	            				}
@@ -234,8 +238,8 @@
 				<table class="doc-table" id="arrived-tb">
 					<colgroup>
 						<col style="width:15%;">
-						<col style="width:15%;">
-						<col style="width:55%;">
+						<col style="width:35%;">
+						<col style="width:35%;">
 						<col style="width:15%;">
 					</colgroup>
 					<thead>
@@ -253,8 +257,8 @@
 				<table class="doc-table" id="departed-tb" style="display:none;">
 					<colgroup>
 						<col style="width:15%;">
-						<col style="width:15%;">
-						<col style="width:55%;">
+						<col style="width:35%;">
+						<col style="width:35%;">
 						<col style="width:15%;">
 					</colgroup>
 					<thead>
@@ -287,6 +291,8 @@
 				$(function(){
 					recentApproval();
 					//setInterval(recentApproval, 3000);
+					
+					
 				})
 				
 				function recentApproval(){
@@ -308,7 +314,7 @@
 								for(let i = 0; i < result.list1.length; i++){
 									let a = result.list1[i];
 									value1 += "<tr>"
-											+ "<td>" + a.enrollDate + "</td>"
+											+ "<td>" + a.enrollDate + "<input type='hidden' id='aNum1' value=" + a.appNo + "></td>"
 											+ "<td>" + a.formName + "</td>";
 											if(a.formCode == 3 || a.formCode == 4){
 												value1 += "<td>" + a.formName + "</td>";
@@ -318,6 +324,7 @@
 											
 											value1+= "<td>" + a.empName + "</td></tr>";
 								}
+								
 							}
 							$("#arrived-tb tbody").html(value1);
 							
@@ -333,7 +340,7 @@
 								for(let i = 0; i<result.list2.length; i++){
 									let b = result.list2[i];
 									value2 += "<tr>"
-										+ "<td>" + b.enrollDate + "</td>"
+										+ "<td>" + b.enrollDate +"<input type='hidden' id='aNum2' value=" + b.appNo + "> </td>"
 										+ "<td>" + b.formName + "</td>";
 										if(b.formCode == 3 || b.formCode == 4){
 											value2 += "<td>" + b.formName + "</td>";
@@ -346,6 +353,18 @@
 							}
 							
 							$("#departed-tb tbody").html(value2);
+							
+							if(result.list1.length > 0){
+								$("#arrived-tb tbody").on("click", "tr", function(){
+						            location.href = 'detailRec.ap?no=' + $(this).eq(0).children().find("#aNum1").val()+"&form="+ $(this).children().eq(1).text()+"&st=결재대기"; 
+						        }); 
+							}
+							
+							if(result.list2.length > 0){
+								$("#departed-tb tbody").on("click", "tr", function(){
+						            location.href = 'detailSPrg.ap?no=' + $(this).eq(0).children().find("#aNum2").val()+"&form="+ $(this).children().eq(1).text()+"&st=결재대기"; 
+						        }); 
+							}
 							
 						}, error:function(){
 							//console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
@@ -362,7 +381,7 @@
 				<div class="subtitle mail-list" id="mail-etc"></div>
 				<br clear="both"><br>
 		
-				<table>
+				<table id="tb-mail">
 					<colgroup>
 						<col style="width:35%;">
 						<col sytle="width:50%;">
@@ -575,15 +594,26 @@
 									
 									for(let i=0; i<scList.length; i++){
 										let s = scList[i]; // {}
-										if(s.allDay == 'Y'){ 
-											value += "<a href='scheduleUpDel.sc?no=" + s.scNo + "'>"
-												   + 	"<li>" + s.scTitle + "<br>" + s.startDate +  " ~ "  + s.endDate + "</li>"
-												   + "</a>"
+										
+										if(scList.length == 0){
+											value+= "<tr>" 
+												+ "<td colspan='1'>"
+												+ "오늘의 일정이 없습니다."
+												+ "</td>"
+												+"</tr>";							
 										}else{
-											value += "<a href='scheduleUpDel.sc?no=" + s.scNo + "'>"
-												   +	"<li>" + s.scTitle + "<br>" + s.startDate + " " + s.startTime +  " ~ "  + s.endDate + " " + s.endTime + "</li>"
-												   + "</a>"
+										
+											if(s.allDay == 'Y'){ 
+												value += "<a href='scheduleUpDel.sc?no=" + s.scNo + "'>"
+													   + 	"<li>" + s.scTitle + "<br>" + s.startDate +  " ~ "  + s.endDate + "</li>"
+													   + "</a>"
+											}else{
+												value += "<a href='scheduleUpDel.sc?no=" + s.scNo + "'>"
+													   +	"<li>" + s.scTitle + "<br>" + s.startDate + " " + s.startTime +  " ~ "  + s.endDate + " " + s.endTime + "</li>"
+													   + "</a>"
+											}
 										}
+										
 									}
 									
 									$("#scheduleList").html(value);

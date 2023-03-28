@@ -270,6 +270,16 @@ public class BoardServiceImpl implements BoardService{
 		return bDao.selectSearchList(sqlSession, pi, keyword);
 	}
 
+	@Override
+	public int selectSearchFreeCount(String keyword) {
+		return bDao.selectSearchFreeCount(sqlSession, keyword);
+	}
+
+	@Override
+	public ArrayList<Board> selectSearchFree(PageInfo pi, String keyword) {
+		return bDao.selectSearchFree(sqlSession, pi, keyword);
+	}
+
 	
 	
 

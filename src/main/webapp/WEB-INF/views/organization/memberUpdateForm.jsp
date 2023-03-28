@@ -55,7 +55,7 @@
 		<div class="board">
 			<cheader>
                 <br><br>
-                <h2>사원정보 수정/삭제 폼</h2>
+                <h2>사원정보 수정/삭제</h2>
                 <br>
             </cheader>
 			<div class="container">
@@ -90,7 +90,7 @@
 			            	<option value="${e.deptCode}" name="deptCode" id="D">${e.deptName}</option>
 			             	<option>-----수정----</option>
 			                <option value="D1" name="deptCode" id="D1">인사관리부</option>
-			                <option value="D2" name="deptCode" id="D2">경영관리부</option>
+			                <option value="D2" name="deptCode" id="D2">경영지원부</option>
 			                <option value="D3" name="deptCode" id="D3">영업1팀</option>
 			                <option value="D4" name="deptCode" id="D4">영업2팀</option>
 			                <option value="D5" name="deptCode" id="D5">영업3팀</option>

@@ -227,7 +227,6 @@ public class ApprovalDao {
 		int result2 = 0;
 		
 		int num = al.get(0).getAppNo();
-		//System.out.println(num);
 		
 		result1 = sqlSession.delete("approvalMapper.deleteApprovalLine", num);
 		
@@ -237,6 +236,11 @@ public class ApprovalDao {
 		
 		return result1 + result2;
  	}
+	
+	public int deleteAttachment(SqlSessionTemplate sqlSession, int appNo) {
+	
+		return sqlSession.delete("approvalMapper.deleteAttachment", appNo);
+	}
 	
 	public int updateAttachment(SqlSessionTemplate sqlSession, ArrayList<Attachment> atList) {
 		
@@ -276,7 +280,7 @@ public class ApprovalDao {
 			
 		}else if(a.getListType().equals("c")) {
 			
-			return 0;
+			return sqlSession.selectOne("approvalMapper.selectSearchCListCount", a);
 			
 		}else if(a.getListType().equals("f")) {
 			
@@ -298,7 +302,7 @@ public class ApprovalDao {
 	public ArrayList<Approval> selectSearchList(SqlSessionTemplate sqlSession, Approval a, PageInfo pi){
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds();
+		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		if(a.getListType().equals("cw")) {
 			
@@ -310,7 +314,7 @@ public class ApprovalDao {
 			
 		}else if(a.getListType().equals("s")) {
 			
-			return (ArrayList)sqlSession.selectList("approvalMapper.selectSearchList", a, rowBounds);
+			return (ArrayList)sqlSession.selectList("approvalMapper.selectSearchSList", a, rowBounds);
 			
 		}else if(a.getListType().equals("t")) {
 			
@@ -318,7 +322,7 @@ public class ApprovalDao {
 			
 		}else if(a.getListType().equals("c")) {
 			
-			return null;
+			return (ArrayList)sqlSession.selectList("approvalMapper.selectSearchCList", a, rowBounds);
 			
 		}else if(a.getListType().equals("f")) {
 			
@@ -335,6 +339,30 @@ public class ApprovalDao {
 		}else {
 			return null;
 		}
+	}
+	
+	
+	
+	public int selectStatusListCount(SqlSessionTemplate sqlSession, Approval a) {
+		
+		if(a.getListType().equals("s")) {
+			return sqlSession.selectOne("approvalMapper.selectStatusSListCount", a);
+		}else {
+			return sqlSession.selectOne("approvalMapper.selectStatusCListCount", a);
+		}
+	}
+	
+	public ArrayList<Approval> selectStatusList(SqlSessionTemplate sqlSession, PageInfo pi, Approval a){
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		if(a.getListType().equals("s")) {
+			return (ArrayList)sqlSession.selectList("approvalMapper.selectStatusSList", a, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("approvalMapper.selectStatusCList", a, rowBounds);
+		}
+		
 	}
 	
 }

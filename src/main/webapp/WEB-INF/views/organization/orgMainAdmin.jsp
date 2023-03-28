@@ -20,7 +20,7 @@
   .board {width: 1000px; float: right;}
   .container {margin: 20px auto; width: 100%; border: 1px solid #ccc; padding: 20px;}
   form {max-width: 1000px; margin: 0 auto; padding: 10px; border-radius: 5px; box-sizing: border-box;}
-  h2 {padding:1% 1%;}
+  h3 {padding-left: 25px; padding-top: 15px; float: left		!important;}
 	table {border-collapse: collapse; width: 100%;}
 	tr {text-align: center;}
 	th, td {text-align: center; padding: 8px; border-bottom: 1px solid #ccc;}
@@ -68,8 +68,8 @@
         <div class="board">
             <cheader>
                 <br><br>
-                <h2>조직도-관리자페이지</h2>
-                <br>
+                <h3><b style="color:rgb(93, 109, 75);">조직도-관리자페이지</b></h3>
+                <br> <br> <br> <br>
             </cheader>
             <div class="container">
                 <form>

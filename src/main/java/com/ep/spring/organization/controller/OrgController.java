@@ -85,7 +85,7 @@ public class OrgController {
 			int calResult = scService.insertDefaultCalendar();
 			AlertMsg msg = new AlertMsg("사원 등록", "성공적으로 사원정보가 등록되었습니다.");
 			session.setAttribute("successMsg", msg);
-			return "organization/orgMainAdmin";
+			return "redirect:adminList.org";
 		}else {
 			model.addAttribute("errorMsg", "실패");
 			return "common/errorPage";
@@ -122,7 +122,7 @@ public class OrgController {
 		if(result>0) {
 			AlertMsg msg = new AlertMsg("사원 수정", "성공적으로 사원정보가 수정되었습니다.");
 			session.setAttribute("successMsg", msg);
-			return "organization/orgMainAdmin";
+			return "redirect:adminList.org";
 		}else {
 			model.addAttribute("errorMsg", "사원정보 수정 실패");
 			return "common/errorPage";	
@@ -136,7 +136,7 @@ public class OrgController {
 		if(result>0) {
 			AlertMsg msg = new AlertMsg("사원 삭제", "성공적으로 사원정보가 삭제되었습니다.");
 			session.setAttribute("successMsg", msg);
-			return "organization/orgMainAdmin";
+			return "redirect:adminList.org";
 		}else {
 			model.addAttribute("errorMsg", "사원정보 삭제 실패");
 			return "common/errorPage";	
@@ -194,7 +194,7 @@ public class OrgController {
 		if(result > 0) {
 			AlertMsg msg = new AlertMsg("부서 수정", "성공적으로 부서정보가 수정되었습니다.");
 			session.setAttribute("successMsg", msg);
-			return "organization/orgSettings";
+			return "redirect:settings.org";
 		}else {
 			model.addAttribute("errorMsg", "실패");
 			return "common/errorPage";
@@ -212,7 +212,7 @@ public class OrgController {
 		if(result>0) {
 			AlertMsg msg = new AlertMsg("부서 삭제", "성공적으로 부서정보가 삭제되었습니다.");
 			session.setAttribute("successMsg", msg);
-			return "organization/orgSettings";
+			return "redirect:settings.org";
 		}else {
 			model.addAttribute("errorMsg", "부서정보 삭제 실패");
 			return "common/errorPage";	
