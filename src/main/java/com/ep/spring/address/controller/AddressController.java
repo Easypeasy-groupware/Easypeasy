@@ -513,9 +513,50 @@ public class AddressController {
 			a.setAddNo(Integer.parseInt(addNo));
 			list.add(a);
 		}
-		int result = aService.completeDeleteAddList(list);
+		int result1 = aService.deleteFavList(list);
+		int result2 = aService.completeDeleteAddList(list);
+		
+		return result1*result2;
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="restoreAddList.add") // ajax 개인주소록 선택한 여러주소록 삭제
+	public int ajaxRestoreAddList(@RequestParam(value="addList[]") List<String> addList) {
+		
+		ArrayList<Address> list = new ArrayList<>();
+		
+		for(String addNo : addList) {
+			Address a = new Address();
+			a.setAddNo(Integer.parseInt(addNo));
+			list.add(a);
+		}
+		int result = aService.restoreAddList(list);
 		
 		return result;
+		
+	}
+	
+	@RequestMapping(value="sharedGroup.add")
+	public ModelAndView sharedGroupEditView(ModelAndView mv) {
+		
+		ArrayList<AddGroup> gList = aService.selectSharedAddGroup();
+		int total = aService.selectExternalAllListCount();
+		ArrayList<Address> aList = aService.selectAllSharedAddress();
+		
+		mv.addObject("gList", gList) // 외부그룹리스트
+		  .addObject("total", total) // 전체 공유주소록 개수
+		  .addObject("aList", aList) // 전체 공유 주소록
+		  .setViewName("address/adminGroupManageList");
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="updateSharedGroup.add")
+	public int ajaxUpdateSharedGroupName(AddGroup ag) {
+		
+		return aService.updateSharedGroupName(ag);
+		
 		
 	}
 	

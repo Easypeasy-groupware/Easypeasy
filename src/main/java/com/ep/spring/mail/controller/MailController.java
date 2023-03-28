@@ -572,4 +572,28 @@ public class MailController {
 		
 		return result;
 	}
+	
+	@RequestMapping("tagginMailList.ma")
+	public ModelAndView selectTaggingMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, MailTag t, HttpSession session) {
+		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		MailTag tag = mService.selectTag(t);
+		
+		PageInfo mailPi = null;
+		ArrayList<Mail> mailList = mService.selectTaggingMailList(t, mailPi);
+		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
+		
+		int listCount = mailList.size();
+		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+		ArrayList<Mail> pagingMailList = mService.selectTaggingMailList(t, mailPi);
+		
+		mv.addObject("mailList", mailList);
+		mv.addObject("pgMailList", pagingMailList);
+		mv.addObject("attachList", attachList);
+		mv.addObject("mailPi", mailPi);
+		mv.addObject("tag", tag);
+		mv.setViewName("mail/taggingMailBox");
+		return mv;
+	}
+	
 }

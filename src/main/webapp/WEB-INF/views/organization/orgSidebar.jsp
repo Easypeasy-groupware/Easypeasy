@@ -10,10 +10,12 @@
 /* 사이드바 */
  	.sidebar {top: 0; left: 0; width: 200px; height:1000px; float: left; border-right: 2px solid rgb(185, 187, 221);}
  	h4 {text-align: center;}
-  	/* .tbtn {align-items: center; justify-content: center; align:center; width:200px;} */
-	#topbtn{width:100%; height:35px; margin:auto; margin-bottom:15px; padding:5px 0 5px 0; background-color: rgb(142, 161, 122); border-radius:4px; text-align:center; justify-content: center;}
-  	
-  
+ 	.sidebar a{text-decoration:none; font-size:14px; color:black;}
+	.sidebar a:hover{text-decoration:none; font-weight:600; color:black;}
+	.sidebar li{list-style:none;}
+  	.menu-btn{width:70%; height:35px; margin:auto; margin-bottom:15px; padding:5px 0 5px 0; background-color: rgb(142, 161, 122); border-radius:4px; text-align:center;}
+	#menu-add-btn{color:white; text-decoration:none;}
+	.menu-btn:hover{background-color: rgb(93, 105, 81);}
 	.menu-title{margin:20px 0 20px 0; text-align:center;}
 	#title{font-size:20px; font-weight:600; color:rgb(93, 109, 75);}
 	#title:hover{color:rgb(58, 69, 47); text-decoration:none;}
@@ -27,12 +29,15 @@
 </head>
 <body>
 	 <div class="sidebar">
+	 
 	    	<div class="menu-title">
-				<a href="list.org" id="org-title">조직도</a>
+				<a href="list.org" id="title" class="menu-a">조직도</a>
 			</div>
 			
 	    	<c:if test="${ loginUser.deptCode eq 'D1' }">
-	    		<button type="button" class="btn btn-success" id="topbtn" onclick="location.href='adminList.org';"> 관리자 </button>
+	    		<div class="menu-btn">
+		            <a href="adminList.org" id="menu-add-btn">관리자</a>
+		        </div>
 	        </c:if>
 	      
 	      <div class="menu">

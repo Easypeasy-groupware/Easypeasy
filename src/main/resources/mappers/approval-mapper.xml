@@ -1007,4 +1007,75 @@
 			      )
 	</insert>
 	
+	<select id="selectSearchSListCount" resultType="_int">
+					select 
+					        count(*) 
+					  from  approval a
+					  join employee e on (a.emp_no = e.emp_no)
+					  join department d on (d.dept_code = e.dept_code) 
+					 where a.emp_no = #{writerNo}
+					   and a.status = 1	
+					   <if test="condition == 'title'">
+					   	and title like '%' || #{keyword} || '%'
+					   </if>
+					   <if test="condition == 'dept'">
+						   and app_no in (select app_no
+	                                         from app_line
+	                                         where emp_no in (
+	                                                            select emp_no
+	                                                              from employee a
+	                                                              join department d on (d.dept_code = a.dept_code)
+	                                                             where dept_name  like '%' || #{keyword} || '%'
+	                                                            )
+	                                         
+	                                         )
+					   </if>
+					   <if test="condition == 'form'">
+					   		and form_name like '%' || #{keyword} || '%'
+					   </if>
+	</select>
+	
+	<select id="selectSearchList" resultMap="approvalResult">
+				select 
+				       a.app_no
+				      , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+				      , form_name
+				      , title
+				      , form_code
+                       , (
+                            select count(*)
+                              from attachment
+                             where division = 'A'
+                               and ref_no = a.app_no
+                            ) attach_count
+				      , app_tstatus
+				  from  approval a
+				  left join employee e on (a.emp_no = e.emp_no)
+				 where a.emp_no = #{writerNo}
+				   and a.status = 1	
+					   <if test="condition == 'title'">
+					   	and title 
+					   	like '%' || #{keyword} || '%'
+					   </if>
+					   <if test="condition == 'dept'">
+						   and app_no in (select app_no
+	                                         from app_line
+	                                         where emp_no in (
+	                                                            select emp_no
+	                                                              from employee a
+	                                                              join department d on (d.dept_code = a.dept_code)
+	                                                             where dept_name like '%' || #{keyword} || '%'
+	                                                            )
+	                                         
+	                                         )
+					   </if>
+					   <if test="condition == 'form'">
+					   		and form_name
+					   		like '%' || #{keyword} || '%'
+					   </if>
+					   
+				 order 
+                    by a.enroll_date desc		
+	</select>
+	
 </mapper>

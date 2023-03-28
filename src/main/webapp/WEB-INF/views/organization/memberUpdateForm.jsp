@@ -71,7 +71,7 @@
 			           <select name="jobCode" id="jcBox" >
 			             		<option value="${e.jobCode}" name="jobCode" id="J">${e.jobName}</option>
 			             		<option>-----수정----</option>
-			             		<option value="J2" name="jobCode" id="J1">사원</option>
+			             		<option value="J1" name="jobCode" id="J1">사원</option>
 			             		<option value="J2" name="jobCode" id="J2">대리</option>
 						        <option value="J3" name="jobCode" id="J3">과장</option>
 						        <option value="J4" name="jobCode" id="J4">부장</option>
@@ -123,7 +123,7 @@
 				<div align="center">
 					<button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1);">이전으로</button>
 					<button type="submit" class="btn btn-success">수정하기</button>
-					<button type="button" class="btn btn-danger" onclick="location.href='deleteMember.org';">삭제하기</button>
+					<!-- <button type="button" class="btn btn-danger" onclick="location.href='deleteMember.org';">삭제하기</button> -->
 				</div>
 				
 			</form>

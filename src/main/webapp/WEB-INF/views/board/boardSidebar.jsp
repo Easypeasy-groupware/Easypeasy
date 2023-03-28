@@ -26,6 +26,7 @@
 	.submenu a {display: block; padding: 10px; color: #333; text-decoration: none; transition: background-color 0.3s ease-in-out;}
 	.submenu a:hover {background-color: #f2f2f2;}
 	.active {background-color: #f2f2f2;}
+	.menu-list b{font-size:15px;}
 	
 </style>
 </head>
@@ -34,14 +35,17 @@
           <!-- sidebar 내용 -->
           <div class="sidebar">
           	<div class="menu-title">
-				<a href="" id="title">게시판</a>
+				<a href="list.bo" id="title">게시판</a>
 			</div>
-			<%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> --%>
+			
+			<%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> 
             	<button type="button" class="btn btn-success" id="topbtn" onclick="location.href='enrollSetting.bo';">게시판 추가</button>
-            <%-- </c:if> --%>
+            </c:if> --%>
+            
+            
             <div class="menu">
                 <ul>
-                    <li><a href="list.bo">전체 공지사항</a>
+                    <li><a href="list.bo"><b>전체 공지사항</b></a>
                     <%-- <c:if test="${ loginUser.deptCode eq 'D1' }">
                     		<a href="updateSettingForms.bo"><img src="resources/common_images/board_icon.png" style="width:20px; height:20px;"></a>
                     </c:if> --%>
@@ -53,7 +57,7 @@
                     	</c:if> 
                     </li>
                      --%>   
-                    <li><a href="free.bo">자유게시판</a>
+                    <li><a href="free.bo"><b>자유게시판</b></a>
                     <%-- <c:if test="${ loginUser.deptCode eq 'D1' }">
                     		<a href="updateSettingForm.bo"><img src="resources/common_images/board_icon.png" style="width:20px; height:20px;"></a>
                      </c:if> --%>

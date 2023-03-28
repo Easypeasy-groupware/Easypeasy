@@ -67,27 +67,26 @@
 		                </tr>
 		                <tr>
 		                    <td>
-		                        작성자 프로필이미지(-)
+		                        조회수 : ${b.boardCount }
 		                    </td>
 		                    <td>
-		                        ${b.boardWriter}
+		                        작성자 : ${b.boardWriter}
 		                    </td>
 		                    <td>
-		                        ${b.createDate}
+		                        등록일 : ${b.createDate}
 		                    </td>
 		                </tr>
 		                <tr>
 		                   <td colspan="3">
-		                     <c:choose>
-                                  <c:when test="${ empty attachmentList }">
-                                          <div>첨부파일이 없습니다.</div>
-                                  </c:when>
-                                  <c:otherwise>
-                                      <c:forEach var="a" items="${ attachmentList }">
-                                             <a href="${a.changeName}" download="${a.originName}">${a.originName}</a><br>
-                                       </c:forEach>
-                                   </c:otherwise>
-                             </c:choose>
+                              <c:choose>
+			                    <c:when test="${ not empty b.originName }">
+			                        <a href="${ b.changeName }" download="${ b.originName }">${ b.originName }</a>
+			                    </c:when>
+			                    <c:otherwise>
+			                        	첨부파일이 없습니다.
+			                    </c:otherwise>
+		                      </c:choose>
+		                      
 		                    </td>
 		                </tr>
 		                <tr>
@@ -148,6 +147,8 @@
 			    updateReply(replyNo, newContent);
 			}
         	
+			
+			
         	function deleteReply(replyNo) { // 댓글 삭제용 ajax
 			    $.ajax({
 			        url: "rdelete.bo",
@@ -204,8 +205,8 @@
         							+	"<td>" + list[i].replyContent + "</td>"
         							+	"<td>" + list[i].createDate + "</td>"
         							+  "<td>" + "<a onclick='deleteReply(" + list[i].replyNo + ")'>" + "삭제" + "</a>" 
-        							+ "|"
-        							+  "<a onclick='updateReply(" + list[i].replyNo + ",\"" + list[i].replyContent + "\")'>" +"수정"+"</a>"    
+        				/* 			+ "|"
+        							+  "<a onclick='updateReply(" + list[i].replyNo + ",\"" + list[i].replyContent + "\")'>" +"수정"+"</a>"     */
         							+ "</td>"
         							+"</tr>";
         				}

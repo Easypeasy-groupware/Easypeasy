@@ -37,19 +37,20 @@ public interface BoardService {
 	Board selectBoard(int boardNo);
 	
 	// 4. 게시글 삭제용 서비스
-	int deleteBoard(int boardNo);
+	 int deleteBoard(int boardNo);
+	 int deleteABoard(int boardNo);
 	
-	int deleteABoard(int boardNo);
-		
 	// 5. 게시글 수정용 서비스
+	/*
 	int updateBoard(Board b, ArrayList<Attachment> atList);
 	ArrayList<Attachment> selectAttList(Board b);
 	int deleteAttachment(Board b);
-	
 	int updateABoard(Board b, ArrayList<Attachment> atList);
 	ArrayList<Attachment> selectAnonAttList(Board b);
 	int deleteAnonAttachment(Board b);
-		
+	*/
+	 int updateBoard(Board b);
+	 
 	// 6. 댓글 리스트 조회용 서비스 (ajax)
 	ArrayList<BoardReply> selectReplyList(int boardNo);
 		

@@ -227,7 +227,7 @@ public class ApprovalDao {
 		int result2 = 0;
 		
 		int num = al.get(0).getAppNo();
-		System.out.println(num);
+		//System.out.println(num);
 		
 		result1 = sqlSession.delete("approvalMapper.deleteApprovalLine", num);
 		
@@ -255,6 +255,86 @@ public class ApprovalDao {
 	
 	public int updateOverTimeForm(SqlSessionTemplate sqlSession, OverTimeForm ot) {
 		return sqlSession.update("approvalMapper.updateOverTimeForm", ot);
+	}
+	
+	public int selectSearchListCount(SqlSessionTemplate sqlSession, Approval a) {
+		if(a.getListType().equals("cw")) {
+			
+			return 0;
+			
+		}else if(a.getListType().equals("fw")) {
+			
+			return 0;
+			
+		}else if(a.getListType().equals("s")) {
+			
+			return sqlSession.selectOne("approvalMapper.selectSearchSListCount", a);
+			
+		}else if(a.getListType().equals("t")) {
+			
+			return 0;
+			
+		}else if(a.getListType().equals("c")) {
+			
+			return 0;
+			
+		}else if(a.getListType().equals("f")) {
+			
+			return 0;
+			
+		}else if(a.getListType().equals("ds")) {
+			
+			return 0;
+			
+		}else if(a.getListType().equals("df")) {
+			
+			return 0;
+			
+		}else {
+			return 0;
+		}
+	}
+	
+	public ArrayList<Approval> selectSearchList(SqlSessionTemplate sqlSession, Approval a, PageInfo pi){
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds();
+		
+		if(a.getListType().equals("cw")) {
+			
+			return null;
+			
+		}else if(a.getListType().equals("fw")) {
+			
+			return null;
+			
+		}else if(a.getListType().equals("s")) {
+			
+			return (ArrayList)sqlSession.selectList("approvalMapper.selectSearchList", a, rowBounds);
+			
+		}else if(a.getListType().equals("t")) {
+			
+			return null;
+			
+		}else if(a.getListType().equals("c")) {
+			
+			return null;
+			
+		}else if(a.getListType().equals("f")) {
+			
+			return null;
+			
+		}else if(a.getListType().equals("ds")) {
+			
+			return null;
+			
+		}else if(a.getListType().equals("df")) {
+			
+			return null;
+			
+		}else {
+			return null;
+		}
 	}
 	
 }

@@ -71,14 +71,12 @@ public class EmployeeController {
 		ArrayList<Mail> recMailList = mService.selectReceiveMailList(loginUser.getEmail());
 		// 태그 리스트 조회
 		ArrayList<MailTag> tagList = mService.selectTagList(loginUser.getEmpNo());
-		// 메일함 즐겨찾기 리스트 조회
-//		ArrayList<MailFavorite> mailFavorList = mService.selectMailFavorList(loginUser.getEmpNo());
 
 		
 		
 		
 		int empNo = loginUser.getEmpNo();
-		
+		System.out.println(empNo);
 		
 		ArrayList<Employee> list = oService.selectOrgList(empNo);
 		ArrayList<Department> deptList = oService.selectDept();
@@ -120,9 +118,8 @@ public class EmployeeController {
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("pList", userGroup); //로그인한 사원의 주소록 그룹리스트 세션에 저장
 			session.setAttribute("sList", sharedGroup); //외부 공유주소록 그룹리스트 세션에 저장
-			//session.setAttribute("recMailList", recMailList);
+			session.setAttribute("recMailList", recMailList);
 			session.setAttribute("tagList", tagList);
-//			session.setAttribute("mailFavorList", mailFavorList);
 			//session.setAttribute("alarmList", alarmList);
 			
 			session.setAttribute("jList", jList);

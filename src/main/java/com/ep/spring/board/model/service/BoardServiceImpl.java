@@ -125,7 +125,7 @@ public class BoardServiceImpl implements BoardService{
 		return bDao.deleteABoard(sqlSession, boardNo);
 	}
 
-
+	/*
 	@Override
 	public ArrayList<Attachment> selectAttList(Board b) {
 		return bDao.selectAttList(sqlSession, b);
@@ -169,8 +169,13 @@ public class BoardServiceImpl implements BoardService{
 	public int deleteAnonAttachment(Board b) {
 		return bDao.deleteAnonAttachment(sqlSession, b);
 	}
+	*/
 	
-	
+	@Override
+	public int updateBoard(Board b) {
+		return bDao.updateBoard(sqlSession, b);
+	}
+
 	
 
 	@Override
@@ -234,6 +239,7 @@ public class BoardServiceImpl implements BoardService{
 		return 0;
 	}
 
+	
 	
 
 	

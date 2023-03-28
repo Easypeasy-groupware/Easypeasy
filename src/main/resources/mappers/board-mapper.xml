@@ -12,6 +12,8 @@
 		<result column="board_content" property="boardContent" />
 		<result column="board_pin" property="boardPin" />
 		<result column="board_cname" property="boardCname" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
 	</resultMap>
 	
 	<resultMap id="attachmentResult" type="Attachment">
@@ -83,8 +85,6 @@
 		    by board_no desc
 	</select>
 	
-	
-	
 	<insert id="insertBoard">
 		insert
 		  into board
@@ -110,7 +110,6 @@
 		  , #{changeName}
 		  )
 	</insert>
-	
 	
 	<insert id="insertAttachment">
 		insert 
@@ -147,18 +146,18 @@
 	<select id="selectBoard" resultMap="boardResult">
 		select
 			   board_no
-			 , b.board_cno
+			 , board_cno
 			 , board_title
 			 , board_writer
 			 , board_content
 			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+			 , board_count
 			 , origin_name
 		     , change_name
 		  from board b
 		 where board_no = #{boardNo}
 	</select>
 	
-
 	<select id="selectAttachmentList" resultMap="attachmentResult">
 		select
 			   attach_no
@@ -194,13 +193,13 @@
 		   and ref_no = #{boardNo}
 	</select>
 	
-	
 	<update id="updateBoard">
 		update
 		       board
-		   set board_cno = #{boardCno}
-		     , board_title = #{boardTitle}
+		   set board_title = #{boardTitle}
 		     , board_content = #{boardContent}
+		     , origin_name = #{originName}
+		     , change_name = #{changeName}
 		 where board_no = #{boardNo}
 	</update>
 	
@@ -355,7 +354,7 @@
 				      , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 				   from board					
 				  where delete_status = 'N'
-				    and board_cno = 2
+				    and board_cno = 3
 				  order
 				     by create_date desc
 		        )

@@ -37,8 +37,10 @@
 	<task:scheduler id="myScheduler" pool-size="10"/>
 	<task:annotation-driven scheduler="myScheduler"/>
 	
+	<!-- interceptor -->
 	<interceptors>
 		<interceptor>
+			<mapping path="/main.ep" />
 			<mapping path="/commute.ep"/>
 			<mapping path="/list.ma"/>
 			<mapping path="/main.ap"/>
@@ -48,9 +50,7 @@
 			<mapping path="/list.bo"/>
 			<mapping path="/favorite.add"/>
 			<mapping path="/list.org"/>
-			<mapping path="/myPage.ep"/>
-			
-			<beans:bean class="com.ep.spring.common.interceptor.LoginInterceptor" id="loginInterceptor"/>
+			<beans:bean class="com.ep.spring.common.interceptor.LoginInterceptor" id="loginInterceptor" />
 		</interceptor>
 	</interceptors>
 	
@@ -77,6 +77,6 @@
 		<websocket:sockjs/>
 	</websocket:handlers>
 	
-	
-
 </beans:beans>
+
+

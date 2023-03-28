@@ -873,6 +873,59 @@
 		 order
 		    by DELETE_DATE desc
 	</select>
+	
+	<delete id="completeDeleteAddList">
+		delete
+		  from address
+		 where add_no = #{addNo}
+	</delete>
+	
+	<delete id="deleteFavList">
+		delete
+		  from add_fav
+		 where add_no = #{addNo}
+	</delete>
+	
+	<update id="restoreAddList">
+		update
+		       address
+		   set add_bin = 'N'
+		 where add_no = #{addNo}
+	</update>
+	
+	<select id="selectAllSharedAddress" resultMap="addressResult">
+	   select      
+		       ADD_NO
+		     , a.EMP_NO
+		     , a.ADD_TYPE
+		     , ADD_NAME
+		     , EMAIL
+		     , PHONE
+		     , ADD_EMP
+		     , ADD_DEPT
+		     , ADD_JOB
+		     , a.GROUP_NO
+		     , GROUP_NAME
+		     , EMP_PHONE
+		     , EMP_ADDRESS
+		     , MEMO
+		     , CREATE_DATE
+		     , MODIFY_DATE
+		     , DELETE_DATE
+		     , ADD_BIN
+		     , EDITABLE
+		 from address a
+         left join add_group g on (a.group_no = g.group_no)
+		 where a.add_type = 'S'
+		   and add_bin = 'Y'
+	</select>
+	
+	<update id="updateSharedGroupName">
+		update
+		       add_group
+		   set group_name = #{groupName}
+		 where group_no = #{groupNo}
+	</update>
 
 
 </mapper>
