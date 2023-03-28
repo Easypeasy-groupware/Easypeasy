@@ -14,7 +14,7 @@
     /* 게시판 스타일 */
     .board {width: 1000px;float: right;}
     .container {margin: 20px auto; width: 900px; padding: 20px;}
-	h2 {padding:1% 1%;}
+	h4 {padding-left: 25px; padding-top: 15px; float: left		!important;}
 	table {border-collapse: collapse; width: 100%;}
 	tr {text-align: center;}
 	th, td {text-align: center; padding: 8px; border-bottom: 1px solid #ccc;}
@@ -44,8 +44,8 @@
         <div class="board">
           <!-- 게시판 내용 -->
           <bheader>
-            <h2>자유게시판</h2>
-            <br>
+            <h4><b style="color:rgb(93, 109, 75);">자유게시판</b></h4>
+            <br><br><br><br>
          </bheader>
         <div class="container">
             <!-- <form>
@@ -79,6 +79,7 @@
                     	 </c:if> --%>
                         <th>글번호</th>
                         <th>제목</th>
+                        <th>작성자</th>
                         <th>작성일</th>
                         <th>조회수</th>
                     </tr>
@@ -91,6 +92,7 @@
 	                    	 </c:if> --%>
 	                        <td class="bno">${b.boardNo}</td>
 	                        <td class="notice">${b.boardTitle}</td>
+	                        <td>익명</td>
 	                        <td>${b.createDate}</td>
 	                        <td>${b.boardCount}</td>
 	                    </tr>

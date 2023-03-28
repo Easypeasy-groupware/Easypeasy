@@ -289,9 +289,19 @@
                         $("#sDate").datepicker("setDate", yymmddStart);
                         $("#eDate").datepicker("setDate", yymmddEnd);
                     }else if(yymmddStart < tDate) { // 오늘 날짜 이전 선택시
-                    	alert("예약 불가능한 날짜");
+                    	swal({
+								title: "예약 불가", 
+								text: "이미 지나간 날짜는 예약이 불가합니다", 
+								icon: "error",
+								button: "확인",
+							});
                     }else if(hhmmStart < tHhmm) { // 오늘 날짜에서 지나간 시간 선택시
-                        alert("예약 불가능한 시간");
+                    	swal({
+								title: "예약 불가", 
+								text: "이미 지나간 시간은 예약이 불가합니다", 
+								icon: "error",
+								button: "확인",
+							});
                     }else{
                         
                     	$("#myModal").modal("show");
@@ -367,6 +377,7 @@
             } 
         }
 
+        /*
         // 전사일정 체크 확인
         function showHidden(){
             if($("input:checkbox[id='company']").is(":checked") == true) {
@@ -375,6 +386,7 @@
                 $(".body").attr("hidden", false);
             }
         }
+        */
     </script>
 
 </body>

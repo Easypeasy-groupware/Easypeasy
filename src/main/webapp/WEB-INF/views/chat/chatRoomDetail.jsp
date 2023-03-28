@@ -81,7 +81,18 @@
 </style>
 </head>
 <body>
-
+	<audio id='audio_play' src='resources/chat-audioFiles/chat-alarm.mp3'></audio>
+	<script type="text/javascript"> 
+		function play() { 
+		    var audio = document.getElementById('audio_play'); 
+		    if (audio.paused) { 
+		        audio.play(); 
+		    }else{ 
+		        audio.pause(); 
+		        audio.currentTime = 0 
+		    } 
+		} 
+	</script>
 	<div class="chat">
 		<div class="room-header">
 			 <div class="room-info">
@@ -101,7 +112,7 @@
 			 </div>
 			 <div class="room-manage">
 			 	<span id="member-count1">👩🏻‍🤝‍🧑🏻</span><span id="member-count2">${ room.count }</span>
-			 	<span id="member-add"ㄴㄴㄴ>➕</span>
+			 	<span id="member-add">➕</span>
 			 	<span id="room-exit">🚪</span>
 			 </div>
 		</div>
@@ -130,6 +141,7 @@
 		        		<c:otherwise>
 		        		
 		        			<div class="chat-message other">
+		        			
 					            <div class="icon"><img src="<c:out value='${msg.empProfile}' default='resources/chat-images/rockstar.png'/>"></div>
 					            <div class="msg-wrap">
 					            	<div class="user-info"><span class="user-name">${msg.empName}</span> <span class="user-job">${msg.jobName}</span></div>
@@ -218,7 +230,7 @@
 	 	// 추가 된 것이 내가 보낸 것인지, 상대방이 보낸 것인지 확인 후 추가
         function CheckMO(data) {
         	let newMsg = "";
-        	
+        	let netSetting;
         	if(data.chatType == "msg"){
             // empNo가 loginSession의 empNo와 다르면 other, 같으면 mine
             const MO = (data.empNo != "${ loginUser.empNo }") ? "other" : "mine";
@@ -257,11 +269,15 @@
 		        				/* + '<span>' + data.unReadCount + '</span>' */
 		        			+'</div>'
 		        		+'</div>';
+		        play();
             }
             
         	}else if(data.chatType == "title"){
         		newMsg = '<div class="chat-user">방 이름이 <b>' + data.message + '</b>로 변경되었습니다</div>';
+        		newSetting = data.message;
+        		$("#room-name").text(data.message);
         	}
+        	
         	
             $(".chat-area").append(newMsg);	
             $(".chat-area").scrollTop($(".chat-area").prop('scrollHeight'));

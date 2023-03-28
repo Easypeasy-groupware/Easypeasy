@@ -104,7 +104,7 @@
               <div align="center">
                 <button type="button" class="btn btn-dark" onclick="javascript:history.go(-1);">이전으로</button>
                 <button type="submit" class="btn btn-success">수정하기</button>
-                <button type="button" class="btn btn-danger" onclick="location.href='delete.bo';">삭제하기</button>
+                <!-- <button type="button" class="btn btn-danger" onclick="location.href='delete.bo';">삭제하기</button> -->
               </div>
               </form>
         </div>

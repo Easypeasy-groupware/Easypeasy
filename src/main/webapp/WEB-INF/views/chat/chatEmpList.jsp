@@ -19,6 +19,7 @@
 	/*채팅방 헤더*/
 	.chat-header{margin:10px; height:50px;}
 	.chat-title{float:left; height:50px; line-height:50px; padding-left:10px; font-weight:600; width:90%;}
+	.chat-title:hover{cursor:pointer;}
 	.room-manage{float:left; height:50px; line-height:50px;}
 	.room-manage span:hover{cursor:pointer; font-size:18px;}
 	
@@ -63,12 +64,22 @@
         	</div>
         	
         	<div class="search-area">
-        	<form action="" method="post">
-        		<input type="text" id="searchEmp" name="empNo">
-        		<a href="#"><img src="resources/common_images/search-icon.png"></a>
-        	</form>
+        	
+       		<input type="text" id="searchEmp" name="empNo">
+       		<a href="#"><img src="resources/common_images/search-icon.png" id="search-icn"></a>
+        	
         	</div>
         </div>
+        <script>
+        	$(".chat-title").click(function(){
+        		if($(".search-area").css("display")!="none"){
+        			$(".chat-header").css("height", "50px");
+         			$(".list-area").css("height", "480px");
+             		$(".search-area").hide();
+        		}
+        		$(".list-area").stop().animate({"scrollTop":0}, 100, "swing");
+        	})
+        </script>
         <script> 		
          	$("#room-search").click(function(){
          		if($(".search-area").css("display")=="none"){
@@ -116,27 +127,114 @@
 			</c:forEach>
 
 		</div><!-- list-area끝 -->
-		
+		<script>				
+			$("#searchEmp").keyup(function(){
+				let keyword = $("#searchEmp").val();
+				$.ajax({
+					url:"searchEmp.ch",
+					data:{
+						empNo:${loginUser.empNo},
+						empName:keyword
+					},
+					success:function(list){
+						let value="";
+						for(let i=0; i<list.length; i++){
+							value += '<div class="indiv-list">'
+										+ '<input type="hidden" name="empNo" value="'+ list[i].empNo +'">'
+										+ '<div class="img-area">';
+										if(list[i].empProfile == null){
+											value += '<img src="resources/chat-images/rockstar.png">';
+										}else{
+											value += '<img src="'+ list[i].empProfile +'">';
+										}
+											
+								value += '</div>'
+										+ '<div class="room-info">'
+											+ '<span class="dept-name">'+ list[i].deptName +'</span>'
+											+ '<span class="emp-name">'+ list[i].empName +'</span>'
+											+ '<span class="job-name">'+ list[i].jobName +'</span>';
+										if(list[i].status == 'WO'){
+											value += ' <span class="badge work-status rounded-pill text-bg-success">근무중</span>';
+										}else if(list[i].status == 'ME'){
+											value += ' <span class="badge work-status rounded-pill text-bg-secondary">회의중</span>';
+										}else{
+											value += ' <span class="badge work-status rounded-pill text-bg-light">부재중</span>';
+										}
+											
+									value += '</div>'
+									+ '</div>';	
+						}
+						$(".list-area").html(value);
+						
+					}
+				})
+			})
+			$("#search-icn").click(function(){
+				let keyword = $("#searchEmp").val();
+				$.ajax({
+					url:"searchEmp.ch",
+					data:{
+						empNo:${loginUser.empNo},
+						empName:keyword
+					},
+					success:function(list){
+						let value="";
+						for(let i=0; i<list.length; i++){
+							value += '<div class="indiv-list">'
+										+ '<input type="hidden" name="empNo" value="'+ list[i].empNo +'">'
+										+ '<div class="img-area">';
+										if(list[i].empProfile == null){
+											value += '<img src="resources/chat-images/rockstar.png">';
+										}else{
+											value += '<img src="'+ list[i].empProfile +'">';
+										}
+											
+								value += '</div>'
+										+ '<div class="room-info">'
+											+ '<span class="dept-name">'+ list[i].deptName +'</span>'
+											+ '<span class="emp-name">'+ list[i].empName +'</span>'
+											+ '<span class="job-name">'+ list[i].jobName +'</span>';
+										if(list[i].status == 'WO'){
+											value += ' <span class="badge work-status rounded-pill text-bg-success">근무중</span>';
+										}else if(list[i].status == 'ME'){
+											value += ' <span class="badge work-status rounded-pill text-bg-secondary">회의중</span>';
+										}else{
+											value += ' <span class="badge work-status rounded-pill text-bg-light">부재중</span>';
+										}
+											
+									value += '</div>'
+									+ '</div>';	
+						}
+						$(".list-area").html(value);
+						
+					}
+				})
+			})
+		</script>
 	
 		<script>
 			$(function(){
 				let count = 0;
-				$(".indiv-list").each(function(){
-					$(this).click(function(){
+				$(".list-area").on("click", ".indiv-list", function(){
+					$(".indiv-list").each(function(){
+						$(this).click(function(){
 
-						count++;
-						let no = $(this).children("input").val();
-						
-						var wName = "room" + no; // 새창의이름
+							count++;
+							let no = $(this).children("input").val();
+							
+							var wName = "room" + no; // 새창의이름
 
-						var options = 'top=500, left=1400, width=400, height=600, status=no, menubar=no, toolbar=no, titlebar=no, resizable=no, location=no, scrollbars=no';
-						var url = "chatRoom.ch?no=" + no;
-						window.open(url, wName, options);
+							var options = 'top=500, left=1400, width=400, height=600, status=no, menubar=no, toolbar=no, titlebar=no, resizable=no, location=no, scrollbars=no';
+							var url = "chatRoom.ch?no=" + no;
+							window.open(url, wName, options);
+						})
 					})
 				})
 				
+				
 			})
 		</script>
+		
     </div>
     <jsp:include page="chatFooter.jsp"/>
     

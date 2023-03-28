@@ -57,8 +57,8 @@
               
               
               <label for="file">파일첨부</label>
-                  <!-- <input type="file" id="board_files" name="originNames" multiple="multiple" /><br> -->
-                  <table>
+                  <input type="file" id="upfile" class="form-control-file border" name="upfile"><br>
+                  <!-- <table>
                   	<tr>
 	                  <td>
 		                  <button id="file_choose" type="button" class="btn btn-secondary btn-sm">파일 선택</button>
@@ -74,7 +74,7 @@
 	                        </div>
 	                        <input id="attach_files" type="file" multiple="multiple" accept="image/*,text/*,audio/*,video.*,.hwp.,.zip" name="originNames" style="display: none;">
 	                 </td>
-                  </table>
+                  </table> -->
               <br>    
               
               
@@ -93,7 +93,7 @@
         </div>
 	</div>
 	
-        <script>
+       <!--  <script>
      	// 첨부파일 업로드 하기
        let fileNames = [];
         let noAttach = document.getElementById("no_attachment");
@@ -155,7 +155,7 @@
             noAttach.style.display = "block";
         });
         
-        </script>
+        </script> -->
 	
 </body>
 </html>

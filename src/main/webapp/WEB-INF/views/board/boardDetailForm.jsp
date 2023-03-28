@@ -15,7 +15,7 @@
     .board {width: 1000px;float: right;}
     .container {margin: 20px auto; width: 900px; padding: 20px;}
     .replyContent{margin: 20px auto; width: 900px; padding: 10px;}
-	h2 {padding:1% 1%;}
+	h4 {padding-left: 25px; padding-top: 15px; float: left		!important;}
 	table {border-collapse: collapse; width: 100%;}
 	tr {text-align: center;}
 	th, td {text-align: center; padding: 8px; border-bottom: 1px solid #ccc;}
@@ -32,7 +32,9 @@
        
         <div class="board">
         
-        	 <h1>${b.boardCno}</h1><br><br>
+        	 <h4><b style="color:rgb(93, 109, 75);">전체 공지사항</b></h4> <br><br><br><br>
+        	 
+        	 
     
 		    <div class="container" style="width:1000px">
 		    	
@@ -70,7 +72,7 @@
 		                        조회수 : ${b.boardCount }
 		                    </td>
 		                    <td>
-		                        작성자 : ${b.boardWriter}
+		                        작성자 : ${b.empName}
 		                    </td>
 		                    <td>
 		                        등록일 : ${b.createDate}
@@ -91,7 +93,7 @@
 		                </tr>
 		                <tr>
 		                    <td colspan="4">
-		                        <p style="height:150px">
+		                        <p style="height:400px">
 		                        	${b.boardContent}
 		                        </p>
 		                    </td>

@@ -14,7 +14,7 @@
     /* 게시판 스타일 */
     .board {width: 1000px;float: right;}
     .container {margin: 20px auto; width: 900px; padding: 20px;}
-	h2 {padding:1% 1%;}
+	h4 {padding-left: 25px; padding-top: 15px; float: left		!important;}
 	table {border-collapse: collapse; width: 100%;}
 	tr {text-align: center;}
 	th, td {text-align: center; padding: 8px; border-bottom: 1px solid #ccc;}
@@ -45,29 +45,37 @@
         <div class="board">
           <!-- 게시판 내용 -->
           <bheader>
-            <h2>전체 공지사항</h2>
-            <br>
+            <h4><b style="color:rgb(93, 109, 75);">전체 공지사항</b></h4>
+            <br><br><br><br>
          </bheader>
         <div class="container">
-            <form>
-               <!--  <div class="search-container">
-                
-                    <select>
+        <div id="search-container">
+            <form action="listSearch.bo" method="get">
+            	
+            	<input type="hidden" name="cpage" value="1">
+             	
+                	
+                   <!--  <select>
                         <option value="all">전체</option>
                         <option value="1">1일</option>
                         <option value="7">1주일</option>
                         <option value="30">1개월</option>
-                    </select>
+                    </select> -->
                     
-                    <select>
+                    <select name="condition">
                         <option value="title">제목</option>
-                        <option value="author">작성자</option>
+                        <!-- <option value="author">작성자</option> -->
                         <option value="content">내용</option>
                     </select>
-                        <input type="text" placeholder="검색">
-                        <button type="button" class="btn btn-success btn-sm" onclick="search()">검색</button>
-                </div> -->
+                        <input type="text" name="keyword" value="${ keyword }">
+                        <button type="submit" class="btn btn-success btn-sm">검색</button>
+                
             </form>
+            </div> 
+            <script>
+	        	document.querySelector("#search-container option[value=${condition}]").selected = true;
+	        </script>
+            
             <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enrollForm.bo';">새글쓰기</button>
             <%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> 
             	<button type="button" class="btn btn-outline-danger btn-sm" onclick="location.href='delete.bo';"> 삭제</button>
@@ -94,7 +102,7 @@
 	                    	 </c:if> --%>
 	                        <td class="bno">${b.boardNo}</td>
 	                        <td class="notice">${b.boardTitle}</td>
-	                        <td>${b.boardWriter}</td>
+	                        <td>${b.empName}</td>
 	                        <td>${b.createDate}</td>
 	                        <td>${b.boardCount}</td>
 	                    </tr>
