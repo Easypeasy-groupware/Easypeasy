@@ -21,6 +21,8 @@
 	th, td {text-align: center; padding: 8px; border-bottom: 1px solid #ccc;}
 	th {background-color: #ddd;}
 	.views {text-align: center;}
+	#replyArea td { resize:none; vertical-align: middle;}
+	.reply_content{min-height: 25px; max-height: 200px;}
 </style>
 </head>
 <body>
@@ -93,7 +95,7 @@
 		                </tr>
 		                <tr>
 		                    <td colspan="4">
-		                        <textarea style="height:400px; width:100%; border:none; text-align:left;" readonly>
+		                        <textarea style="height:400px; width:100%; border:none; text-align:left; resize:none;" readonly>
 		                        	${b.boardContent}
 		                        </textarea>
 		                    </td>
@@ -103,16 +105,16 @@
 		    </div>
 		
 		    <div class="replyContent" style="width:1000px" >
-		        <table id="replyArea" class="table" align="center" border="1px, solid">
+		        <table id="replyArea" class="table" style="align:center; boder:1px solid; width:990px;">
 		            <thead>
 		                <tr>
-		                    <td colspan="4">댓글 (<span id="rcount">3</span>) </td> 
+		                    <td colspan="5">댓글 (<span id="rcount"></span>) </td> 
 		                </tr>
 			            <tr>
 			                <th colspan="3">
-			                     <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%"></textarea>
+			                     <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:800px"></textarea>
 			                 </th>
-			                  <th style="vertical-align: middle"><button class="btn btn-secondary"  onclick="addReply();">등록하기</button></th>
+			                  <th style="vertical-align: middle; width:100px;"><button class="btn btn-secondary" style="width:100px; height:60px;" onclick="addReply();">등록하기</button></th>
 			            </tr>
 		            </thead>
 		            <tbody>
@@ -203,12 +205,14 @@
         				let value = "";
         				for(let i=0; i<list.length; i++){
         					value += "<tr>"
-        							+	"<td>" + list[i].replyWriter + "</td>"
-        							+	"<td>" + list[i].replyContent + "</td>"
-        							+	"<td>" + list[i].createDate + "</td>"
-        							+  "<td>" + "<a onclick='deleteReply(" + list[i].replyNo + ")'>" + "삭제" + "</a>" 
-        				/* 			+ "|"
-        							+  "<a onclick='updateReply(" + list[i].replyNo + ",\"" + list[i].replyContent + "\")'>" +"수정"+"</a>"     */
+        							+	"<td style='width:110px;'>" + list[i].empName + "</td>"
+        							+	"<td style='width:800px;'>" + list[i].replyContent + "</td>"
+        							+	"<td style='width:200px;'>" + list[i].createDate + "</td>"
+        							if(list[i].replyWriter == ${loginUser.empNo}){
+        								value +=  "<td>" + "<a onclick='deleteReply(" + list[i].replyNo + ")'>" + "삭제" + "</a>";
+        							}else{
+        								value +=  "<td>";
+        							}
         							+ "</td>"
         							+"</tr>";
         				}

@@ -111,7 +111,6 @@
 		            			location.href='detailForm.bo?no=' + $(this).children(".bno").text();
 		            	})
 		            })
-		            
 		          
 	                /* // 체크박스 
 	                $(document).ready(function() {
