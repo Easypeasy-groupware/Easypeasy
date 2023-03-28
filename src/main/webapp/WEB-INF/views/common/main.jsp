@@ -471,13 +471,13 @@
 					</tr>
 					<tr>
 						<td id="in-time">
-							<c:if test="${ not empty c.startTime }">
-	                    		${ c.startTime }
+							<c:if test="${ not empty userCom.startTime }">
+	                    		${ userCom.startTime }
 	                    	</c:if>
                     	</td>
 						<td id="out-time">
-							<c:if test="${ not empty c.endTime }">
-	                    		${ c.endTime }
+							<c:if test="${ not empty userCom.endTime }">
+	                    		${ userCom.endTime }
 	                    	</c:if>
 						</td>
 					</tr>
@@ -564,7 +564,6 @@
                         
                         
     	                inTimeInsertAjax(today);
-    	                
     	                
     	                
     	            }

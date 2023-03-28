@@ -20,6 +20,8 @@ import com.ep.spring.chat.model.vo.ChatSession;
 //import com.ep.spring.chat.model.vo.ChatSession;
 import com.ep.spring.common.model.vo.AlertMsg;
 import com.ep.spring.common.template.FileUpload;
+import com.ep.spring.commute.model.service.CommuteService;
+import com.ep.spring.commute.model.vo.Commute;
 import com.ep.spring.login.model.service.EmployeeService;
 import com.ep.spring.login.model.vo.Department;
 import com.ep.spring.login.model.vo.Employee;
@@ -43,7 +45,8 @@ public class EmployeeController {
 	private AddressService aService;
 	@Autowired
 	private OrgService oService;
-	
+	@Autowired
+	private CommuteService cService;
 	@Autowired
 	private MailService mService;
 	@Autowired
@@ -76,14 +79,14 @@ public class EmployeeController {
 		
 		
 		int empNo = loginUser.getEmpNo();
-		System.out.println(empNo);
+		//System.out.println(empNo);
 		
 		ArrayList<Employee> list = oService.selectOrgList(empNo);
 		ArrayList<Department> deptList = oService.selectDept();
 		ArrayList<Job> jList = oService.selectJob();
 		ArrayList<Calendar> myCalList = scService.selectMyCalendar(empNo);
 		
-		
+		Commute c = cService.commuteMainPage(empNo);
 		
 		/* 채팅 */
         // 현재 로그인 한 User 채팅 Session ArrayList에 추가.
@@ -127,6 +130,8 @@ public class EmployeeController {
 			session.setAttribute("list", list);
 			session.setAttribute("myCalList", myCalList);
 			
+			session.setAttribute("userCom", c);
+			
 			cSession.addLoginChatUser(loginUser.getEmpNo());
 			
 			return "common/main";
@@ -156,8 +161,10 @@ public class EmployeeController {
 	// 메인페이지 이동
 	@RequestMapping("main.ep")
 	public String mainPage(HttpSession session) {
-		
-		
+		Employee e = (Employee) session.getAttribute("loginUser");
+		int empNo = e.getEmpNo();
+		Commute c = cService.commuteMainPage(empNo);
+		session.setAttribute("userCom", c);
 		
 		return "common/main";
 	}
