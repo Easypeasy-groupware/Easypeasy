@@ -391,10 +391,15 @@
 						mailOne.addEventListener('click', function(){
 							const form = document.createElement("form");
 							const table = document.createElement("table");
-							const tr = this.cloneNode(true)
+							const tr = this.cloneNode(true);
+							const input = document.createElement("input");
+							input.setAttribute("style", "display:none")
+							input.setAttribute("name", "div");
+							input.setAttribute("value", 1);
 							table.append(tr);
 							form.append(table);
-							form.setAttribute("style", "display:none;")
+							form.append(input);
+							form.setAttribute("style", "display:none;");
 							form.action = "select.ma";
 							form.method = "POST";
 							document.body.append(form);
