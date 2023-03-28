@@ -307,18 +307,17 @@
             let mailSelectList = document.querySelectorAll('.mail_select_area');
             mailSelectList.forEach(function(select){
                 select.addEventListener('click', function(){
+                    const input = document.createElement("input");
+                    input.setAttribute("style", "display:none")
+                    input.setAttribute("name", "div");
+                    input.setAttribute("value", 2);
+                    this.append(input);
                     this.action = "select.ma";
                     this.method = "POST";
                     this.submit();
+
                 });
             });
-
-            // 페이징
-            $(function(){
-                    $("#ps-tbody").on("click", "tr", function(){
-                        location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
-                    })
-                })
 
             // 전체 체크박스 선택 취소
             let checkAll = document.getElementById("check_all");

@@ -110,12 +110,22 @@ public class MailDao {
 		return result;
 	}
 
-	public int completeDeleteMail(Mail m, SqlSessionTemplate sqlSession) {
-		return sqlSession.delete("mailMapper.completeDeleteMail", m);
+	public int completeDeleteMail(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
+		int result = 0;
+		if(recMailNoList.length > 0) {
+			for(int mail : recMailNoList) {
+				m.setRecMailNo(mail);
+				result += sqlSession.update("mailMapper.completeDeleteMail", m);
+			}
+		}else {
+			result = sqlSession.update("mailMapper.completeDeleteMail", m);
+		}
+		return result;
 	}
 
 	public int spamEnroll(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
 		int result = 0;
+		System.out.println(recMailNoList);
 		if(recMailNoList.length > 0) {
 			for(int mail : recMailNoList) {
 				m.setRecMailNo(mail);
@@ -269,6 +279,32 @@ public class MailDao {
 
 	public MailTag selectTag(MailTag t, SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("mailMapper.selectTag", t);
+	}
+
+	public ArrayList<Mail> selectDeleteMailList(String email, SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("mailMapper.selectDeleteMailList", email);
+	}
+
+	public int restoreDeleteMail(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
+		int result = 0;
+		if(recMailNoList.length > 0) {
+			for(int mail : recMailNoList) {
+				m.setRecMailNo(mail);
+				result += sqlSession.update("mailMapper.restoreDeleteMail", m);
+			}
+		}else {
+			result = sqlSession.update("mailMapper.restoreDeleteMail", m);
+		}
+		return result;
+	}
+
+	public int completeDeleteMailAll(String email, Mail m, SqlSessionTemplate sqlSession) {
+		int result = 0;
+		if(m.getStatus() != null) {
+			return sqlSession.delete("mailMapper.completeDeleteMailAll1", email);
+		}else {
+			return sqlSession.delete("mailMapper.completeDeleteMailAll2", email);
+		}
 	}
 
 	

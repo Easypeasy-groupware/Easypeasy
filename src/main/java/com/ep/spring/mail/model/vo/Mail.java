@@ -13,6 +13,7 @@ public class Mail {
 	
 	private int recMailNo;
 	private int mailNo;
+	private int refNo;
 	private int tagNo;
 	private String tagName;
 	private String tagColor;

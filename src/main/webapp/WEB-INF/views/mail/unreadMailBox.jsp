@@ -311,9 +311,15 @@
             let mailSelectList = document.querySelectorAll('.mail_select_area');
             mailSelectList.forEach(function(select){
                 select.addEventListener('click', function(){
+                    const input = document.createElement("input");
+                    input.setAttribute("style", "display:none")
+                    input.setAttribute("name", "div");
+                    input.setAttribute("value", 6);
+                    this.append(input);
                     this.action = "select.ma";
                     this.method = "POST";
                     this.submit();
+
                 });
             });
 

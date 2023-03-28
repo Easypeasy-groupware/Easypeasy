@@ -31,6 +31,8 @@ public interface MailService {
 	ArrayList<Mail> selectSendMailList(PageInfo mailPi, String email);
 	// - 태그 한 메일 리스트 조회
 	ArrayList<Mail> selectTaggingMailList(MailTag t, PageInfo mailPi);
+	// - 삭제한 메일 리스트 조회
+	ArrayList<Mail> selectDeleteMailList(String email);
 	
 	/* 2. 태그 생성 */
 	int insertTag(MailTag t);
@@ -64,10 +66,13 @@ public interface MailService {
 	
 	/* 6. 휴지통 보내기 */
 	int deleteMail(Mail m, int[] recMailNoList);
-
+	// - 메일 복원
+	int restoreDeleteMail(Mail m, int[] recMailNoList);
 	
-	/* 7. 비우기 처리(영구 삭제) */
-	int completeDeleteMail(Mail m);
+	/* 7. 영구 삭제 */
+	int completeDeleteMail(Mail m, int[] recMailNoList);
+	// - 비우기 버튼 일괄 삭제
+	int completeDeleteMailAll(String email, Mail m);
 	// - 보낸 메일 삭제
 	int deleteSendMail(int[] mailNoList);
 
@@ -93,6 +98,9 @@ public interface MailService {
 	int enrollFavorMailBox(MailFavorite mf);
 	// - 삭제
 	int deleteFavorMailBox(MailFavorite mf);
+	
+	
+	
 
 	
 	
