@@ -27,6 +27,7 @@
 		
 	}
     .groupNames img{width:15px;}
+    .groupNames img:hover{cursor:pointer;}
     
     .each-group{display:inline-block; width:150px;}
     .input-name{
@@ -42,6 +43,8 @@
     .group-rename{width:30px; pading:10px;}
     .group-delete{width:30px; pading:10px;}
     
+    .group-rename:hover{cursor: pointer;}
+    input{padding-left:5px;}
     
     /*스크롤*/
 	#psLike::-webkit-scrollbar, #pbLike::-webkit-scrollbar{width:5px;}
@@ -103,12 +106,15 @@
 								groupNo : no.val()
 							},
 							success:function(result){
+								/*
 								if(result>0){
 									name.hide();
 									no.hide();
 									search.hide();
 									group.text(val).show();
 								}
+								*/
+								location.reload();
 							},
 							error:function(){
 		    					console.log("공용주소록그룹 수정 실패");
@@ -118,8 +124,20 @@
 					
 					$(".address-content-outer").on("click", ".group-delete", function(){
 						let no = $(this).parent().siblings(".groupNo").val();
-						location.href="adminDel.add?no=" + no;
-					}
+						$.ajax({
+							url:"adminDel.add",
+							data:no,
+							success:function(msg){
+								
+								location.reload();
+							},
+							error:function(){
+		    					console.log("공용주소록그룹 삭제 실패");
+		    				}
+							
+						});
+						
+					})
 					
 				})
 			</script>
