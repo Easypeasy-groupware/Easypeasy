@@ -288,7 +288,7 @@
                                     <tr height="55">
                                         <th>장소</th>
                                         <td colspan="2">
-                                            <input type="text" name="scPlace" size="80" placeholder=" 장소를 입력하세요" required>
+                                            <input type="text" name="scPlace" size="80" placeholder=" 장소를 입력하세요">
                                         </td>
                                     </tr>
                                 </tfoot>

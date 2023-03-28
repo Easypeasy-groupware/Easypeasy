@@ -136,7 +136,7 @@
 				<br>
 				<!-- 경영지원팀만 글작성 할 수 있도록 -->
 				<c:if test="${ loginUser.deptCode eq 'D2' }">
-					<a class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white; margin-left: 940px; margin-bottom: -15px;" href="enrollForm.db">글쓰기</a>
+					<a class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white; margin-left: 30px; margin-bottom: -15px;" href="enrollForm.db">글쓰기</a>
 				</c:if>
 				<br><br>
 				<div class="list-outer">

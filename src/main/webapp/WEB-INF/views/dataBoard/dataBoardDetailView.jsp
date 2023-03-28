@@ -124,14 +124,14 @@
                         <td style="text-align: left;">
                             <a href="${ db.changeName }" download="${ db.originName }">${ db.originName }</a>
                             <c:if test="${fn:contains(db.changeName, 'pdf')}">
-                            	<a style="margin-left: 20px; font-weight:bold;" href="openPdf.db" onClick="window.open(this.href, '', 'width=700, height=500'); return false;" target="_blanck">미리보기</a>
+                            	<a style="margin-left: 20px; font-weight:bold;" href="openPdf.db" onClick="window.open(this.href, '', 'width=900, height=600'); return false;" target="_blanck">미리보기</a>
                             </c:if>
                         </td>
                     </tr>
                 </tfoot>
             </table>
             <br>
-            <div style="margin-left: 955px">
+            <div style="margin-left: 950px">
                 <a href="list.db" class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">목록</a>
             </div>
             <br>

@@ -385,9 +385,19 @@
                         $("#sDate").datepicker("setDate", yymmddStart);
                         $("#eDate").datepicker("setDate", yymmddEnd);
                     }else if(yymmddStart < tDate) { // 오늘 날짜 이전 선택시
-                    	alert("예약 불가능한 날짜");
+                    	swal({
+								title: "예약 불가", 
+								text: "이미 지나간 날짜는 예약이 불가합니다", 
+								icon: "error",
+								button: "확인",
+							});
                     }else if(hhmmStart < tHhmm) { // 오늘 날짜에서 지나간 시간 선택시
-                        alert("예약 불가능한 시간");
+                    	swal({
+								title: "예약 불가", 
+								text: "이미 지나간 시간은 예약이 불가합니다", 
+								icon: "error",
+								button: "확인",
+							});
                     }else{
                         
                     	$("input[name=resourceNo]").val(info.resource.id); // info.resource.id : 해당 이벤트 아이디 반환해줌

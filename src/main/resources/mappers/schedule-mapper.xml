@@ -266,6 +266,7 @@
 		update
 			   schedule
 		   set sc_title = #{scTitle}
+		   	 , cal_no = #{calNo}
 		  	 , sc_place = #{scPlace}
 		  	 , sc_content = #{scContent}
 		  	 , start_date = #{startDate}
