@@ -347,12 +347,6 @@
                 hiddenRefence.style.display = "none";
             });
 
-            // 에디터 내용이 비었는지 체크
-            // if ($('#summernote').summernote('isEmpty')) {
-            //     alert('editor content is empty');
-            // }
-
-                
             // 첨부파일 업로드1 (버튼 클릭 방식)
             let fileNames = [];
             let noAttach = document.getElementById("no_attachment");
@@ -485,12 +479,7 @@
                         contentType:false,
                         success: function(result){
                             if(result == 1){
-                                if(sock){
-                                    var msg = null;
-                                    <c:forEach var="m" items="${ mList }" >
-                                    </c:forEach>
-                                    sock.send(msg);
-                                }
+                                location.href="sendList.ma";
                             }
                         }, error:function(){
 

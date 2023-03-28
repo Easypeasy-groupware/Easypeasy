@@ -99,10 +99,12 @@ public class MailDao {
 
 	public int deleteMail(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
 		int result = 0;
-		if(recMailNoList.length > 0) {
-			for(int mail : recMailNoList) {
-				m.setRecMailNo(mail);
-				result += sqlSession.update("mailMapper.deleteMail", m);
+		if(recMailNoList != null) {
+			if(recMailNoList.length > 0) {
+				for(int mail : recMailNoList) {
+					m.setRecMailNo(mail);
+					result += sqlSession.update("mailMapper.deleteMail", m);
+				}
 			}
 		}else {
 			result = sqlSession.update("mailMapper.deleteMail", m);
@@ -112,10 +114,12 @@ public class MailDao {
 
 	public int completeDeleteMail(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
 		int result = 0;
-		if(recMailNoList.length > 0) {
-			for(int mail : recMailNoList) {
-				m.setRecMailNo(mail);
-				result += sqlSession.update("mailMapper.completeDeleteMail", m);
+		if(recMailNoList != null) {
+			if(recMailNoList.length > 0) {
+				for(int mail : recMailNoList) {
+					m.setRecMailNo(mail);
+					result += sqlSession.update("mailMapper.completeDeleteMail", m);
+				}
 			}
 		}else {
 			result = sqlSession.update("mailMapper.completeDeleteMail", m);
@@ -125,11 +129,12 @@ public class MailDao {
 
 	public int spamEnroll(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
 		int result = 0;
-		System.out.println(recMailNoList);
-		if(recMailNoList.length > 0) {
-			for(int mail : recMailNoList) {
-				m.setRecMailNo(mail);
-				result += sqlSession.update("mailMapper.spamEnroll", m);
+		if(recMailNoList != null) {
+			if(recMailNoList.length > 0 ) {
+				for(int mail : recMailNoList) {
+					m.setRecMailNo(mail);
+					result += sqlSession.update("mailMapper.spamEnroll", m);
+				}
 			}
 		}else {
 			result = sqlSession.update("mailMapper.spamEnroll", m);
@@ -139,10 +144,12 @@ public class MailDao {
 
 	public int spamClear(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
 		int result = 0;
-		if(recMailNoList.length > 0) {
-			for(int mail : recMailNoList) {
-				m.setRecMailNo(mail);
-				result += sqlSession.update("mailMapper.spamClear", m);
+		if(recMailNoList != null) {
+			if(recMailNoList.length > 0) {
+				for(int mail : recMailNoList) {
+					m.setRecMailNo(mail);
+					result += sqlSession.update("mailMapper.spamClear", m);
+				}
 			}
 		}else {
 			result = sqlSession.update("mailMapper.spamClear", m);
@@ -152,10 +159,12 @@ public class MailDao {
 
 	public int tagMail(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
 		int result = 0;
-		if(recMailNoList.length > 0) {
-			for(int mail : recMailNoList) {
-				m.setRecMailNo(mail);
-				result += sqlSession.update("mailMapper.tagMail", m);
+		if(recMailNoList != null) {
+			if(recMailNoList.length > 0) {
+				for(int mail : recMailNoList) {
+					m.setRecMailNo(mail);
+					result += sqlSession.update("mailMapper.tagMail", m);
+				}
 			}
 		}else {
 			result = sqlSession.update("mailMapper.tagMail", m);
@@ -287,10 +296,12 @@ public class MailDao {
 
 	public int restoreDeleteMail(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
 		int result = 0;
-		if(recMailNoList.length > 0) {
-			for(int mail : recMailNoList) {
-				m.setRecMailNo(mail);
-				result += sqlSession.update("mailMapper.restoreDeleteMail", m);
+		if(recMailNoList != null) {
+			if(recMailNoList.length > 0) {
+				for(int mail : recMailNoList) {
+					m.setRecMailNo(mail);
+					result += sqlSession.update("mailMapper.restoreDeleteMail", m);
+				}
 			}
 		}else {
 			result = sqlSession.update("mailMapper.restoreDeleteMail", m);
@@ -298,14 +309,18 @@ public class MailDao {
 		return result;
 	}
 
-	public int completeDeleteMailAll(String email, Mail m, SqlSessionTemplate sqlSession) {
+	public int completeDeleteMailAll(String email, String division, SqlSessionTemplate sqlSession) {
 		int result = 0;
-		if(m.getJunkMail() == null) {
+		if(division.equals("trash")) {
 			result = sqlSession.delete("mailMapper.completeDeleteMailAll1", email);
 		}else {
 			result = sqlSession.delete("mailMapper.completeDeleteMailAll2", email);
 		}
 		return result;
+	}
+
+	public int insertTempMail(Mail m, ArrayList<Mail> mList, SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("mailMapper.insertTempMail", m);
 	}
 
 	

@@ -210,8 +210,13 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public int completeDeleteMailAll(String email, Mail m) {
-		return mDao.completeDeleteMailAll(email, m, sqlSession);
+	public int completeDeleteMailAll(String email, String division) {
+		return mDao.completeDeleteMailAll(email, division, sqlSession);
+	}
+
+	@Override
+	public int insertTempMail(Mail m, ArrayList<Mail> mList, ArrayList<Attachment> atList) {
+		return mDao.insertTempMail(m, mList, sqlSession);
 	}
 
 	

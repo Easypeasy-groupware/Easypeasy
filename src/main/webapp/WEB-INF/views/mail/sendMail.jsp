@@ -129,7 +129,6 @@
                         <td></td>
                         <td colspan="2" style="text-align: left;">
                             <button id="file_choose" type="button" class="btn btn-secondary">파일 선택</button>
-                            <button type="button" class="btn btn-secondary">자료실</button>
                             <button id="file_delete" type="button" class="btn btn-secondary">모두 삭제</button>
                         </td>
                     </tr>
@@ -405,12 +404,6 @@
                         contentType:false,
                         success: function(result){
                             if(result == 1){
-                                // if(sock){
-                                //     var msg = null;
-                                //     <c:forEach var="m" items="${ mList }" >
-                                //     </c:forEach>
-                                //     sock.send(msg);
-                                // }
                                 location.href="sendList.ma";
                             }
                         }, error:function(){
@@ -444,9 +437,7 @@
                     }
                 }
 
-                if(receiver.length < 1) {
-                    alert("수신자를 입력해주세요.")
-                }else if(mailTitle.value == ""){
+                if(mailTitle.value == ""){
                     alert("제목을 입력해주세요.")
                 }else if(mailContent.value == ""){
                     alert("내용을 입력해주세요.")
@@ -469,8 +460,9 @@
                     }
 
                     formData.append('key', new Blob([JSON.stringify(data)], {type : "application/json"}));
+                    console.log(formData)
                     $.ajax({
-                        url:"send.ma",
+                        url:"temp.ma",
                         method:"POST",
                         enctype:"multipart/form-data",
                         data:formData,
@@ -478,12 +470,7 @@
                         contentType:false,
                         success: function(result){
                             if(result == 1){
-                                if(sock){
-                                    var msg = null;
-                                    <c:forEach var="m" items="${ mList }" >
-                                    </c:forEach>
-                                    sock.send(msg);
-                                }
+                                location.href = "tempList.ma"
                             }
                         }, error:function(){
 

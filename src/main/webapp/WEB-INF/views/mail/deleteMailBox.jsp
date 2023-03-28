@@ -208,13 +208,6 @@
                 });
             });
 
-            // 페이징
-            $(function(){
-                $("#ps-tbody").on("click", "tr", function(){
-                    location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
-                })
-            })
-
              // 전체 체크박스 선택 취소
             let checkAll = document.getElementById("check_all");
             let mailCheckBox = document.querySelectorAll('.mail_checkbox');
@@ -241,6 +234,7 @@
                     const form = document.createElement("form");
                     const input = document.createElement("input");
                     form.setAttribute("style", "display:none;");
+                    input.setAttribute("style", "display:none;");
                     input.setAttribute("name", "recMailNoList");
                     input.setAttribute("multiple", "multiple");
                     input.setAttribute("value", arr);
@@ -305,6 +299,7 @@
                     const form = document.createElement("form");
                     const input = document.createElement("input");
                     form.setAttribute("style", "display:none;");
+                    input.setAttribute("style", "display:none;");
                     input.setAttribute("name", "recMailNoList");
                     input.setAttribute("multiple", "multiple");
                     input.setAttribute("value", arr);

@@ -72,7 +72,7 @@ public interface MailService {
 	/* 7. 영구 삭제 */
 	int completeDeleteMail(Mail m, int[] recMailNoList);
 	// - 비우기 버튼 일괄 삭제
-	int completeDeleteMailAll(String email, Mail m);
+	int completeDeleteMailAll(String email, String division);
 	// - 보낸 메일 삭제
 	int deleteSendMail(int[] mailNoList);
 
@@ -99,6 +99,8 @@ public interface MailService {
 	// - 삭제
 	int deleteFavorMailBox(MailFavorite mf);
 	
+	/* 임시 저장 */
+	int insertTempMail(Mail m, ArrayList<Mail> mList, ArrayList<Attachment> atList);
 	
 	
 

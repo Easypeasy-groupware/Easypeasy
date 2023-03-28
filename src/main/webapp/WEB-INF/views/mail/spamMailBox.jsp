@@ -241,6 +241,8 @@
                 if(checkedBoxSum != 0) {
                     const form = document.createElement("form");
                     const input = document.createElement("input");
+                    form.setAttribute("style", "display:none;");
+                    input.setAttribute("style", "display:none;");
                     input.setAttribute("name", "recMailNoList");
                     input.setAttribute("multiple", "multiple")
                     input.setAttribute("value", arr)
@@ -263,15 +265,25 @@
                 let form = document.createElement("form");
                     mailCheckBox.forEach((i) => {
                         if(i.checked == true) {
+                            let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("recMailNo")[0].value;
+                            arr.push(value)
                             checkedBoxSum += 1;
-                            arr[count] = mailNoList[i.value].value;
-                            count += 1; 
                         }
                     })
                     console.log(arr);
 
                 if(checkedBoxSum != 0) {
-
+                    const form = document.createElement("form");
+                    const input = document.createElement("input");
+                    form.setAttribute("style", "display:none;");
+                    input.setAttribute("name", "recMailNoList");
+                    input.setAttribute("multiple", "multiple");
+                    input.setAttribute("value", arr);
+                    form.append(input);
+                    form.method = "POST";
+                    form.action = "completeDelete.ma";
+                    document.body.append(form);
+                    form.submit();
                 }else{
                     alert('체크박스를 선택해주세요');
                 }

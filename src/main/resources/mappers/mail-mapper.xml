@@ -545,33 +545,18 @@
 	
 	<select id="selectTempMailList" resultMap="MailResult">
 		select
-		       RECEP_MAIL_NO
-			 , s.MAIL_NO
-			 , TAG_NO
-			 , emp_name
-			 , r.recep_MAIL_ADDRESS
-			 , r.send_mail_address
-			 , s.MAIL_TITLE
-			 , s.MAIL_CONTENT
-			 , REC_CHECK
-			 , rec_date
+			   MAIL_NO
+			 , send_mail_address
+			 , MAIL_TITLE
+			 , MAIL_CONTENT
 			 , sent_date
-			 , IMPOR_MAIL
-			 , JUNK_MAIL
-			 , RESER_MAIL
-			 , r.STATUS
-			 , REFERENCE
-			 , HIDDEN_REFERENCE
-	      from send_mail s
-          join rec_mail r on s.mail_no = r.mail_no
-          join employee e on r.recep_mail_address = email
+			 , STATUS
+	      from send_mail 
 	     where 
-			   s.send_mail_address = #{email}
-		   and r.status = 'T'
-           and s.status = 'Y'
-           and s.temp_storage = 'Y'
+			   send_mail_address = #{ sendMailAdd }
+           and temp_storage = 'T'
 	     order
-	        by recep_mail_no desc
+	        by MAIL_NO desc
 	</select>
 	
 	<update id="enrollImporMail">
@@ -709,4 +694,26 @@
 		   	   recep_mail_address = #{ email }
 		   and junk_mail = 'Y'
 	</delete>
+	
+	<insert id="insertTempMail">
+		insert 
+		  into send_mail
+		  (
+		  	MAIL_NO
+		  ,	SEND_MAIL_ADDRESS
+		  ,	SENT_DATE
+		  ,	MAIL_TITLE
+	      ,	MAIL_CONTENT
+		  ,	TEMP_STORAGE
+		  )
+		  values
+		  (
+		    seq_mano.nextval
+		  , #{ sendMailAdd }
+		  , to_char(sysdate, 'YYYY-MM-DD DY HH24:mi:SS')
+		  , #{ mailTitle }
+		  , #{ mailContent }
+		  , 'T'
+		  )
+	</insert>
 </mapper>

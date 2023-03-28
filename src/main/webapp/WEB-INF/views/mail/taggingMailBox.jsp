@@ -200,18 +200,18 @@
                             <li><a href=""> < </a></li>
                         </c:when>
                         <c:otherwise>
-                            <li class="on"><a href="list.ma?cpage=${ mailPi.currentPage-1 }"> < </a></li>
+                            <li class="on"><a href="tagginMailList.ma?cpage=${ mailPi.currentPage-1 }"> < </a></li>
                         </c:otherwise>
                     </c:choose>
                     <c:forEach var="p" begin="${ mailPi.startPage }" end="${ mailPi.endPage }">
-                        <li class='on'><a href="list.ma?cpage=${ p }"> ${ p } </a></li>
+                        <li class='on'><a href="tagginMailList.ma?cpage=${ p }"> ${ p } </a></li>
                     </c:forEach>
                     <c:choose>
                         <c:when test="${ mailPi.currentPage == mailPi.maxPage }">
                             <li><a href=""> > </a></li>
                         </c:when>
                         <c:otherwise>
-                            <li class="on"><a href="list.ma?cpage=${ mailPi.currentPage+1 }"> > </a></li>
+                            <li class="on"><a href="tagginMailList.ma?cpage=${ mailPi.currentPage+1 }"> > </a></li>
                         </c:otherwise>
                     </c:choose>
                 </ul>

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -97,7 +96,6 @@ public class MailController {
 		String hRefList = (String)param.get("hRefList");
 		String mAddList = recMailAdd.substring(0, recMailAdd.length()-1);
 		
-		
 		String[] receiverAddList = mAddList.split(",");
 		String[] refAddList = refList.split("참조 - ");
 		String[] hidRefAddList = hRefList.split("숨은 참조 - ");
@@ -142,7 +140,6 @@ public class MailController {
 			mail.setStatus(status);
 			mList.add(mail);
 		}
-		System.out.println(mList);
 		
 		// mList에 참조 메일 추가
 		for(int i=1; i<refAddList.length; i++) {
@@ -223,6 +220,7 @@ public class MailController {
 			case 4: mailList = mService.selectAttachMailList(null, m.getRecMailAdd());
 				break;
 			case 5: mailList = mService.selectSendMailList(null, m.getRecMailAdd());
+					mv.addObject("check", "send");
 				break;
 			case 6: mailList = mService.selectUnreadMailList(null, m.getRecMailAdd());
 				break;
@@ -230,10 +228,10 @@ public class MailController {
 				break;
 			case 8: mailList = mService.selectTempMailList(null, m.getRecMailAdd());
 				break;
-			case 9: mailList = mService.selectSendMailList(null, m.getRecMailAdd());
+			case 9: mailList = mService.selectReceiveMailList(m.getRecMailAdd());
 				break;
-//			case 10:mailList = mService.select
-//				break;
+			case 10:mailList = mService.selectDeleteMailList(m.getRecMailAdd());
+				break;
 		}
 		
 		mv.addObject("division", div);
@@ -279,7 +277,7 @@ public class MailController {
 			msg.setTitle("메일 삭제");
 			msg.setContent("메일을 성공적으로 삭제했습니다.");
 			mv.addObject("successMsg", msg);
-			return deleteMailList(1, mv, session);
+			return selectMailList(1, session, mv);
 		}else {
 			msg.setTitle("메일 삭제");
 			msg.setContent("메일 삭제에 실패했습니다.");
@@ -358,6 +356,7 @@ public class MailController {
 			msg.setTitle("스팸 해제");
 			msg.setContent("메일 스팸 해제를 성공했습니다.");
 			mv.addObject("successMsg", msg);
+			mv.addObject("mailList", mailList);
 			return selectMailList(1, session, mv);
 		}else {
 			msg.setTitle("스팸 해제");
@@ -377,8 +376,6 @@ public class MailController {
 		mv.addObject("receiverList", receiverList);
 		mv.addObject("attachmentList", attachmentList);
 		mv.setViewName("mail/replyMail");
-		System.out.println(mail);
-		System.out.println(receiverList);
 		return mv;
 	}
 	
@@ -512,6 +509,7 @@ public class MailController {
 		mv.addObject("pgMailList", pagingMailList);
 		mv.addObject("attachList", attachList);
 		mv.addObject("mailPi", mailPi);
+		mv.addObject("unread", "true");
 		mv.setViewName("mail/unreadMailBox");
 		return mv;
 	}
@@ -532,7 +530,6 @@ public class MailController {
 		mv.addObject("mailList", mailList);
 		mv.addObject("pgMailList", pagingMailList);
 		mv.addObject("attachList", attachList);
-		
 		mv.addObject("mailPi", mailPi);
 		mv.setViewName("mail/sendMailbox");
 		return mv;
@@ -638,18 +635,18 @@ public class MailController {
 	}
 	
 	@RequestMapping("completeDeleteAll.ma")
-	public ModelAndView completeDeletAll(ModelAndView mv, HttpSession session, Mail m) {
+	public ModelAndView completeDeletAll(@RequestParam String division, ModelAndView mv, HttpSession session, Mail m) {
 		AlertMsg msg = new AlertMsg();
 		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
-		int result = mService.completeDeleteMailAll(email, m);
+		int result = mService.completeDeleteMailAll(email, division);
 		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
-		String division = m.getJunkMail();
+		
 		if(result > 0) {
 			msg.setTitle("비우기");
 			msg.setContent("비우기 처리에 성공했습니다.");
 			mv.addObject("successMsg", msg);
 			mv.addObject("mailList", mailList);
-			if(division != null) {
+			if(division.equals("trash")) {
 				return deleteMailList(1, mv, session);
 			}else {
 				return spamMailList(1, mv, session);
@@ -662,4 +659,124 @@ public class MailController {
 		}
 		
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "temp.ma", method=RequestMethod.POST)
+	public Object tempMail(@RequestPart(value = "key") Map<String, Object> param, 
+						   @RequestPart(value = "originNames", required = false) List<MultipartFile> originNames, 
+						   ModelAndView mv, HttpSession session) {
+		ArrayList<Mail> mList = new ArrayList<>();
+		ArrayList<Attachment> atList = new ArrayList<>();
+		AlertMsg msg = new AlertMsg();
+		
+		String recMailAdd = (String)param.get("recAddList");
+		String refList = (String)param.get("refList");
+		String hRefList = (String)param.get("hRefList");
+		String mAddList = recMailAdd.substring(0, recMailAdd.length()-1);
+		
+		String[] receiverAddList = mAddList.split(",");
+		String[] refAddList = refList.split("참조 - ");
+		String[] hidRefAddList = hRefList.split("숨은 참조 - ");
+		Mail m = new Mail();
+		String mailTitle = (String)param.get("mailTitle");
+		String mailContent = (String)param.get("mailContent");
+		String sendMailAdd = ((Employee)session.getAttribute("loginUser")).getEmail();
+		String imporMail = (String)param.get("imporMail");
+		String tempStorage = (String)param.get("tempStorage");
+		String status;
+		
+		
+		if(imporMail == null) {
+			imporMail = "N";
+		}else {
+			imporMail = "Y";
+		}
+		
+		if(tempStorage == null) {
+			tempStorage = "N";
+			status = "Y";
+		}else {
+			tempStorage = "Y";
+			status = "T";
+		}
+		
+		m.setMailTitle(mailTitle);
+		m.setMailContent(mailContent);
+		m.setSendMailAdd(sendMailAdd);
+		m.setTempStorage(tempStorage);
+		
+		// mList에 수신 메일 추가
+		for(int i=0; i<receiverAddList.length; i++) {
+			Mail mail = new Mail();
+			mail.setSendMailAdd(sendMailAdd);
+			mail.setMailTitle(mailTitle);
+			mail.setMailContent(mailContent);
+			mail.setRecMailAdd(receiverAddList[i]);
+			mail.setReference("N");
+			mail.setHiddenReference("N");
+			mail.setImporMail(imporMail);
+			mail.setStatus(status);
+			mList.add(mail);
+		}
+		
+		// mList에 참조 메일 추가
+		for(int i=1; i<refAddList.length; i++) {
+			Mail mail = new Mail();
+			mail.setSendMailAdd(sendMailAdd);
+			mail.setMailTitle(mailTitle);
+			mail.setMailContent(mailContent);
+			mail.setRecMailAdd(refAddList[i]);
+			mail.setReference("Y");
+			mail.setHiddenReference("N");
+			mail.setImporMail(imporMail);
+			mail.setStatus(status);
+			mList.add(mail);
+		}
+		
+		// mList에 숨은 참조 메일 추가
+		for(int i=1; i<hidRefAddList.length; i++) {
+			Mail mail = new Mail();
+			mail.setSendMailAdd(sendMailAdd);
+			mail.setMailTitle(mailTitle);
+			mail.setMailContent(mailContent);
+			mail.setRecMailAdd(hidRefAddList[i]);
+			mail.setReference("N");
+			mail.setHiddenReference("Y");
+			mail.setImporMail(imporMail);
+			mail.setStatus(status);
+			mList.add(mail);
+		}
+		
+		// 첨부파일 처리
+		if(originNames != null) {
+			String path = "resources/mail_attachFiles/";
+			for (MultipartFile mf : originNames) {
+				Attachment attach = new Attachment();
+				String originFileName = mf.getOriginalFilename();
+				String saveFilePath = FileUpload.saveFile(mf, session, path);
+				String[] changeNameArr = saveFilePath.split("/");
+				String changeName = changeNameArr[2];
+				attach.setOriginName(originFileName);
+				attach.setChangeName(changeName);
+				attach.setFilePath(saveFilePath);
+				atList.add(attach);
+			}
+		}
+		
+		int sendResult = mService.insertTempMail(m, mList, atList);
+		
+		if(sendResult > 0) {
+			msg.setTitle("메일 임시저장");
+			msg.setContent("메일을 성공적으로 저장했습니다.");
+			session.setAttribute("successMsg", msg);
+			return 1;
+		}else {
+			msg.setTitle("메일 임시저장");
+			msg.setContent("메일 저장에 실패했습니다.");
+			session.setAttribute("failMsg", msg);
+			return 0;
+		}
+		
+	}
+	
 }
