@@ -304,6 +304,12 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return aDao.selectStatusList(sqlSession, pi, a);
 	}
 
+	@Override
+	public Approval selectVacationInfo(int no) {
+		
+		return aDao.selectVacationInfo(sqlSession, no);
+	}
+
 
 
 
