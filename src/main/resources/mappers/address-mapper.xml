@@ -945,6 +945,12 @@
 		  from add_group
 		 where group_no = #{groupNo}
 	</delete>
+	
+	<update id="updateDeleteAddGroup">
+		update address
+		   set group_no = ''
+		 where group_no = #{groupNo}
+	</update>
 
 
 </mapper>

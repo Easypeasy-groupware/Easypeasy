@@ -19,7 +19,7 @@
 		display:inline-block;
 		height:70px; 
 		width:300px; 
-		border:2px dashed gray; 
+		border:2px dashed darkgreen; 
 		border-radius:5px; 
 		margin:0 0 15px 30px; 
 		padding-left:15px;
@@ -61,6 +61,9 @@
     	font-size:13px;
     }
     #plus:hover{cursor:pointer;}
+    
+    #address-group{margin:10px 0 0 30px;}
+    #setting-outer{margin-left:100px;}
 </style>
 </head>
 <body>
@@ -72,17 +75,18 @@
 		
 		<div class="address-content-outer">
 
-			<p id="address-group">관리자 공유주소록 그룹 관리</p>
+			<p id="address-group">${loginUser.empName }님 공유주소록 그룹 관리</p>
 
 			<br>
 			<br>
+			<div id="setting-outer">
 			<span class="groupNames" style="border:0; height:10px;">
 			</span>
 			<span class="groupNames" style="border:0; height:30px;">
 				<div id="more-group">그룹추가 <span id="plus">➕</span></div>
 			</span>
 			
-			<c:forEach var="g" items="${gList}">
+			<c:forEach var="g" items="${pList}">
 				<span class="groupNames">
 					<span class="each-group">
 						${ g.groupName }
@@ -98,7 +102,7 @@
 			</c:forEach>
 			
 				
-			
+			</div>
 			<script>
 				$(function(){
 					$(".group-rename").click(function(){
@@ -108,7 +112,7 @@
 						$(this).parent().siblings(".submit-name").show();
 					})
 					
-					$(".address-content-outer").on("click", ".submit-name", function(){
+					$("#setting-outer").on("click", ".submit-name", function(){
 						let name = $(this).siblings(".input-name");
 						let val = $(this).siblings(".input-name").val();
 						let no = $(this).siblings(".groupNo");
@@ -138,7 +142,7 @@
 						});
 					})
 					
-					$(".address-content-outer").on("click", ".group-delete", function(){
+					$("#setting-outer").on("click", ".group-delete", function(){
 						let no = $(this).parent().siblings(".groupNo").val();
 						$.ajax({
 							url:"adminDel.add",
@@ -168,15 +172,15 @@
 						+ '</span>';
 					
 						$("#more-group").click(function(){
-							$(".address-content-outer").append(value);
+							$("#setting-outer").append(value);
 						})
 				})
 				
-				$(".address-content-outer").on("click", ".submit-new", function(){
+				$("#setting-outer").on("click", ".submit-new", function(){
 					let name = $(this).siblings("input").val();
 					
 						$.ajax({
-							url:"insertShGroup.add",
+							url:"insertPsGroup.add",
 							data:{
 								groupName : name,
 								empNo : '${loginUser.empNo}'

@@ -280,6 +280,10 @@ public class AddressDao {
 		return sqlSession.delete("addressMapper.deleteSharedGroup", ag);
 	}
 
+	public int updateDeleteAddGroup(SqlSessionTemplate sqlSession, AddGroup ag) {
+		return sqlSession.update("addressMapper.updateDeleteAddGroup", ag);
+	}
+
 
 
 

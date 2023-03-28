@@ -61,6 +61,9 @@
     	font-size:13px;
     }
     #plus:hover{cursor:pointer;}
+    
+    #setting-outer{margin-left:100px;}
+    #address-group{margin:10px 0 0 30px;}
 </style>
 </head>
 <body>
@@ -72,17 +75,18 @@
 		
 		<div class="address-content-outer">
 
-			<p id="address-group">${loginUser.empName }님의 공유주소록 그룹 관리</p>
+			<p id="address-group">관리자 공유주소록 그룹 관리</p>
 
 			<br>
 			<br>
+			<div id="setting-outer">
 			<span class="groupNames" style="border:0; height:10px;">
 			</span>
 			<span class="groupNames" style="border:0; height:30px;">
 				<div id="more-group">그룹추가 <span id="plus">➕</span></div>
 			</span>
 			
-			<c:forEach var="g" items="${pList}">
+			<c:forEach var="g" items="${gList}">
 				<span class="groupNames">
 					<span class="each-group">
 						${ g.groupName }
@@ -98,7 +102,7 @@
 			</c:forEach>
 			
 				
-			
+			</div>
 			<script>
 				$(function(){
 					$(".group-rename").click(function(){
@@ -108,7 +112,7 @@
 						$(this).parent().siblings(".submit-name").show();
 					})
 					
-					$(".address-content-outer").on("click", ".submit-name", function(){
+					$("#setting-outer").on("click", ".submit-name", function(){
 						let name = $(this).siblings(".input-name");
 						let val = $(this).siblings(".input-name").val();
 						let no = $(this).siblings(".groupNo");
@@ -116,7 +120,7 @@
 						let group = $(this).siblings(".each-group");
 						
 						$.ajax({
-							url:"updatePersonalGroup.add",
+							url:"updateSharedGroup.add",
 							data:{
 								groupName : name.val(),
 								groupNo : no.val()
@@ -138,14 +142,12 @@
 						});
 					})
 					
-					$(".address-content-outer").on("click", ".group-delete", function(){
+					$("#setting-outer").on("click", ".group-delete", function(){
 						let no = $(this).parent().siblings(".groupNo").val();
 						$.ajax({
-							url:"personalDel.add",
+							url:"adminDel.add",
 							data:{
-								groupNo : no,
-								empNo : '${loginUser.empNo}'
-								
+								groupNo : no
 							},
 							success:function(msg){
 								
@@ -170,15 +172,15 @@
 						+ '</span>';
 					
 						$("#more-group").click(function(){
-							$(".address-content-outer").append(value);
+							$("#setting-outer").append(value);
 						})
 				})
 				
-				$(".address-content-outer").on("click", ".submit-new", function(){
+				$("#setting-outer").on("click", ".submit-new", function(){
 					let name = $(this).siblings("input").val();
 					
 						$.ajax({
-							url:"insertPsGroup.add",
+							url:"insertShGroup.add",
 							data:{
 								groupName : name,
 								empNo : '${loginUser.empNo}'

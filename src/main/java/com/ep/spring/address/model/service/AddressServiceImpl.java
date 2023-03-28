@@ -277,7 +277,9 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	public int deleteSharedGroup(AddGroup ag) {
-		return aDao.deleteSharedGroup(sqlSession, ag);
+		int result1 = aDao.updateDeleteAddGroup(sqlSession, ag);
+		int result2 = aDao.deleteSharedGroup(sqlSession, ag);
+		return result1+result2;
 	}
 
 	@Override
