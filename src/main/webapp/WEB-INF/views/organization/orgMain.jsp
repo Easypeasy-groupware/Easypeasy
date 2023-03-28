@@ -30,6 +30,7 @@
   /* content */
   .board {width: 1000px; float: right;}
   .container {margin: 20px auto; width: 100%; padding: 20px;}
+  h2 {padding-left: 25px; padding-top: 15px; float: left		!important;}
   form {max-width: 1000px; margin: 0 auto; padding: 10px; border-radius: 5px; box-sizing: border-box;}
   .search-container {display: flex; justify-content: flex-end;margin-bottom: 10px;}
   .namebox {
@@ -45,7 +46,7 @@
       z-index:-99;
   }
   .details { align-items: center; margin-top: 10px;}
-  .details h4 { margin: 0; text-align: center; transform: translateY(70%);}
+  .details h4 { margin: 0; text-align: center; transform: translateY(70%); }
 
 /* Modal styles */
     .modal {
@@ -79,7 +80,7 @@
 	   <jsp:include page="../organization/orgSidebar.jsp" />
 	  
 	    <div class="board">
-	    	<h2>조직도</h2>
+	    	<h2><b style="color:rgb(93, 109, 75);">조직도</b></h2>
 			<div class="container">
 	          <form>
 	              <div class="search-container">
@@ -90,7 +91,7 @@
 	          <div class="main">
 					<c:forEach var="d" items="${deptList}">
 						<c:if test="${d.deptCode eq 'D1'}">
-							<h4><a onclick="dept1();">${d.deptName}</a></h4>
+							<h4><a onclick="dept1();"><b>${d.deptName}</b></a></h4>
 							<div id="d1">
 								<c:forEach var="e" items="${list}">
 									<c:if test="${e.deptCode eq d.deptCode}">
@@ -104,7 +105,7 @@
 													<img src="${e.empProfile}"  style="width:100px;">
 												</td>
 												<td>
-													<br><h4>${e.jobName} | ${e.empName}</h4>
+													<br><h4> ${e.jobName} | ${e.empName}</h4>
 													<input type="hidden" name="empNo" value="${e.empNo}">
 												</td>
 											</tr>
@@ -144,7 +145,7 @@
 
 	            <c:forEach var="d" items="${deptList}">
 			        <c:if test="${d.deptCode eq 'D2'}">
-			            <h4><a onclick="dept2();">${d.deptName}</a></h4>
+			            <h4><a onclick="dept2();"><b>${d.deptName}</b></a></h4>
 	          			<div id="d2" style="display: none;">
 				          <c:forEach var="e" items="${list}">
 				          	<c:if test="${e.deptCode eq d.deptCode}">
@@ -194,7 +195,7 @@
 	          <br>
 	          <c:forEach var="d" items="${deptList}">
 			        <c:if test="${d.deptCode eq 'D3'}">
-			            <h4><a onclick="dept3();">${d.deptName}</a></h4>
+			            <h4><a onclick="dept3();"><b>${d.deptName}</b></a></h4>
 	          			<div id="d3" style="display: none;">
 				          <c:forEach var="e" items="${list}">
 				          	<c:if test="${e.deptCode eq d.deptCode}">
@@ -244,7 +245,7 @@
 	          <br>
 	          <c:forEach var="d" items="${deptList}">
 			        <c:if test="${d.deptCode eq 'D4'}">
-			            <h4><a onclick="dept4();">${d.deptName}</a></h4>
+			            <h4><a onclick="dept4();"><b>${d.deptName}</b></a></h4>
 	          			<div id="d4" style="display: none;">
 				          <c:forEach var="e" items="${list}">
 				          	<c:if test="${e.deptCode eq d.deptCode}">
@@ -294,7 +295,7 @@
 	          <br>
 	          <c:forEach var="d" items="${deptList}">
 			        <c:if test="${d.deptCode eq 'D5'}">
-			            <h4><a onclick="dept5();">${d.deptName}</a></h4>
+			            <h4><a onclick="dept5();"><b>${d.deptName}</b></a></h4>
 	          			<div id="d5" style="display: none;">
 				          <c:forEach var="e" items="${list}">
 				          	<c:if test="${e.deptCode eq d.deptCode}">
@@ -344,7 +345,7 @@
 	          <br>
 	          <c:forEach var="d" items="${deptList}">
 			        <c:if test="${d.deptCode eq 'D6'}">
-			            <h4><a onclick="dept6();">${d.deptName}</a></h4>
+			            <h4><a onclick="dept6();"><b>${d.deptName}</b></a></h4>
 	          			<div id="d6" style="display: none;">
 				          <c:forEach var="e" items="${list}">
 				          	<c:if test="${e.deptCode eq d.deptCode}">

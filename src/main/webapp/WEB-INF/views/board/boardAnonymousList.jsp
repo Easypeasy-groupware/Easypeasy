@@ -14,16 +14,16 @@
     /* 게시판 스타일 */
     .board {width: 1000px;float: right;}
     .container {margin: 20px auto; width: 900px; padding: 20px;}
-	h2 {padding:1% 1%;}
+	h4 {padding-left: 25px; padding-top: 15px; float: left		!important;}
 	table {border-collapse: collapse; width: 100%;}
 	tr {text-align: center;}
 	th, td {text-align: center; padding: 8px; border-bottom: 1px solid #ccc;}
 	th {background-color: #ddd;}
 	tr:hover {background-color: #f5f5f5;}
 	.views {text-align: center;}
-    .search-container {display: flex; justify-content: flex-end; margin-bottom: 10px;}
-	.search-container input[type=text] {padding: 6px; margin-right: 10px; border: none; border-radius: 3px; width: 200px;}
-	.notice{font-color:red;}
+    #search-container {display: flex; justify-content: flex-end; margin-bottom: 10px;}
+	#search-container input[type=text] {padding: 6px; margin-right: 10px; border:0.5px solid; border-radius: 3px; width: 200px;}
+	.notice{font-color:red; overflow: hidden; text-overflow: ellipsis; width:600px;}
 
 	/* 페이징바 */
     #paging{text-align: center; display: inline-block; padding-left :0;}
@@ -44,28 +44,33 @@
         <div class="board">
           <!-- 게시판 내용 -->
           <bheader>
-            <h2>자유게시판</h2>
-            <br>
+            <h4><b style="color:rgb(93, 109, 75);">자유게시판</b></h4>
+            <br><br><br><br>
          </bheader>
         <div class="container">
-            <!-- <form>
-                <div class="search-container">
-                
-                    <select>
-                        <option value="all">전체</option>
-                        <option value="1">1일</option>
-                        <option value="7">1주일</option>
-                        <option value="30">1개월</option>
-                    </select>
-                    
-                    <select>
-                        <option value="title">제목</option>
-                        <option value="content">내용</option>
-                    </select>
-                        <input type="text" placeholder="검색">
-                        <button type="button" class="btn btn-success btn-sm" onclick="search()">검색</button>
-                </div>
-            </form> -->
+	        <div id="search-container">
+	           <form action="freeSearch.bo" method="get">
+	           		<input type="hidden" name="cpage" value="1">
+	                    <!-- <select>
+	                        <option value="all">전체</option>
+	                        <option value="1">1일</option>
+	                        <option value="7">1주일</option>
+	                        <option value="30">1개월</option>
+	                    </select> -->
+	                    
+	                    <select>
+	                        <option value="title">제목</option>
+	                        <option value="content">내용</option>
+	                    </select>
+	                        <input type="text" name="keyword" value="${keyword}" placeholder="검색어를 입력하세요">
+	                        <button type="submit" class="btn btn-success">검색</button>
+	               
+	            </form>
+	          </div>
+	          <script>
+	        	document.querySelector("#search-container option[value=${condition}]").selected = true;
+	          </script> 
+	        
             <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enrollAForm.bo';">새글쓰기</button>
             <%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> 
             	<button type="button" class="btn btn-outline-danger btn-sm" onclick="location.href='delete.bo';"> 삭제</button>
@@ -79,6 +84,7 @@
                     	 </c:if> --%>
                         <th>글번호</th>
                         <th>제목</th>
+                        <th>작성자</th>
                         <th>작성일</th>
                         <th>조회수</th>
                     </tr>
@@ -90,7 +96,8 @@
 	                    		<td><input type="checkbox" name="ckb"></td>
 	                    	 </c:if> --%>
 	                        <td class="bno">${b.boardNo}</td>
-	                        <td class="notice">${b.boardTitle}</td>
+	                        <td class="notice" style="text-align:left">${b.boardTitle}</td>
+	                        <td>익명</td>
 	                        <td>${b.createDate}</td>
 	                        <td>${b.boardCount}</td>
 	                    </tr>
@@ -106,7 +113,7 @@
 		            })
 		            
 		          
-	                // 체크박스 
+	             /*    // 체크박스 
 	                $(document).ready(function() {
 	                    $("#ckbAll").click(function() {
 	                      if($("#ckbAll").is(":checked")) $("input[name=ckb]").prop("checked", true);
@@ -120,7 +127,7 @@
 	                      if(total != checked) $("#ckbAll").prop("checked", false);
 	                      else $("#ckbAll").prop("checked", true); 
 	                    });
-	                  });
+	                  }); */
            
 		        </script>
             
@@ -128,27 +135,38 @@
             <tfoot>
                 <div align="center">
 		            <ul id="paging">
-		               <c:choose>
-		                	<c:when test="${ pi.currentPage eq 1 }">
-			                    <li class="page-item disabled"><a class="page-link" href="#"> < </a></li>
-			                </c:when>
-			                <c:otherwise>
-			                    <li class="page-item"><a class="page-link" href="free.bo?cpage=${ pi.currentPage-1 }"> < </a></li>
-		                    </c:otherwise>
-	                    </c:choose>
-	                    
-	                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-	                    	<li class="page-item"><a class="page-link" href="free.bo?cpage=${p}">${p}</a></li>
-	     				</c:forEach>
-	                    
-	                    <c:choose>
-		                    <c:when test="${pi.currentPage eq pi.maxPage }">
-		                    	<li class="page-item disabled"><a class="page-link" href="#"> > </a></li>
-		                    </c:when>
-		                    <c:otherwise>
-		                    	<li class="page-item"><a class="page-link" href="free.bo?cpage=${ pi.currentPage + 1 }"> > </a></li>
-	                    	</c:otherwise>
-	                    </c:choose>
+		              <c:choose>
+							<c:when test="${ empty keyword }">
+								<c:if test="${ pi.currentPage ne 1 }">
+									<li><a href="free.bo?cpage=${ pi.currentPage-1 }">&lt;</a></li>
+								</c:if>
+							</c:when>
+							<c:otherwise>
+								<c:if test="${ pi.currentPage ne 1 }">
+									<li><a href="freeSearch.bo?cpage=${ pi.currentPage-1 }&keyword=${ keyword }">&lt;</a></li>
+								</c:if>
+							</c:otherwise>
+						</c:choose>
+							
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+							<c:choose>
+								<c:when test="${ empty keyword }">
+									<li class="on"><a href="free.bo?cpage=${ p }">${ p }</a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="on"><a href="freeSearch.bo?cpage=${ p }&keyword=${ keyword }">${ p }</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+							
+						<c:choose>
+							<c:when test="${ empty keyword }">
+								<li><a href="free.bo?cpage=${ pi.currentPage+1 }">&gt;</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="freeSearch.bo?cpage=${ pi.currentPage+1 }&keyword=${ keyword }">&gt;</a></li>
+							</c:otherwise>
+						</c:choose>
 		            </ul>
 		        </div>
 		        

@@ -255,7 +255,7 @@
 								value += "<tr class='indiv-emp'><td style='display:none'>" + list[i].empNo + "</td>";
 								
 								if(list[i].deptName != null){
-									value += "<td style='width:70px;'>" + list[i].deptName + "</td>";
+									value += "<td style='width:90px;'>" + list[i].deptName + "</td>";
 								}else{
 									value += "<td style='width:70px;'></td>";
 								}
@@ -277,22 +277,34 @@
 
 				})
 				
+				
 				$(".list-show").on("click", ".indiv-emp", function(){ // 사원 리스트에 추가
+					
 					var empNo = $(this).children().eq(0).text();
 					var empDept = $(this).children().eq(1).text();
 					var empJob = $(this).children().eq(2).text();
 					var empName = $(this).children().eq(3).text();
 		
-					var emp = "<div><span style='display:hidden'>" + empNo + "</span>"; 
+					var emp = "<div><span style='display:none'>" + empNo + "</span>"; 
 					if(empDept !=""){
 						emp += empDept +"&nbsp;";
 					}
 					emp += "<b>" + empName + "</b>&nbsp;" + empJob + " <img src='resources/common_images/delete-img.png' class='emp-delete' style='width:8px;'></div>";
-					$(".emp-mini2").append(emp);
+					
+					let count = 0;
+					$(".emp-mini2 span").each(function(){
+						if($(this).text() == empNo){
+							count++;
+						}
+					})
+					if(count == 0){
+						$(".emp-mini2").append(emp);
+					}
 				})
 				
 				$(".emp-mini2").on("click", ".emp-delete", function(){ // 사원 리스트에서 삭제
 					$(this).parent().remove();
+					
 				})
 			</script>
 			

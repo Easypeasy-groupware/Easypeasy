@@ -14,6 +14,7 @@
 		<result column="board_cname" property="boardCname" />
 		<result column="origin_name" property="originName" />
 		<result column="change_name" property="changeName" />
+		<result column="emp_name" property="empName" />
 	</resultMap>
 	
 	<resultMap id="attachmentResult" type="Attachment">
@@ -43,6 +44,7 @@
 		<result column="create_date" property="createDate" />
 		<result column="modify_date" property="modifyDate" />
 		<result column="status" property="status" />
+		<result column="emp_name" property="empName" />
 	</resultMap>
 	
 
@@ -51,6 +53,7 @@
 			   count(*)
 		  from board
 		 where delete_status = 'N'
+		  and board_cno = 1
 	</select> 
 	
 	<select id="selectList" resultMap="boardResult">
@@ -58,16 +61,26 @@
 		       board_no
 		     , board_cno
 		     , board_title
-		     , board_writer
+		     , b.board_writer
 		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		     , board_count
 		     , board_pin
-		  from board 
+		     , e.emp_name
+		  from board b
+		  left join employee e on (b.board_writer = e.emp_no)
 		 where delete_status = 'N'
 		   and board_cno = 1
 		 order
 		    by board_no desc
 	</select>
+	
+	<select id="selectFreeListCount" resultType="_int">
+		select
+			   count(*)
+		  from board
+		 where delete_status = 'N'
+		  and board_cno = 3
+	</select> 
 	
 	<select id="selectListFree" resultMap="boardResult">
 		select
@@ -148,13 +161,15 @@
 			   board_no
 			 , board_cno
 			 , board_title
-			 , board_writer
+			 , b.board_writer
 			 , board_content
 			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 			 , board_count
 			 , origin_name
 		     , change_name
+		     , e.emp_name
 		  from board b
+		  left join employee e on (b.board_writer = e.emp_no)
 		 where board_no = #{boardNo}
 	</select>
 	
@@ -236,14 +251,16 @@
 	<select id="selectReplyList" resultMap="boardreplyResult">
 		select
 			   reply_no 						
-			 , reply_writer
+			 , r.reply_writer
 			 , reply_content
 			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
-		  from board_reply 
+			
+		  from board_reply r
+		 
 		 where status = 'N'
 		   and board_no = #{boardNo}		
 		 order
-		    by reply_no desc  
+		    by reply_no asc  
 	</select>
 	
 	<insert id="insertReply">
@@ -332,9 +349,11 @@
 				        board_no
 				      , board_cno
 				      , board_title
-				      , board_writer
+				      , b.board_writer
 				      , to_char(create_date, 'YYYY-MM-DD') as "create_date"
-				   from board					
+				      , e.emp_name
+				   from board b
+				    left join employee e on (b.board_writer = e.emp_no)					
 				  where delete_status = 'N'
 				    and board_cno = 1
 				  order
@@ -361,8 +380,85 @@
 		  where rownum between 1 and 5	
 	</select>
 
+	<select id="selectSearchListCount" resultType="_int">
+		select
+			   count(*)
+		  from board
+		 where delete_status = 'N'
+		   and board_cno = 1
+	 	   <choose>
+			   <when test="condition == 'title'">
+			   		and board_title  
+			   </when>
+			   <otherwise>
+			  		and board_content
+			   </otherwise>
+			</choose>  
+		         like '%' || #{keyword} || '%' 
+	</select>
+	
+	<select id="selectSearchList" resultMap="boardResult">
+		select
+			    board_no
+			  , board_title
+			  , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+			  , board_count
+			  , e.emp_name
+		   from board b
+		   left join employee e on (b.board_writer = e.emp_no)
+		  where delete_status = 'N'
+		    and board_cno = 1
+           <choose>
+			   <when test="condition == 'title'">
+			   		and board_title  
+			   </when>
+			   <otherwise>
+			  		and board_content
+			   </otherwise>
+			</choose>  
+		         like '%' || #{keyword} || '%' 
+		  order
+		     by board_no desc
+	</select>
 
-
+	<select id="selectSearchFreeCount" resultType="_int">
+		select
+			   count(*)
+		  from board
+		 where delete_status = 'N'
+		   and board_cno = 3
+           <choose>
+			   <when test="condition == 'title'">
+			   		and board_title  
+			   </when>
+			   <otherwise>
+			  		and board_content
+			   </otherwise>
+			</choose>  
+		         like '%' || #{keyword} || '%' 
+	</select>
+	
+	<select id="selectSearchFree" resultMap="boardResult">
+		select
+			    board_no
+			  , board_title
+			  , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+			  , board_count
+		   from board b
+		  where delete_status = 'N'
+		    and board_cno = 3
+           <choose>
+			   <when test="condition == 'title'">
+			   		and board_title  
+			   </when>
+			   <otherwise>
+			  		and board_content
+			   </otherwise>
+			</choose>  
+		         like '%' || #{keyword} || '%' 
+		  order
+		     by board_no desc
+	</select>
 
 
 

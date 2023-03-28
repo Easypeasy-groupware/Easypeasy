@@ -15,7 +15,9 @@
             margin:auto;
             float:left;
             box-sizing: border-box;
-        }	
+        }
+      tbody>tr:hover{background:rgb(233, 233, 233); cursor:pointer;}
+        	
 	</style>
 </head>
 <body>
@@ -40,7 +42,9 @@
 					<option value="">기안부서</option>
 					<option value="">결재양식</option>
 				</select>
-				<input type="search"> <button>검색</button>
+				<button onclick="searchResult();" style="float:right;text-align:center;height:23px;line-height:12px;" class="btn btn-outline-secondary btn-sm">검색</button>
+				<input type="search" class="form-control" style="display:block;width:200px; height:20px;float:right; margin-right:0px;" name="keyword" id="keyword"> 
+
 
 			</div>
 
@@ -80,7 +84,14 @@
 											<input type="hidden" id="num" value="${a.appNo }">
 										</td>
 										<td>${a.enrollDate}</td>
-										<td>${a.updateDate }</td>
+										<c:choose>
+											<c:when test="${a.tstatus == '결재'}">
+												<td>${a.updateDate }</td>
+											</c:when>
+											<c:otherwise>
+												<td> - </td>
+											</c:otherwise>
+										</c:choose>
 										<td>${a.formName }</td>
 										<c:choose>
 											<c:when test="${a.formCode == 3 || a.formCode == 4 }">

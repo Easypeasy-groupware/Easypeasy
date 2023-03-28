@@ -1,6 +1,7 @@
 package com.ep.spring.chat.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.ep.spring.chat.model.vo.ChatMember;
 import com.ep.spring.chat.model.vo.ChatRecord;
@@ -40,6 +41,14 @@ public interface ChatService {
 
 	// 새로만든 방의 멤버수 추가하기
 	int insertNewRoomCount(int[] n2);
+
+	// 채팅가능한 사원 검색
+	ArrayList<Employee> selectChatEmpList(Employee e);
+
+	int selectUnReadCount(ChatRecord message);
+
+	List<ChatRoom> chatRoomList(String empNo);
+
 
 	
 	

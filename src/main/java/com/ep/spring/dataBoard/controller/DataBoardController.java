@@ -29,10 +29,16 @@ public class DataBoardController {
 		
 		int listCount = daService.selectDbListCount();
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 16);
 		
 		ArrayList<DataBoard> list = daService.selectDbList(pi);
 		
+		for(int i = 0; i<list.size(); i++) {
+			String name = list.get(i).getOriginName();
+			String ext = name.substring(name.lastIndexOf(".")+1);
+			list.get(i).setOriginName(ext);
+		}
+		System.out.println(list);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
@@ -79,7 +85,7 @@ public class DataBoardController {
 			
 			DataBoard db = daService.selectDataBoard(no);
 			
-			model.addAttribute("db", db);
+			session.setAttribute("db", db);
 			return "dataBoard/dataBoardDetailView";
 			
 		}else {
@@ -165,5 +171,10 @@ public class DataBoardController {
 		return "dataBoard/dataBoardMain";
 	}
 	
+	@RequestMapping("openPdf.db")
+	public String openPdf(Model model) {
+		
+		return "dataBoard/openPdf";
+	}
 	
 }

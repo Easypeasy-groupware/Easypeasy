@@ -25,6 +25,7 @@
 	.board>.board1{width:50%; float:left;}
 	.board>.board2{width:50%; float:right;}
 	.container {margin: 10px auto; width: 90%;  padding: 20px;}
+	h3 {padding-left: 25px; padding-top: 15px; float: left		!important;}
     table {border-collapse: collapse; width: 100%;}
 	tr, th, td {text-align: center; padding: 8px; border-bottom: 1px solid #ccc;}
 	th {background-color: #ddd;}
@@ -56,7 +57,7 @@
 		<div class="board">
 			<div class="board1">
 				<br><br>
-				<h2>직무관리</h2>
+				<h3><b style="color:rgb(93, 109, 75);">부서관리</b></h3>
 				<br>
 				<div class="container dep">
 					<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#myModal" style="float:right;">등록하기</button>
@@ -172,7 +173,7 @@
 				
 			<div class="board2">
 				<br><br>
-				<h2>직위관리</h2>
+				<h3><b style="color:rgb(93, 109, 75);">직위관리</b></h3>
 				<br>
 				<div class="container position">
 					<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#jobModal" style="float:right;">등록하기</button>

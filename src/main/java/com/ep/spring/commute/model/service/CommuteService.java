@@ -20,6 +20,9 @@ public interface CommuteService {
 	//퇴근등록
 	int outTime(Commute c);
 	
+	//근무시간 등록
+	int workTime(Commute c);
+	
 	//Employee상태변경(근무,회의,외출,외근)
 	int updateStatus(Employee e);
 	

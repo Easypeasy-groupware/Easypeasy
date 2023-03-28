@@ -352,6 +352,7 @@
                         
                         
     	                outTimeInsertAjax(today);
+    	                workTimeInsertAjax(today);
     	
     	                
     	            }
@@ -386,6 +387,28 @@
     	                	}
     	                })
                     }
+					
+					function workTimeInsertAjax(today){
+						
+						$.ajax({
+							url:"workTime.co",
+							data:{
+    	                		startTime:$(".inTime").html().trim(),
+    	                		endTime:$(".outTime").html().trim(),
+    	                		empNo:${loginUser.empNo},
+    	                		enrollDate:today
+							},
+							success:function(result){
+								if(result=="success"){
+									console.log(result);
+								}
+							},
+							error:function(){
+								console.log("근무시간등록 ajax 통신실패");
+							}
+						})
+						
+					}
                 </script>
             </div>
             <div class="content2">

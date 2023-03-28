@@ -17,31 +17,19 @@
     }
     
     #content{
-        border-left: 1px solid lightgray;
         width: 1000px;
         float: left;
         box-sizing: border-box;
-    }
-
-    #sidebar{
-        width: 200px;
-        float: left;
-        padding-left: 10px;
-        padding-top: 10px;
-    }
-    #sidebar a{
-        color: black;
-        text-decoration: none;
+        margin-left: 20px;
     }
 
     #title h5{
-        padding-left: 25px;
         padding-top: 15px;
         float: left;
     }
 
     #content>table{
-        width: 950px;
+        width: 1000px;
     }
     #content-1 input{
         border: 1px solid lightgray;
@@ -152,7 +140,7 @@
                     <br><br>
                     <div id="submit">
                         <button class="btn btn-sm btn-light" style="border: 1px solid lightgray; background: rgb(214, 223, 204); color: white;">등록</button>&nbsp;&nbsp;
-                        <button type="reset" class="btn btn-sm btn-light">취소</button>
+                        <a href="list.db" class="btn btn-sm btn-light" style="background: white; border: 1px solid lightgray;">취소</a>
                     </div>
                 </div>
             </form>

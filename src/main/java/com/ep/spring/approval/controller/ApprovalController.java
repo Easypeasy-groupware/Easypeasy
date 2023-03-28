@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,8 @@ import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.common.template.FileUpload;
 import com.ep.spring.common.template.Pagination;
+import com.ep.spring.commute.model.service.CommuteService;
+import com.ep.spring.commute.model.vo.VacationRecode;
 import com.ep.spring.login.model.service.EmployeeService;
 import com.ep.spring.login.model.vo.Department;
 import com.ep.spring.login.model.vo.Employee;
@@ -46,6 +49,9 @@ public class ApprovalController {
 	
 	@Autowired
 	private EmployeeService eService;
+	
+	@Autowired
+	private CommuteService cService;	
 	
 	@RequestMapping("main.ap")
 	public String selectAppMain(HttpSession session, Model model) {
@@ -176,20 +182,36 @@ public class ApprovalController {
 	}
 	
 	@RequestMapping("statusList.ap")
-	public String selectSendLists(@RequestParam(value="cpage", defaultValue="1") int currentPage, Approval a, HttpSession session, Model model) {
+	public String selectStatusList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Approval a, HttpSession session, Model model) {
 		
 		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		
+		//System.out.println(a);
+		
 		if(a.getListType().equals("s")) {
 			a.setWriterNo(eNo);
-			return "";
+
 		}else {
-			return "";
+			a.setReceiverNo(eNo);
 		}
 		
+		int listCount = aService.selectStatusListCount(a);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Approval> tList = aService.selectStatusList(pi, a);
 		
+		//System.out.println(pi);
 		
+		model.addAttribute("list", tList);
+		model.addAttribute("tpi", pi);
+		model.addAttribute("ta", a);
 		
+		if(a.getListType().equals("s")) {
+			
+			return "approval/appSendListView";
+		}else {
+			return "approval/appRecListView";
+
+		}
 	}
 	
 	@RequestMapping("tempList.ap")
@@ -315,7 +337,7 @@ public class ApprovalController {
 	public String selectReplyList(@RequestParam(value="no") int appNo) {
 		
 		ArrayList<ApprovalReply> list = aService.selectReplyList(appNo);
-		System.out.println(list);
+		//System.out.println(list);
 		return new Gson().toJson(list); 
 		
 	}
@@ -348,16 +370,39 @@ public class ApprovalController {
 		
 		//System.out.println(result);
 		
+		
 		if(result > 0) {
-				for(int i= 0; i < filePath.size(); i++) {
-					if(!filePath.get(i).equals("")) {
-					new File(session.getServletContext().getRealPath(filePath.get(i))).delete();
-				}
-			}
+			
+			// 첨부파일 처리하기
+			
+			ArrayList <Attachment> atList = new ArrayList<>();
+			Approval ap = new Approval();
+			ap.setAppNo(appNo);
+			ArrayList<Attachment> list =  aService.selectDetailSPrgAt(ap);
+			//System.out.println("지울 첨부파일 : " + list);
 
+			if(list.size() > 0) {
+				
+				for(Attachment b : list) {
+					new File(session.getServletContext().getRealPath(b.getFilePath())).delete();
+				}
+				
+				int delResult = aService.deleteAttachment(appNo);
+				
+				if(delResult > 0) {
+					AlertMsg atMsg = new AlertMsg("기존파일 삭제", "기존 파일 삭제에 성공했습니다.");
+					session.setAttribute("successMsg", atMsg);
+				}else {
+					AlertMsg atMsg = new AlertMsg("기존파일 삭제실패", "기존 파일 삭제에 실패했습니다.");
+					session.setAttribute("failMsg", atMsg);
+				}
+				
+			}
+				
 			AlertMsg msg = new AlertMsg("문서삭제", "성공적으로 삭제되었습니다");
 			session.setAttribute("successMsg", msg);
 			return "redirect:main.ap";
+			
 		}else {
 			AlertMsg msg = new AlertMsg("문서삭제", "삭제에 실패했습니다.");
 			session.setAttribute("failMsg", msg);
@@ -555,6 +600,24 @@ public class ApprovalController {
 		int result = aService.updateAppLine(al);
 		
 		if(result > 0) {
+			
+			Approval a = aService.selectVacationInfo(al.getAppNo());
+			//System.out.println("가져온 값" + a );
+			
+			if(a!=null) {
+				VacationRecode vr = new VacationRecode();
+				vr.setEmpNo(a.getWriterNo());
+				vr.setVacDays(a.getVacUse());
+				vr.setVacCategory("GV");
+				vr.setVacReason("결재완료");
+				vr.setVacDivide("DE");
+				
+				int result2 = cService.insertVacRecodeMinus(vr);
+				
+				if(result2>0) {
+					System.out.println(result2);
+				}
+			}
 			AlertMsg msg = new AlertMsg("의견등록성공", "의견등록에 성공했습니다!");
 			session.setAttribute("successMsg", msg);
 			return "redirect:recWlist.ap";	
@@ -572,11 +635,11 @@ public class ApprovalController {
 		Approval ap = aService.selectTempApproval(no);
 		// 재기안인지 수정인지 구분하는 값 세팅해주기
 		
-		System.out.println("재기안일까요 수정일까요?" + division);
+		//System.out.println("재기안일까요 수정일까요?" + division);
 		ap.setDivision(division);
 
-		System.out.println("화면에 돌려줄 재기안/수정값?" + ap.getDivision());
-		System.out.println(ap);
+		//System.out.println("화면에 돌려줄 재기안/수정값?" + ap.getDivision());
+		//System.out.println(ap);
 		model.addAttribute("ap", ap);	
 		
 		ArrayList<ApprovalLine> list1 = aService.selectDetailSPrgAl(ap);
@@ -586,8 +649,12 @@ public class ApprovalController {
 		model.addAttribute("list2", list2);
 		
 		ArrayList<Attachment> list3 = aService.selectDetailSPrgAt(ap);
-		model.addAttribute("list3", list3);
-		System.out.println("업데이트폼에서 보낼 기존 첨부파일 : " + list3);
+		if(division == 1) {
+			if(list3.size() > 0) {
+			model.addAttribute("list3", list3);
+			}
+		}
+		//System.out.println("업데이트폼에서 보낼 기존 첨부파일 : " + list3);
 		
 		
 		if(ap.getFormCode() == 1) {
@@ -616,11 +683,10 @@ public class ApprovalController {
 	public String updateApproval(HttpSession session, Model model, List<MultipartFile> originNames, 
 								 Approval ap, VacationForm vf, OverTimeForm ot) {
 		//System.out.println(ap);
-		System.out.println("넘어온 파일 : " + originNames);
+		//System.out.println("넘어온 파일 : " + originNames);
 		
 		
 		/*
-		 * 
 		 * 
 		 * 1. 새로 첨부된 파일이 없을 경우, 기존 첨부파일 x
 		 * 		=> originName : null, changeName, null
@@ -643,17 +709,30 @@ public class ApprovalController {
 		
 		ArrayList <Attachment> atList = new ArrayList<>();
 		
-		if(originNames.size() > 0) {
+		if(originNames.size() > 1) {
 			
 			// 기존 첨부파일이 있었을 경우 => 기존의 파일 지우기
 			ArrayList<Attachment> list =  aService.selectDetailSPrgAt(ap);
-			System.out.println("기존의 지울 첨부파일 : " + list);
+			//System.out.println("기존의 지울 첨부파일 : " + list);
 			
 			if(list.size() > 0) {
 				
-				for(Attachment t : list){
-					new File(session.getServletContext().getRealPath(t.getFilePath())).delete();
+			
+					for(Attachment b : list) {
+						new File(session.getServletContext().getRealPath(b.getFilePath())).delete();
+	
+					}					
+			
+				int delResult = aService.deleteAttachment(ap.getAppNo());
+				
+				if(delResult > 0) {
+					AlertMsg atMsg = new AlertMsg("기존파일 삭제", "기존 파일 삭제에 성공했습니다.");
+					session.setAttribute("successMsg", atMsg);
+				}else {
+					AlertMsg atMsg = new AlertMsg("기존파일 삭제실패", "기존 파일 삭제에 실패했습니다.");
+					session.setAttribute("failMsg", atMsg);
 				}
+				
 			}
 			
 			String path = "resources/approval_attachFiles/";
@@ -668,16 +747,13 @@ public class ApprovalController {
 				at.setOriginName(originName);
 				at.setChangeName(changeName);
 				at.setFilePath(saveFilePath);
-				System.out.println("추가할 하나하나의 첨부파일 : " + at);
+				//System.out.println("추가할 하나하나의 첨부파일 : " + at);
 				atList.add(at);
 				
 			}
 			
 		}
 
-		
-		
-		
 		ap.setWriterNo(((Employee)session.getAttribute("loginUser")).getEmpNo());
 		if(ap.getFormCode() == 3 || ap.getFormCode() == 4) {
 			ap.setTitle(ap.getFormName());
@@ -754,15 +830,22 @@ public class ApprovalController {
 	public String selectSearchList(Approval a, @RequestParam(value="cpage", defaultValue="1") int currentPage, Model model, HttpSession session) {
 		
 		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
-		a.setWriterNo(eNo);
+		
+		if(a.getListType().equals("s")) {
+			a.setWriterNo(eNo);
+		}else if(a.getListType().equals("c")) {
+			a.setReceiverNo(eNo);
+		}
+		
 		int listCount = aService.selectSearchListCount(a);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 		ArrayList<Approval> sList = aService.selectSearchList(a, pi);
 		
+		/*
 		System.out.println(a);
 		System.out.println(listCount);
 		System.out.println(sList);
-		System.out.println(pi);
+		System.out.println(pi);*/
 		
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("sList", sList);
@@ -775,48 +858,7 @@ public class ApprovalController {
 	
 
 	
-	
-	/*
-	@RequestMapping("search.ap")
-	public String selectSearchList(@RequestParam("r-page") String rPage, @RequestParam("period") String period, 
-									@RequestParam("option") String option, @RequestParam("keyword") String keyword, 
-									@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) {
-		
-		String eNo = String.valueOf(((Employee)session.getAttribute("loginUser")).getEmpNo());
-		HashMap<String, String> map = new HashMap<>();
-		map.put("eNo", eNo);
-		map.put("rPage", rPage);
-		map.put("period", period);
-		map.put("option", option);
-		map.put("keyword", keyword);
-		
-		int listCount = aService.selectSearchListCount(map);
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
-		ArrayList<Approval> list = aService.selectSearchList(pi, map);
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
-		
-		if(rPage.equals("cw")) {
-			return "approval/appRecWatingListView";
-		}else if(rPage.equals("fw")) {
-			return "approval/appRefWatingListView";
-		}else if(rPage.equals("s")) {
-			return "approval/appSendListView";
-		}else if(rPage.equals("t")) {
-			return "approval/appTempStorListView";
-		}else if(rPage.equals("c")) {
-			return "approval/appRecListView";
-		}else if(rPage.equals("f")) {
-			return "approval/appRefListView";
-		}else if(rPage.equals("ds")) {
-			return "approval/appDSendCompleteListView";
-		}else {
-			return "approval/appDRefListView";
-		}
-		
-		
-	}
-	*/
+
 	
 	
 	

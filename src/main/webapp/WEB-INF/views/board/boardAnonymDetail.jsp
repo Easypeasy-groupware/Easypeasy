@@ -15,12 +15,13 @@
     .board {width: 1000px;float: right;}
     .container {margin: 20px auto; width: 900px; padding: 20px;}
     .replyContent{margin: 20px auto; width: 900px; padding: 10px;}
-	h2 {padding:1% 1%;}
+	h4 {padding-left: 25px; padding-top: 15px; float: left		!important;}
 	table {border-collapse: collapse; width: 100%;}
 	tr {text-align: center;}
 	th, td {text-align: center; padding: 8px; border-bottom: 1px solid #ccc;}
 	th {background-color: #ddd;}
 	.views {text-align: center;}
+	#replyArea td {overflow: hidden; text-overflow: ellipsis; white-space: nowrap; resize:none;}
 </style>
 </head>
 <body>
@@ -32,7 +33,7 @@
        
         <div class="board">
         
-        	 <h1>자유게시판</h1><br><br><input type="hidden" name="no" value="${b.boardCno}">
+        	 <h4><b style="color:rgb(93, 109, 75);">자유게시판</b></h4> <br><br><br><br><input type="hidden" name="no" value="${b.boardCno}">
     
 		    <div class="container" style="width:1000px">
 		    	
@@ -44,6 +45,7 @@
 		                
 		                <form action="" method="post" id="postForm"> 
 				         	<input type="hidden" name="no" value="${b.boardNo}">
+				         	<input type="hidden" name="filePath" value="${ b.changeName }">
 				        </form>
 			        
 			            <script>
@@ -66,51 +68,51 @@
 		                </tr>
 		                <tr>
 		                    <td>
-		                       <img src="resources/profile_images/default_profile.png" style="width:50px; height:50px;">
+		                       조회수 : ${b.boardCount }
 		                    </td>
 		                    <td>
-		                        <input type="hidden" name="boardWriter" value="${b.boardWriter}"> 익명
+		                        작성자 : <input type="hidden" name="boardWriter" value="${b.boardWriter}"> 익명
 		                    </td>
 		                    <td>
-		                        ${b.createDate}
+		                        등록일 : ${b.createDate}
 		                    </td>
 		                </tr>
 		                <tr>
 		                   <td colspan="3">
-		                     <c:choose>
-                                  <c:when test="${ empty attachmentList }">
-                                          <div>첨부파일이 없습니다.</div>
-                                  </c:when>
-                                  <c:otherwise>
-                                      <c:forEach var="a" items="${ attachmentList }">
-                                             <a href="${a.changeName}" download="${a.originName}">${a.originName}</a><br>
-                                       </c:forEach>
-                                   </c:otherwise>
-                             </c:choose>
+		                      <c:choose>
+			                    <c:when test="${ not empty b.originName }">
+			                        <a href="${ b.changeName }" download="${ b.originName }">${ b.originName }</a>
+			                    </c:when>
+			                    <c:otherwise>
+			                        	첨부파일이 없습니다.
+			                    </c:otherwise>
+		                      </c:choose>
 		                    </td>
 		                </tr>
 		                <tr>
 		                    <td colspan="4">
-		                        <p style="height:150px">
+		                        <textarea style="height:400px; width:100%; border:none; text-align:left;" readonly>
 		                        	${b.boardContent}
-		                        </p>
+		                        </textarea>
 		                    </td>
 		                </tr>
 		            </table>
 		      
 		    </div>
 		
-		    <div class="replyContent" style="width:1000px" >
-		        <table id="replyArea" class="table" align="center" border="1px, solid">
+		    <div class="replyContent" style="width:1000px;" >
+		        <table id="replyArea" class="table" style="align:center; boder:1px solid; width:900px;">
 		            <thead>
 		                <tr>
-		                    <td colspan="4">댓글 (<span id="rcount">3</span>) </td> 
+		                    <td colspan="5">댓글 (<span id="rcount"></span>) </td> 
 		                </tr>
 			            <tr>
-			                <th colspan="3">
-			                     <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%"></textarea>
-			                 </th>
-			                  <th style="vertical-align: middle"><button class="btn btn-secondary"  onclick="addReply();">등록하기</button></th>
+			                <th colspan="4">
+			                  <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:770px;"></textarea>
+			                </th>
+			                <th style="vertical-align: middle; width:100px;">
+			                  	<button class="btn btn-secondary"  onclick="addReply();">등록하기</button>
+			                </th>
 			            </tr>
 		            </thead>
 		            <tbody>
@@ -141,18 +143,21 @@
 
         	
         	function deleteReply(replyNo) { // 댓글 삭제용 ajax
-			    $.ajax({
-			        url: "rdelete.bo",
-			        data: { replyNo: replyNo },
-			        success: function(result) {
-			            if (result == "success") {
-			                selectReplyList();
-			            }
-			        },
-			        error: function() {
-			            console.log("댓글 삭제용 ajax 통신 실패");
-			        }
-			    });
+        		
+       			$.ajax({
+   			        url: "rdelete.bo",
+   			        data: { replyNo: replyNo },
+   			        success: function(result) {
+   			            if (result == "success") {
+   			                selectReplyList();
+   			            }
+   			        },
+   			        error: function() {
+   			            console.log("댓글 삭제용 ajax 통신 실패");
+   			        }
+   			    });
+        	
+			    
 			}
         	
         	function addReply(){ // 댓글 작성용 ajax
@@ -192,12 +197,18 @@
         				let value = "";
         				for(let i=0; i<list.length; i++){
         					value += "<tr>"
-        							+	"<td>" + list[i].replyWriter + "</td>"
-        							+	"<td>" + list[i].replyContent + "</td>"
-        							+	"<td>" + list[i].createDate + "</td>"
-        							+  "<td>" + "<a onclick='deleteReply(" + list[i].replyNo + ")'>" + "삭제" + "</a>" 
-        							+ "|"
-        							+  "<a onclick='updateReply(" + list[i].replyNo + ",\"" + list[i].replyContent + "\")'>" +"수정"+"</a>"    
+        							+  "<td style='display:none'>" + list[i].replyWriter +"</td>"
+        							+	"<td style='width:80px;'>" + "익명" + "</td>"
+        							+	"<td style='width:800px;'>" + list[i].replyContent + "</td>"
+        							+	"<td style='width:150px;'>" + list[i].createDate + "</td>";
+        							if(list[i].replyWriter == ${loginUser.empNo}){
+        								value +=  "<td>" + "<a onclick='deleteReply(" + list[i].replyNo + ")'>" + "삭제" + "</a>";
+        							}else{
+        								value +=  "<td>";
+        							}
+        							
+        						/* 	+ "|"
+        							+  "<a onclick='updateReply(" + list[i].replyNo + ",\"" + list[i].replyContent + "\")'>" +"수정"+"</a>"    */
         							+ "</td>"
         							+"</tr>";
         				}
@@ -210,6 +221,8 @@
         			}
         		})
         	}
+        	
+        	
 		    </script>
         </div>
 	</div>

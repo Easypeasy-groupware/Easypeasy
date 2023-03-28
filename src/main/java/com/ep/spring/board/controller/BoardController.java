@@ -24,6 +24,7 @@ import com.ep.spring.common.model.vo.Attachment;
 import com.ep.spring.common.model.vo.PageInfo;
 import com.ep.spring.common.template.FileUpload;
 import com.ep.spring.common.template.Pagination;
+import com.ep.spring.dataBoard.model.vo.DataBoard;
 import com.google.gson.Gson;
 
 @Controller
@@ -288,10 +289,12 @@ public class BoardController {
 		return mv;
 	}
 	
+	
 	@RequestMapping("enrollAForm.bo")
 	public String enrollAForm() {
 		return "board/boardAnonymEnroll";
 	}
+	
 	/*
 	@RequestMapping("insertA.bo")
 	public ModelAndView insertABoard(@RequestParam List<MultipartFile> originNames, Board b, Attachment a, HttpSession session, ModelAndView mv) {
@@ -328,6 +331,44 @@ public class BoardController {
 	}
 	*/
 	
+	@RequestMapping("insertA.bo")
+	public String insertABoard(Board b, MultipartFile upfile, HttpSession session, Model model) {
+		
+		if(!upfile.getOriginalFilename().equals("")) {
+			
+			String  saveFilePath = FileUpload.saveFile(upfile, session, "resources/board_attachFiles/"); 
+			
+			b.setOriginName(upfile.getOriginalFilename()); 
+			b.setChangeName(saveFilePath); 
+		}
+		
+		int result = bService.insertABoard(b);
+		
+		if(result > 0) { 
+			session.setAttribute("alertMsg", "성공적으로 게시글이 등록되었습니다.");
+			return "redirect:free.bo";
+		}else { 
+			return "redirect:free.bo";
+		}
+		
+	}
+	
+	@RequestMapping("detailAForm.bo")
+	public ModelAndView selectABoard(int no, ModelAndView mv) {
+		int result = bService.increaseACount(no);
+		
+		if(result > 0) {
+			Board b = bService.selectABoard(no);
+			//System.out.println(b);
+			mv.addObject("b", b).setViewName("board/boardAnonymDetail");
+	
+		}else {
+			mv.addObject("errorMsg", "조회수 증가 실패").setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	
 	/*
 	@RequestMapping("detailAForm.bo")
 	public ModelAndView selectABoard(int no, HttpSession session, ModelAndView mv, Board b) {
@@ -349,7 +390,7 @@ public class BoardController {
 		}
 		return mv;
 	}
-	*/
+	
 	
 	@RequestMapping("deleteA.bo")
 	public String deleteABoard(@RequestParam(value="no")int boardNo, HttpSession session, Model model, ArrayList<String> filePath) {
@@ -371,12 +412,34 @@ public class BoardController {
 		}
 		
 	}
+	*/
 	
+	@RequestMapping("deleteA.bo")
+	public String deleteABoard(int no, String filePath, HttpSession session, Model model) {
+		int result = bService.deleteABoard(no);
+		
+		if(result > 0) {	
+			
+			if(!filePath.equals("")) {
+				new File(session.getServletContext().getRealPath(filePath)).delete(); 
+			}
+			session.setAttribute("alertMsg", "성공적으로 게시글이 삭제되었습니다."); 
+			return "redirect:free.bo";
+			
+		}else {	
+			model.addAttribute("errorMsg", "게시글 삭제 실패");
+			return "common/errorPage";
+		}
+	}
+		
 	
 	@RequestMapping("updateAForm.bo")
-	 public String updateAForm() {
-	   return "board/boardAnonymUpdate"; 
-	 }
+	 public String updateAForm(int no, Model model) {
+		model.addAttribute("b", bService.selectBoard(no));
+		
+		return "board/boardAnonymUpdate"; 
+	}
+	
 	/*
 	@RequestMapping("updateA.bo")
 	public String updateABoard(@RequestParam("no") int no, Board b, HttpSession session, Model model, @RequestParam(value="originNames", required=false) List<MultipartFile> originNames) {
@@ -428,6 +491,31 @@ public class BoardController {
 		}
 	}
 	*/
+	
+	@RequestMapping("updateA.bo")
+	public String updateABoard(Board b, MultipartFile reupfile, HttpSession session, Model model) {
+		
+		if(!reupfile.getOriginalFilename().equals("")) {  
+			
+			if(b.getOriginName() != null) {
+				new File(session.getServletContext().getRealPath(b.getChangeName())).delete(); 
+			}
+			
+			String saveFilePath = FileUpload.saveFile(reupfile, session, "resources/board_attachFiles/");
+			
+			b.setOriginName(reupfile.getOriginalFilename());
+			b.setChangeName(saveFilePath);
+		}
+		int result = bService.updateABoard(b);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다."); 
+			return "redirect:detailAForm.bo?no=" + b.getBoardNo();	
+		}else {
+			model.addAttribute("errorMsg", "게시글 수정 실패");
+			return "common/errorPage";
+		}
+	}
 	
 	
 	// 댓글 ajax
@@ -542,8 +630,44 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value="topFree.bo", produces="application/json; charset=UTF-8")
 	public String ajaxSelectFreeList() {
-		ArrayList<Board> list = bService.selectFreeList();
-		return new Gson().toJson(list);
+		ArrayList<Board> flist = bService.selectFreeList();
+		return new Gson().toJson(flist);
 	}
+	
+	// 검색
+	@RequestMapping("listSearch.bo")
+	public String selectSearchList(String keyword, @RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+		
+		int searchCount = bService.selectSearchListCount(keyword);
+		
+		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 5, 10);
+		
+		ArrayList<Board> list = bService.selectSearchList(pi, keyword);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		model.addAttribute("keyword", keyword);
+		
+		return "board/boardListView";
+	}
+	
+	@RequestMapping("freeSearch.bo")
+	public String selectSearchFree(String keyword, @RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+		
+		int searchCount = bService.selectSearchFreeCount(keyword);
+		
+		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 5, 10);
+		
+		ArrayList<Board> list = bService.selectSearchFree(pi, keyword);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		model.addAttribute("keyword", keyword);
+		
+		return "board/boardAnonymousList";
+	}
+	
 	
 }

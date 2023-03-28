@@ -72,6 +72,14 @@
 		   and enroll_date = #{enrollDate}
 	</update>
 	
+	<update id="workTime">
+		update
+			   commute
+		   set work_time = #{workTime}
+		 where emp_no = #{empNo}
+		   and enroll_date = #{enrollDate}
+	</update>
+	
 	<update id="updateStatus">
 		update
 		       employee
@@ -323,12 +331,12 @@
 			  , #{vacReason}
 			  , #{vacDivide}
 	          , #{vacCategory}
-              , (select vac_remaining
-                    from vac_recode
-                    where emp_no = #{empNo}
-                    and vac_recode = (select max(vac_recode)
-                                        from vac_recode
-                                       where emp_no = #{empNo})) - #{vacDays}
+              , (select (vac_remaining - #{vacDays}) as vac_remaining
+                  from vac_recode
+                 where emp_no = #{empNo}
+                   and vac_recode = (select max(vac_recode)
+                                       from vac_recode
+                                      where emp_no = #{empNo}))
              )
 	</insert>
 	

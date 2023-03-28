@@ -30,7 +30,8 @@
     /*게시판*/
     .board{height:280px;}
     .board-title:hover{cursor:pointer; font-weight:600;}
-    #board-notice{border-bottom:4px solid rgb(166, 184, 145); font-weight:600;}
+    #doc-etc{width:48%;}
+    #board-notice{border-bottom:4px solid rgb(166, 184, 145); font-weight:600;  overflow: hidden; text-overflow: ellipsis;}
 
     /*결재문서*/
     .document{height:280px;}
@@ -71,6 +72,10 @@
 	#scheduleList a:hover{
 		font-weight:600;
 	}
+	
+	#arrived-tb *, #departed-tb *{overflow:hidden; text-overflow: ellipsis;}
+	.board-table th, #arrived-tb th, #departed-tb th, #tb-mail th{text-align:center;}
+	
 </style>
 </head>
 <body>
@@ -85,15 +90,16 @@
 				<br><br>
 				<div class="subtitle board-title" id="board-notice">전체공지사항</div>
 				<div class="subtitle board-title" id="board-all">자유게시판</div>
+				<div class="subtitle" id="doc-etc"></div>
 				<br clear="both"><br>
 		
-				<table class="board-table" id="notice-tb">
+				<table class="board-table" id="notice-tb" style="table-layout:fixed;">
 					<colgroup>
 						<col style="width:70%;">
 						<col style="width:15%;">
 						<col style="width:15%;">
 					</colgroup>
-					<thead>
+					<thead align="center">
 						<tr>
 							<th>제목</th>
 							<th>작성자</th>
@@ -105,13 +111,13 @@
 					</tbody>
 				</table>
 	 
-				<table class="board-table" id="free-tb" style="display:none">
+				<table class="board-table" id="free-tb" style="display:none; table-layout:fixed;">
 					<colgroup>
 						<col style="width:70%;">
 						<col style="width:15%;">
 						<col style="width:15%;">
 					</colgroup>
-					<thead>
+					<thead align="center">
 						<tr>
 							<th>제목</th>
 							<th>작성자</th>
@@ -142,26 +148,40 @@
 				
 				$(function(){
 					topBoardList();
+					topFreeList();
+            		/* $(document).on("click", "#notice-tb>tbody>tr", function(){
+            			location.href = 'detailForm.bo?no=' + $(this).children().eq(0).text(); // 자손들 중 첫번째 값
+            		}) */
 				})
 				
             	function topBoardList(){
             		$.ajax({
             			url:"topList.bo",
             			success:function(list){
-            				console.log(list[0].boardTitle);
+            				console.log(list);
             				
             				let value = "";
-            				for(let i=0; i<list.length; i++){
-            					let b = list[i]; 
-            					value += "<tr>"
-            							+	"<td>" + list[i].boardTitle + "</td>"
-            							+	"<td>" + list[i].boardWriter + "</td>"
-            							+	"<td>" + list[i].createDate + "</td>"
-            							+ "</tr>"; 
-            				}
+            				if(list.length == 0){
+								value1+= "<tr>" 
+										+ "<td colspan='3'>"
+										+ "전체 공지사항이 없습니다."
+										+ "</td>"
+										+"</tr>";
+							}else{
+								
+	            				for(let i=0; i<list.length; i++){
+	            					let b = list[i]; 
+	            					value += "<tr>"
+	            							+	"<td style='width: 98%; text-overflow:ellipsis; overflow:hidden; white-space: nowrap;'>" + list[i].boardTitle + "</td>"
+	            							+	"<td>" + list[i].empName + "</td>"
+	            							+	"<td>" + list[i].createDate + "</td>"
+	            							+ "</tr>"; 
+	            				}
+	            				
+							}
             				
             				$("#notice-tb tbody").html(value);
-            							
+            				
             			},error:function(){
             				console.log("top5 공지게시글 조회용 ajax 통신 실패");
             			}
@@ -169,29 +189,39 @@
             	}
 				
 			
-			/* 	function topFreeList(){
-            		$.ajax({
-            			url:"topFree.bo",
-            			success:function(result){
-            				console.log(result);
-            				
-            				let value = "";
-            				for(let j=0; j<list.length; j++){
-            					let b = list[j]; 
-            					value += "<tr>"
-            							+	"<td>" + list[j].boardTitle + "</td>"
-            							+	"<td>" + "익명" + "</td>"
-            							+	"<td>" + list[j].createDate + "</td>"
-            							+   "</tr>"; 
-            				}
-            				
-            				$("#free-tb tbody").html(value);
-            							
-            			},error:function(){
-            				console.log("top5 자유게시글 조회용 ajax 통신 실패");
-            			}
-            		})
-            	} */
+				function topFreeList(){
+	            		$.ajax({
+	            			url:"topFree.bo",
+	            			success:function(flist){
+	            				console.log(flist);
+	            				
+	            				let value = "";
+	            				if(flist.length == 0){
+									value1+= "<tr>" 
+											+ "<td colspan='3'>"
+											+ "자유게시판에 게시글이 없습니다."
+											+ "</td>"
+											+"</tr>";
+								}else{
+									
+		            				for(let j=0; j<flist.length; j++){
+		            					let b = flist[j]; 
+		            					value += "<tr>"
+		            							+	"<td style='width: 98%; text-overflow:ellipsis; overflow:hidden; white-space: nowrap;'>" + b.boardTitle + "</td>"
+		            							+	"<td>" + "익명" + "</td>"
+		            							+	"<td>" + b.createDate + "</td>"
+		            							+   "</tr>"; 
+		            				}
+		            				
+								}
+	            				
+	            				$("#free-tb tbody").html(value);
+	            				
+	            			},error:function(){
+	            				console.log("top5 자유게시글 조회용 ajax 통신 실패");
+	            			}
+	            		})
+	            	}
 				  
 			</script>	
 			
@@ -208,8 +238,8 @@
 				<table class="doc-table" id="arrived-tb">
 					<colgroup>
 						<col style="width:15%;">
-						<col style="width:15%;">
-						<col style="width:55%;">
+						<col style="width:35%;">
+						<col style="width:35%;">
 						<col style="width:15%;">
 					</colgroup>
 					<thead>
@@ -227,8 +257,8 @@
 				<table class="doc-table" id="departed-tb" style="display:none;">
 					<colgroup>
 						<col style="width:15%;">
-						<col style="width:15%;">
-						<col style="width:55%;">
+						<col style="width:35%;">
+						<col style="width:35%;">
 						<col style="width:15%;">
 					</colgroup>
 					<thead>
@@ -261,6 +291,8 @@
 				$(function(){
 					recentApproval();
 					//setInterval(recentApproval, 3000);
+					
+					
 				})
 				
 				function recentApproval(){
@@ -282,7 +314,7 @@
 								for(let i = 0; i < result.list1.length; i++){
 									let a = result.list1[i];
 									value1 += "<tr>"
-											+ "<td>" + a.enrollDate + "</td>"
+											+ "<td>" + a.enrollDate + "<input type='hidden' id='aNum1' value=" + a.appNo + "></td>"
 											+ "<td>" + a.formName + "</td>";
 											if(a.formCode == 3 || a.formCode == 4){
 												value1 += "<td>" + a.formName + "</td>";
@@ -292,6 +324,7 @@
 											
 											value1+= "<td>" + a.empName + "</td></tr>";
 								}
+								
 							}
 							$("#arrived-tb tbody").html(value1);
 							
@@ -307,7 +340,7 @@
 								for(let i = 0; i<result.list2.length; i++){
 									let b = result.list2[i];
 									value2 += "<tr>"
-										+ "<td>" + b.enrollDate + "</td>"
+										+ "<td>" + b.enrollDate +"<input type='hidden' id='aNum2' value=" + b.appNo + "> </td>"
 										+ "<td>" + b.formName + "</td>";
 										if(b.formCode == 3 || b.formCode == 4){
 											value2 += "<td>" + b.formName + "</td>";
@@ -320,6 +353,18 @@
 							}
 							
 							$("#departed-tb tbody").html(value2);
+							
+							if(result.list1.length > 0){
+								$("#arrived-tb tbody").on("click", "tr", function(){
+						            location.href = 'detailRec.ap?no=' + $(this).eq(0).children().find("#aNum1").val()+"&form="+ $(this).children().eq(1).text()+"&st=결재대기"; 
+						        }); 
+							}
+							
+							if(result.list2.length > 0){
+								$("#departed-tb tbody").on("click", "tr", function(){
+						            location.href = 'detailSPrg.ap?no=' + $(this).eq(0).children().find("#aNum2").val()+"&form="+ $(this).children().eq(1).text()+"&st=결재대기"; 
+						        }); 
+							}
 							
 						}, error:function(){
 							//console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
@@ -336,7 +381,7 @@
 				<div class="subtitle mail-list" id="mail-etc"></div>
 				<br clear="both"><br>
 		
-				<table>
+				<table id="tb-mail">
 					<colgroup>
 						<col style="width:35%;">
 						<col sytle="width:50%;">
@@ -554,15 +599,26 @@
 									
 									for(let i=0; i<scList.length; i++){
 										let s = scList[i]; // {}
-										if(s.allDay == 'Y'){ 
-											value += "<a href='scheduleUpDel.sc?no=" + s.scNo + "'>"
-												   + 	"<li>" + s.scTitle + "<br>" + s.startDate +  " ~ "  + s.endDate + "</li>"
-												   + "</a>"
+										
+										if(scList.length == 0){
+											value+= "<tr>" 
+												+ "<td colspan='1'>"
+												+ "오늘의 일정이 없습니다."
+												+ "</td>"
+												+"</tr>";							
 										}else{
-											value += "<a href='scheduleUpDel.sc?no=" + s.scNo + "'>"
-												   +	"<li>" + s.scTitle + "<br>" + s.startDate + " " + s.startTime +  " ~ "  + s.endDate + " " + s.endTime + "</li>"
-												   + "</a>"
+										
+											if(s.allDay == 'Y'){ 
+												value += "<a href='scheduleUpDel.sc?no=" + s.scNo + "'>"
+													   + 	"<li>" + s.scTitle + "<br>" + s.startDate +  " ~ "  + s.endDate + "</li>"
+													   + "</a>"
+											}else{
+												value += "<a href='scheduleUpDel.sc?no=" + s.scNo + "'>"
+													   +	"<li>" + s.scTitle + "<br>" + s.startDate + " " + s.startTime +  " ~ "  + s.endDate + " " + s.endTime + "</li>"
+													   + "</a>"
+											}
 										}
+										
 									}
 									
 									$("#scheduleList").html(value);

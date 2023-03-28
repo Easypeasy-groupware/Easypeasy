@@ -19,4 +19,5 @@ public class BoardReply {
 	private String modifyDate;
 	private String status;
 	
+	private String empName;
 }
