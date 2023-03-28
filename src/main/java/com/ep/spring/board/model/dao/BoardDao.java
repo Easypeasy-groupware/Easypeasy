@@ -194,4 +194,17 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchList", keyword, rowBounds); 	
 	}
 	
+	public int selectSearchFreeCount(SqlSessionTemplate sqlSession, String keyword) {
+		return sqlSession.selectOne("boardMapper.selectSearchFreeCount");
+	}
+	
+	public ArrayList<Board> selectSearchFree(SqlSessionTemplate sqlSession, PageInfo pi, String keyword){
+		
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);	
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchFree", keyword, rowBounds); 	
+	}
+	
 }

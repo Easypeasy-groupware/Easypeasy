@@ -31,7 +31,7 @@
     .board{height:280px;}
     .board-title:hover{cursor:pointer; font-weight:600;}
     #doc-etc{width:48%;}
-    #board-notice{border-bottom:4px solid rgb(166, 184, 145); font-weight:600;}
+    #board-notice{border-bottom:4px solid rgb(166, 184, 145); font-weight:600;  overflow: hidden; text-overflow: ellipsis;}
 
     /*결재문서*/
     .document{height:280px;}
@@ -95,7 +95,7 @@
 						<col style="width:15%;">
 						<col style="width:15%;">
 					</colgroup>
-					<thead>
+					<thead align="center">
 						<tr>
 							<th>제목</th>
 							<th>작성자</th>
@@ -113,14 +113,14 @@
 						<col style="width:15%;">
 						<col style="width:15%;">
 					</colgroup>
-					<thead>
+					<thead align="center">
 						<tr>
 							<th>제목</th>
 							<th>작성자</th>
 							<th>게시일</th>
 						</tr>
 					</thead>
-					<tbody align="center">
+					<tbody align="center" style=" overflow: hidden; text-overflow: ellipsis;">
 						
 					</tbody>
 				</table>
@@ -169,7 +169,7 @@
 	            					let b = list[i]; 
 	            					value += "<tr>"
 	            							+	"<td>" + list[i].boardTitle + "</td>"
-	            							+	"<td>" + list[i].boardWriter + "</td>"
+	            							+	"<td>" + list[i].empName + "</td>"
 	            							+	"<td>" + list[i].createDate + "</td>"
 	            							+ "</tr>"; 
 	            				}

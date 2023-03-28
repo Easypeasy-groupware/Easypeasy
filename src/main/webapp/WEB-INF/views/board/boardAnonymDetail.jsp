@@ -90,9 +90,9 @@
 		                </tr>
 		                <tr>
 		                    <td colspan="4">
-		                        <p style="height:400px" >
+		                        <textarea style="height:400px; width:100%; border:none; text-align:left;" readonly>
 		                        	${b.boardContent}
-		                        </p>
+		                        </textarea>
 		                    </td>
 		                </tr>
 		            </table>
