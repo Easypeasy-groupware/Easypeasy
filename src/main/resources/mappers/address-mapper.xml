@@ -943,7 +943,7 @@
 	<delete id="deleteSharedGroup">
 		delete
 		  from add_group
-		 where group_no = #{no}
+		 where group_no = #{groupNo}
 	</delete>
 
 
