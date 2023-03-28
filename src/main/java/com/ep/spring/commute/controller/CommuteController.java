@@ -341,7 +341,7 @@ public class CommuteController {
 	    		int result2 = cService.updateWorkTime(c);
 	    		
 	    		if(result2>0) {
-	    			AlertMsg msg = new AlertMsg("근무시간 수정", "근무시간 수정에 실패하였습니다.");
+	    			AlertMsg msg = new AlertMsg("근무시간 수정", "근무시간 수정에 성공하였습니다.");
 					session.setAttribute("successMsg", msg);	    			
 	    			return "redirect:workingEmp.HR?no="+empNo;
 	    		}else {
