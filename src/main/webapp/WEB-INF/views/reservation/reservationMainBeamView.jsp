@@ -482,6 +482,7 @@
             } 
         }
 
+        /*
         // 전사일정 체크 확인
         function showHidden(){
             if($("input:checkbox[id='company']").is(":checked") == true) {
@@ -490,6 +491,7 @@
                 $(".body").attr("hidden", false);
             }
         }
+        */
     </script>
     
         

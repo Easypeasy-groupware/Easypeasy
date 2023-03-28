@@ -372,9 +372,19 @@
                         $("#sDate").datepicker("setDate", yymmddStart);
                         $("#eDate").datepicker("setDate", yymmddEnd);
                     }else if(yymmddStart < tDate) { // 오늘 날짜 이전 선택시
-                    	alert("예약 불가능한 날짜");
+                    	swal({
+								title: "예약 불가", 
+								text: "이미 지나간 날짜는 예약이 불가합니다", 
+								icon: "error",
+								button: "확인",
+							});
                     }else if(hhmmStart < tHhmm) { // 오늘 날짜에서 지나간 시간 선택시
-                        alert("예약 불가능한 시간");
+                    	swal({
+								title: "예약 불가", 
+								text: "이미 지나간 시간은 예약이 불가합니다", 
+								icon: "error",
+								button: "확인",
+							});
                     }else{
                     	
                     	$("input[name=resourceNo]").val(info.resource.id);
@@ -439,8 +449,8 @@
                 minDate: "D"
             })
 
-            //$("#sDate").datepicker("setDate", "today");
-            //$("#eDate").datepicker("setDate", "+7");
+            $("#sDate").datepicker("setDate", "today");
+           	$("#eDate").datepicker("setDate", "+5");
 
             
             $("#sDate").datepicker();
@@ -477,6 +487,27 @@
             } else {
                 $(".body").attr("hidden", false);
             }
+        }
+        
+        
+     // 지금 시간
+        var date = new Date();
+        var Hour = ('0' + date.getHours()).slice(-2);
+        var Minites = ('0' + date.getMinutes()).slice(-2);
+
+        var Hour2 = (date.getHours()+1);
+        var Hour3 = (String(Hour2).padStart(2, "0"));
+     
+        //console.log(Hour);
+        //console.log(Hour2);
+        //console.log(String(Hour2).padStart(2, "0"));
+        
+        if(Minites >= 30) { // 지금 시간이 30분 이상이면
+            $("#sel1").val(Hour + ":" + "30").prop("selected", true);
+            $("#sel2").val(Hour3 + ":" + "00").prop("selected", true);
+        }else{ // 30분 미만이라면
+            $("#sel1").val(Hour + ":" + "00").prop("selected", true);
+            $("#sel2").val(Hour + ":" + "30").prop("selected", true);
         }
     </script>
         

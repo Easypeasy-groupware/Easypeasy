@@ -587,6 +587,27 @@
     		
     		
     	})
+    	
+    	
+    	// 지금 시간
+        var date = new Date();
+        var Hour = ('0' + date.getHours()).slice(-2);
+        var Minites = ('0' + date.getMinutes()).slice(-2);
+
+        var Hour2 = (date.getHours()+1);
+        var Hour3 = (String(Hour2).padStart(2, "0"));
+     
+        //console.log(Hour);
+        //console.log(Hour2);
+        //console.log(String(Hour2).padStart(2, "0"));
+        
+        if(Minites >= 30) { // 지금 시간이 30분 이상이면
+            $("#sel1").val(Hour + ":" + "30").prop("selected", true);
+            $("#sel2").val(Hour3 + ":" + "00").prop("selected", true);
+        }else{ // 30분 미만이라면
+            $("#sel1").val(Hour + ":" + "00").prop("selected", true);
+            $("#sel2").val(Hour + ":" + "30").prop("selected", true);
+        }
     </script>
 	
 	
