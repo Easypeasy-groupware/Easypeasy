@@ -188,11 +188,11 @@
 			function topFreeList(){
             		$.ajax({
             			url:"topFree.bo",
-            			success:function(result){
-            				console.log(result);
+            			success:function(flist){
+            				console.log(flist);
             				
             				let value = "";
-            				if(result.length == 0){
+            				if(flist.length == 0){
 								value1+= "<tr>" 
 										+ "<td colspan='3'>"
 										+ "자유게시판에 게시글이 없습니다."
@@ -200,18 +200,19 @@
 										+"</tr>";
 							}else{
 								
-	            				for(let j=0; j<list.length; j++){
-	            					let b = list[j]; 
+	            				for(let j=0; j<flist.length; j++){
+	            					let b = flist[j]; 
 	            					value += "<tr>"
-	            							+	"<td>" + b.boardTitle + "</td>"
+	            							+	"<td>" + flist[j].boardTitle + "</td>"
 	            							+	"<td>" + "익명" + "</td>"
-	            							+	"<td>" + b.createDate + "</td>"
+	            							+	"<td>" + flist[j].createDate + "</td>"
 	            							+   "</tr>"; 
 	            				}
 	            				
 							}
             				
             				$("#free-tb tbody").html(value);
+            				
             			},error:function(){
             				console.log("top5 자유게시글 조회용 ajax 통신 실패");
             			}
