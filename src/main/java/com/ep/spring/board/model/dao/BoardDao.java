@@ -79,13 +79,14 @@ public class BoardDao {
 	}
 	*/
 	
-	public int increaseACount(SqlSessionTemplate sqlSession, int no) {
-		return sqlSession.update("boardMapper.increaseCount", no);
+	public int increaseACount(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("boardMapper.increaseCount", boardNo);
 	}
 	
-	public Board selectABoard(SqlSessionTemplate sqlSession, Board b) {
-		return sqlSession.selectOne("boardMapper.selectBoard", b);
+	public Board selectABoard(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.selectOne("boardMapper.selectBoard", boardNo);
 	}
+	
 	/*
 	public ArrayList<Attachment> selectAnAttachmentList(SqlSessionTemplate sqlSession, Board b){ 
 		return (ArrayList)sqlSession.selectList("boardMapper.selectAttachmentList", b); 
@@ -179,5 +180,18 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectFreeList");
 	}
 	
+	
+	public int selectSearchListCount(SqlSessionTemplate sqlSession, String keyword) {
+		return sqlSession.selectOne("boardMapper.selectSearchListCount");
+	}
+	
+	public ArrayList<Board> selectSearchList(SqlSessionTemplate sqlSession, PageInfo pi, String keyword){
+		
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);	
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchList", keyword, rowBounds); 	
+	}
 	
 }

@@ -142,6 +142,10 @@
 				
 				$(function(){
 					topBoardList();
+					
+            		/* $(document).on("click", "#notice-tb>tbody>tr", function(){
+            			location.href = 'detailForm.bo?no=' + $(this).children().eq(0).text(); // 자손들 중 첫번째 값
+            		}) */
 				})
 				
             	function topBoardList(){
@@ -155,7 +159,7 @@
             					let b = list[i]; 
             					value += "<tr>"
             							+	"<td>" + list[i].boardTitle + "</td>"
-            							+	"<td>" + list[i].boardWriter + "</td>"
+            							+	"<td>" + list[i].empName + "</td>"
             							+	"<td>" + list[i].createDate + "</td>"
             							+ "</tr>"; 
             				}
