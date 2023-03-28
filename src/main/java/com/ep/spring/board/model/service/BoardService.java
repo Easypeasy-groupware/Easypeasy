@@ -84,4 +84,7 @@ public interface BoardService {
 	int selectSearchListCount(String keyword);
 	ArrayList<Board> selectSearchList(PageInfo pi, String keyword);
 	
+	int selectSearchFreeCount(String keyword);
+	ArrayList<Board> selectSearchFree(PageInfo pi, String keyword);
+	
 }

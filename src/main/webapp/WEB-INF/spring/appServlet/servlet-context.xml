@@ -40,6 +40,7 @@
 	<!-- interceptor -->
 	<interceptors>
 		<interceptor>
+		<!--
 			<mapping path="/main.ep" />
 			<mapping path="/commute.ep"/>
 			<mapping path="/list.ma"/>
@@ -50,6 +51,9 @@
 			<mapping path="/list.bo"/>
 			<mapping path="/favorite.add"/>
 			<mapping path="/list.org"/>
+		-->
+			<mapping path="/**"/>
+			<exclude-mapping path="/login.ep"/> <!-- login.ep제외하고 나머지 접근하면 로그인 페이지로 -->
 			<beans:bean class="com.ep.spring.common.interceptor.LoginInterceptor" id="loginInterceptor" />
 		</interceptor>
 	</interceptors>

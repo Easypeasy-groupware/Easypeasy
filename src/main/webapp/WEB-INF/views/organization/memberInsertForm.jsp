@@ -58,15 +58,15 @@
 		</div>
 		
 		<div class="board">
-			<h2>사원 등록 폼</h2>
+			<h2>사원 등록</h2>
 			
 			<div class="container">
 				<form action="insert.org" method="POST" id="enrollForm">
 					<br>
-			        <!-- <label for="empNo">*사원번호:</label> -->
+			        <!-- <label for="empNo">*사원번호:</label> 
 			            <input type="hidden" id="empNo" name="empNo" value="" required><br />
 			            <div id="checkResult" style="font-size:0.8em; display:none"></div>
-			            <br>
+			            <br>-->
 			        <label for="userId">*아이디:</label>
 			          <input type="text" id="empId" name="empId"  required><br />
 			        <label for="password">*비밀번호:</label>
@@ -85,7 +85,7 @@
 			        <label>직무</label>
 			            <select name="deptCode" id="deptCode" >
 			                <option value="D1" name="deptCode" id="D1">인사관리부</option>
-			                <option value="D2" name="deptCode" id="D2">경영관리부</option>
+			                <option value="D2" name="deptCode" id="D2">경영지원부</option>
 			                <option value="D3" name="deptCode" id="D3">영업1팀</option>
 			                <option value="D4" name="deptCode" id="D4">영업2팀</option>
 			                <option value="D5" name="deptCode" id="D5">영업3팀</option>
@@ -105,11 +105,11 @@
 					<br><br>
 					<div align="center">
 						<button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1);">이전으로</button>
-						<button type="submit" class="btn btn-success" disabled>등록하기</button>
+						<button type="submit" class="btn btn-success">등록하기</button>
 					</div>
 				</form>
 			</div>
-			
+			<!-- 
 			<script>
 	    	$(function(){
 	    		const $noInput = $("#enrollForm input[name=empNo]");
@@ -144,7 +144,7 @@
 	    		})
 	    	})
 	    </script>
-			
+			 -->
 		</div>
 	</div>	
 </body>

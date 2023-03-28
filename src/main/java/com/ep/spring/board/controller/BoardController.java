@@ -652,5 +652,22 @@ public class BoardController {
 		return "board/boardListView";
 	}
 	
+	@RequestMapping("freeSearch.bo")
+	public String selectSearchFree(String keyword, @RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+		
+		int searchCount = bService.selectSearchFreeCount(keyword);
+		
+		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 5, 10);
+		
+		ArrayList<Board> list = bService.selectSearchFree(pi, keyword);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		model.addAttribute("keyword", keyword);
+		
+		return "board/boardAnonymousList";
+	}
+	
 	
 }

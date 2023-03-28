@@ -31,7 +31,7 @@
     .board{height:280px;}
     .board-title:hover{cursor:pointer; font-weight:600;}
     #doc-etc{width:48%;}
-    #board-notice{border-bottom:4px solid rgb(166, 184, 145); font-weight:600;}
+    #board-notice{border-bottom:4px solid rgb(166, 184, 145); font-weight:600;  overflow: hidden; text-overflow: ellipsis;}
 
     /*결재문서*/
     .document{height:280px;}
@@ -93,13 +93,13 @@
 				<div class="subtitle" id="doc-etc"></div>
 				<br clear="both"><br>
 		
-				<table class="board-table" id="notice-tb">
+				<table class="board-table" id="notice-tb" style="table-layout:fixed;">
 					<colgroup>
 						<col style="width:70%;">
 						<col style="width:15%;">
 						<col style="width:15%;">
 					</colgroup>
-					<thead>
+					<thead align="center">
 						<tr>
 							<th>제목</th>
 							<th>작성자</th>
@@ -111,13 +111,13 @@
 					</tbody>
 				</table>
 	 
-				<table class="board-table" id="free-tb" style="display:none">
+				<table class="board-table" id="free-tb" style="display:none; table-layout:fixed;">
 					<colgroup>
 						<col style="width:70%;">
 						<col style="width:15%;">
 						<col style="width:15%;">
 					</colgroup>
-					<thead>
+					<thead align="center">
 						<tr>
 							<th>제목</th>
 							<th>작성자</th>
@@ -172,8 +172,8 @@
 	            				for(let i=0; i<list.length; i++){
 	            					let b = list[i]; 
 	            					value += "<tr>"
-	            							+	"<td>" + list[i].boardTitle + "</td>"
-	            							+	"<td>" + list[i].boardWriter + "</td>"
+	            							+	"<td style='width: 98%; text-overflow:ellipsis; overflow:hidden; white-space: nowrap;'>" + list[i].boardTitle + "</td>"
+	            							+	"<td>" + list[i].empName + "</td>"
 	            							+	"<td>" + list[i].createDate + "</td>"
 	            							+ "</tr>"; 
 	            				}
@@ -207,7 +207,7 @@
 		            				for(let j=0; j<flist.length; j++){
 		            					let b = flist[j]; 
 		            					value += "<tr>"
-		            							+	"<td>" + b.boardTitle + "</td>"
+		            							+	"<td style='width: 98%; text-overflow:ellipsis; overflow:hidden; white-space: nowrap;'>" + b.boardTitle + "</td>"
 		            							+	"<td>" + "익명" + "</td>"
 		            							+	"<td>" + b.createDate + "</td>"
 		            							+   "</tr>"; 
