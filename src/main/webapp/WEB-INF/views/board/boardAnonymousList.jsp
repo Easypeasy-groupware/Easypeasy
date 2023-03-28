@@ -21,8 +21,8 @@
 	th {background-color: #ddd;}
 	tr:hover {background-color: #f5f5f5;}
 	.views {text-align: center;}
-    .search-container {display: flex; justify-content: flex-end; margin-bottom: 10px;}
-	.search-container input[type=text] {padding: 6px; margin-right: 10px; border:0.5px solid; border-radius: 3px; width: 200px;}
+    #search-container {display: flex; justify-content: flex-end; margin-bottom: 10px;}
+	#search-container input[type=text] {padding: 6px; margin-right: 10px; border:0.5px solid; border-radius: 3px; width: 200px;}
 	.notice{font-color:red; overflow: hidden; text-overflow: ellipsis; width:600px;}
 
 	/* 페이징바 */
@@ -48,7 +48,7 @@
             <br><br><br><br>
          </bheader>
         <div class="container">
-	        <div class="search-container">
+	        <div id="search-container">
 	           <form action="freeSearch.bo" method="get">
 	           		<input type="hidden" name="cpage" value="1">
 	                    <!-- <select>
@@ -56,17 +56,21 @@
 	                        <option value="1">1일</option>
 	                        <option value="7">1주일</option>
 	                        <option value="30">1개월</option>
-	                    </select> 
+	                    </select> -->
 	                    
 	                    <select>
 	                        <option value="title">제목</option>
 	                        <option value="content">내용</option>
-	                    </select>-->
-	                        <input type="text" name="keyword" value="${ keyword }" placeholder="검색어를 입력하세요">
+	                    </select>
+	                        <input type="text" name="keyword" value="${keyword}" placeholder="검색어를 입력하세요">
 	                        <button type="submit" class="btn btn-success">검색</button>
 	               
 	            </form>
 	          </div>
+	          <script>
+	        	document.querySelector("#search-container option[value=${condition}]").selected = true;
+	          </script> 
+	        
             <button type="button" class="btn btn-outline-success btn-sm" onclick="location.href='enrollAForm.bo';">새글쓰기</button>
             <%-- <c:if test="${ loginUser.deptCode eq 'D1' }"> 
             	<button type="button" class="btn btn-outline-danger btn-sm" onclick="location.href='delete.bo';"> 삭제</button>

@@ -120,11 +120,12 @@
     #paging li.on {background:rgb(166, 184, 145);}
     #paging li.on a { color: white;}
     
-    #topButton{position: fixed; right: 15%; bottom: 50px; display:none;  z-index: 999;}
+    #topButton{position: fixed; right: 10%; bottom: 50px; display:none;  z-index: 999;}
     
 </style>
 </head>
 <body>
+
 	
 	<c:if test="${ not empty successMsg }">
 		<script>
@@ -139,7 +140,8 @@
 		</script>
 		<c:remove var="failMsg" scope="session"/>
 	</c:if>
-	 
+		
+	
 	
     <div class="wrap">	
     <div class="header">
@@ -159,24 +161,24 @@
             <div class="icons">
                 <a href="javascript:openWindowPop('empList.ch', 'popup');" class="position-relative" id="chat-a">
                     <img src="resources/common_images/comments.png" class="chat-icon"> 
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger websk-num">
-                        99+
-                    </span>
+                    <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle" id="newChat" style="display:none;"></span>
+                    <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger websk-num" id="newChat"></span> -->
                 </a>
 
                 <a class="position-relative alarm_toggle" id="alarm-a">
                     <img src="resources/common_images/bell.png" class="alarm-icon"> 
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger websk-num">
-                        99+
-                    </span>
                 </a>
             </div>
+
+		 	
 			<script>
 				function openWindowPop(url, name){
 					var options = 'top=500, left=1400, width=400, height=600, status=no, menubar=no, toolbar=no, titlebar=no, resizable=no, scrollbars=yes';
 					window.open(url, name, options);
+					
 				}
 			</script>
+			
             
 
            	<div id="empName"><span id="user-name">${ loginUser.empName }</span> ${ loginUser.jobName }님</div>

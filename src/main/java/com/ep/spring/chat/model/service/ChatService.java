@@ -1,6 +1,7 @@
 package com.ep.spring.chat.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.ep.spring.chat.model.vo.ChatMember;
 import com.ep.spring.chat.model.vo.ChatRecord;
@@ -43,6 +44,11 @@ public interface ChatService {
 
 	// 채팅가능한 사원 검색
 	ArrayList<Employee> selectChatEmpList(Employee e);
+
+	int selectUnReadCount(ChatRecord message);
+
+	List<ChatRoom> chatRoomList(String empNo);
+
 
 	
 	

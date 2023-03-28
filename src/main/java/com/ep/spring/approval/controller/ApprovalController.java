@@ -368,7 +368,7 @@ public class ApprovalController {
 
 		int result = aService.deleteApproval(appNo);
 		
-		System.out.println(result);
+		//System.out.println(result);
 		
 		
 		if(result > 0) {
@@ -379,7 +379,7 @@ public class ApprovalController {
 			Approval ap = new Approval();
 			ap.setAppNo(appNo);
 			ArrayList<Attachment> list =  aService.selectDetailSPrgAt(ap);
-			System.out.println("지울 첨부파일 : " + list);
+			//System.out.println("지울 첨부파일 : " + list);
 
 			if(list.size() > 0) {
 				
@@ -635,11 +635,11 @@ public class ApprovalController {
 		Approval ap = aService.selectTempApproval(no);
 		// 재기안인지 수정인지 구분하는 값 세팅해주기
 		
-		System.out.println("재기안일까요 수정일까요?" + division);
+		//System.out.println("재기안일까요 수정일까요?" + division);
 		ap.setDivision(division);
 
-		System.out.println("화면에 돌려줄 재기안/수정값?" + ap.getDivision());
-		System.out.println(ap);
+		//System.out.println("화면에 돌려줄 재기안/수정값?" + ap.getDivision());
+		//System.out.println(ap);
 		model.addAttribute("ap", ap);	
 		
 		ArrayList<ApprovalLine> list1 = aService.selectDetailSPrgAl(ap);
@@ -654,7 +654,7 @@ public class ApprovalController {
 			model.addAttribute("list3", list3);
 			}
 		}
-		System.out.println("업데이트폼에서 보낼 기존 첨부파일 : " + list3);
+		//System.out.println("업데이트폼에서 보낼 기존 첨부파일 : " + list3);
 		
 		
 		if(ap.getFormCode() == 1) {
@@ -683,7 +683,7 @@ public class ApprovalController {
 	public String updateApproval(HttpSession session, Model model, List<MultipartFile> originNames, 
 								 Approval ap, VacationForm vf, OverTimeForm ot) {
 		//System.out.println(ap);
-		System.out.println("넘어온 파일 : " + originNames);
+		//System.out.println("넘어온 파일 : " + originNames);
 		
 		
 		/*
@@ -713,7 +713,7 @@ public class ApprovalController {
 			
 			// 기존 첨부파일이 있었을 경우 => 기존의 파일 지우기
 			ArrayList<Attachment> list =  aService.selectDetailSPrgAt(ap);
-			System.out.println("기존의 지울 첨부파일 : " + list);
+			//System.out.println("기존의 지울 첨부파일 : " + list);
 			
 			if(list.size() > 0) {
 				
@@ -747,7 +747,7 @@ public class ApprovalController {
 				at.setOriginName(originName);
 				at.setChangeName(changeName);
 				at.setFilePath(saveFilePath);
-				System.out.println("추가할 하나하나의 첨부파일 : " + at);
+				//System.out.println("추가할 하나하나의 첨부파일 : " + at);
 				atList.add(at);
 				
 			}
@@ -844,8 +844,8 @@ public class ApprovalController {
 		/*
 		System.out.println(a);
 		System.out.println(listCount);
-		System.out.println(sList);*/
-		System.out.println(pi);
+		System.out.println(sList);
+		System.out.println(pi);*/
 		
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("sList", sList);
