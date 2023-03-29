@@ -90,6 +90,59 @@
 	          </form>
 	          
 	          <div class="main">
+	          	<c:forEach var="d" items="${deptList}">
+						<c:if test="${d.deptCode eq 'D0'}">
+							<h4><a onclick="dept0();"><b>${d.deptName}</b></a></h4>
+							<div id="d0">
+								<c:forEach var="e" items="${list}">
+									<c:if test="${e.deptCode eq d.deptCode}">
+									<div class="namebox" data-toggle="modal" data-target="#myModal${ e.empNo }">
+										<table>
+											<tr>
+												<td>
+													<c:if test="${e.empProfile eq null}">
+														<img src="resources/profile_images/default_profile.png"  style="width:100px;">
+													</c:if>
+													<img src="${e.empProfile}"  style="width:100px;">
+												</td>
+												<td>
+													<br><h4> ${e.jobName} | ${e.empName}</h4>
+													<input type="hidden" name="empNo" value="${e.empNo}">
+												</td>
+											</tr>
+										</table>
+									</div>
+									
+										<!--  모달  -->
+										<div id="myModal${ e.empNo }" class="modal">
+											<div class="modal-dialog">
+											<div class="modal-content">
+											<span class="close" data-dismiss="modal">&times;</span>
+											<div class="modal-body">
+												<table>
+												<tr>
+													<td><input type="hidden" name="empNo" value="${e.empNo}">
+														<c:if test="${e.empProfile eq null}">
+															<img src="resources/profile_images/default_profile.png"  style="width:100px;">
+														</c:if>
+														<img src="${e.empProfile}"  style="width:200px;"></td>
+													<td><h3>${e.empName }</h3>
+													<p>${e.jobName }</p>
+													<p>${e.deptName }</p>
+													<p>${e.email }</p></td>
+												</tr>
+												</table>
+											</div>
+											</div>
+										</div>
+										</div>
+									</c:if>
+								</c:forEach>
+							</div>
+						</c:if> 
+				</c:forEach>
+				<br><br>
+	          
 					<c:forEach var="d" items="${deptList}">
 						<c:if test="${d.deptCode eq 'D1'}">
 							<h4><a onclick="dept1();"><b>${d.deptName}</b></a></h4>
