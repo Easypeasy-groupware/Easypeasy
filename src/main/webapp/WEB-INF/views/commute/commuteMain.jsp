@@ -542,7 +542,7 @@
                     </thead>
                     
                     <tbody>
-                    <c:forEach var="list2" items="${ list2 }">
+                    <c:forEach var="list2" begin="0" end="4" items="${ list2 }">
                       <tr>
                         
                 		<td class="tg-0lax">${ list2.vacStart }~${ list2.vacEnd }</td>

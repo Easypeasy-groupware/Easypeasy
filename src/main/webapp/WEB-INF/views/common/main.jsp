@@ -389,11 +389,12 @@
 				<br clear="both"><br>
 		
 				<table id="tb-mail">
-					<colgroup>
-						<col style="width:35%;">
-						<col sytle="width:50%;">
-						<col style="width:15%;">
-					</colgroup>
+					<!-- <colgroup>
+						<col style="width:20%;">
+						<col sytle="width:15%;">
+						<col style="width:45%;">
+						<col style="width:20%;">
+					</colgroup> -->
 					<thead>
 						<tr>
 							<th>발신자</th>
@@ -408,7 +409,7 @@
 									<c:if test="${ m.status == 'Y' }">
 										<tr class="mailOne">
 											<td>
-												<div style="width: 25%; float: left;">
+												<div style="width: 60px; float: left;">
 													${ m.empName }&nbsp;
 												</div>
 												<div style="width: 70%; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
@@ -416,7 +417,7 @@
 												</div>
 											</td>
 											<td>
-												<div style="width: 92%; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+												<div style="width: 90%; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 													${ m.mailTitle }
 												</div>
 											</td>

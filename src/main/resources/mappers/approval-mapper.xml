@@ -925,6 +925,19 @@
 			                        )       	
 	</update>
 	
+	<update id="updateReject">
+                    update approval
+                       set app_tstatus = '반려'
+                     where app_no = (
+                                            select app_no 
+                                               from app_line
+                                              where app_no = #{appNo}
+                                                and emp_no = #{recEmpNo}
+                                                and app_status = '반려'
+                                            )  	
+	
+	</update>
+	
 	<select id="selectTempApproval" resultMap="approvalResult">
 			select
 			        a.APP_NO

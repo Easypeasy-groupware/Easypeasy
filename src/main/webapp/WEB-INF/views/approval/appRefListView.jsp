@@ -67,7 +67,7 @@
 							<th>결재상태</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody style="font-size:14px;">
 						<c:choose>
 							<c:when test="${empty list}">
 								<tr>
