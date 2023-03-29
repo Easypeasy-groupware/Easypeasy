@@ -284,6 +284,10 @@ public class AddressDao {
 		return sqlSession.update("addressMapper.updateDeleteAddGroup", ag);
 	}
 
+	public int updatePersonalGroupName(SqlSessionTemplate sqlSession, AddGroup ag) {
+		return sqlSession.update("addressMapper.updatePersonalGroupName", ag);
+	}
+
 
 
 

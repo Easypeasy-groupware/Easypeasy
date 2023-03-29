@@ -88,6 +88,8 @@
 			 , add_type
 		  from add_group
          where add_type = 'S'
+         order
+            by group_no
 	</select>
 	
 	<select id="selectPersonalFavAddList" resultMap="addressResult">
@@ -949,6 +951,13 @@
 	<update id="updateDeleteAddGroup">
 		update address
 		   set group_no = ''
+		 where group_no = #{groupNo}
+	</update>
+	
+	<update id="updatePersonalGroupName">
+		update
+		       add_group
+		   set group_name = #{groupName}
 		 where group_no = #{groupNo}
 	</update>
 

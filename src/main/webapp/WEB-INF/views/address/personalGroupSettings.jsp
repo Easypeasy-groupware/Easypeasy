@@ -75,7 +75,7 @@
 		
 		<div class="address-content-outer">
 
-			<p id="address-group">${loginUser.empName }님 공유주소록 그룹 관리</p>
+			<p id="address-group">${loginUser.empName }님 그룹 관리</p>
 
 			<br>
 			<br>
@@ -120,7 +120,7 @@
 						let group = $(this).siblings(".each-group");
 						
 						$.ajax({
-							url:"updateSharedGroup.add",
+							url:"updatePersonalGroup.add",
 							data:{
 								groupName : name.val(),
 								groupNo : no.val()
@@ -135,6 +135,7 @@
 								}
 								*/
 								location.reload();
+								//location.href="groupSetting.add";
 							},
 							error:function(){
 		    					console.log("공용주소록그룹 수정 실패");

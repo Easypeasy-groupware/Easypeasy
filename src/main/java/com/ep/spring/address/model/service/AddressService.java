@@ -141,6 +141,9 @@ public interface AddressService {
 	
 	// 33. 개인주소록 개별삭제
 	int deleteOndAdd(int no);
+	
+	
+	int updatePersonalGroupName(AddGroup ag);
 
 	
 

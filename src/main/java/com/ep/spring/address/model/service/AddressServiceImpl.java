@@ -287,6 +287,11 @@ public class AddressServiceImpl implements AddressService {
 		return aDao.deleteOneAdd(sqlSession, no);
 	}
 
+	@Override
+	public int updatePersonalGroupName(AddGroup ag) {
+		return aDao.updatePersonalGroupName(sqlSession, ag);
+	}
+
 
 
 

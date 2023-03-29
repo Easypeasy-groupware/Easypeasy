@@ -592,6 +592,20 @@ public class AddressController {
 		return "address/personalGroupSettings";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="updatePersonalGroup.add")
+	public int ajaxUpdatePersonalGroupName(AddGroup ag) {
+		
+		return aService.updatePersonalGroupName(ag);
+	}
+	
+	@RequestMapping("sendMail.add")
+	public ArrayList<Address> sendMailFromAddress(List<String> list){
+		System.out.println(list);
+		ArrayList<Address> aaa = new ArrayList<Address>();
+		
+		return aaa;
+	}
 	
 
 }
