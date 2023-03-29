@@ -77,7 +77,7 @@ public class AddressController {
 		if(a.getEditList()==null) {
 			a.setEditable("N");
 		}else {
-			a.setEditable("N");
+			a.setEditable("Y");
 		}
 		System.out.println(a);
 		int result = aService.insertSharedAdd(a);

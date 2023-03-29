@@ -228,7 +228,6 @@
 			 , ADD_EMP
 			 , ADD_DEPT
 			 , ADD_JOB
-			 , GROUP_NO
 			 , EMP_PHONE
 			 , EMP_ADDRESS
 			 , MEMO
@@ -246,7 +245,6 @@
 			 , #{addEmp}
 			 , #{addDept}
 			 , #{addJob}
-			 , #{groupNo}
 			 , #{empPhone}
 			 , #{empAddress}
 			 , #{memo}

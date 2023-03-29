@@ -92,7 +92,7 @@
     <div class="outer" align="center">
 
         <div class="title">
-            <img src="http://192.168.9.68:8306/EP/resources/common_images/EP-oval.png" style="width:500px;">
+            <img src="resources/common_images/EP-oval.png" style="width:500px;">
         </div>
 
         <div class="login-area">
