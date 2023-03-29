@@ -218,5 +218,35 @@
             </div>
         </div>
     </div>
+    
+
+    <script>
+
+        // 전체 체크박스 선택 취소
+        let checkAll = document.getElementById("check_all");
+        let mailCheckBox = document.querySelectorAll('.mail_checkbox');
+        checkAll.addEventListener('change', function(event){
+            mailCheckBox.forEach((checkbox) => {
+                checkbox.checked = checkAll.checked;
+            })
+        });
+
+        // 메일 상세조회
+        let mailSelectList = document.querySelectorAll('.mail_select_area');
+            mailSelectList.forEach(function(select){
+                select.addEventListener('click', function(){
+                    const input = document.createElement("input");
+                    input.setAttribute("style", "display:none")
+                    input.setAttribute("name", "div");
+                    input.setAttribute("value", 1);
+                    this.append(input);
+                    this.action = "select.ma";
+                    this.method = "POST";
+                    this.submit();
+
+                });
+            });
+
+    </script>
 </body>
 </html>

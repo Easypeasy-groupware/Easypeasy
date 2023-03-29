@@ -404,19 +404,19 @@
 					<tbody>
 						<c:choose>
 							<c:when test="${ not empty recMailList }">
-								<c:forEach var="m" begin="0" end="5" items="${ recMailList }">
+								<c:forEach var="m" begin="0" end="4" items="${ recMailList }">
 									<c:if test="${ m.status == 'Y' }">
 										<tr class="mailOne">
 											<td>
 												<div style="width: 25%; float: left;">
 													${ m.empName }&nbsp;
 												</div>
-												<div style="width: 70%; float: left; overflow: hidden; text-overflow: ellipsis;">
+												<div style="width: 70%; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 													${ m.sendMailAdd }
 												</div>
 											</td>
 											<td>
-												<div style="width: 92%; float: left; overflow: hidden; text-overflow: ellipsis;">
+												<div style="width: 92%; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 													${ m.mailTitle }
 												</div>
 											</td>
@@ -531,7 +531,7 @@
                         var seconds = time.getSeconds();
             
                         Target.innerText = 
-                        	(month + 1)+"월 "+ date + "일 " + week[day] +"요일" +
+                        	(month + 1)+"월 "+ date + "일 " + week[day] +"요일 " +
                         	(hours < 10 ? "0"+hours : hours )
                         	+ ":" +( minutes < 10 ? "0"+minutes : minutes )
                         	+ ":" +( seconds < 10 ? "0"+seconds : seconds );
