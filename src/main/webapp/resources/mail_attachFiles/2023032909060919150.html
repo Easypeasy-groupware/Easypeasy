@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    import (
+        "bytes"
+        "fmt"
+        "net/http"
+
+        "google.golang.org/appengine"
+        "google.golang.org/appengine/log"
+        "google.golang.org/appengine/mail"
+    )
+
+    func confirm(w http.ResponseWriter, r *http.Request) {
+            ctx := appengine.NewContext(r)
+            addr := r.FormValue("email")
+            url := createConfirmationURL(r)
+            msg := &mail.Message{
+                    Sender:  "ktj9102@naver.com Support <ktj9102@naver.com>",
+                    To:      []string{addr},
+                    Subject: "Confirm your registration",
+                    Body:    fmt.Sprintf(confirmMessage, url),
+            }
+            if err := mail.Send(ctx, msg); err != nil {
+                    log.Errorf(ctx, "Couldn't send email: %v", err)
+            }
+    }
+
+    const confirmMessage = `
+    Thank you for creating an account!
+    Please confirm your email address by clicking on the link below:
+
+    %s
+`
+
+</body>
+</html>
+

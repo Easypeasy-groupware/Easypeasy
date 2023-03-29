@@ -390,9 +390,9 @@
 		
 				<table id="tb-mail">
 					<colgroup>
-						<col style="width:35%;">
-						<col sytle="width:50%;">
-						<col style="width:15%;">
+						<!-- <col style="width:35%;"> -->
+						<!-- <col sytle="width:50%;"> -->
+						<!-- <col style="width:15%;"> -->
 					</colgroup>
 					<thead>
 						<tr>
@@ -404,23 +404,23 @@
 					<tbody>
 						<c:choose>
 							<c:when test="${ not empty recMailList }">
-								<c:forEach var="m" begin="0" end="5" items="${ recMailList }">
+								<c:forEach var="m" begin="0" end="4" items="${ recMailList }">
 									<c:if test="${ m.status == 'Y' }">
 										<tr class="mailOne">
-											<td>
-												<div style="width: 25%; float: left;">
+											<td style="width: 270px;">
+												<div style="width: 80px; float: left;">
 													${ m.empName }&nbsp;
 												</div>
-												<div style="width: 70%; float: left; overflow: hidden; text-overflow: ellipsis;">
+												<div style="width: 170px; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 													${ m.sendMailAdd }
 												</div>
 											</td>
-											<td>
-												<div style="width: 92%; float: left; overflow: hidden; text-overflow: ellipsis;">
+											<td style="width: 390px">
+												<div style="width: 360px; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 													${ m.mailTitle }
 												</div>
 											</td>
-											<td>
+											<td style="width: 300pxs">
 												${ m.dateDay }
 												<input class="mailNo" type="hidden" name="mailNo" value="${ m.mailNo }">
 												<input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
@@ -531,7 +531,7 @@
                         var seconds = time.getSeconds();
             
                         Target.innerText = 
-                        	(month + 1)+"월 "+ date + "일 " + week[day] +"요일" +
+                        	(month + 1)+"월 "+ date + "일 " + week[day] +"요일 " +
                         	(hours < 10 ? "0"+hours : hours )
                         	+ ":" +( minutes < 10 ? "0"+minutes : minutes )
                         	+ ":" +( seconds < 10 ? "0"+seconds : seconds );
