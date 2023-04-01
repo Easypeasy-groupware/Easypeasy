@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -544,9 +543,17 @@ public class ApprovalController {
 		// 첨부파일 처리하기
 		
 		ArrayList <Attachment> atList = new ArrayList<>();
+		System.out.println(originNames);
+		//System.out.println(originNames.getOriginalFilename());
+		String test = "";
 		
+		for(MultipartFile mf : originNames) {
+			test += mf.getOriginalFilename();
+		}
 		
-		if(originNames != null) {
+		System.out.println(test);
+		
+		if(!(test.equals(""))) {
 			String path = "resources/approval_attachFiles/";
 			
 			
@@ -642,11 +649,12 @@ public class ApprovalController {
 		//System.out.println(ap);
 		model.addAttribute("ap", ap);	
 		
-		ArrayList<ApprovalLine> list1 = aService.selectDetailSPrgAl(ap);
+		/*ArrayList<ApprovalLine> list1 = aService.selectDetailSPrgAl(ap);
 		model.addAttribute("list1", list1);	
 		
+		
 		ArrayList<ApprovalLine> list2 = aService.selectDetailSPrgRl(ap);
-		model.addAttribute("list2", list2);
+		model.addAttribute("list2", list2);*/
 		
 		ArrayList<Attachment> list3 = aService.selectDetailSPrgAt(ap);
 		if(division == 1) {
@@ -707,21 +715,33 @@ public class ApprovalController {
 
 		// 첨부파일 처리하기
 		
+		
+		
 		ArrayList <Attachment> atList = new ArrayList<>();
 		
-		if(originNames != null) {
+		String test="";
+		for(MultipartFile mf : originNames) {
+			test += mf.getOriginalFilename();
+		}
+		
+		System.out.println(test);
+		
+		if(!(test.equals(""))) {
 			
 			// 기존 첨부파일이 있었을 경우 => 기존의 파일 지우기
 			ArrayList<Attachment> list =  aService.selectDetailSPrgAt(ap);
 			System.out.println("기존의 지울 첨부파일 : " + list);
 			
+			
+
+			
 			if(list.size() > 1) {
 				
 			
-					for(Attachment b : list) {
-						new File(session.getServletContext().getRealPath(b.getFilePath())).delete();
-	
-					}					
+				for(Attachment b : list) {
+					new File(session.getServletContext().getRealPath(b.getFilePath())).delete();
+
+				}					
 			
 				int delResult = aService.deleteAttachment(ap.getAppNo());
 				
@@ -768,6 +788,7 @@ public class ApprovalController {
 		
 		// 결재자 ApprovalLine에 담기
 		
+		ap.setAppSequence(1);		
 		
 		ArrayList<ApprovalLine> al = new ArrayList<>();
 		if(ap.getAlList() != null) {

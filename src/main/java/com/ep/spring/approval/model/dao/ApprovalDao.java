@@ -211,7 +211,17 @@ public class ApprovalDao {
 	}
 	
 	public int updateAppLine(SqlSessionTemplate sqlSession, ApprovalLine al) {
-		return sqlSession.update("approvalMapper.updateAppLine", al);
+		
+		int result1 = 0;
+		int result2 = 0;
+		
+		result1 = sqlSession.update("approvalMapper.updateAppLine", al);
+		
+		if(al.getAppStatus().equals("반려")) {
+			result2 += sqlSession.update("approvalMapper.updateReject", al);
+		}
+		
+		return result1 + result2;
 	}
 	
 	public Approval selectTempApproval(SqlSessionTemplate sqlSession, int appNo) {
@@ -226,7 +236,7 @@ public class ApprovalDao {
 		
 		int result1 = 0;
 		int result2 = 0;
-		int result3 = 0;
+
 		
 		int num = al.get(0).getAppNo();
 		
@@ -234,10 +244,6 @@ public class ApprovalDao {
 		
 		for(ApprovalLine a : al) {
 			result2 += sqlSession.insert("approvalMapper.updateApprovalLine", a);
-			
-			if(a.getAppStatus().equals("반려")) {
-				result3 += sqlSession.update("approvalMapper.updateReject", a);
-			}
 			
 		}
 		
