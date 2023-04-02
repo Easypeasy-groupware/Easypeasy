@@ -29,25 +29,6 @@
 		<div class="outer1">
 			<p style="font-size:25px;"><b>참조대기문서</b></p>
 			<br><br>
-			<div class="list-1">
-				<select name="period" id="">
-					<option value="">전체기간</option>
-					<option value="">1개월</option>
-					<option value="">6개월</option>
-					<option value="">1년</option>
-				</select>
-				<select name="option" id="">
-					<option value="">기안자</option>
-					<option value="">기안부서</option>
-					<option value="">결재양식</option>
-				</select>
-				<button onclick="searchResult();" style="float:right;text-align:center;height:23px;line-height:12px;" class="btn btn-outline-secondary btn-sm">검색</button>
-				<input type="search" class="form-control" style="display:block;width:200px; height:20px;float:right; margin-right:0px;" name="keyword" id="keyword"> 
-
-
-			</div>
-
-			<br><br>
 
 			<div class="list-2">
 				<table style="text-align:center" class="table" id="result-tb">

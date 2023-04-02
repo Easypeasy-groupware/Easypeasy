@@ -622,7 +622,13 @@
         			
         			swal("결재선 선택 후 상신요청해주세요.");
         			
-        		} else if(($("#writerComment").val().trim().length>0) && ($(".app-body input").html() != null) && ($("#content").val().trim().length>0)){
+        		}	else if(parseFloat($("#remain").val()) < parseFloat($("#vacUse").val())){
+
+
+        			swal("신청연차가 잔여연차보다 더 많습니다.");
+        		} 
+        		
+        		else if(($("#writerComment").val().trim().length>0) && ($(".app-body input").html() != null) && ($("#content").val().trim().length>0) && !(parseFloat($("#remain").val()) < parseFloat($("#vacUse").val()))){
         		
 	        		const appContent = $("#contentArea");
 	        		

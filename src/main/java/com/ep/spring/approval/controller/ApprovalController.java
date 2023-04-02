@@ -852,9 +852,9 @@ public class ApprovalController {
 		
 		int eNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		
-		if(a.getListType().equals("s")) {
+		if(a.getListType().equals("s") || a.getListType().equals("t")) {
 			a.setWriterNo(eNo);
-		}else if(a.getListType().equals("c")) {
+		}else if(a.getListType().equals("c") || a.getListType().equals("f")) {
 			a.setReceiverNo(eNo);
 		}
 		
