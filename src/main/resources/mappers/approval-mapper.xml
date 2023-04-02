@@ -123,7 +123,7 @@
 					            
 		               		)a
 		         )
-		         where rnum between 1 and 4                 
+		         where rnum between 1 and 5                 
 			  	
 	</select>
 	
@@ -137,19 +137,27 @@
 								   , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
 								   , app_tstatus
 								   , title
-								   , a.emp_no
+								   , e.emp_no
 								   , form_name
 								   , form_code
 								   , app_amount
 								   , app_sequence
-								   , emp_name
-							   from  approval a
-							   join  employee e on (a.emp_no = e.emp_no)
+								   , (
+                                        select emp_name                                       
+                                          from app_line b
+                                          join employee c on (b.emp_no = c.emp_no)
+                                         where app_no = a.app_no
+                                           and ref_whether = 'N'
+                                           and app_seq_no = app_sequence
+                                           and app_status = '미결재'
+                                        )as emp_name
+							   from approval a
+							   join employee e on (a.emp_no = e.emp_no)
 							  where a.status = '1'
 							    and app_tstatus = '진행중'
-							    and a.emp_no = #{eNo}
+                                and a.emp_no = #{eNo}                  
 					            order 
-					               by enroll_date desc  
+					               by enroll_date desc 
 		               		)c
 		         )
 		         where rnum between 1 and 5  
