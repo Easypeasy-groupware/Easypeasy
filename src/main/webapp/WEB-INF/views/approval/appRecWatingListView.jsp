@@ -37,7 +37,7 @@
 					<thead>
 						<tr>
 							<th>
-								<input type="checkbox" name="" id="chk-total">
+								<!-- <input type="checkbox" name="" id="chk-total"> -->
 							</th>
 							<th>기안일</th>
 							<th>결재양식</th>
@@ -59,7 +59,7 @@
 								<c:forEach var="a" items="${list}">
 									<tr>
 										<td>
-											<input type="checkbox" name="chk" id="">
+											<!-- <input type="checkbox" name="chk" id=""> -->
 											<input type="hidden" id="num" value="${a.appNo}">
 										</td>
 										<td>${a.enrollDate}</td>
