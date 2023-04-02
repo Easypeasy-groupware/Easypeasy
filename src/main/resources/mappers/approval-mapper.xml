@@ -1323,6 +1323,163 @@
 					    by a.app_no desc   		
 	</select>
 	
+	<select id="selectSearchDSListCount" resultType="_int">
+			 select count(*)
+			  from approval a
+			  join employee e on (e.emp_no = a.emp_no) 
+			  where dept_code in (
+			                    select dept_code
+			                      from employee
+			                     where emp_no = #{receiverNo}
+			                    )
+			    and app_tstatus = '결재'  
+			   <if test="condition == 'writer'">
+			    and emp_name
+			   </if>
+			  <if test="condition == 'title'">
+			    and title  	
+			   </if>
+			   <if test="condition == 'form'">
+			    and form_name 
+			   </if>
+			     like '%' || #{keyword} || '%'  			     	
+	</select>
+	
+	<select id="selectSearchDSList" resultMap="approvalResult">
+				select
+				         distinct a.app_no
+				        , to_char(a.enroll_date, 'YYYY-MM-dd') as "enroll_date"
+				        , to_char(update_date, 'YYYY-MM-dd') as "update_date" 
+				        , form_name
+				        , form_code
+				        , title
+				        , emp_name
+		               , (
+		                    select count(*)
+		                      from attachment
+		                     where division = 'A'
+		                       and ref_no = a.app_no
+		                    ) attach_count
+				        , app_change
+				        , app_tstatus
+				   from approval a
+				   left join app_line l on (a.app_no = l.app_no)
+				   left join employee e on (a.emp_no = e.emp_no)
+				  where a.status = 1
+				    and app_tstatus = '결재'
+				    and dept_code in (
+                                        select dept_code
+                                          from employee
+                                         where emp_no = #{receiverNo}
+                                        )
+                                    
+                    and update_date = (select max(update_date)
+                                        from app_line
+                                       where app_no in a.app_no
+                                    ) 
+			   <if test="condition == 'writer'">
+			    and emp_name
+			   </if>
+			  <if test="condition == 'title'">
+			    and title  	
+			   </if>
+			   <if test="condition == 'form'">
+			    and form_name 
+			   </if>
+			     like '%' || #{keyword} || '%'  	                                                 
+				   order by a.app_no desc  	
+	</select>
+	
+	<select id="selectSearchDFListCount" resultType="_int">
+            select
+				   count(distinct a.app_no)
+				   from approval a
+				   left join app_line l on (a.app_no = l.app_no)
+				   left join employee e on (a.emp_no = e.emp_no)
+				   
+				  where a.status = 1
+				    and a.app_no in (
+                                    select a.app_no
+                                      from app_line a
+                                      join employee e on (e.emp_no = a.emp_no) 
+                                     where ref_whether = 'Y'
+                                       and dept_code = (
+                                                        select dept_code
+                                                          from employee
+                                                         where emp_no = #{receiverNo}
+                                                        )
+                                      group by a.app_no
+                                    )
+                                    
+                    and update_date = (select max(update_date)
+                                        from app_line
+                                       where app_no in a.app_no
+                                    	)
+				   <if test="condition == 'writer'">
+				    and emp_name
+				   </if>
+				  <if test="condition == 'title'">
+				    and title  	
+				   </if>
+				   <if test="condition == 'form'">
+				    and form_name 
+				   </if>
+				     like '%' || #{keyword} || '%'  	                                                 
+					 order by a.app_no desc                                      	  	
+	</select>
+	
+	<select id="selectSearchDFList" resultMap="approvalResult">
+                    
+				select
+				         distinct a.app_no
+				        , to_char(a.enroll_date, 'YYYY-MM-dd') as "enroll_date"
+				        , to_char(update_date, 'YYYY-MM-dd') as "update_date" 
+				        , form_name
+				        , form_code
+				        , title
+				        , emp_name
+		               , (
+		                    select count(*)
+		                      from attachment
+		                     where division = 'A'
+		                       and ref_no = a.app_no
+		                    ) attach_count
+				        , app_change
+				        , app_tstatus
+				   from approval a
+				   left join app_line l on (a.app_no = l.app_no)
+				   left join employee e on (a.emp_no = e.emp_no)
+				  where a.status = 1
+				    and a.app_no in (
+                                    select app_no
+                                      from app_line a
+                                      join employee e on (e.emp_no = a.emp_no) 
+                                     where ref_whether = 'Y'
+                                       and dept_code = (
+                                                        select dept_code
+                                                          from employee
+                                                         where emp_no = #{receiverNo}
+                                                        )
+                                      group by app_no
+                                    )
+                                    
+                    and update_date = (select max(update_date)
+                                        from app_line
+                                       where app_no in a.app_no
+                                    ) 
+				   <if test="condition == 'writer'">
+				    and emp_name
+				   </if>
+				  <if test="condition == 'title'">
+				    and title  	
+				   </if>
+				   <if test="condition == 'form'">
+				    and form_name 
+				   </if>
+				     like '%' || #{keyword} || '%'                                                
+				   order by a.app_no desc  	
+	</select>
+	
 	<select id="selectStatusSListCount" resultType="_int">
 					select 
 					        count(*) 

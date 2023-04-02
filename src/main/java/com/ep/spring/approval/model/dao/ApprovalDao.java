@@ -275,15 +275,8 @@ public class ApprovalDao {
 	}
 	
 	public int selectSearchListCount(SqlSessionTemplate sqlSession, Approval a) {
-		if(a.getListType().equals("cw")) {
-			
-			return 0;
-			
-		}else if(a.getListType().equals("fw")) {
-			
-			return 0;
-			
-		}else if(a.getListType().equals("s")) {
+		
+		if(a.getListType().equals("s")) {
 			
 			return sqlSession.selectOne("approvalMapper.selectSearchSListCount", a);
 			
@@ -301,11 +294,11 @@ public class ApprovalDao {
 			
 		}else if(a.getListType().equals("ds")) {
 			
-			return 0;
+			return sqlSession.selectOne("approvalMapper.selectSearchDSListCount", a);
 			
 		}else if(a.getListType().equals("df")) {
 			
-			return 0;
+			return sqlSession.selectOne("approvalMapper.selectSearchDFListCount", a);
 			
 		}else {
 			return 0;
@@ -317,15 +310,7 @@ public class ApprovalDao {
 		int limit = pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		if(a.getListType().equals("cw")) {
-			
-			return null;
-			
-		}else if(a.getListType().equals("fw")) {
-			
-			return null;
-			
-		}else if(a.getListType().equals("s")) {
+		if(a.getListType().equals("s")) {
 			
 			return (ArrayList)sqlSession.selectList("approvalMapper.selectSearchSList", a, rowBounds);
 			
@@ -343,11 +328,11 @@ public class ApprovalDao {
 			
 		}else if(a.getListType().equals("ds")) {
 			
-			return null;
+			return (ArrayList)sqlSession.selectList("approvalMapper.selectSearchDSList", a, rowBounds);
 			
 		}else if(a.getListType().equals("df")) {
 			
-			return null;
+			return (ArrayList)sqlSession.selectList("approvalMapper.selectSearchDFList", a, rowBounds);
 			
 		}else {
 			return null;

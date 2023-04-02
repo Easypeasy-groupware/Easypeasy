@@ -854,7 +854,7 @@ public class ApprovalController {
 		
 		if(a.getListType().equals("s") || a.getListType().equals("t")) {
 			a.setWriterNo(eNo);
-		}else if(a.getListType().equals("c") || a.getListType().equals("f")) {
+		}else if(a.getListType().equals("c") || a.getListType().equals("f") || a.getListType().equals("ds") || a.getListType().equals("df")) {
 			a.setReceiverNo(eNo);
 		}
 		
