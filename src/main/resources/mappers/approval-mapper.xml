@@ -819,10 +819,7 @@
 			                            )
 			         )
 			      , #{recEmpNo} 
-			      , (
-			         select max(app_no)
-			           from approval
-			        )
+			      ,  seq_apno.currval
 			      ) 	
 	
 	</insert>
@@ -841,10 +838,7 @@
 			        values
 			    (
 			       seq_attno.nextval
-			     , (
-			         select max(app_no)
-			           from approval
-			        )
+			     , seq_apno.currval
 			     , #{originName}
 			     , #{changeName}
 			     , #{filePath}
@@ -866,10 +860,7 @@
 			  )
 			  values
 			  (
-			      (
-			        select max(app_no)
-			          from approval
-			      )
+			      seq_apno.currval
 			    , #{vacKind}
 			    , #{vacStart}
 			    , #{vacEnd}
@@ -892,10 +883,7 @@
 			      )
 			        values
 			     (
-			         (
-			            select max(app_no)
-			              from approval
-			         )
+			         seq_apno.currval
 			       , #{otKind}
 			       , #{otDate}
 			       , #{otStart}
