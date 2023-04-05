@@ -180,13 +180,25 @@
             </div>
             <div align="center">
                 <ul id="paging">
-                    <li><a href=""> < </a></li>
-                    <li class='on'><a href=""> 1 </a></li>
-                    <li><a href=""> 2 </a></li>
-                    <li><a href=""> 3 </a></li>
-                    <li><a href=""> 4 </a></li>
-                    <li><a href=""> 5 </a></li>
-                    <li><a href=""> > </a></li>
+                    <c:choose>
+                        <c:when test="${ mailPi.currentPage == 1 }">
+                            <li><a> < </a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="on"><a id="${ mailPi.currentPage-1 }"> < </a></li>
+                        </c:otherwise>
+                    </c:choose>
+                    <c:forEach var="p" begin="${ mailPi.startPage }" end="${ mailPi.endPage }">
+                        <li class='on'><a id="${ p }"> ${ p } </a></li>
+                    </c:forEach>
+                    <c:choose>
+                        <c:when test="${ mailPi.currentPage == mailPi.maxPage }">
+                            <li><a> > </a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="on"><a id="${ mailPi.currentPage+1 }"> > </a></li>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </div>
         </div>
@@ -208,10 +220,30 @@
                 });
             });
 
-            // 페이징
-            $(function(){
-                $("#ps-tbody").on("click", "tr", function(){
-                    location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
+            // 페이징 버튼
+            let pagingBtn = document.querySelectorAll('.on');
+            pagingBtn.forEach(function(btn){
+                btn.addEventListener('click', function(){
+                    document.getElementsByTagName
+                    let sort = document.getElementById('sort');
+                    let sortValue = sort.options[sort.selectedIndex].value;
+                    const form = document.createElement('form');
+                    const input1 = document.createElement('input');
+                    const input2 = document.createElement('input');
+                    form.setAttribute('style', 'display:none')
+                    form.action = "list.ma";
+                    form.method = 'POST';
+                    input1.setAttribute('name', 'sort');
+                    input1.setAttribute('value', sortValue);
+                    input1.setAttribute('type', 'hidden');
+                    input2.setAttribute('name', 'cpage');
+                    input2.setAttribute('value', this.firstElementChild.id);
+                    input2.setAttribute('type', 'hidden');
+                    form.append(input1);
+                    form.append(input2);
+                    document.body.append(form);
+                    console.log(form)
+                    form.submit();
                 })
             })
 

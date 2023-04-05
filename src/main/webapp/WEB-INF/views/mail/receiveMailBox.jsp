@@ -55,7 +55,7 @@
     #paging li {text-align: center; float: left; list-style:none; border-radius:10px; margin:2px; background-color: rgb(234, 234, 234);}
     #paging li a {display: block; font-size: 12px; color: black; padding: 5px 10px; box-sizing: border-box; text-decoration-line:none;}
     #paging li.on {background:rgb(166, 184, 145);}
-    #paging li.on a { color: white;}
+    #paging li.on a {cursor: pointer; color: white;}
 
     
 </style>
@@ -198,21 +198,21 @@
                 <ul id="paging">
                     <c:choose>
                         <c:when test="${ mailPi.currentPage == 1 }">
-                            <li><a href=""> < </a></li>
+                            <li><a> < </a></li>
                         </c:when>
                         <c:otherwise>
-                            <li class="on"><a href="list.ma?cpage=${ mailPi.currentPage-1 }"> < </a></li>
+                            <li class="on"><a id="${ mailPi.currentPage-1 }"> < </a></li>
                         </c:otherwise>
                     </c:choose>
                     <c:forEach var="p" begin="${ mailPi.startPage }" end="${ mailPi.endPage }">
-                        <li class='on'><a href="list.ma?cpage=${ p }"> ${ p } </a></li>
+                        <li class='on'><a id="${ p }"> ${ p } </a></li>
                     </c:forEach>
                     <c:choose>
                         <c:when test="${ mailPi.currentPage == mailPi.maxPage }">
-                            <li><a href=""> > </a></li>
+                            <li><a> > </a></li>
                         </c:when>
                         <c:otherwise>
-                            <li class="on"><a href="list.ma?cpage=${ mailPi.currentPage+1 }"> > </a></li>
+                            <li class="on"><a id="${ mailPi.currentPage+1 }"> > </a></li>
                         </c:otherwise>
                     </c:choose>
                 </ul>
@@ -246,6 +246,33 @@
 
                 });
             });
+
+        // 페이징 버튼
+        let pagingBtn = document.querySelectorAll('.on');
+        pagingBtn.forEach(function(btn){
+            btn.addEventListener('click', function(){
+                document.getElementsByTagName
+                let sort = document.getElementById('sort');
+                let sortValue = sort.options[sort.selectedIndex].value;
+                const form = document.createElement('form');
+                const input1 = document.createElement('input');
+                const input2 = document.createElement('input');
+                form.setAttribute('style', 'display:none')
+                form.action = "list.ma";
+                form.method = 'POST';
+                input1.setAttribute('name', 'sort');
+                input1.setAttribute('value', sortValue);
+                input1.setAttribute('type', 'hidden');
+                input2.setAttribute('name', 'cpage');
+                input2.setAttribute('value', this.firstElementChild.id);
+                input2.setAttribute('type', 'hidden');
+                form.append(input1);
+                form.append(input2);
+                document.body.append(form);
+                console.log(form)
+                form.submit();
+            })
+        })
 
     </script>
 

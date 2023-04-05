@@ -219,6 +219,12 @@ public class MailServiceImpl implements MailService {
 		return mDao.insertTempMail(m, mList, sqlSession);
 	}
 
+	@Override
+	public ArrayList<Mail> selectPreviousList(PageInfo pi, String email) {
+		return mDao.selectPreviousList(pi, email, sqlSession);
+	}
+
+
 	
 	
 

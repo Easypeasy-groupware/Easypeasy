@@ -65,10 +65,20 @@
         <div class="menu menu2" id="delete">삭제</div>
         <div style="float: right; width: 150px; font-size: 12px;">
             정렬
-            <select name="" id="">
-                <option value="">최근 메일</option>
-                <option value="">오래된 메일</option>
-            </select>
+            <c:choose>
+                <c:when test="${sort == 'previous'}">
+                    <select name="sort" id="sort">
+                        <option value="previous">오래된 메일</option>
+                        <option value="recent">최근 메일</option>
+                    </select>
+                </c:when>
+                <c:otherwise>
+                    <select name="sort" id="sort">
+                        <option value="recent">최근 메일</option>
+                        <option value="previous">오래된 메일</option>
+                    </select>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
 

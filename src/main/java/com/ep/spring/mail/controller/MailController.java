@@ -2,6 +2,7 @@ package com.ep.spring.mail.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,23 +37,31 @@ public class MailController {
 	private MailService mService;
 	
 	@RequestMapping("list.ma")
-	public ModelAndView selectMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, ModelAndView mv) {
+	public ModelAndView selectMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, ModelAndView mv,
+									   String sort) {
 		
 		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
 		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+
 		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
 		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
 		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
-		
+
 		int listCount = mailList.size();
 		PageInfo mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
-		ArrayList<Mail> pagingMailList = mService.selectList(mailPi, email);
+		ArrayList<Mail> pagingMailList = new ArrayList<Mail>();
+		if(sort != null && sort.equals("previous")) {
+			pagingMailList = mService.selectPreviousList(mailPi, email);
+		}else {
+			pagingMailList = mService.selectList(mailPi, email);
+		}
 		
 		session.setAttribute("tagList", tagList);
 		mv.addObject("mailList", mailList);
 		mv.addObject("pgMailList", pagingMailList);
 		mv.addObject("mailPi", mailPi);
 		mv.addObject("attachList", attachList);
+		mv.addObject("sort", sort);
 		mv.setViewName("mail/receiveMailBox");
 		return mv;
 	}
@@ -277,7 +286,7 @@ public class MailController {
 			msg.setTitle("메일 삭제");
 			msg.setContent("메일을 성공적으로 삭제했습니다.");
 			mv.addObject("successMsg", msg);
-			return selectMailList(1, session, mv);
+			return selectMailList(1, session, mv, "recent");
 		}else {
 			msg.setTitle("메일 삭제");
 			msg.setContent("메일 삭제에 실패했습니다.");
@@ -289,11 +298,24 @@ public class MailController {
 	}
 	
 	@RequestMapping("deleteList.ma")
-	public ModelAndView deleteMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, HttpSession session) {
+	public ModelAndView deleteMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, 
+									   HttpSession session, String sort) {
 		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
 		ArrayList<Mail> mailList = mService.selectDeleteMailList(email);
 		
+		int listCount = mailList.size();
+		PageInfo mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+		ArrayList<Mail> pagingMailList = new ArrayList<Mail>();
+		if(sort != null && sort.equals("previous")) {
+			pagingMailList = mService.selectPreviousList(mailPi, email);
+			System.out.println(pagingMailList);
+		}else {
+			pagingMailList = mService.selectList(mailPi, email);
+		}
+		
 		mv.addObject("mailList", mailList);
+		mv.addObject("pagingMailList", pagingMailList);
+		mv.addObject("sort", sort);
 		mv.setViewName("mail/deleteMailBox");
 		return mv;
 	}
@@ -312,7 +334,7 @@ public class MailController {
 			msg.setContent("메일 삭제에 실패했습니다.\n삭제할 메일이 있는지 확인해주세요.");
 			mv.addObject("failMsg", msg);
 		}
-		return deleteMailList(1, mv, session);
+		return deleteMailList(1, mv, session, "recent");
 	}
 	
 	@RequestMapping("spamEnroll.ma")
@@ -332,7 +354,7 @@ public class MailController {
 			mv.addObject("failMsg", msg);
 		}
 		
-		return selectMailList(1, session, mv);
+		return selectMailList(1, session, mv, "recent");
 	}
 	
 	@RequestMapping("spamList.ma")
@@ -357,7 +379,7 @@ public class MailController {
 			msg.setContent("메일 스팸 해제를 성공했습니다.");
 			mv.addObject("successMsg", msg);
 			mv.addObject("mailList", mailList);
-			return selectMailList(1, session, mv);
+			return selectMailList(1, session, mv, "recent");
 		}else {
 			msg.setTitle("스팸 해제");
 			msg.setContent("메일 스팸 해제에 실패했습니다.");
@@ -624,13 +646,13 @@ public class MailController {
 			msg.setContent("메일을 복원 처리했습니다.");
 			mv.addObject("successMsg", msg);
 			mv.addObject("mailList", mailList);
-			return selectMailList(1, session, mv);
+			return selectMailList(1, session, mv, "recent");
 		}else {
 			msg.setTitle("메일 복원");
 			msg.setContent("메일 복원 처리에 실패했습니다.");
 			mv.addObject("failMsg", msg);
 			mv.addObject("mailList", mailList);
-			return deleteMailList(1, mv, session);
+			return deleteMailList(1, mv, session, "recent");
 		}
 	}
 	
@@ -647,7 +669,7 @@ public class MailController {
 			mv.addObject("successMsg", msg);
 			mv.addObject("mailList", mailList);
 			if(division.equals("trash")) {
-				return deleteMailList(1, mv, session);
+				return deleteMailList(1, mv, session, "recent");
 			}else {
 				return spamMailList(1, mv, session);
 			}
@@ -655,7 +677,7 @@ public class MailController {
 			msg.setTitle("비우기");
 			msg.setContent("비우기 처리에 실패했습니다.");
 			mv.addObject("failMsg", msg);
-			return selectMailList(1, session, mv);
+			return selectMailList(1, session, mv, "recent");
 		}
 		
 	}

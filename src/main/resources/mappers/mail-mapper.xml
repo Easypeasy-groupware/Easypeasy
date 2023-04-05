@@ -112,6 +112,36 @@
 	        by recep_mail_no desc
 	</select>
 	
+	<select id="selectPreviousList" resultMap="MailResult">
+		select
+		       RECEP_MAIL_NO
+			 , s.MAIL_NO
+			 , TAG_NO
+			 , emp_name
+			 , r.recep_MAIL_ADDRESS
+			 , r.send_mail_address
+			 , s.MAIL_TITLE
+			 , s.MAIL_CONTENT
+			 , REC_CHECK
+			 , sent_DATE
+			 , substr(sent_DATE, 0, 11) "date_day"
+             , substr(sent_DATE, 14) "date_time"
+			 , IMPOR_MAIL
+			 , JUNK_MAIL
+			 , RESER_MAIL
+			 , r.STATUS
+			 , REFERENCE
+			 , HIDDEN_REFERENCE
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.send_mail_address = email
+	     where 
+			   recep_mail_address = #{ email }
+		   and r.status = 'Y'
+	     order
+	        by recep_mail_no asc
+	</select>
+	
 	<select id="selectTagList" resultMap="TagResult">
 		select
 		       TAG_NO

@@ -323,6 +323,14 @@ public class MailDao {
 		return sqlSession.insert("mailMapper.insertTempMail", m);
 	}
 
+	public ArrayList<Mail> selectPreviousList(PageInfo pi, String email, SqlSessionTemplate sqlSession) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectPreviousList", email, rowBounds);
+	}
+
 	
 
 	

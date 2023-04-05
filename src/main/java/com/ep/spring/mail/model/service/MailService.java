@@ -13,8 +13,6 @@ public interface MailService {
 	/* 1. 메일 메인 페이지 조회 */
 	// - 수신메일 리스트 조회
 	ArrayList<Mail> selectReceiveMailList(String email);
-	// - 리스트 페이징
-	ArrayList<Mail> selectList(PageInfo pi, String email);
 	// - 중요메일 리스트 조회
 	ArrayList<Mail> selectImporMailList(PageInfo mailPi, String email);
 	// - 첨부메일 리스트 조회
@@ -33,6 +31,10 @@ public interface MailService {
 	ArrayList<Mail> selectTaggingMailList(MailTag t, PageInfo mailPi);
 	// - 삭제한 메일 리스트 조회
 	ArrayList<Mail> selectDeleteMailList(String email);
+	// - 리스트 페이징
+	ArrayList<Mail> selectList(PageInfo pi, String email);
+	// - 페이징 리스트 역순 조회
+	ArrayList<Mail> selectPreviousList(PageInfo mailPi, String email);
 	
 	/* 2. 태그 생성 */
 	int insertTag(MailTag t);
@@ -101,6 +103,8 @@ public interface MailService {
 	
 	/* 임시 저장 */
 	int insertTempMail(Mail m, ArrayList<Mail> mList, ArrayList<Attachment> atList);
+	
+
 	
 	
 
