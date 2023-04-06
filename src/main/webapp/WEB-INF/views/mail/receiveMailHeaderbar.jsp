@@ -73,16 +73,16 @@
         <div style="float: right; width: 150px; font-size: 12px;">
             정렬
             <c:choose>
-                <c:when test="${sort == 'previous'}">
+                <c:when test="${mail.sort == 'ASC'}">
                     <select name="sort" id="sort">
-                        <option value="previous">오래된 메일</option>
-                        <option value="recent">최근 메일</option>
+                        <option value="ASC">오래된 메일</option>
+                        <option value="DESC">최근 메일</option>
                     </select>
                 </c:when>
                 <c:otherwise>
                     <select name="sort" id="sort">
-                        <option value="recent">최근 메일</option>
-                        <option value="previous">오래된 메일</option>
+                        <option value="DESC">최근 메일</option>
+                        <option value="ASC">오래된 메일</option>
                     </select>
                 </c:otherwise>
             </c:choose>
@@ -665,13 +665,9 @@
                         break;
                     case "첨부파일 메일함" : url = "attachList.ma";
                         break;
-                    case "보낸 메일함" : url = "sendList.ma";
-                        break;
-                    case "안읽은 메일함" : url = "";
+                    case "안읽은 메일함" : url = "updateReadUnread.ma";
                         break;
                     case "중요 메일함" : url = "imporList.ma";
-                        break;
-                    case "작성중인 메일함" : url = "tempList.ma";
                         break;
                     case "스팸 메일함" : url = "spamList.ma";
                         break;

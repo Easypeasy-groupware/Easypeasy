@@ -37,32 +37,297 @@ public class MailController {
 	private MailService mService;
 	
 	@RequestMapping("list.ma")
-	public ModelAndView selectMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, ModelAndView mv,
-									   String sort) {
+	public ModelAndView selectMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, 
+									   ModelAndView mv, Mail m) {
 		
-		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
+		System.out.println(m.getSort());
+		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+		if(m.getSort() == null) {
+			m.setSort("DESC");
+		}
 		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		PageInfo mailPi = null;
+		ArrayList<Mail> mailList = mService.selectReceiveMailList(mailPi, m);
+		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
+		
+		int listCount = mailList.size();
+		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+		ArrayList<Mail> pagingMailList = new ArrayList<Mail>();
+		pagingMailList = mService.selectReceiveMailList(mailPi, m);
+		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(pagingMailList);
 
-		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
+		session.setAttribute("tagList", tagList);
+		mv.addObject("mailList", mailList);
+		mv.addObject("pgMailList", pagingMailList);
+		mv.addObject("mailPi", mailPi);
+		mv.addObject("attachList", attachList);
+		mv.setViewName("mail/receiveMailBox");
+		return mv;
+	}
+	
+	@RequestMapping("imporList.ma")
+	public ModelAndView selectImporMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, Mail m, 
+											HttpSession session) {
+		
+		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+		if(m.getSort() == null) {
+			m.setSort("DESC");
+		}
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		PageInfo mailPi = null;
+		ArrayList<Mail> mailList = mService.selectImporMailList(mailPi, m);
 		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
 		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
-
+		
 		int listCount = mailList.size();
-		PageInfo mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
 		ArrayList<Mail> pagingMailList = new ArrayList<Mail>();
-		if(sort != null && sort.equals("previous")) {
-			pagingMailList = mService.selectPreviousList(mailPi, email);
-		}else {
-			pagingMailList = mService.selectList(mailPi, email);
-		}
+		pagingMailList = mService.selectImporMailList(mailPi, m);
+		
 		
 		session.setAttribute("tagList", tagList);
 		mv.addObject("mailList", mailList);
 		mv.addObject("pgMailList", pagingMailList);
 		mv.addObject("mailPi", mailPi);
 		mv.addObject("attachList", attachList);
-		mv.addObject("sort", sort);
-		mv.setViewName("mail/receiveMailBox");
+		mv.setViewName("mail/imporMailBox");
+		return mv;
+	}
+	
+	@RequestMapping("attachList.ma")
+	public ModelAndView selectAttachMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, Mail m, 
+											 HttpSession session) {
+		
+		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+		if(m.getSort() == null) {
+			m.setSort("DESC");
+		}
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		PageInfo mailPi = null;
+		ArrayList<Mail> mailList = mService.selectAttachMailList(mailPi, m);
+		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
+		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
+		
+		int listCount = mailList.size();
+		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+		ArrayList<Mail> pagingMailList = new ArrayList<Mail>();
+		pagingMailList = mService.selectAttachMailList(mailPi, m);
+		
+		session.setAttribute("tagList", tagList);
+		mv.addObject("mailList", mailList);
+		mv.addObject("pgMailList", pagingMailList);
+		mv.addObject("mailPi", mailPi);
+		mv.addObject("attachList", attachList);
+		mv.setViewName("mail/attachMailbox");
+		return mv;
+	}
+	
+	@RequestMapping("todayList.ma")
+	public ModelAndView selectTodayMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, Mail m, 
+											HttpSession session) {
+		
+		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+		if(m.getSort() == null) {
+			m.setSort("DESC");
+		}
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		PageInfo mailPi = null;
+		ArrayList<Mail> mailList = mService.selectTodayMailList(mailPi, m);
+		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
+		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
+		
+		int listCount = mailList.size();
+		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+		ArrayList<Mail> pagingMailList = new ArrayList<Mail>();
+		pagingMailList = mService.selectTodayMailList(mailPi, m);
+		
+		session.setAttribute("tagList", tagList);
+		mv.addObject("mailList", mailList);
+		mv.addObject("pgMailList", pagingMailList);
+		mv.addObject("mailPi", mailPi);
+		mv.addObject("attachList", attachList);
+		mv.setViewName("mail/todayMailBox");
+		return mv;
+	}
+	
+	@RequestMapping("tomeList.ma")
+	public ModelAndView selectToMeMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, Mail m, 
+										   HttpSession session) {
+		
+		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+		if(m.getSort() == null) {
+			m.setSort("DESC");
+		}
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		PageInfo mailPi = null;
+		ArrayList<Mail> mailList = mService.selectToMeMailList(mailPi, m);
+		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
+		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
+		
+		int listCount = mailList.size();
+		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+		ArrayList<Mail> pagingMailList = new ArrayList<Mail>();
+		pagingMailList = mService.selectToMeMailList(mailPi, m);
+		
+		session.setAttribute("tagList", tagList);
+		mv.addObject("mailList", mailList);
+		mv.addObject("pgMailList", pagingMailList);
+		mv.addObject("mailPi", mailPi);
+		mv.addObject("attachList", attachList);
+		mv.setViewName("mail/toMeMailBox");
+		return mv;
+	}
+	
+	@RequestMapping("unreadList.ma")
+	public ModelAndView selectUnreadMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, Mail m, 
+											 HttpSession session) {
+		
+		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+		if(m.getSort() == null) {
+			m.setSort("DESC");
+		}
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		PageInfo mailPi = null;
+		ArrayList<Mail> mailList = mService.selectUnreadMailList(mailPi, m);
+		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
+		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
+		
+		int listCount = mailList.size();
+		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+		ArrayList<Mail> pagingMailList = new ArrayList<Mail>();
+		pagingMailList = mService.selectUnreadMailList(mailPi, m);
+		
+		session.setAttribute("tagList", tagList);
+		mv.addObject("mailList", mailList);
+		mv.addObject("pgMailList", pagingMailList);
+		mv.addObject("mailPi", mailPi);
+		mv.addObject("attachList", attachList);
+		mv.addObject("unread", "true");
+		mv.setViewName("mail/unreadMailBox");
+		return mv;
+	}
+	
+	@RequestMapping("tempList.ma")
+	public ModelAndView selectTempMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, Mail m, 
+										   HttpSession session) {
+		
+		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+		if(m.getSort() == null) {
+			m.setSort("DESC");
+		}
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		PageInfo mailPi = null;
+		ArrayList<Mail> mailList = mService.selectTempMailList(mailPi, m);
+		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
+		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
+		
+		int listCount = mailList.size();
+		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+		ArrayList<Mail> pagingMailList = new ArrayList<Mail>();
+		pagingMailList = mService.selectTempMailList(mailPi, m);
+		
+		session.setAttribute("tagList", tagList);
+		mv.addObject("mailList", mailList);
+		mv.addObject("pgMailList", pagingMailList);
+		mv.addObject("mailPi", mailPi);
+		mv.addObject("attachList", attachList);
+		mv.setViewName("mail/tempMailBox");
+		return mv;
+	}
+	
+	@RequestMapping("sendList.ma")
+	public ModelAndView selectSendMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, Mail m, 
+										   HttpSession session) {
+		
+		m.setSendMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+		if(m.getSort() == null) {
+			m.setSort("DESC");
+		}
+		System.out.println(m.getSort());
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		PageInfo mailPi = null;
+		ArrayList<Mail> mailList = mService.selectSendMailList(mailPi, m);
+		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
+		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
+		
+		int listCount = mailList.size();
+		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+		ArrayList<Mail> pagingMailList = new ArrayList<Mail>();
+		pagingMailList = mService.selectSendMailList(mailPi, m);
+		
+		session.setAttribute("tagList", tagList);
+		mv.addObject("mailList", mailList);
+		mv.addObject("pgMailList", pagingMailList);
+		mv.addObject("mailPi", mailPi);
+		mv.addObject("attachList", attachList);
+		mv.setViewName("mail/sendMailbox");
+		return mv;
+	}
+	
+	@RequestMapping("deleteList.ma")
+	public ModelAndView deleteMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, Mail m,
+									   HttpSession session) {
+		
+		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+		if(m.getSort() == null) {
+			m.setSort("DESC");
+		}
+		PageInfo mailPi = null;
+		ArrayList<Mail> mailList = mService.selectDeleteMailList(mailPi, m);
+		int listCount = mailList.size();
+		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+		ArrayList<Mail> pagingMailList = new ArrayList<Mail>();
+		pagingMailList = mService.selectDeleteMailList(mailPi, m);
+		
+		mv.addObject("pagingMailList", pagingMailList);
+		mv.setViewName("mail/deleteMailBox");
+		return mv;
+	}
+	
+	@RequestMapping("tagginMailList.ma")
+	public ModelAndView selectTaggingMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, MailTag t, 
+											  HttpSession session) {
+		
+		if(t.getSort() == null) {
+			t.setSort("DESC");
+		}
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		MailTag tag = mService.selectTag(t);
+		
+		PageInfo mailPi = null;
+		ArrayList<Mail> mailList = mService.selectTaggingMailList(t, mailPi);
+		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
+		
+		int listCount = mailList.size();
+		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+		ArrayList<Mail> pagingMailList = new ArrayList<Mail>();
+		pagingMailList = mService.selectTaggingMailList(t, mailPi);
+		
+		mv.addObject("mailList", mailList);
+		mv.addObject("pgMailList", pagingMailList);
+		mv.addObject("mailPi", mailPi);
+		mv.addObject("attachList", attachList);
+		mv.addObject("tag", tag);
+		mv.setViewName("mail/taggingMailBox");
+		return mv;
+	}
+	
+	@RequestMapping("spamList.ma")
+	public ModelAndView spamMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, Mail m,
+									 HttpSession session) {
+		
+		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+		if(m.getSort() == null) {
+			m.setSort("DESC");
+		}
+		ArrayList<Mail> mailList = mService.selectReceiveMailList(null, m);
+		int listCount = mailList.size();
+		PageInfo mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+		ArrayList<Mail> pagingMailList = new ArrayList<Mail>();
+		pagingMailList = mService.selectReceiveMailList(mailPi, m);
+		
+		mv.addObject("pagingMailList", pagingMailList);
+		mv.setViewName("mail/spamMailBox");
 		return mv;
 	}
 	
@@ -220,26 +485,26 @@ public class MailController {
 		ArrayList<Attachment> attachmentList = mService.selectMailAttachment(m);
 		ArrayList<Mail> mailList = new ArrayList<Mail>();
 		switch(div) {
-			case 1: mailList = mService.selectReceiveMailList(m.getRecMailAdd());
+			case 1: mailList = mService.selectReceiveMailList(null, m);
 				break;
-			case 2: mailList = mService.selectTodayMailList(null, m.getRecMailAdd());
+			case 2: mailList = mService.selectTodayMailList(null, m);
 				break;
-			case 3: mailList = mService.selectToMeMailList(null, m.getRecMailAdd());
+			case 3: mailList = mService.selectToMeMailList(null, m);
 				break;
-			case 4: mailList = mService.selectAttachMailList(null, m.getRecMailAdd());
+			case 4: mailList = mService.selectAttachMailList(null, m);
 				break;
-			case 5: mailList = mService.selectSendMailList(null, m.getRecMailAdd());
+			case 5: mailList = mService.selectSendMailList(null, m);
 					mv.addObject("check", "send");
 				break;
-			case 6: mailList = mService.selectUnreadMailList(null, m.getRecMailAdd());
+			case 6: mailList = mService.selectUnreadMailList(null, m);
 				break;
-			case 7: mailList = mService.selectImporMailList(null, m.getRecMailAdd());
+			case 7: mailList = mService.selectImporMailList(null, m);
 				break;
-			case 8: mailList = mService.selectTempMailList(null, m.getRecMailAdd());
+			case 8: mailList = mService.selectTempMailList(null, m);
 				break;
-			case 9: mailList = mService.selectReceiveMailList(m.getRecMailAdd());
+			case 9: mailList = mService.selectReceiveMailList(null, m);
 				break;
-			case 10:mailList = mService.selectDeleteMailList(m.getRecMailAdd());
+			case 10: mailList = mService.selectDeleteMailList(null, m);
 				break;
 		}
 		
@@ -255,12 +520,15 @@ public class MailController {
 	// 메일 읽음/안읽음 처리
 	@ResponseBody
 	@RequestMapping(value="updateReadUnread.ma")
-	public Object updateReadMail(@RequestParam String recMailNoListData, String recCheck, HttpSession session) throws IOException {
+	public Object updateReadMail(@RequestParam String recMailNoListData, String recCheck, HttpSession session, Mail m) throws IOException {
 		String[] recMailNoList = recMailNoListData.split(",");
 		int result = mService.updateReadUnreadMail(recMailNoList, recCheck);
 		
-		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
-		ArrayList<Mail> selectMailList = mService.selectReceiveMailList(email);
+		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+		if(m.getSort() == null) {
+			m.setSort("DESC");
+		}
+		ArrayList<Mail> selectMailList = mService.selectReceiveMailList(null, m);
 		if(result > 0) {
 			Map<String, Object> mailList = new HashMap<String, Object>();
 			mailList.put("mailList", selectMailList);
@@ -276,8 +544,11 @@ public class MailController {
 		
 		AlertMsg msg = new AlertMsg();
 		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
-		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
-		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
+		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+		if(m.getSort() == null) {
+			m.setSort("DESC");
+		}
+		ArrayList<Mail> mailList = mService.selectReceiveMailList(null, m);
 		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
 		
 		if(result > 0) {
@@ -286,7 +557,7 @@ public class MailController {
 			msg.setTitle("메일 삭제");
 			msg.setContent("메일을 성공적으로 삭제했습니다.");
 			mv.addObject("successMsg", msg);
-			return selectMailList(1, session, mv, "recent");
+			return selectMailList(1, session, mv, m);
 		}else {
 			msg.setTitle("메일 삭제");
 			msg.setContent("메일 삭제에 실패했습니다.");
@@ -295,29 +566,6 @@ public class MailController {
 			return mv;
 		}
 		
-	}
-	
-	@RequestMapping("deleteList.ma")
-	public ModelAndView deleteMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, 
-									   HttpSession session, String sort) {
-		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
-		ArrayList<Mail> mailList = mService.selectDeleteMailList(email);
-		
-		int listCount = mailList.size();
-		PageInfo mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
-		ArrayList<Mail> pagingMailList = new ArrayList<Mail>();
-		if(sort != null && sort.equals("previous")) {
-			pagingMailList = mService.selectPreviousList(mailPi, email);
-			System.out.println(pagingMailList);
-		}else {
-			pagingMailList = mService.selectList(mailPi, email);
-		}
-		
-		mv.addObject("mailList", mailList);
-		mv.addObject("pagingMailList", pagingMailList);
-		mv.addObject("sort", sort);
-		mv.setViewName("mail/deleteMailBox");
-		return mv;
 	}
 	
 	/* 비우기 기능 */
@@ -334,15 +582,15 @@ public class MailController {
 			msg.setContent("메일 삭제에 실패했습니다.\n삭제할 메일이 있는지 확인해주세요.");
 			mv.addObject("failMsg", msg);
 		}
-		return deleteMailList(1, mv, session, "recent");
+		return deleteMailList(1, mv, m, session);
 	}
 	
 	@RequestMapping("spamEnroll.ma")
 	public ModelAndView spamEnroll(Mail m, ModelAndView mv, int[] recMailNoList, HttpSession session) {
 		AlertMsg msg = new AlertMsg();
 		int result = mService.spamEnroll(m, recMailNoList);
-		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
-		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
+		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+		ArrayList<Mail> mailList = mService.selectReceiveMailList(null, m);
 		if(result > 0) {
 			msg.setTitle("스팸 등록");
 			msg.setContent("메일을 스팸 처리했습니다.");
@@ -354,37 +602,27 @@ public class MailController {
 			mv.addObject("failMsg", msg);
 		}
 		
-		return selectMailList(1, session, mv, "recent");
-	}
-	
-	@RequestMapping("spamList.ma")
-	public ModelAndView spamMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, HttpSession session) {
-		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
-		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
-		
-		mv.addObject("mailList", mailList);
-		mv.setViewName("mail/spamMailBox");
-		return mv;
+		return selectMailList(1, session, mv, m);
 	}
 	
 	@RequestMapping("spamClear.ma")
 	public ModelAndView spamClear(Mail m, ModelAndView mv, int[] recMailNoList, HttpSession session) {
 		AlertMsg msg = new AlertMsg();
 		int result = mService.spamClear(m, recMailNoList);
-		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
-		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
+		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+		ArrayList<Mail> mailList = mService.selectReceiveMailList(null, m);
 		
 		if(result > 0) {
 			msg.setTitle("스팸 해제");
 			msg.setContent("메일 스팸 해제를 성공했습니다.");
 			mv.addObject("successMsg", msg);
 			mv.addObject("mailList", mailList);
-			return selectMailList(1, session, mv, "recent");
+			return selectMailList(1, session, mv, m);
 		}else {
 			msg.setTitle("스팸 해제");
 			msg.setContent("메일 스팸 해제에 실패했습니다.");
 			mv.addObject("failMsg", msg);
-			return spamMailList(1, mv, session);
+			return spamMailList(1, mv, m, session);
 		}
 	}
 	
@@ -406,8 +644,10 @@ public class MailController {
 		AlertMsg msg = new AlertMsg();
 		m.setTagNo(t.getTagNo());
 		int result = mService.tagMail(m, recMailNoList);
-		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
-		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
+		if(t.getSort() == null) {
+			t.setSort("DESC");
+		}
+		ArrayList<Mail> mailList = mService.selectReceiveMailList(null, m);
 		
 		if(result > 0) {
 			msg.setTitle("태그 등록");
@@ -425,165 +665,11 @@ public class MailController {
 		}
 	}
 	
-	@RequestMapping("todayList.ma")
-	public ModelAndView selectTodayMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, Mail m, HttpSession session) {
-		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
-		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
-		PageInfo mailPi = null;
-		ArrayList<Mail> mailList = mService.selectTodayMailList(mailPi, email);
-		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
-		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
-		
-		int listCount = mailList.size();
-		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
-		ArrayList<Mail> pagingMailList = mService.selectTodayMailList(mailPi, email);
-		
-		session.setAttribute("tagList", tagList);
-		mv.addObject("mailList", mailList);
-		mv.addObject("pgMailList", pagingMailList);
-		mv.addObject("attachList", attachList);
-		mv.addObject("mailPi", mailPi);
-		mv.setViewName("mail/todayMailBox");
-		return mv;
-	}
-	
-	@RequestMapping("tomeList.ma")
-	public ModelAndView selectToMeMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, Mail m, HttpSession session) {
-		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
-		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
-		PageInfo mailPi = null;
-		ArrayList<Mail> mailList = mService.selectToMeMailList(mailPi, email);
-		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
-		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
-		
-		int listCount = mailList.size();
-		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
-		ArrayList<Mail> pagingMailList = mService.selectToMeMailList(mailPi, email);
-		
-		session.setAttribute("tagList", tagList);
-		mv.addObject("mailList", mailList);
-		mv.addObject("pgMailList", pagingMailList);
-		mv.addObject("attachList", attachList);
-		mv.addObject("mailPi", mailPi);
-		mv.setViewName("mail/toMeMailBox");
-		return mv;
-	}
-	
-	@RequestMapping("attachList.ma")
-	public ModelAndView selectAttachMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, Mail m, HttpSession session) {
-		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
-		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
-		PageInfo mailPi = null;
-		ArrayList<Mail> mailList = mService.selectAttachMailList(mailPi, email);
-		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
-		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
-		
-		int listCount = mailList.size();
-		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
-		ArrayList<Mail> pagingMailList = mService.selectAttachMailList(mailPi, email);
-		
-		session.setAttribute("tagList", tagList);
-		mv.addObject("mailList", mailList);
-		mv.addObject("pgMailList", pagingMailList);
-		mv.addObject("attachList", attachList);
-		mv.addObject("mailPi", mailPi);
-		mv.setViewName("mail/attachMailbox");
-		return mv;
-	}
-	
-	@RequestMapping("imporList.ma")
-	public ModelAndView selectImporMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, Mail m, HttpSession session) {
-		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
-		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
-		PageInfo mailPi = null;
-		ArrayList<Mail> mailList = mService.selectImporMailList(mailPi, email);
-		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
-		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
-		
-		int listCount = mailList.size();
-		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
-		ArrayList<Mail> pagingMailList = mService.selectImporMailList(mailPi, email);
-		
-		session.setAttribute("tagList", tagList);
-		mv.addObject("mailList", mailList);
-		mv.addObject("pgMailList", pagingMailList);
-		mv.addObject("attachList", attachList);
-		mv.addObject("mailPi", mailPi);
-		mv.setViewName("mail/imporMailBox");
-		return mv;
-	}
-	
-	@RequestMapping("unreadList.ma")
-	public ModelAndView selectUnreadMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, Mail m, HttpSession session) {
-		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
-		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
-		PageInfo mailPi = null;
-		ArrayList<Mail> mailList = mService.selectUnreadMailList(mailPi, email);
-		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
-		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
-		
-		int listCount = mailList.size();
-		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
-		ArrayList<Mail> pagingMailList = mService.selectUnreadMailList(mailPi, email);
-		
-		session.setAttribute("tagList", tagList);
-		mv.addObject("mailList", mailList);
-		mv.addObject("pgMailList", pagingMailList);
-		mv.addObject("attachList", attachList);
-		mv.addObject("mailPi", mailPi);
-		mv.addObject("unread", "true");
-		mv.setViewName("mail/unreadMailBox");
-		return mv;
-	}
-	
-	@RequestMapping("sendList.ma")
-	public ModelAndView selectSendMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, Mail m, HttpSession session) {
-		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
-		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
-		PageInfo mailPi = null;
-		ArrayList<Mail> mailList = mService.selectSendMailList(mailPi, email);
-		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
-		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
-		
-		int listCount = mailList.size();
-		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
-		ArrayList<Mail> pagingMailList = mService.selectSendMailList(mailPi, email);
-		session.setAttribute("tagList", tagList);
-		mv.addObject("mailList", mailList);
-		mv.addObject("pgMailList", pagingMailList);
-		mv.addObject("attachList", attachList);
-		mv.addObject("mailPi", mailPi);
-		mv.setViewName("mail/sendMailbox");
-		return mv;
-	}
-	
 	@RequestMapping("delete.sm")
 	public ModelAndView deleteSendMail(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, int[] mailNoList, HttpSession session, Mail m) {
 		int result = mService.deleteSendMail(mailNoList);
 		
 		return selectSendMailList(1, mv, m, session);
-	}
-	
-	@RequestMapping("tempList.ma")
-	public ModelAndView selectTempMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, Mail m, HttpSession session) {
-		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
-		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
-		PageInfo mailPi = null;
-		ArrayList<Mail> mailList = mService.selectTempMailList(mailPi, email);
-		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
-		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
-		
-		int listCount = mailList.size();
-		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
-		ArrayList<Mail> pagingMailList = mService.selectTempMailList(mailPi, email);
-		
-		session.setAttribute("tagList", tagList);
-		mv.addObject("mailList", mailList);
-		mv.addObject("pgMailList", pagingMailList);
-		mv.addObject("attachList", attachList);
-		mv.addObject("mailPi", mailPi);
-		mv.setViewName("mail/tempMailBox");
-		return mv;
 	}
 	
 	@ResponseBody
@@ -611,48 +697,25 @@ public class MailController {
 		return result;
 	}
 	
-	@RequestMapping("tagginMailList.ma")
-	public ModelAndView selectTaggingMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, MailTag t, HttpSession session) {
-		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
-		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
-		MailTag tag = mService.selectTag(t);
-		
-		PageInfo mailPi = null;
-		ArrayList<Mail> mailList = mService.selectTaggingMailList(t, mailPi);
-		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
-		
-		int listCount = mailList.size();
-		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
-		ArrayList<Mail> pagingMailList = mService.selectTaggingMailList(t, mailPi);
-		
-		mv.addObject("mailList", mailList);
-		mv.addObject("pgMailList", pagingMailList);
-		mv.addObject("attachList", attachList);
-		mv.addObject("mailPi", mailPi);
-		mv.addObject("tag", tag);
-		mv.setViewName("mail/taggingMailBox");
-		return mv;
-	}
-	
 	@RequestMapping("restore.ma")
 	public ModelAndView restoreDeleteMail(Mail m, ModelAndView mv, int[] recMailNoList, HttpSession session) {
 		AlertMsg msg = new AlertMsg();
 		int result = mService.restoreDeleteMail(m, recMailNoList);
-		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
-		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
+		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+		ArrayList<Mail> mailList = mService.selectReceiveMailList(null, m);
 		
 		if(result > 0) {
 			msg.setTitle("메일 복원");
 			msg.setContent("메일을 복원 처리했습니다.");
 			mv.addObject("successMsg", msg);
 			mv.addObject("mailList", mailList);
-			return selectMailList(1, session, mv, "recent");
+			return selectMailList(1, session, mv, m);
 		}else {
 			msg.setTitle("메일 복원");
 			msg.setContent("메일 복원 처리에 실패했습니다.");
 			mv.addObject("failMsg", msg);
 			mv.addObject("mailList", mailList);
-			return deleteMailList(1, mv, session, "recent");
+			return deleteMailList(1, mv, m, session);
 		}
 	}
 	
@@ -660,8 +723,9 @@ public class MailController {
 	public ModelAndView completeDeletAll(@RequestParam String division, ModelAndView mv, HttpSession session, Mail m) {
 		AlertMsg msg = new AlertMsg();
 		String email = ((Employee)session.getAttribute("loginUser")).getEmail();
+		m.setRecMailAdd(email);
 		int result = mService.completeDeleteMailAll(email, division);
-		ArrayList<Mail> mailList = mService.selectReceiveMailList(email);
+		ArrayList<Mail> mailList = mService.selectReceiveMailList(null, m);
 		
 		if(result > 0) {
 			msg.setTitle("비우기");
@@ -669,15 +733,15 @@ public class MailController {
 			mv.addObject("successMsg", msg);
 			mv.addObject("mailList", mailList);
 			if(division.equals("trash")) {
-				return deleteMailList(1, mv, session, "recent");
+				return deleteMailList(1, mv, m, session);
 			}else {
-				return spamMailList(1, mv, session);
+				return spamMailList(1, mv, m, session);
 			}
 		}else {
 			msg.setTitle("비우기");
 			msg.setContent("비우기 처리에 실패했습니다.");
 			mv.addObject("failMsg", msg);
-			return selectMailList(1, session, mv, "recent");
+			return selectMailList(1, session, mv, m);
 		}
 		
 	}

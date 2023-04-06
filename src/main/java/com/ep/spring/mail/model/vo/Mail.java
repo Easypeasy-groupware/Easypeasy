@@ -34,5 +34,6 @@ public class Mail {
 	private String hiddenReference;
 	private String sentDate;
 	private String tempStorage;
+	private String sort;
 
 }

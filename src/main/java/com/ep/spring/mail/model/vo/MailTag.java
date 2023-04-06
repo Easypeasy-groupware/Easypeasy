@@ -15,5 +15,6 @@ public class MailTag {
 	private int empNo;
 	private String tagName;
 	private String tagColor;
+	private String sort;
 	
 }

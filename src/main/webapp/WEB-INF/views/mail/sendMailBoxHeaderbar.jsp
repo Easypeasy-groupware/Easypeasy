@@ -66,16 +66,16 @@
         <div style="float: right; width: 150px; font-size: 12px;">
             정렬
             <c:choose>
-                <c:when test="${sort == 'previous'}">
+                <c:when test="${mail.sort == 'ASC'}">
                     <select name="sort" id="sort">
-                        <option value="previous">오래된 메일</option>
-                        <option value="recent">최근 메일</option>
+                        <option value="ASC">오래된 메일</option>
+                        <option value="DESC">최근 메일</option>
                     </select>
                 </c:when>
                 <c:otherwise>
                     <select name="sort" id="sort">
-                        <option value="recent">최근 메일</option>
-                        <option value="previous">오래된 메일</option>
+                        <option value="DESC">최근 메일</option>
+                        <option value="ASC">오래된 메일</option>
                     </select>
                 </c:otherwise>
             </c:choose>
@@ -263,6 +263,31 @@
                     console.log("즐겨찾기");
                 });
             });
+
+            let sort = document.getElementById('sort');
+            sort.addEventListener('change', function(){
+                let sortValue = sort.options[sort.selectedIndex].value;
+                let boxNameElement = document.getElementById("mail_header_info");
+                let boxName = boxNameElement.firstElementChild.innerHTML;
+                let url;
+                switch(boxName){
+                    case "보낸 메일함" : url = "sendList.ma";
+                        break;
+                    case "작성중인 메일함" : url = "tempList.ma";
+                        break;
+                }
+                const form = document.createElement('form');
+                const input = document.createElement('input');
+                form.setAttribute('style', 'display:none')
+                form.action = url;
+                form.method = 'POST';
+                input.setAttribute('name', 'sort');
+                input.setAttribute('value', sortValue);
+                input.setAttribute('type', 'hidden');
+                form.append(input);
+                document.body.append(form);
+                form.submit();
+            })
         });
     </script>
 
