@@ -72,7 +72,7 @@
                 <div id="mail_header1" style="width:100%; float:left">
                     <div id="mail_header_info">
                         <c:choose>
-                            <c:when test="${division >= 1 && division < 9}">
+                            <c:when test="${division >= 1 && division < 5 || division >= 6 && division < 10}">
                                 <b style="font-size: 20px;">전체메일 </b>
                                 <b id="allCount" style="color: dodgerblue; font-size: 23px;">
                                     <c:set var="allMail" value="0" />
@@ -89,6 +89,31 @@
                                     <c:set var="readMail" value="0" />
                                     <c:forEach var="m" items="${ mailList }">
                                         <c:if test="${ m.status == 'Y' and m.junkMail == 'N' }">
+                                            <c:if test="${ m.recCheck == 'Y' }">
+                                                <c:set var="readMail" value="${readMail + 1}" />
+                                            </c:if>
+                                        </c:if>
+                                    </c:forEach>
+                                    ${allMail-readMail}
+                                </b>
+                            </c:when>
+                            <c:when test="${division == 5}">
+                                <b style="font-size: 20px;">전체메일 </b>
+                                <b id="all_mail_no" style="color: dodgerblue; font-size: 23px;">
+                                    <c:set var="allMail" value="0" />
+                                    <c:forEach var="m" items="${ mailList }">
+                                        <!-- <c:if test="${ m.status == 'Y' and m.junkMail == 'N' }"> -->
+                                            <c:set var="allMail" value="${allMail + 1}" />
+                                        <!-- </c:if> -->
+                                    </c:forEach>
+                                    ${allMail}
+                                </b>
+                                <b>/ </b>
+                                <b style="font-size: 20px;">미확인 </b>
+                                <b id="unread_mail_no" style="color: crimson; font-size: 23px;">
+                                    <c:set var="readMail" value="0" />
+                                    <c:forEach var="m" items="${ mailList }">
+                                        <c:if test="${ m.status == 'Y'}">
                                             <c:if test="${ m.recCheck == 'Y' }">
                                                 <c:set var="readMail" value="${readMail + 1}" />
                                             </c:if>
@@ -124,19 +149,6 @@
                                 </b>
                             </c:otherwise>
                         </c:choose>
-                        
-                    </div>
-                    <div id="search_bar">
-                        <form action="">
-                            <select name="search" id="">
-                                    <option value="searchAll">전체</option>
-                                <option value="searchAddress">메일 주소</option>
-                                <option value="searchTitle">메일 제목</option>
-                                <option value="searchContent">메일 내용</option>
-                            </select>
-                            <input type="text">
-                                <button>검색</button>
-                        </form>
                     </div>
                 </div><br>
                 <div id="mail_header2">
@@ -264,19 +276,15 @@
                         <table>
                             <tr class="detail_info_tr">
                                 <th class="detail_info_th">보낸 사람</th>
-                                <td style="width: 90%;">${ mail.empName } ${ mail.sendMailAdd }</td>
+                                <td style="width: 90%;">${ mail.sendName } ${ mail.sendMailAdd }</td>
                             </tr>
                             <tr class="detail_info_tr">
                                 <th class="detail_info_th">받는 사람</th>
                                 <td>
                                     <c:forEach var="r" items="${ receiverList }">
-                                        <c:choose>
-                                            <c:when test="${ r.reference == 'N' && r.hiddenReference == 'N' }">
-                                                ${ r.empName } ${ r.recMailAdd }
-                                            </c:when>
-                                            <c:otherwise>
-                                            </c:otherwise>
-                                        </c:choose>    
+                                        <c:if test="${ r.reference == 'N' && r.hiddenReference == 'N' }">
+                                            ${ r.recName } ${ r.recMailAdd }
+                                        </c:if>
                                     </c:forEach>
                                 </td>
                             </tr>
@@ -284,13 +292,9 @@
                                 <th class="detail_info_th">참 조</th>
                                 <td>
                                     <c:forEach var="r" items="${ receiverList }">
-                                        <c:choose>
-                                            <c:when test="${ r.reference == 'Y' }">
-                                                <div>${ r.empName } ${ r.recMailAdd }</div>
-                                            </c:when>
-                                            <c:otherwise>
-                                            </c:otherwise>
-                                        </c:choose>    
+                                        <c:if test="${ r.reference == 'Y' }">
+                                            ${ r.recName } ${ r.recMailAdd } &nbsp;
+                                        </c:if>
                                     </c:forEach>
                                 </td>
                             </tr>

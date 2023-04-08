@@ -165,21 +165,6 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public int enrollFavorMailBox(MailFavorite mf) {
-		return mDao.enrollFavorMailBox(mf, sqlSession);
-	}
-
-	@Override
-	public int deleteFavorMailBox(MailFavorite mf) {
-		return mDao.deleteFavorMailBox(mf, sqlSession);
-	}
-
-	@Override
-	public ArrayList<MailFavorite> selectMailFavorList(int empNo) {
-		return mDao.selectMailFavorList(empNo, sqlSession);
-	}
-
-	@Override
 	public ArrayList<Mail> selectTaggingMailList(MailTag t, PageInfo pi) {
 		return mDao.selectTaggingMailList(t, pi, sqlSession);
 	}
@@ -212,6 +197,76 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public ArrayList<Mail> selectReceiveMailList(PageInfo mailPi, Mail m) {
 		return mDao.selectReceiveMailList(mailPi, m, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Mail> selectSpamMailList(PageInfo mailPi, Mail m) {
+		return mDao.selectSpamMailList(mailPi, m, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Mail> searchReceiveMailList(PageInfo mailPi, Mail m) {
+		return mDao.searchReceiveMailList(mailPi, m, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Mail> searchImporMailList(PageInfo mailPi, Mail m) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Mail> searchAttachMailList(PageInfo mailPi, Mail m) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Mail> searchTodayMailList(PageInfo mailPi, Mail m) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Mail> searchToMeMailList(PageInfo mailPi, Mail m) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Mail> searchUnreadMailList(PageInfo mailPi, Mail m) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Mail> searchTempMailList(PageInfo mailPi, Mail m) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Mail> searchSendMailList(PageInfo mailPi, Mail m) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Mail> searchDeleteMailList(PageInfo mailPi, Mail m) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Mail> searchTaggingMailList(MailTag t, PageInfo mailPi) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Mail> searchSpamMailList(PageInfo mailPi, Mail m) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

@@ -74,7 +74,6 @@ public class EmployeeController {
 		Mail m = new Mail();
 		m.setRecMailAdd(loginUser.getEmail());
 		m.setSort("DESC");
-		System.out.println(m);
 		ArrayList<Mail> recMailList = mService.selectReceiveMailList(null, m);
 		// 태그 리스트 조회
 		ArrayList<MailTag> tagList = mService.selectTagList(loginUser.getEmpNo());

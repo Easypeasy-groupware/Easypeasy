@@ -127,7 +127,19 @@
 
     <script>
 
+        // onload 구문
         document.addEventListener("DOMContentLoaded", function(){
+
+            // 메일함 검색 후 카테고리 유지
+            const searchCategory = document.getElementById("search_category");
+            const searchSelected = document.getElementById("search_selected");
+            const len = searchCategory.options.length;
+            
+            for(let i=0; i<len; i++){
+                if(searchSelected.value == searchCategory.options[i].value){
+                    searchCategory.options[i].selected = true;
+                }
+            }
 
             // 스팸 등록
             let spamEnroll = document.getElementById("spam");
@@ -651,7 +663,7 @@
                 });
             });
 
-            // 정렬
+            // 최근 순 / 오래된 순 정렬
             let sort = document.getElementById('sort');
             sort.addEventListener('change', function(){
                 let sortValue = sort.options[sort.selectedIndex].value;
@@ -665,13 +677,9 @@
                         break;
                     case "첨부파일 메일함" : url = "attachList.ma";
                         break;
-                    case "안읽은 메일함" : url = "updateReadUnread.ma";
+                    case "안읽은 메일함" : url = "unreadList.ma";
                         break;
                     case "중요 메일함" : url = "imporList.ma";
-                        break;
-                    case "스팸 메일함" : url = "spamList.ma";
-                        break;
-                    case "휴지통 " : url = "deleteList.ma";
                         break;
                     default : url = "list.ma";
                 }
@@ -688,7 +696,6 @@
                 console.log(input)
                 form.submit();
             })
-
         });    
 
     </script>

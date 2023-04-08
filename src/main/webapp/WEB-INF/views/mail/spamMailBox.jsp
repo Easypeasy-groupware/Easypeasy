@@ -106,10 +106,20 @@
                     <div class="menu menu2" id="complete_delete"><img src="">영구 삭제</div>
                     <div style="float: right; width: 150px; font-size: 12px;">
                         정렬
-                        <select name="" id="">
-                            <option value="">최근 메일</option>
-                            <option value="">오래된 메일</option>
-                        </select>
+                        <c:choose>
+                            <c:when test="${mail.sort == 'ASC'}">
+                                <select name="sort" id="sort">
+                                    <option value="ASC">오래된 메일</option>
+                                    <option value="DESC">최근 메일</option>
+                                </select>
+                            </c:when>
+                            <c:otherwise>
+                                <select name="sort" id="sort">
+                                    <option value="DESC">최근 메일</option>
+                                    <option value="ASC">오래된 메일</option>
+                                </select>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </div>
@@ -117,8 +127,8 @@
             <!-- 메일 리스트 -->
             <div id="mail_list">
                 <c:set var="mailCount" value="0" />
-                <c:if test="${ not empty mailList }">
-                    <c:forEach var="m" items="${ mailList }">
+                <c:if test="${ not empty pgMailList }">
+                    <c:forEach var="m" items="${ pgMailList }">
                         <c:if test="${ m.junkMail == 'Y' }">
                             <c:set var="mailCount" value="${mailCount + 1}" />
                             <div class="mail_one" >
@@ -157,7 +167,7 @@
                                     <input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
                                     <div id="selectMailLine">
                                         <div class="mail_sender_name">
-                                            ${m.empName}
+                                            ${m.sendName}
                                         </div>
                                         <div class="mail_sender">
                                             ${ m.sendMailAdd }
@@ -178,29 +188,9 @@
                     <div class="empty">메일함이 비었습니다.</div>
                 </c:if>
             </div>
-            <div align="center">
-                <ul id="paging">
-                    <c:choose>
-                        <c:when test="${ mailPi.currentPage == 1 }">
-                            <li><a> < </a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="on"><a id="${ mailPi.currentPage-1 }"> < </a></li>
-                        </c:otherwise>
-                    </c:choose>
-                    <c:forEach var="p" begin="${ mailPi.startPage }" end="${ mailPi.endPage }">
-                        <li class='on'><a id="${ p }"> ${ p } </a></li>
-                    </c:forEach>
-                    <c:choose>
-                        <c:when test="${ mailPi.currentPage == mailPi.maxPage }">
-                            <li><a> > </a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="on"><a id="${ mailPi.currentPage+1 }"> > </a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </ul>
-            </div>
+            
+            <jsp:include page="paging.jsp" />
+
         </div>
 
         <script>
@@ -219,33 +209,6 @@
 
                 });
             });
-
-            // 페이징 버튼
-            let pagingBtn = document.querySelectorAll('.on');
-            pagingBtn.forEach(function(btn){
-                btn.addEventListener('click', function(){
-                    document.getElementsByTagName
-                    let sort = document.getElementById('sort');
-                    let sortValue = sort.options[sort.selectedIndex].value;
-                    const form = document.createElement('form');
-                    const input1 = document.createElement('input');
-                    const input2 = document.createElement('input');
-                    form.setAttribute('style', 'display:none')
-                    form.action = "list.ma";
-                    form.method = 'POST';
-                    input1.setAttribute('name', 'sort');
-                    input1.setAttribute('value', sortValue);
-                    input1.setAttribute('type', 'hidden');
-                    input2.setAttribute('name', 'cpage');
-                    input2.setAttribute('value', this.firstElementChild.id);
-                    input2.setAttribute('type', 'hidden');
-                    form.append(input1);
-                    form.append(input2);
-                    document.body.append(form);
-                    console.log(form)
-                    form.submit();
-                })
-            })
 
             // 전체 체크박스 선택 취소
             let checkAll = document.getElementById("check_all");
@@ -328,9 +291,25 @@
                     this.parentNode.parentNode.style.display = 'none';
                 })
             });
+
+            // 최근 순 / 오래된 순 정렬
+            let sort = document.getElementById('sort');
+            sort.addEventListener('change', function(){
+                let sortValue = sort.options[sort.selectedIndex].value;
+                const form = document.createElement('form');
+                const input = document.createElement('input');
+                form.setAttribute('style', 'display:none')
+                form.action = "spamList.ma";
+                form.method = 'POST';
+                input.setAttribute('name', 'sort');
+                input.setAttribute('value', sortValue);
+                input.setAttribute('type', 'hidden');
+                form.append(input);
+                document.body.append(form);
+                console.log(input)
+                form.submit();
+            });
         </script>
-    </div>
-	
 
 </body>
 </html>

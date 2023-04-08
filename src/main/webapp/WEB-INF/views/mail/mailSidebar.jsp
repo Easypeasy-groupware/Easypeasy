@@ -178,13 +178,6 @@
         let index = 0;
         let arr = [];
 
-        // 페이징
-        $(function(){
-                $("#ps-tbody").on("click", "tr", function(){
-                    location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
-                })
-            })
-
         // 받은 메일함 이동
         document.querySelectorAll(".mailbox").forEach(function(selectBox){
             selectBox.addEventListener("click", function(){
@@ -266,6 +259,7 @@
             });
         });
 
+        // 태그 별 메일 리스트 조회
         document.querySelectorAll(".tagOne").forEach(function(tag){
             tag.addEventListener('click', function(){
                 let form = document.createElement("form");

@@ -122,24 +122,6 @@
 
         document.addEventListener("DOMContentLoaded", function(){
 
-            // 전역 번수 선언부
-            let mailSelectArea = document.querySelectorAll(".mail_select_area");
-
-            let mailSelectList = document.querySelectorAll('.mail_select_area');
-            mailSelectList.forEach(function(select){
-                select.addEventListener('click', function(){
-                    const input = document.createElement("input");
-                    input.setAttribute("style", "display:none")
-                    input.setAttribute("name", "div");
-                    input.setAttribute("value", 5);
-                    this.append(input);
-                    this.action = "select.ma";
-                    this.method = "POST";
-                    this.submit();
-
-                });
-            });
-
             // 전체 체크박스 선택 취소
             let checkAll = document.getElementById("check_all");
             let mailCheckBox = document.querySelectorAll('.mail_checkbox');
@@ -152,6 +134,7 @@
             // 답장
             let reply = document.getElementById("reply");
             reply.addEventListener('click', function(){
+                let mailSelectList = document.querySelectorAll('.mail_select_area');
                 checkedBoxSum = 0
                 index = 0;
                 mailCheckBox.forEach((i, number) => {
@@ -161,8 +144,8 @@
                     }
                 })
                 if(checkedBoxSum == 1) {
-                    mailSelectArea = mailSelectArea.item(index)
-                    const mail = mailSelectArea.cloneNode(true);
+                    mailSelectList = mailSelectList.item(index)
+                    const mail = mailSelectList.cloneNode(true);
                     const input = document.createElement("input");
                     mail.setAttribute("style", "display:none;");
                     mail.method = "POST";
@@ -181,6 +164,7 @@
             // 전달
             let forward = document.getElementById("forward");
             forward.addEventListener('click', function(){
+                let mailSelectList = document.querySelectorAll('.mail_select_area');
                 checkedBoxSum = 0
                 index = 0;
                 mailCheckBox.forEach((i, number) => {
@@ -190,8 +174,8 @@
                     }
                 })
                 if(checkedBoxSum == 1) {
-                    mailSelectArea = mailSelectArea.item(index)
-                    const mail = mailSelectArea.cloneNode(true);
+                    mailSelectList = mailSelectList.item(index)
+                    const mail = mailSelectList.cloneNode(true);
                     const input = document.createElement("input");
                     mail.setAttribute("style", "display:none;");
                     mail.method = "POST";
@@ -264,6 +248,7 @@
                 });
             });
 
+            // 최근 순 / 오래된 순 정렬
             let sort = document.getElementById('sort');
             sort.addEventListener('change', function(){
                 let sortValue = sort.options[sort.selectedIndex].value;

@@ -409,7 +409,7 @@
 										<tr class="mailOne">
 											<td style="width: 270px;">
 												<div style="width: 80px; float: left;">
-													${ m.empName }&nbsp;
+													${ m.sendName }&nbsp;
 												</div>
 												<div style="width: 170px; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 													${ m.sendMailAdd }

@@ -153,7 +153,7 @@
                                     <input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
                                     <div id="selectMailLine">
                                         <div class="mail_sender_name">
-                                            ${m.empName}
+                                            ${m.recName}
                                         </div>
                                         <div class="mail_sender">
                                             ${ m.recMailAdd }
@@ -198,59 +198,28 @@
                 </c:if>
                 </div>
             </div>
-            <div align="center">
-                <ul id="paging">
-                    <c:choose>
-                        <c:when test="${ mailPi.currentPage == 1 }">
-                            <li><a> < </a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="on"><a id="${ mailPi.currentPage-1 }"> < </a></li>
-                        </c:otherwise>
-                    </c:choose>
-                    <c:forEach var="p" begin="${ mailPi.startPage }" end="${ mailPi.endPage }">
-                        <li class='on'><a id="${ p }"> ${ p } </a></li>
-                    </c:forEach>
-                    <c:choose>
-                        <c:when test="${ mailPi.currentPage == mailPi.maxPage }">
-                            <li><a> > </a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="on"><a id="${ mailPi.currentPage+1 }"> > </a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </ul>
-            </div>
-        </div>
 
-        <script>
-            // 페이징 버튼
-            let pagingBtn = document.querySelectorAll('.on');
-            pagingBtn.forEach(function(btn){
-                btn.addEventListener('click', function(){
-                    document.getElementsByTagName
-                    let sort = document.getElementById('sort');
-                    let sortValue = sort.options[sort.selectedIndex].value;
-                    const form = document.createElement('form');
-                    const input1 = document.createElement('input');
-                    const input2 = document.createElement('input');
-                    form.setAttribute('style', 'display:none')
-                    form.action = "list.ma";
-                    form.method = 'POST';
-                    input1.setAttribute('name', 'sort');
-                    input1.setAttribute('value', sortValue);
-                    input1.setAttribute('type', 'hidden');
-                    input2.setAttribute('name', 'cpage');
-                    input2.setAttribute('value', this.firstElementChild.id);
-                    input2.setAttribute('type', 'hidden');
-                    form.append(input1);
-                    form.append(input2);
-                    document.body.append(form);
-                    console.log(form)
-                    form.submit();
-                })
-            })
-        </script>
+            <jsp:include page="paging.jsp" />
+
+        </div>
     </div>
+
+    <script>
+        // 메일 상세조회
+        let mailSelectList = document.querySelectorAll('.mail_select_area');
+            mailSelectList.forEach(function(select){
+                select.addEventListener('click', function(){
+                    const input = document.createElement("input");
+                    input.setAttribute("style", "display:none")
+                    input.setAttribute("name", "div");
+                    input.setAttribute("value", 5);
+                    this.append(input);
+                    this.action = "select.ma";
+                    this.method = "POST";
+                    this.submit();
+                });
+            });
+    </script>
+
 </body>
 </html>

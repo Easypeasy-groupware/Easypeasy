@@ -190,12 +190,12 @@
                             <textarea name="mailContent" id="summernote" value="">
                                 <div id="reply_content">
                                     ----- Original Message -----<br>
-                                    From: "${mail.empName}" &lt; ${mail.sendMailAdd} &gt;<br>
-                                    To: "${loginUser.empName}" &lt; ${loginUser.email} &gt;<br>
+                                    From: "${mail.sendName}" &lt; ${mail.sendMailAdd} &gt;<br>
+                                    To: "${mail.recName}" &lt; ${mail.recMailAdd} &gt;<br>
                                     Cc: <c:if test="${ not empty receiverList}">
                                             <c:forEach var="r" items="${receiverList}">
                                                 <c:if test="${r.reference == 'Y'}" >
-                                                    "${r.empName}" &lt; ${r.recMailAdd} &gt;
+                                                    "${r.recName}" &lt; ${r.recMailAdd} &gt;
                                                 </c:if>
                                             </c:forEach>
                                     </c:if><br> 

@@ -40,7 +40,6 @@ public class MailController {
 	public ModelAndView selectMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, 
 									   ModelAndView mv, Mail m) {
 		
-		System.out.println(m.getSort());
 		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
 		if(m.getSort() == null) {
 			m.setSort("DESC");
@@ -49,7 +48,6 @@ public class MailController {
 		PageInfo mailPi = null;
 		ArrayList<Mail> mailList = mService.selectReceiveMailList(mailPi, m);
 		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
-		
 		int listCount = mailList.size();
 		mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
 		ArrayList<Mail> pagingMailList = new ArrayList<Mail>();
@@ -243,7 +241,6 @@ public class MailController {
 		if(m.getSort() == null) {
 			m.setSort("DESC");
 		}
-		System.out.println(m.getSort());
 		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		PageInfo mailPi = null;
 		ArrayList<Mail> mailList = mService.selectSendMailList(mailPi, m);
@@ -279,7 +276,10 @@ public class MailController {
 		ArrayList<Mail> pagingMailList = new ArrayList<Mail>();
 		pagingMailList = mService.selectDeleteMailList(mailPi, m);
 		
-		mv.addObject("pagingMailList", pagingMailList);
+		
+		mv.addObject("mailList", mailList);
+		mv.addObject("pgMailList", pagingMailList);
+		mv.addObject("mailPi", mailPi);
 		mv.setViewName("mail/deleteMailBox");
 		return mv;
 	}
@@ -320,13 +320,15 @@ public class MailController {
 		if(m.getSort() == null) {
 			m.setSort("DESC");
 		}
-		ArrayList<Mail> mailList = mService.selectReceiveMailList(null, m);
+		ArrayList<Mail> mailList = mService.selectSpamMailList(null, m);
 		int listCount = mailList.size();
 		PageInfo mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
-		ArrayList<Mail> pagingMailList = new ArrayList<Mail>();
-		pagingMailList = mService.selectReceiveMailList(mailPi, m);
+		ArrayList<Mail> pgMailList = new ArrayList<Mail>();
+		pgMailList = mService.selectSpamMailList(mailPi, m);
 		
-		mv.addObject("pagingMailList", pagingMailList);
+		mv.addObject("mailList", mailList);
+		mv.addObject("pgMailList", pgMailList);
+		mv.addObject("mailPi", mailPi);
 		mv.setViewName("mail/spamMailBox");
 		return mv;
 	}
@@ -493,7 +495,8 @@ public class MailController {
 				break;
 			case 4: mailList = mService.selectAttachMailList(null, m);
 				break;
-			case 5: mailList = mService.selectSendMailList(null, m);
+			case 5: m.setSendMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+					mailList = mService.selectSendMailList(null, m);
 					mv.addObject("check", "send");
 				break;
 			case 6: mailList = mService.selectUnreadMailList(null, m);
@@ -517,10 +520,104 @@ public class MailController {
 		return mv;
 	}
 	
+	// 메일리스트 키워드 조회
+	@RequestMapping("search.ma")
+	public ModelAndView searchMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, int boxNum, Mail m, 
+									   HttpSession session, ModelAndView mv) {
+		
+		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
+		
+		PageInfo mailPi = null;
+		int listCount = 0;
+		String viewName = "mail/receiveMailBox";
+		ArrayList<Mail> mailList = new ArrayList<Mail>();
+		ArrayList<Mail> pagingMailList = new ArrayList<Mail>();
+		switch(boxNum) {
+		case 1: mailList = mService.searchReceiveMailList(mailPi, m);
+				listCount = mailList.size();
+				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+				pagingMailList = mService.searchReceiveMailList(mailPi, m);
+			break;
+		case 2: mailList = mService.searchTodayMailList(mailPi, m);
+				listCount = mailList.size();
+				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+				pagingMailList = mService.searchTodayMailList(mailPi, m);
+				mv.setViewName("mail/todayMailBox");
+			break;
+		case 3: mailList = mService.searchToMeMailList(mailPi, m);
+				listCount = mailList.size();
+				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+				pagingMailList = mService.searchToMeMailList(mailPi, m);
+				mv.setViewName("mail/toMeMailBox");
+			break;
+		case 4: mailList = mService.searchAttachMailList(mailPi, m);
+				listCount = mailList.size();
+				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+				pagingMailList = mService.searchAttachMailList(mailPi, m);
+				mv.setViewName("mail/attachMailbox");
+			break;
+		case 5: m.setSendMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
+				mailList = mService.searchSendMailList(mailPi, m);
+				listCount = mailList.size();
+				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+				pagingMailList = mService.searchSendMailList(mailPi, m);
+				mv.addObject("check", "send");
+				mv.setViewName("mail/sendMailbox");
+			break;
+		case 6: mailList = mService.searchUnreadMailList(mailPi, m);
+				listCount = mailList.size();
+				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+				pagingMailList = mService.searchUnreadMailList(mailPi, m);
+				mv.setViewName("mail/unreadMailBox");
+			break;
+		case 7: mailList = mService.searchImporMailList(mailPi, m);
+				listCount = mailList.size();
+				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+				pagingMailList = mService.searchImporMailList(mailPi, m);
+				mv.setViewName("mail/imporMailBox");
+			break;
+		case 8: mailList = mService.searchTempMailList(mailPi, m);
+				listCount = mailList.size();
+				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+				pagingMailList = mService.searchTempMailList(mailPi, m);
+				mv.setViewName("mail/tempMailBox");
+			break;
+		case 9: mailList = mService.searchSpamMailList(mailPi, m);
+				listCount = mailList.size();
+				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+				pagingMailList = mService.searchSpamMailList(mailPi, m);
+				mv.setViewName("mail/spamMailBox");
+			break;
+		case 10: mailList = mService.searchDeleteMailList(mailPi, m);
+				listCount = mailList.size();
+				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+				pagingMailList = mService.searchDeleteMailList(mailPi, m);
+				mv.setViewName("mail/deleteMailBox");
+			break;
+		}
+		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
+		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
+		
+		session.setAttribute("tagList", tagList);
+		System.out.println(m);
+		mv.addObject("mail", m);
+		mv.addObject("mailList", mailList);
+		mv.addObject("pgMailList", pagingMailList);
+		mv.addObject("mailPi", mailPi);
+		mv.addObject("attachList", attachList);
+		mv.setViewName(viewName);
+		
+		return mv;
+	}
+
+	
 	// 메일 읽음/안읽음 처리
 	@ResponseBody
 	@RequestMapping(value="updateReadUnread.ma")
 	public Object updateReadMail(@RequestParam String recMailNoListData, String recCheck, HttpSession session, Mail m) throws IOException {
+		
+		
 		String[] recMailNoList = recMailNoListData.split(",");
 		int result = mService.updateReadUnreadMail(recMailNoList, recCheck);
 		
@@ -634,6 +731,7 @@ public class MailController {
 		mv.addObject("mail", mail);
 		mv.addObject("mailDiv", replyForwadDiv);
 		mv.addObject("receiverList", receiverList);
+		System.out.println(receiverList);
 		mv.addObject("attachmentList", attachmentList);
 		mv.setViewName("mail/replyMail");
 		return mv;
@@ -676,24 +774,6 @@ public class MailController {
 	@RequestMapping("imporEroll.ma")
 	public String enrollImporMail(Mail m) {
 		String result = Integer.toString(mService.enrollImporMail(m)); 
-		return result;
-	}
-	
-	@ResponseBody
-	@RequestMapping("enrollFavorMailBox.ma")
-	public String enrollFavorMailBox(MailFavorite mf, HttpSession session) {
-		mf.setEmpNo(((Employee)session.getAttribute("loginUser")).getEmpNo());
-		String result = Integer.toString(mService.enrollFavorMailBox(mf));
-		
-		return result;
-	}
-	
-	@ResponseBody
-	@RequestMapping("deleteFavorMailBox.ma")
-	public String deleteFavorMailBox(MailFavorite mf, HttpSession session) {
-		mf.setEmpNo(((Employee)session.getAttribute("loginUser")).getEmpNo());
-		String result = Integer.toString(mService.deleteFavorMailBox(mf));
-		
 		return result;
 	}
 	
