@@ -73,6 +73,7 @@
             <div id="mail_header">
                 <div id="mail_header1" style="width:100%; float:left">
                     <div id="mail_header_info">
+                        <input type="hidden" id="tagNo" name="tagNo" value="${tag.tagNo}">
                         <b style="color: ${tag.tagColor};"> ${ tag.tagName }</b>
                         <b style="font-size: 20px;">전체메일 </b>
                         <b id="all_mail_no" style="color: dodgerblue; font-size: 23px;">
@@ -99,18 +100,8 @@
                         </b>
                     </div>
                     
-                    <div id="search_bar">
-                        <form action="">
-                            <select name="search" id="">
-                                <option value="searchAll">전체</option>
-                                <option value="searchAddress">메일 주소</option>
-                                <option value="searchTitle">메일 제목</option>
-                                <option value="searchContent">메일 내용</option>
-                            </select>
-                            <input type="text">
-                            <button>검색</button>
-                        </form>
-                    </div>
+                    <jsp:include page="mailSearch.jsp" />
+
                 </div><br>
                 <jsp:include page="receiveMailHeaderbar.jsp" />
             </div>

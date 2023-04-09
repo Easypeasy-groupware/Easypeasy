@@ -634,7 +634,7 @@
 			 , hidden_reference
 	      from rec_mail r
           join send_mail s on s.mail_no = r.mail_no
-          join employee e on r.recep_mail_address = #{ recMailAdd }
+          join employee e on r.recep_mail_address = email
           join mail_tag t on t.tag_no = r.tag_no 
 	     where 
 			   t.tag_no = #{ tagNo }
@@ -754,6 +754,510 @@
 			   recep_mail_address = #{ recMailAdd }
 		   and r.status = 'Y'
 		   and junk_mail = 'N'
+		   <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by recep_mail_no DESC
+	</select>
+	
+	<select id="searchImporMailList" resultMap="MailResult">
+		select
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
+			 , r.send_mail_address
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.recep_mail_address = email
+	     where 
+			   recep_mail_address = #{recMailAdd}
+		   and r.status = 'Y'
+		   and junk_mail = 'N'
+		   and impor_mail = 'Y'
+		   <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by recep_mail_no DESC
+	</select>
+	
+	<select id="searchAttachMailList" resultMap="MailResult">
+		select
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
+			 , r.send_mail_address
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.send_mail_address = email
+	      join (select distinct ref_no, division from attachment) a on s.mail_no = a.ref_no
+	     where 
+			   recep_mail_address = #{recMailAdd}
+		   and r.status = 'Y'
+		   and junk_mail = 'N'
+           and division = 'M'
+           <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by recep_mail_no DESC
+	</select>
+	
+	<select id="searchTodayMailList" resultMap="MailResult">
+		select
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
+			 , r.send_mail_address
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.recep_mail_address = email
+	inner join (select to_char(to_date(sysdate), 'YYYY-MM-DD') as selectDate  from dual) e
+     		on s.sent_date like '%' || e.selectDate || '%'
+	     where 
+			   recep_mail_address = #{recMailAdd}
+		   and r.status = 'Y'
+		   and junk_mail = 'N'
+		   <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by recep_mail_no DESC
+	</select>
+	
+	<select id="searchToMeMailList" resultMap="MailResult">
+		select
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
+			 , r.send_mail_address
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.recep_mail_address = email
+	     where 
+			   recep_mail_address = #{recMailAdd}
+		   and s.send_mail_address = #{recMailAdd}
+		   and r.status = 'Y'
+		   and junk_mail = 'N'
+		   <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by recep_mail_no DESC
+	</select>
+	
+	<select id="searchUnreadMailList" resultMap="MailResult">
+		select
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
+			 , r.send_mail_address
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.recep_mail_address = email
+	     where 
+			   recep_mail_address = #{recMailAdd}
+		   and r.status = 'Y'
+		   and junk_mail = 'N'
+		   and rec_check = 'N'
+		   <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by recep_mail_no DESC
+	</select>
+	
+	<select id="searchTempMailList" resultMap="MailResult">
+		select
+			   mail_no
+			 , send_mail_address
+			 , mail_title
+			 , mail_content
+			 , sent_date
+			 , status
+	      from send_mail 
+	     where 
+			   send_mail_address = #{ sendMailAdd }
+           and temp_storage = 'T'
+           <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by mail_no DESC
+	</select>
+	
+	<select id="searchSendMailList" resultMap="MailResult">
+		select
+			       recep_mail_no
+				 , s.mail_no
+	             , ref_no
+				 , tag_no
+				 , e.emp_name "rec_name"
+				 , e2.emp_name "send_name"
+				 , r.recep_mail_address
+				 , r.send_mail_address
+				 , s.mail_title
+				 , s.mail_content
+				 , rec_check
+				 , rec_date
+				 , sent_date
+				 , impor_mail
+				 , junk_mail
+				 , reser_mail
+				 , r.status
+				 , reference
+				 , hidden_reference
+		      from send_mail s
+	          join rec_mail r on s.mail_no = r.mail_no
+	          join employee e on r.recep_mail_address = e.email
+	          join employee e2 on r.send_mail_address = e2.email	
+   full outer join (select distinct ref_no 
+                      from attachment) a on s.mail_no = a.ref_no
+		     where 
+				   s.send_mail_address = #{sendMailAdd}
+			   and r.status = 'Y'
+	           and s.status = 'Y'
+	           <choose>
+			    	<when test="category == 'all'">
+				    	and (r.send_mail_address like '%'||#{keyword}||'%'
+				        	 or e.emp_name like '%'||#{keyword}||'%'
+		            		 or r.mail_title like '%'||#{keyword}||'%'
+		            		 or r.mail_content like '%'||#{keyword}||'%')
+			    	</when>
+			    	<when test="category == 'name'">
+			    		and e.emp_name like '%'||#{keyword}||'%'
+			    	</when>
+			    	<when test="category == 'address'">
+			    		and r.send_mail_address like '%'||#{keyword}||'%'
+			    	</when>
+			    	<when test="category == 'title'">
+			    		and r.mail_title like '%'||#{keyword}||'%'
+			    	</when>
+			    	<when test="category == 'content'">
+			    		and r.mail_content like '%'||#{keyword}||'%'
+			    	</when>
+			   </choose>
+		     order
+		        by recep_mail_no DESC
+	</select>
+	
+	<select id="searchDeleteMailList" resultMap="MailResult">
+		select
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
+			 , r.send_mail_address
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.send_mail_address = email
+	     where 
+			   recep_mail_address = #{ recMailAdd }
+		   and r.status = 'N'
+		   <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by recep_mail_no DESC
+	</select>
+	
+	<select id="searchSpamMailList" resultMap="MailResult">
+		select
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
+			 , r.send_mail_address
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.send_mail_address = email
+	     where 
+			   recep_mail_address = #{ recMailAdd }
+		   and r.status = 'Y'
+           and junk_mail = 'Y'
+           <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by recep_mail_no DESC
+	</select>
+	
+	<select id="searchTaggingMailList" resultMap="MailResult">
+		select
+		       recep_mail_no
+			 , s.mail_no
+			 , t.tag_no
+             , tag_name
+			 , emp_name "send_name"
+			 , r.recep_mail_address
+			 , r.send_mail_address
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , rec_date
+			 , sent_date
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
+	      from rec_mail r
+          join send_mail s on s.mail_no = r.mail_no
+          join employee e on r.recep_mail_address = email
+          join mail_tag t on t.tag_no = r.tag_no 
+	     where 
+			   t.tag_no = #{ tagNo }
 		   <choose>
 		    	<when test="category == 'all'">
 			    	and (r.send_mail_address like '%'||#{keyword}||'%'

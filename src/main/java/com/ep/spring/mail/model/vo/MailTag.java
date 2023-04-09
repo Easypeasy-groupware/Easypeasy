@@ -16,5 +16,7 @@ public class MailTag {
 	private String tagName;
 	private String tagColor;
 	private String sort;
+	private String category;
+	private String keyword;
 	
 }

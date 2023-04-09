@@ -161,9 +161,6 @@
                             <div style="display: none;" class="menu menu2" id="tag">태그</div>
                         </c:when>
                         <c:otherwise>
-                            <!-- <div style="display: none;" class="menu menu2" id="reply">답장</div> -->
-                            <!-- <div style="display: none;" class="menu menu2" id="forward">전달</div> -->
-                            <!-- <div style="display: none;" class="menu menu2" id="delete">삭제</div> -->
                             <c:choose>
                                 <c:when test="${mail.junkMail == 'Y'}">
                                     <div class="menu menu1" id="spam_clear">스팸 해제</div>
@@ -180,14 +177,27 @@
                                     <div class="menu menu2" id="delete">삭제</div>
                                     <div class="menu menu2" id="tag">태그</div>
                                     <div class="menu menu2" id="forward">전달</div>
+                                    <div style="display: none;" class="menu menu2" id="restore"><img src="">복원</div>
+                                    <div style="display: none;" class="menu menu2" id="complete_delete">영구 삭제</div>
                                 </c:when>
-                                <c:otherwise>
-                                    <div class="menu menu2" id="complete_delete">영구 삭제</div>
+                                <c:when test="${mail.status == 'Y' && mail.junkMail == 'Y'}">
                                     <div style="display: none;" class="menu menu2" id="reply">답장</div>
                                     <div style="display: none;" class="menu menu2" id="delete">삭제</div>
                                     <div style="display: none;" class="menu menu2" id="tag">태그</div>
                                     <div style="display: none;" class="menu menu2" id="forward">전달</div>
-                                    <div style="display: none;" class="menu menu1" id="spam">스팸 등록</div>
+                                    <div class="menu menu2" id="complete_delete">영구 삭제</div>
+                                    <div class="menu menu3" id="read" style="display: none;"><img class="mail_img" src="resources/common_images/mail_read.png">읽음</div>
+                                    <div class="menu menu3" id="unRead" style="display: none;"><img class="mail_img" src="resources/common_images/mail_unRead.png">안읽음</div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div style="display: none;" class="menu menu2" id="reply">답장</div>
+                                    <div style="display: none;" class="menu menu2" id="delete">삭제</div>
+                                    <div style="display: none;" class="menu menu2" id="tag">태그</div>
+                                    <div style="display: none;" class="menu menu2" id="forward">전달</div>
+                                    <div class="menu menu2" id="complete_delete">영구 삭제</div>
+                                    <div class="menu menu2" id="restore"><img src="">복원</div>
+                                    <div class="menu menu3" id="read" style="display: none;"><img class="mail_img" src="resources/common_images/mail_read.png">읽음</div>
+                                    <div class="menu menu3" id="unRead" style="display: none;"><img class="mail_img" src="resources/common_images/mail_unRead.png">안읽음</div>
                                 </c:otherwise>
                             </c:choose>
 
@@ -417,6 +427,23 @@
                 });
             });
 
+            // 복원
+            let restore = document.getElementById("restore");
+            restore.addEventListener('click', function(){
+                const recMailNo = document.getElementById("recMailNo").value;
+                const form = document.createElement("form");
+                const input = document.createElement("input");
+                form.setAttribute("style", "display:none;");
+                input.setAttribute("style", "display:none;");
+                input.setAttribute("name", "recMailNo");
+                input.setAttribute("value", recMailNo);
+                form.append(input);
+                form.method = "POST";
+                form.action = "restore.ma";
+                document.body.append(form);
+                form.submit();
+            });
+
             // 영구 삭제
             let deleteCompleteMail = document.getElementById("complete_delete");
             deleteCompleteMail.addEventListener('click', function(){
@@ -433,7 +460,6 @@
                 document.body.append(form);
                 form.submit();
             });
-
 
             // 태그
             let tagging = document.getElementById("tag");

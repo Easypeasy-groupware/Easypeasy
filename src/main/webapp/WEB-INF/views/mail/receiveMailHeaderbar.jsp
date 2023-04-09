@@ -73,7 +73,7 @@
         <div style="float: right; width: 150px; font-size: 12px;">
             정렬
             <c:choose>
-                <c:when test="${mail.sort == 'ASC'}">
+                <c:when test="${mail.sort == 'ASC' || tag.sort == 'ASC'}">
                     <select name="sort" id="sort">
                         <option value="ASC">오래된 메일</option>
                         <option value="DESC">최근 메일</option>
@@ -669,8 +669,11 @@
                 let sortValue = sort.options[sort.selectedIndex].value;
                 let boxNameElement = document.getElementById("mail_header_info");
                 let boxName = boxNameElement.firstElementChild.innerHTML;
+                let tagNo = document.getElementById("tagNo");
                 let url;
                 switch(boxName){
+                    case "받은 메일함" : url = "list.ma"
+                        break;
                     case "오늘 온 메일함" : url = "todayList.ma";
                         break;
                     case "내게 쓴 메일함" : url = "tomeList.ma";
@@ -681,7 +684,8 @@
                         break;
                     case "중요 메일함" : url = "imporList.ma";
                         break;
-                    default : url = "list.ma";
+                    default : url = "tagginMailList.ma";
+
                 }
                 const form = document.createElement('form');
                 const input = document.createElement('input');
@@ -692,8 +696,10 @@
                 input.setAttribute('value', sortValue);
                 input.setAttribute('type', 'hidden');
                 form.append(input);
+                if(tagNo != null){
+                    form.append(tagNo);
+                }
                 document.body.append(form);
-                console.log(input)
                 form.submit();
             })
         });    

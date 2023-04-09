@@ -291,8 +291,8 @@ public class MailController {
 		if(t.getSort() == null) {
 			t.setSort("DESC");
 		}
-		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
 		MailTag tag = mService.selectTag(t);
+		tag.setSort(t.getSort());
 		
 		PageInfo mailPi = null;
 		ArrayList<Mail> mailList = mService.selectTaggingMailList(t, mailPi);
@@ -522,12 +522,11 @@ public class MailController {
 	
 	// 메일리스트 키워드 조회
 	@RequestMapping("search.ma")
-	public ModelAndView searchMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, int boxNum, Mail m, 
+	public ModelAndView searchMailList(@RequestParam(value="cpage", defaultValue="1") int currentPage, int boxNum, Mail m, MailTag t,
 									   HttpSession session, ModelAndView mv) {
 		
 		m.setRecMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
 		int empNo = ((Employee)session.getAttribute("loginUser")).getEmpNo();
-		
 		PageInfo mailPi = null;
 		int listCount = 0;
 		String viewName = "mail/receiveMailBox";
@@ -543,19 +542,19 @@ public class MailController {
 				listCount = mailList.size();
 				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
 				pagingMailList = mService.searchTodayMailList(mailPi, m);
-				mv.setViewName("mail/todayMailBox");
+				viewName = "mail/todayMailBox";
 			break;
 		case 3: mailList = mService.searchToMeMailList(mailPi, m);
 				listCount = mailList.size();
 				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
 				pagingMailList = mService.searchToMeMailList(mailPi, m);
-				mv.setViewName("mail/toMeMailBox");
+				viewName = "mail/toMeMailBox";
 			break;
 		case 4: mailList = mService.searchAttachMailList(mailPi, m);
 				listCount = mailList.size();
 				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
 				pagingMailList = mService.searchAttachMailList(mailPi, m);
-				mv.setViewName("mail/attachMailbox");
+				viewName = "mail/attachMailbox";
 			break;
 		case 5: m.setSendMailAdd(((Employee)session.getAttribute("loginUser")).getEmail());
 				mailList = mService.searchSendMailList(mailPi, m);
@@ -563,49 +562,56 @@ public class MailController {
 				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
 				pagingMailList = mService.searchSendMailList(mailPi, m);
 				mv.addObject("check", "send");
-				mv.setViewName("mail/sendMailbox");
+				viewName = "mail/sendMailbox";
 			break;
 		case 6: mailList = mService.searchUnreadMailList(mailPi, m);
 				listCount = mailList.size();
 				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
 				pagingMailList = mService.searchUnreadMailList(mailPi, m);
-				mv.setViewName("mail/unreadMailBox");
+				viewName = "mail/unreadMailBox";
 			break;
 		case 7: mailList = mService.searchImporMailList(mailPi, m);
 				listCount = mailList.size();
 				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
 				pagingMailList = mService.searchImporMailList(mailPi, m);
-				mv.setViewName("mail/imporMailBox");
+				viewName = "mail/imporMailBox";
 			break;
 		case 8: mailList = mService.searchTempMailList(mailPi, m);
 				listCount = mailList.size();
 				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
 				pagingMailList = mService.searchTempMailList(mailPi, m);
-				mv.setViewName("mail/tempMailBox");
+				viewName = "mail/tempMailBox";
 			break;
 		case 9: mailList = mService.searchSpamMailList(mailPi, m);
 				listCount = mailList.size();
 				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
 				pagingMailList = mService.searchSpamMailList(mailPi, m);
-				mv.setViewName("mail/spamMailBox");
+				viewName = "mail/spamMailBox";
 			break;
 		case 10: mailList = mService.searchDeleteMailList(mailPi, m);
-				listCount = mailList.size();
-				mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
-				pagingMailList = mService.searchDeleteMailList(mailPi, m);
-				mv.setViewName("mail/deleteMailBox");
+				 listCount = mailList.size();
+				 mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+				 pagingMailList = mService.searchDeleteMailList(mailPi, m);
+				 viewName = "mail/deleteMailBox";
 			break;
+		case 11: mailList = mService.searchTaggingMailList(t, mailPi);
+				 listCount = mailList.size();
+				 mailPi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+				 pagingMailList = mService.searchTaggingMailList(t, mailPi);
+				 
+				 viewName = "mail/taggingMailBox";
 		}
 		ArrayList<MailTag> tagList = mService.selectTagList(empNo);
 		ArrayList<ArrayList<Attachment>> attachList = mService.selectAttachmentList(mailList);
+		MailTag tag = mService.selectTag(t);
 		
 		session.setAttribute("tagList", tagList);
-		System.out.println(m);
 		mv.addObject("mail", m);
 		mv.addObject("mailList", mailList);
 		mv.addObject("pgMailList", pagingMailList);
 		mv.addObject("mailPi", mailPi);
 		mv.addObject("attachList", attachList);
+		mv.addObject("tag", tag);
 		mv.setViewName(viewName);
 		
 		return mv;

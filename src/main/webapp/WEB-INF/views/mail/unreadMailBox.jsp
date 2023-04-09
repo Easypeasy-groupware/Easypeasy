@@ -100,18 +100,8 @@
                         </b>
                     </div>
                     
-                    <div id="search_bar">
-                        <form action="">
-                            <select name="search" id="">
-                                <option value="searchAll">전체</option>
-                                <option value="searchAddress">메일 주소</option>
-                                <option value="searchTitle">메일 제목</option>
-                                <option value="searchContent">메일 내용</option>
-                            </select>
-                            <input type="text">
-                            <button>검색</button>
-                        </form>
-                    </div>
+                    <jsp:include page="mailSearch.jsp" />
+                    
                 </div><br>
                 <jsp:include page="receiveMailHeaderbar.jsp" />
             </div>

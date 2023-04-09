@@ -85,6 +85,8 @@
                             ${allMail}
                         </b>
                     </div>
+
+                    <jsp:include page="mailSearch.jsp" />
                     
                 </div><br>
                 <jsp:include page="sendMailBoxHeaderbar.jsp" />

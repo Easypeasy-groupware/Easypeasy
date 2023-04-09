@@ -40,10 +40,11 @@
             let form = document.getElementById("search");
             let keyword = document.getElementById("keyword");
             let boxNum = document.getElementById("boxNum");
-            let num = 0;
             let boxNameElement = document.getElementById("mail_header_info");
             let boxName = boxNameElement.firstElementChild.innerHTML;
-            let url;
+            let tagNo = document.getElementById("tagNo");
+            let num = 0;
+            console.log(tagNo);
             switch(boxName){
                 case "받은 메일함" : num = 1;
                     break;
@@ -53,11 +54,11 @@
                     break;
                 case "첨부파일 메일함" : num = 4;
                     break;
-                case "안읽은 메일함" : num = 5;
+                case "보낸 메일함" : num = 5;
                     break;
-                case "중요 메일함" : num = 6;
+                case "안읽은 메일함" : num = 6;
                     break;
-                case "보낸 메일함" : num = 7;
+                case "중요 메일함" : num = 7;
                     break;
                 case "작성중인 메일함" : num = 8;
                     break;
@@ -65,10 +66,15 @@
                     break;  
                 case "휴지통" : num = 10;
                     break; 
+                default : num = 11;
             }
             boxNum.value = num;
             if(keyword.value != ""){
+                if(tagNo != null){
+                    form.append(tagNo);
+                }
                 form.action = "search.ma";
+                console.log(form)
                 form.submit();
             }else{
                 alert("검색어를 입력해주세요.")

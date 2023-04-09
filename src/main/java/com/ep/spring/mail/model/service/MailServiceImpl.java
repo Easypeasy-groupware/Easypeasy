@@ -211,62 +211,52 @@ public class MailServiceImpl implements MailService {
 
 	@Override
 	public ArrayList<Mail> searchImporMailList(PageInfo mailPi, Mail m) {
-		// TODO Auto-generated method stub
-		return null;
+		return mDao.searchImporMailList(mailPi, m, sqlSession);
 	}
 
 	@Override
 	public ArrayList<Mail> searchAttachMailList(PageInfo mailPi, Mail m) {
-		// TODO Auto-generated method stub
-		return null;
+		return mDao.searchAttachMailList(mailPi, m, sqlSession);
 	}
 
 	@Override
 	public ArrayList<Mail> searchTodayMailList(PageInfo mailPi, Mail m) {
-		// TODO Auto-generated method stub
-		return null;
+		return mDao.searchTodayMailList(mailPi, m, sqlSession);
 	}
 
 	@Override
 	public ArrayList<Mail> searchToMeMailList(PageInfo mailPi, Mail m) {
-		// TODO Auto-generated method stub
-		return null;
+		return mDao.searchToMeMailList(mailPi, m, sqlSession);
 	}
 
 	@Override
 	public ArrayList<Mail> searchUnreadMailList(PageInfo mailPi, Mail m) {
-		// TODO Auto-generated method stub
-		return null;
+		return mDao.searchUnreadMailList(mailPi, m, sqlSession);
 	}
 
 	@Override
 	public ArrayList<Mail> searchTempMailList(PageInfo mailPi, Mail m) {
-		// TODO Auto-generated method stub
-		return null;
+		return mDao.searchTempMailList(mailPi, m, sqlSession);
 	}
 
 	@Override
 	public ArrayList<Mail> searchSendMailList(PageInfo mailPi, Mail m) {
-		// TODO Auto-generated method stub
-		return null;
+		return mDao.searchSendMailList(mailPi, m, sqlSession);
 	}
 
 	@Override
 	public ArrayList<Mail> searchDeleteMailList(PageInfo mailPi, Mail m) {
-		// TODO Auto-generated method stub
-		return null;
+		return mDao.searchDeleteMailList(mailPi, m, sqlSession);
 	}
 
 	@Override
 	public ArrayList<Mail> searchTaggingMailList(MailTag t, PageInfo mailPi) {
-		// TODO Auto-generated method stub
-		return null;
+		return mDao.searchTaggingMailList(mailPi, t, sqlSession);
 	}
 
 	@Override
 	public ArrayList<Mail> searchSpamMailList(PageInfo mailPi, Mail m) {
-		// TODO Auto-generated method stub
-		return null;
+		return mDao.searchSpamMailList(mailPi, m, sqlSession);
 	}
 
 	

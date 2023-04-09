@@ -137,7 +137,7 @@
                                         </c:forEach>
                                     </c:if>
                                 </div>
-                                <div class="mail_select_area">
+                                <form class="mail_select_area">
                                     <input class="mailNo" type="hidden" name="mailNo" value="${ m.mailNo }">
                                     <input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
                                     <div id="selectMailLine">
@@ -167,7 +167,7 @@
                                             ${ m.dateDay } ${ m.dateTime }
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </c:if>
                     </c:forEach>
@@ -205,8 +205,8 @@
                     this.append(input);
                     this.action = "select.ma";
                     this.method = "POST";
+                    console.log(this)
                     this.submit();
-
                 });
             });
 
