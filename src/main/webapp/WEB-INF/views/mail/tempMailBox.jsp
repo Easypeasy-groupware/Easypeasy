@@ -168,15 +168,15 @@
 
         <script>
 
+            // 메일 쓰기 이동
             let mailSelectList = document.querySelectorAll('.mail_select_area');
             mailSelectList.forEach(function(select){
                 select.addEventListener('click', function(){
                     const input = document.createElement("input");
                     input.setAttribute("style", "display:none")
                     input.setAttribute("name", "div");
-                    input.setAttribute("value", 8);
                     this.append(input);
-                    this.action = "select.ma";
+                    this.action = "temEnrollForm.sm";
                     this.method = "POST";
                     this.submit();
 

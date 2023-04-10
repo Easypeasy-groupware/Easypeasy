@@ -59,6 +59,8 @@ public interface MailService {
 	int unReadCount(Mail m);
 	// - 보낸 메일 정보
 	Mail selectMail(Mail m);
+	// - 임시 저장 메일 정보
+	Mail selectTempMail(Mail m);
 	// - 수신자 리스트 조회
 	ArrayList<Mail> selectReceiverList(Mail m);
 	// - 메일 리스트 첨부파일 조회

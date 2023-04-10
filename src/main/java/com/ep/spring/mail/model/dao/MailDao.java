@@ -463,6 +463,10 @@ public class MailDao {
 		}
 	}
 
+	public Mail selectTempMail(Mail m, SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("mailMapper.selectTempMail", m);
+	}
+
 	
 
 	

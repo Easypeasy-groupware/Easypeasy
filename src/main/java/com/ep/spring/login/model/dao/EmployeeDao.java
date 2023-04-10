@@ -46,4 +46,9 @@ public class EmployeeDao {
 	public int updateDefaultProfile(SqlSessionTemplate sqlSession, Employee e) {
 		return sqlSession.update("employeeMapper.updateDefaultProfile", e);
 	}
+
+	// [메일 파트] 사원 전체 메일 주소 조회
+	public ArrayList<Employee> selectMailList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("employeeMapper.selectMailList");
+	}
 }

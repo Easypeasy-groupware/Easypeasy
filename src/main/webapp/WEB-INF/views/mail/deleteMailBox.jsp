@@ -191,7 +191,7 @@
                     const input = document.createElement("input");
                     input.setAttribute("style", "display:none")
                     input.setAttribute("name", "div");
-                    input.setAttribute("value", 10);
+                    input.setAttribute("value", 9);
                     this.append(input);
                     this.action = "select.ma";
                     this.method = "POST";

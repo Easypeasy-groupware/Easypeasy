@@ -44,7 +44,6 @@ public class MailServiceImpl implements MailService {
 		
 		if((sendResult > 0 && receiveResult > 0 ) || (atList.size() + attachResult > 0)) {
 			int mailNo = mDao.selectRecSendMailNo(sqlSession);
-//			aService.receiveMailAlarm(mList, mailNo);
 			return 1;
 		}else {
 			return 0;
@@ -191,7 +190,14 @@ public class MailServiceImpl implements MailService {
 
 	@Override
 	public int insertTempMail(Mail m, ArrayList<Mail> mList, ArrayList<Attachment> atList) {
-		return mDao.insertTempMail(m, mList, sqlSession);
+		int sendResult = mDao.insertTempMail(m, mList, sqlSession);
+		int attachResult = mDao.insertAttachment(atList, sqlSession);
+		
+		if(sendResult > 0 && (atList.size() + attachResult > 0)) {
+			return 1;
+		}else {
+			return 0;
+		}
 	}
 
 	@Override
@@ -257,6 +263,11 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public ArrayList<Mail> searchSpamMailList(PageInfo mailPi, Mail m) {
 		return mDao.searchSpamMailList(mailPi, m, sqlSession);
+	}
+
+	@Override
+	public Mail selectTempMail(Mail m) {
+		return mDao.selectTempMail(m, sqlSession);
 	}
 
 	

@@ -114,5 +114,15 @@
 		  set emp_profile = #{empProfile}
 		where emp_no = #{empNo}
 	</update>
+	
+	<select id="selectMailList" resultMap="employeeResult">
+		select 
+		       e.dept_code
+		     , t.dept_name
+		     , emp_name
+		     , email
+		  from employee e
+          join department t on e.dept_code = t.dept_code
+	</select>
 
 </mapper>

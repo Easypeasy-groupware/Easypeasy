@@ -60,9 +60,19 @@
     <div id="userInfo">${loginUser.email}</div>
     <div id="mail_header2">
         <div style="width: 27px; float: left; padding-left: 5px; padding-top: 8px;"><input type="checkbox" name="" id="check_all"></div>
-        <div class="menu menu2" id="reply">답장</div>
-        <div class="menu menu2" id="forward">전달</div>
-        <div class="menu menu2" id="delete">삭제</div>
+        <c:choose>
+            <c:when test="${pgMailList[0].tempStorage != 'T'}">
+                <div class="menu menu2" id="reply">답장</div>
+                <div class="menu menu2" id="forward">전달</div>
+                <div class="menu menu2" id="delete">삭제</div>
+            </c:when>
+            <c:otherwise>
+                <div style="display: none;" class="menu menu2" id="reply">답장</div>
+                <div style="display: none;" class="menu menu2" id="forward">전달</div>
+                <div class="menu menu2" id="delete">삭제</div>
+            </c:otherwise>
+        </c:choose>
+        
         <div style="float: right; width: 150px; font-size: 12px;">
             정렬
             <c:choose>

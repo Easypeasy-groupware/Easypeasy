@@ -66,13 +66,14 @@
         <!-- 메일 컨텐트-->
         <input type="hidden" id="recMailNo" name="recMailNo" value="${mail.recMailNo}">
         <input type="hidden" id="mailNo" name="mailNo" value="${mail.mailNo}">
+        <input type="hidden" id="division" name="div" value="${division}">
         
         <div id="mail_content">
             <div id="mail_header">
                 <div id="mail_header1" style="width:100%; float:left">
                     <div id="mail_header_info">
                         <c:choose>
-                            <c:when test="${division >= 1 && division < 5 || division >= 6 && division < 10}">
+                            <c:when test="${division >= 1 && division < 5 || division >= 6 && division < 9}">
                                 <b style="font-size: 20px;">전체메일 </b>
                                 <b id="allCount" style="color: dodgerblue; font-size: 23px;">
                                     <c:set var="allMail" value="0" />
@@ -122,7 +123,7 @@
                                     ${allMail-readMail}
                                 </b>
                             </c:when>
-                            <c:when test="${division == 10}">
+                            <c:when test="${division == 9}">
                                 <b>휴지통</b>
                                 <b style="font-size: 20px;">삭제메일 </b>
                                 <b style="color: cadetblue; font-size: 23px;">
@@ -157,8 +158,14 @@
                         <c:when test="${check == 'send'}" >
                             <div class="menu menu2" id="reply">답장</div>
                             <div class="menu menu2" id="forward">전달</div>
-                            <div class="menu menu2" id="delete">삭제</div>
                             <div style="display: none;" class="menu menu2" id="tag">태그</div>
+                            <div class="menu menu2" id="delete">삭제</div>
+                            <div style="display: none;" class="menu menu2" id="restore"><img src="">복원</div>
+                            <div style="display: none;" class="menu menu2" id="complete_delete">영구 삭제</div>
+                            <div style="display: none;" class="menu menu1" id="spam">스팸 등록</div>
+                            <div style="display: none;" class="menu menu1" id="spam_clear">스팸 해제</div>
+                            <div class="menu menu3" id="read" style="display: none;"><img class="mail_img" src="resources/common_images/mail_read.png">읽음</div>
+                            <div class="menu menu3" id="unRead" style="display: none;"><img class="mail_img" src="resources/common_images/mail_unRead.png">안읽음</div>
                         </c:when>
                         <c:otherwise>
                             <c:choose>
@@ -254,14 +261,48 @@
                     </div>
 
                     <!-- 메일 위치 이동 -->
-                    <div class="menu menu1" style="float: right; margin-left: 10px;" id="after_mail">
-                        다음 메일
-                        <div class="material-symbols-outlined" style="display: block; padding-top: 8px; float: right;">expand_more</div>
-                    </div>
-                    <div class="menu menu1" style="float: right;" id="before_mail">
-                        이전 메일
-                        <div class="material-symbols-outlined" style="display: block; padding-top: 8px; float: right;">expand_less</div>
-                    </div>
+                        <c:forEach var="m" items="${ mailList }" varStatus="status">
+                            <c:if test="${ m.recMailNo == mail.recMailNo }">
+                                <c:choose>
+                                    <c:when test="${ status.last }">
+                                        <div class="menu menu1" style="float: right; margin-left: 10px;" id="after_mail">
+                                            <b style="color: rgb(172, 172, 172);">다음 메일</b>
+                                            <div class="material-symbols-outlined" style="display: block; padding-top: 8px; float: right; color: rgb(172, 172, 172);">expand_less</div>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <form class="menu menu1" style="float: right; margin-left: 10px;" id="after_mail">
+                                            다음 메일
+                                            <div class="material-symbols-outlined" style="display: block; padding-top: 8px; float: right;">expand_less</div>
+                                            <input type="hidden" name="recMailNo" value="${mailList[status.index+1].recMailNo}" >
+                                            <input type="hidden" name="mailNo" value="${mailList[status.index+1].mailNo}" >
+                                        </form>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:if>
+                        </c:forEach>
+                    </form>
+                        <c:forEach var="m" items="${ mailList }" varStatus="status">
+                            <c:if test="${ m.recMailNo == mail.recMailNo }">
+                                <c:choose>
+                                    <c:when test="${ status.first }">
+                                        <div class="menu menu1" style="float: right;" id="before_mail">
+                                            <b style="color: rgb(172, 172, 172);">이전 메일</b>
+                                            <div class="material-symbols-outlined" style="display: block; padding-top: 8px; float: right; color: rgb(172, 172, 172);">expand_more</div>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <form class="menu menu1" style="float: right;" id="before_mail">
+                                            이전 메일
+                                            <div class="material-symbols-outlined" style="display: block; padding-top: 8px; float: right;">expand_more</div>
+                                            <input type="hidden" name="recMailNo" value="${mailList[status.index-1].recMailNo}" >
+                                            <input type="hidden" name="mailNo" value="${mailList[status.index-1].mailNo}" >
+                                        </form>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:if>
+                        </c:forEach>
+                    </form>
                 </div>
                 <div id="mail_detail_content">
                     <div>
@@ -347,7 +388,6 @@
             spam.addEventListener('click', function(){
                 const form = document.createElement("form");
                 const recMailNo = document.getElementById("recMailNo");
-                console.log(recMailNo);
                 form.setAttribute("style", "display:none;");
                 form.append(recMailNo);
                 form.action = "spamEnroll.ma"
@@ -361,6 +401,8 @@
             reply.addEventListener('click', function(){
                 const form = document.createElement("form");
                 const input = document.createElement("input");
+                const recMailNo = document.getElementById("recMailNo");
+                const mailNo = document.getElementById("mailNo");
                 form.setAttribute("style", "display:none;");
                 input.setAttribute("style", "display:none;");
                 form.method = "POST";
@@ -369,6 +411,8 @@
                 // 1 = 답장 / 2 = 전달
                 input.value = 1;
                 form.append(input);
+                form.append(recMailNo);
+                form.append(mailNo);
                 document.body.append(form);
                 form.submit();
             });
@@ -378,6 +422,8 @@
             forward.addEventListener('click', function(){
                 const form = document.createElement("form");
                 const input = document.createElement("input");
+                const recMailNo = document.getElementById("recMailNo");
+                const mailNo = document.getElementById("mailNo");
                 form.setAttribute("style", "display:none;");
                 input.setAttribute("style", "display:none;");
                 form.method = "POST";
@@ -386,6 +432,8 @@
                 // 1 = 답장 / 2 = 전달
                 input.value = 2;
                 form.append(input);
+                form.append(mailNo);
+                form.append(recMailNo);
                 document.body.append(form);
                 form.submit();
             });
@@ -562,13 +610,21 @@
             // 이전 메일
             const prev = document.getElementById("before_mail")
             prev.addEventListener('click', function(){
-                
+                let division = document.getElementById("division")
+                prev.action = "select.ma";
+                prev.method = "POST";
+                prev.append(division);
+                prev.submit();
             })
 
             // 다음 메일
             const next = document.getElementById("after_mail")
             next.addEventListener('click', function(){
-
+                let division = document.getElementById("division")
+                next.action = "select.ma";
+                next.method = "POST";
+                next.append(division);
+                next.submit();
             })
         </script>
     </div>

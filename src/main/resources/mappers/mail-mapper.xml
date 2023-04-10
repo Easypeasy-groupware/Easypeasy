@@ -253,6 +253,23 @@
 			   recep_mail_no = #{ recMailNo }
 	</select>
 	
+	<select id="selectTempMail" resultMap="MailResult">
+		select
+			   mail_no
+			 , send_mail_address
+			 , mail_title
+			 , mail_content
+			 , sent_date
+			 , status
+			 , temp_storage
+	      from send_mail 
+	     where 
+			   mail_no = #{ mailNo }
+           and temp_storage = 'Y'
+	     order
+	        by mail_no DESC
+	</select>
+	
 	<select id="selectReceiverList" resultMap="MailResult">
 		select
 			   recep_mail_no
@@ -561,10 +578,11 @@
 			 , mail_content
 			 , sent_date
 			 , status
+			 , temp_storage
 	      from send_mail 
 	     where 
 			   send_mail_address = #{ sendMailAdd }
-           and temp_storage = 'T'
+           and temp_storage = 'Y'
 	     order
 	        by mail_no ${ sort }
 	</select>
@@ -601,16 +619,6 @@
 		 where emp_no = #{ empNo }
 		   and mailbox_name = #{ mailBoxName }
 	</delete>
-	
-	<select id="selectMailFavorList" resultMap="MailFavorResult">
-		select
-			   FAV_NO
-			 , EMP_NO
-			 , FAV_ORDER
-			 , MAILBOX_NAME
-		  from mail_fav
-		 where emp_no = #{ empNo }
-	</select>
 	
 	<select id="selectTaggingMailList" resultMap="MailResult">
 		select
@@ -723,7 +731,7 @@
 		  , to_char(sysdate, 'YYYY-MM-DD DY HH24:mi:SS')
 		  , #{ mailTitle }
 		  , #{ mailContent }
-		  , 'T'
+		  , 'Y'
 		  )
 	</insert>
 	
@@ -1051,7 +1059,7 @@
 	      from send_mail 
 	     where 
 			   send_mail_address = #{ sendMailAdd }
-           and temp_storage = 'T'
+           and temp_storage = 'Y'
            <choose>
 		    	<when test="category == 'all'">
 			    	and (r.send_mail_address like '%'||#{keyword}||'%'
