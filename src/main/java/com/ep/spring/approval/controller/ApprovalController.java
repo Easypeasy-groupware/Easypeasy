@@ -484,7 +484,7 @@ public class ApprovalController {
 	public String insertApproval(HttpSession session, Model model, List<MultipartFile> originNames, 
 								 Approval ap, VacationForm vf, OverTimeForm ot) {
 		//System.out.println(ap);
-		System.out.println(originNames);
+		//System.out.println(originNames);
 		
 		ap.setWriterNo(((Employee)session.getAttribute("loginUser")).getEmpNo());
 		if(ap.getFormCode() == 3 || ap.getFormCode() == 4) {
@@ -543,7 +543,7 @@ public class ApprovalController {
 		// 첨부파일 처리하기
 		
 		ArrayList <Attachment> atList = new ArrayList<>();
-		System.out.println(originNames);
+		//System.out.println(originNames);
 		//System.out.println(originNames.getOriginalFilename());
 		String test = "";
 		
@@ -551,7 +551,7 @@ public class ApprovalController {
 			test += mf.getOriginalFilename();
 		}
 		
-		System.out.println(test);
+		//System.out.println(test);
 		
 		if(!(test.equals(""))) {
 			String path = "resources/approval_attachFiles/";
@@ -571,28 +571,37 @@ public class ApprovalController {
 			
 		}
 		
-		int result = aService.insertApproval(ap, al, vf, ot, atList);
+		// 기존 임시저장문서를 중복확인 후 중복이면 update, 아니면 insert
+		int t = aService.selectTempApp(ap.getAppChange());
 		
-		//System.out.println(atList);
-		
-		if(result > 0) {
-			
-			AlertMsg msg = new AlertMsg("결재상신", "성공적으로 문서상신 완료되었습니다!");
-			//System.out.println("status : " + ap.getStatus());
-			if(ap.getStatus().equals("2")) {
-				msg.setTitle("임시저장");
-				msg.setContent("성공적으로 임시저장 되었습니다!");
-			}
-			session.setAttribute("successMsg", msg);
-			return "redirect:main.ap";			
+		if(t > 0) {
+			ap.setDivision(4);
+			return updateApproval(session, model, originNames, ap, vf, ot);
 		}else {
-			AlertMsg msg = new AlertMsg("상신실패", "문서 상신에 실패했습니다.");
-			if(ap.getStatus().equals("2")) {
-				msg.setTitle("임시저장");
-				msg.setContent("임시저장에 실패했습니다.");
+			int result = aService.insertApproval(ap, al, vf, ot, atList);
+			
+			//System.out.println(atList);
+			
+			if(result > 0) {
+				
+				AlertMsg msg = new AlertMsg("결재상신", "성공적으로 문서상신 완료되었습니다!");
+				//System.out.println("status : " + ap.getStatus());
+				if(ap.getStatus().equals("2")) {
+					msg.setTitle("임시저장");
+					msg.setContent("성공적으로 임시저장 되었습니다!");
+				}
+				session.setAttribute("successMsg", msg);
+				return "redirect:main.ap";			
+			}else {
+				AlertMsg msg = new AlertMsg("상신실패", "문서 상신에 실패했습니다.");
+				if(ap.getStatus().equals("2")) {
+					msg.setTitle("임시저장");
+					msg.setContent("임시저장에 실패했습니다.");
+				}
+				session.setAttribute("failMsg", msg);
+				return "redirect:main.ap";
 			}
-			session.setAttribute("failMsg", msg);
-			return "redirect:main.ap";
+			
 		}
 		
 	}
@@ -834,12 +843,22 @@ public class ApprovalController {
 		int result = aService.updateApproval(ap, al, vf, ot, atList);
 		
 		if(result > 0) {
-			System.out.println("최종 담은 첨부 : " + atList);
+			//System.out.println("최종 담은 첨부 : " + atList);
 			AlertMsg msg = new AlertMsg("결재상신", "성공적으로 문서상신 완료되었습니다!");
+			
+			if(ap.getDivision()==4) {
+				msg.setTitle("임시저장");
+				msg.setContent("성공적으로 임시저장되었습니다!");
+			}
+			
 			session.setAttribute("successMsg", msg);
 			return "redirect:main.ap";			
 		}else {
 			AlertMsg msg = new AlertMsg("상신실패", "문서 상신에 실패했습니다.");
+			if(ap.getDivision()==4) {
+				msg.setTitle("임시저장실패");
+				msg.setContent("임시저장에 실패했습니다.");
+			}
 			session.setAttribute("failMsg", msg);
 			return "redirect:main.ap";
 		}

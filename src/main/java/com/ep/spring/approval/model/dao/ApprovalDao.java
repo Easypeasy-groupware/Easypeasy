@@ -78,6 +78,11 @@ public class ApprovalDao {
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectTempList", empNo, rowBounds);
 	}
 	
+	public int selectTempApp(SqlSessionTemplate sqlSession, String appChange) {
+		return sqlSession.selectOne("approvalMapper.selectTempApp", appChange);
+		
+	}
+	
 	public int selectRecListCount(SqlSessionTemplate sqlSession, int empNo) {
 		return sqlSession.selectOne("approvalMapper.selectRecListCount", empNo);
 	}

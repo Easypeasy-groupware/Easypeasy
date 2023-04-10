@@ -86,6 +86,13 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public ArrayList<Approval> selectTempList(PageInfo pi, int eNo) {
 		return aDao.selectTempList(sqlSession, pi, eNo);
 	}
+	
+	@Override
+	public int selectTempApp(String appChange) {
+		return aDao.selectTempApp(sqlSession, appChange);
+	}
+	
+	
 
 	@Override
 	public int selectRecListCount(int eNo) {
@@ -309,6 +316,8 @@ public class ApprovalServiceImpl implements ApprovalService{
 		
 		return aDao.selectVacationInfo(sqlSession, no);
 	}
+
+
 
 
 

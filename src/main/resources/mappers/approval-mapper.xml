@@ -318,8 +318,16 @@
 			      from approval a
 			 where status = 2
 			   and emp_no = #{empNo}
-			order by enroll_date desc	
+			order by enroll_date desc, a.app_no desc	
 	</select>
+	
+	<select id="selectTempApp" resultType="_int">
+				select count(*) 
+				  from approval
+				 where app_change = #{appChange}
+	</select>
+	
+	
 	
 	<select id="selectRecListCount" resultType="_int">
 		select 
