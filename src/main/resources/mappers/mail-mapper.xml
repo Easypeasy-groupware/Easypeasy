@@ -45,14 +45,7 @@
 		<result column="upload_date" property="uploadDate" />
 		<result column="division" property="division" />
 	</resultMap>
-	
-	<resultMap id="MailFavorResult" type="MailFavorite">
-		<id column="fav_no" property="favNo" />
-		<result column="emp_no" property="empNo" />
-		<result column="fav_order" property="favOrder" />
-		<result column="mailbox_name" property="mailBoxName" />
-	</resultMap>
-	
+
 	<select id="selectReceiveMailList" resultMap="MailResult">
 		select
 		       recep_mail_no
