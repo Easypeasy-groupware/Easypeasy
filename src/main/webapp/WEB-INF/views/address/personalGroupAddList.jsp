@@ -153,7 +153,7 @@
 
 			<button class="btnGroup" id="delete">삭제</button>
 			<button class="btnGroup" id="change-group">그룹변경</button>
-			<button class="btnGroup" id="sendMail">메일쓰기</button>
+			
 			<script>
 				$(function(){
 					
@@ -567,23 +567,23 @@
 				<c:if test="${ not empty list }">
 				
 					<c:if test="${ pi.currentPage ne 1 }">
-						<li><a href="internalEnt.add?cpage=${ pi.currentPage-1 }"> < </a></li>
+						<li><a href="psGroup.add?group=${ ag.groupNo }&cpage=${ pi.currentPage-1 }"> < </a></li>
 					</c:if>
 					
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:choose>
 						<c:when test="${ pi.currentPage eq p }">
-							<li class="on"><a href="internalEnt.add?cpage=${ p }">${ p }</a></li>
+							<li class="on"><a href="psGroup.add?group=${ ag.groupNo }&cpage=${ p }">${ p }</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="internalEnt.add?cpage=${ p }">${ p }</a></li>
+							<li><a href="psGroup.add?group=${ ag.groupNo }&cpage=${ p }">${ p }</a></li>
 						</c:otherwise>
 						</c:choose>
 					</c:forEach>
 
 					
 					<c:if test="${ pi.currentPage ne pi.maxPage }">
-						<li><a href="internalEnt.add?cpage=${ pi.currentPage+1 }"> > </a></li>
+						<li><a href="psGroup.add?group=${ ag.groupNo }&cpage=${ pi.currentPage+1 }"> > </a></li>
 					</c:if>
 				</c:if>
 				</ul>

@@ -68,11 +68,12 @@
 
 			<p id="address-group">즐겨찾기</p>
 
+			<!--  
 			<div class="search" align="right">
 				<input type="text" id="searchKey" placeholder="이름, 회사, 전화번호">
 				<button id="searchBtn">검색</button>
 			</div>
-
+			-->
 			<div class="addNew">
 				<form action="insertNewPs.add" method="post" id="simpleAddForm">
 				<input type="hidden" name="empNo" value="${ loginUser.empNo }">
@@ -119,7 +120,6 @@
 
 			<br><br>
 
-			<button id="sendMail">메일쓰기</button>
 			<span class="subheading" id="psSubheading"><b>개인주소록 (${fn:length(p)}개)</b></span>
 
 			<br>

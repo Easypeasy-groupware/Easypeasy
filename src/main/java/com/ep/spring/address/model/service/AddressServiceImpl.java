@@ -287,6 +287,21 @@ public class AddressServiceImpl implements AddressService {
 		return aDao.deleteOneAdd(sqlSession, no);
 	}
 
+	@Override
+	public int deleteSharedAdd(int no) {
+		return aDao.deleteSharedAdd(sqlSession, no);
+	}
+
+	@Override
+	public int selectsharedBinListCount() {
+		return aDao.selectsharedBinListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Address> selectsharedBinList(PageInfo pi) {
+		return aDao.selectSharedBinList(sqlSession, pi);
+	}
+
 
 
 

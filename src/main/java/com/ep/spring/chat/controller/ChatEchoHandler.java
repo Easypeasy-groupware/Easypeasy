@@ -38,19 +38,19 @@ public class ChatEchoHandler extends TextWebSocketHandler {
 	
 	    //private Map<String, ArrayList<WebSocketSession>> EmpList = new ConcurrentHashMap<String, ArrayList<WebSocketSession>>();
 	    
-		private static int i;
+		//private static int i;
 		
 		
 		// 해당 웹소켓에 새로운 클라이언트와 연결됐을때 실행할 내용 정의 
 		@Override
 		public void afterConnectionEstablished(WebSocketSession session) throws Exception {//WebSocketSession객체가 클라이언트에 대한 정보를 담는 객체
-			i++;
+			//i++;
 			
 			System.out.println("\n========== websocket 연결됨 =============");
 			System.out.println("session Id : " + session.getId());
 			//System.out.println("session Attributes : " + session.getAttributes()); // {sessionId=xxxxxxx, loginUser=Member객체}
 			System.out.println("현재 채팅방에 참가한 로그인한 회원 : " + session.getAttributes().get("loginUser"));
-			System.out.println(session.getId() + " 연결 성공 => 총 접속 인원 : " + i + "명");
+			//System.out.println(session.getId() + " 연결 성공 => 총 접속 인원 : " + i + "명");
 
 		}
 		
@@ -59,8 +59,8 @@ public class ChatEchoHandler extends TextWebSocketHandler {
 	     */
 	    @Override
 	    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-	        i--;
-	        System.out.println(session.getId() + " 연결 종료 => 총 접속 인원 : " + i + "명");
+	        //i--;
+	        //System.out.println(session.getId() + " 연결 종료 => 총 접속 인원 : " + i + "명");
 	        
 	        String roomNo = "";
 	        // sessionList에 session이 있다면

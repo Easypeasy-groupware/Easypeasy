@@ -141,6 +141,13 @@ public interface AddressService {
 	
 	// 33. 개인주소록 개별삭제
 	int deleteOndAdd(int no);
+	
+	// 34. 공용주소록 삭제
+	int deleteSharedAdd(int no);
+	
+	// 35. 공유주소록 휴지통 목록 조회
+	int selectsharedBinListCount();
+	ArrayList<Address> selectsharedBinList(PageInfo pi);
 
 	
 

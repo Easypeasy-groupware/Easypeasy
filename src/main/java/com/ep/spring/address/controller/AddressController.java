@@ -423,6 +423,8 @@ public class AddressController {
 		
 		ArrayList<Address> list = new ArrayList<>();
 		
+		System.out.println(addList);
+		
 		for(String addNo : addList) {
 			Address a = new Address();
 			a.setAddNo(Integer.parseInt(addNo));
@@ -476,11 +478,14 @@ public class AddressController {
 	
 	@ResponseBody
 	@RequestMapping(value="updatePsGroupName.add")
-	public String ajaxUpdatePsGroupName(AddGroup ag) {
-		System.out.println(ag);
+	public String ajaxUpdatePsGroupName(AddGroup ag, HttpSession session) {
+		
 		int result = aService.updatePsGroupName(ag);
-		System.out.println(result);
+		Employee e = (Employee)session.getAttribute("loginUser");
+		
 		if(result > 0) {
+			ArrayList<AddGroup> userGroup = aService.selectPersonalAddGroup(e);
+			session.setAttribute("pList", userGroup);
 			return "success";
 		}else {
 			return "fail";
@@ -590,6 +595,41 @@ public class AddressController {
 	@RequestMapping("groupSetting.add")
 	public String personalGroupSetting() {
 		return "address/personalGroupSettings";
+	}
+	
+	@RequestMapping("deleteSharedOne.add") // 공유주소록 삭제
+	public String deleteSharedAdd(int no, HttpSession session) {
+		
+		int result = aService.deleteSharedAdd(no);
+		
+		if(result>0) {
+			AlertMsg msg = new AlertMsg("주소록 삭제", "주소록이 삭제되었습니다");
+			session.setAttribute("successMsg", msg);
+		}else {
+			AlertMsg msg = new AlertMsg("주소록 삭제", "삭제 실패했습니다");
+			session.setAttribute("failMsg", msg);
+		}
+		return "redirect:externalAll.add";
+	}
+	
+	@RequestMapping(value="sharedBin.add") // 공유주소록 삭제 목록
+	public ModelAndView selectsharedBinList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, ModelAndView mv) {
+		
+		int listCount = aService.selectsharedBinListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		ArrayList<Address> list = aService.selectsharedBinList(pi);
+		
+		System.out.println(list);
+		
+		mv.addObject("count", listCount)
+		  .addObject("list", list)
+		  .addObject("pi", pi)
+		  .setViewName("address/sharedBin");
+		return mv;
+	
+	
 	}
 	
 	

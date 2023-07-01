@@ -284,6 +284,22 @@ public class AddressDao {
 		return sqlSession.update("addressMapper.updateDeleteAddGroup", ag);
 	}
 
+	public int deleteSharedAdd(SqlSessionTemplate sqlSession, int no) {
+		return sqlSession.update("addressMapper.deleteSharedAdd", no);
+	}
+
+	public int selectsharedBinListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("addressMapper.selectSharedBinListCount");
+	}
+
+	public ArrayList<Address> selectSharedBinList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		return (ArrayList) sqlSession.selectList("addressMapper.selectSharedBinList", 0, rowBounds);
+	}
+
 
 
 

@@ -110,11 +110,11 @@
 			 		<input type="text" name="roomName" id="newName" style="display:none;">
 			 		<span id="name-insert" style="display:none;" onclick="updateName();">✔️</span>
 			 </div>
-			 <div class="room-manage">
+			 <%-- <div class="room-manage">
 			 	<span id="member-count1">👩🏻‍🤝‍🧑🏻</span><span id="member-count2">${ room.count }</span>
 			 	<span id="member-add">➕</span>
 			 	<span id="room-exit">🚪</span>
-			 </div>
+			 </div> --%>
 		</div>
 		<script>
 			$(function(){ // 채팅방이름이 15자를 초과할경우 이름조정

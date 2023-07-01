@@ -152,11 +152,17 @@
         
        <br>
        
+       
        <c:if test="${ loginUser.deptCode eq 'D1' }">
+      		<div><b> ⚙️관리자 </b></div>
+      		
+        	<div class="menu-type menu-list">
+        	<a href="sharedGroup.add" class="menu-a"><img src="resources/common_images/admin-setting.png" style="width:15px; color:orange;"> <b> 외부그룹 관리 </b></a>
+        	</div>
 	        <div class="menu-type menu-list">
-	        	<a href="sharedGroup.add" class="menu-a"><img src="resources/common_images/admin-setting.png" style="width:15px; color:orange;"> <b> 주소록 관리 </b></a>
+	        	<a href="sharedBin.add" class="menu-a"><img src="resources/common_images/admin-setting.png" style="width:15px; color:orange;"> <b> 외부주소록 관리 </b></a>
 	        </div>
-        </c:if>
+    	</c:if>
     </div>
     
     <script>
@@ -255,6 +261,7 @@
     					groupName : groupName.val()
     				},
     				success:function(result) {
+    					
     					if(result == "success"){
     						console.log("성공함");
     						$name.text("- " + groupName.val());
@@ -263,7 +270,6 @@
     						groupName.hide();
     						edit.show();
     						check.hide();
-    					
     					}
     					
     				},error:function(){

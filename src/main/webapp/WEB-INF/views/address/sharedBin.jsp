@@ -81,28 +81,16 @@
 		
 		<div class="content-outer">
 
-			<p id="address-group">🗑️ 휴지통</p>
+			<p id="address-group">🗑️ 비활성 외부주소록 관리</p>
 
 			<br>
 		
 			<br><br>
-			
 
-			<button class="btnGroup" id="delete">영구삭제</button>
 			<button class="btnGroup" id="restore">복구</button>
 			<script>
 				$(function(){
 					const list = []; //빈 배열 생성
-
-					$("#delete").click(function(){ // 삭제하기 버튼 클릭시
-						let num = $("input:checkbox[name=name-checkbox]:checked").length; // 선택한 체크박스의 개수
-						if(num == 0){
-							$("#deleteFailModal").modal("show");
-						}else{
-							$("#add-num").text(num);
-							$("#deleteModal").modal("show");
-						}
-					})
 					
 					$("#restore").click(function(){ // 복구 버튼 클릭시
 						let num = $("input:checkbox[name=name-checkbox]:checked").length; // 선택한 체크박스의 개수
@@ -194,73 +182,6 @@
 			</script>
 
 			<br><br>
-			<!-- 삭제 불가용 모달-->
-			<div class="modal fade" id="deleteFailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-header" style="background-color:rgb(166, 184, 145);">
-							<p class="modal-title" style="font-weight:600">영구 삭제</p>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							<br>
-							⛔ 연락처를 한 개 이상 선택해 주세요❗
-							<br><br><br>
-							<button type="button" class="btn-event-green" id="modal-del-btn" data-bs-dismiss="modal">확인</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<!-- 삭제 확인용 모달-->
-			<div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-header" style="background-color:rgb(166, 184, 145);">
-							<p class="modal-title" style="font-weight:600">연락처 삭제</p>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							선택한 <span id="add-num" style="font-weight:600;"></span>개의 연락처를 정말 삭제하시겠습니까?
-							<br><br>
-							<button type="button" class="btn-event-gray" data-bs-dismiss="modal" id="modal-close-btn">취소</button>
-							<button type="button" class="btn-event-green" id="modal-del-btn" onclick="deleteAddList();">삭제</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<script>
-				function deleteAddList(){ // 선택한 주소록 다중 삭제용 ajax
-					const aList = []; //빈 배열 생성
-					for(var i=0; i<$("#ps-tbody>tr").length; i++){
-						if($("#ps-tbody>tr").eq(i).children().find("input[type='checkbox']").is(":checked")){
-							
-							//var setData={}; // 배열에 넣을 데이터쌍 변수 생성
-							//setData{'addNo'} = $("#ps-tbody>tr").eq(i).children().eq(0).text();
-							aList.push($("#ps-tbody>tr").eq(i).children().eq(0).text());
-						}
-					}
-					var objParams = {"addList" : aList}
-					
-					$.ajax({
-						url:"deleteFromBin.add",
-						dataType : "json",
-						contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-						type:"post",
-						data : objParams,
-						success : function(result){
-							if(result > 0){
-								location.href= "addressBin.add";
-							}
-						},
-						error : function(){
-							console.log("주소록 삭제용 ajax 통신 실패");
-						}
-					});
-				}
-			
-			
-			</script>
 			
 			<!-- 복구 불가용 모달-->
 			<div class="modal fade" id="restoreFailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -280,7 +201,7 @@
 				</div>
 			</div>
 			
-			<!-- 복구 확인용 모달-->
+			<!-- 삭제 확인용 모달-->
 			<div class="modal fade" id="restoreModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content">
@@ -319,7 +240,7 @@
 						data : objParams,
 						success : function(result){
 							if(result > 0){
-								location.href= "addressBin.add";
+								location.href= "sharedBin.add";
 							}
 						},
 						error : function(){
@@ -337,23 +258,23 @@
 				<c:if test="${ not empty list }">
 				
 					<c:if test="${ pi.currentPage ne 1 }">
-						<li><a href="addressBin.add?cpage=${ pi.currentPage-1 }"> < </a></li>
+						<li><a href="sharedBin.add?cpage=${ pi.currentPage-1 }"> < </a></li>
 					</c:if>
 					
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:choose>
 						<c:when test="${ pi.currentPage eq p }">
-							<li class="on"><a href="addressBin.add?cpage=${ p }">${ p }</a></li>
+							<li class="on"><a href="sharedBin.add?cpage=${ p }">${ p }</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="addressBin.add?cpage=${ p }">${ p }</a></li>
+							<li><a href="sharedBin.add?cpage=${ p }">${ p }</a></li>
 						</c:otherwise>
 						</c:choose>
 					</c:forEach>
 
 					
 					<c:if test="${ pi.currentPage ne pi.maxPage }">
-						<li><a href="addressBin.add?cpage=${ pi.currentPage+1 }"> > </a></li>
+						<li><a href="sharedBin.add?cpage=${ pi.currentPage+1 }"> > </a></li>
 					</c:if>
 				</c:if>
 				</ul>

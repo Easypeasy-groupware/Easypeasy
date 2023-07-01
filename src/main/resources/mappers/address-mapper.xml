@@ -747,10 +747,11 @@
 	
 	<select id="selectExternalAddEditList" resultMap="addEditResult">
 		select
-		       add_no
-		     , emp_no
-		  from add_edit
-		 where add_no = #{no}
+		       e.add_no
+		     , e.emp_no
+		  from add_edit e
+		  join address a on (e.add_no = a.add_no)
+		 where a.add_no = #{no}
 		  and add_bin = 'N'
 	</select>
 	
@@ -951,6 +952,49 @@
 		   set group_no = ''
 		 where group_no = #{groupNo}
 	</update>
+	
+	<update id="deleteSharedAdd">
+		update address
+		   set add_bin = 'Y'
+		 where add_no = #{no}
+	</update>
 
+	<select id="selectSharedBinListCount" resultType="_int">
+		select
+		       count(*)
+		  from address
+		 where add_type = 'S'
+		   and add_bin = 'Y'
+	</select>
+	
+	<select id="selectSharedBinList" resultMap="addressResult">
+		select
+		       ADD_NO
+		     , a.EMP_NO
+		     , a.ADD_TYPE
+		     , ADD_NAME
+		     , EMAIL
+		     , PHONE
+		     , ADD_EMP
+		     , ADD_DEPT
+		     , ADD_JOB
+		     , a.GROUP_NO
+		     , GROUP_NAME
+		     , EMP_PHONE
+		     , EMP_ADDRESS
+		     , MEMO
+		     , CREATE_DATE
+		     , MODIFY_DATE
+		     , DELETE_DATE
+		     , ADD_BIN
+		     , EDITABLE
+		 from address a
+         left join add_group g on (a.group_no = g.group_no)
+		 where a.add_type = 'S'
+		   and add_bin = 'Y'
+		 order
+		    by DELETE_DATE desc
+	</select>
+	
 
 </mapper>

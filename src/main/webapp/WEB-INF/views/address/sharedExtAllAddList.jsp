@@ -26,7 +26,6 @@
 	/*주소록 리스트 헤더*/
 	.btnGroup{width:80px; height:25px; border:0; border-radius:5px; margin-bottom:10px; color:white;}
 	.btnGroup:hover{cursor: pointer; font-weight:600;}
-	#sendMail{background: rgb(77, 88, 64);}
 	#myAddr{width:120px; background: rgb(166, 184, 145); float:right;}
 
     /*주소록 리스트 테이블*/
@@ -57,18 +56,12 @@
         
         <div class="content-outer">
         
-            <div class="search" align="right" style="float:right">
-                <input type="text" id="searchKey" placeholder="이름, 회사, 전화번호">
-                <button id="searchBtn">검색</button>
-            </div>
             
-            <p id="address-group">외부주소록</p>
+            
+            <p id="address-group">외부주소록</p> 
+            <button class="btnGroup" id="myAddr">등록한 연락처</button>
             <p id="group-name">전체 총 ${ count }명</p>
 
-            <br><br>
-            
-            <button class="btnGroup" id="sendMail">메일쓰기</button>
-            <button class="btnGroup" id="myAddr">등록한 연락처</button>
             <script>
                 $("#myAddr").click(function(){
                     location.href="extReg.add";

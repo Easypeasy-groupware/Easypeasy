@@ -142,8 +142,8 @@
 			
 
 			<button class="btnGroup" id="delete">삭제</button>
-			<button class="btnGroup" id="change-group" data-bs-toggle="modal" data-bs-target="#changeModal">그룹변경</button>
-			<button class="btnGroup" id="sendMail">메일쓰기</button>
+			<button class="btnGroup" id="change-group">그룹변경</button>
+			
 			<script>
 				$(function(){
 					
@@ -156,6 +156,18 @@
 						}else{
 							$("#add-num").text(num);
 							$("#deleteModal").modal("show");
+						}
+					})
+					
+					$("#change-group").click(function(){ // 그룹변경 버튼 클릭시
+						let num = $("input:checkbox[name=name-checkbox]:checked").length; // 선택한 체크박스의 개수
+						if(num == 0){
+							$(".warning-title").text("⛔ 그룹 변경");
+							$(".warning-content").text("📂 연락처를 한 개 이상 선택해 주세요❗");
+							$("#failModal").modal("show");
+						}else{
+							$("#change-add-num").text(num);
+							$("#changeModal").modal("show");
 						}
 					})
 				})
@@ -337,14 +349,13 @@
 					</div>
 				</div>
 			</div>
+			
 			<script>
 				function deleteAddList(){ // 선택한 주소록 다중 삭제용 ajax
 					const aList = []; //빈 배열 생성
 					for(var i=0; i<$("#ps-tbody>tr").length; i++){
 						if($("#ps-tbody>tr").eq(i).children().find("input[type='checkbox']").is(":checked")){
 							
-							//var setData={}; // 배열에 넣을 데이터쌍 변수 생성
-							//setData{'addNo'} = $("#ps-tbody>tr").eq(i).children().eq(0).text();
 							aList.push($("#ps-tbody>tr").eq(i).children().eq(0).text());
 						}
 					}
@@ -358,7 +369,8 @@
 						data : objParams,
 						success : function(result){
 							if(result > 0){
-								location.href= "psAll.add";
+
+								location.reload();
 							}
 						},
 						error : function(){
@@ -366,10 +378,26 @@
 						}
 					});
 				}
-				
-				
 			</script>
-
+			
+			<!-- 선택실패용 모달-->
+			<div class="modal fade" id="failModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header" style="background-color:rgb(166, 184, 145);">
+							<p class="modal-title warning-title" style="font-weight:600"></p>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<br>
+							<p class="warning-content"></p>
+							<br>
+							<button type="button" class="btn-event-green" id="modal-del-btn" data-bs-dismiss="modal">확인</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
 			<!-- 그룹 변경용 모달-->
 			<div class="modal fade" id="changeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered">
@@ -529,23 +557,23 @@
 				<c:if test="${ not empty list }">
 				
 					<c:if test="${ pi.currentPage ne 1 }">
-						<li><a href="internalEnt.add?cpage=${ pi.currentPage-1 }"> < </a></li>
+						<li><a href="psAll.add?cpage=${ pi.currentPage-1 }"> < </a></li>
 					</c:if>
 					
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:choose>
 						<c:when test="${ pi.currentPage eq p }">
-							<li class="on"><a href="internalEnt.add?cpage=${ p }">${ p }</a></li>
+							<li class="on"><a href="psAll.add?cpage=${ p }">${ p }</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="internalEnt.add?cpage=${ p }">${ p }</a></li>
+							<li><a href="psAll.add?cpage=${ p }">${ p }</a></li>
 						</c:otherwise>
 						</c:choose>
 					</c:forEach>
 
 					
 					<c:if test="${ pi.currentPage ne pi.maxPage }">
-						<li><a href="internalEnt.add?cpage=${ pi.currentPage+1 }"> > </a></li>
+						<li><a href="psAll.add?cpage=${ pi.currentPage+1 }"> > </a></li>
 					</c:if>
 				</c:if>
 				</ul>

@@ -106,9 +106,6 @@
 			<br>
 
 			<br><br>
-			
-
-			<button class="btnGroup" id="sendMail">메일쓰기</button>
 
 			<p class="subheading" id="psSubheading"> 총 <b>${ count }</b> 명</p>
 			<br>
