@@ -226,6 +226,23 @@
 
 
 			</script>
+			
+			<script>
+				$(function(){
+					$("#sendMail").click(function(){
+						const aList = []; //빈 배열 생성
+						for(var i=0; i<$("#ps-tbody>tr").length; i++){
+							if($("#ps-tbody>tr").eq(i).children().find("input[type='checkbox']").is(":checked")){
+								
+								//var setData={}; // 배열에 넣을 데이터쌍 변수 생성
+								//setData{'addNo'} = $("#ps-tbody>tr").eq(i).children().eq(0).text();
+								aList.push($("#ps-tbody>tr").eq(i).children().eq(0).text());
+							}
+						}
+						location.href="sendMail.add?list=" + aList;
+					}
+				}
+			</script>
 
 			<br>
 			

@@ -86,7 +86,7 @@
                             ${allMail}
                         </b>
                         <b>/ </b>
-                        <b style="font-size: 20px;">수신 미확인 </b>
+                        <b style="font-size: 20px;">미확인 </b>
                         <b id="unread_mail_no" style="color: crimson; font-size: 23px;">
                             <c:set var="readMail" value="0" />
                             <c:forEach var="m" items="${ mailList }">
@@ -100,39 +100,19 @@
                         </b>
                     </div>
                     
-                    <div id="search_bar">
-                        <form action="">
-                            <select name="search" id="">
-                                <option value="searchAll">전체</option>
-                                <option value="searchAddress">메일 주소</option>
-                                <option value="searchTitle">메일 제목</option>
-                                <option value="searchContent">메일 내용</option>
-                            </select>
-                            <input type="text">
-                            <button>검색</button>
-                        </form>
-                    </div>
+                    <jsp:include page="mailSearch.jsp" />
+                    
                 </div><br>
-                <div id="mail_header2">
-                    <div style="width: 27px; float: left; padding-left: 5px; padding-top: 8px;"><input type="checkbox" name="" id="check_all"></div>
-                    <div class="menu menu2" id="reply">답장</div>
-                    <div class="menu menu2" id="forward">전달</div>
-                    <div class="menu menu2" id="delete">삭제</div>
-                    <div style="float: right; width: 150px; font-size: 12px;">
-                        정렬
-                        <select name="" id="">
-                            <option value="">최근 메일</option>
-                            <option value="">오래된 메일</option>
-                        </select>
-                    </div>
-                </div>
+                <jsp:include page="sendMailBoxHeaderbar.jsp" />
             </div>
 
             <!-- 메일 리스트 -->
             <div id="mail_list">
+                <c:set var="mailCount" value="0" />
                 <c:if test="${ not empty pgMailList }">
                     <c:forEach var="m" items="${ pgMailList }">
                         <c:if test="${ m.status == 'Y' }">
+                            <c:set var="mailCount" value="${mailCount + 1}" />
                             <div class="mail_one" >
                                 <div class="mail_check">
                                     <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="">
@@ -163,7 +143,7 @@
                                     <input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
                                     <div id="selectMailLine">
                                         <div class="mail_sender_name">
-                                            ${m.empName}
+                                            ${m.recName}
                                         </div>
                                         <div class="mail_sender">
                                             ${ m.recMailAdd }
@@ -203,41 +183,20 @@
                         </c:if>
                     </c:forEach>
                 </c:if>
+                <c:if test="${mailCount == 0}">
+                    <div class="empty">메일함이 비었습니다.</div>
+                </c:if>
                 </div>
             </div>
-            <div align="center">
-                <ul id="paging">
-                    <c:choose>
-                        <c:when test="${ mailPi.currentPage == 1 }">
-                            <li><a href=""> < </a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="on"><a href="list.ma?cpage=${ mailPi.currentPage-1 }"> < </a></li>
-                        </c:otherwise>
-                    </c:choose>
-                    <c:forEach var="p" begin="${ mailPi.startPage }" end="${ mailPi.endPage }">
-                        <li class='on'><a href="list.ma?cpage=${ p }"> ${ p } </a></li>
-                    </c:forEach>
-                    <c:choose>
-                        <c:when test="${ mailPi.currentPage == mailPi.maxPage }">
-                            <li><a href=""> > </a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="on"><a href="list.ma?cpage=${ mailPi.currentPage+1 }"> > </a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </ul>
-            </div>
+
+            <jsp:include page="paging.jsp" />
+
         </div>
+    </div>
 
-        <script>
-            // 전역 번수 선언부
-            let checkedBoxSum = 0
-            let mailSelectArea = document.querySelectorAll(".mail_select_area");
-            let index = 0;
-            let arr = [];
-
-            let mailSelectList = document.querySelectorAll('.mail_select_area');
+    <script>
+        // 메일 상세조회
+        let mailSelectList = document.querySelectorAll('.mail_select_area');
             mailSelectList.forEach(function(select){
                 select.addEventListener('click', function(){
                     const input = document.createElement("input");
@@ -248,134 +207,9 @@
                     this.action = "select.ma";
                     this.method = "POST";
                     this.submit();
-
                 });
             });
+    </script>
 
-            // 전체 체크박스 선택 취소
-            let checkAll = document.getElementById("check_all");
-            let mailCheckBox = document.querySelectorAll('.mail_checkbox');
-            checkAll.addEventListener('change', function(event){
-                mailCheckBox.forEach((checkbox) => {
-                    checkbox.checked = checkAll.checked;
-                })
-            });
-
-            // 답장
-            let reply = document.getElementById("reply");
-            reply.addEventListener('click', function(){
-                checkedBoxSum = 0
-                index = 0;
-                mailCheckBox.forEach((i, number) => {
-                    if(i.checked == true) {
-                        index = number
-                        checkedBoxSum += 1;
-                    }
-                })
-                if(checkedBoxSum == 1) {
-                    mailSelectArea = mailSelectArea.item(index)
-                    const mail = mailSelectArea.cloneNode(true);
-                    const input = document.createElement("input");
-                    mail.setAttribute("style", "display:none;");
-                    mail.method = "POST";
-                    mail.action = "reply.ma";
-                    input.name = "replyForwadDiv"
-                    // 1 = 답장 / 2 = 전달
-                    input.value = 1
-                    mail.append(input)
-                    document.body.append(mail);
-                    mail.submit();
-                }else{
-                    alert('한 개의 체크박스를 선택해주세요!')
-                }
-            });
-
-            // 전달
-            let forward = document.getElementById("forward");
-            forward.addEventListener('click', function(){
-                checkedBoxSum = 0
-                index = 0;
-                mailCheckBox.forEach((i, number) => {
-                    if(i.checked == true) {
-                        index = number;
-                        checkedBoxSum += 1;
-                    }
-                })
-                if(checkedBoxSum == 1) {
-                    mailSelectArea = mailSelectArea.item(index)
-                    const mail = mailSelectArea.cloneNode(true);
-                    const input = document.createElement("input");
-                    mail.setAttribute("style", "display:none;");
-                    mail.method = "POST";
-                    mail.action = "reply.ma";
-                    input.name = "replyForwadDiv"
-                    // 1 = 답장 / 2 = 전달
-                    input.value = 2
-                    mail.append(input)
-                    document.body.append(mail);
-                    mail.submit();
-                }else{
-                    alert('한 개의 체크박스를 선택해주세요!')
-                }
-            });
-
-            // 메일 삭제
-            let deleteMail = document.getElementById("delete");
-            deleteMail.addEventListener('click', function(){
-                checkedBoxSum = 0
-                arr = [];
-                mailCheckBox.forEach((i) => {
-                    if(i.checked == true) {
-                        let value = i.parentElement.parentElement.lastElementChild.getElementsByClassName("mailNo")[0].value;
-                        arr.push(value);
-                        checkedBoxSum += 1;
-                    };
-                })
-
-                if(checkedBoxSum != 0) {
-                    swal({
-                        title: "영구 삭제하시겠습니까?",
-                        text: "삭제된 메일은 복구되지 않습니다.",
-                        icon: "warning",
-                        buttons: ["취소", "삭제"],
-                        dangerMode: true,
-                    })
-                    .then((willDelete) => {
-                        if(willDelete){
-                            let form = document.createElement("form");
-                            let input = document.createElement("input");
-                            input.setAttribute("name", "mailNoList");
-                            input.setAttribute("multiple", "multiple");
-                            input.setAttribute("value", arr);
-                            form.action = "delete.sm";
-                            form.method = "POST";
-                            form.append(input);
-                            document.body.append(form);
-                            console.log(input)
-                            form.submit();
-                        }
-                    });
-                }else {
-                    alert('체크박스를 선택해주세요');
-                };
-            });
-
-            // x button 닫기 효과
-            let x_blocks = document.querySelectorAll('.x');
-            x_blocks.forEach(function(x){
-                x.addEventListener('click', function(){
-                    this.parentNode.parentNode.style.display = 'none';
-                })
-            });
-
-            // 즐겨찾기
-            let imporList = document.querySelectorAll('.mail_impor');
-            imporList.forEach(function(impor){
-                impor.addEventListener('click', function(){
-                    console.log("즐겨찾기");
-                });
-            });
-        </script>
-    </div>
 </body>
 </html>

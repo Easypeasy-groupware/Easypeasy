@@ -42,7 +42,7 @@ public class Approval {
 	private String condition;
 	private String listType; // 검색결과를 돌려줄 리스트목록들에 대한 구분
 	private String vacKind;
-	private int vacUse;
+	private double vacUse;
 	
 	private ArrayList<ApprovalLine> alList;
 	private ArrayList<ApprovalLine> refList;

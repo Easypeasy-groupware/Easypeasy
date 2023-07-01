@@ -28,25 +28,7 @@
 		<jsp:include page="appMenubar.jsp" />
 		<div class="outer1">
 			<p style="font-size:25px;"><b>결재대기문서</b></p>
-			<br><br>
-			<div class="list-1">
-				<form action="search.ap" method="Get">
-					<input type="hidden" name="r-page" value="cw">
-					<select name="period" id="">
-						<option value="all">전체기간</option>
-						<option value="1">1개월</option>
-						<option value="6">6개월</option>
-						<option value="365">1년</option>
-					</select>
-					<select name="option" id="">
-						<option value="writer">기안자</option>
-						<option value="dept">기안부서</option>
-						<option value="form">결재양식</option>
-					</select>
-				<button onclick="searchResult();" style="float:right;text-align:center;height:23px;line-height:12px;" class="btn btn-outline-secondary btn-sm">검색</button>
-				<input type="search" class="form-control" style="display:block;width:200px; height:20px;float:right; margin-right:0px;" name="keyword" id="keyword"> 
-				</form>
-			</div>
+
 
 			<br><br>
 
@@ -55,7 +37,7 @@
 					<thead>
 						<tr>
 							<th>
-								<input type="checkbox" name="" id="chk-total">
+								<!-- <input type="checkbox" name="" id="chk-total"> -->
 							</th>
 							<th>기안일</th>
 							<th>결재양식</th>
@@ -77,7 +59,7 @@
 								<c:forEach var="a" items="${list}">
 									<tr>
 										<td>
-											<input type="checkbox" name="chk" id="">
+											<!-- <input type="checkbox" name="chk" id=""> -->
 											<input type="hidden" id="num" value="${a.appNo}">
 										</td>
 										<td>${a.enrollDate}</td>

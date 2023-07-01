@@ -298,6 +298,8 @@ public class AddressDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 
 		return (ArrayList) sqlSession.selectList("addressMapper.selectSharedBinList", 0, rowBounds);
+	public int updatePersonalGroupName(SqlSessionTemplate sqlSession, AddGroup ag) {
+		return sqlSession.update("addressMapper.updatePersonalGroupName", ag);
 	}
 
 

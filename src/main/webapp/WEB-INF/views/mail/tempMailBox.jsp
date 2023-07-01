@@ -45,10 +45,10 @@
     .mail_imgList{width: 80px; text-align: center; line-height: 43px;}
     .mail_img{width: 30px; line-height: 2.5;}
     #selectMailLine:hover{font-weight: 600; cursor: pointer;}
-    .mail_sender_name{width: 60px; margin-right: 15px; overflow: hidden;}
+    .mail_sender_name{width: 150px; margin-right: 15px; overflow: hidden;}
     .mail_sender{width: 180px; margin-right: 15px; overflow: hidden; text-overflow: ellipsis;}
-    .mail_title{width: 380px; margin-right: 15px; overflow: hidden;}
-    .mail_date{width: 200px; text-align: right;}
+    .mail_title{width: 300px; margin-right: 15px; overflow: hidden;}
+    .mail_date{width: 250px; text-align: right;}
 
     #paging{text-align: center; display: inline-block; padding-left :0; margin-top: 20px;}
     #paging li {text-align: center; float: left; list-style:none; border-radius:10px; margin:2px; background-color: rgb(234, 234, 234);}
@@ -78,117 +78,27 @@
                         <b id="all_mail_no" style="color: dodgerblue; font-size: 23px;">
                             <c:set var="allMail" value="0" />
                             <c:forEach var="m" items="${ mailList }">
-                                <c:if test="${ m.status == 'T'}">
+                                <c:if test="${ m.status == 'Y'}">
                                     <c:set var="allMail" value="${allMail + 1}" />
                                 </c:if>
                             </c:forEach>
                             ${allMail}
                         </b>
                     </div>
+
+                    <jsp:include page="mailSearch.jsp" />
                     
-                    <div id="search_bar">
-                        <form action="">
-                            <select name="search" id="">
-                                <option value="searchAll">전체</option>
-                                <option value="searchAddress">메일 주소</option>
-                                <option value="searchTitle">메일 제목</option>
-                                <option value="searchContent">메일 내용</option>
-                            </select>
-                            <input type="text">
-                            <button>검색</button>
-                        </form>
-                    </div>
                 </div><br>
-                <div id="mail_header2">
-                    <div style="width: 27px; float: left; padding-left: 5px; padding-top: 8px;"><input type="checkbox" name="" id="check_all"></div>
-                    <div class="menu menu2" id="reply">답장</div>
-                    <div class="menu menu2" id="forward">전달</div>
-                    <div class="menu menu2" id="delete">삭제</div>
-                    <div style="float: right; width: 150px; font-size: 12px;">
-                        정렬
-                        <select name="" id="">
-                            <option value="">최근 메일</option>
-                            <option value="">오래된 메일</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 태그 블록 -->
-            <div class="block tag_block">
-                <b style="line-height: 40px;">태그 목록</b>
-                <div class="x-btn">
-                    <button class="x btn btn-outline-secondary btn-sm">X</button>
-                </div>
-                <div class="block_list tag_list">
-                    <c:choose>
-                        <c:when test="${ not empty tagList }">
-                            <c:forEach var="t" items="${ tagList }">
-                                <div class="block_one tag_one">
-                                    <div class="tagTriangleList">
-                                        <span class="tagBlock">
-                                            <span class="tag_innerBlock1 tagColor" style="background-color: ${t.tagColor}; border: 1px solid ${t.tagColor};">
-                                                <span class="tag_innerBlock2" style="border-inline-color: inherit;">
-                                                    <span style="border-inline-color: inherit;"></span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div class="tag_name">${t.tagName}</div>
-                                    <div>
-                                        <button class="tag_btn btn btn-outline-primary btn-sm">적용</button>
-                                        <input type="hidden" class="tagNo" name="tagNo" value="${t.tagNo}">
-                                    </div>
-                                </div>
-                            </c:forEach>
-                        </c:when>
-                        <c:otherwise>
-                            <br>
-                            <div style="width: 100%; text-align: center"> 생성된 태그가 없습니다</div>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>
-
-            <!-- 이동 블록 -->
-            <div class="block shift_block">
-                <b style="line-height: 40px;">메일함</b>
-                <div class="x-btn">
-                    <button class="x btn btn-outline-secondary btn-sm">X</button>
-                </div>
-                <div class="block_list shift_list">
-                    <div class="block_one shift_one">
-                        <div class="shift_name">받은 메일함</div>
-                        <div>
-                            <button class="tag_btn btn btn-outline-primary btn-sm">적용</button>
-                            <input type="hidden" class="tagNo" name="tagNo" value="">
-                        </div>
-                    </div>
-                    <br>
-                    <div class="block_one shift_one">
-                        <div class="shift_name">중요 메일함</div>
-                        <div>
-                            <button class="tag_btn btn btn-outline-primary btn-sm">적용</button>
-                            <input type="hidden" class="tagNo" name="tagNo" value="">
-                        </div>
-                    </div>
-                    <br>
-                    <div class="block_one shift_one">
-                        <div class="shift_name">메일함 이름</div>
-                        <div>
-                            <button class="tag_btn btn btn-outline-primary btn-sm">적용</button>
-                            <input type="hidden" class="tagNo" name="tagNo" value="">
-                        </div>
-                    </div>
-                    <br>
-                </div>
+                <jsp:include page="sendMailBoxHeaderbar.jsp" />
             </div>
 
             <!-- 메일 리스트 -->
             <div id="mail_list">
+                <c:set var="mailCount" value="0" />
                 <c:if test="${ not empty pgMailList }">
                     <c:forEach var="m" items="${ pgMailList }">
-                        <c:if test="${ m.status == 'T' }">
+                        <c:if test="${  m.status == 'Y' }">
+                            <c:set var="mailCount" value="${mailCount + 1}" />
                             <div class="mail_one" >
                                 <div class="mail_check">
                                     <input type="checkbox" name="mail_checkbox" class="mail_checkbox" value="">
@@ -216,13 +126,12 @@
                                     <input class="mailNo" type="hidden" name="mailNo" value="${ m.mailNo }">
                                     <input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
                                     <div id="selectMailLine">
-                                        <div class="mail_sender_name">
-                                            ${m.empName}
+                                        <div class="mail_sender_name" style="width: 150px;">
+                                            (수신 대상 없음)
                                         </div>
-                                        <div class="mail_sender">
-                                            ${ m.recMailAdd }
+                                        <div class="mail_sender" style="width: 100px;">
                                         </div>
-                                        <div class="mail_title">
+                                        <div class="mail_title" style="width: 250px;">
                                             <c:forEach var="t" items="${tagList}">
                                                 <c:if test="${ m.tagNo == t.tagNo }">
                                                     <div class="mail_tag">
@@ -238,7 +147,7 @@
                                             </c:forEach>
                                             ${ m.mailTitle }
                                         </div>
-                                        <div class="mail_date">
+                                        <div class="mail_date" style="width: 270px;">
                                             ${ m.sentDate }
                                         </div>
                                     </div>
@@ -247,61 +156,32 @@
                         </c:if>
                     </c:forEach>
                 </c:if>
+                <c:if test="${mailCount == 0}">
+                    <div class="empty">메일함이 비었습니다.</div>
+                </c:if>
                 </div>
             </div>
-            <div align="center">
-                <ul id="paging">
-                    <c:choose>
-                        <c:when test="${ mailPi.currentPage == 1 }">
-                            <li><a href=""> < </a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="on"><a href="list.ma?cpage=${ mailPi.currentPage-1 }"> < </a></li>
-                        </c:otherwise>
-                    </c:choose>
-                    <c:forEach var="p" begin="${ mailPi.startPage }" end="${ mailPi.endPage }">
-                        <li class='on'><a href="list.ma?cpage=${ p }"> ${ p } </a></li>
-                    </c:forEach>
-                    <c:choose>
-                        <c:when test="${ mailPi.currentPage == mailPi.maxPage }">
-                            <li><a href=""> > </a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="on"><a href="list.ma?cpage=${ mailPi.currentPage+1 }"> > </a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </ul>
-            </div>
+            
+            <jsp:include page="paging.jsp" />
+
         </div>
 
         <script>
-            // 전역 번수 선언부
-            let checkedBoxSum = 0
-            let mailSelectArea = document.querySelectorAll(".mail_select_area");
-            let index = 0;
-            let arr = [];
 
+            // 메일 쓰기 이동
             let mailSelectList = document.querySelectorAll('.mail_select_area');
             mailSelectList.forEach(function(select){
                 select.addEventListener('click', function(){
                     const input = document.createElement("input");
                     input.setAttribute("style", "display:none")
                     input.setAttribute("name", "div");
-                    input.setAttribute("value", 8);
                     this.append(input);
-                    this.action = "select.ma";
+                    this.action = "temEnrollForm.sm";
                     this.method = "POST";
                     this.submit();
 
                 });
             });
-
-            // 페이징
-            $(function(){
-                    $("#ps-tbody").on("click", "tr", function(){
-                        location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
-                    })
-                })
 
             // 전체 체크박스 선택 취소
             let checkAll = document.getElementById("check_all");

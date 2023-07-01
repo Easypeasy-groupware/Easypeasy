@@ -71,7 +71,10 @@ public class EmployeeController {
 		// 공용외부주소록 그룹리스트 조회
 		ArrayList<AddGroup> sharedGroup = aService.selectSharedAddGroup();
 		// 받은 메일 조회
-		ArrayList<Mail> recMailList = mService.selectReceiveMailList(loginUser.getEmail());
+		Mail m = new Mail();
+		m.setRecMailAdd(loginUser.getEmail());
+		m.setSort("DESC");
+		ArrayList<Mail> recMailList = mService.selectReceiveMailList(null, m);
 		// 태그 리스트 조회
 		ArrayList<MailTag> tagList = mService.selectTagList(loginUser.getEmpNo());
 

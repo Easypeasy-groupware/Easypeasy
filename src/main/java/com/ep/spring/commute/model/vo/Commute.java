@@ -23,6 +23,7 @@ public class Commute {
 	private String workTime;
 	private String comStatus;
 	private String leStatus;
+	private String deptName;
 	
 
 }

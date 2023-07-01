@@ -173,107 +173,108 @@
 
 
     <script>
-        document.addEventListener("DOMContentLoaded", function(){
+        // 전역 번수 선언부
+        let checkedBoxSum = 0
+        let index = 0;
+        let arr = [];
 
-            // 전역 번수 선언부
-            let checkedBoxSum = 0
-            let index = 0;
-            let arr = [];
-
-            // 페이징
-            $(function(){
-                    $("#ps-tbody").on("click", "tr", function(){
-                        location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
-                    })
-                })
-
-            // 받은 메일함 이동
-            document.querySelectorAll(".mailbox").forEach(function(selectBox){
-                selectBox.addEventListener("click", function(){
-                    if(this.innerText == "받은 메일함(전체)"){
-                        location.href="list.ma";
-                    }else if(this.innerText == "오늘 온 메일함"){
-                        location.href="todayList.ma";
-                    }else if(this.innerText == "내게 쓴 메일함"){
-                        location.href="tomeList.ma";
-                    }else if(this.innerText == "첨부파일 메일함"){
-                        location.href="attachList.ma";
-                    }else if(this.innerText == "보낸 메일함"){
-                        location.href="sendList.ma";
-                    }else if(this.innerText == "안읽은 메일함"){
-                        location.href="unreadList.ma";
-                    }else if(this.innerText == "중요 메일함"){
-                        location.href="imporList.ma";
-                    }else if(this.innerText == "작성중인 메일함"){
-                        location.href="tempList.ma";
-                    }else if(this.innerText == "예약 메일함"){
-                        location.href="reservationList.ma";
-                    }else if(this.innerText == "스팸 메일함"){
-                        location.href="spamList.ma";
-                    }else if(this.innerText == "휴지통"){
-                        location.href="deleteList.ma";
-                    }
-                })
+        // 받은 메일함 이동
+        document.querySelectorAll(".mailbox").forEach(function(selectBox){
+            selectBox.addEventListener("click", function(){
+                if(this.innerText == "받은 메일함(전체)"){
+                    location.href="list.ma";
+                }else if(this.innerText == "오늘 온 메일함"){
+                    location.href="todayList.ma";
+                }else if(this.innerText == "내게 쓴 메일함"){
+                    location.href="tomeList.ma";
+                }else if(this.innerText == "첨부파일 메일함"){
+                    location.href="attachList.ma";
+                }else if(this.innerText == "보낸 메일함"){
+                    location.href="sendList.ma";
+                }else if(this.innerText == "안읽은 메일함"){
+                    location.href="unreadList.ma";
+                }else if(this.innerText == "중요 메일함"){
+                    location.href="imporList.ma";
+                }else if(this.innerText == "작성중인 메일함"){
+                    location.href="tempList.ma";
+                }else if(this.innerText == "예약 메일함"){
+                    location.href="reservationList.ma";
+                }else if(this.innerText == "스팸 메일함"){
+                    location.href="spamList.ma";
+                }else if(this.innerText == "휴지통"){
+                    location.href="deleteList.ma";
+                }
             })
+        })
 
-            // 스팸 메일함 비우기
-            document.getElementById("spam_completeDel").addEventListener("click", function(){
-                swal({
-                    title: "영구 삭제하시겠습니까?",
-                    text: "삭제된 메일들은 복구되지 않습니다.",
-                    icon: "warning",
-                    buttons: ["취소", "삭제"],
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if(willDelete){
-                        let form = document.createElement("form");
-                        let input = document.createElement("input");
-                        input.setAttribute("name", "junkMail");
-                        input.setAttribute("value", "N");
-                        form.action = "completeDeleteAll.ma";
-                        form.method = "POST";
-                        form.append(input);
-                        document.body.append(form);
-                        form.submit();
-                    }
-                });
-            });
-
-            // 휴지통 비우기
-            document.getElementById("trashcan_completeDel").addEventListener("click", function(){
-                swal({
-                    title: "영구 삭제하시겠습니까?",
-                    text: "삭제된 메일들은 복구되지 않습니다.",
-                    icon: "warning",
-                    buttons: ["취소", "삭제"],
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if(willDelete){
-                        form.action = "completeDeleteAll.ma";
-                        form.method = "POST";
-                        document.body.append(form);
-                        form.submit();
-                    }
-                });
-            });
-
-            document.querySelectorAll(".tagOne").forEach(function(tag){
-                tag.addEventListener('click', function(){
+        // 스팸 메일함 비우기
+        document.getElementById("spam_completeDel").addEventListener("click", function(){
+            swal({
+                title: "영구 삭제하시겠습니까?",
+                text: "삭제된 메일들은 복구되지 않습니다.",
+                icon: "warning",
+                buttons: ["취소", "삭제"],
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if(willDelete){
                     let form = document.createElement("form");
                     let input = document.createElement("input");
-                    input.setAttribute("name", "tagNo");
-                    input.setAttribute("value", this.nextElementSibling.value);
-                    form.action = "tagginMailList.ma";
+                    form.setAttribute("style", "display:none;");
+                    input.setAttribute("style", "display:none;");
+                    input.setAttribute("name", "division");
+                    input.setAttribute("value", "junk");
+                    form.action = "completeDeleteAll.ma";
                     form.method = "POST";
                     form.append(input);
                     document.body.append(form);
                     form.submit();
-                });
+                }
             });
+        });
 
-        });    
+        // 휴지통 비우기
+        document.getElementById("trashcan_completeDel").addEventListener("click", function(){
+            swal({
+                title: "영구 삭제하시겠습니까?",
+                text: "삭제된 메일들은 복구되지 않습니다.",
+                icon: "warning",
+                buttons: ["취소", "삭제"],
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if(willDelete){
+                    let form = document.createElement("form");
+                    let input = document.createElement("input");
+                    form.setAttribute("style", "display:none;");
+                    input.setAttribute("style", "display:none;");
+                    input.setAttribute("name", "division");
+                    input.setAttribute("value", "trash");
+                    form.action = "completeDeleteAll.ma";
+                    form.method = "POST";
+                    form.append(input);
+                    document.body.append(form);
+                    form.submit();
+                }
+            });
+        });
+
+        // 태그 별 메일 리스트 조회
+        document.querySelectorAll(".tagOne").forEach(function(tag){
+            tag.addEventListener('click', function(){
+                let form = document.createElement("form");
+                let input = document.createElement("input");
+                form.setAttribute("style", "display:none;");
+                input.setAttribute("style", "display:none;");
+                input.setAttribute("name", "tagNo");
+                input.setAttribute("value", this.nextElementSibling.value);
+                form.action = "tagginMailList.ma";
+                form.method = "POST";
+                form.append(input);
+                document.body.append(form);
+                form.submit();
+            });
+        });
     </script>
 
 </body>

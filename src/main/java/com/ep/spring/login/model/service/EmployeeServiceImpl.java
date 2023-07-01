@@ -50,8 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
 	
 	
-	// [추가]
-	// 부서 전체 조회
+	// [추가] 부서 전체 조회
 	@Override
 	public ArrayList<Department> selectDeptList() {
 		return eDao.selectDeptList(sqlSession);
@@ -60,6 +59,12 @@ public class EmployeeServiceImpl implements EmployeeService{
 	@Override
 	public int updateDefaultProfile(Employee e) {
 		return eDao.updateDefaultProfile(sqlSession, e);
+	}
+
+	// [메일] 사원 전체 메일 주소 조회
+	@Override
+	public ArrayList<Employee> selectMailList() {
+		return eDao.selectMailList(sqlSession);
 	}
 
 	

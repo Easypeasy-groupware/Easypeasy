@@ -271,7 +271,7 @@
                                 
                 <div class="appLine1">
 
-
+					<!-- 조직도요소 -->
 					<c:forEach var="d" items="${deptList}" begin="0" end="6" varStatus="dept">
 						<div>
 							<b class="${ d.deptCode }">${ d.deptName }</b>

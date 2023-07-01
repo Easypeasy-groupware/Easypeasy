@@ -300,6 +300,8 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	public ArrayList<Address> selectsharedBinList(PageInfo pi) {
 		return aDao.selectSharedBinList(sqlSession, pi);
+	public int updatePersonalGroupName(AddGroup ag) {
+		return aDao.updatePersonalGroupName(sqlSession, ag);
 	}
 
 

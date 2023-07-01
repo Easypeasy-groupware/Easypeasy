@@ -148,6 +148,8 @@ public interface AddressService {
 	// 35. 공유주소록 휴지통 목록 조회
 	int selectsharedBinListCount();
 	ArrayList<Address> selectsharedBinList(PageInfo pi);
+	
+	int updatePersonalGroupName(AddGroup ag);
 
 	
 

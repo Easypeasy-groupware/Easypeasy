@@ -88,6 +88,8 @@
 			 , add_type
 		  from add_group
          where add_type = 'S'
+         order
+            by group_no
 	</select>
 	
 	<select id="selectPersonalFavAddList" resultMap="addressResult">
@@ -226,7 +228,6 @@
 			 , ADD_EMP
 			 , ADD_DEPT
 			 , ADD_JOB
-			 , GROUP_NO
 			 , EMP_PHONE
 			 , EMP_ADDRESS
 			 , MEMO
@@ -244,7 +245,6 @@
 			 , #{addEmp}
 			 , #{addDept}
 			 , #{addJob}
-			 , #{groupNo}
 			 , #{empPhone}
 			 , #{empAddress}
 			 , #{memo}
@@ -957,6 +957,13 @@
 		update address
 		   set add_bin = 'Y'
 		 where add_no = #{no}
+	</update>
+
+	<update id="updatePersonalGroupName">
+		update
+		       add_group
+		   set group_name = #{groupName}
+		 where group_no = #{groupNo}
 	</update>
 
 	<select id="selectSharedBinListCount" resultType="_int">

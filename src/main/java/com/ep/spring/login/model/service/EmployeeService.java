@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.ep.spring.login.model.vo.Department;
 import com.ep.spring.login.model.vo.Employee;
 
+
 public interface EmployeeService {
 	
 	// 로그인 서비스
@@ -33,5 +34,12 @@ public interface EmployeeService {
 	ArrayList<Department> selectDeptList();
 
 	int updateDefaultProfile(Employee e);
+
+	
+	/**
+	 * @author 김태진
+	 * [메일 파트] 사원 전체 메일 주소 조회
+	 */
+	ArrayList<Employee> selectMailList();
 
 }

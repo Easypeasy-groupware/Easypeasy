@@ -83,7 +83,6 @@
                 <div id="send_btnList">
                     <button id="send">보내기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <button id="temp_save" class="btn btn-outline-secondary">임시저장</button>&nbsp;
-                    <button id="preview" class="btn btn-outline-secondary">미리보기</button>&nbsp;
                 </div>
             </div>
             <form id="mail_content_text" action="send.ma" method="POST" enctype="multipart/form-data">
@@ -146,7 +145,6 @@
                         <td></td>
                         <td colspan="2" style="text-align: left;">
                             <button id="file_choose" type="button" class="btn btn-secondary">파일 선택</button>
-                            <button type="button" class="btn btn-secondary">자료실</button>
                             <button id="file_delete" type="button" class="btn btn-secondary">모두 삭제</button>
                         </td>
                     </tr>
@@ -190,12 +188,12 @@
                             <textarea name="mailContent" id="summernote" value="">
                                 <div id="reply_content">
                                     ----- Original Message -----<br>
-                                    From: "${mail.empName}" &lt; ${mail.sendMailAdd} &gt;<br>
-                                    To: "${loginUser.empName}" &lt; ${loginUser.email} &gt;<br>
+                                    From: "${mail.sendName}" &lt; ${mail.sendMailAdd} &gt;<br>
+                                    To: "${mail.recName}" &lt; ${mail.recMailAdd} &gt;<br>
                                     Cc: <c:if test="${ not empty receiverList}">
                                             <c:forEach var="r" items="${receiverList}">
                                                 <c:if test="${r.reference == 'Y'}" >
-                                                    "${r.empName}" &lt; ${r.recMailAdd} &gt;
+                                                    "${r.recName}" &lt; ${r.recMailAdd} &gt;
                                                 </c:if>
                                             </c:forEach>
                                     </c:if><br> 
@@ -347,12 +345,6 @@
                 hiddenRefence.style.display = "none";
             });
 
-            // 에디터 내용이 비었는지 체크
-            // if ($('#summernote').summernote('isEmpty')) {
-            //     alert('editor content is empty');
-            // }
-
-                
             // 첨부파일 업로드1 (버튼 클릭 방식)
             let fileNames = [];
             let noAttach = document.getElementById("no_attachment");
@@ -485,12 +477,7 @@
                         contentType:false,
                         success: function(result){
                             if(result == 1){
-                                if(sock){
-                                    var msg = null;
-                                    <c:forEach var="m" items="${ mList }" >
-                                    </c:forEach>
-                                    sock.send(msg);
-                                }
+                                location.href="sendList.ma";
                             }
                         }, error:function(){
 

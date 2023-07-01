@@ -478,16 +478,19 @@
     		const appBody = $(".app-body input");
     		const refBody = $(".rep-body input");
     		
-    		
-    		for(let i = 0; i < appBody.length; i++){
-    			console.log(appBody[i]);
-    			appBody[i].setAttribute('name', 'alList['+ i +'].recEmpNo');
-    	
+    		if(appBody.length > 0){
+	    		for(let i = 0; i < appBody.length; i++){
+	    			console.log(appBody[i]);
+	    			appBody[i].setAttribute('name', 'alList['+ i +'].recEmpNo');
+	    	
+	    		}
     		}
-
-    		for(let j = 0; j < refBody.length; j++){
-    			refBody[j].setAttribute('name', 'refList[' + j + '].recEmpNo');
-    	
+    		
+    		if(refBody.length > 0){
+	    		for(let j = 0; j < refBody.length; j++){
+	    			refBody[j].setAttribute('name', 'refList[' + j + '].recEmpNo');
+	    	
+	    		}
     		}
 
 			

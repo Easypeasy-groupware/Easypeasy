@@ -16,17 +16,17 @@ import com.ep.spring.mail.model.vo.MailTag;
 
 @Repository
 public class MailDao {
-
-	public ArrayList<Mail> selectReceiveMailList(String email, SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiceMailList", email);
-	}
 	
-	public ArrayList<Mail> selectList(PageInfo pi, String email, SqlSessionTemplate sqlSession) {
-		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-		int limit = pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, limit);
+	public ArrayList<Mail> selectReceiveMailList(PageInfo pi, Mail m, SqlSessionTemplate sqlSession) {
+		if(pi != null) {
+			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+			int limit = pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectReceiveMailList", m, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.selectReceiveMailList", m);
+		}
 		
-		return (ArrayList)sqlSession.selectList("mailMapper.selectList", email, rowBounds);
 	}
 
 	public ArrayList<MailTag> selectTagList(int empNo, SqlSessionTemplate sqlSession) {
@@ -99,10 +99,12 @@ public class MailDao {
 
 	public int deleteMail(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
 		int result = 0;
-		if(recMailNoList.length > 0) {
-			for(int mail : recMailNoList) {
-				m.setRecMailNo(mail);
-				result += sqlSession.update("mailMapper.deleteMail", m);
+		if(recMailNoList != null) {
+			if(recMailNoList.length > 0) {
+				for(int mail : recMailNoList) {
+					m.setRecMailNo(mail);
+					result += sqlSession.update("mailMapper.deleteMail", m);
+				}
 			}
 		}else {
 			result = sqlSession.update("mailMapper.deleteMail", m);
@@ -112,10 +114,12 @@ public class MailDao {
 
 	public int completeDeleteMail(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
 		int result = 0;
-		if(recMailNoList.length > 0) {
-			for(int mail : recMailNoList) {
-				m.setRecMailNo(mail);
-				result += sqlSession.update("mailMapper.completeDeleteMail", m);
+		if(recMailNoList != null) {
+			if(recMailNoList.length > 0) {
+				for(int mail : recMailNoList) {
+					m.setRecMailNo(mail);
+					result += sqlSession.update("mailMapper.completeDeleteMail", m);
+				}
 			}
 		}else {
 			result = sqlSession.update("mailMapper.completeDeleteMail", m);
@@ -125,11 +129,12 @@ public class MailDao {
 
 	public int spamEnroll(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
 		int result = 0;
-		System.out.println(recMailNoList);
-		if(recMailNoList.length > 0) {
-			for(int mail : recMailNoList) {
-				m.setRecMailNo(mail);
-				result += sqlSession.update("mailMapper.spamEnroll", m);
+		if(recMailNoList != null) {
+			if(recMailNoList.length > 0 ) {
+				for(int mail : recMailNoList) {
+					m.setRecMailNo(mail);
+					result += sqlSession.update("mailMapper.spamEnroll", m);
+				}
 			}
 		}else {
 			result = sqlSession.update("mailMapper.spamEnroll", m);
@@ -139,10 +144,12 @@ public class MailDao {
 
 	public int spamClear(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
 		int result = 0;
-		if(recMailNoList.length > 0) {
-			for(int mail : recMailNoList) {
-				m.setRecMailNo(mail);
-				result += sqlSession.update("mailMapper.spamClear", m);
+		if(recMailNoList != null) {
+			if(recMailNoList.length > 0) {
+				for(int mail : recMailNoList) {
+					m.setRecMailNo(mail);
+					result += sqlSession.update("mailMapper.spamClear", m);
+				}
 			}
 		}else {
 			result = sqlSession.update("mailMapper.spamClear", m);
@@ -152,10 +159,12 @@ public class MailDao {
 
 	public int tagMail(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
 		int result = 0;
-		if(recMailNoList.length > 0) {
-			for(int mail : recMailNoList) {
-				m.setRecMailNo(mail);
-				result += sqlSession.update("mailMapper.tagMail", m);
+		if(recMailNoList != null) {
+			if(recMailNoList.length > 0) {
+				for(int mail : recMailNoList) {
+					m.setRecMailNo(mail);
+					result += sqlSession.update("mailMapper.tagMail", m);
+				}
 			}
 		}else {
 			result = sqlSession.update("mailMapper.tagMail", m);
@@ -163,69 +172,69 @@ public class MailDao {
 		return result;
 	}
 
-	public ArrayList<Mail> selectTodayMailList(String email, PageInfo pi, SqlSessionTemplate sqlSession) {
+	public ArrayList<Mail> selectTodayMailList(Mail m, PageInfo pi, SqlSessionTemplate sqlSession) {
 		if(pi != null) {
 			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 			int limit = pi.getBoardLimit();
 			RowBounds rowBounds = new RowBounds(offset, limit);
-			return (ArrayList)sqlSession.selectList("mailMapper.selectTodayMailList", email, rowBounds);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectTodayMailList", m, rowBounds);
 		}else {
-			return (ArrayList)sqlSession.selectList("mailMapper.selectTodayMailList", email);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectTodayMailList", m);
 		}
 	}
 
-	public ArrayList<Mail> selectToMeMailList(String email, PageInfo pi, SqlSessionTemplate sqlSession) {
+	public ArrayList<Mail> selectToMeMailList(Mail m, PageInfo pi, SqlSessionTemplate sqlSession) {
 		if(pi != null) {
 			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 			int limit = pi.getBoardLimit();
 			RowBounds rowBounds = new RowBounds(offset, limit);
-			return (ArrayList)sqlSession.selectList("mailMapper.selectToMeMailList", email, rowBounds);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectToMeMailList", m, rowBounds);
 		}else {
-			return (ArrayList)sqlSession.selectList("mailMapper.selectToMeMailList", email);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectToMeMailList", m);
 		}
 	}
 
-	public ArrayList<Mail> selectAttachMailList(String email, PageInfo pi, SqlSessionTemplate sqlSession) {
+	public ArrayList<Mail> selectAttachMailList(Mail m, PageInfo pi, SqlSessionTemplate sqlSession) {
 		if(pi != null) {
 			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 			int limit = pi.getBoardLimit();
 			RowBounds rowBounds = new RowBounds(offset, limit);
-			return (ArrayList)sqlSession.selectList("mailMapper.selectAttachMailList", email, rowBounds);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectAttachMailList", m, rowBounds);
 		}else {
-			return (ArrayList)sqlSession.selectList("mailMapper.selectAttachMailList", email);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectAttachMailList", m);
 		}
 	}
 
-	public ArrayList<Mail> selectImporMailList(String email, PageInfo pi, SqlSessionTemplate sqlSession) {
+	public ArrayList<Mail> selectImporMailList(Mail m, PageInfo pi, SqlSessionTemplate sqlSession) {
 		if(pi != null) {
 			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 			int limit = pi.getBoardLimit();
 			RowBounds rowBounds = new RowBounds(offset, limit);
-			return (ArrayList)sqlSession.selectList("mailMapper.selectImporMailList", email, rowBounds);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectImporMailList", m, rowBounds);
 		}else {
-			return (ArrayList)sqlSession.selectList("mailMapper.selectImporMailList", email);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectImporMailList", m);
 		}
 	}
 
-	public ArrayList<Mail> selectUnreadMailList(String email, PageInfo pi, SqlSessionTemplate sqlSession) {
+	public ArrayList<Mail> selectUnreadMailList(Mail m, PageInfo pi, SqlSessionTemplate sqlSession) {
 		if(pi != null) {
 			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 			int limit = pi.getBoardLimit();
 			RowBounds rowBounds = new RowBounds(offset, limit);
-			return (ArrayList)sqlSession.selectList("mailMapper.selectUnreadMailList", email, rowBounds);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectUnreadMailList", m, rowBounds);
 		}else {
-			return (ArrayList)sqlSession.selectList("mailMapper.selectUnreadMailList", email);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectUnreadMailList", m);
 		}
 	}
 
-	public ArrayList<Mail> selectSendMailList(String email, PageInfo pi, SqlSessionTemplate sqlSession) {
+	public ArrayList<Mail> selectSendMailList(Mail m, PageInfo pi, SqlSessionTemplate sqlSession) {
 		if(pi != null) {
 			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 			int limit = pi.getBoardLimit();
 			RowBounds rowBounds = new RowBounds(offset, limit);
-			return (ArrayList)sqlSession.selectList("mailMapper.selectSendMailList", email, rowBounds);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectSendMailList", m, rowBounds);
 		}else {
-			return (ArrayList)sqlSession.selectList("mailMapper.selectSendMailList", email);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectSendMailList", m);
 		}
 	}
 
@@ -239,14 +248,14 @@ public class MailDao {
 		return result;
 	}
 
-	public ArrayList<Mail> selectTempMailList(String email, PageInfo pi, SqlSessionTemplate sqlSession) {
+	public ArrayList<Mail> selectTempMailList(Mail m, PageInfo pi, SqlSessionTemplate sqlSession) {
 		if(pi != null) {
 			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 			int limit = pi.getBoardLimit();
 			RowBounds rowBounds = new RowBounds(offset, limit);
-			return (ArrayList)sqlSession.selectList("mailMapper.selectTempMailList", email, rowBounds);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectTempMailList", m, rowBounds);
 		}else {
-			return (ArrayList)sqlSession.selectList("mailMapper.selectTempMailList", email);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectTempMailList", m);
 		}
 	}
 
@@ -281,16 +290,26 @@ public class MailDao {
 		return sqlSession.selectOne("mailMapper.selectTag", t);
 	}
 
-	public ArrayList<Mail> selectDeleteMailList(String email, SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("mailMapper.selectDeleteMailList", email);
+	public ArrayList<Mail> selectDeleteMailList(PageInfo pi, Mail m, SqlSessionTemplate sqlSession) {
+		if(pi != null) {
+			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+			int limit = pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectDeleteMailList", m, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.selectDeleteMailList", m);
+		}
+		
 	}
 
 	public int restoreDeleteMail(Mail m, int[] recMailNoList, SqlSessionTemplate sqlSession) {
 		int result = 0;
-		if(recMailNoList.length > 0) {
-			for(int mail : recMailNoList) {
-				m.setRecMailNo(mail);
-				result += sqlSession.update("mailMapper.restoreDeleteMail", m);
+		if(recMailNoList != null) {
+			if(recMailNoList.length > 0) {
+				for(int mail : recMailNoList) {
+					m.setRecMailNo(mail);
+					result += sqlSession.update("mailMapper.restoreDeleteMail", m);
+				}
 			}
 		}else {
 			result = sqlSession.update("mailMapper.restoreDeleteMail", m);
@@ -298,14 +317,154 @@ public class MailDao {
 		return result;
 	}
 
-	public int completeDeleteMailAll(String email, Mail m, SqlSessionTemplate sqlSession) {
+	public int completeDeleteMailAll(String email, String division, SqlSessionTemplate sqlSession) {
 		int result = 0;
-		if(m.getJunkMail() == null) {
+		if(division.equals("trash")) {
 			result = sqlSession.delete("mailMapper.completeDeleteMailAll1", email);
 		}else {
 			result = sqlSession.delete("mailMapper.completeDeleteMailAll2", email);
 		}
 		return result;
+	}
+
+	public int insertTempMail(Mail m, ArrayList<Mail> mList, SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("mailMapper.insertTempMail", m);
+	}
+
+	public ArrayList<Mail> selectSpamMailList(PageInfo pi, Mail m, SqlSessionTemplate sqlSession) {
+		if(pi != null) {
+			int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+			int limit = pi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.selectSpamMailList", m, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.selectSpamMailList", m);
+		}
+	}
+
+	public ArrayList<Mail> searchReceiveMailList(PageInfo mailPi, Mail m, SqlSessionTemplate sqlSession) {
+		if(mailPi != null) {
+			int offset = (mailPi.getCurrentPage() - 1) * mailPi.getBoardLimit();
+			int limit = mailPi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.searchReceiveMailList", m, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.searchReceiveMailList", m);
+		}
+	}
+
+	public ArrayList<Mail> searchImporMailList(PageInfo mailPi, Mail m, SqlSessionTemplate sqlSession) {
+		if(mailPi != null) {
+			int offset = (mailPi.getCurrentPage() - 1) * mailPi.getBoardLimit();
+			int limit = mailPi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.searchImporMailList", m, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.searchImporMailList", m);
+		}
+	}
+
+	public ArrayList<Mail> searchAttachMailList(PageInfo mailPi, Mail m, SqlSessionTemplate sqlSession) {
+		if(mailPi != null) {
+			int offset = (mailPi.getCurrentPage() - 1) * mailPi.getBoardLimit();
+			int limit = mailPi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.searchAttachMailList", m, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.searchAttachMailList", m);
+		}
+	}
+
+	public ArrayList<Mail> searchTodayMailList(PageInfo mailPi, Mail m, SqlSessionTemplate sqlSession) {
+		if(mailPi != null) {
+			int offset = (mailPi.getCurrentPage() - 1) * mailPi.getBoardLimit();
+			int limit = mailPi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.searchTodayMailList", m, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.searchTodayMailList", m);
+		}
+	}
+
+	public ArrayList<Mail> searchToMeMailList(PageInfo mailPi, Mail m, SqlSessionTemplate sqlSession) {
+		if(mailPi != null) {
+			int offset = (mailPi.getCurrentPage() - 1) * mailPi.getBoardLimit();
+			int limit = mailPi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.searchToMeMailList", m, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.searchToMeMailList", m);
+		}
+	}
+
+	public ArrayList<Mail> searchUnreadMailList(PageInfo mailPi, Mail m, SqlSessionTemplate sqlSession) {
+		if(mailPi != null) {
+			int offset = (mailPi.getCurrentPage() - 1) * mailPi.getBoardLimit();
+			int limit = mailPi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.searchUnreadMailList", m, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.searchUnreadMailList", m);
+		}
+	}
+
+	public ArrayList<Mail> searchTempMailList(PageInfo mailPi, Mail m, SqlSessionTemplate sqlSession) {
+		if(mailPi != null) {
+			int offset = (mailPi.getCurrentPage() - 1) * mailPi.getBoardLimit();
+			int limit = mailPi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.searchTempMailList", m, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.searchTempMailList", m);
+		}
+	}
+
+	public ArrayList<Mail> searchSendMailList(PageInfo mailPi, Mail m, SqlSessionTemplate sqlSession) {
+		if(mailPi != null) {
+			int offset = (mailPi.getCurrentPage() - 1) * mailPi.getBoardLimit();
+			int limit = mailPi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.searchSendMailList", m, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.searchSendMailList", m);
+		}
+	}
+
+	public ArrayList<Mail> searchDeleteMailList(PageInfo mailPi, Mail m, SqlSessionTemplate sqlSession) {
+		if(mailPi != null) {
+			int offset = (mailPi.getCurrentPage() - 1) * mailPi.getBoardLimit();
+			int limit = mailPi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.searchDeleteMailList", m, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.searchDeleteMailList", m);
+		}
+	}
+
+	public ArrayList<Mail> searchSpamMailList(PageInfo mailPi, Mail m, SqlSessionTemplate sqlSession) {
+		if(mailPi != null) {
+			int offset = (mailPi.getCurrentPage() - 1) * mailPi.getBoardLimit();
+			int limit = mailPi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.searchSpamMailList", m, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.searchSpamMailList", m);
+		}
+	}
+
+	public ArrayList<Mail> searchTaggingMailList(PageInfo mailPi, MailTag t, SqlSessionTemplate sqlSession) {
+		if(mailPi != null) {
+			int offset = (mailPi.getCurrentPage() - 1) * mailPi.getBoardLimit();
+			int limit = mailPi.getBoardLimit();
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("mailMapper.searchTaggingMailList", t, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("mailMapper.searchTaggingMailList", t);
+		}
+	}
+
+	public Mail selectTempMail(Mail m, SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("mailMapper.selectTempMail", m);
 	}
 
 	

@@ -110,7 +110,7 @@
                        join  employee e on (b.emp_no = e.emp_no)
 					  where b.status = '1'
 					    and app_tstatus = '진행중'
-					    and app_no IN (
+					    and app_no in (
                                     select app_no
                                       from app_line
                                      where ref_whether = 'N'
@@ -123,7 +123,7 @@
 					            
 		               		)a
 		         )
-		         where rnum between 1 and 4                 
+		         where rnum between 1 and 5                 
 			  	
 	</select>
 	
@@ -137,19 +137,27 @@
 								   , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
 								   , app_tstatus
 								   , title
-								   , a.emp_no
+								   , e.emp_no
 								   , form_name
 								   , form_code
 								   , app_amount
 								   , app_sequence
-								   , emp_name
-							   from  approval a
-							   join  employee e on (a.emp_no = e.emp_no)
+								   , (
+                                        select emp_name                                       
+                                          from app_line b
+                                          join employee c on (b.emp_no = c.emp_no)
+                                         where app_no = a.app_no
+                                           and ref_whether = 'N'
+                                           and app_seq_no = app_sequence
+                                           and app_status = '미결재'
+                                        )as emp_name
+							   from approval a
+							   join employee e on (a.emp_no = e.emp_no)
 							  where a.status = '1'
 							    and app_tstatus = '진행중'
-							    and a.emp_no = #{eNo}
+                                and a.emp_no = #{eNo}                  
 					            order 
-					               by enroll_date desc  
+					               by enroll_date desc 
 		               		)c
 		         )
 		         where rnum between 1 and 5  
@@ -310,8 +318,16 @@
 			      from approval a
 			 where status = 2
 			   and emp_no = #{empNo}
-			order by enroll_date desc	
+			order by enroll_date desc, a.app_no desc	
 	</select>
+	
+	<select id="selectTempApp" resultType="_int">
+				select count(*) 
+				  from approval
+				 where app_change = #{appChange}
+	</select>
+	
+	
 	
 	<select id="selectRecListCount" resultType="_int">
 		select 
@@ -811,10 +827,7 @@
 			                            )
 			         )
 			      , #{recEmpNo} 
-			      , (
-			         select max(app_no)
-			           from approval
-			        )
+			      ,  seq_apno.currval
 			      ) 	
 	
 	</insert>
@@ -833,10 +846,7 @@
 			        values
 			    (
 			       seq_attno.nextval
-			     , (
-			         select max(app_no)
-			           from approval
-			        )
+			     , seq_apno.currval
 			     , #{originName}
 			     , #{changeName}
 			     , #{filePath}
@@ -858,10 +868,7 @@
 			  )
 			  values
 			  (
-			      (
-			        select max(app_no)
-			          from approval
-			      )
+			      seq_apno.currval
 			    , #{vacKind}
 			    , #{vacStart}
 			    , #{vacEnd}
@@ -884,10 +891,7 @@
 			      )
 			        values
 			     (
-			         (
-			            select max(app_no)
-			              from approval
-			         )
+			         seq_apno.currval
 			       , #{otKind}
 			       , #{otDate}
 			       , #{otStart}
@@ -923,6 +927,19 @@
 			                          and app_no = #{appNo}
 			                          and ref_whether = 'N'
 			                        )       	
+	</update>
+	
+	<update id="updateReject">
+                    update approval
+                       set app_tstatus = '반려'
+                     where app_no = (
+                                            select app_no 
+                                               from app_line
+                                              where app_no = #{appNo}
+                                                and emp_no = #{recEmpNo}
+                                                and app_status = '반려'
+                                            )  	
+	
 	</update>
 	
 	<select id="selectTempApproval" resultMap="approvalResult">
@@ -1122,6 +1139,73 @@
 				 order 
                     by a.enroll_date desc		
 	</select>
+	
+	<select id="selectSearchTListCount" resultType="_int">
+			select
+			        count(*)
+			  from approval
+			 where status = 2
+			   and emp_no = #{writerNo}	
+			   <if test="condition == 'title'">
+			   	and title like '%' || #{keyword} || '%'
+			   </if>
+			   <if test="condition == 'dept'">
+				   and app_no in (select app_no
+                                    from app_line
+                                   where emp_no in (
+                                                      select emp_no
+                                                        from employee a
+                                                        join department d on (d.dept_code = a.dept_code)
+                                                       where dept_name  like '%' || #{keyword} || '%'
+                                                      )
+                                    
+                                    )
+			   </if>
+			   <if test="condition == 'form'">
+			   		and form_name like '%' || #{keyword} || '%'
+			   </if>
+	</select>
+	
+	<select id="selectSearchTList" resultMap="approvalResult">
+				select
+			        a.app_no
+			      , to_char(enroll_date, 'YYYY-MM-dd') as "enroll_date"
+			      , app_tstatus
+			      , title
+			      , form_name
+			      , form_code
+	               , (
+	                    select count(*)
+	                      from attachment
+	                     where division = 'A'
+	                       and ref_no = a.app_no
+	                    ) attach_count
+			      from approval a
+			 where status = 2
+			   and emp_no = #{writerNo}
+			   <if test="condition == 'title'">
+			   	and title like '%' || #{keyword} || '%'
+			   </if>
+			   <if test="condition == 'dept'">
+				   and app_no in (select app_no
+                                    from app_line
+                                   where emp_no in (
+                                                      select emp_no
+                                                        from employee a
+                                                        join department d on (d.dept_code = a.dept_code)
+                                                       where dept_name  like '%' || #{keyword} || '%'
+                                                     )
+                                    
+                                    )
+			   </if>
+			   <if test="condition == 'form'">
+			   		and form_name like '%' || #{keyword} || '%'
+			   </if>			   
+			   
+			order by enroll_date desc	
+	</select>
+	
+		
 	<select id="selectSearchCList" resultMap="approvalResult">
 				select  
 				       distinct a.app_no
@@ -1169,6 +1253,235 @@
 					 order 
 					    by app_no desc 	
 
+	</select>
+	
+	<select id="selectSearchFListCount" resultType="_int">
+				select
+				        count(*)
+				  from approval a
+			 left join employee e on (a.emp_no = e.emp_no)				  
+				 where a.status = 1
+				   and app_no in (
+				                    select app_no
+				                      from app_line
+				                     where ref_whether = 'Y'
+				                       and emp_no = #{receiverNo}
+				                    )
+				   <if test="condition == 'writer'">
+				   and emp_name
+				   </if>
+				  <if test="condition == 'title'">
+				   and title  	
+				   </if>
+				   <if test="condition == 'form'">
+				   and form_name 
+				   </if>
+				    like '%' || #{keyword} || '%'               
+				                    		
+	</select>
+	
+	<select id="selectSearchFList" resultMap="approvalResult">
+				select distinct
+				         a.app_no 
+				        ,  to_char(a.enroll_date, 'YYYY-MM-dd') as "enroll_date"
+				        , to_char(update_date, 'YYYY-MM-dd') as "update_date" 
+				        , form_name
+				        , form_code
+				        , title
+				        , emp_name
+		               , (
+		                    select count(*)
+		                      from attachment
+		                     where division = 'A'
+		                       and ref_no = a.app_no
+		                    ) attach_count
+				        , app_change
+				        , app_tstatus
+				   from approval a
+				   left join app_line l on (a.app_no = l.app_no)
+				   left join employee e on (a.emp_no = e.emp_no)
+				  where a.status = 1
+				    and a.app_no in (
+				                    select app_no
+				                      from app_line
+				                     where ref_whether = 'Y'
+				                       and emp_no = #{receiverNo}
+				    )
+				    and update_date = (select max(update_date)
+				                        from app_line
+				                       where ref_whether = 'N'
+				                         and app_no = a.app_no
+				                    ) 
+				   <if test="condition == 'writer'">
+				   and emp_name
+				   </if>
+				  <if test="condition == 'title'">
+				   and title  	
+				   </if>
+				   <if test="condition == 'form'">
+				   and form_name 
+				   </if>
+				    like '%' || #{keyword} || '%'               
+				                    
+					 order 
+					    by a.app_no desc   		
+	</select>
+	
+	<select id="selectSearchDSListCount" resultType="_int">
+			 select count(*)
+			  from approval a
+			  join employee e on (e.emp_no = a.emp_no) 
+			  where dept_code in (
+			                    select dept_code
+			                      from employee
+			                     where emp_no = #{receiverNo}
+			                    )
+			    and app_tstatus = '결재'  
+			   <if test="condition == 'writer'">
+			    and emp_name
+			   </if>
+			  <if test="condition == 'title'">
+			    and title  	
+			   </if>
+			   <if test="condition == 'form'">
+			    and form_name 
+			   </if>
+			     like '%' || #{keyword} || '%'  			     	
+	</select>
+	
+	<select id="selectSearchDSList" resultMap="approvalResult">
+				select
+				         distinct a.app_no
+				        , to_char(a.enroll_date, 'YYYY-MM-dd') as "enroll_date"
+				        , to_char(update_date, 'YYYY-MM-dd') as "update_date" 
+				        , form_name
+				        , form_code
+				        , title
+				        , emp_name
+		               , (
+		                    select count(*)
+		                      from attachment
+		                     where division = 'A'
+		                       and ref_no = a.app_no
+		                    ) attach_count
+				        , app_change
+				        , app_tstatus
+				   from approval a
+				   left join app_line l on (a.app_no = l.app_no)
+				   left join employee e on (a.emp_no = e.emp_no)
+				  where a.status = 1
+				    and app_tstatus = '결재'
+				    and dept_code in (
+                                        select dept_code
+                                          from employee
+                                         where emp_no = #{receiverNo}
+                                        )
+                                    
+                    and update_date = (select max(update_date)
+                                        from app_line
+                                       where app_no in a.app_no
+                                    ) 
+			   <if test="condition == 'writer'">
+			    and emp_name
+			   </if>
+			  <if test="condition == 'title'">
+			    and title  	
+			   </if>
+			   <if test="condition == 'form'">
+			    and form_name 
+			   </if>
+			     like '%' || #{keyword} || '%'  	                                                 
+				   order by a.app_no desc  	
+	</select>
+	
+	<select id="selectSearchDFListCount" resultType="_int">
+            select
+				   count(distinct a.app_no)
+				   from approval a
+				   left join app_line l on (a.app_no = l.app_no)
+				   left join employee e on (a.emp_no = e.emp_no)
+				   
+				  where a.status = 1
+				    and a.app_no in (
+                                    select a.app_no
+                                      from app_line a
+                                      join employee e on (e.emp_no = a.emp_no) 
+                                     where ref_whether = 'Y'
+                                       and dept_code = (
+                                                        select dept_code
+                                                          from employee
+                                                         where emp_no = #{receiverNo}
+                                                        )
+                                      group by a.app_no
+                                    )
+                                    
+                    and update_date = (select max(update_date)
+                                        from app_line
+                                       where app_no in a.app_no
+                                    	)
+				   <if test="condition == 'writer'">
+				    and emp_name
+				   </if>
+				  <if test="condition == 'title'">
+				    and title  	
+				   </if>
+				   <if test="condition == 'form'">
+				    and form_name 
+				   </if>
+				     like '%' || #{keyword} || '%'  	                                                 
+					 order by a.app_no desc                                      	  	
+	</select>
+	
+	<select id="selectSearchDFList" resultMap="approvalResult">
+                    
+				select
+				         distinct a.app_no
+				        , to_char(a.enroll_date, 'YYYY-MM-dd') as "enroll_date"
+				        , to_char(update_date, 'YYYY-MM-dd') as "update_date" 
+				        , form_name
+				        , form_code
+				        , title
+				        , emp_name
+		               , (
+		                    select count(*)
+		                      from attachment
+		                     where division = 'A'
+		                       and ref_no = a.app_no
+		                    ) attach_count
+				        , app_change
+				        , app_tstatus
+				   from approval a
+				   left join app_line l on (a.app_no = l.app_no)
+				   left join employee e on (a.emp_no = e.emp_no)
+				  where a.status = 1
+				    and a.app_no in (
+                                    select app_no
+                                      from app_line a
+                                      join employee e on (e.emp_no = a.emp_no) 
+                                     where ref_whether = 'Y'
+                                       and dept_code = (
+                                                        select dept_code
+                                                          from employee
+                                                         where emp_no = #{receiverNo}
+                                                        )
+                                      group by app_no
+                                    )
+                                    
+                    and update_date = (select max(update_date)
+                                        from app_line
+                                       where app_no in a.app_no
+                                    ) 
+				   <if test="condition == 'writer'">
+				    and emp_name
+				   </if>
+				  <if test="condition == 'title'">
+				    and title  	
+				   </if>
+				   <if test="condition == 'form'">
+				    and form_name 
+				   </if>
+				     like '%' || #{keyword} || '%'                                                
+				   order by a.app_no desc  	
 	</select>
 	
 	<select id="selectStatusSListCount" resultType="_int">
@@ -1264,6 +1577,8 @@
 					 order 
 					    by app_no desc 	
 	</select>
+	
+
 	
 	<select id="selectVacationInfo" resultMap="approvalResult">
 				select 

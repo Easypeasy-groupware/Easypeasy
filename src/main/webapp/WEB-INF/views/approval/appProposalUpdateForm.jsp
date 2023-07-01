@@ -400,6 +400,8 @@
         
         function tempSave(){
         	
+        	//console.log("템프세이브");
+        	
 			let value = "";
 			value += "<input type='hidden' name='status' value='"+ 2 +"'>";
 			$("#commentArea").html(value);
@@ -411,21 +413,27 @@
     		const appBody = $(".app-body input");
     		const refBody = $(".rep-body input");
     		
+    		//console.log("appBody" + appBody.length);
+    		//console.log("refBody" + refBody.length);
     		
-    		for(let i = 0; i < appBody.length; i++){
-    			console.log(appBody[i]);
-    			appBody[i].setAttribute('name', 'alList['+ i +'].recEmpNo');
-    	
+    		if(appBody.length > 0){
+	    		for(let i = 0; i < appBody.length; i++){
+	    			console.log(appBody[i]);
+	    			appBody[i].setAttribute('name', 'alList['+ i +'].recEmpNo');
+	    	
+	    		}
     		}
-
-    		for(let j = 0; j < refBody.length; j++){
-    			refBody[j].setAttribute('name', 'refList[' + j + '].recEmpNo');
-    	
-    		}
-
+			
+    		if(refBody.length > 0){
+	    		for(let j = 0; j < refBody.length; j++){
+	    			refBody[j].setAttribute('name', 'refList[' + j + '].recEmpNo');
+	    	
+	    		}
+			}
 			
 			
-        	$("#contentArea").attr("action","insert.ap");
+        	$("#contentArea").attr("action","insert.ap").submit();
+        	
         }            
         
 

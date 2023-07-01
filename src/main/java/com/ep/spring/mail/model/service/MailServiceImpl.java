@@ -27,16 +27,6 @@ public class MailServiceImpl implements MailService {
 	private AlarmService aService;
 	
 	@Override
-	public ArrayList<Mail> selectReceiveMailList(String email) {
-		return mDao.selectReceiveMailList(email, sqlSession);
-	}
-	
-	@Override
-	public ArrayList<Mail> selectList(PageInfo pi, String email) {
-		return mDao.selectList(pi, email, sqlSession);
-	}
-
-	@Override
 	public ArrayList<MailTag> selectTagList(int empNo) {
 		return mDao.selectTagList(empNo, sqlSession);
 	}
@@ -54,7 +44,6 @@ public class MailServiceImpl implements MailService {
 		
 		if((sendResult > 0 && receiveResult > 0 ) || (atList.size() + attachResult > 0)) {
 			int mailNo = mDao.selectRecSendMailNo(sqlSession);
-//			aService.receiveMailAlarm(mList, mailNo);
 			return 1;
 		}else {
 			return 0;
@@ -125,33 +114,33 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public ArrayList<Mail> selectTodayMailList(PageInfo pi, String email) {
-		return mDao.selectTodayMailList(email, pi, sqlSession);
+	public ArrayList<Mail> selectTodayMailList(PageInfo pi, Mail m) {
+		return mDao.selectTodayMailList(m, pi, sqlSession);
 	}
 
 	@Override
-	public ArrayList<Mail> selectToMeMailList(PageInfo pi, String email) {
-		return mDao.selectToMeMailList(email, pi, sqlSession);
+	public ArrayList<Mail> selectToMeMailList(PageInfo pi, Mail m) {
+		return mDao.selectToMeMailList(m, pi, sqlSession);
 	}
 
 	@Override
-	public ArrayList<Mail> selectAttachMailList(PageInfo pi, String email) {
-		return mDao.selectAttachMailList(email, pi, sqlSession);
+	public ArrayList<Mail> selectAttachMailList(PageInfo pi, Mail m) {
+		return mDao.selectAttachMailList(m, pi, sqlSession);
 	}
 
 	@Override
-	public ArrayList<Mail> selectImporMailList(PageInfo pi, String email) {
-		return mDao.selectImporMailList(email, pi, sqlSession);
+	public ArrayList<Mail> selectImporMailList(PageInfo pi, Mail m) {
+		return mDao.selectImporMailList(m, pi, sqlSession);
 	}
 
 	@Override
-	public ArrayList<Mail> selectUnreadMailList(PageInfo pi, String email) {
-		return mDao.selectUnreadMailList(email, pi, sqlSession);
+	public ArrayList<Mail> selectUnreadMailList(PageInfo pi, Mail m) {
+		return mDao.selectUnreadMailList(m, pi, sqlSession);
 	}
 
 	@Override
-	public ArrayList<Mail> selectSendMailList(PageInfo pi, String email) {
-		return mDao.selectSendMailList(email, pi, sqlSession);
+	public ArrayList<Mail> selectSendMailList(PageInfo pi, Mail m) {
+		return mDao.selectSendMailList(m, pi, sqlSession);
 	}
 
 	@Override
@@ -160,8 +149,8 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public ArrayList<Mail> selectTempMailList(PageInfo pi, String email) {
-		return mDao.selectTempMailList(email, pi, sqlSession);
+	public ArrayList<Mail> selectTempMailList(PageInfo pi, Mail m) {
+		return mDao.selectTempMailList(m, pi, sqlSession);
 	}
 
 	@Override
@@ -175,21 +164,6 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public int enrollFavorMailBox(MailFavorite mf) {
-		return mDao.enrollFavorMailBox(mf, sqlSession);
-	}
-
-	@Override
-	public int deleteFavorMailBox(MailFavorite mf) {
-		return mDao.deleteFavorMailBox(mf, sqlSession);
-	}
-
-	@Override
-	public ArrayList<MailFavorite> selectMailFavorList(int empNo) {
-		return mDao.selectMailFavorList(empNo, sqlSession);
-	}
-
-	@Override
 	public ArrayList<Mail> selectTaggingMailList(MailTag t, PageInfo pi) {
 		return mDao.selectTaggingMailList(t, pi, sqlSession);
 	}
@@ -200,8 +174,8 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public ArrayList<Mail> selectDeleteMailList(String email) {
-		return mDao.selectDeleteMailList(email, sqlSession);
+	public ArrayList<Mail> selectDeleteMailList(PageInfo mailPi, Mail m) {
+		return mDao.selectDeleteMailList(mailPi, m, sqlSession);
 	}
 
 	@Override
@@ -210,21 +184,91 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public int completeDeleteMailAll(String email, Mail m) {
-		return mDao.completeDeleteMailAll(email, m, sqlSession);
+	public int completeDeleteMailAll(String email, String division) {
+		return mDao.completeDeleteMailAll(email, division, sqlSession);
 	}
 
-	
-	
+	@Override
+	public int insertTempMail(Mail m, ArrayList<Mail> mList, ArrayList<Attachment> atList) {
+		int sendResult = mDao.insertTempMail(m, mList, sqlSession);
+		int attachResult = mDao.insertAttachment(atList, sqlSession);
+		
+		if(sendResult > 0 && (atList.size() + attachResult > 0)) {
+			return 1;
+		}else {
+			return 0;
+		}
+	}
 
-	
+	@Override
+	public ArrayList<Mail> selectReceiveMailList(PageInfo mailPi, Mail m) {
+		return mDao.selectReceiveMailList(mailPi, m, sqlSession);
+	}
 
-	
+	@Override
+	public ArrayList<Mail> selectSpamMailList(PageInfo mailPi, Mail m) {
+		return mDao.selectSpamMailList(mailPi, m, sqlSession);
+	}
 
-	
+	@Override
+	public ArrayList<Mail> searchReceiveMailList(PageInfo mailPi, Mail m) {
+		return mDao.searchReceiveMailList(mailPi, m, sqlSession);
+	}
 
-	
+	@Override
+	public ArrayList<Mail> searchImporMailList(PageInfo mailPi, Mail m) {
+		return mDao.searchImporMailList(mailPi, m, sqlSession);
+	}
 
-	
+	@Override
+	public ArrayList<Mail> searchAttachMailList(PageInfo mailPi, Mail m) {
+		return mDao.searchAttachMailList(mailPi, m, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Mail> searchTodayMailList(PageInfo mailPi, Mail m) {
+		return mDao.searchTodayMailList(mailPi, m, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Mail> searchToMeMailList(PageInfo mailPi, Mail m) {
+		return mDao.searchToMeMailList(mailPi, m, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Mail> searchUnreadMailList(PageInfo mailPi, Mail m) {
+		return mDao.searchUnreadMailList(mailPi, m, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Mail> searchTempMailList(PageInfo mailPi, Mail m) {
+		return mDao.searchTempMailList(mailPi, m, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Mail> searchSendMailList(PageInfo mailPi, Mail m) {
+		return mDao.searchSendMailList(mailPi, m, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Mail> searchDeleteMailList(PageInfo mailPi, Mail m) {
+		return mDao.searchDeleteMailList(mailPi, m, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Mail> searchTaggingMailList(MailTag t, PageInfo mailPi) {
+		return mDao.searchTaggingMailList(mailPi, t, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Mail> searchSpamMailList(PageInfo mailPi, Mail m) {
+		return mDao.searchSpamMailList(mailPi, m, sqlSession);
+	}
+
+	@Override
+	public Mail selectTempMail(Mail m) {
+		return mDao.selectTempMail(m, sqlSession);
+	}
+
 	
 }

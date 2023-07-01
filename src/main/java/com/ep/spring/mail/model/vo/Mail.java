@@ -17,7 +17,8 @@ public class Mail {
 	private int tagNo;
 	private String tagName;
 	private String tagColor;
-	private String empName;
+	private String recName;
+	private String sendName;
 	private String recMailAdd;
 	private String sendMailAdd;
 	private String mailTitle;
@@ -34,5 +35,8 @@ public class Mail {
 	private String hiddenReference;
 	private String sentDate;
 	private String tempStorage;
+	private String sort;
+	private String keyword;
+	private String category;
 
 }

@@ -77,7 +77,7 @@ public class AddressController {
 		if(a.getEditList()==null) {
 			a.setEditable("N");
 		}else {
-			a.setEditable("N");
+			a.setEditable("Y");
 		}
 		System.out.println(a);
 		int result = aService.insertSharedAdd(a);
@@ -632,6 +632,20 @@ public class AddressController {
 	
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="updatePersonalGroup.add")
+	public int ajaxUpdatePersonalGroupName(AddGroup ag) {
+		
+		return aService.updatePersonalGroupName(ag);
+	}
+	
+	@RequestMapping("sendMail.add")
+	public ArrayList<Address> sendMailFromAddress(List<String> list){
+		System.out.println(list);
+		ArrayList<Address> aaa = new ArrayList<Address>();
+		
+		return aaa;
+	}
 	
 
 }

@@ -11,7 +11,8 @@
 		<result column="tag_color" property="tagColor" />
 		<result column="recep_mail_address" property="recMailAdd" />
 		<result column="send_mail_address" property="sendMailAdd" />
-		<result column="emp_name" property="empName" />
+		<result column="rec_name" property="recName" />
+		<result column="send_name" property="sendName" />
 		<result column="mail_title" property="mailTitle" />
 		<result column="mail_content" property="mailContent" />
 		<result column="rec_check" property="recCheck" />
@@ -44,79 +45,43 @@
 		<result column="upload_date" property="uploadDate" />
 		<result column="division" property="division" />
 	</resultMap>
-	
-	<resultMap id="MailFavorResult" type="MailFavorite">
-		<id column="fav_no" property="favNo" />
-		<result column="emp_no" property="empNo" />
-		<result column="fav_order" property="favOrder" />
-		<result column="mailbox_name" property="mailBoxName" />
-	</resultMap>
-	
-	<select id="selectReceiceMailList" resultMap="MailResult">
+
+	<select id="selectReceiveMailList" resultMap="MailResult">
 		select
-		       RECEP_MAIL_NO
-			 , s.MAIL_NO
-			 , TAG_NO
-			 , emp_name
-			 , r.recep_MAIL_ADDRESS
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
 			 , r.send_mail_address
-			 , s.MAIL_TITLE
-			 , s.MAIL_CONTENT
-			 , REC_CHECK
-			 , sent_DATE
-			 , substr(sent_DATE, 0, 11) "date_day"
-             , substr(sent_DATE, 14) "date_time"
-			 , IMPOR_MAIL
-			 , JUNK_MAIL
-			 , RESER_MAIL
-			 , r.STATUS
-			 , REFERENCE
-			 , HIDDEN_REFERENCE
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
 	      from send_mail s
           join rec_mail r on s.mail_no = r.mail_no
           join employee e on r.send_mail_address = email
 	     where 
-			   recep_mail_address = #{ email }
+			   recep_mail_address = #{ recMailAdd }
 		   and r.status = 'Y'
+		   and junk_mail = 'N'
 	     order
-	        by recep_mail_no desc
-	</select>
-	
-	<select id="selectList" resultMap="MailResult">
-		select
-		       RECEP_MAIL_NO
-			 , s.MAIL_NO
-			 , TAG_NO
-			 , emp_name
-			 , r.recep_MAIL_ADDRESS
-			 , r.send_mail_address
-			 , s.MAIL_TITLE
-			 , s.MAIL_CONTENT
-			 , REC_CHECK
-			 , sent_DATE
-			 , substr(sent_DATE, 0, 11) "date_day"
-             , substr(sent_DATE, 14) "date_time"
-			 , IMPOR_MAIL
-			 , JUNK_MAIL
-			 , RESER_MAIL
-			 , r.STATUS
-			 , REFERENCE
-			 , HIDDEN_REFERENCE
-	      from send_mail s
-          join rec_mail r on s.mail_no = r.mail_no
-          join employee e on r.send_mail_address = email
-	     where 
-			   recep_mail_address = #{ email }
-		   and r.status = 'Y'
-	     order
-	        by recep_mail_no desc
+	        by recep_mail_no ${ sort }
 	</select>
 	
 	<select id="selectTagList" resultMap="TagResult">
 		select
-		       TAG_NO
-			 , TAG_NAME
-			 , TAG_COLOR
+		       tag_no
+			 , tag_name
+			 , tag_color
 		  from mail_tag
 		 where emp_no = #{empNo}
 		 order
@@ -145,12 +110,12 @@
 		insert 
 		  into send_mail
 		  (
-		  	MAIL_NO
-		  , SEND_MAIL_ADDRESS
-		  , MAIL_TITLE
-		  , MAIL_CONTENT
-		  , SENT_DATE
-		  , TEMP_STORAGE
+		  	mail_no
+		  , send_mail_address
+		  , mail_title
+		  , mail_content
+		  , sent_date
+		  , temp_storage
 		  )
 		  values
 		  (
@@ -167,15 +132,15 @@
 		insert
 		  into rec_mail
 		  (
-			RECEP_MAIL_NO
-		  , MAIL_NO
-		  , RECEP_MAIL_ADDRESS
-		  , SEND_MAIL_ADDRESS
-		  , MAIL_TITLE
-		  , MAIL_CONTENT
-		  , IMPOR_MAIL
-		  , REFERENCE
-		  , HIDDEN_REFERENCE
+			recep_mail_no
+		  , mail_no
+		  , recep_mail_address
+		  , send_mail_address
+		  , mail_title
+		  , mail_content
+		  , impor_mail
+		  , reference
+		  , hidden_reference
 		  , status
 		  )
 		  values
@@ -188,7 +153,7 @@
 		  , #{ mailContent }
 		  , #{ imporMail }
 		  , #{ reference }
-		  , #{ hiddenReference }
+		  , #{ hiddenreference }
 		  , #{ status }
 		  )
 	</insert>
@@ -198,7 +163,7 @@
 		  into attachment
 		  (
 		    ATTACH_NO
-		  , REF_NO
+		  , ref_no
 	  	  , ORIGIN_NAME
 		  , CHANGE_NAME
 		  , FILE_PATH
@@ -220,7 +185,7 @@
 	<select id="selectMailAttachment" resultMap="AttachResult">
 		select 
 			   ATTACH_NO
-		     , REF_NO
+		     , ref_no
 			 , ORIGIN_NAME
 			 , FILE_PATH
 			 , DIVISION
@@ -253,44 +218,66 @@
 	
 	<select id="selectMail" resultMap="MailResult">
 		select
-		       RECEP_MAIL_NO
-			 , s.MAIL_NO
-			 , r.TAG_NO
-			 , emp_name
-			 , r.recep_MAIL_ADDRESS
+		       recep_mail_no
+			 , s.mail_no
+			 , r.tag_no
+			 , e.emp_name "rec_name"
+			 , e2.emp_name "send_name"
+			 , r.recep_mail_address
 			 , r.send_mail_address
-			 , s.MAIL_TITLE
-			 , s.MAIL_CONTENT
-			 , REC_CHECK
-			 , sent_DATE
-			 , substr(sent_DATE, 0, 11) "date_day"
-             , substr(sent_DATE, 14) "date_time"
-			 , IMPOR_MAIL
-			 , JUNK_MAIL
-			 , RESER_MAIL
-			 , r.STATUS
-			 , REFERENCE
-			 , HIDDEN_REFERENCE
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
 	      from send_mail s
           join rec_mail r on s.mail_no = r.mail_no
-          join employee e on r.send_mail_address = email
+          join employee e on r.recep_mail_address = e.email
+          join employee e2 on r.send_mail_address = e2.email
      left join mail_tag t on r.tag_no = t.tag_no
 	     where 
-			   RECEP_MAIL_NO = #{ recMailNo }
+			   recep_mail_no = #{ recMailNo }
+	</select>
+	
+	<select id="selectTempMail" resultMap="MailResult">
+		select
+			   mail_no
+			 , send_mail_address
+			 , mail_title
+			 , mail_content
+			 , sent_date
+			 , status
+			 , temp_storage
+	      from send_mail 
+	     where 
+			   mail_no = #{ mailNo }
+           and temp_storage = 'Y'
+	     order
+	        by mail_no DESC
 	</select>
 	
 	<select id="selectReceiverList" resultMap="MailResult">
 		select
-			   RECEP_MAIL_NO
-			 , MAIL_NO
-			 , emp_name
-			 , RECEP_MAIL_ADDRESS
-			 , REFERENCE
-			 , HIDDEN_REFERENCE
+			   recep_mail_no
+			 , mail_no
+			 , e.emp_name "rec_name"
+			 , e2.emp_name "send_name"
+			 , recep_mail_address
+			 , send_mail_address
+			 , reference
+			 , hidden_reference
 	      from rec_mail r
 	      join employee e on r.recep_mail_address = e.email
+	      join employee e2 on r.send_mail_address = e2.email
 	     where 
-			   MAIL_NO = #{ mailNo }
+			   mail_no = #{ mailNo }
 	</select>
 	
 	<update id="updateReadUnreadMail">
@@ -342,199 +329,232 @@
 		 where recep_mail_no = #{ recMailNo }
 	</update>
 	
+	<select id="selectSpamMailList" resultMap="MailResult">
+		select
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
+			 , r.send_mail_address
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.send_mail_address = email
+	     where 
+			   recep_mail_address = #{ recMailAdd }
+		   and r.status = 'Y'
+           and junk_mail = 'Y'
+	     order
+	        by recep_mail_no ${ sort }
+	</select>
+	
 	<select id="selectTodayMailList" resultMap="MailResult">
 		select
-		       RECEP_MAIL_NO
-			 , s.MAIL_NO
-			 , TAG_NO
-			 , emp_name
-			 , r.recep_MAIL_ADDRESS
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
 			 , r.send_mail_address
-			 , s.MAIL_TITLE
-			 , s.MAIL_CONTENT
-			 , REC_CHECK
-			 , sent_DATE
-			 , substr(sent_DATE, 0, 11) "date_day"
-             , substr(sent_DATE, 14) "date_time"
-			 , IMPOR_MAIL
-			 , JUNK_MAIL
-			 , RESER_MAIL
-			 , r.STATUS
-			 , REFERENCE
-			 , HIDDEN_REFERENCE
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
 	      from send_mail s
           join rec_mail r on s.mail_no = r.mail_no
           join employee e on r.recep_mail_address = email
 	inner join (select to_char(to_date(sysdate), 'YYYY-MM-DD') as selectDate  from dual) e
      		on s.sent_date like '%' || e.selectDate || '%'
 	     where 
-			   recep_mail_address = #{email}
+			   recep_mail_address = #{recMailAdd}
 		   and r.status = 'Y'
 		   and junk_mail = 'N'
 	     order
-	        by recep_mail_no desc
+	        by recep_mail_no ${ sort }
 	</select>
 	
 	<select id="selectToMeMailList" resultMap="MailResult">
 		select
-		       RECEP_MAIL_NO
-			 , s.MAIL_NO
-			 , TAG_NO
-			 , emp_name
-			 , r.recep_MAIL_ADDRESS
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
 			 , r.send_mail_address
-			 , s.MAIL_TITLE
-			 , s.MAIL_CONTENT
-			 , REC_CHECK
-			 , sent_DATE
-			 , substr(sent_DATE, 0, 11) "date_day"
-             , substr(sent_DATE, 14) "date_time"
-			 , IMPOR_MAIL
-			 , JUNK_MAIL
-			 , RESER_MAIL
-			 , r.STATUS
-			 , REFERENCE
-			 , HIDDEN_REFERENCE
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
 	      from send_mail s
           join rec_mail r on s.mail_no = r.mail_no
           join employee e on r.recep_mail_address = email
 	     where 
-			   recep_mail_address = #{email}
-		   and s.send_mail_address = #{email}
+			   recep_mail_address = #{recMailAdd}
+		   and s.send_mail_address = #{recMailAdd}
 		   and r.status = 'Y'
 		   and junk_mail = 'N'
 	     order
-	        by recep_mail_no desc
+	        by recep_mail_no ${ sort }
 	</select>
 	
 	<select id="selectAttachMailList" resultMap="MailResult">
 		select
-		       RECEP_MAIL_NO
-			 , s.MAIL_NO
-			 , TAG_NO
-			 , emp_name
-			 , r.recep_MAIL_ADDRESS
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
 			 , r.send_mail_address
-			 , s.MAIL_TITLE
-			 , s.MAIL_CONTENT
-			 , REC_CHECK
-			 , sent_DATE
-			 , substr(sent_DATE, 0, 11) "date_day"
-             , substr(sent_DATE, 14) "date_time"
-			 , IMPOR_MAIL
-			 , JUNK_MAIL
-			 , RESER_MAIL
-			 , r.STATUS
-			 , REFERENCE
-			 , HIDDEN_REFERENCE
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
 	      from send_mail s
           join rec_mail r on s.mail_no = r.mail_no
-          join employee e on r.recep_mail_address = email
+          join employee e on r.send_mail_address = email
 	      join (select distinct ref_no, division from attachment) a on s.mail_no = a.ref_no
 	     where 
-			   recep_mail_address = #{email}
+			   recep_mail_address = #{recMailAdd}
 		   and r.status = 'Y'
 		   and junk_mail = 'N'
            and division = 'M'
 	     order
-	        by recep_mail_no desc
+	        by recep_mail_no ${ sort }
 	</select>
 	
 	<select id="selectImporMailList" resultMap="MailResult">
 		select
-		       RECEP_MAIL_NO
-			 , s.MAIL_NO
-			 , TAG_NO
-			 , emp_name
-			 , r.recep_MAIL_ADDRESS
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
 			 , r.send_mail_address
-			 , s.MAIL_TITLE
-			 , s.MAIL_CONTENT
-			 , REC_CHECK
-			 , sent_DATE
-			 , substr(sent_DATE, 0, 11) "date_day"
-             , substr(sent_DATE, 14) "date_time"
-			 , IMPOR_MAIL
-			 , JUNK_MAIL
-			 , RESER_MAIL
-			 , r.STATUS
-			 , REFERENCE
-			 , HIDDEN_REFERENCE
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
 	      from send_mail s
           join rec_mail r on s.mail_no = r.mail_no
           join employee e on r.recep_mail_address = email
 	     where 
-			   recep_mail_address = #{email}
+			   recep_mail_address = #{recMailAdd}
 		   and r.status = 'Y'
 		   and junk_mail = 'N'
 		   and impor_mail = 'Y'
 	     order
-	        by recep_mail_no desc
+	        by recep_mail_no ${ sort }
 	</select>
 	
 	<select id="selectUnreadMailList" resultMap="MailResult">
 		select
-		       RECEP_MAIL_NO
-			 , s.MAIL_NO
-			 , TAG_NO
-			 , emp_name
-			 , r.recep_MAIL_ADDRESS
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
 			 , r.send_mail_address
-			 , s.MAIL_TITLE
-			 , s.MAIL_CONTENT
-			 , REC_CHECK
-			 , sent_DATE
-			 , substr(sent_DATE, 0, 11) "date_day"
-             , substr(sent_DATE, 14) "date_time"
-			 , IMPOR_MAIL
-			 , JUNK_MAIL
-			 , RESER_MAIL
-			 , r.STATUS
-			 , REFERENCE
-			 , HIDDEN_REFERENCE
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
 	      from send_mail s
           join rec_mail r on s.mail_no = r.mail_no
           join employee e on r.recep_mail_address = email
 	     where 
-			   recep_mail_address = #{email}
+			   recep_mail_address = #{recMailAdd}
 		   and r.status = 'Y'
 		   and junk_mail = 'N'
 		   and rec_check = 'N'
 	     order
-	        by recep_mail_no desc
+	        by recep_mail_no ${ sort }
 	</select>
 	
 	<select id="selectSendMailList" resultMap="MailResult">
 			select
-			       RECEP_MAIL_NO
-				 , s.MAIL_NO
+			       recep_mail_no
+				 , s.mail_no
 	             , ref_no
-				 , TAG_NO
-				 , emp_name
-				 , r.recep_MAIL_ADDRESS
+				 , tag_no
+				 , e.emp_name "rec_name"
+				 , e2.emp_name "send_name"
+				 , r.recep_mail_address
 				 , r.send_mail_address
-				 , s.MAIL_TITLE
-				 , s.MAIL_CONTENT
-				 , REC_CHECK
-				 , REC_DATE
+				 , s.mail_title
+				 , s.mail_content
+				 , rec_check
+				 , rec_date
 				 , sent_date
-				 , IMPOR_MAIL
-				 , JUNK_MAIL
-				 , RESER_MAIL
-				 , r.STATUS
-				 , REFERENCE
-				 , HIDDEN_REFERENCE
+				 , impor_mail
+				 , junk_mail
+				 , reser_mail
+				 , r.status
+				 , reference
+				 , hidden_reference
 		      from send_mail s
 	          join rec_mail r on s.mail_no = r.mail_no
-	          join employee e on r.recep_mail_address = email	
+	          join employee e on r.recep_mail_address = e.email
+	          join employee e2 on r.send_mail_address = e2.email	
    full outer join (select distinct ref_no 
                       from attachment) a on s.mail_no = a.ref_no
 		     where 
-				   s.send_mail_address = #{email}
+				   s.send_mail_address = #{sendMailAdd}
 			   and r.status = 'Y'
 	           and s.status = 'Y'
 		     order
-		        by recep_mail_no desc
+		        by recep_mail_no ${ sort }
 	</select>
 	
 	<update id="deleteSendMail">
@@ -545,33 +565,19 @@
 	
 	<select id="selectTempMailList" resultMap="MailResult">
 		select
-		       RECEP_MAIL_NO
-			 , s.MAIL_NO
-			 , TAG_NO
-			 , emp_name
-			 , r.recep_MAIL_ADDRESS
-			 , r.send_mail_address
-			 , s.MAIL_TITLE
-			 , s.MAIL_CONTENT
-			 , REC_CHECK
-			 , rec_date
+			   mail_no
+			 , send_mail_address
+			 , mail_title
+			 , mail_content
 			 , sent_date
-			 , IMPOR_MAIL
-			 , JUNK_MAIL
-			 , RESER_MAIL
-			 , r.STATUS
-			 , REFERENCE
-			 , HIDDEN_REFERENCE
-	      from send_mail s
-          join rec_mail r on s.mail_no = r.mail_no
-          join employee e on r.recep_mail_address = email
+			 , status
+			 , temp_storage
+	      from send_mail 
 	     where 
-			   s.send_mail_address = #{email}
-		   and r.status = 'T'
-           and s.status = 'Y'
-           and s.temp_storage = 'Y'
+			   send_mail_address = #{ sendMailAdd }
+           and temp_storage = 'Y'
 	     order
-	        by recep_mail_no desc
+	        by mail_no ${ sort }
 	</select>
 	
 	<update id="enrollImporMail">
@@ -607,84 +613,74 @@
 		   and mailbox_name = #{ mailBoxName }
 	</delete>
 	
-	<select id="selectMailFavorList" resultMap="MailFavorResult">
-		select
-			   FAV_NO
-			 , EMP_NO
-			 , FAV_ORDER
-			 , MAILBOX_NAME
-		  from mail_fav
-		 where emp_no = #{ empNo }
-	</select>
-	
 	<select id="selectTaggingMailList" resultMap="MailResult">
 		select
-		       RECEP_MAIL_NO
-			 , s.MAIL_NO
-			 , t.TAG_NO
+		       recep_mail_no
+			 , s.mail_no
+			 , t.tag_no
              , tag_name
-			 , emp_name
-			 , r.recep_MAIL_ADDRESS
+			 , emp_name "send_name"
+			 , r.recep_mail_address
 			 , r.send_mail_address
-			 , s.MAIL_TITLE
-			 , s.MAIL_CONTENT
-			 , REC_CHECK
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
 			 , rec_date
 			 , sent_date
-			 , IMPOR_MAIL
-			 , JUNK_MAIL
-			 , RESER_MAIL
-			 , r.STATUS
-			 , REFERENCE
-			 , HIDDEN_REFERENCE
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
 	      from rec_mail r
           join send_mail s on s.mail_no = r.mail_no
           join employee e on r.recep_mail_address = email
           join mail_tag t on t.tag_no = r.tag_no 
 	     where 
-			   t.tag_no = ${ tagNo }
+			   t.tag_no = #{ tagNo }
 	     order
-	        by recep_mail_no desc
+	        by recep_mail_no ${ sort }
 	</select>
 	
 	<select id="selectTag" resultMap="TagResult">
 		select
-		       TAG_NO
+		       tag_no
 			 , EMP_NO
-			 , TAG_NAME
-			 , TAG_COLOR
+			 , tag_name
+			 , tag_color
 		  from mail_tag
 		 where tag_no = #{ tagNo }
 	</select>
 	
 	<select id="selectDeleteMailList" resultMap="MailResult">
 		select
-		       RECEP_MAIL_NO
-			 , s.MAIL_NO
-			 , TAG_NO
-			 , emp_name
-			 , r.recep_MAIL_ADDRESS
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
 			 , r.send_mail_address
-			 , s.MAIL_TITLE
-			 , s.MAIL_CONTENT
-			 , REC_CHECK
-			 , sent_DATE
-			 , substr(sent_DATE, 0, 11) "date_day"
-             , substr(sent_DATE, 14) "date_time"
-			 , IMPOR_MAIL
-			 , JUNK_MAIL
-			 , RESER_MAIL
-			 , r.STATUS
-			 , REFERENCE
-			 , HIDDEN_REFERENCE
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
 	      from send_mail s
           join rec_mail r on s.mail_no = r.mail_no
           join employee e on r.send_mail_address = email
 	     where 
-			   recep_mail_address = #{ email }
+			   recep_mail_address = #{ recMailAdd }
 		   and r.status = 'N'
 	     order
-	        by recep_mail_no desc
+	        by recep_mail_no ${ sort }
 	</select>
 	
 	<update id="restoreDeleteMail">
@@ -709,4 +705,581 @@
 		   	   recep_mail_address = #{ email }
 		   and junk_mail = 'Y'
 	</delete>
+	
+	<insert id="insertTempMail">
+		insert 
+		  into send_mail
+		  (
+		  	mail_no
+		  ,	send_mail_address
+		  ,	sent_date
+		  ,	mail_title
+	      ,	mail_content
+		  ,	temp_storage
+		  )
+		  values
+		  (
+		    seq_mano.nextval
+		  , #{ sendMailAdd }
+		  , to_char(sysdate, 'YYYY-MM-DD DY HH24:mi:SS')
+		  , #{ mailTitle }
+		  , #{ mailContent }
+		  , 'Y'
+		  )
+	</insert>
+	
+	<select id="searchReceiveMailList" resultMap="MailResult">
+		select
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
+			 , r.send_mail_address
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.send_mail_address = email
+	     where 
+			   recep_mail_address = #{ recMailAdd }
+		   and r.status = 'Y'
+		   and junk_mail = 'N'
+		   <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by recep_mail_no DESC
+	</select>
+	
+	<select id="searchImporMailList" resultMap="MailResult">
+		select
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
+			 , r.send_mail_address
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.recep_mail_address = email
+	     where 
+			   recep_mail_address = #{recMailAdd}
+		   and r.status = 'Y'
+		   and junk_mail = 'N'
+		   and impor_mail = 'Y'
+		   <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by recep_mail_no DESC
+	</select>
+	
+	<select id="searchAttachMailList" resultMap="MailResult">
+		select
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
+			 , r.send_mail_address
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.send_mail_address = email
+	      join (select distinct ref_no, division from attachment) a on s.mail_no = a.ref_no
+	     where 
+			   recep_mail_address = #{recMailAdd}
+		   and r.status = 'Y'
+		   and junk_mail = 'N'
+           and division = 'M'
+           <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by recep_mail_no DESC
+	</select>
+	
+	<select id="searchTodayMailList" resultMap="MailResult">
+		select
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
+			 , r.send_mail_address
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.recep_mail_address = email
+	inner join (select to_char(to_date(sysdate), 'YYYY-MM-DD') as selectDate  from dual) e
+     		on s.sent_date like '%' || e.selectDate || '%'
+	     where 
+			   recep_mail_address = #{recMailAdd}
+		   and r.status = 'Y'
+		   and junk_mail = 'N'
+		   <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by recep_mail_no DESC
+	</select>
+	
+	<select id="searchToMeMailList" resultMap="MailResult">
+		select
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
+			 , r.send_mail_address
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.recep_mail_address = email
+	     where 
+			   recep_mail_address = #{recMailAdd}
+		   and s.send_mail_address = #{recMailAdd}
+		   and r.status = 'Y'
+		   and junk_mail = 'N'
+		   <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by recep_mail_no DESC
+	</select>
+	
+	<select id="searchUnreadMailList" resultMap="MailResult">
+		select
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
+			 , r.send_mail_address
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.recep_mail_address = email
+	     where 
+			   recep_mail_address = #{recMailAdd}
+		   and r.status = 'Y'
+		   and junk_mail = 'N'
+		   and rec_check = 'N'
+		   <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by recep_mail_no DESC
+	</select>
+	
+	<select id="searchTempMailList" resultMap="MailResult">
+		select
+			   mail_no
+			 , send_mail_address
+			 , mail_title
+			 , mail_content
+			 , sent_date
+			 , status
+	      from send_mail 
+	     where 
+			   send_mail_address = #{ sendMailAdd }
+           and temp_storage = 'Y'
+           <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by mail_no DESC
+	</select>
+	
+	<select id="searchSendMailList" resultMap="MailResult">
+		select
+			       recep_mail_no
+				 , s.mail_no
+	             , ref_no
+				 , tag_no
+				 , e.emp_name "rec_name"
+				 , e2.emp_name "send_name"
+				 , r.recep_mail_address
+				 , r.send_mail_address
+				 , s.mail_title
+				 , s.mail_content
+				 , rec_check
+				 , rec_date
+				 , sent_date
+				 , impor_mail
+				 , junk_mail
+				 , reser_mail
+				 , r.status
+				 , reference
+				 , hidden_reference
+		      from send_mail s
+	          join rec_mail r on s.mail_no = r.mail_no
+	          join employee e on r.recep_mail_address = e.email
+	          join employee e2 on r.send_mail_address = e2.email	
+   full outer join (select distinct ref_no 
+                      from attachment) a on s.mail_no = a.ref_no
+		     where 
+				   s.send_mail_address = #{sendMailAdd}
+			   and r.status = 'Y'
+	           and s.status = 'Y'
+	           <choose>
+			    	<when test="category == 'all'">
+				    	and (r.send_mail_address like '%'||#{keyword}||'%'
+				        	 or e.emp_name like '%'||#{keyword}||'%'
+		            		 or r.mail_title like '%'||#{keyword}||'%'
+		            		 or r.mail_content like '%'||#{keyword}||'%')
+			    	</when>
+			    	<when test="category == 'name'">
+			    		and e.emp_name like '%'||#{keyword}||'%'
+			    	</when>
+			    	<when test="category == 'address'">
+			    		and r.send_mail_address like '%'||#{keyword}||'%'
+			    	</when>
+			    	<when test="category == 'title'">
+			    		and r.mail_title like '%'||#{keyword}||'%'
+			    	</when>
+			    	<when test="category == 'content'">
+			    		and r.mail_content like '%'||#{keyword}||'%'
+			    	</when>
+			   </choose>
+		     order
+		        by recep_mail_no DESC
+	</select>
+	
+	<select id="searchDeleteMailList" resultMap="MailResult">
+		select
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
+			 , r.send_mail_address
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.send_mail_address = email
+	     where 
+			   recep_mail_address = #{ recMailAdd }
+		   and r.status = 'N'
+		   <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by recep_mail_no DESC
+	</select>
+	
+	<select id="searchSpamMailList" resultMap="MailResult">
+		select
+		       recep_mail_no
+			 , s.mail_no
+			 , tag_no
+			 , emp_name "send_name"
+			 , r.recep_mail_address
+			 , r.send_mail_address
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , sent_date
+			 , substr(sent_date, 0, 11) "date_day"
+             , substr(sent_date, 14) "date_time"
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
+	      from send_mail s
+          join rec_mail r on s.mail_no = r.mail_no
+          join employee e on r.send_mail_address = email
+	     where 
+			   recep_mail_address = #{ recMailAdd }
+		   and r.status = 'Y'
+           and junk_mail = 'Y'
+           <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by recep_mail_no DESC
+	</select>
+	
+	<select id="searchTaggingMailList" resultMap="MailResult">
+		select
+		       recep_mail_no
+			 , s.mail_no
+			 , t.tag_no
+             , tag_name
+			 , emp_name "send_name"
+			 , r.recep_mail_address
+			 , r.send_mail_address
+			 , s.mail_title
+			 , s.mail_content
+			 , rec_check
+			 , rec_date
+			 , sent_date
+			 , impor_mail
+			 , junk_mail
+			 , reser_mail
+			 , r.status
+			 , reference
+			 , hidden_reference
+	      from rec_mail r
+          join send_mail s on s.mail_no = r.mail_no
+          join employee e on r.recep_mail_address = email
+          join mail_tag t on t.tag_no = r.tag_no 
+	     where 
+			   t.tag_no = #{ tagNo }
+		   <choose>
+		    	<when test="category == 'all'">
+			    	and (r.send_mail_address like '%'||#{keyword}||'%'
+			        	 or emp_name like '%'||#{keyword}||'%'
+	            		 or r.mail_title like '%'||#{keyword}||'%'
+	            		 or r.mail_content like '%'||#{keyword}||'%')
+		    	</when>
+		    	<when test="category == 'name'">
+		    		and emp_name like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'address'">
+		    		and r.send_mail_address like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'title'">
+		    		and r.mail_title like '%'||#{keyword}||'%'
+		    	</when>
+		    	<when test="category == 'content'">
+		    		and r.mail_content like '%'||#{keyword}||'%'
+		    	</when>
+		   </choose>
+	     order
+	        by recep_mail_no DESC
+	</select>
 </mapper>

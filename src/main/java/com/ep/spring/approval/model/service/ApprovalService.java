@@ -38,6 +38,7 @@ public interface ApprovalService {
 	// 5. 임시저장함 조회용 서비스(페이징)
 	int selectTempListCount(int eNo);
 	ArrayList<Approval> selectTempList(PageInfo pi, int eNo);
+	int selectTempApp(String appChange);
 	
 	// 6. 결재문서함 조회용 서비스(페이징)
 	int selectRecListCount(int eNo);

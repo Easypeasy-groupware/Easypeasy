@@ -86,18 +86,8 @@
                         </b>
                     </div>
                     
-                    <div id="search_bar">
-                        <form action="">
-                            <select name="search" id="">
-                                <option value="searchAll">전체</option>
-                                <option value="searchAddress">메일 주소</option>
-                                <option value="searchTitle">메일 제목</option>
-                                <option value="searchContent">메일 내용</option>
-                            </select>
-                            <input type="text">
-                            <button>검색</button>
-                        </form>
-                    </div>
+                    <jsp:include page="mailSearch.jsp" />
+
                 </div><br>
                 <div id="mail_header2">
                     <div style="width: 27px; float: left; padding-left: 5px; padding-top: 8px;"><input type="checkbox" name="" id="check_all"></div>
@@ -106,10 +96,20 @@
                     <div class="menu menu2" id="restore"><img src="">복원</div>
                     <div style="float: right; width: 150px; font-size: 12px;">
                         정렬
-                        <select name="" id="">
-                            <option value="">최근 메일</option>
-                            <option value="">오래된 메일</option>
-                        </select>
+                        <c:choose>
+                            <c:when test="${mail.sort == 'ASC'}">
+                                <select name="sort" id="sort">
+                                    <option value="ASC">오래된 메일</option>
+                                    <option value="DESC">최근 메일</option>
+                                </select>
+                            </c:when>
+                            <c:otherwise>
+                                <select name="sort" id="sort">
+                                    <option value="DESC">최근 메일</option>
+                                    <option value="ASC">오래된 메일</option>
+                                </select>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </div>
@@ -157,7 +157,7 @@
                                     <input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
                                     <div id="selectMailLine">
                                         <div class="mail_sender_name">
-                                            ${m.empName}
+                                            ${m.sendName}
                                         </div>
                                         <div class="mail_sender">
                                             ${ m.sendMailAdd }
@@ -178,17 +178,9 @@
                     <div class="empty">휴지통이 비었습니다.</div>
                 </c:if>
             </div>
-            <div align="center">
-                <ul id="paging">
-                    <li><a href=""> < </a></li>
-                    <li class='on'><a href=""> 1 </a></li>
-                    <li><a href=""> 2 </a></li>
-                    <li><a href=""> 3 </a></li>
-                    <li><a href=""> 4 </a></li>
-                    <li><a href=""> 5 </a></li>
-                    <li><a href=""> > </a></li>
-                </ul>
-            </div>
+
+            <jsp:include page="paging.jsp" />
+
         </div>
 
         <script>
@@ -199,7 +191,7 @@
                     const input = document.createElement("input");
                     input.setAttribute("style", "display:none")
                     input.setAttribute("name", "div");
-                    input.setAttribute("value", 10);
+                    input.setAttribute("value", 9);
                     this.append(input);
                     this.action = "select.ma";
                     this.method = "POST";
@@ -207,13 +199,6 @@
 
                 });
             });
-
-            // 페이징
-            $(function(){
-                $("#ps-tbody").on("click", "tr", function(){
-                    location.href = 'xxxxx.ad?no=' + $(this).children().eq(0).text(); 
-                })
-            })
 
              // 전체 체크박스 선택 취소
             let checkAll = document.getElementById("check_all");
@@ -241,6 +226,7 @@
                     const form = document.createElement("form");
                     const input = document.createElement("input");
                     form.setAttribute("style", "display:none;");
+                    input.setAttribute("style", "display:none;");
                     input.setAttribute("name", "recMailNoList");
                     input.setAttribute("multiple", "multiple");
                     input.setAttribute("value", arr);
@@ -305,6 +291,7 @@
                     const form = document.createElement("form");
                     const input = document.createElement("input");
                     form.setAttribute("style", "display:none;");
+                    input.setAttribute("style", "display:none;");
                     input.setAttribute("name", "recMailNoList");
                     input.setAttribute("multiple", "multiple");
                     input.setAttribute("value", arr);
@@ -324,6 +311,24 @@
                 x.addEventListener('click', function(){
                     this.parentNode.parentNode.style.display = 'none';
                 })
+            });
+
+            // 최근 순 / 오래된 순 정렬
+            let sort = document.getElementById('sort');
+            sort.addEventListener('change', function(){
+                let sortValue = sort.options[sort.selectedIndex].value;
+                const form = document.createElement('form');
+                const input = document.createElement('input');
+                form.setAttribute('style', 'display:none')
+                form.action = "deleteList.ma";
+                form.method = 'POST';
+                input.setAttribute('name', 'sort');
+                input.setAttribute('value', sortValue);
+                input.setAttribute('type', 'hidden');
+                form.append(input);
+                document.body.append(form);
+                console.log(input)
+                form.submit();
             });
         </script>
     </div>

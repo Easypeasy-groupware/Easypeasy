@@ -51,13 +51,6 @@
     .mail_date{width: 160px; text-align: right;}
     .empty{height: 300px; line-height: 290px; text-align: center; font-size: 23px; font-weight: 600; color: gray;}
 
-    #paging{text-align: center; display: inline-block; padding-left :0; margin-top: 20px;}
-    #paging li {text-align: center; float: left; list-style:none; border-radius:10px; margin:2px; background-color: rgb(234, 234, 234);}
-    #paging li a {display: block; font-size: 12px; color: black; padding: 5px 10px; box-sizing: border-box; text-decoration-line:none;}
-    #paging li.on {background:rgb(166, 184, 145);}
-    #paging li.on a { color: white;}
-
-    
 </style>
 </head>
 <body>
@@ -100,18 +93,8 @@
                         </b>
                     </div>
                     
-                    <div id="search_bar">
-                        <form action="">
-                            <select name="search" id="">
-                                <option value="searchAll">전체</option>
-                                <option value="searchAddress">메일 주소</option>
-                                <option value="searchTitle">메일 제목</option>
-                                <option value="searchContent">메일 내용</option>
-                            </select>
-                            <input type="text">
-                            <button>검색</button>
-                        </form>
-                    </div>
+                    <jsp:include page="mailSearch.jsp" />
+                    
                 </div><br>
                 <jsp:include page="receiveMailHeaderbar.jsp" />
             </div>
@@ -159,7 +142,7 @@
                                     <input class="recMailNo" type="hidden" name="recMailNo" value="${ m.recMailNo }">
                                     <div id="selectMailLine">
                                         <div class="mail_sender_name">
-                                            ${m.empName}
+                                            ${m.sendName}
                                         </div>
                                         <div class="mail_sender">
                                             ${ m.sendMailAdd }
@@ -194,29 +177,9 @@
                 </c:if>
                 </div>
             </div>
-            <div align="center">
-                <ul id="paging">
-                    <c:choose>
-                        <c:when test="${ mailPi.currentPage == 1 }">
-                            <li><a href=""> < </a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="on"><a href="list.ma?cpage=${ mailPi.currentPage-1 }"> < </a></li>
-                        </c:otherwise>
-                    </c:choose>
-                    <c:forEach var="p" begin="${ mailPi.startPage }" end="${ mailPi.endPage }">
-                        <li class='on'><a href="list.ma?cpage=${ p }"> ${ p } </a></li>
-                    </c:forEach>
-                    <c:choose>
-                        <c:when test="${ mailPi.currentPage == mailPi.maxPage }">
-                            <li><a href=""> > </a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="on"><a href="list.ma?cpage=${ mailPi.currentPage+1 }"> > </a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </ul>
-            </div>
+
+            <jsp:include page="paging.jsp" />
+
         </div>
     </div>
 
@@ -242,8 +205,8 @@
                     this.append(input);
                     this.action = "select.ma";
                     this.method = "POST";
+                    console.log(this)
                     this.submit();
-
                 });
             });
 

@@ -13,14 +13,14 @@ import lombok.ToString;
 @ToString
 public class VacationRecode {
 	
-	private int vacRecode;
+	private double vacRecode;
 	private int empNo;
-	private int vacDays;
+	private double vacDays;
 	private String enrollDate;
 	private String vacReason;
 	private String vacDivide;
 	private String vacCategory;
-	private int vacRemaining;
+	private double vacRemaining;
 	
 
 

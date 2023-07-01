@@ -622,7 +622,13 @@
         			
         			swal("결재선 선택 후 상신요청해주세요.");
         			
-        		} else if(($("#writerComment").val().trim().length>0) && ($(".app-body input").html() != null) && ($("#content").val().trim().length>0)){
+        		}	else if(parseFloat($("#remain").val()) < parseFloat($("#vacUse").val())){
+
+
+        			swal("신청연차가 잔여연차보다 더 많습니다.");
+        		} 
+        		
+        		else if(($("#writerComment").val().trim().length>0) && ($(".app-body input").html() != null) && ($("#content").val().trim().length>0) && !(parseFloat($("#remain").val()) < parseFloat($("#vacUse").val()))){
         		
 	        		const appContent = $("#contentArea");
 	        		
@@ -680,16 +686,19 @@
     		const appBody = $(".app-body input");
     		const refBody = $(".rep-body input");
     		
-    		
-    		for(let i = 0; i < appBody.length; i++){
-    			console.log(appBody[i]);
-    			appBody[i].setAttribute('name', 'alList['+ i +'].recEmpNo');
-    	
+    		if(appBody.length > 0){
+	    		for(let i = 0; i < appBody.length; i++){
+	    			console.log(appBody[i]);
+	    			appBody[i].setAttribute('name', 'alList['+ i +'].recEmpNo');
+	    	
+	    		}
     		}
-
-    		for(let j = 0; j < refBody.length; j++){
-    			refBody[j].setAttribute('name', 'refList[' + j + '].recEmpNo');
-    	
+    		
+    		if(refBody.length > 0){
+	    		for(let j = 0; j < refBody.length; j++){
+	    			refBody[j].setAttribute('name', 'refList[' + j + '].recEmpNo');
+	    	
+	    		}
     		}
 
 			
